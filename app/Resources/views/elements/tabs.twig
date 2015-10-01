@@ -2,7 +2,7 @@
 
 <div class="alexander {{ctrl}}" ng-app="{{app}}" ng-controller="{{ctrl}} as vm">
 
-    <form ng-submit="vm.onSubmit()" name="vm.form" class="form" novalidate>      
+    <form ng-submit="vm.onSubmit()" name="vm.form" class="form" id="{{ctrl}}" novalidate>      
         <button type="submit" class="btn btn-primary submit-button" ng-disabled="vm.form.$invalid">Submit</button>
         <button type="button" class="btn btn-default" ng-click="vm.resetAllForms()">Reset</button>          
         <tabset>

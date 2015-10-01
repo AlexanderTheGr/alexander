@@ -25,9 +25,9 @@ class ProductController extends Main {
     }
 
     /**
-     * @Route("/product/view")
+     * @Route("/product/view/{id}")
      */
-    public function viewAction() {
+    public function viewAction($id) {
         return $this->render('product/view.html.twig', array(
                     'pagename' => 'Products',
                     'url' => '/product/gettab',
@@ -57,6 +57,7 @@ class ProductController extends Main {
      */
     public function getdatatableAction(Request $request) {
         $this->repository = 'AppBundle:Product';
+
         $this->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
                 ->addField(array("name" => "Code", "index" => 'erpCode'))
                 ->addField(array("name" => "Price", "index" => 'itemPricew01'));

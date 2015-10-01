@@ -174,10 +174,29 @@ class Main extends Controller {
         ));
     }
 
-    public function form1() {
-        return $this->get('twig')->render('elements/forms_1.twig');
+    function getFormLyField($model, $formLyFields) {
+        $forms["model"] = array();
+        foreach ($formLyFields as $field => $fieldAttrs) {
+            @$fieldAttrs["type"] = $fieldAttrs["type"] ? $fieldAttrs["type"] : "input";
+            @$fieldAttrs["required"] = $fieldAttrs["required"] ? $fieldAttrs["required"] : true;
+            $forms["fields"][$field] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $model->getId(), "type" => $fieldAttrs["type"], "defaultValue" => $model->getField($field), "templateOptions" => array("label" => $fieldAttrs["label"], "required" => $fieldAttrs["required"]));
+        }
+
+        return $forms;
     }
-    public function form2() {
-        return $this->get('twig')->render('elements/forms_2.twig');
+
+    function base64Request() {
+        $request = Request::createFromGlobals();
+        $json = $this->get("request")->getContent();
+        $data = json_decode($json);
+        $post64 = array($data->data);
+        $post = array();
+        foreach ($post64[0] as $key64 => $val64) {
+            $key = base64_decode($key64);
+            $val = base64_decode($val64);
+            $post[$key] = $val;
+        }
+        return $post;
     }
+
 }

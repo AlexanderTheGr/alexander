@@ -7,13 +7,13 @@
         var settings = $.extend({}, defaults, custom);
         tabs(app, ctrl, url, tab);
         function tabs(app, ctrl, url, tab) {
-            var app = angular.module(app, ['ngSanitize', 'ui.bootstrap', 'formly', 'formlyBootstrap', 'ngMessages']).config(function($interpolateProvider) {
+            var app = angular.module(app, ['ngSanitize', 'ui.bootstrap', 'formly', 'formlyBootstrap', 'ngMessages','base64']).config(function($interpolateProvider) {
                 $interpolateProvider.startSymbol('[[').endSymbol(']]');
             });
             var data = {};
             data.id = 1;
 
-            app.controller(ctrl, function($scope, $http, $sce) {
+            app.controller(ctrl, function($scope, $http, $sce, $base64) {
                 var vm = this;
 
                 var response = angular.fromJson(html_entity_decode(tab));
@@ -33,14 +33,20 @@
                 // function definition
                 function onSubmit() {
                     invokeOnAllFormOptions('updateInitialValue');
-                    alert(JSON.stringify(vm.model), null, 2);
+                    //alert(JSON.stringify(vm.model), null, 2);  
+                    
+                    var data = {}
+                    data.data = vm.model;
+                    $http.post(url, data).success(function(response) {
+                        
+                    })
                 }
-
 
                 function invokeOnAllFormOptions(fn) {
                     angular.forEach(vm.tabs, function(tab) {
                         angular.forEach(tab.form.fields, function(field, index) {
-                            vm.model[field.id] = field.value();
+                            //vm.model[field.id] = field.value();
+                            vm.model[$base64.encode(field.id)] = $base64.encode(unescape(encodeURIComponent(field.value())));
                         })
                         if (tab.form.options && tab.form.options[fn]) {
                             tab.form.options[fn]();
