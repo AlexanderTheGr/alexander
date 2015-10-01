@@ -47,10 +47,9 @@ class CustomerController extends Main {
      * @Route("/customers/save/{id}")
      */
     public function saveAction($id) {
-        $data = $this->base64Request();
-        print_r($data);
+        $this->save();
         return new Response(
-                $content, 200, array('Content-Type' => 'application/json')
+                json_encode(array("ok")), 200, array('Content-Type' => 'application/json')
         );
     }
 

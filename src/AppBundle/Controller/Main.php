@@ -198,5 +198,21 @@ class Main extends Controller {
         }
         return $post;
     }
+    public function save() {
+        $datas = $this->base64Request();
+        $em = $this->getDoctrine()->getManager();
+        $models = array();
+        foreach ($datas as $key => $data) {
+            $f = explode(":", $key);
+            if (!@$models[$f[0] . ":" . $f[1]]) {
+                $models[$f[0] . ":" . $f[1]] = $this->getDoctrine()->getRepository($f[0] . ":" . $f[1])->find($f[3]);
+            }
+            $models[$f[0] . ":" . $f[1]]->setField($f[2], $data);
+        }
+        foreach ($models as $model) {
+            $em->persist($model);
+            $em->flush();
+        }
 
+    }
 }
