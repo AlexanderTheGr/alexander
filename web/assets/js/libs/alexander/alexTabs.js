@@ -41,6 +41,7 @@
                     })
                 }
 
+
                 function invokeOnAllFormOptions(fn) {
                     angular.forEach(vm.tabs, function(tab) {
                         angular.forEach(tab.form.fields, function(field, index) {
