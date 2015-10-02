@@ -23,6 +23,7 @@ class CustomerController extends Main {
         return $this->render('customer/index.html.twig', array(
                     'pagename' => 'Customers',
                     'url' => '/customers/getdatatable',
+                    'view' => '/customers/view',
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
@@ -33,9 +34,12 @@ class CustomerController extends Main {
      * @Route("/customers/view/{id}")
      */
     public function viewAction($id) {
+
         return $this->render('customer/view.html.twig', array(
                     'pagename' => 'Customers',
-                    'url' => '/customers/save/' . $id,
+
+                    'url' => '/customers/save',
+
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'tabs' => $this->gettabs($id),
@@ -54,32 +58,40 @@ class CustomerController extends Main {
     }
 
     /**
-     * @Route("/customers/gettab")
+     * @Route("/customers/save")
      */
-    public function gettabAction() {
-        $this->addTab(array("name" => "General1", "content" => $this->form1(), "index" => $this->generateRandomString(), 'search' => 'text', "active" => "active"));
-        $this->addTab(array("name" => "General2", "content" => $this->form2(), "index" => $this->generateRandomString(), 'search' => 'text'));
-        $json = $this->tabs();
+
+    public function savection() {
+        $this->save();
+        $json = json_encode(array("ok"));
+
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
 
+
+    /**
+     * @Route("/customers/gettab")
+     */
     public function gettabs($id) {
 
-        $model = $this->getDoctrine()
+
+
+
+        $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($id);
 
 
-        $formLyFields["customerCode"] = array("label" => "Customer Code");
-        $formLyFields["customerName"] = array("label" => "Customer Name");
-        $formLyFields["customerAfm"] = array("label" => "Customer AFM");
-        $formLyFields["customerAddress"] = array("label" => "Customer Address");
-        $formLyFields["customerCity"] = array("label" => "Customer Address");
 
-        $forms1 = $this->getFormLyField($model, $formLyFields);
+        $fields["customerCode"] = array("label" => "Customer Code");
+        $fields["customerName"] = array("label" => "Customer Name");
+        $fields["customerAfm"] = array("label" => "Customer Afm");
+        $fields["customerAddress"] = array("label" => "Customer Address");
+        $fields["customerCity"] = array("label" => "Customer City");
 
+        $forms1 = $this->getFormLyFields($entity, $fields);
         $this->addTab(array("title" => "General1", "form" => $forms1, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
 
         $json = $this->tabs();

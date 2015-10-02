@@ -17,7 +17,7 @@ class Customer {
     }
     public function setField($field,$val) {
         $this->$field = $val;
-        return $this;
+        return $val;
     }
     /**
      * @var integer

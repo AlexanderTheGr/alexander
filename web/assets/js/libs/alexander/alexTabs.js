@@ -7,7 +7,7 @@
         var settings = $.extend({}, defaults, custom);
         tabs(app, ctrl, url, tab);
         function tabs(app, ctrl, url, tab) {
-            var app = angular.module(app, ['ngSanitize', 'ui.bootstrap', 'formly', 'formlyBootstrap', 'ngMessages','base64']).config(function($interpolateProvider) {
+            var app = angular.module(app, ['ngSanitize', 'ui.bootstrap', 'base64', 'formly', 'formlyBootstrap', 'ngMessages']).config(function($interpolateProvider) {
                 $interpolateProvider.startSymbol('[[').endSymbol(']]');
             });
             var data = {};
@@ -33,12 +33,11 @@
                 // function definition
                 function onSubmit() {
                     invokeOnAllFormOptions('updateInitialValue');
-                    //alert(JSON.stringify(vm.model), null, 2);  
-                    
+                    //alert(JSON.stringify(vm.model), null, 2);
                     var data = {}
-                    data.data = vm.model;
-                    $http.post(url, data).success(function(response) {
-                        
+                    data.data =  vm.model;
+                    $http.post(url, data)
+                        .success(function(response) {
                     })
                 }
 
@@ -46,7 +45,7 @@
                     angular.forEach(vm.tabs, function(tab) {
                         angular.forEach(tab.form.fields, function(field, index) {
                             //vm.model[field.id] = field.value();
-                            vm.model[$base64.encode(field.id)] = $base64.encode(unescape(encodeURIComponent(field.value())));
+                            vm.model[$base64.encode(unescape(encodeURIComponent(field.id)))] = $base64.encode(unescape(encodeURIComponent(field.value())));
                         })
                         if (tab.form.options && tab.form.options[fn]) {
                             tab.form.options[fn]();

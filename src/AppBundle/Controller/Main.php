@@ -174,45 +174,48 @@ class Main extends Controller {
         ));
     }
 
-    function getFormLyField($model, $formLyFields) {
-        $forms["model"] = array();
-        foreach ($formLyFields as $field => $fieldAttrs) {
-            @$fieldAttrs["type"] = $fieldAttrs["type"] ? $fieldAttrs["type"] : "input";
-            @$fieldAttrs["required"] = $fieldAttrs["required"] ? $fieldAttrs["required"] : true;
-            $forms["fields"][$field] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $model->getId(), "type" => $fieldAttrs["type"], "defaultValue" => $model->getField($field), "templateOptions" => array("label" => $fieldAttrs["label"], "required" => $fieldAttrs["required"]));
-        }
 
-        return $forms;
-    }
-
-    function base64Request() {
-        $request = Request::createFromGlobals();
-        $json = $this->get("request")->getContent();
-        $data = json_decode($json);
-        $post64 = array($data->data);
+    function formLybase64() {
+        $json = json_encode(array("ok"));
+        $content = $this->get("request")->getContent();
+        $data = json_decode($content);
         $post = array();
-        foreach ($post64[0] as $key64 => $val64) {
-            $key = base64_decode($key64);
-            $val = base64_decode($val64);
-            $post[$key] = $val;
+        foreach ($data->data as $key64 => $val64) {
+            $post[base64_decode($key64)] = base64_decode($val64);
         }
         return $post;
+
     }
-    public function save() {
-        $datas = $this->base64Request();
+
+
+    function save() {
+        $data = $this->formLybase64();
         $em = $this->getDoctrine()->getManager();
-        $models = array();
-        foreach ($datas as $key => $data) {
-            $f = explode(":", $key);
-            if (!@$models[$f[0] . ":" . $f[1]]) {
-                $models[$f[0] . ":" . $f[1]] = $this->getDoctrine()->getRepository($f[0] . ":" . $f[1])->find($f[3]);
+        $entities = array();
+        foreach ($data as $key => $val) {
+            $df = explode(":", $key);
+            if (!@$entities[$df[0] . ":" . $df[1]]) {
+                $entities[$df[0] . ":" . $df[1]] = $this->getDoctrine()
+                        ->getRepository($df[0] . ":" . $df[1])
+                        ->find($df[3]);
             }
-            $models[$f[0] . ":" . $f[1]]->setField($f[2], $data);
+            $entities[$df[0] . ":" . $df[1]]->setField($df[2], $val);
         }
-        foreach ($models as $model) {
-            $em->persist($model);
+        foreach ($entities as $entity) {
+            $em->persist($entity);
             $em->flush();
         }
 
     }
+
+    function getFormLyFields($entity, $fields) {
+        $forms["model"] = array();
+        foreach ($fields as $field => $options) {
+            @$options["type"] = $options["type"] ? $options["type"] : "input";
+            @$options["required"] = $options["required"] ? $options["required"] : true;
+            $forms["fields"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field), "type" => "input", "templateOptions" => array("type" => '', "label" => $options["label"], "required" => $options["required"]));
+        }
+        return $forms;
+    }
+
 }

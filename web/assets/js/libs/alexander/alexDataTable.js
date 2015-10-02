@@ -1,5 +1,5 @@
 (function($) {
-    $.fn.alexDataTable = function(app, ctrl, url, custom) {
+    $.fn.alexDataTable = function(app, ctrl, url, view, custom) {
         var defaults = {}
         var alexander = this;
         alexander.hide();
@@ -7,7 +7,7 @@
         var settings = $.extend({}, defaults, custom);
         var dt_table;
         dataTable(app, ctrl, url);
-        function dataTable(app, ctrl, url) {
+        function dataTable(app, ctrl, url,view) {
             var app = angular.module(app, []).config(function($interpolateProvider) {
                 $interpolateProvider.startSymbol('[[').endSymbol(']]');
             });
@@ -48,6 +48,7 @@
                     dt_table.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
                 }
+                location.href  = view+"/"+$(this).attr("ref");
             });
 
             $(alexander).find(".search_init").change(function() {

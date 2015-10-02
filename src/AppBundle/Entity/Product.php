@@ -10,6 +10,14 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="AppBundle\Entity\ProductRepository")
  */
 class Product {
+    public function getField($field) {
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
 
     /**
      * @var integer
@@ -404,10 +412,6 @@ class Product {
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
-    public function getField($field) {
-        return $this->$field;
-    }
 
     /**
      * Set reference

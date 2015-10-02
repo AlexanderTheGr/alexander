@@ -11,13 +11,17 @@ use AppBundle\Controller\Main as Main;
 
 class ProductController extends Main {
 
+    var $repository = 'AppBundle:Product';
+
     /**
      * @Route("/product/product")
      */
     public function indexAction() {
-        return $this->render('product/index.html.twig', array(
-                    'pagename' => 'Products',
+
+        return $this->render('customer/index.html.twig', array(
+                    'pagename' => 'Customers',
                     'url' => '/product/getdatatable',
+                    'view' => '/product/view',
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
@@ -28,28 +32,46 @@ class ProductController extends Main {
      * @Route("/product/view/{id}")
      */
     public function viewAction($id) {
+
         return $this->render('product/view.html.twig', array(
-                    'pagename' => 'Products',
-                    'url' => '/product/gettab',
+                    'pagename' => 'Product',
+                    'url' => '/product/save',
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
+                    'tabs' => $this->gettabs($id),
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
 
     /**
-     * @Route("/product/gettab")
+     * @Route("/product/save")
      */
-    public function gettabAction(Request $request) {
-        $this->repository = 'AppBundle:Product';
-
-        $this->addTab(array("name" => "General1", "content" => $this->form1(), "index" => $this->generateRandomString(), 'search' => 'text', "active" => "active"));
-        $this->addTab(array("name" => "General2", "content" => $this->form2(), "index" => $this->generateRandomString(), 'search' => 'text'));
-
-        $json = $this->tabs();
+    public function savection() {
+        $this->save();
+        $json = json_encode(array("ok"));
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
+    }
+
+    /**
+     * @Route("/product/gettab")
+     */
+    public function gettabs($id) {
+
+
+        $entity = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->find($id);
+
+        $fields["erpCode"] = array("label" => "Erp Code");
+        $fields["itemPricew01"] = array("label" => "Price Name");
+
+        $forms = $this->getFormLyFields($entity, $fields);
+        
+        $this->addTab(array("title" => "General", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
+        $json = $this->tabs();
+        return $json;
     }
 
     /**
