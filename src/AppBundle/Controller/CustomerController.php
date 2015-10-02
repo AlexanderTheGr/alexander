@@ -37,9 +37,7 @@ class CustomerController extends Main {
 
         return $this->render('customer/view.html.twig', array(
                     'pagename' => 'Customers',
-
                     'url' => '/customers/save',
-
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'tabs' => $this->gettabs($id),
@@ -48,23 +46,11 @@ class CustomerController extends Main {
     }
 
     /**
-     * @Route("/customers/save/{id}")
-     */
-    public function saveAction($id) {
-        $this->save();
-        return new Response(
-                json_encode(array("ok")), 200, array('Content-Type' => 'application/json')
-        );
-    }
-
-    /**
      * @Route("/customers/save")
      */
-
     public function savection() {
         $this->save();
         $json = json_encode(array("ok"));
-
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
@@ -77,13 +63,9 @@ class CustomerController extends Main {
     public function gettabs($id) {
 
 
-
-
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($id);
-
-
 
         $fields["customerCode"] = array("label" => "Customer Code");
         $fields["customerName"] = array("label" => "Customer Name");
@@ -93,7 +75,6 @@ class CustomerController extends Main {
 
         $forms1 = $this->getFormLyFields($entity, $fields);
         $this->addTab(array("title" => "General1", "form" => $forms1, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
-
         $json = $this->tabs();
         return $json;
     }

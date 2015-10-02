@@ -174,7 +174,6 @@ class Main extends Controller {
         ));
     }
 
-
     function formLybase64() {
         $json = json_encode(array("ok"));
         $content = $this->get("request")->getContent();
@@ -184,9 +183,7 @@ class Main extends Controller {
             $post[base64_decode($key64)] = base64_decode($val64);
         }
         return $post;
-
     }
-
 
     function save() {
         $data = $this->formLybase64();
@@ -205,7 +202,6 @@ class Main extends Controller {
             $em->persist($entity);
             $em->flush();
         }
-
     }
 
     function getFormLyFields($entity, $fields) {
