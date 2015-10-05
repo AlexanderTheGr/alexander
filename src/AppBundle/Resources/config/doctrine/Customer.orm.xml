@@ -139,7 +139,7 @@
             </options>
         </field>
         
-        <many-to-one
+         <many-to-one
             field="route"
             target-entity="Route"
             inversed-by="customers"
