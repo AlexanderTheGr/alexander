@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div ng-app="{{app}}" ng-controller="{{ctrl}}"> 
+    <table class="table table-striped dataTable {{ctrl}}">
+        <thead>
+            <tr>
+                <td ng-repeat="field in fields">[[ field.name ]]</td>
+            </tr>                
+        </thead> 
+        <tbody>
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block javascripts %}
+<script>
+    $(".{{ctrl}}").alexander("{{app}}", "{{ctrl}}", "{{url}}");
+    </script>
+{% endblock %}

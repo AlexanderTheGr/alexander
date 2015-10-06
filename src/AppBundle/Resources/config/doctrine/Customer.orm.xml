@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="AppBundle\Entity\Customer" repository-class="AppBundle\Entity\CustomerRepository" table="customer">
+        <indexes>
+            <index name="user_id" columns="actioneer"/>
+            <index name="customer_code" columns="customer_code"/>
+            <index name="route" columns="route"/>
+        </indexes>
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="reference" type="integer" column="reference" nullable="false">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="group" type="integer" column="group" nullable="false">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+
+        <field name="email" type="string" column="email" length="45" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="username" type="string" column="username" length="45" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="password" type="string" column="password" length="80" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="customerCode" type="string" column="customer_code" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="customerName" type="string" column="customer_name" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="customerAfm" type="string" column="customer_afm" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="customerAddress" type="string" column="customer_address" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="customerDistrict" type="string" column="customer_district" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="customerCity" type="string" column="customer_city" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="customerZip" type="integer" column="customer_zip" nullable="false">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="customerPhone01" type="string" column="customer_phone01" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="customerPhone02" type="string" column="customer_phone02" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="customerTrdrCusextraVarchar03" type="string" column="customer_trdr_cusextra_varchar03" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="customerFax" type="string" column="customer_fax" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="customerWebpage" type="string" column="customer_webpage" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="customerEmail" type="string" column="customer_email" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="customerPayment" type="integer" column="customer_payment" nullable="false">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="customerTrdcategory" type="integer" column="customer_trdcategory" nullable="false">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="priceField" type="string" column="price_field" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="ts" type="datetime" column="ts" nullable="false">
+            <options>
+                <option name="default">CURRENT_TIMESTAMP</option>
+            </options>
+        </field>
+        <field name="status" type="string" column="status" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+                <option name="default">active</option>
+            </options>
+        </field>
+        <field name="actioneer" type="integer" column="actioneer" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="created" type="datetime" column="created" nullable="false"/>
+        <field name="modified" type="datetime" column="modified" nullable="false"/>
+        <field name="flatData" type="text" column="flat_data" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        
+        <many-to-one
+            field="route"
+            target-entity="Route"
+            inversed-by="customers"
+            join-column="route">
+            <join-column name="route" referenced-column-name="id" />
+        </many-to-one>
+    </entity>
+</doctrine-mapping>

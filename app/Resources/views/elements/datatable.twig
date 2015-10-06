@@ -1,0 +1,22 @@
+{% block body %} 
+<div ng-app="{{app}}" ng-controller="{{ctrl}}"> 
+    <table class="alexander table table-striped dataTable {{ctrl}}">
+        <thead>
+            <tr>
+                <td ng-repeat="field in fields"><input class="style-primary-bright form-control search_init" type="[[ field.search ]]" /></td>
+            </tr> 
+            <tr>
+                <td ng-repeat="field in fields">[[ field.name ]]</td>
+            </tr>                
+        </thead> 
+        <tbody>
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}

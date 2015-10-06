@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\ProductSearch" table="product_search">
+    <indexes>
+      <index name="item_code" columns="item_code"/>
+      <index name="search" columns="search"/>
+      <index name="gnisia" columns="gnisia"/>
+      <index name="item_code1" columns="item_code1"/>
+      <index name="item_code2" columns="item_code2"/>
+      <index name="item_code_2" columns="item_code"/>
+      <index name="item_code1_2" columns="item_code1"/>
+      <index name="item_code2_2" columns="item_code2"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="itemCode" type="string" column="item_code" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="itemCode1" type="string" column="item_code1" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="itemCode2" type="string" column="item_code2" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="search" type="string" column="search" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="gnisia" type="string" column="gnisia" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>

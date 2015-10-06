@@ -1,0 +1,87 @@
+.gui-controls > button > span.title {
+    margin-left: 25px;
+}
+.gui-controls > button > .gui-icon {
+    position: absolute;
+    left: 2px;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    color: #565853;
+    font-size: 18px;
+    overflow: hidden;
+    border-radius: 999px;
+    -webkit-transition: all 0.15s linear;
+    -o-transition: all 0.15s linear;
+    transition: all 0.15s linear;
+}
+.gui-controls > button > .gui-icon .fa:first-child, .gui-controls > button > .gui-icon .md:first-child, .gui-controls > button > .gui-icon .glyphicon:first-child {
+    line-height: 30px;
+}
+.gui-controls > button.btn-danger > .gui-icon {
+    color:#fff;
+}
+.gui-controls > button.btn-success > .gui-icon {
+    color:#fff;
+}
+.gui-controls > button.btn-primary > .gui-icon {
+    color:#fff;
+}
+.right {
+    float: right;    
+}
+.left {
+    float: left;    
+}
+#orderitem_wrapper .dataTables_length, #orderitem_wrapper .dataTables_filter {
+    display: none;   
+}
+
+.chosen-container-single .chosen-single {
+    border:0px;
+    background: #ddefc9;
+    border-color: #ddefc9;
+    color: #333531;    
+    border-radius: 0px;
+    height: 30px;
+    line-height: 30px;
+}
+.chosen-container-active.chosen-with-drop .chosen-single {
+  border: 0px solid #aaa;
+  -moz-border-radius-bottomright: 0;
+  border-bottom-right-radius: 0;
+  -moz-border-radius-bottomleft: 0;
+  border-bottom-left-radius: 0;
+  background: #ddefc9;
+  /* background-image: linear-gradient(#eeeeee 20%, #ffffff 80%); */
+  box-shadow: 0 1px 0 #fff inset;
+}
+.chosen-container-single .chosen-single div {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    width: 18px;
+    height: 100%;
+    margin-top: 4px;
+}
+.form-group .form-control ~ label {
+    top: 0;
+    margin-bottom: 0;
+    font-size: 15px;
+    opacity: 0.5;
+    margin-top: -4px;
+}
+table.dataTable tbody tr {
+    background-color: transparent;
+    cursor: pointer;
+}
+.form-control {
+    padding: 0px 5px;
+}
+.list-chats .chat-body strong {
+    display: block;
+}
+.alexander {
+    display: none;    
+}
