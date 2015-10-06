@@ -13,7 +13,6 @@ class SupplierController extends Main {
 
     var $repository = 'AppBundle:Supplier';
 
-    
     /**
      * @Route("/supplier/supplier")
      */

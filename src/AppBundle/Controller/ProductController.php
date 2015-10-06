@@ -65,10 +65,6 @@ class ProductController extends Main {
                 ->find($id);
 
         $fields["erpCode"] = array("label" => "Erp Code");
-        $fields["itemName"] = array("label" => "Περιγραφή");
-        $fields["itemName1"] = array("label" => "Περιγραφή 2");
-        
-        
         $fields["itemPricew01"] = array("label" => "Price Name");
 
         $forms = $this->getFormLyFields($entity, $fields);

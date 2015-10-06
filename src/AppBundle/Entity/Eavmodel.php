@@ -10,7 +10,14 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="eavmodel", indexes={@ORM\Index(name="user_id", columns={"actioneer"})})
  * @ORM\Entity
  */
-class Eavmodel {
+class Eavmodel
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="eav_model", type="string", length=255, nullable=false)
+     */
+    private $eavModel;
 
     /**
      * @var string
@@ -71,6 +78,31 @@ class Eavmodel {
     private $id;
 
 
+
+    /**
+     * Set eavModel
+     *
+     * @param string $eavModel
+     *
+     * @return Eavmodel
+     */
+    public function setEavModel($eavModel)
+    {
+        $this->eavModel = $eavModel;
+
+        return $this;
+    }
+
+    /**
+     * Get eavModel
+     *
+     * @return string
+     */
+    public function getEavModel()
+    {
+        return $this->eavModel;
+    }
+
     /**
      * Set softone
      *
@@ -78,7 +110,8 @@ class Eavmodel {
      *
      * @return Eavmodel
      */
-    public function setSoftone($softone) {
+    public function setSoftone($softone)
+    {
         $this->softone = $softone;
 
         return $this;
@@ -89,7 +122,8 @@ class Eavmodel {
      *
      * @return string
      */
-    public function getSoftone() {
+    public function getSoftone()
+    {
         return $this->softone;
     }
 
@@ -100,7 +134,8 @@ class Eavmodel {
      *
      * @return Eavmodel
      */
-    public function setList($list) {
+    public function setList($list)
+    {
         $this->list = $list;
 
         return $this;
@@ -111,7 +146,8 @@ class Eavmodel {
      *
      * @return string
      */
-    public function getList() {
+    public function getList()
+    {
         return $this->list;
     }
 
@@ -122,7 +158,8 @@ class Eavmodel {
      *
      * @return Eavmodel
      */
-    public function setViewstyle($viewstyle) {
+    public function setViewstyle($viewstyle)
+    {
         $this->viewstyle = $viewstyle;
 
         return $this;
@@ -133,7 +170,8 @@ class Eavmodel {
      *
      * @return string
      */
-    public function getViewstyle() {
+    public function getViewstyle()
+    {
         return $this->viewstyle;
     }
 
@@ -144,7 +182,8 @@ class Eavmodel {
      *
      * @return Eavmodel
      */
-    public function setTs($ts) {
+    public function setTs($ts)
+    {
         $this->ts = $ts;
 
         return $this;
@@ -155,7 +194,8 @@ class Eavmodel {
      *
      * @return \DateTime
      */
-    public function getTs() {
+    public function getTs()
+    {
         return $this->ts;
     }
 
@@ -166,7 +206,8 @@ class Eavmodel {
      *
      * @return Eavmodel
      */
-    public function setActioneer($actioneer) {
+    public function setActioneer($actioneer)
+    {
         $this->actioneer = $actioneer;
 
         return $this;
@@ -177,7 +218,8 @@ class Eavmodel {
      *
      * @return integer
      */
-    public function getActioneer() {
+    public function getActioneer()
+    {
         return $this->actioneer;
     }
 
@@ -188,7 +230,8 @@ class Eavmodel {
      *
      * @return Eavmodel
      */
-    public function setCreated($created) {
+    public function setCreated($created)
+    {
         $this->created = $created;
 
         return $this;
@@ -199,7 +242,8 @@ class Eavmodel {
      *
      * @return \DateTime
      */
-    public function getCreated() {
+    public function getCreated()
+    {
         return $this->created;
     }
 
@@ -210,7 +254,8 @@ class Eavmodel {
      *
      * @return Eavmodel
      */
-    public function setModified($modified) {
+    public function setModified($modified)
+    {
         $this->modified = $modified;
 
         return $this;
@@ -221,7 +266,8 @@ class Eavmodel {
      *
      * @return \DateTime
      */
-    public function getModified() {
+    public function getModified()
+    {
         return $this->modified;
     }
 
@@ -230,81 +276,8 @@ class Eavmodel {
      *
      * @return integer
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
-    }
-
-    /**
-     * @var string
-     */
-    private $entity;
-
-    /**
-     * Set entity
-     *
-     * @param string $entity
-     *
-     * @return Eavmodel
-     */
-    public function setEntity($entity) {
-        $this->entity = $entity;
-
-        return $this;
-    }
-
-    /**
-     * Get entity
-     *
-     * @return string
-     */
-    public function getEntity() {
-        return $this->entity;
-    }
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $attributeItems;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->attributeItems = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add attributeItem
-     *
-     * @param \AppBundle\Entity\AttributeItems $attributeItem
-     *
-     * @return Eavmodel
-     */
-    public function addAttributeItem(\AppBundle\Entity\AttributeItems $attributeItem)
-    {
-        $this->attributeItems[] = $attributeItem;
-
-        return $this;
-    }
-
-    /**
-     * Remove attributeItem
-     *
-     * @param \AppBundle\Entity\AttributeItems $attributeItem
-     */
-    public function removeAttributeItem(\AppBundle\Entity\AttributeItems $attributeItem)
-    {
-        $this->attributeItems->removeElement($attributeItem);
-    }
-
-    /**
-     * Get attributeItems
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getAttributeItems()
-    {
-        return $this->attributeItems;
     }
 }

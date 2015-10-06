@@ -15,9 +15,9 @@ class AttributeItems
     /**
      * @var string
      *
-     * @ORM\Column(name="eav_model", type="integer", length=255, nullable=false)
+     * @ORM\Column(name="eav_model", type="string", length=255, nullable=false)
      */
-    private $entity;
+    private $eavModel;
 
     /**
      * @var integer
@@ -143,27 +143,27 @@ class AttributeItems
 
 
     /**
-     * Set entity
+     * Set eavModel
      *
-     * @param string $entity
+     * @param string $eavModel
      *
      * @return AttributeItems
      */
-    public function setEntity($entity)
+    public function setEavModel($eavModel)
     {
-        $this->entity = $entity;
+        $this->eavModel = $eavModel;
 
         return $this;
     }
 
     /**
-     * Get entity
+     * Get eavModel
      *
      * @return string
      */
-    public function getEntity()
+    public function getEavModel()
     {
-        return $this->entity;
+        return $this->eavModel;
     }
 
     /**

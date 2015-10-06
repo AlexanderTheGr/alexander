@@ -2,16 +2,20 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="AppBundle\Entity\AttributeItems" table="attribute_items">
     <indexes>
-      <index name="entity" columns="entity"/>
+      <index name="eav_model" columns="eav_model"/>
       <index name="user_id" columns="actioneer"/>
     </indexes>
     <unique-constraints>
-      <unique-constraint name="eav_model_2" columns="entity,attribute_id"/>
+      <unique-constraint name="eav_model_2" columns="eav_model,attribute_id"/>
     </unique-constraints>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-
+    <field name="eavModel" type="string" column="eav_model" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
     <field name="attributeId" type="integer" column="attribute_id" nullable="false">
       <options>
         <option name="unsigned"/>
@@ -79,16 +83,5 @@
     </field>
     <field name="created" type="datetime" column="created" nullable="false"/>
     <field name="modified" type="datetime" column="modified" nullable="false"/>
-    
-    
-        
-    <many-to-one
-        field="entity"
-        target-entity="Eavmodel"
-        inversed-by="attributeItems"
-        join-column="entity">
-        <join-column name="entity" referenced-column-name="id" />
-    </many-to-one>    
-    
   </entity>
 </doctrine-mapping>
