@@ -1,0 +1,24 @@
+parameters:
+    attribute.eav_attribute_creator.class: EavBundle\EventListener\AttributeCreatorListener
+    form.type.attributeCollection.class: EavBundle\Form\Type\AttributeCollectionType
+
+services:
+    eav_bundle.cache_warmer:
+        class: EavBundle\CacheWarmer\EntityAnnotationCacheWarmer
+        arguments:
+            - @doctrine
+            - %kernel.debug%
+        tags:
+            - { name: kernel.cache_warmer, priority: 64 }
+
+    attribute.eav_attribute_creator:
+        class: %attribute.eav_attribute_creator.class%
+        arguments:
+            - %kernel.cache_dir%
+        tags:
+            - { name: doctrine.event_listener, event: postLoad }
+
+    form.type.attributeCollection:
+        class: %form.type.attributeCollection.class%
+        tags:
+            - { name: form.type, alias: attributeCollection }
