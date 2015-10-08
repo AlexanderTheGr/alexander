@@ -1,8 +1,8 @@
 attribute:
-    resource: "@AttributeBundle/Controller/"
+    resource: "@EavBundle/Controller/"
     type:     annotation
     prefix:   /
 
 app:
-    resource: "@AppBundle/Controller/"
+    resource: "@PartsboxBundle/Controller/"
     type:     annotation
