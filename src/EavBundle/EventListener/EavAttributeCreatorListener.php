@@ -22,6 +22,8 @@ class EavAttributeCreatorListener
 
     public function postLoad(LifecycleEventArgs $eventArgs)
     {
+        
+        echo "s";
         $em = $eventArgs->getEntityManager();
         $uow = $em->getUnitOfWork();
         $entity = $eventArgs->getEntity();
