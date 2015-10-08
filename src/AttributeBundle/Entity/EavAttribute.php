@@ -1,149 +1,117 @@
 <?php
 
-namespace AppBundle\Entity;
-
-use Doctrine\ORM\Mapping as ORM;
+namespace AttributeBundle\Entity;
 
 /**
- * Attributes
- *
- * @ORM\Table(name="attributes", indexes={@ORM\Index(name="user_id", columns={"actioneer"})})
- * @ORM\Entity
+ * EavAttribute
  */
-class Attributes
-{
+class EavAttribute {
+
     /**
      * @var string
-     *
-     * @ORM\Column(name="type", type="string", length=255, nullable=false)
      */
     private $type;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="identifier", type="string", length=100, nullable=false)
      */
     private $identifier;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=100, nullable=false)
      */
     private $title;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="css", type="text", length=65535, nullable=false)
      */
     private $css;
 
     /**
      * @var boolean
-     *
-     * @ORM\Column(name="required", type="boolean", nullable=false)
      */
     private $required = '0';
 
     /**
      * @var boolean
-     *
-     * @ORM\Column(name="visible", type="boolean", nullable=false)
      */
     private $visible = '0';
 
     /**
      * @var boolean
-     *
-     * @ORM\Column(name="searchable", type="boolean", nullable=false)
      */
     private $searchable = '0';
 
     /**
      * @var boolean
-     *
-     * @ORM\Column(name="unique", type="boolean", nullable=false)
      */
     private $unique = '0';
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="validation", type="string", length=255, nullable=false)
      */
     private $validation = 'none';
 
     /**
      * @var boolean
-     *
-     * @ORM\Column(name="locked", type="boolean", nullable=false)
      */
     private $locked = '0';
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="select_data", type="text", length=65535, nullable=false)
      */
     private $selectData;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="source", type="text", length=65535, nullable=false)
      */
     private $source;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="ts", type="datetime", nullable=false)
      */
     private $ts = 'CURRENT_TIMESTAMP';
 
     /**
      * @var integer
-     *
-     * @ORM\Column(name="actioneer", type="integer", nullable=true)
      */
     private $actioneer;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="created", type="datetime", nullable=false)
      */
     private $created;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="modified", type="datetime", nullable=false)
      */
     private $modified;
 
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $eav_attribute_items;
 
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->eav_attribute_items = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Set type
      *
      * @param string $type
      *
-     * @return Attributes
+     * @return EavAttribute
      */
-    public function setType($type)
-    {
+    public function setType($type) {
         $this->type = $type;
 
         return $this;
@@ -154,8 +122,7 @@ class Attributes
      *
      * @return string
      */
-    public function getType()
-    {
+    public function getType() {
         return $this->type;
     }
 
@@ -164,10 +131,9 @@ class Attributes
      *
      * @param string $identifier
      *
-     * @return Attributes
+     * @return EavAttribute
      */
-    public function setIdentifier($identifier)
-    {
+    public function setIdentifier($identifier) {
         $this->identifier = $identifier;
 
         return $this;
@@ -178,8 +144,7 @@ class Attributes
      *
      * @return string
      */
-    public function getIdentifier()
-    {
+    public function getIdentifier() {
         return $this->identifier;
     }
 
@@ -188,10 +153,9 @@ class Attributes
      *
      * @param string $title
      *
-     * @return Attributes
+     * @return EavAttribute
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
 
         return $this;
@@ -202,8 +166,7 @@ class Attributes
      *
      * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -212,10 +175,9 @@ class Attributes
      *
      * @param string $css
      *
-     * @return Attributes
+     * @return EavAttribute
      */
-    public function setCss($css)
-    {
+    public function setCss($css) {
         $this->css = $css;
 
         return $this;
@@ -226,8 +188,7 @@ class Attributes
      *
      * @return string
      */
-    public function getCss()
-    {
+    public function getCss() {
         return $this->css;
     }
 
@@ -236,10 +197,9 @@ class Attributes
      *
      * @param boolean $required
      *
-     * @return Attributes
+     * @return EavAttribute
      */
-    public function setRequired($required)
-    {
+    public function setRequired($required) {
         $this->required = $required;
 
         return $this;
@@ -250,8 +210,7 @@ class Attributes
      *
      * @return boolean
      */
-    public function getRequired()
-    {
+    public function getRequired() {
         return $this->required;
     }
 
@@ -260,10 +219,9 @@ class Attributes
      *
      * @param boolean $visible
      *
-     * @return Attributes
+     * @return EavAttribute
      */
-    public function setVisible($visible)
-    {
+    public function setVisible($visible) {
         $this->visible = $visible;
 
         return $this;
@@ -274,8 +232,7 @@ class Attributes
      *
      * @return boolean
      */
-    public function getVisible()
-    {
+    public function getVisible() {
         return $this->visible;
     }
 
@@ -284,10 +241,9 @@ class Attributes
      *
      * @param boolean $searchable
      *
-     * @return Attributes
+     * @return EavAttribute
      */
-    public function setSearchable($searchable)
-    {
+    public function setSearchable($searchable) {
         $this->searchable = $searchable;
 
         return $this;
@@ -298,8 +254,7 @@ class Attributes
      *
      * @return boolean
      */
-    public function getSearchable()
-    {
+    public function getSearchable() {
         return $this->searchable;
     }
 
@@ -308,10 +263,9 @@ class Attributes
      *
      * @param boolean $unique
      *
-     * @return Attributes
+     * @return EavAttribute
      */
-    public function setUnique($unique)
-    {
+    public function setUnique($unique) {
         $this->unique = $unique;
 
         return $this;
@@ -322,8 +276,7 @@ class Attributes
      *
      * @return boolean
      */
-    public function getUnique()
-    {
+    public function getUnique() {
         return $this->unique;
     }
 
@@ -332,10 +285,9 @@ class Attributes
      *
      * @param string $validation
      *
-     * @return Attributes
+     * @return EavAttribute
      */
-    public function setValidation($validation)
-    {
+    public function setValidation($validation) {
         $this->validation = $validation;
 
         return $this;
@@ -346,8 +298,7 @@ class Attributes
      *
      * @return string
      */
-    public function getValidation()
-    {
+    public function getValidation() {
         return $this->validation;
     }
 
@@ -356,10 +307,9 @@ class Attributes
      *
      * @param boolean $locked
      *
-     * @return Attributes
+     * @return EavAttribute
      */
-    public function setLocked($locked)
-    {
+    public function setLocked($locked) {
         $this->locked = $locked;
 
         return $this;
@@ -370,8 +320,7 @@ class Attributes
      *
      * @return boolean
      */
-    public function getLocked()
-    {
+    public function getLocked() {
         return $this->locked;
     }
 
@@ -380,10 +329,9 @@ class Attributes
      *
      * @param string $selectData
      *
-     * @return Attributes
+     * @return EavAttribute
      */
-    public function setSelectData($selectData)
-    {
+    public function setSelectData($selectData) {
         $this->selectData = $selectData;
 
         return $this;
@@ -394,8 +342,7 @@ class Attributes
      *
      * @return string
      */
-    public function getSelectData()
-    {
+    public function getSelectData() {
         return $this->selectData;
     }
 
@@ -404,10 +351,9 @@ class Attributes
      *
      * @param string $source
      *
-     * @return Attributes
+     * @return EavAttribute
      */
-    public function setSource($source)
-    {
+    public function setSource($source) {
         $this->source = $source;
 
         return $this;
@@ -418,8 +364,7 @@ class Attributes
      *
      * @return string
      */
-    public function getSource()
-    {
+    public function getSource() {
         return $this->source;
     }
 
@@ -428,10 +373,9 @@ class Attributes
      *
      * @param \DateTime $ts
      *
-     * @return Attributes
+     * @return EavAttribute
      */
-    public function setTs($ts)
-    {
+    public function setTs($ts) {
         $this->ts = $ts;
 
         return $this;
@@ -442,8 +386,7 @@ class Attributes
      *
      * @return \DateTime
      */
-    public function getTs()
-    {
+    public function getTs() {
         return $this->ts;
     }
 
@@ -452,10 +395,9 @@ class Attributes
      *
      * @param integer $actioneer
      *
-     * @return Attributes
+     * @return EavAttribute
      */
-    public function setActioneer($actioneer)
-    {
+    public function setActioneer($actioneer) {
         $this->actioneer = $actioneer;
 
         return $this;
@@ -466,8 +408,7 @@ class Attributes
      *
      * @return integer
      */
-    public function getActioneer()
-    {
+    public function getActioneer() {
         return $this->actioneer;
     }
 
@@ -476,10 +417,9 @@ class Attributes
      *
      * @param \DateTime $created
      *
-     * @return Attributes
+     * @return EavAttribute
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -490,8 +430,7 @@ class Attributes
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -500,10 +439,9 @@ class Attributes
      *
      * @param \DateTime $modified
      *
-     * @return Attributes
+     * @return EavAttribute
      */
-    public function setModified($modified)
-    {
+    public function setModified($modified) {
         $this->modified = $modified;
 
         return $this;
@@ -514,8 +452,7 @@ class Attributes
      *
      * @return \DateTime
      */
-    public function getModified()
-    {
+    public function getModified() {
         return $this->modified;
     }
 
@@ -524,8 +461,39 @@ class Attributes
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
+
+    /**
+     * Add eavAttributeItem
+     *
+     * @param \AttributeBundle\Entity\EavAttributeItem $eavAttributeItem
+     *
+     * @return EavAttribute
+     */
+    public function addEavAttributeItem(\AttributeBundle\Entity\EavAttributeItem $eavAttributeItem) {
+        $this->eav_attribute_items[] = $eavAttributeItem;
+
+        return $this;
+    }
+
+    /**
+     * Remove eavAttributeItem
+     *
+     * @param \AttributeBundle\Entity\EavAttributeItem $eavAttributeItem
+     */
+    public function removeEavAttributeItem(\AttributeBundle\Entity\EavAttributeItem $eavAttributeItem) {
+        $this->eav_attribute_items->removeElement($eavAttributeItem);
+    }
+
+    /**
+     * Get eavAttributeItems
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEavAttributeItems() {
+        return $this->eav_attribute_items;
+    }
+
 }

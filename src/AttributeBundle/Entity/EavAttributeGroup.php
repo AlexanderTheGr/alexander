@@ -1,68 +1,46 @@
 <?php
 
-namespace AppBundle\Entity;
-
-use Doctrine\ORM\Mapping as ORM;
+namespace AttributeBundle\Entity;
 
 /**
- * Attributegroups
- *
- * @ORM\Table(name="attributegroups", indexes={@ORM\Index(name="user_id", columns={"actioneer"})})
- * @ORM\Entity
+ * EavAttributeGroup
  */
-class Attributegroups
+class EavAttributeGroup
 {
     /**
      * @var string
-     *
-     * @ORM\Column(name="group", type="string", length=40, nullable=false)
      */
     private $group;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="access", type="text", length=65535, nullable=false)
      */
     private $access;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="ts", type="datetime", nullable=false)
      */
     private $ts = '0000-00-00 00:00:00';
 
     /**
      * @var integer
-     *
-     * @ORM\Column(name="actioneer", type="integer", nullable=true)
      */
     private $actioneer;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="created", type="datetime", nullable=false)
      */
     private $created;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="modified", type="datetime", nullable=false)
      */
     private $modified;
 
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
 
 
     /**
@@ -70,7 +48,7 @@ class Attributegroups
      *
      * @param string $group
      *
-     * @return Attributegroups
+     * @return EavAttributeGroup
      */
     public function setGroup($group)
     {
@@ -94,7 +72,7 @@ class Attributegroups
      *
      * @param string $access
      *
-     * @return Attributegroups
+     * @return EavAttributeGroup
      */
     public function setAccess($access)
     {
@@ -118,7 +96,7 @@ class Attributegroups
      *
      * @param \DateTime $ts
      *
-     * @return Attributegroups
+     * @return EavAttributeGroup
      */
     public function setTs($ts)
     {
@@ -142,7 +120,7 @@ class Attributegroups
      *
      * @param integer $actioneer
      *
-     * @return Attributegroups
+     * @return EavAttributeGroup
      */
     public function setActioneer($actioneer)
     {
@@ -166,7 +144,7 @@ class Attributegroups
      *
      * @param \DateTime $created
      *
-     * @return Attributegroups
+     * @return EavAttributeGroup
      */
     public function setCreated($created)
     {
@@ -190,7 +168,7 @@ class Attributegroups
      *
      * @param \DateTime $modified
      *
-     * @return Attributegroups
+     * @return EavAttributeGroup
      */
     public function setModified($modified)
     {
@@ -219,3 +197,4 @@ class Attributegroups
         return $this->id;
     }
 }
+

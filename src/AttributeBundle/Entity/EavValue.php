@@ -1,63 +1,41 @@
 <?php
 
-namespace AppBundle\Entity;
-
-use Doctrine\ORM\Mapping as ORM;
+namespace AttributeBundle\Entity;
 
 /**
- * Eav
- *
- * @ORM\Table(name="eav", indexes={@ORM\Index(name="user_id", columns={"actioneer"})})
- * @ORM\Entity
+ * EavValue
  */
-class Eav
+class EavValue
 {
     /**
      * @var string
-     *
-     * @ORM\Column(name="value", type="text", length=65535, nullable=false)
      */
     private $value;
 
     /**
      * @var integer
-     *
-     * @ORM\Column(name="actioneer", type="integer", nullable=true)
      */
     private $actioneer;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="created", type="datetime", nullable=false)
      */
     private $created;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="modified", type="datetime", nullable=false)
      */
     private $modified;
 
     /**
      * @var integer
-     *
-     * @ORM\Column(name="attribute_item", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $attributeItem;
 
     /**
      * @var integer
-     *
-     * @ORM\Column(name="entity_id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $entityId;
-
 
 
     /**
@@ -65,7 +43,7 @@ class Eav
      *
      * @param string $value
      *
-     * @return Eav
+     * @return EavValue
      */
     public function setValue($value)
     {
@@ -89,7 +67,7 @@ class Eav
      *
      * @param integer $actioneer
      *
-     * @return Eav
+     * @return EavValue
      */
     public function setActioneer($actioneer)
     {
@@ -113,7 +91,7 @@ class Eav
      *
      * @param \DateTime $created
      *
-     * @return Eav
+     * @return EavValue
      */
     public function setCreated($created)
     {
@@ -137,7 +115,7 @@ class Eav
      *
      * @param \DateTime $modified
      *
-     * @return Eav
+     * @return EavValue
      */
     public function setModified($modified)
     {
@@ -161,7 +139,7 @@ class Eav
      *
      * @param integer $attributeItem
      *
-     * @return Eav
+     * @return EavValue
      */
     public function setAttributeItem($attributeItem)
     {
@@ -185,7 +163,7 @@ class Eav
      *
      * @param integer $entityId
      *
-     * @return Eav
+     * @return EavValue
      */
     public function setEntityId($entityId)
     {
@@ -204,3 +182,4 @@ class Eav
         return $this->entityId;
     }
 }
+
