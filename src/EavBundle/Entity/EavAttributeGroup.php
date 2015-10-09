@@ -197,4 +197,3 @@ class EavAttributeGroup
         return $this->id;
     }
 }
-

@@ -272,4 +272,3 @@ class EavEntity
         return $this->eav_attribute_items;
     }
 }
-

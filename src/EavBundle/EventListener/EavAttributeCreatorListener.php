@@ -76,7 +76,7 @@ class EavAttributeCreatorListener
     protected function getEntities()
     {
         if ($this->entities === null) {
-            $this->entities = include $this->cacheDir . '/padam87/attribute_bundle/Entity.cache.php';
+            $this->entities = include $this->cacheDir . '/eav_bundle/Entity.cache.php';
         }
 
         return $this->entities;

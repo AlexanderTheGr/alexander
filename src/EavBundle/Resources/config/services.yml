@@ -1,7 +1,3 @@
-parameters:
-    eav_attribute.eav_attribute_creator.class: EavBundle\EventListener\AttributeCreatorListener
-
-
 services:
     eav_bundle.cache_warmer:
         class: EavBundle\CacheWarmer\EntityAnnotationCacheWarmer

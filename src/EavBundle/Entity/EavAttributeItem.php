@@ -516,4 +516,3 @@ class EavAttributeItem
         return $this->eav_entity;
     }
 }
-
