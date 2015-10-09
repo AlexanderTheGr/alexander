@@ -1,18 +1,8 @@
-parameters:
-    eav_attribute.eav_attribute_creator.class: EavBundle\EventListener\AttributeCreatorListener
-
-
 services:
-    eav_bundle.cache_warmer:
-        class: EavBundle\CacheWarmer\EntityAnnotationCacheWarmer
-        arguments:
-            - doctrine
-            - %kernel.debug%
+    page_load_listener:
+        class: PartsboxBundle\EventListener\PageLoadListener
+        arguments: 
+            security: "@security.context"
+            container: "@service_container"
         tags:
-            - { name: doctrine.event_listener, event: postLoad }
-
-    eav_attribute.eav_attribute_creator:
-        class: EavBundle\EventListener\EavAttributeCreatorListener
-        tags:
-            - { name: doctrine.event_listener, event: postLoad }
-
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

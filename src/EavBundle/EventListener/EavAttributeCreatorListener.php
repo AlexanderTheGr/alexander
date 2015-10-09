@@ -18,7 +18,7 @@ class EavAttributeCreatorListener {
         $this->cacheDir = $cacheDir;
     }
 
-    public function postPersist(LifecycleEventArgs $eventArgs) {
+    public function postLoad(LifecycleEventArgs $eventArgs) {
 
 
         $em = $eventArgs->getEntityManager();

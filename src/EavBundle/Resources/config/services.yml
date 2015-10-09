@@ -1,6 +1,14 @@
 services:
-
     eav_attribute.eav_attribute_creator:
         class: EavBundle\EventListener\EavAttributeCreatorListener
+        arguments:
+            - %kernel.cache_dir%
         tags:
-            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postLoad }
+    padam87_attribute_bundle.cache_warmer:
+        class: EavBundle\CacheWarmer\EntityAnnotationCacheWarmer
+        arguments:
+            - @doctrine
+            - %kernel.debug%
+        tags:
+            - { name: kernel.cache_warmer, priority: 64 }            

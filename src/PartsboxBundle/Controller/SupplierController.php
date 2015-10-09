@@ -1,7 +1,4 @@
 <?php
-
-// src/PartsboxBundle/Controller/LuckyController.php
-
 namespace PartsboxBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
