@@ -1,14 +1,6 @@
 services:
-    eav_bundle.cache_warmer:
-        class: EavBundle\CacheWarmer\EntityAnnotationCacheWarmer
-        arguments:
-            - doctrine
-            - %kernel.debug%
-        tags:
-            - { name: doctrine.event_listener, event: postLoad }
 
     eav_attribute.eav_attribute_creator:
         class: EavBundle\EventListener\EavAttributeCreatorListener
         tags:
-            - { name: doctrine.event_listener, event: postLoad }
-
+            - { name: doctrine.event_listener, event: postPersist }
