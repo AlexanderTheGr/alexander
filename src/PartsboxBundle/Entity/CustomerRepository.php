@@ -2,6 +2,7 @@
 
 namespace PartsboxBundle\Entity;
 
+use AppBundle\Entity\Repository;
 /**
  * CustomerRepository
  *

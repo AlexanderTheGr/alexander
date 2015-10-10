@@ -1,6 +1,6 @@
 <?php
 
-namespace PartsboxBundle\Entity;
+namespace AppBundle\Entity;
 
 /**
  * OrderRepository

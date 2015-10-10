@@ -1,6 +1,6 @@
 <?php
 
-namespace PartsboxBundle\Controller;
+namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,28 +30,22 @@ class Main extends Controller {
     public function datatable() {
         ini_set("memory_limit", "1256M");
         $request = Request::createFromGlobals();
-
         $results = array();
         $recordsTotal = 0;
         $recordsFiltered = 0;
         $this->q_or = array();
         $this->q_and = array();
         $s = array();
-
         if ($request->request->get("length")) {
             $em = $this->getDoctrine()->getManager();
-
             $dt_order = $request->request->get("order");
             $dt_search = $request->request->get("search");
             $dt_columns = $request->request->get("columns");
-
             $recordsTotal = $em->getRepository($this->repository)->recordsTotal();
             $fields = array();
-
             foreach ($this->fields as $index => $field) {
                 $fields[] = $field["index"];
                 $field_relation = explode(":", $field["index"]);
-
                 if (count($field_relation) == 1) {
                     if ($this->clearstring($dt_search["value"])) {
                         $this->q_or[] = $this->prefix . "." . $field["index"] . " LIKE '%" . $this->clearstring($dt_search["value"]) . "%'";
@@ -62,15 +56,11 @@ class Main extends Controller {
                     $s[] = $this->prefix . "." . $field_relation[0];
                 }
             }
-
             $this->createWhere();
             $this->createOrderBy($fields, $dt_order);
             $this->createSelect($s);
-
             $select = count($s) > 0 ? implode(",", $s) : $this->prefix . ".*";
-
             $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
-
             $query = $em->createQuery(
                             'SELECT  ' . $this->select . '
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
@@ -150,7 +140,6 @@ class Main extends Controller {
     }
 
     public function datatableAction($ctrl, $app, $url) {
-
         return $this->render('elements/datatable.twig', array(
                     'url' => $url,
                     'ctrl' => $ctrl,

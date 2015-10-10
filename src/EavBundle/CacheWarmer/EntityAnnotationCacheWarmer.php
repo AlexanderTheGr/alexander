@@ -63,9 +63,9 @@ class EntityAnnotationCacheWarmer implements CacheWarmerInterface {
                 $refl = new \ReflectionClass($metadata->getName());
             }
 
-            if ($reader->getClassAnnotation($refl, 'EavBundle\Annotation\Entity') != null) {
+            //if ($reader->getClassAnnotation($refl, 'EavBundle\Annotation\Entity') != null) {
                 $entities[$metadata->getName()] = true;
-            }
+            //}
         }
 
         return $entities;

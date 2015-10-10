@@ -1,7 +1,8 @@
 <?php
 
-namespace PartsboxBundle\Entity;
+namespace AppBundle\Entity;
 
+use AppBundle\Entity\Repository;
 /**
  * ProductRepository
  *

@@ -19,14 +19,12 @@ class EavAttributeCreatorListener {
     }
 
     public function postLoad(LifecycleEventArgs $eventArgs) {
-
-
+       
         $em = $eventArgs->getEntityManager();
         $uow = $em->getUnitOfWork();
         $entity = $eventArgs->getEntity();
         $classname = get_class($entity);
-
-
+        
         if (!array_key_exists($classname, $this->getEntities())) {
             return null;
         }

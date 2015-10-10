@@ -7,7 +7,7 @@ namespace PartsboxBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use PartsboxBundle\Controller\Main as Main;
+use AppBundle\Controller\Main as Main;
 
 class OrderController extends Main {
 
