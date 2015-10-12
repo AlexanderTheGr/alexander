@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace PartsboxBundle\Entity;
 
 use AppBundle\Entity\Repository;
 /**
