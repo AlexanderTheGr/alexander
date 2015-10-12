@@ -10,8 +10,17 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="user", indexes={@ORM\Index(name="user_id", columns={"actioneer"})})
  * @ORM\Entity
  */
-class User
-{
+class User {
+
+    public function getField($field) {
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
+
     /**
      * @var string
      *
@@ -105,8 +114,6 @@ class User
      */
     private $id;
 
-
-
     /**
      * Set email
      *
@@ -114,8 +121,7 @@ class User
      *
      * @return User
      */
-    public function setEmail($email)
-    {
+    public function setEmail($email) {
         $this->email = $email;
 
         return $this;
@@ -126,8 +132,7 @@ class User
      *
      * @return string
      */
-    public function getEmail()
-    {
+    public function getEmail() {
         return $this->email;
     }
 
@@ -138,8 +143,7 @@ class User
      *
      * @return User
      */
-    public function setUsername($username)
-    {
+    public function setUsername($username) {
         $this->username = $username;
 
         return $this;
@@ -150,8 +154,7 @@ class User
      *
      * @return string
      */
-    public function getUsername()
-    {
+    public function getUsername() {
         return $this->username;
     }
 
@@ -162,8 +165,7 @@ class User
      *
      * @return User
      */
-    public function setPassword($password)
-    {
+    public function setPassword($password) {
         $this->password = $password;
 
         return $this;
@@ -174,8 +176,7 @@ class User
      *
      * @return string
      */
-    public function getPassword()
-    {
+    public function getPassword() {
         return $this->password;
     }
 
@@ -186,8 +187,7 @@ class User
      *
      * @return User
      */
-    public function setStore($store)
-    {
+    public function setStore($store) {
         $this->store = $store;
 
         return $this;
@@ -198,8 +198,7 @@ class User
      *
      * @return integer
      */
-    public function getStore()
-    {
+    public function getStore() {
         return $this->store;
     }
 
@@ -210,8 +209,7 @@ class User
      *
      * @return User
      */
-    public function setKey($key)
-    {
+    public function setKey($key) {
         $this->key = $key;
 
         return $this;
@@ -222,8 +220,7 @@ class User
      *
      * @return string
      */
-    public function getKey()
-    {
+    public function getKey() {
         return $this->key;
     }
 
@@ -234,8 +231,7 @@ class User
      *
      * @return User
      */
-    public function setRole($role)
-    {
+    public function setRole($role) {
         $this->role = $role;
 
         return $this;
@@ -246,8 +242,7 @@ class User
      *
      * @return string
      */
-    public function getRole()
-    {
+    public function getRole() {
         return $this->role;
     }
 
@@ -258,8 +253,7 @@ class User
      *
      * @return User
      */
-    public function setAppkey($appkey)
-    {
+    public function setAppkey($appkey) {
         $this->appkey = $appkey;
 
         return $this;
@@ -270,8 +264,7 @@ class User
      *
      * @return string
      */
-    public function getAppkey()
-    {
+    public function getAppkey() {
         return $this->appkey;
     }
 
@@ -282,8 +275,7 @@ class User
      *
      * @return User
      */
-    public function setTs($ts)
-    {
+    public function setTs($ts) {
         $this->ts = $ts;
 
         return $this;
@@ -294,8 +286,7 @@ class User
      *
      * @return \DateTime
      */
-    public function getTs()
-    {
+    public function getTs() {
         return $this->ts;
     }
 
@@ -306,8 +297,7 @@ class User
      *
      * @return User
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->status = $status;
 
         return $this;
@@ -318,8 +308,7 @@ class User
      *
      * @return string
      */
-    public function getStatus()
-    {
+    public function getStatus() {
         return $this->status;
     }
 
@@ -330,8 +319,7 @@ class User
      *
      * @return User
      */
-    public function setActioneer($actioneer)
-    {
+    public function setActioneer($actioneer) {
         $this->actioneer = $actioneer;
 
         return $this;
@@ -342,8 +330,7 @@ class User
      *
      * @return integer
      */
-    public function getActioneer()
-    {
+    public function getActioneer() {
         return $this->actioneer;
     }
 
@@ -354,8 +341,7 @@ class User
      *
      * @return User
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -366,8 +352,7 @@ class User
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -378,8 +363,7 @@ class User
      *
      * @return User
      */
-    public function setModified($modified)
-    {
+    public function setModified($modified) {
         $this->modified = $modified;
 
         return $this;
@@ -390,8 +374,7 @@ class User
      *
      * @return \DateTime
      */
-    public function getModified()
-    {
+    public function getModified() {
         return $this->modified;
     }
 
@@ -400,8 +383,8 @@ class User
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
+
 }

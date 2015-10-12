@@ -1,23 +1,37 @@
 <?php
 
-namespace PartsboxBundle\Entity;
+namespace AccessBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Accessmodule
+ * Accessgroup
  *
- * @ORM\Table(name="accessmodule", uniqueConstraints={@ORM\UniqueConstraint(name="module", columns={"module"})}, indexes={@ORM\Index(name="user_id", columns={"actioneer"})})
+ * @ORM\Table(name="accessgroup", indexes={@ORM\Index(name="user_id", columns={"actioneer"})})
  * @ORM\Entity
  */
-class Accessmodule
+class Accessgroup
 {
     /**
      * @var string
      *
-     * @ORM\Column(name="module", type="string", length=50, nullable=false)
+     * @ORM\Column(name="title", type="string", length=255, nullable=false)
      */
-    private $module;
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="notes", type="text", length=65535, nullable=false)
+     */
+    private $notes;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="data", type="text", length=65535, nullable=false)
+     */
+    private $data;
 
     /**
      * @var string
@@ -66,27 +80,75 @@ class Accessmodule
 
 
     /**
-     * Set module
+     * Set title
      *
-     * @param string $module
+     * @param string $title
      *
-     * @return Accessmodule
+     * @return Accessgroup
      */
-    public function setModule($module)
+    public function setTitle($title)
     {
-        $this->module = $module;
+        $this->title = $title;
 
         return $this;
     }
 
     /**
-     * Get module
+     * Get title
      *
      * @return string
      */
-    public function getModule()
+    public function getTitle()
     {
-        return $this->module;
+        return $this->title;
+    }
+
+    /**
+     * Set notes
+     *
+     * @param string $notes
+     *
+     * @return Accessgroup
+     */
+    public function setNotes($notes)
+    {
+        $this->notes = $notes;
+
+        return $this;
+    }
+
+    /**
+     * Get notes
+     *
+     * @return string
+     */
+    public function getNotes()
+    {
+        return $this->notes;
+    }
+
+    /**
+     * Set data
+     *
+     * @param string $data
+     *
+     * @return Accessgroup
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+
+        return $this;
+    }
+
+    /**
+     * Get data
+     *
+     * @return string
+     */
+    public function getData()
+    {
+        return $this->data;
     }
 
     /**
@@ -94,7 +156,7 @@ class Accessmodule
      *
      * @param string $access
      *
-     * @return Accessmodule
+     * @return Accessgroup
      */
     public function setAccess($access)
     {
@@ -118,7 +180,7 @@ class Accessmodule
      *
      * @param \DateTime $ts
      *
-     * @return Accessmodule
+     * @return Accessgroup
      */
     public function setTs($ts)
     {
@@ -142,7 +204,7 @@ class Accessmodule
      *
      * @param integer $actioneer
      *
-     * @return Accessmodule
+     * @return Accessgroup
      */
     public function setActioneer($actioneer)
     {
@@ -166,7 +228,7 @@ class Accessmodule
      *
      * @param \DateTime $created
      *
-     * @return Accessmodule
+     * @return Accessgroup
      */
     public function setCreated($created)
     {
@@ -190,7 +252,7 @@ class Accessmodule
      *
      * @param \DateTime $modified
      *
-     * @return Accessmodule
+     * @return Accessgroup
      */
     public function setModified($modified)
     {

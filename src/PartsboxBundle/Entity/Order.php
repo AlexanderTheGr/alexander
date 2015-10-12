@@ -16,6 +16,11 @@ class Order {
         return $this->$field;
     }
 
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
+
     /**
      * @var integer
      *
@@ -216,28 +221,6 @@ class Order {
     }
 
     /**
-     * Set user
-     *
-     * @param integer $user
-     *
-     * @return Order
-     */
-    public function setUser($user) {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return integer
-     */
-    public function getUser() {
-        return $this->user;
-    }
-
-    /**
      * Set store
      *
      * @param integer $store
@@ -259,27 +242,6 @@ class Order {
         return $this->store;
     }
 
-    /**
-     * Set route
-     *
-     * @param integer $route
-     *
-     * @return Order
-     */
-    public function setRoute($route) {
-        $this->route = $route;
-
-        return $this;
-    }
-
-    /**
-     * Get route
-     *
-     * @return integer
-     */
-    public function getRoute() {
-        return $this->route;
-    }
 
     /**
      * Set customer
@@ -730,4 +692,52 @@ class Order {
         return $this->id;
     }
 
+
+    /**
+     * Set user
+     *
+     * @param \PartsboxBundle\Entity\User $user
+     *
+     * @return Order
+     */
+    public function setUser(\PartsboxBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \PartsboxBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set route
+     *
+     * @param \PartsboxBundle\Entity\Route $route
+     *
+     * @return Order
+     */
+    public function setRoute(\PartsboxBundle\Entity\Route $route = null)
+    {
+        $this->route = $route;
+
+        return $this;
+    }
+
+    /**
+     * Get route
+     *
+     * @return \PartsboxBundle\Entity\Route
+     */
+    public function getRoute()
+    {
+        return $this->route;
+    }
 }

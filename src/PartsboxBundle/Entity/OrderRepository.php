@@ -2,6 +2,8 @@
 
 namespace PartsboxBundle\Entity;
 
+use AppBundle\Entity\Repository;
+
 /**
  * OrderRepository
  *
@@ -9,6 +11,5 @@ namespace PartsboxBundle\Entity;
  * repository methods below.
  */
 class OrderRepository extends Repository {
-
-
+    
 }

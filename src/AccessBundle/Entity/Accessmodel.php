@@ -1,30 +1,23 @@
 <?php
 
-namespace PartsboxBundle\Entity;
+namespace AccessBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Accessmodulecontroller
+ * Accessmodel
  *
- * @ORM\Table(name="accessmodulecontroller", uniqueConstraints={@ORM\UniqueConstraint(name="module", columns={"module", "controller"})}, indexes={@ORM\Index(name="user_id", columns={"actioneer"})})
+ * @ORM\Table(name="accessmodel", uniqueConstraints={@ORM\UniqueConstraint(name="model", columns={"model"})}, indexes={@ORM\Index(name="user_id", columns={"actioneer"})})
  * @ORM\Entity
  */
-class Accessmodulecontroller
+class Accessmodel
 {
     /**
      * @var string
      *
-     * @ORM\Column(name="module", type="string", length=50, nullable=false)
+     * @ORM\Column(name="model", type="string", length=50, nullable=false)
      */
-    private $module;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="controller", type="string", length=50, nullable=false)
-     */
-    private $controller;
+    private $model;
 
     /**
      * @var string
@@ -73,51 +66,27 @@ class Accessmodulecontroller
 
 
     /**
-     * Set module
+     * Set model
      *
-     * @param string $module
+     * @param string $model
      *
-     * @return Accessmodulecontroller
+     * @return Accessmodel
      */
-    public function setModule($module)
+    public function setModel($model)
     {
-        $this->module = $module;
+        $this->model = $model;
 
         return $this;
     }
 
     /**
-     * Get module
+     * Get model
      *
      * @return string
      */
-    public function getModule()
+    public function getModel()
     {
-        return $this->module;
-    }
-
-    /**
-     * Set controller
-     *
-     * @param string $controller
-     *
-     * @return Accessmodulecontroller
-     */
-    public function setController($controller)
-    {
-        $this->controller = $controller;
-
-        return $this;
-    }
-
-    /**
-     * Get controller
-     *
-     * @return string
-     */
-    public function getController()
-    {
-        return $this->controller;
+        return $this->model;
     }
 
     /**
@@ -125,7 +94,7 @@ class Accessmodulecontroller
      *
      * @param string $access
      *
-     * @return Accessmodulecontroller
+     * @return Accessmodel
      */
     public function setAccess($access)
     {
@@ -149,7 +118,7 @@ class Accessmodulecontroller
      *
      * @param \DateTime $ts
      *
-     * @return Accessmodulecontroller
+     * @return Accessmodel
      */
     public function setTs($ts)
     {
@@ -173,7 +142,7 @@ class Accessmodulecontroller
      *
      * @param integer $actioneer
      *
-     * @return Accessmodulecontroller
+     * @return Accessmodel
      */
     public function setActioneer($actioneer)
     {
@@ -197,7 +166,7 @@ class Accessmodulecontroller
      *
      * @param \DateTime $created
      *
-     * @return Accessmodulecontroller
+     * @return Accessmodel
      */
     public function setCreated($created)
     {
@@ -221,7 +190,7 @@ class Accessmodulecontroller
      *
      * @param \DateTime $modified
      *
-     * @return Accessmodulecontroller
+     * @return Accessmodel
      */
     public function setModified($modified)
     {

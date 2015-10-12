@@ -1,7 +1,5 @@
 <?php
 
-// src/PartsboxBundle/Controller/LuckyController.php
-
 namespace PartsboxBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -18,7 +16,7 @@ class ProductController extends Main {
      */
     public function indexAction() {
 
-        return $this->render('customer/index.html.twig', array(
+        return $this->render('product/index.html.twig', array(
                     'pagename' => 'Customers',
                     'url' => '/product/getdatatable',
                     'view' => '/product/view',
@@ -78,8 +76,6 @@ class ProductController extends Main {
      * @Route("/product/getdatatable")
      */
     public function getdatatableAction(Request $request) {
-        $this->repository = 'PartsboxBundle:Product';
-
         $this->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
                 ->addField(array("name" => "Code", "index" => 'erpCode'))
                 ->addField(array("name" => "Price", "index" => 'itemPricew01'));

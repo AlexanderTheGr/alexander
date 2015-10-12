@@ -1,4 +1,5 @@
 <?php
+
 namespace PartsboxBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -65,7 +66,7 @@ class SupplierController extends Main {
         $fields["supplierName"] = array("label" => "Name");
 
         $forms = $this->getFormLyFields($entity, $fields);
-        
+
         $this->addTab(array("title" => "General", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         $json = $this->tabs();
         return $json;

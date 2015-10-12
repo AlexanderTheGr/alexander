@@ -5,8 +5,8 @@ namespace EavBundle\Entity;
 /**
  * EavEntity
  */
-class EavEntity
-{
+class EavEntity {
+
     /**
      * @var string
      */
@@ -55,8 +55,7 @@ class EavEntity
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->eav_attribute_items = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -67,8 +66,7 @@ class EavEntity
      *
      * @return EavEntity
      */
-    public function setEntity($entity)
-    {
+    public function setEntity($entity) {
         $this->entity = $entity;
 
         return $this;
@@ -79,8 +77,7 @@ class EavEntity
      *
      * @return string
      */
-    public function getEntity()
-    {
+    public function getEntity() {
         return $this->entity;
     }
 
@@ -91,8 +88,7 @@ class EavEntity
      *
      * @return EavEntity
      */
-    public function setList($list)
-    {
+    public function setList($list) {
         $this->list = $list;
 
         return $this;
@@ -103,8 +99,7 @@ class EavEntity
      *
      * @return string
      */
-    public function getList()
-    {
+    public function getList() {
         return $this->list;
     }
 
@@ -115,8 +110,7 @@ class EavEntity
      *
      * @return EavEntity
      */
-    public function setViewstyle($viewstyle)
-    {
+    public function setViewstyle($viewstyle) {
         $this->viewstyle = $viewstyle;
 
         return $this;
@@ -127,8 +121,7 @@ class EavEntity
      *
      * @return string
      */
-    public function getViewstyle()
-    {
+    public function getViewstyle() {
         return $this->viewstyle;
     }
 
@@ -139,8 +132,7 @@ class EavEntity
      *
      * @return EavEntity
      */
-    public function setTs($ts)
-    {
+    public function setTs($ts) {
         $this->ts = $ts;
 
         return $this;
@@ -151,8 +143,7 @@ class EavEntity
      *
      * @return \DateTime
      */
-    public function getTs()
-    {
+    public function getTs() {
         return $this->ts;
     }
 
@@ -163,8 +154,7 @@ class EavEntity
      *
      * @return EavEntity
      */
-    public function setActioneer($actioneer)
-    {
+    public function setActioneer($actioneer) {
         $this->actioneer = $actioneer;
 
         return $this;
@@ -175,8 +165,7 @@ class EavEntity
      *
      * @return integer
      */
-    public function getActioneer()
-    {
+    public function getActioneer() {
         return $this->actioneer;
     }
 
@@ -187,8 +176,7 @@ class EavEntity
      *
      * @return EavEntity
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -199,8 +187,7 @@ class EavEntity
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -211,8 +198,7 @@ class EavEntity
      *
      * @return EavEntity
      */
-    public function setModified($modified)
-    {
+    public function setModified($modified) {
         $this->modified = $modified;
 
         return $this;
@@ -223,8 +209,7 @@ class EavEntity
      *
      * @return \DateTime
      */
-    public function getModified()
-    {
+    public function getModified() {
         return $this->modified;
     }
 
@@ -233,8 +218,7 @@ class EavEntity
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -245,8 +229,7 @@ class EavEntity
      *
      * @return EavEntity
      */
-    public function addEavAttributeItem(\EavBundle\Entity\EavAttributeItem $eavAttributeItem)
-    {
+    public function addEavAttributeItem(\EavBundle\Entity\EavAttributeItem $eavAttributeItem) {
         $this->eav_attribute_items[] = $eavAttributeItem;
 
         return $this;
@@ -257,8 +240,7 @@ class EavEntity
      *
      * @param \EavBundle\Entity\EavAttributeItem $eavAttributeItem
      */
-    public function removeEavAttributeItem(\EavBundle\Entity\EavAttributeItem $eavAttributeItem)
-    {
+    public function removeEavAttributeItem(\EavBundle\Entity\EavAttributeItem $eavAttributeItem) {
         $this->eav_attribute_items->removeElement($eavAttributeItem);
     }
 
@@ -267,8 +249,8 @@ class EavEntity
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getEavAttributeItems()
-    {
+    public function getEavAttributeItems() {
         return $this->eav_attribute_items;
     }
+
 }

@@ -1,7 +1,5 @@
 <?php
 
-// src/PartsboxBundle/Controller/customerController.php
-
 namespace PartsboxBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

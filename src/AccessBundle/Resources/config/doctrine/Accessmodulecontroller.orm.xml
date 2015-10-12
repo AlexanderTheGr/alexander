@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="PartsboxBundle\Entity\Accessmodel" table="accessmodel">
+  <entity name="AccessBundle\Entity\Accessmodulecontroller" table="accessmodulecontroller">
     <indexes>
       <index name="user_id" columns="actioneer"/>
     </indexes>
     <unique-constraints>
-      <unique-constraint name="model" columns="model"/>
+      <unique-constraint name="module" columns="module,controller"/>
     </unique-constraints>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="model" type="string" column="model" length="50" nullable="false">
+    <field name="module" type="string" column="module" length="50" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="controller" type="string" column="controller" length="50" nullable="false">
       <options>
         <option name="fixed"/>
       </options>

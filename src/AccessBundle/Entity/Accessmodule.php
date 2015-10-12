@@ -1,23 +1,23 @@
 <?php
 
-namespace PartsboxBundle\Entity;
+namespace AccessBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Accessmodel
+ * Accessmodule
  *
- * @ORM\Table(name="accessmodel", uniqueConstraints={@ORM\UniqueConstraint(name="model", columns={"model"})}, indexes={@ORM\Index(name="user_id", columns={"actioneer"})})
+ * @ORM\Table(name="accessmodule", uniqueConstraints={@ORM\UniqueConstraint(name="module", columns={"module"})}, indexes={@ORM\Index(name="user_id", columns={"actioneer"})})
  * @ORM\Entity
  */
-class Accessmodel
-{
+class Accessmodule {
+
     /**
      * @var string
      *
-     * @ORM\Column(name="model", type="string", length=50, nullable=false)
+     * @ORM\Column(name="module", type="string", length=50, nullable=false)
      */
-    private $model;
+    private $module;
 
     /**
      * @var string
@@ -63,30 +63,26 @@ class Accessmodel
      */
     private $id;
 
-
-
     /**
-     * Set model
+     * Set module
      *
-     * @param string $model
+     * @param string $module
      *
-     * @return Accessmodel
+     * @return Accessmodule
      */
-    public function setModel($model)
-    {
-        $this->model = $model;
+    public function setModule($module) {
+        $this->module = $module;
 
         return $this;
     }
 
     /**
-     * Get model
+     * Get module
      *
      * @return string
      */
-    public function getModel()
-    {
-        return $this->model;
+    public function getModule() {
+        return $this->module;
     }
 
     /**
@@ -94,10 +90,9 @@ class Accessmodel
      *
      * @param string $access
      *
-     * @return Accessmodel
+     * @return Accessmodule
      */
-    public function setAccess($access)
-    {
+    public function setAccess($access) {
         $this->access = $access;
 
         return $this;
@@ -108,8 +103,7 @@ class Accessmodel
      *
      * @return string
      */
-    public function getAccess()
-    {
+    public function getAccess() {
         return $this->access;
     }
 
@@ -118,10 +112,9 @@ class Accessmodel
      *
      * @param \DateTime $ts
      *
-     * @return Accessmodel
+     * @return Accessmodule
      */
-    public function setTs($ts)
-    {
+    public function setTs($ts) {
         $this->ts = $ts;
 
         return $this;
@@ -132,8 +125,7 @@ class Accessmodel
      *
      * @return \DateTime
      */
-    public function getTs()
-    {
+    public function getTs() {
         return $this->ts;
     }
 
@@ -142,10 +134,9 @@ class Accessmodel
      *
      * @param integer $actioneer
      *
-     * @return Accessmodel
+     * @return Accessmodule
      */
-    public function setActioneer($actioneer)
-    {
+    public function setActioneer($actioneer) {
         $this->actioneer = $actioneer;
 
         return $this;
@@ -156,8 +147,7 @@ class Accessmodel
      *
      * @return integer
      */
-    public function getActioneer()
-    {
+    public function getActioneer() {
         return $this->actioneer;
     }
 
@@ -166,10 +156,9 @@ class Accessmodel
      *
      * @param \DateTime $created
      *
-     * @return Accessmodel
+     * @return Accessmodule
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -180,8 +169,7 @@ class Accessmodel
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -190,10 +178,9 @@ class Accessmodel
      *
      * @param \DateTime $modified
      *
-     * @return Accessmodel
+     * @return Accessmodule
      */
-    public function setModified($modified)
-    {
+    public function setModified($modified) {
         $this->modified = $modified;
 
         return $this;
@@ -204,8 +191,7 @@ class Accessmodel
      *
      * @return \DateTime
      */
-    public function getModified()
-    {
+    public function getModified() {
         return $this->modified;
     }
 
@@ -214,8 +200,8 @@ class Accessmodel
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
+
 }

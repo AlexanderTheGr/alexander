@@ -1,30 +1,30 @@
 <?php
 
-namespace PartsboxBundle\Entity;
+namespace AccessBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Accessmodelfield
+ * Accessmodulecontroller
  *
- * @ORM\Table(name="accessmodelfield", indexes={@ORM\Index(name="user_id", columns={"actioneer"})})
+ * @ORM\Table(name="accessmodulecontroller", uniqueConstraints={@ORM\UniqueConstraint(name="module", columns={"module", "controller"})}, indexes={@ORM\Index(name="user_id", columns={"actioneer"})})
  * @ORM\Entity
  */
-class Accessmodelfield
+class Accessmodulecontroller
 {
     /**
      * @var string
      *
-     * @ORM\Column(name="model", type="string", length=50, nullable=false)
+     * @ORM\Column(name="module", type="string", length=50, nullable=false)
      */
-    private $model;
+    private $module;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="field", type="string", length=50, nullable=false)
+     * @ORM\Column(name="controller", type="string", length=50, nullable=false)
      */
-    private $field;
+    private $controller;
 
     /**
      * @var string
@@ -73,51 +73,51 @@ class Accessmodelfield
 
 
     /**
-     * Set model
+     * Set module
      *
-     * @param string $model
+     * @param string $module
      *
-     * @return Accessmodelfield
+     * @return Accessmodulecontroller
      */
-    public function setModel($model)
+    public function setModule($module)
     {
-        $this->model = $model;
+        $this->module = $module;
 
         return $this;
     }
 
     /**
-     * Get model
+     * Get module
      *
      * @return string
      */
-    public function getModel()
+    public function getModule()
     {
-        return $this->model;
+        return $this->module;
     }
 
     /**
-     * Set field
+     * Set controller
      *
-     * @param string $field
+     * @param string $controller
      *
-     * @return Accessmodelfield
+     * @return Accessmodulecontroller
      */
-    public function setField($field)
+    public function setController($controller)
     {
-        $this->field = $field;
+        $this->controller = $controller;
 
         return $this;
     }
 
     /**
-     * Get field
+     * Get controller
      *
      * @return string
      */
-    public function getField()
+    public function getController()
     {
-        return $this->field;
+        return $this->controller;
     }
 
     /**
@@ -125,7 +125,7 @@ class Accessmodelfield
      *
      * @param string $access
      *
-     * @return Accessmodelfield
+     * @return Accessmodulecontroller
      */
     public function setAccess($access)
     {
@@ -149,7 +149,7 @@ class Accessmodelfield
      *
      * @param \DateTime $ts
      *
-     * @return Accessmodelfield
+     * @return Accessmodulecontroller
      */
     public function setTs($ts)
     {
@@ -173,7 +173,7 @@ class Accessmodelfield
      *
      * @param integer $actioneer
      *
-     * @return Accessmodelfield
+     * @return Accessmodulecontroller
      */
     public function setActioneer($actioneer)
     {
@@ -197,7 +197,7 @@ class Accessmodelfield
      *
      * @param \DateTime $created
      *
-     * @return Accessmodelfield
+     * @return Accessmodulecontroller
      */
     public function setCreated($created)
     {
@@ -221,7 +221,7 @@ class Accessmodelfield
      *
      * @param \DateTime $modified
      *
-     * @return Accessmodelfield
+     * @return Accessmodulecontroller
      */
     public function setModified($modified)
     {

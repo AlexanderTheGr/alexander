@@ -16,6 +16,7 @@ class Main extends Controller {
     var $q_and = array();
     var $where;
     var $select;
+    var $orderBy;
     var $rmd;
 
     function __construct() {
@@ -61,6 +62,8 @@ class Main extends Controller {
             $this->createSelect($s);
             $select = count($s) > 0 ? implode(",", $s) : $this->prefix . ".*";
             $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
+            
+            
             $query = $em->createQuery(
                             'SELECT  ' . $this->select . '
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
@@ -68,9 +71,12 @@ class Main extends Controller {
                                 ORDER BY ' . $this->orderBy
                     )
                     ->setMaxResults($request->request->get("length"))
-                    ->setFirstResult($request->request->get("start"));
+                    ->setFirstResult($request->request->get("start"));     
+            
             $results = $query->getResult();
+            
         }
+
         $data["fields"] = $this->fields;
         $jsonarr = array();
         $r = explode(":", $this->repository);
@@ -84,9 +90,15 @@ class Main extends Controller {
                         if ($obj)
                             $obj = $obj->getField($relation);
                     }
-                    $json[] = $obj;
+                    $val = $obj;
                 } else {
-                    $json[] = $result[$field["index"]];
+                    $val = $result[$field["index"]];
+                }
+                if (@$field["method"]) {
+                    $method = $field["method"] . "Method";
+                    $json[] = $this->$method($val);
+                } else {
+                    $json[] = $val;
                 }
             }
             $json["DT_RowClass"] = "dt_row_" . strtolower($r[1]);
@@ -99,6 +111,10 @@ class Main extends Controller {
         return json_encode($data);
     }
 
+    function yesnoMethod($value) {
+        return $value ? "YES" : "NO";
+    }
+
     function clearstring($string) {
         return addslashes(str_replace(array("'"), "", trim($string)));
     }
@@ -109,13 +125,19 @@ class Main extends Controller {
 
     function createWhere() {
         $this->where = count($this->q_or) > 0 ? " WHERE (" . implode(" OR ", $this->q_or) . ")" : " WHERE " . $this->prefix . ".id > 0";
-        $this->where = count($this->q_and) > 0 ? $where . " AND (" . implode(" AND ", $this->q_and) . ")" : $this->where;
+        $this->where = count($this->q_and) > 0 ? $this->where . " AND (" . implode(" AND ", $this->q_and) . ")" : $this->where;
         return $this->where;
     }
 
     function createOrderBy($fields, $dt_order) {
         $field_order = explode(":", $fields[$dt_order[0]["column"]]);
-        $this->orderBy = $this->prefix . '.' . $field_order[0] . ' ' . $dt_order[0]["dir"] . ' ';
+        if (count($field_order) > 1) {
+            $this->orderBy =  "FIELD(".$this->prefix . "." . $field_order[0].",1,5,4,3)"; //$this->prefix . '.' . $field_order[0] . ' ' . $dt_order[0]["dir"] . ' ';
+            //$this->orderBy = $this->prefix . '.' . $field_order[0] . ' ' . $dt_order[0]["dir"] . ' ';
+            //echo $this->orderBy;
+        } else {
+            $this->orderBy = $this->prefix . '.' . $field_order[0] . ' ' . $dt_order[0]["dir"] . ' ';
+        }
         return $this->orderBy;
     }
 

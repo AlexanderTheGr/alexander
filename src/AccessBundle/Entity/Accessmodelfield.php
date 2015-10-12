@@ -1,37 +1,30 @@
 <?php
 
-namespace PartsboxBundle\Entity;
+namespace AccessBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Accessgroup
+ * Accessmodelfield
  *
- * @ORM\Table(name="accessgroup", indexes={@ORM\Index(name="user_id", columns={"actioneer"})})
+ * @ORM\Table(name="accessmodelfield", indexes={@ORM\Index(name="user_id", columns={"actioneer"})})
  * @ORM\Entity
  */
-class Accessgroup
+class Accessmodelfield
 {
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255, nullable=false)
+     * @ORM\Column(name="model", type="string", length=50, nullable=false)
      */
-    private $title;
+    private $model;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="notes", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="field", type="string", length=50, nullable=false)
      */
-    private $notes;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="data", type="text", length=65535, nullable=false)
-     */
-    private $data;
+    private $field;
 
     /**
      * @var string
@@ -80,75 +73,51 @@ class Accessgroup
 
 
     /**
-     * Set title
+     * Set model
      *
-     * @param string $title
+     * @param string $model
      *
-     * @return Accessgroup
+     * @return Accessmodelfield
      */
-    public function setTitle($title)
+    public function setModel($model)
     {
-        $this->title = $title;
+        $this->model = $model;
 
         return $this;
     }
 
     /**
-     * Get title
+     * Get model
      *
      * @return string
      */
-    public function getTitle()
+    public function getModel()
     {
-        return $this->title;
+        return $this->model;
     }
 
     /**
-     * Set notes
+     * Set field
      *
-     * @param string $notes
+     * @param string $field
      *
-     * @return Accessgroup
+     * @return Accessmodelfield
      */
-    public function setNotes($notes)
+    public function setField($field)
     {
-        $this->notes = $notes;
+        $this->field = $field;
 
         return $this;
     }
 
     /**
-     * Get notes
+     * Get field
      *
      * @return string
      */
-    public function getNotes()
+    public function getField()
     {
-        return $this->notes;
-    }
-
-    /**
-     * Set data
-     *
-     * @param string $data
-     *
-     * @return Accessgroup
-     */
-    public function setData($data)
-    {
-        $this->data = $data;
-
-        return $this;
-    }
-
-    /**
-     * Get data
-     *
-     * @return string
-     */
-    public function getData()
-    {
-        return $this->data;
+        return $this->field;
     }
 
     /**
@@ -156,7 +125,7 @@ class Accessgroup
      *
      * @param string $access
      *
-     * @return Accessgroup
+     * @return Accessmodelfield
      */
     public function setAccess($access)
     {
@@ -180,7 +149,7 @@ class Accessgroup
      *
      * @param \DateTime $ts
      *
-     * @return Accessgroup
+     * @return Accessmodelfield
      */
     public function setTs($ts)
     {
@@ -204,7 +173,7 @@ class Accessgroup
      *
      * @param integer $actioneer
      *
-     * @return Accessgroup
+     * @return Accessmodelfield
      */
     public function setActioneer($actioneer)
     {
@@ -228,7 +197,7 @@ class Accessgroup
      *
      * @param \DateTime $created
      *
-     * @return Accessgroup
+     * @return Accessmodelfield
      */
     public function setCreated($created)
     {
@@ -252,7 +221,7 @@ class Accessgroup
      *
      * @param \DateTime $modified
      *
-     * @return Accessgroup
+     * @return Accessmodelfield
      */
     public function setModified($modified)
     {
