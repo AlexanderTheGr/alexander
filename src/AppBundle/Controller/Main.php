@@ -59,15 +59,33 @@ class Main extends Controller {
                         $this->q_and[] = $this->prefix . "." . $this->fields[$index]["index"] . " LIKE '%" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "%'";
                     }
                     $s[] = $this->prefix . "." . $field_relation[0];
+                } else {
+                    
+                    if ($dt_search["value"]) {
+                        if ($this->clearstring($dt_search["value"])) {
+                            $this->q_or[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_search["value"]) . "'";
+                        }
+                    }
+                    if ($this->clearstring($dt_columns[$index]["search"]["value"])) {
+                        if ($this->clearstring($dt_columns[$index]["search"]["value"])) {
+                            $field_relation = explode(":", $this->fields[$index]["index"]);
+                            $this->q_and[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "'";
+                        }
+                        //$s[] = $this->prefix . "." . $field_relation[0];  
+                    }                  
+                    
                 }
             }
+    
             $this->createWhere();
             $this->createOrderBy($fields, $dt_order);
             $this->createSelect($s);
             $select = count($s) > 0 ? implode(",", $s) : $this->prefix . ".*";
-            $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
+                            
+            
+            //$recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
 
-
+            
             $query = $em->createQuery(
                             'SELECT  ' . $this->select . '
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
@@ -76,8 +94,13 @@ class Main extends Controller {
                     )
                     ->setMaxResults($request->request->get("length"))
                     ->setFirstResult($request->request->get("start"));
+            
 
+         
+            
+            
             $results = $query->getResult();
+            
         }
         $data["fields"] = $this->fields;
         $jsonarr = array();
@@ -122,6 +145,9 @@ class Main extends Controller {
     }
 
     function createSelect($s) {
+        foreach ($s as $v=>$f) {
+            //$s[$v] = "IDENTITY(".$f.")";
+        }
         $this->select = count($s) > 0 ? implode(",", $s) : $this->prefix . ".*";
     }
 
@@ -132,22 +158,23 @@ class Main extends Controller {
     }
 
     function createOrderBy($fields, $dt_order) {
+        $bundle = explode(":", $this->repository);
         $field_order = explode(":", $fields[$dt_order[0]["column"]]);
         if (count($field_order) > 1) {
             $em = $this->getDoctrine()->getManager();
             $query = $em->createQuery(
-                            'SELECT  '.$this->prefix . '.id
-                                FROM PartsboxBundle:' . $field_order[0] . ' ' . $this->prefix . '
-                                ORDER BY '.$this->prefix . '.'.$field_order[1] 
-                    );
+                    'SELECT  ' . $this->prefix . '.id
+                                FROM ' . $bundle[0] . ':' . $field_order[0] . ' ' . $this->prefix . '
+                                ORDER BY ' . $this->prefix . '.' . $field_order[1]
+            );
             $results = $query->getResult();
-            foreach($results as $res) {
-                $d[] = $res["id"];               
+            foreach ($results as $res) {
+                $d[] = $res["id"];
             }
             if ($d) {
                 $fei = implode(",", $d);
             }
-            $this->orderBy = "FIELD(" . $this->prefix . "." . $field_order[0] . ",".$fei.")" . " ". $dt_order[0]["dir"] . ' '; //$this->prefix . '.' . $field_order[0] . ' ' . $dt_order[0]["dir"] . ' ';
+            $this->orderBy = "FIELD(" . $this->prefix . "." . $field_order[0] . "," . $fei . ")" . " " . $dt_order[0]["dir"] . ' '; //$this->prefix . '.' . $field_order[0] . ' ' . $dt_order[0]["dir"] . ' ';
         } else {
             $this->orderBy = $this->prefix . '.' . $field_order[0] . ' ' . $dt_order[0]["dir"] . ' ';
         }
@@ -155,6 +182,30 @@ class Main extends Controller {
     }
 
     function addField($field = array()) {
+        $bundle = explode(":", $this->repository);
+        if (@$field["type"] == "select") {
+            $field["content"] = '<input class="style-primary-bright form-control search_init" type="radio" />';
+        } else {
+            
+
+            $field_order = explode(":", $field["index"]);
+            if (count($field_order) > 1) {
+                $em = $this->getDoctrine()->getManager();
+                $query = $em->createQuery(
+                        'SELECT  ' . $this->prefix . '.id, ' . $this->prefix . '.' . $field_order[1] . '
+                                FROM ' . $bundle[0] . ':' . ucfirst($field_order[0]) . ' ' . $this->prefix . '
+                                ORDER BY ' . $this->prefix . '.' . $field_order[1]
+                );
+                $results = $query->getResult();
+                $field["content"] = '<select class="style-primary-bright form-control search_init">';
+                foreach ($results as $result) {
+                    $field["content"] .= '<option value="'.$result["id"].'">'.$result[$field_order[1]].'</option>';
+                }
+                $field["content"] .= '</select>';
+            } else {
+                $field["content"] = '<input class="style-primary-bright form-control search_init" type="text" />';
+            }
+        }
         $this->fields[] = $field;
         return $this;
     }

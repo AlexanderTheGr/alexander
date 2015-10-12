@@ -3,7 +3,9 @@
     <table class="alexander table table-striped dataTable {{ctrl}}">
         <thead>
             <tr>
-                <td ng-repeat="field in fields"><input class="style-primary-bright form-control search_init" type="[[ field.search ]]" /></td>
+                <td  ng-repeat="field in fields" ng-bind-html="deliberatelyTrustDangerousSnippet(field.content)">
+                    [[ field.content ]]
+                </td>
             </tr> 
             <tr>
                 <td ng-repeat="field in fields">[[ field.name ]]</td>
