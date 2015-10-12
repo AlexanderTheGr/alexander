@@ -76,8 +76,6 @@ class Main extends Controller {
             $results = $query->getResult();
             
         }
-        
-
         $data["fields"] = $this->fields;
         $jsonarr = array();
         $r = explode(":", $this->repository);
