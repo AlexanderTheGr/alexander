@@ -39,6 +39,10 @@ class Main extends Controller {
         $s = array();
         if ($request->request->get("length")) {
             $em = $this->getDoctrine()->getManager();
+
+            $doctrineConfig = $em->getConfiguration();
+            $doctrineConfig->addCustomStringFunction('FIELD', 'DoctrineExtensions\Query\Mysql\Field');
+
             $dt_order = $request->request->get("order");
             $dt_search = $request->request->get("search");
             $dt_columns = $request->request->get("columns");
@@ -62,8 +66,8 @@ class Main extends Controller {
             $this->createSelect($s);
             $select = count($s) > 0 ? implode(",", $s) : $this->prefix . ".*";
             $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
-            
-            
+
+
             $query = $em->createQuery(
                             'SELECT  ' . $this->select . '
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
@@ -71,10 +75,9 @@ class Main extends Controller {
                                 ORDER BY ' . $this->orderBy
                     )
                     ->setMaxResults($request->request->get("length"))
-                    ->setFirstResult($request->request->get("start"));     
-            
+                    ->setFirstResult($request->request->get("start"));
+
             $results = $query->getResult();
-            
         }
         $data["fields"] = $this->fields;
         $jsonarr = array();
@@ -131,9 +134,20 @@ class Main extends Controller {
     function createOrderBy($fields, $dt_order) {
         $field_order = explode(":", $fields[$dt_order[0]["column"]]);
         if (count($field_order) > 1) {
-            $this->orderBy =  "FIELD(".$this->prefix . "." . $field_order[0].",1,5,4,3)"; //$this->prefix . '.' . $field_order[0] . ' ' . $dt_order[0]["dir"] . ' ';
-            //$this->orderBy = $this->prefix . '.' . $field_order[0] . ' ' . $dt_order[0]["dir"] . ' ';
-            //echo $this->orderBy;
+            $em = $this->getDoctrine()->getManager();
+            $query = $em->createQuery(
+                            'SELECT  '.$this->prefix . '.id
+                                FROM PartsboxBundle:' . $field_order[0] . ' ' . $this->prefix . '
+                                ORDER BY '.$this->prefix . '.'.$field_order[1] 
+                    );
+            $results = $query->getResult();
+            foreach($results as $res) {
+                $d[] = $res["id"];               
+            }
+            if ($d) {
+                $fei = implode(",", $d);
+            }
+            $this->orderBy = "FIELD(" . $this->prefix . "." . $field_order[0] . ",".$fei.")" . " ". $dt_order[0]["dir"] . ' '; //$this->prefix . '.' . $field_order[0] . ' ' . $dt_order[0]["dir"] . ' ';
         } else {
             $this->orderBy = $this->prefix . '.' . $field_order[0] . ' ' . $dt_order[0]["dir"] . ' ';
         }
