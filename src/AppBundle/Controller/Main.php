@@ -52,40 +52,34 @@ class Main extends Controller {
                 $fields[] = $field["index"];
                 $field_relation = explode(":", $field["index"]);
                 if (count($field_relation) == 1) {
-                    if ($this->clearstring($dt_search["value"])) {
+                    if ($this->clearstring($dt_search["value"])  != "") {
                         $this->q_or[] = $this->prefix . "." . $field["index"] . " LIKE '%" . $this->clearstring($dt_search["value"]) . "%'";
                     }
-                    if ($this->clearstring($dt_columns[$index]["search"]["value"])) {
+                    if ($this->clearstring($dt_columns[$index]["search"]["value"])  != "") {
                         $this->q_and[] = $this->prefix . "." . $this->fields[$index]["index"] . " LIKE '%" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "%'";
                     }
                     $s[] = $this->prefix . "." . $field_relation[0];
                 } else {
-                    
-                    if ($dt_search["value"]) {
-                        if ($this->clearstring($dt_search["value"])) {
+                    if ($dt_search["value"] === true) {
+                        if ($this->clearstring($dt_search["value"])  != "") {
                             $this->q_or[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_search["value"]) . "'";
                         }
                     }
-                    if ($this->clearstring($dt_columns[$index]["search"]["value"])) {
-                        if ($this->clearstring($dt_columns[$index]["search"]["value"])) {
-                            $field_relation = explode(":", $this->fields[$index]["index"]);
-                            $this->q_and[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "'";
-                        }
+                    if ($this->clearstring($dt_columns[$index]["search"]["value"]) != "") {
+                        $field_relation = explode(":", $this->fields[$index]["index"]);
+                        $this->q_and[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "'";
                         //$s[] = $this->prefix . "." . $field_relation[0];  
-                    }                  
-                    
+                    }
                 }
             }
-    
+
             $this->createWhere();
             $this->createOrderBy($fields, $dt_order);
             $this->createSelect($s);
             $select = count($s) > 0 ? implode(",", $s) : $this->prefix . ".*";
-                            
-            
-            //$recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
 
-            
+            $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
+
             $query = $em->createQuery(
                             'SELECT  ' . $this->select . '
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
@@ -94,13 +88,7 @@ class Main extends Controller {
                     )
                     ->setMaxResults($request->request->get("length"))
                     ->setFirstResult($request->request->get("start"));
-            
-
-         
-            
-            
             $results = $query->getResult();
-            
         }
         $data["fields"] = $this->fields;
         $jsonarr = array();
@@ -145,7 +133,7 @@ class Main extends Controller {
     }
 
     function createSelect($s) {
-        foreach ($s as $v=>$f) {
+        foreach ($s as $v => $f) {
             //$s[$v] = "IDENTITY(".$f.")";
         }
         $this->select = count($s) > 0 ? implode(",", $s) : $this->prefix . ".*";
@@ -186,10 +174,16 @@ class Main extends Controller {
         if (@$field["type"] == "select") {
             $field["content"] = '<input class="style-primary-bright form-control search_init" type="radio" />';
         } else {
-            
-
             $field_order = explode(":", $field["index"]);
-            if (count($field_order) > 1) {
+            if (@$field["method"] == "yesno") {
+                $field["content"] = '<select class="style-primary-bright form-control search_init">';
+                $field["content"] .= '<option value="">All</option>';
+
+                $field["content"] .= '<option value="0">NO</option>';
+                $field["content"] .= '<option value="1">YES</option>';
+
+                $field["content"] .= '</select>';
+            } elseif (count($field_order) > 1) {
                 $em = $this->getDoctrine()->getManager();
                 $query = $em->createQuery(
                         'SELECT  ' . $this->prefix . '.id, ' . $this->prefix . '.' . $field_order[1] . '
@@ -198,8 +192,9 @@ class Main extends Controller {
                 );
                 $results = $query->getResult();
                 $field["content"] = '<select class="style-primary-bright form-control search_init">';
+                $field["content"] .= '<option value="">Select</option>';
                 foreach ($results as $result) {
-                    $field["content"] .= '<option value="'.$result["id"].'">'.$result[$field_order[1]].'</option>';
+                    $field["content"] .= '<option value="' . $result["id"] . '">' . $result[$field_order[1]] . '</option>';
                 }
                 $field["content"] .= '</select>';
             } else {

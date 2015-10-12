@@ -82,7 +82,7 @@ class OrderController extends Main {
                 ->addField(array("name" => "Δρομολόγιο", "index" => 'route:route'))
                 ->addField(array("name" => "Παραγγελία", "index" => 'reference','method'=>'yesno'))
                 ->addField(array("name" => "Προσφορά", "index" => 'noorder','method'=>'yesno'))
-                ->addField(array("name" => "Ημιτελής", "index" => 'id',"method"=>"imitelis","type"=>"select"))
+                ->addField(array("name" => "Ημιτελής", "index" => 'id',"method"=>"imitelis"))
                 ;
         $json = $this->datatable();
         return new Response(
