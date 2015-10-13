@@ -52,16 +52,16 @@ class Main extends Controller {
                 $fields[] = $field["index"];
                 $field_relation = explode(":", $field["index"]);
                 if (count($field_relation) == 1) {
-                    if ($this->clearstring($dt_search["value"])  != "") {
+                    if ($this->clearstring($dt_search["value"]) != "") {
                         $this->q_or[] = $this->prefix . "." . $field["index"] . " LIKE '%" . $this->clearstring($dt_search["value"]) . "%'";
                     }
-                    if ($this->clearstring($dt_columns[$index]["search"]["value"])  != "") {
+                    if ($this->clearstring($dt_columns[$index]["search"]["value"]) != "") {
                         $this->q_and[] = $this->prefix . "." . $this->fields[$index]["index"] . " LIKE '%" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "%'";
                     }
                     $s[] = $this->prefix . "." . $field_relation[0];
                 } else {
                     if ($dt_search["value"] === true) {
-                        if ($this->clearstring($dt_search["value"])  != "") {
+                        if ($this->clearstring($dt_search["value"]) != "") {
                             $this->q_or[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_search["value"]) . "'";
                         }
                     }
@@ -220,21 +220,20 @@ class Main extends Controller {
         return $randomString;
     }
 
-    public function datatableAction($ctrl, $app, $url) {
-        return $this->render('elements/datatable.twig', array(
-                    'url' => $url,
-                    'ctrl' => $ctrl,
-                    'app' => $app,
-                    'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
-        ));
+    public function datatableAction($ctrl = "", $app = "", $url = "") {
+        if ($ctrl != 'none')
+            return $this->render('elements/datatable.twig', array(
+                        'url' => $url,
+                        'ctrl' => $ctrl,
+                        'app' => $app,
+                        'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
+            ));
+        return new Response();
     }
 
     public function tabAction($ctrl, $app, $url, $action) {
         return $this->form($ctrl, $app, $url, $action);
     }
-    
-
-    
 
     public function tabsAction($ctrl, $app, $url) {
         return $this->render('elements/tabs.twig', array(

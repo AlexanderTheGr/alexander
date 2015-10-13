@@ -31,12 +31,23 @@ class OrderController extends Main {
      */
     public function viewAction($id) {
 
+        
+        
+        $datatable = array(
+            'url' => '/order/getdatatable',
+            'view' => '/order/view',
+            'ctrl' => $this->generateRandomString(),
+            'app' => $this->generateRandomString());
+        
+        
+        
         return $this->render('PartsboxBundle:Order:view.html.twig', array(
                     'pagename' => 'Order',
                     'url' => '/order/save',
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
-                    'tabs' => $this->gettabs($id),
+                    'tabs' => $this->gettabs($id,$datatable),
+                    'datatable'=>$datatable,
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
@@ -55,7 +66,7 @@ class OrderController extends Main {
     /**
      * @Route("/order/gettab")
      */
-    public function gettabs($id) {
+    public function gettabs($id,$datatable) {
 
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
@@ -65,11 +76,7 @@ class OrderController extends Main {
         $forms = $this->getFormLyFields($entity, $fields);
         $this->addTab(array("title" => "General", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
 
-        $datatable = array(
-            'url' => '/order/getdatatable',
-            'view' => '/order/view',
-            'ctrl' => $this->generateRandomString(),
-            'app' => $this->generateRandomString());
+
 
         if ($entity->getId()) {
             $this->addTab(array("title" => "Search", "form" => '', "content" => $this->getTabContentSearch(), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));

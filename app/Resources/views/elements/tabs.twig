@@ -9,7 +9,7 @@
             <tab ng-repeat="tab in vm.tabs" heading="[[ tab.title ]]" active="tab.active" disable="tab.disable">
                 <div id="[[ tab.index ]]"></div>     
                 <formly-form model="tab.form.model" fields="tab.form.fields" form="vm.form" options="tab.form.options"></formly-form>
-                {{ render(controller('PartsboxBundle:Order:datatable', { 'ctrl': '444','app':'khhkjh','url':'hhh','view':'sddd' })) }}
+                {{ render(controller('PartsboxBundle:Order:datatable', { 'ctrl': 'none','app':'khhkjh','url':'hhh','view':'sddd' })) }}
             </tab>
         </tabset>  
     </form>
