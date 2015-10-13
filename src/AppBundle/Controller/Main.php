@@ -232,6 +232,9 @@ class Main extends Controller {
     public function tabAction($ctrl, $app, $url, $action) {
         return $this->form($ctrl, $app, $url, $action);
     }
+    
+
+    
 
     public function tabsAction($ctrl, $app, $url) {
         return $this->render('elements/tabs.twig', array(

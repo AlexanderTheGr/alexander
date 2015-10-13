@@ -84,5 +84,17 @@ class ProductController extends Main {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+    
+    
+    /**
+     * @Route("/product/fororderajaxjson")
+     */    
+    public function fororderajaxjsonAction() {
+        return new Response(
+                "", 200
+        );        
+        
+    }
+ 
 
 }

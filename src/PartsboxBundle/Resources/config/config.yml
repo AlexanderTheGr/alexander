@@ -1,2 +1,6 @@
 imports:
     - { resource: services.yml }
+twig:
+    form:
+        resources:
+            - 'PartboxBundle:Order:search.html.twig'
