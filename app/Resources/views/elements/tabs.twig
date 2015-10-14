@@ -1,19 +1,18 @@
 {% block body %}
-
-<div class="alexander {{ctrl}}" ng-app="{{app}}" ng-controller="{{ctrl}} as vm">
-
-    <form ng-submit="vm.onSubmit()" name="vm.form" class="form" id="{{ctrl}}" novalidate>      
-        <button type="submit" class="btn btn-primary submit-button" ng-disabled="vm.form.$invalid">Submit</button>
-        <button type="button" class="btn btn-default" ng-click="vm.resetAllForms()">Reset</button>          
-        <tabset>
-            <tab ng-repeat="tab in vm.tabs" heading="[[ tab.title ]]" active="tab.active" disable="tab.disable">
-                <div id="[[ tab.index ]]"></div>     
-                <formly-form model="tab.form.model" fields="tab.form.fields" form="vm.form" options="tab.form.options"></formly-form>
-                {{ render(controller('PartsboxBundle:Order:datatable', { 'ctrl': 'none','app':'khhkjh','url':'hhh','view':'sddd' })) }}
-            </tab>
-        </tabset>  
-    </form>
-</div>    
+    <div class="alexander {{ctrl}}" ng-app="{{app}}" ng-controller="{{ctrl}} as vm">
+        <form ng-submit="vm.onSubmit()" name="vm.form" class="form" id="{{ctrl}}" novalidate>      
+            <button type="submit" class="btn btn-primary submit-button" ng-disabled="vm.form.$invalid">Submit</button>
+            <button type="button" class="btn btn-default" ng-click="vm.resetAllForms()">Reset</button>          
+            <tabset>
+                {% for tab in tabs.tabs %}
+                    <tab heading="{{ tab.title }}" active="{{tab.active}}">
+                        {{tab.content | raw }}
+                        
+                    </tab> 
+                {% endfor %}      
+            </tabset>  
+        </form>
+    </div>    
 {% endblock %}
 
 {% block stylesheets %}

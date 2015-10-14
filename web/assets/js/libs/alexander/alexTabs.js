@@ -6,36 +6,18 @@
         var $dialog = {}
         var settings = $.extend({}, defaults, custom);
         tabs(app, ctrl, url, tab);
+
         function tabs(app, ctrl, url, tab) {
+            alexander.show();
+           
             var app = angular.module(app, ['ngSanitize', 'ui.bootstrap', 'base64', 'formly', 'formlyBootstrap', 'ngMessages']).config(function ($interpolateProvider) {
                 $interpolateProvider.startSymbol('[[').endSymbol(']]');
             });
-            var data = {};
-            data.id = 1;
-
+            
             app.controller(ctrl, function ($scope, $http, $sce, $base64) {
+                return;
                 var vm = this;
 
-
-
-                var response = angular.fromJson(html_entity_decode(tab));
-                vm.tabs = response.tabs;
-                alexander.show();
-                $scope.deliberatelyTrustDangerousSnippet = function (html) {
-                    $scope.snippet = html;
-                    return $sce.trustAsHtml($scope.snippet);
-                };
-
-                setTimeout(function () {
-                    angular.forEach(vm.tabs, function (tab) {
-                        if (tab.content != "") {
-                            jQuery("#" + tab.index).html(html_entity_decode(tab.content))
-                        }
-                        //if (tab.datatable != "") {
-                            //$("."+tab.ctrl).alexDataTable(tab.app, tab.ctrl, tab.url, tab.view)
-                       // }
-                    })
-                }, 30)
 
                 vm.onSubmit = onSubmit;
                 vm.resetAllForms = invokeOnAllFormOptions.bind(null, 'resetModel');

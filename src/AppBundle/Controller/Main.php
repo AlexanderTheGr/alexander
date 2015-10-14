@@ -235,12 +235,14 @@ class Main extends Controller {
         return $this->form($ctrl, $app, $url, $action);
     }
 
-    public function tabsAction($ctrl, $app, $url) {
+    public function tabsAction($ctrl, $app, $url, $tabs) {
+        $tabs = (array)json_decode($tabs);
         return $this->render('elements/tabs.twig', array(
                     'pagename' => 'Customers',
                     'url' => $url,
                     'ctrl' => $ctrl,
                     'app' => $app,
+                    'tabs' => $tabs,
                     'type' => '',
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
