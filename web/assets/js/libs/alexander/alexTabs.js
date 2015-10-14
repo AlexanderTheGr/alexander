@@ -1,22 +1,31 @@
-(function ($) {
-    $.fn.alexTabs = function (app, ctrl, url, tab, custom) {
+(function($) {
+    $.fn.alexTabs = function(app, ctrl, url, tab, custom) {
         var alexander = this;
         alexander.hide();
         var defaults = {}
         var $dialog = {}
         var settings = $.extend({}, defaults, custom);
         tabs(app, ctrl, url, tab);
-
         function tabs(app, ctrl, url, tab) {
-            alexander.show();
-           
-            var app = angular.module(app, ['ngSanitize', 'ui.bootstrap', 'base64', 'formly', 'formlyBootstrap', 'ngMessages']).config(function ($interpolateProvider) {
+            var app = angular.module(app, ['ngSanitize', 'ui.bootstrap', 'base64', 'formly', 'formlyBootstrap', 'ngMessages']).config(function($interpolateProvider) {
                 $interpolateProvider.startSymbol('[[').endSymbol(']]');
             });
-            
-            app.controller(ctrl, function ($scope, $http, $sce, $base64) {
-                return;
+            var data = {};
+            data.id = 1;
+
+            app.controller(ctrl, function($scope, $http, $sce, $base64) {
                 var vm = this;
+                
+                var response = angular.fromJson(html_entity_decode(tab));
+                
+                alert(html_entity_decode(tab));
+                vm.tabs = response.tabs;
+                
+                alexander.show();
+                $scope.deliberatelyTrustDangerousSnippet = function(html) {
+                    $scope.snippet = html;
+                    return $sce.trustAsHtml($scope.snippet);
+                };
 
 
                 vm.onSubmit = onSubmit;
@@ -32,14 +41,14 @@
                     var data = {}
                     data.data = vm.model;
                     $http.post(url, data)
-                            .success(function (response) {
-                            })
+                            .success(function(response) {
+                    })
                 }
 
 
                 function invokeOnAllFormOptions(fn) {
-                    angular.forEach(vm.tabs, function (tab) {
-                        angular.forEach(tab.form.fields, function (field, index) {
+                    angular.forEach(vm.tabs, function(tab) {
+                        angular.forEach(tab.form.fields, function(field, index) {
                             //vm.model[field.id] = field.value();
                             vm.model[$base64.encode(unescape(encodeURIComponent(field.id)))] = $base64.encode(unescape(encodeURIComponent(field.value())));
                         })

@@ -88,9 +88,9 @@ class OrderController extends Main {
     }
 
     function getTabContentSearch() {
-        return $this->get('twig')->render('PartsboxBundle:Order:search.html.twig', array());
+        $response =  $this->get('twig')->render('PartsboxBundle:Order:search.html.twig', array());
 
-        return $response;
+        return str_replace("\n", "", htmlentities($response));
     }
 
     public function getTabContentItems() {
