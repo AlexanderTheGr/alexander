@@ -18,7 +18,6 @@
                 
                 var response = angular.fromJson(html_entity_decode(tab));
                 
-                alert(html_entity_decode(tab));
                 vm.tabs = response.tabs;
                 
                 alexander.show();
@@ -37,7 +36,7 @@
 
                 function onSubmit() {
                     invokeOnAllFormOptions('updateInitialValue');
-                    //alert(JSON.stringify(vm.model), null, 2);
+                    
                     var data = {}
                     data.data = vm.model;
                     $http.post(url, data)
@@ -45,7 +44,16 @@
                     })
                 }
 
-
+                setTimeout(function () {
+                    angular.forEach(vm.tabs, function (tab) {
+                        if (tab.content != "") {
+                            jQuery("#" + tab.index).html(html_entity_decode(tab.content))
+                        }
+                        //if (tab.datatable != "") {
+                            //$("."+tab.ctrl).alexDataTable(tab.app, tab.ctrl, tab.url, tab.view)
+                       // }
+                    })
+                }, 30)
                 function invokeOnAllFormOptions(fn) {
                     angular.forEach(vm.tabs, function(tab) {
                         angular.forEach(tab.form.fields, function(field, index) {
