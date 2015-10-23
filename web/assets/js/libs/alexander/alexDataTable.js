@@ -13,6 +13,8 @@
             });
             var data = {};
             data.id = 1;
+            
+            
             app.controller(ctrl, function ($scope, $http, $sce) {
                 $http.get(url, "options=nodata")
                         .success(function (response) {

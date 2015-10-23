@@ -18,6 +18,9 @@
                 
                 var response = angular.fromJson(html_entity_decode(tab));
                 
+                
+                
+                //console.log(html_entity_decode(tab));
                 vm.tabs = response.tabs;
                 
                 alexander.show();
@@ -49,6 +52,11 @@
                         if (tab.content != "") {
                             jQuery("#" + tab.index).html(html_entity_decode(tab.content))
                         }
+                        angular.forEach(tab.datatables, function (datatable) {
+                            console.log(datatable.ctrl);  
+                            $("."+datatable.ctrl).alexDataTable(datatable.app, datatable.ctrl, datatable.url, datatable.view)
+                        })
+
                         //if (tab.datatable != "") {
                             //$("."+tab.ctrl).alexDataTable(tab.app, tab.ctrl, tab.url, tab.view)
                        // }

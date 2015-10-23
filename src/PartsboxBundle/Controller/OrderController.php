@@ -36,6 +36,7 @@ class OrderController extends Main {
         $datatable = array(
             'url' => '/order/getdatatable',
             'view' => '/order/view',
+            'fields' => array(array('content'=>1),array("content"=>2)),
             'ctrl' => $this->generateRandomString(),
             'app' => $this->generateRandomString());
         

@@ -10,6 +10,39 @@
                 <div id="[[ tab.index ]]"></div>     
                 <formly-form model="tab.form.model" fields="tab.form.fields" form="vm.form" options="tab.form.options"></formly-form>
                 
+                
+                
+                
+                
+                
+                <div ng-repeat="datatable in tab.datatables" ng-app="datatable.app"> 
+                    <table class="alexander table table-striped dataTable [[datatable.ctrl]]">
+                        <thead>
+                            <tr>
+                                <td  ng-repeat="field in datatable.fields" ng-bind-html="deliberatelyTrustDangerousSnippet(field.content)">
+                                    [[ field.content ]]
+                                </td>
+                            </tr> 
+                            <tr>
+                                <td ng-repeat="field in datatable.fields">[[ field.name ]]</td>
+                            </tr>                
+                        </thead> 
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
             </uib-tab>
         </uib-tabset>  
     </form>
