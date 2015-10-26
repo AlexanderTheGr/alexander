@@ -15,11 +15,11 @@
                 
                 
                 
-                <div ng-repeat="datatable in tab.datatables" ng-app="datatable.app"> 
+                <div ng-repeat="datatable in tab.datatables"> 
                     <table class="alexander table table-striped dataTable [[datatable.ctrl]]">
                         <thead>
                             <tr>
-                                <td  ng-repeat="field in datatable.fields" ng-bind-html="deliberatelyTrustDangerousSnippet(field.content)">
+                                <td  ng-repeat="field in datatable.fields">
                                     [[ field.content ]]
                                 </td>
                             </tr> 

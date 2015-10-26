@@ -54,7 +54,22 @@
                         }
                         angular.forEach(tab.datatables, function (datatable) {
                             console.log(datatable.ctrl);  
-                            $("."+datatable.ctrl).alexDataTable(datatable.app, datatable.ctrl, datatable.url, datatable.view)
+                            //$("."+datatable.ctrl).alexDataTable(datatable.app, datatable.ctrl, datatable.url, datatable.view)
+                            $("."+datatable.ctrl).show();
+                            dt_table = $("."+datatable.ctrl).dataTable({
+                                "pageLength": 100,
+                                "processing": true,
+                                "serverSide": true,
+                                //"initComplete": initComplete,
+                                //"drawCallback": drawCallback,
+                                //"rowCallback": rowCallback,
+                                //"createdRow": createdRow,
+                                "ajax": {
+                                    "method": "post",
+                                    "url": datatable.url,
+                                }
+                            })   
+                            
                         })
 
                         //if (tab.datatable != "") {
