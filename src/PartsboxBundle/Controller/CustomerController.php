@@ -17,10 +17,7 @@ class CustomerController extends Main {
      * @Route("/customer/customer")
      */
     public function indexAction() {
-
-
-
-        return $this->render('customer/index.html.twig', array(
+        return $this->render('PartsboxBundle:Customer:index.html.twig', array(
                     'pagename' => 'Customers',
                     'url' => '/customer/getdatatable',
                     'view' => '/customer/view',
@@ -35,7 +32,7 @@ class CustomerController extends Main {
      */
     public function viewAction($id) {
 
-        return $this->render('customer/view.html.twig', array(
+        return $this->render('PartsboxBundle:Customer:view.html.twig', array(
                     'pagename' => 'Customers',
                     'url' => '/customer/save',
                     'ctrl' => $this->generateRandomString(),

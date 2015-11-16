@@ -42,6 +42,10 @@ class OrderController extends Main {
         $params['url'] = '/order/getitems/' . $id;        
         $datatables[] = $this->tabDatatable($params);
         
+        
+        
+        
+        
         return $this->render('PartsboxBundle:Order:view.html.twig', array(
                     'pagename' => 'Order',
                     'url' => '/order/save',
