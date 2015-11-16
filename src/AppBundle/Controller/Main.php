@@ -34,8 +34,9 @@ class Main extends Controller {
         $results = array();
         $recordsTotal = 0;
         $recordsFiltered = 0;
-        $this->q_or = array();
-        $this->q_and = array();
+        //$this->q_or = array();
+        //$this->q_and = array();
+        
         $s = array();
         if ($request->request->get("length")) {
             $em = $this->getDoctrine()->getManager();
@@ -55,7 +56,7 @@ class Main extends Controller {
                     if ($this->clearstring($dt_search["value"]) != "") {
                         $this->q_or[] = $this->prefix . "." . $field["index"] . " LIKE '%" . $this->clearstring($dt_search["value"]) . "%'";
                     }
-                    if ($this->clearstring($dt_columns[$index]["search"]["value"]) != "") {
+                    if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != "") {
                         $this->q_and[] = $this->prefix . "." . $this->fields[$index]["index"] . " LIKE '%" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "%'";
                     }
                     $s[] = $this->prefix . "." . $field_relation[0];
@@ -65,7 +66,7 @@ class Main extends Controller {
                             $this->q_or[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_search["value"]) . "'";
                         }
                     }
-                    if ($this->clearstring($dt_columns[$index]["search"]["value"]) != "") {
+                    if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != "") {
                         $field_relation = explode(":", $this->fields[$index]["index"]);
                         $this->q_and[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "'";
                         //$s[] = $this->prefix . "." . $field_relation[0];  
@@ -93,13 +94,16 @@ class Main extends Controller {
         $data["fields"] = $this->fields;
         $jsonarr = array();
         $r = explode(":", $this->repository);
+        
         foreach ($results as $result) {
             $json = array();
             foreach ($data["fields"] as $field) {
                 $field_relation = explode(":", $field["index"]);
                 if (count($field_relation) > 1) {
+                    //echo $this->repository;
                     $obj = $em->getRepository($this->repository)->find($result["id"]);
                     foreach ($field_relation as $relation) {
+                        
                         if ($obj)
                             $obj = $obj->getField($relation);
                     }
@@ -171,7 +175,7 @@ class Main extends Controller {
 
     function addField($field = array()) {
         $bundle = explode(":", $this->repository);
-        if (@$field["type"] == "select") {
+        if (@$field["type"] != "select") {
             $field["content"] = '<input class="style-primary-bright form-control search_init" type="radio" />';
         } else {
             $field_order = explode(":", $field["index"]);
@@ -209,7 +213,21 @@ class Main extends Controller {
         $this->tabs[] = $tab;
         return $this;
     }
-
+    
+    function tabDatatable($params) {
+        $session = new Session();
+        $session->set('params', $params['dtparams']);
+        foreach ($params['dtparams'] as $param) {
+            $fields[] = array('content' => $param["name"]);
+        }
+        $datatable = array(
+            'url' => $params['url'],// '/order/getitems/' . $id,
+            'fields' => $fields,
+            'ctrl' => $this->generateRandomString(),
+            'app' => $this->generateRandomString());
+        return $datatable;
+    }
+    
     function generateRandomString($length = 15) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);

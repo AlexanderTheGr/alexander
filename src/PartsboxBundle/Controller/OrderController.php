@@ -3,6 +3,7 @@
 namespace PartsboxBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Controller\Main as Main;
@@ -30,26 +31,24 @@ class OrderController extends Main {
      * @Route("/order/view/{id}")
      */
     public function viewAction($id) {
-
         
         
-        $datatable = array(
-            'url' => '/order/getdatatable',
-            'view' => '/order/view',
-            'fields' => array(array('content'=>1),array("content"=>2)),
-            'ctrl' => $this->generateRandomString(),
-            'app' => $this->generateRandomString());
-        
-        $datatables[] = $datatable; 
-        
+        $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
+        $dtparams[] = array("name" => "Product", "index" => 'product:title');
+        $dtparams[] = array("name" => "Rafi", "index" => 'product:rafi1');
+        $dtparams[] = array("name" => "Supplier", "index" => 'product:erpSupplier');
+        $params['dtparams'] = $dtparams;
+        $params['id'] = $dtparams;
+        $params['url'] = '/order/getitems/' . $id;        
+        $datatables[] = $this->tabDatatable($params);
         
         return $this->render('PartsboxBundle:Order:view.html.twig', array(
                     'pagename' => 'Order',
                     'url' => '/order/save',
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
-                    'tabs' => $this->gettabs($id,$datatables),
-                    'datatables'=>$datatables,
+                    'tabs' => $this->gettabs($id, $datatables),
+                    'datatables' => $datatables,
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
@@ -68,32 +67,29 @@ class OrderController extends Main {
     /**
      * @Route("/order/gettab")
      */
-    public function gettabs($id,$datatables) {
-
+    public function gettabs($id, $datatables) {
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($id);
         $fields["fincode"] = array("label" => "Erp Code");
         $fields["customerName"] = array("label" => "Price Name");
         $forms = $this->getFormLyFields($entity, $fields);
-        $this->addTab(array("title" => "General","datatables" =>array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
-
+        $this->addTab(array("title" => "General", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         if ($entity->getId()) {
-            $this->addTab(array("title" => "Search","datatables" =>array(), "form" => '', "content" => $this->getTabContentSearch(), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
+            $this->addTab(array("title" => "Search", "datatables" => array(), "form" => '', "content" => $this->getTabContentSearch(), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
             $this->addTab(array("title" => "Items", "datatables" => $datatables, "form" => '', "content" => "", "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
-            $this->addTab(array("title" => "Customer Details","datatables" =>array(), "form" => '', "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
+            $this->addTab(array("title" => "Customer Details", "datatables" => array(), "form" => '', "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
         }
         $json = $this->tabs();
-        
         return $json;
     }
 
     function getTabContentSearch() {
-        $response =  $this->get('twig')->render('PartsboxBundle:Order:search.html.twig', array());
-
+        $response = $this->get('twig')->render('PartsboxBundle:Order:search.html.twig', array());
         return str_replace("\n", "", htmlentities($response));
     }
 
+    
     public function getTabContentItems() {
         return;
         $tmpl = $this->get('twig')->render('PartsboxBundle:Order:index.html.twig', array(
@@ -121,6 +117,20 @@ class OrderController extends Main {
                 ->addField(array("name" => "Προσφορά", "index" => 'noorder', 'method' => 'yesno'))
                 ->addField(array("name" => "Ημιτελής", "index" => 'id', "method" => "imitelis"))
         ;
+        $json = $this->datatable();
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+    }
+
+
+    public function getitemsAction($id) {
+        $session = new Session();
+        foreach ($session->get('params') as $param) {
+            $this->addField($param);
+        }
+        $this->repository = 'PartsboxBundle:Orderitem';
+        $this->q_and[] = $this->prefix . ".order = " . $id;
         $json = $this->datatable();
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
