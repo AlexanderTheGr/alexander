@@ -16,7 +16,7 @@ class ProductController extends Main {
      */
     public function indexAction() {
 
-        return $this->render('product/index.html.twig', array(
+        return $this->render('PartsboxBundle:Product:index.html.twig', array(
                     'pagename' => 'Customers',
                     'url' => '/product/getdatatable',
                     'view' => '/product/view',
@@ -30,13 +30,14 @@ class ProductController extends Main {
      * @Route("/product/view/{id}")
      */
     public function viewAction($id) {
-
-        return $this->render('product/view.html.twig', array(
+        $datatables = array();
+        return $this->render('PartsboxBundle:Product:view.html.twig', array(
                     'pagename' => 'Product',
                     'url' => '/product/save',
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
-                    'tabs' => $this->gettabs($id),
+                    'tabs' => $this->gettabs($id, $datatables),
+                    'datatables' => $datatables,
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
@@ -55,6 +56,7 @@ class ProductController extends Main {
     /**
      * @Route("/product/gettab")
      */
+    /*
     public function gettabs($id) {
 
 
@@ -71,8 +73,26 @@ class ProductController extends Main {
         $json = $this->tabs();
         return $json;
     }
+     * 
+     */
 
+    public function gettabs($id, $datatables) {
+        $entity = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->find($id);
+        $fields["erpCode"] = array("label" => "Erp Code");
+        $fields["itemPricew01"] = array("label" => "Price Name");
+        $forms = $this->getFormLyFields($entity, $fields);
+        $this->addTab(array("title" => "General", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
+
+        $json = $this->tabs();
+        return $json;
+    }    
+    
+    
     /**
+     * 
+     * 
      * @Route("/product/getdatatable")
      */
     public function getdatatableAction(Request $request) {

@@ -175,7 +175,7 @@ class Main extends Controller {
 
     function addField($field = array()) {
         $bundle = explode(":", $this->repository);
-        if (@$field["type"] != "select") {
+        if (@$field["type"] == "select") {
             $field["content"] = '<input class="style-primary-bright form-control search_init" type="radio" />';
         } else {
             $field_order = explode(":", $field["index"]);

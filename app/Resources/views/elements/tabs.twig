@@ -9,12 +9,6 @@
             <uib-tab ng-repeat="tab in vm.tabs" heading="[[ tab.title ]]" active="tab.active" disable="tab.disable">
                 <div id="[[ tab.index ]]"></div>     
                 <formly-form model="tab.form.model" fields="tab.form.fields" form="vm.form" options="tab.form.options"></formly-form>
-                
-                
-                
-                
-                
-                
                 <div ng-repeat="datatable in tab.datatables"> 
                     <table class="alexander table table-striped dataTable [[datatable.ctrl]]">
                         <thead>
@@ -31,18 +25,6 @@
                         </tbody>
                     </table>
                 </div>
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
             </uib-tab>
         </uib-tabset>  
     </form>
