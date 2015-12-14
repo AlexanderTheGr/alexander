@@ -127,7 +127,9 @@ class OrderController extends Main {
         );
     }
 
-
+    /**
+     * @Route("/order/getitems/{id}")
+     */
     public function getitemsAction($id) {
         $session = new Session();
         foreach ($session->get('params') as $param) {

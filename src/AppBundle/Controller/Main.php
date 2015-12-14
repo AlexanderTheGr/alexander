@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -187,7 +188,7 @@ class Main extends Controller {
                 $field["content"] .= '<option value="1">YES</option>';
 
                 $field["content"] .= '</select>';
-            } elseif (count($field_order) > 1) {
+            } elseif (count($field_order) > 1 AND @$field["type"] == "select") {
                 $em = $this->getDoctrine()->getManager();
                 $query = $em->createQuery(
                         'SELECT  ' . $this->prefix . '.id, ' . $this->prefix . '.' . $field_order[1] . '
