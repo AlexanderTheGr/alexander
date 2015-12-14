@@ -1,0 +1,138 @@
+EdiBundle\Entity\Eltrekaedi:
+    type: entity
+    table: eltrekaedi
+    uniqueConstraints:
+        partsno:
+            columns:
+                - partno
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        sos:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        partno:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        description:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        factorypartno:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        tecdocsupplierno:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        tecdocpartno:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        wholeprice:
+            type: decimal
+            nullable: false
+            precision: 10
+            scale: 2
+        retailprice:
+            type: decimal
+            nullable: false
+            precision: 10
+            scale: 2
+        supplierno:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        supplierdescr:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        division:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        eltrekkaCat:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: eltrekka_cat
+        eltrekkaCatDe:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: eltrekka_cat_de
+        eltrekkaSubCat:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: eltrekka_sub_cat
+        eltrekkaSubCatDe:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: eltrekka_sub_cat_de
+        photo:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        grossWeightGr:
+            type: decimal
+            nullable: false
+            precision: 10
+            scale: 2
+            column: gross_weight_gr
+        lenghtMm:
+            type: decimal
+            nullable: false
+            precision: 10
+            scale: 2
+            column: lenght_mm
+        widthMm:
+            type: decimal
+            nullable: false
+            precision: 10
+            scale: 2
+            column: width_mm
+        heightMm:
+            type: decimal
+            nullable: false
+            precision: 10
+            scale: 2
+            column: height_mm
+    lifecycleCallbacks: {  }

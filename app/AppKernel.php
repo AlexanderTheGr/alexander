@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new PartsboxBundle\PartsboxBundle(),
             new EavBundle\EavBundle(),
             new AccessBundle\AccessBundle(),
+            new EdiBundle\EdiBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
