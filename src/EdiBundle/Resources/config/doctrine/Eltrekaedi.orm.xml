@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="EdiBundle\Entity\Eltrekaedi" repository-class="EdiBundle\Entity\EltrekaediRepository" table="eltrekaedi">
+    <unique-constraints>
+      <unique-constraint name="partsno" columns="partno"/>
+    </unique-constraints>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="sos" type="integer" column="sos" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="partno" type="string" column="partno" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="description" type="string" column="description" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="factorypartno" type="string" column="factorypartno" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="tecdocsupplierno" type="integer" column="tecdocsupplierno" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="tecdocpartno" type="string" column="tecdocpartno" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="wholeprice" type="decimal" column="wholeprice" precision="10" scale="2" nullable="false"/>
+    <field name="retailprice" type="decimal" column="retailprice" precision="10" scale="2" nullable="false"/>
+    <field name="supplierno" type="string" column="supplierno" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="supplierdescr" type="string" column="supplierdescr" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="division" type="string" column="division" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="eltrekkaCat" type="string" column="eltrekka_cat" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="eltrekkaCatDe" type="string" column="eltrekka_cat_de" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="eltrekkaSubCat" type="string" column="eltrekka_sub_cat" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="eltrekkaSubCatDe" type="string" column="eltrekka_sub_cat_de" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="photo" type="string" column="photo" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="grossWeightGr" type="decimal" column="gross_weight_gr" precision="10" scale="2" nullable="false"/>
+    <field name="lenghtMm" type="decimal" column="lenght_mm" precision="10" scale="2" nullable="false"/>
+    <field name="widthMm" type="decimal" column="width_mm" precision="10" scale="2" nullable="false"/>
+    <field name="heightMm" type="decimal" column="height_mm" precision="10" scale="2" nullable="false"/>
+  </entity>
+</doctrine-mapping>

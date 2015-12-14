@@ -35,7 +35,7 @@ class EavAttributeCreatorListener {
         ]);
 
         if ($eavEntity === null) {
-            throw new \UnexpectedValueException('EavEntity not found for ' . $classname);
+            //throw new \UnexpectedValueException('EavEntity not found for ' . $classname);
         }
 
 

@@ -7,6 +7,15 @@ namespace EdiBundle\Entity;
  */
 class Eltrekaedi {
 
+    public function getField($field) {
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
+
     /**
      * @var integer
      */
@@ -561,28 +570,22 @@ class Eltrekaedi {
         return $this->heightMm;
     }
 
-    
-    
-    
-    
-    
-    
-    
     var $client;
     var $Username = 'TESTUID';
-    var $Password = 'TESTPWD'; 
+    var $Password = 'TESTPWD';
     var $CustomerNo = '999999L';
     var $soap_url = 'http://195.144.16.7/EltrekkaEDI/EltrekkaEDI.asmx?WSDL';
-    
+
     private function auth() {
-        $this->client = new SoapClient($this->soap_url);
+        $this->client = new \SoapClient($this->soap_url);
         $ns = 'http://eltrekka.gr/edi/';
         $headerbody = array('Username' => $this->Username, 'Password' => $this->Password);
-        $header = new SOAPHeader($ns, 'AuthHeader', $headerbody);
+        $header = new \SOAPHeader($ns, 'AuthHeader', $headerbody);
         $this->client->__setSoapHeaders($header);
     }
 
-    function getPartMaster() {
+    function getPartMasterFile() {
+        $this->auth();
         $response = $this->client->GetPartMaster();
         $xml = simplexml_load_string($response->GetPartMasterResult->any) or die("Error: Cannot create object");
         if (!trim($xml->ErrorCode) != "") {
@@ -590,13 +593,15 @@ class Eltrekaedi {
         } else {
             $xml->ErrorDescription;
         }
-    }    
-    
-    public function loadproducts() {
-         $this->auth();
+    }
 
+    public function getPartMaster() {
+        return;
+        $this->auth();
         //echo $this->getPartMaster();
-        $file = $this->getPartMaster();
+        $file = $this->getPartMasterFile();
+        echo $file;
+
         if ((($handle = fopen($file, "r")) !== FALSE)) {
             $data = fgetcsv($handle, 100000, "\t");
             //print_r($data);
@@ -607,44 +612,50 @@ class Eltrekaedi {
                 foreach ($data as $key => $val) {
                     $attributes[$attrs[$key]] = $val;
                 }
+
+
+                $attributes["wholeprice"] = str_replace(",", ".", $attributes["wholeprice"]);
+                $attributes["retailprice"] = str_replace(",", ".", $attributes["retailprice"]);
+                $attributes["gross_weight_gr"] = str_replace(",", ".", $attributes["gross_weight_gr"]);
+                $attributes["lenght_mm"] = str_replace(",", ".", $attributes["lenght_mm"]);
+                $attributes["width_mm"] = str_replace(",", ".", $attributes["width_mm"]);
+                $attributes["height_mm"] = str_replace(",", ".", $attributes["height_mm"]);
                 
-                
-                $attributes["wholeprice"] = str_replace(",", ".",$attributes["wholeprice"]);
-                $attributes["retailprice"] = str_replace(",", ".",$attributes["retailprice"]);
-                $attributes["gross_weight_gr"] = str_replace(",", ".",$attributes["gross_weight_gr"]);
-                $attributes["lenght_mm"] = str_replace(",", ".",$attributes["lenght_mm"]);
-                $attributes["width_mm"] = str_replace(",", ".",$attributes["width_mm"]);
-                $attributes["height_mm"] = str_replace(",", ".",$attributes["height_mm"]);
-                //print_r($attributes);
-             
-                /*
-                $sql = "select id from eltrekaedi where partno = '".$attributes["partno"]."'"; 
-                $eltrekaedi = Yii::app()->db->createCommand($sql)->queryRow();
-                */
-                
-                $q = array();
-                foreach($attributes as $field=>$val) {
-                    $q[] = "`".$field. "` = '".addslashes($val)."'";                     
+
+
+                $Eltrekaedi = $this->getDoctrine()
+                        ->getRepository('|EdiBundle:Eltrekaedi')
+                        ->findOneByIdPartno($attributes["partnot"]);
+
+                foreach ($attributes as $field => $val) {
+                    $this->setField($field, $val);
                 }
-                if ((int)$eltrekaedi["id"] == 0) {
+
+                print_r($attributes);
+                exit;
+
+                /*
+                  $sql = "select id from eltrekaedi where partno = '".$attributes["partno"]."'";
+                  $eltrekaedi = Yii::app()->db->createCommand($sql)->queryRow();
+                 */
+
+                $q = array();
+                foreach ($attributes as $field => $val) {
+                    $q[] = "`" . $field . "` = '" . addslashes($val) . "'";
+                }
+                if ((int) $eltrekaedi["id"] == 0) {
                     $eltrekaedi["id"] = $this->getSysId();
                 }
                 /*
-                $sql = "replace eltrekaedi set id = '".$eltrekaedi["id"]."', ".implode(",",$q);
-                echo $eltrekaedi["id"]."<BR>";
-                Yii::app()->db->createCommand($sql)->execute();
-                //if ($i++ > 10)
-                //exit;
+                  $sql = "replace eltrekaedi set id = '".$eltrekaedi["id"]."', ".implode(",",$q);
+                  echo $eltrekaedi["id"]."<BR>";
+                  Yii::app()->db->createCommand($sql)->execute();
+                  //if ($i++ > 10)
+                  //exit;
                  * 
                  */
             }
         }
-    }    
-    
-    
-    
-    
-    
-    
-    
+    }
+
 }
