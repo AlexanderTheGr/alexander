@@ -87,11 +87,10 @@ class EltrekaController extends Main {
                 $eltrekaedi = $this->getDoctrine()
                         ->getRepository('EdiBundle:Eltrekaedi')
                         ->findOneByPartno($attributes["partno"]);
-                if (@!$eltrekaedi->getId())
+                if (@!$eltrekaedi->id)
                      $eltrekaedi = new Eltrekaedi();
                 
                 foreach ($attributes as $field => $val) {
-                    echo $field . " " . $val . "<BR>";
                     $eltrekaedi->setField($field, $val);
                 }
                 //exit;
@@ -99,20 +98,13 @@ class EltrekaController extends Main {
                 $em->persist($eltrekaedi);
                 $em->flush();
                 print_r($attributes);
-                exit;
+                //exit;
 
                 /*
                   $sql = "select id from eltrekaedi where partno = '".$attributes["partno"]."'";
                   $eltrekaedi = Yii::app()->db->createCommand($sql)->queryRow();
                  */
 
-                $q = array();
-                foreach ($attributes as $field => $val) {
-                    $q[] = "`" . $field . "` = '" . addslashes($val) . "'";
-                }
-                if ((int) $eltrekaedi["id"] == 0) {
-                    $eltrekaedi["id"] = $this->getSysId();
-                }
                 /*
                   $sql = "replace eltrekaedi set id = '".$eltrekaedi["id"]."', ".implode(",",$q);
                   echo $eltrekaedi["id"]."<BR>";

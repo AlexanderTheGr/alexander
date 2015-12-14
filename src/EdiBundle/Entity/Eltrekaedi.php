@@ -19,7 +19,7 @@ class Eltrekaedi {
     /**
      * @var integer
      */
-    private $id;
+    var $id;
 
     /**
      * @var integer

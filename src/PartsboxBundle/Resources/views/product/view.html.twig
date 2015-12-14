@@ -1,9 +1,0 @@
-{% extends 'base.html.twig' %}
-{% block body %}
-{{ render(controller('PartsboxBundle:Order:tabs', { 'ctrl': ctrl,'app':app,'url':url,'tabs':tabs }) ) }}
-{% endblock %}
-{% block stylesheets %}
-{% endblock %}
-{% block javascripts %}
-<script>$(".{{ctrl}}").alexTabs("{{app}}", "{{ctrl}}", "{{url}}","{{tabs}}");</script>
-{% endblock %}
