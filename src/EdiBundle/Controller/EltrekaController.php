@@ -55,6 +55,7 @@ class EltrekaController extends Main {
     /**
      * @Route("/edi/eltreka/getPartMaster")
      */
+    
     public function getPartMasterAction() {
 
         $eltrekaedi = new Eltrekaedi();
@@ -67,6 +68,7 @@ class EltrekaController extends Main {
             foreach ($data as $key => $attr) {
                 $attrs[$key] = strtolower($attr);
             }
+            $em = $this->getDoctrine()->getManager();
             while ($data = fgetcsv($handle, 100000, "\t")) {
                 foreach ($data as $key => $val) {
                     $attributes[$this->createName($attrs[$key])] = $val;
@@ -94,7 +96,7 @@ class EltrekaController extends Main {
                         $eltrekaedi->setField($field, $val);
                     }
                     //exit;
-                    $em = $this->getDoctrine()->getManager();
+                   
                     $em->persist($eltrekaedi);
                     $em->flush();
                     echo ".";
