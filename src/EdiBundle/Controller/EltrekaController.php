@@ -58,7 +58,7 @@ class EltrekaController extends Main {
     public function getPartMasterAction() {
 
         $eltrekaedi = new Eltrekaedi();
-        $file = $eltrekaedi->getPartMasterFile();
+        $file = "http://195.144.16.7/EltrekkaEDI/Temp/Parts/97ZQW6PS.txt"; //$eltrekaedi->getPartMasterFile();
         echo $file;
         $em = $this->getDoctrine()->getManager();
         if ((($handle = fopen($file, "r")) !== FALSE)) {
@@ -68,13 +68,10 @@ class EltrekaController extends Main {
                 $attrs[$key] = strtolower($attr);
             }
             while ($data = fgetcsv($handle, 100000, "\t")) {
-                /*
+                
                 foreach ($data as $key => $val) {
-                    $attributes[$this->from_camel_case($attrs[$key])] = $val;
+                    $attributes[$attrs[$key]] = $val;
                 }
-                 * 
-                 */
-
 
                 $attributes["wholeprice"] = str_replace(",", ".", $attributes["wholeprice"]);
                 $attributes["retailprice"] = str_replace(",", ".", $attributes["retailprice"]);
@@ -92,13 +89,16 @@ class EltrekaController extends Main {
                     $q[] = "`" . $field . "` = '" . addslashes($val) . "'";
                 }
                 //if ((int) $eltrekaedi["id"] == 0) {
-                @$eltrekaedi["id"] = (int)$eltrekaedi->id;
+                @$eltrekaedi_id = (int)$eltrekaedi->id;
                 //}
-                if ($eltrekaedi["id"] == 0) {
+                if ($eltrekaedi_id == 0) {
                     echo ".";
                 } 
-                $sql = "replace eltrekaedi set id = '" . $eltrekaedi["id"] . "', " . implode(",", $q);
+                $sql = "replace eltrekaedi set id = '" . $eltrekaedi_id . "', " . implode(",", $q);
+                
+                //echo $sql;
                 $em->getConnection()->exec($sql);
+                //if ($i++ > 10) return;
             }
         }
     }
