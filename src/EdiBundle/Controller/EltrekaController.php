@@ -60,39 +60,27 @@ class EltrekaController extends Main {
         $eltrekaedi = new Eltrekaedi();
         $file = $eltrekaedi->getPartMasterFile();
         echo $file;
-
+        $em = $this->getDoctrine()->getManager();
         if ((($handle = fopen($file, "r")) !== FALSE)) {
             $data = fgetcsv($handle, 100000, "\t");
             //print_r($data);
             foreach ($data as $key => $attr) {
                 $attrs[$key] = strtolower($attr);
             }
-            $em = $this->getDoctrine()->getManager();
             while ($data = fgetcsv($handle, 100000, "\t")) {
-                /*
                 foreach ($data as $key => $val) {
-                    $attributes[$this->createName($attrs[$key])] = $val;
+                    $attributes[$this->from_camel_case($attrs[$key])] = $val;
                 }
-                 * 
-                 */
-
 
 
                 $attributes["wholeprice"] = str_replace(",", ".", $attributes["wholeprice"]);
                 $attributes["retailprice"] = str_replace(",", ".", $attributes["retailprice"]);
-                $attributes["grossWeightGr"] = str_replace(",", ".", $attributes["grossWeightGr"]);
-                $attributes["lenghtMm"] = str_replace(",", ".", $attributes["lenghtMm"]);
-                $attributes["widthMm"] = str_replace(",", ".", $attributes["widthMm"]);
-                $attributes["heightMm"] = str_replace(",", ".", $attributes["heightMm"]);
+                $attributes["gross_weight_gr"] = str_replace(",", ".", $attributes["gross_weight_gr"]);
+                $attributes["lenght_mm"] = str_replace(",", ".", $attributes["lenght_mm"]);
+                $attributes["width_mm"] = str_replace(",", ".", $attributes["width_mm"]);
+                $attributes["height_mm"] = str_replace(",", ".", $attributes["height_mm"]);
 
-
-
-
-
-
-
-                //$eltrekaedi = new Eltrekaedi();
-
+                
                 $eltrekaedi = $this->getDoctrine()
                         ->getRepository('EdiBundle:Eltrekaedi')
                         ->findOneByPartno($attributes["partno"]);
@@ -108,58 +96,16 @@ class EltrekaController extends Main {
                 } 
                 $sql = "replace eltrekaedi set id = '" . $eltrekaedi["id"] . "', " . implode(",", $q);
                 $em->getConnection()->exec($sql);
-                
-                /*
-                  if (@!$eltrekaedi->id) {
-                  $eltrekaedi = new Eltrekaedi();
-                  foreach ($attributes as $field => $val) {
-                  $eltrekaedi->setField($field, $val);
-                  }
-                  //exit;
-
-                  $em->persist($eltrekaedi);
-                  $em->flush();
-                  echo ".";
-                  } else {
-                  echo $eltrekaedi->id."<BR>";
-                  }
-                 * 
-                 */
-                //exit;
-
-                /*
-                  $sql = "select id from eltrekaedi where partno = '".$attributes["partno"]."'";
-                  $eltrekaedi = Yii::app()->db->createCommand($sql)->queryRow();
-                 */
-
-                /*
-                  $sql = "replace eltrekaedi set id = '".$eltrekaedi["id"]."', ".implode(",",$q);
-                  echo $eltrekaedi["id"]."<BR>";
-                  Yii::app()->db->createCommand($sql)->execute();
-                  //if ($i++ > 10)
-                  //exit;
-                 * 
-                 */
             }
         }
     }
-
-    function createName($str) {
-        $strArr = explode("_", $str);
-        $i = 0;
-        $b = "";
-        foreach ($strArr as $a) {
-            $b .= ucfirst($a);
-        }
-        $strArr = explode(".", $b);
-        $i = 0;
-        $b = "";
-        foreach ($strArr as $a) {
-            $b .= ucfirst($a);
-        }
-        return lcfirst($b);
+    function from_camel_case($str) {
+        $str = $this->createName($str);
+        //echo $str;
+        //$str[0] = strtolower($str[0]);
+        $func = create_function('$c', 'return $c[1];');
+        return preg_replace_callback('/([A-Z])/', $func, $str);
     }
-
     /**
      * @Route("/edi/eltreka/gettab")
      */
