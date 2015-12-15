@@ -97,7 +97,7 @@ class EltrekaController extends Main {
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($eltrekaedi);
                     $em->flush();
-                    print_r($attributes);
+                    echo ".";
                 }
                 //exit;
 
