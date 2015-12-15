@@ -35,15 +35,10 @@ class EltrekaController extends Main {
      * @Route("/edi/eltreka/view/{id}")
      */
     public function viewAction($id) {
-        
-        $buttons = array();
-        //$buttons[] = array("label"=>'Get PartMaster','position'=>'right','class'=>'btn-success');  
-        
-        return $this->render(
-                    'EdiBundle:Eltreka:view.html.twig', array(
+
+        return $this->render('EdiBundle:Eltreka:view.html.twig', array(
                     'pagename' => 'Eltrekaedis',
                     'url' => '/edi/eltreka/save',
-                    'buttons' => $buttons, 
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'tabs' => $this->gettabs($id),
@@ -126,7 +121,7 @@ class EltrekaController extends Main {
         
 
         $forms = $this->getFormLyFields($entity, $fields);
-        $this->addTab(array("title" => "General", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
+        $this->addTab(array("title" => "General", 'buttons' => $buttons, "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         $json = $this->tabs();
         return $json;
     }
