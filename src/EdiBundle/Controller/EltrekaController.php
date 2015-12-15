@@ -80,7 +80,6 @@ class EltrekaController extends Main {
                 $attributes["width_mm"] = str_replace(",", ".", $attributes["width_mm"]);
                 $attributes["height_mm"] = str_replace(",", ".", $attributes["height_mm"]);
 
-                
                 $eltrekaedi = $this->getDoctrine()
                         ->getRepository('EdiBundle:Eltrekaedi')
                         ->findOneByPartno($attributes["partno"]);
@@ -88,24 +87,15 @@ class EltrekaController extends Main {
                 foreach ($attributes as $field => $val) {
                     $q[] = "`" . $field . "` = '" . addslashes($val) . "'";
                 }
-                //if ((int) $eltrekaedi["id"] == 0) {
                 @$eltrekaedi_id = (int)$eltrekaedi->id;
-                //}
                 if ($eltrekaedi_id == 0) {
-                    echo ".";
                     $sql = "replace eltrekaedi set id = '" . $eltrekaedi_id . "', " . implode(",", $q);
                     $em->getConnection()->exec($sql);
                 }
             }
         }
     }
-    function from_camel_case($str) {
-        $str = $this->createName($str);
-        //echo $str;
-        //$str[0] = strtolower($str[0]);
-        $func = create_function('$c', 'return $c[1];');
-        return preg_replace_callback('/([A-Z])/', $func, $str);
-    }
+
     /**
      * @Route("/edi/eltreka/gettab")
      */
@@ -135,6 +125,12 @@ class EltrekaController extends Main {
         $this->addField(array("name" => "ID", "index" => 'id'))
                 ->addField(array("name" => "Part No", "index" => 'partno', 'search' => 'text'))
                 ->addField(array("name" => "Description", "index" => 'description', 'search' => 'text'))
+                
+                ->addField(array("name" => "Supplier", "index" => 'supplierdescr', 'search' => 'text'))
+                ->addField(array("name" => "Factorypart No", "index" => 'factorypartno', 'search' => 'text'))
+                
+                ->addField(array("name" => "Wholeprice", "index" => 'wholeprice', 'search' => 'text'))
+                ->addField(array("name" => "Retailprice", "index" => 'retailprice', 'search' => 'text'))
 
         ;
         $json = $this->datatable();
