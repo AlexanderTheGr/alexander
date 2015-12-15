@@ -68,9 +68,12 @@ class EltrekaController extends Main {
                 $attrs[$key] = strtolower($attr);
             }
             while ($data = fgetcsv($handle, 100000, "\t")) {
+                /*
                 foreach ($data as $key => $val) {
                     $attributes[$this->from_camel_case($attrs[$key])] = $val;
                 }
+                 * 
+                 */
 
 
                 $attributes["wholeprice"] = str_replace(",", ".", $attributes["wholeprice"]);
