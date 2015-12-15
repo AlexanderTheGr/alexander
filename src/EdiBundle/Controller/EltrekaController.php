@@ -16,10 +16,15 @@ class EltrekaController extends Main {
      * @Route("/edi/eltreka")
      */
     public function indexAction() {
+        
+        $buttons = array();
+        $buttons[] = array("label"=>'Get PartMaster','position'=>'right','class'=>'btn-success');        
+        
         return $this->render('EdiBundle:Eltreka:index.html.twig', array(
                     'pagename' => 'Eltrekaedis',
                     'url' => '/edi/eltreka/getdatatable',
                     'view' => '/edi/eltreka/view',
+                    'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
@@ -30,10 +35,15 @@ class EltrekaController extends Main {
      * @Route("/edi/eltreka/view/{id}")
      */
     public function viewAction($id) {
-
-        return $this->render('EdiBundle:Eltreka:view.html.twig', array(
+        
+        $buttons = array();
+        //$buttons[] = array("label"=>'Get PartMaster','position'=>'right','class'=>'btn-success');  
+        
+        return $this->render(
+                    'EdiBundle:Eltreka:view.html.twig', array(
                     'pagename' => 'Eltrekaedis',
                     'url' => '/edi/eltreka/save',
+                    'buttons' => $buttons, 
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'tabs' => $this->gettabs($id),
@@ -104,14 +114,19 @@ class EltrekaController extends Main {
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($id);
-        $fields["customerCode"] = array("label" => "Eltrekaedi Code");
-        $fields["customerName"] = array("label" => "Eltrekaedi Name");
-        $fields["customerAfm"] = array("label" => "Eltrekaedi Afm");
-        $fields["customerAddress"] = array("label" => "Eltrekaedi Address");
-        $fields["customerCity"] = array("label" => "Eltrekaedi City");
+        $buttons = array();
+        $buttons[] = array("label"=>'Get PartMaster','position'=>'right','class'=>'btn-success');
+        
+        $fields["partno"] = array("label" => "Part No");
+        $fields["description"] = array("label" => "Description");
+        $fields["supplierdescr"] = array("label" => "Supplier");
+        $fields["factorypartno"] = array("label" => "Factorypart Ni");
+        $fields["wholeprice"] = array("label" => "Wholeprice");
+        $fields["retailprice"] = array("label" => "Retailprice");
+        
 
         $forms = $this->getFormLyFields($entity, $fields);
-        $this->addTab(array("title" => "General1", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
+        $this->addTab(array("title" => "General", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         $json = $this->tabs();
         return $json;
     }

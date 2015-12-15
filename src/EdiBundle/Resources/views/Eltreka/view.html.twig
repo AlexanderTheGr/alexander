@@ -1,5 +1,8 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+{% for button in buttons %}
+        <button class="btn {{ button.class }} {{ button.position }}">{{ button.label }}</button>    
+{% endfor %}    
 {{ render(controller('EdiBundle:Eltreka:tabs', { 'ctrl': ctrl,'app':app,'url':url,'tabs':tabs }) ) }}
 {% endblock %}
 {% block stylesheets %}
