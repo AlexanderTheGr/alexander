@@ -93,12 +93,9 @@ class EltrekaController extends Main {
                 //}
                 if ($eltrekaedi_id == 0) {
                     echo ".";
-                } 
-                $sql = "replace eltrekaedi set id = '" . $eltrekaedi_id . "', " . implode(",", $q);
-                
-                //echo $sql;
-                $em->getConnection()->exec($sql);
-                //if ($i++ > 10) return;
+                    $sql = "replace eltrekaedi set id = '" . $eltrekaedi_id . "', " . implode(",", $q);
+                    $em->getConnection()->exec($sql);
+                }
             }
         }
     }
