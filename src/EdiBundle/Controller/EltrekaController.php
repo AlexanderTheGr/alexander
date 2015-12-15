@@ -58,7 +58,7 @@ class EltrekaController extends Main {
     public function getPartMasterAction() {
 
         $eltrekaedi = new Eltrekaedi();
-        $file = "http://195.144.16.7/EltrekkaEDI/Temp/Parts/2Z2DCH0W.txt"; //$eltrekaedi->getPartMasterFile();
+        $file = $eltrekaedi->getPartMasterFile();
         echo $file;
 
         if ((($handle = fopen($file, "r")) !== FALSE)) {
