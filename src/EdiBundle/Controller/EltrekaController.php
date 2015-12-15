@@ -55,7 +55,6 @@ class EltrekaController extends Main {
     /**
      * @Route("/edi/eltreka/getPartMaster")
      */
-    
     public function getPartMasterAction() {
 
         $eltrekaedi = new Eltrekaedi();
@@ -70,9 +69,12 @@ class EltrekaController extends Main {
             }
             $em = $this->getDoctrine()->getManager();
             while ($data = fgetcsv($handle, 100000, "\t")) {
+                /*
                 foreach ($data as $key => $val) {
                     $attributes[$this->createName($attrs[$key])] = $val;
                 }
+                 * 
+                 */
 
 
 
@@ -84,25 +86,45 @@ class EltrekaController extends Main {
                 $attributes["heightMm"] = str_replace(",", ".", $attributes["heightMm"]);
 
 
-                
-                $eltrekaedi = new Eltrekaedi();
+
+
+
+
+
+                //$eltrekaedi = new Eltrekaedi();
+
                 $eltrekaedi = $this->getDoctrine()
                         ->getRepository('EdiBundle:Eltrekaedi')
                         ->findOneByPartno($attributes["partno"]);
-                
-                if (@!$eltrekaedi->id) {
-                    $eltrekaedi = new Eltrekaedi();                
-                    foreach ($attributes as $field => $val) {
-                        $eltrekaedi->setField($field, $val);
-                    }
-                    //exit;
-                   
-                    $em->persist($eltrekaedi);
-                    $em->flush();
-                    echo ".";   
-                } else {
-                    echo $eltrekaedi->id."<BR>";                    
+                $q = array();
+                foreach ($attributes as $field => $val) {
+                    $q[] = "`" . $field . "` = '" . addslashes($val) . "'";
                 }
+                //if ((int) $eltrekaedi["id"] == 0) {
+                @$eltrekaedi["id"] = (int)$eltrekaedi->id;
+                //}
+                if ($eltrekaedi["id"] == 0) {
+                    echo ".";
+                } 
+                $sql = "replace eltrekaedi set id = '" . $eltrekaedi["id"] . "', " . implode(",", $q);
+                $em->getConnection()->exec($sql);
+                
+                /*
+                  if (@!$eltrekaedi->id) {
+                  $eltrekaedi = new Eltrekaedi();
+                  foreach ($attributes as $field => $val) {
+                  $eltrekaedi->setField($field, $val);
+                  }
+                  //exit;
+
+                  $em->persist($eltrekaedi);
+                  $em->flush();
+                  echo ".";
+                  } else {
+                  echo $eltrekaedi->id."<BR>";
+                  }
+                 * 
+                 */
                 //exit;
 
                 /*
