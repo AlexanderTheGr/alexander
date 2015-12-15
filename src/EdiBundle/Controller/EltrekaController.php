@@ -82,22 +82,23 @@ class EltrekaController extends Main {
                 $attributes["heightMm"] = str_replace(",", ".", $attributes["heightMm"]);
 
 
-                $eltrekaedi = new Eltrekaedi();
                 
+                $eltrekaedi = new Eltrekaedi();
                 $eltrekaedi = $this->getDoctrine()
                         ->getRepository('EdiBundle:Eltrekaedi')
                         ->findOneByPartno($attributes["partno"]);
-                if (@!$eltrekaedi->id)
-                     $eltrekaedi = new Eltrekaedi();
                 
-                foreach ($attributes as $field => $val) {
-                    $eltrekaedi->setField($field, $val);
+                if (@!$eltrekaedi->id) {
+                    $eltrekaedi = new Eltrekaedi();                
+                    foreach ($attributes as $field => $val) {
+                        $eltrekaedi->setField($field, $val);
+                    }
+                    //exit;
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($eltrekaedi);
+                    $em->flush();
+                    print_r($attributes);
                 }
-                //exit;
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($eltrekaedi);
-                $em->flush();
-                print_r($attributes);
                 //exit;
 
                 /*
