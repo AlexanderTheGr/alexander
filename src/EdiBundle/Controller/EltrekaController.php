@@ -99,7 +99,9 @@ class EltrekaController extends Main {
                    
                     $em->persist($eltrekaedi);
                     $em->flush();
-                    echo ".";
+                    echo ".";   
+                } else {
+                    echo $eltrekaedi->id."<BR>";                    
                 }
                 //exit;
 
