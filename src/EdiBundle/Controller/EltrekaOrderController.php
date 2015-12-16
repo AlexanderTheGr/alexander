@@ -5,21 +5,22 @@ namespace EdiBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use EdiBundle\Entity\Eltrekaedi;
+use EdiBundle\Entity\EltrekaediOrder as EltrekaediOrder;
 use AppBundle\Controller\Main as Main;
 
 class EltrekaOrderController extends Main {
 
     var $repository = 'EdiBundle:EltrekaediOrder';
+    var $newentity = '';
 
     /**
      * @Route("/edi/eltreka/order")
      */
     public function indexAction() {
-        
+
         $buttons = array();
-        $buttons[] = array("label"=>'Get PartMaster','position'=>'right','class'=>'btn-success');        
-        
+        $buttons[] = array("label" => 'Get PartMaster', 'position' => 'right', 'class' => 'btn-success');
+
         return $this->render('EdiBundle:Eltreka:index.html.twig', array(
                     'pagename' => 'Eltrekaedis',
                     'url' => '/edi/eltreka/order/getdatatable',
@@ -35,10 +36,11 @@ class EltrekaOrderController extends Main {
      * @Route("/edi/eltreka/order/view/{id}")
      */
     public function viewAction($id) {
-
+        $buttons = array();
         return $this->render('EdiBundle:Eltreka:view.html.twig', array(
                     'pagename' => 'Eltrekaedis',
                     'url' => '/edi/eltreka/order/save',
+                    'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'tabs' => $this->gettabs($id),
@@ -50,13 +52,19 @@ class EltrekaOrderController extends Main {
      * @Route("/edi/eltreka/order/save")
      */
     public function savection() {
-        $this->save();
-        $json = json_encode(array("ok"));
+        $entity = new EltrekaediOrder;
+        $this->newentity[$this->repository] = $entity;
+        $this->newentity[$this->repository]->setField("reference", 0);
+        $out = $this->save();
+        $jsonarr = array();
+        if ($this->newentity[$this->repository]->getId()) {
+            $jsonarr["returnurl"] = "/edi/eltreka/order/view/" . $this->newentity[$this->repository]->getId();
+        }
+        $json = json_encode($jsonarr);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
-
 
     /**
      * @Route("/edi/eltreka/gettab")
@@ -66,16 +74,18 @@ class EltrekaOrderController extends Main {
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($id);
+
+        if ($id == 0 AND @ $entity->id == 0) {
+            $entity = new EltrekaediOrder;
+            $this->newentity[$this->repository] = $entity;
+        }
+
         $buttons = array();
-        $buttons[] = array("label"=>'Get PartMaster','position'=>'right','class'=>'btn-success');
-        
-        $fields["partno"] = array("label" => "Part No");
-        $fields["description"] = array("label" => "Description");
-        $fields["supplierdescr"] = array("label" => "Supplier");
-        $fields["factorypartno"] = array("label" => "Factorypart Ni");
-        $fields["wholeprice"] = array("label" => "Wholeprice");
-        $fields["retailprice"] = array("label" => "Retailprice");
-        
+        $buttons[] = array("label" => 'Get PartMaster', 'position' => 'right', 'class' => 'btn-success');
+
+        $fields["comments"] = array("label" => "Comments");
+
+
 
         $forms = $this->getFormLyFields($entity, $fields);
         $this->addTab(array("title" => "General", 'buttons' => $buttons, "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));

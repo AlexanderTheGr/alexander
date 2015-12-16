@@ -35,10 +35,11 @@ class EltrekaController extends Main {
      * @Route("/edi/eltreka/view/{id}")
      */
     public function viewAction($id) {
-
+        $buttons = array();
         return $this->render('EdiBundle:Eltreka:view.html.twig', array(
                     'pagename' => 'Eltrekaedis',
                     'url' => '/edi/eltreka/save',
+                    'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'tabs' => $this->gettabs($id),

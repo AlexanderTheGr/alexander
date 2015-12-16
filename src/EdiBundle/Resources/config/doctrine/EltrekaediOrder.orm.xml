@@ -11,29 +11,30 @@
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="reference" type="integer" column="reference" nullable="false">
+    <field name="reference" type="integer" column="reference" nullable="true">
       <options>
         <option name="unsigned"/>
+        <option name="default">0</option>
       </options>
     </field>
-    <field name="store" type="integer" column="store" nullable="false">
+    <field name="store" type="integer" column="store" nullable="true">
       <options>
         <option name="unsigned"/>
         <option name="default">1</option>
       </options>
     </field>
-    <field name="insdate" type="datetime" column="insdate" nullable="false"/>
-    <field name="comments" type="text" column="comments" length="65535" nullable="false">
+    <field name="insdate" type="datetime" column="insdate" nullable="true"/>
+    <field name="comments" type="text" column="comments" length="65535" nullable="true">
       <options>
         <option name="fixed"/>
       </options>
     </field>
-    <field name="remarks" type="text" column="remarks" length="65535" nullable="false">
+    <field name="remarks" type="text" column="remarks" length="65535" nullable="true">
       <options>
         <option name="fixed"/>
       </options>
     </field>
-    <field name="status" type="integer" column="status" nullable="false">
+    <field name="status" type="integer" column="status" nullable="true">
       <options>
         <option name="unsigned"/>
       </options>
@@ -43,8 +44,8 @@
         <option name="unsigned"/>
       </options>
     </field>
-    <field name="created" type="datetime" column="created" nullable="false"/>
-    <field name="modified" type="datetime" column="modified" nullable="false"/>
+    <field name="created" type="datetime" column="created" nullable="true"/>
+    <field name="modified" type="datetime" column="modified" nullable="true"/>
     <field name="user" type="integer" column="user" nullable="true">
       <options>
         <option name="unsigned"/>

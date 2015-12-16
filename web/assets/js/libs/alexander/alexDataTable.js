@@ -13,13 +13,11 @@
             });
             var data = {};
             data.id = 1;
-            
-            
+
             app.controller(ctrl, function ($scope, $http, $sce) {
                 $http.get(url, "options=nodata")
                         .success(function (response) {
                             //$scope.records = response.data;
-
                             $scope.fields = response.fields;
                             //setTimeout(function () {                                
                             $scope.deliberatelyTrustDangerousSnippet = function (html) {
@@ -28,7 +26,6 @@
 
                             alexander.show();
                             setTimeout(function () {
-
                                 dt_table = $(alexander).dataTable({
                                     "pageLength": 100,
                                     "processing": true,
@@ -57,6 +54,10 @@
                     $(this).addClass('selected');
                 }
                 location.href = view + "/" + $(this).attr("ref");
+            });
+            
+            $(".btn_new_"+ctrl).live('click', function () {
+                location.href = view + "/new";
             });
 
             $(alexander).find(".search_init").change(function () {

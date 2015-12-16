@@ -37,7 +37,7 @@ class Main extends Controller {
         $recordsFiltered = 0;
         //$this->q_or = array();
         //$this->q_and = array();
-        
+
         $s = array();
         if ($request->request->get("length")) {
             $em = $this->getDoctrine()->getManager();
@@ -95,7 +95,7 @@ class Main extends Controller {
         $data["fields"] = $this->fields;
         $jsonarr = array();
         $r = explode(":", $this->repository);
-        
+
         foreach ($results as $result) {
             $json = array();
             foreach ($data["fields"] as $field) {
@@ -104,7 +104,7 @@ class Main extends Controller {
                     //echo $this->repository;
                     $obj = $em->getRepository($this->repository)->find($result["id"]);
                     foreach ($field_relation as $relation) {
-                        
+
                         if ($obj)
                             $obj = $obj->getField($relation);
                     }
@@ -188,7 +188,7 @@ class Main extends Controller {
                 $field["content"] .= '<option value="1">YES</option>';
 
                 $field["content"] .= '</select>';
-            } elseif (count($field_order) > 1 AND @$field["type"] == "select") {
+            } elseif (count($field_order) > 1 AND @ $field["type"] == "select") {
                 $em = $this->getDoctrine()->getManager();
                 $query = $em->createQuery(
                         'SELECT  ' . $this->prefix . '.id, ' . $this->prefix . '.' . $field_order[1] . '
@@ -214,7 +214,7 @@ class Main extends Controller {
         $this->tabs[] = $tab;
         return $this;
     }
-    
+
     function tabDatatable($params) {
         $session = new Session();
         $session->set('params', $params['dtparams']);
@@ -222,13 +222,13 @@ class Main extends Controller {
             $fields[] = array('content' => $param["name"]);
         }
         $datatable = array(
-            'url' => $params['url'],// '/order/getitems/' . $id,
+            'url' => $params['url'], // '/order/getitems/' . $id,
             'fields' => $fields,
             'ctrl' => $this->generateRandomString(),
             'app' => $this->generateRandomString());
         return $datatable;
     }
-    
+
     function generateRandomString($length = 15) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
@@ -255,7 +255,7 @@ class Main extends Controller {
     }
 
     public function tabsAction($ctrl, $app, $url, $tabs) {
-        $tabs = (array)json_decode($tabs);
+        $tabs = (array) json_decode($tabs);
         return $this->render('elements/tabs.twig', array(
                     'pagename' => 'Customers',
                     'url' => $url,
@@ -282,6 +282,7 @@ class Main extends Controller {
         $data = $this->formLybase64();
         $em = $this->getDoctrine()->getManager();
         $entities = array();
+
         foreach ($data as $key => $val) {
             $df = explode(":", $key);
             if (!@$entities[$df[0] . ":" . $df[1]]) {
@@ -289,12 +290,17 @@ class Main extends Controller {
                         ->getRepository($df[0] . ":" . $df[1])
                         ->find($df[3]);
             }
+            if ($df[3] == 0 AND @$entities[$df[0] . ":" . $df[1]]->id == 0) {
+                 $entities[$df[0] . ":" . $df[1]] = $this->newentity[$df[0] . ":" . $df[1]];
+            }
             $entities[$df[0] . ":" . $df[1]]->setField($df[2], $val);
         }
-        foreach ($entities as $entity) {
+        foreach ($entities as $key=>$entity) {
             $em->persist($entity);
             $em->flush();
+            $out[$key] = $entity->getId();
         }
+        return $out;
     }
 
     function getFormLyFields($entity, $fields) {

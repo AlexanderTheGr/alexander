@@ -5,8 +5,15 @@ namespace EdiBundle\Entity;
 /**
  * EltrekaediOrder
  */
-class EltrekaediOrder
-{
+class EltrekaediOrder {
+    public function getField($field) {
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
     /**
      * @var integer
      */
@@ -67,7 +74,6 @@ class EltrekaediOrder
      */
     private $id;
 
-
     /**
      * Set reference
      *
@@ -75,8 +81,7 @@ class EltrekaediOrder
      *
      * @return EltrekaediOrder
      */
-    public function setReference($reference)
-    {
+    public function setReference($reference) {
         $this->reference = $reference;
 
         return $this;
@@ -87,8 +92,7 @@ class EltrekaediOrder
      *
      * @return integer
      */
-    public function getReference()
-    {
+    public function getReference() {
         return $this->reference;
     }
 
@@ -99,8 +103,7 @@ class EltrekaediOrder
      *
      * @return EltrekaediOrder
      */
-    public function setStore($store)
-    {
+    public function setStore($store) {
         $this->store = $store;
 
         return $this;
@@ -111,8 +114,7 @@ class EltrekaediOrder
      *
      * @return integer
      */
-    public function getStore()
-    {
+    public function getStore() {
         return $this->store;
     }
 
@@ -123,8 +125,7 @@ class EltrekaediOrder
      *
      * @return EltrekaediOrder
      */
-    public function setInsdate($insdate)
-    {
+    public function setInsdate($insdate) {
         $this->insdate = $insdate;
 
         return $this;
@@ -135,8 +136,7 @@ class EltrekaediOrder
      *
      * @return \DateTime
      */
-    public function getInsdate()
-    {
+    public function getInsdate() {
         return $this->insdate;
     }
 
@@ -147,8 +147,7 @@ class EltrekaediOrder
      *
      * @return EltrekaediOrder
      */
-    public function setComments($comments)
-    {
+    public function setComments($comments) {
         $this->comments = $comments;
 
         return $this;
@@ -159,8 +158,7 @@ class EltrekaediOrder
      *
      * @return string
      */
-    public function getComments()
-    {
+    public function getComments() {
         return $this->comments;
     }
 
@@ -171,8 +169,7 @@ class EltrekaediOrder
      *
      * @return EltrekaediOrder
      */
-    public function setRemarks($remarks)
-    {
+    public function setRemarks($remarks) {
         $this->remarks = $remarks;
 
         return $this;
@@ -183,8 +180,7 @@ class EltrekaediOrder
      *
      * @return string
      */
-    public function getRemarks()
-    {
+    public function getRemarks() {
         return $this->remarks;
     }
 
@@ -195,8 +191,7 @@ class EltrekaediOrder
      *
      * @return EltrekaediOrder
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->status = $status;
 
         return $this;
@@ -207,8 +202,7 @@ class EltrekaediOrder
      *
      * @return integer
      */
-    public function getStatus()
-    {
+    public function getStatus() {
         return $this->status;
     }
 
@@ -219,8 +213,7 @@ class EltrekaediOrder
      *
      * @return EltrekaediOrder
      */
-    public function setActioneer($actioneer)
-    {
+    public function setActioneer($actioneer) {
         $this->actioneer = $actioneer;
 
         return $this;
@@ -231,8 +224,7 @@ class EltrekaediOrder
      *
      * @return integer
      */
-    public function getActioneer()
-    {
+    public function getActioneer() {
         return $this->actioneer;
     }
 
@@ -243,8 +235,7 @@ class EltrekaediOrder
      *
      * @return EltrekaediOrder
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -255,8 +246,7 @@ class EltrekaediOrder
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -267,8 +257,7 @@ class EltrekaediOrder
      *
      * @return EltrekaediOrder
      */
-    public function setModified($modified)
-    {
+    public function setModified($modified) {
         $this->modified = $modified;
 
         return $this;
@@ -279,8 +268,7 @@ class EltrekaediOrder
      *
      * @return \DateTime
      */
-    public function getModified()
-    {
+    public function getModified() {
         return $this->modified;
     }
 
@@ -291,8 +279,7 @@ class EltrekaediOrder
      *
      * @return EltrekaediOrder
      */
-    public function setUser($user)
-    {
+    public function setUser($user) {
         $this->user = $user;
 
         return $this;
@@ -303,8 +290,7 @@ class EltrekaediOrder
      *
      * @return integer
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 
@@ -315,8 +301,7 @@ class EltrekaediOrder
      *
      * @return EltrekaediOrder
      */
-    public function setRoute($route)
-    {
+    public function setRoute($route) {
         $this->route = $route;
 
         return $this;
@@ -327,8 +312,7 @@ class EltrekaediOrder
      *
      * @return integer
      */
-    public function getRoute()
-    {
+    public function getRoute() {
         return $this->route;
     }
 
@@ -337,8 +321,8 @@ class EltrekaediOrder
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
+
 }
