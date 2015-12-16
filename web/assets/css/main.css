@@ -85,3 +85,6 @@ table.dataTable tbody tr {
 .alexander {
     display: none;    
 }
+.tab-pane {
+    padding-top: 15px;    
+}

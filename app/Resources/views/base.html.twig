@@ -17,6 +17,7 @@
         <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/theme-4/material-design-iconic-font.min.css') }}" />
         <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/theme-4/libs/DataTables/jquery.dataTables.css') }}">
         <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+        
 
     {% block stylesheets %}{% endblock %}
     <!-- END STYLESHEETS -->
@@ -58,8 +59,7 @@
                         <a href="javascript:void(0);" class="dropdown-toggle ink-reaction" data-toggle="dropdown">
                             <img src="/assets/img/avatar1.jpg?1403934956" alt="" />
                             <span class="profile-info">
-                                <?php echo $this->user->getFirstName() . " " . $this->user->getLastName() ?>
-                                <small><?php echo $this->userrole; ?></small>
+                                
                             </span>
                         </a>
                         <ul class="dropdown-menu animation-dock">
@@ -263,10 +263,11 @@
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div>                 
-    <!-- BEGIN OFFCANVAS RIGHT -->
-    <div class="offcanvas">
+    </div>
 
+    <!-- BEGIN OFFCANVAS RIGHT -->
+    <a class="btn btn-icon-toggle btn-default offcanvas-search" href="#offcanvas-search" data-toggle="offcanvas" data-backdrop="false"></a>
+    <div class="offcanvas">
         <!-- BEGIN OFFCANVAS SEARCH -->
         <div id="offcanvas-search" style='width: 1600px' class="offcanvas-pane style-default-light">
             <div class="offcanvas-head">
@@ -327,7 +328,6 @@
 </div><!--end #base-->
 <!-- END BASE -->        
 <!-- BEGIN JAVASCRIPT -->
-
 {% javascripts
             'assets/js/libs/jquery/jquery-1.11.2.min.js'
             'assets/js/libs/jquery/jquery-migrate-1.2.1.min.js' 
@@ -349,31 +349,11 @@
             'assets/js/libs/angular/angular-base64.js' 
             'assets/js/libs/alexander/*' 
             'assets/js/libs/partsbox/*' 
+            'assets/js/libs/eltrekaedi/*' 
 %}
 <script src="{{ asset_url }}"></script>
 {% endjavascripts %} 
 
-
-<!--
-<script src="{{ asset('assets/js/libs/jquery/jquery-1.11.2.min.js') }}"></script>
-<script src="{{ asset('assets/js/libs/jquery/jquery-migrate-1.2.1.min.js') }}"></script>
-<script src="{{ asset('assets/js/libs/bootstrap/bootstrap.min.js') }}"></script>
-<script src="{{ asset('assets/js/libs/spin.js/spin.min.js') }}"></script>
-<script src="{{ asset('assets/js/libs/autosize/jquery.autosize.min.js') }}"></script>
-<script src="{{ asset('assets/js/libs/nanoscroller/jquery.nanoscroller.min.js') }}"></script>
-<script src="{{ asset('assets/js/core/source/App.js') }}"></script>
-<script src="{{ asset('assets/js/core/source/AppNavigation.js') }}"></script>
-<script src="{{ asset('assets/js/core/source/AppOffcanvas.js') }}"></script>
-<script src="{{ asset('assets/js/core/source/AppCard.js') }}"></script>
-<script src="{{ asset('assets/js/core/source/AppForm.js') }}"></script>
-<script src="{{ asset('assets/js/core/source/AppNavSearch.js') }}"></script>
-<script src="{{ asset('assets/js/core/source/AppVendor.js') }}"></script>
-<script src="{{ asset('assets/js/core/demo/Demo.js') }}"></script>
-<script src="{{ asset('assets/js/libs/DataTables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('assets/js/core/source/Angular.js') }}"></script> 
-<script src="{{ asset('assets/js/core/source/angular-datatables.min.js') }}"></script>
-<script src="{{ asset('assets/js/libs/alexander.js') }}"></script>
--->
 
 {% block javascripts %}{% endblock %}
 <!-- END JAVASCRIPT -->    

@@ -5,8 +5,17 @@ namespace EdiBundle\Entity;
 /**
  * EltrekaediOrderItem
  */
-class EltrekaediOrderItem
-{
+class EltrekaediOrderItem {
+
+    public function getField($field) {
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
+
     /**
      * @var integer
      */
@@ -52,7 +61,6 @@ class EltrekaediOrderItem
      */
     private $id;
 
-
     /**
      * Set order
      *
@@ -60,8 +68,7 @@ class EltrekaediOrderItem
      *
      * @return EltrekaediOrderItem
      */
-    public function setOrder($order)
-    {
+    public function setOrder($order) {
         $this->order = $order;
 
         return $this;
@@ -72,8 +79,7 @@ class EltrekaediOrderItem
      *
      * @return integer
      */
-    public function getOrder()
-    {
+    public function getOrder() {
         return $this->order;
     }
 
@@ -84,8 +90,7 @@ class EltrekaediOrderItem
      *
      * @return EltrekaediOrderItem
      */
-    public function setProduct($product)
-    {
+    public function setProduct($product) {
         $this->product = $product;
 
         return $this;
@@ -96,8 +101,7 @@ class EltrekaediOrderItem
      *
      * @return integer
      */
-    public function getProduct()
-    {
+    public function getProduct() {
         return $this->product;
     }
 
@@ -108,8 +112,7 @@ class EltrekaediOrderItem
      *
      * @return EltrekaediOrderItem
      */
-    public function setQty($qty)
-    {
+    public function setQty($qty) {
         $this->qty = $qty;
 
         return $this;
@@ -120,8 +123,7 @@ class EltrekaediOrderItem
      *
      * @return integer
      */
-    public function getQty()
-    {
+    public function getQty() {
         return $this->qty;
     }
 
@@ -132,8 +134,7 @@ class EltrekaediOrderItem
      *
      * @return EltrekaediOrderItem
      */
-    public function setPrice($price)
-    {
+    public function setPrice($price) {
         $this->price = $price;
 
         return $this;
@@ -144,8 +145,7 @@ class EltrekaediOrderItem
      *
      * @return string
      */
-    public function getPrice()
-    {
+    public function getPrice() {
         return $this->price;
     }
 
@@ -156,8 +156,7 @@ class EltrekaediOrderItem
      *
      * @return EltrekaediOrderItem
      */
-    public function setDisc1prc($disc1prc)
-    {
+    public function setDisc1prc($disc1prc) {
         $this->disc1prc = $disc1prc;
 
         return $this;
@@ -168,8 +167,7 @@ class EltrekaediOrderItem
      *
      * @return string
      */
-    public function getDisc1prc()
-    {
+    public function getDisc1prc() {
         return $this->disc1prc;
     }
 
@@ -180,8 +178,7 @@ class EltrekaediOrderItem
      *
      * @return EltrekaediOrderItem
      */
-    public function setLineval($lineval)
-    {
+    public function setLineval($lineval) {
         $this->lineval = $lineval;
 
         return $this;
@@ -192,8 +189,7 @@ class EltrekaediOrderItem
      *
      * @return string
      */
-    public function getLineval()
-    {
+    public function getLineval() {
         return $this->lineval;
     }
 
@@ -204,8 +200,7 @@ class EltrekaediOrderItem
      *
      * @return EltrekaediOrderItem
      */
-    public function setStore($store)
-    {
+    public function setStore($store) {
         $this->store = $store;
 
         return $this;
@@ -216,8 +211,7 @@ class EltrekaediOrderItem
      *
      * @return integer
      */
-    public function getStore()
-    {
+    public function getStore() {
         return $this->store;
     }
 
@@ -228,8 +222,7 @@ class EltrekaediOrderItem
      *
      * @return EltrekaediOrderItem
      */
-    public function setChk($chk)
-    {
+    public function setChk($chk) {
         $this->chk = $chk;
 
         return $this;
@@ -240,8 +233,7 @@ class EltrekaediOrderItem
      *
      * @return boolean
      */
-    public function getChk()
-    {
+    public function getChk() {
         return $this->chk;
     }
 
@@ -250,9 +242,62 @@ class EltrekaediOrderItem
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
-}
 
+    /**
+     * @var \EdiBundle\Entity\Eltrekaedi
+     */
+    private $eltrekaedi;
+
+    /**
+     * Set eltrekaedi
+     *
+     * @param \EdiBundle\Entity\Eltrekaedi $eltrekaedi
+     *
+     * @return EltrekaediOrderItem
+     */
+    public function setEltrekaedi(\EdiBundle\Entity\Eltrekaedi $eltrekaedi = null) {
+        $this->eltrekaedi = $eltrekaedi;
+
+        return $this;
+    }
+
+    /**
+     * Get eltrekaedi
+     *
+     * @return \EdiBundle\Entity\Eltrekaedi
+     */
+    public function getEltrekaedi() {
+        return $this->eltrekaedi;
+    }
+
+    /**
+     * @var \EdiBundle\Entity\EltrekaediOrder
+     */
+    private $eltrekaediorder;
+
+    /**
+     * Set eltrekaediorder
+     *
+     * @param \EdiBundle\Entity\EltrekaediOrder $eltrekaediorder
+     *
+     * @return EltrekaediOrderItem
+     */
+    public function setEltrekaediorder(\EdiBundle\Entity\EltrekaediOrder $eltrekaediorder = null) {
+        $this->eltrekaediorder = $eltrekaediorder;
+
+        return $this;
+    }
+
+    /**
+     * Get eltrekaediorder
+     *
+     * @return \EdiBundle\Entity\EltrekaediOrder
+     */
+    public function getEltrekaediorder() {
+        return $this->eltrekaediorder;
+    }
+
+}
