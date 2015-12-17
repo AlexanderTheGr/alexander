@@ -8,6 +8,7 @@
         var dt_table;
         dataTable(app, ctrl, url);
         function dataTable(app, ctrl, url, view) {
+           
             var app = angular.module(app, ['ngSanitize']).config(function ($interpolateProvider) {
                 $interpolateProvider.startSymbol('[[').endSymbol(']]');
             });
@@ -15,6 +16,7 @@
             data.id = 1;
 
             app.controller(ctrl, function ($scope, $http, $sce) {
+                alert(alexander);
                 $http.get(url, "options=nodata")
                         .success(function (response) {
                             //$scope.records = response.data;
@@ -23,7 +25,7 @@
                             $scope.deliberatelyTrustDangerousSnippet = function (html) {
                                 return $sce.trustAsHtml(html);
                             };
-
+                            
                             alexander.show();
                             setTimeout(function () {
                                 dt_table = $(alexander).dataTable({

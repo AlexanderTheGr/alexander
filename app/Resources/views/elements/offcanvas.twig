@@ -1,0 +1,19 @@
+{% block body %} 
+    <a class="btn btn-icon-toggle btn-default offcanvas-search" href="#asdf" data-toggle="offcanvas" data-backdrop="false">lllll</a>
+    <div  class="offcanvas" ng-app="{{app}}" ng-controller="{{ctrl}}"> 
+        
+        <div ng-repeat="offcanvas in offcanvases" id="[[ offcanvas.id ]]" style='width: 1600px' class="{{ctrl}} offcanvas-pane style-default-light">
+            <div class="offcanvas-head">
+                <header class="text-primary">Search</header>
+                <div class="offcanvas-tools">
+                    <a class="btn btn-icon-toggle btn-default-light pull-right" data-dismiss="offcanvas">
+                        <i class="md md-close"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="offcanvas-body">
+                [[ offcanvas.body ]]
+            </div>
+        </div>    
+    </div>
+{% endblock %}

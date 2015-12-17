@@ -266,9 +266,11 @@
     </div>
 
     <!-- BEGIN OFFCANVAS RIGHT -->
-    <a class="btn btn-icon-toggle btn-default offcanvas-search" href="#offcanvas-search" data-toggle="offcanvas" data-backdrop="false"></a>
+    <a class="btn btn-icon-toggle btn-default offcanvas-search" style="display: none" href="#offcanvas-search" data-toggle="offcanvas" data-backdrop="false"></a>
     <div class="offcanvas">
         <!-- BEGIN OFFCANVAS SEARCH -->
+        
+        
         <div id="offcanvas-search" style='width: 1600px' class="offcanvas-pane style-default-light">
             <div class="offcanvas-head">
                 <header class="text-primary">Search</header>
@@ -279,7 +281,7 @@
                 </div>
             </div>
             <div class="offcanvas-body">
-
+                
             </div><!--end .offcanvas-body -->
         </div><!--end .offcanvas-pane -->
         <!-- END OFFCANVAS SEARCH -->
@@ -296,38 +298,13 @@
             </div>
         </div>
 
-        <!-- BEGIN OFFCANVAS CHAT -->
-        <div id="offcanvas-chat" class="offcanvas-pane style-default-light width-12">
-            <div class="offcanvas-head style-default-bright">
-                <header class="text-primary">Chat</header>
-                <div class="offcanvas-tools">
-                    <a class="btn btn-icon-toggle btn-default-light pull-right" data-dismiss="offcanvas">
-                        <i class="md md-close"></i>
-                    </a>
-                    <!--a class="btn btn-icon-toggle btn-default-light pull-right" href="#offcanvas-search" data-toggle="offcanvas" data-backdrop="false">
-                        <i class="md md-arrow-back"></i>
-                    </a-->
-                </div>
-                <div class="form">
-                    <div class="form-group floating-label">
-                        <input  name="sidebarChatMessage" id="sidebarChatMessage" maxlength=200 class="form-control autosize" rows="1">
-                        <label for="sidebarChatMessage">Leave a message</label>
-                    </div>
-                </div>
-            </div>
-            <div  class="offcanvas-body">
-                <ul id="chat-area" class="list-chats">
-                </ul>
-            </div><!--end .offcanvas-body -->
-        </div><!--end .offcanvas-pane -->
-        <!-- END OFFCANVAS CHAT -->
-
     </div><!--end .offcanvas-->
     <!-- END OFFCANVAS RIGHT -->
 
 </div><!--end #base-->
 <!-- END BASE -->        
 <!-- BEGIN JAVASCRIPT -->
+
 {% javascripts
             'assets/js/libs/jquery/jquery-1.11.2.min.js'
             'assets/js/libs/jquery/jquery-migrate-1.2.1.min.js' 
@@ -351,6 +328,7 @@
             'assets/js/libs/partsbox/*' 
             'assets/js/libs/eltrekaedi/*' 
 %}
+
 <script src="{{ asset_url }}"></script>
 {% endjavascripts %} 
 

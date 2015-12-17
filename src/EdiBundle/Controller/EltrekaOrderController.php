@@ -56,7 +56,7 @@ class EltrekaOrderController extends Main {
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
-                    'tabs' => $this->gettabs($id, $datatables),
+                    'tabs' => $this->gettabs($id, $datatables),      
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
@@ -79,10 +79,7 @@ class EltrekaOrderController extends Main {
         );
     }
 
-    /**
-     * @Route("/edi/eltreka/gettab")
-     */
-    public function gettabs($id, $datatables) {
+    protected function gettabs($id, $datatables) {
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($id);
@@ -95,11 +92,14 @@ class EltrekaOrderController extends Main {
         $buttons[] = array("label" => 'Get PartMaster', 'position' => 'right', 'class' => 'btn-success');
         $fields["comments"] = array("label" => "Comments");
 
+        
+        $offcanvases[] = array('id'=>'asdf',"body"=>'sss');
+        
         $forms = $this->getFormLyFields($entity, $fields);
-        $this->addTab(array("title" => "General", 'buttons' => $buttons, "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
+        $this->addTab(array("title" => "General",'offcanvases' => $offcanvases, 'buttons' => $buttons, "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         if ($entity->getId()) {
             //$this->addTab(array("title" => "Search", "datatables" => array(), "form" => '', "content" => $this->getTabContentSearch(), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
-            $this->addTab(array("title" => "Items", "datatables" => $datatables, "form" => '', "content" => $this->getTabContentSearch(), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
+            $this->addTab(array("title" => "Items",  "datatables" => $datatables, "form" => '', "content" => $this->getTabContentSearch(), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
         }
 
         $json = $this->tabs();
@@ -116,10 +116,18 @@ class EltrekaOrderController extends Main {
      * @Route("/edi/eltreka/order/fororder/")
      */
     public function fororderAction() {
-        $json = json_encode(array());
-        return new Response(
-                $json, 200, array('Content-Type' => 'application/json')
-        );
+        $buttons = array();
+        $buttons[] = array("label" => 'Get PartMaster', 'position' => 'right', 'class' => 'btn-success');
+
+        return $this->render('EdiBundle:Eltreka:index.html_1.twig', array(
+                    'pagename' => 'Eltrekaedis',
+                    'url' => '/edi/eltreka/order/getdatatable',
+                    'view' => '/edi/eltreka/order/view',
+                    'buttons' => $buttons,
+                    'ctrl' => $this->generateRandomString(),
+                    'app' => $this->generateRandomString(),
+                    'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
+        ));
     }
 
     /**

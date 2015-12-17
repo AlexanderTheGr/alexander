@@ -3,6 +3,7 @@
 namespace EdiBundle\Entity;
 
 use AppBundle\Entity\Repository;
+
 /**
  * EltrekaediRepository
  *

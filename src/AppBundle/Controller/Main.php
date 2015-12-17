@@ -28,7 +28,10 @@ class Main extends Controller {
         $data["tabs"] = $this->tabs;
         return json_encode($data);
     }
-
+    public function offcanvases() {
+        $data["offcanvases"] = $this->offcanvases;
+        return json_encode($data);
+    }
     public function datatable() {
         ini_set("memory_limit", "1256M");
         $request = Request::createFromGlobals();
@@ -214,6 +217,10 @@ class Main extends Controller {
         $this->tabs[] = $tab;
         return $this;
     }
+    function addOffCanvas($offcanvas = array()) {
+        $this->offcanvases[] = $offcanvas;
+        return $this;
+    }    
 
     function tabDatatable($params) {
         $session = new Session();
@@ -257,7 +264,7 @@ class Main extends Controller {
     public function tabsAction($ctrl, $app, $url, $tabs) {
         $tabs = (array) json_decode($tabs);
         return $this->render('elements/tabs.twig', array(
-                    'pagename' => 'Customers',
+                    'pagename' => '',
                     'url' => $url,
                     'ctrl' => $ctrl,
                     'app' => $app,
@@ -267,6 +274,20 @@ class Main extends Controller {
         ));
     }
 
+    public function offCanvasAction($ctrl, $app, $url, $offcanvases) {
+        $tabs = (array) json_decode($offcanvases);
+        return $this->render('elements/offcanvas.twig', array(
+                    'pagename' => '',
+                    'url' => $url,
+                    'ctrl' => $ctrl,
+                    'app' => $app,
+                    'offcanvases' => $offcanvases,
+                    'type' => '',
+                    'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
+        ));
+    }    
+    
+    
     function formLybase64() {
         $json = json_encode(array("ok"));
         $content = $this->get("request")->getContent();

@@ -24,6 +24,7 @@
                 vm.tabs = response.tabs;
 
                 alexander.show();
+                
                 $scope.deliberatelyTrustDangerousSnippet = function (html) {
                     $scope.snippet = html;
                     return $sce.trustAsHtml($scope.snippet);
@@ -55,10 +56,13 @@
                         if (tab.content != "") {
                             jQuery("#" + tab.index).html(html_entity_decode(tab.content))
                         }
+                        
                         angular.forEach(tab.datatables, function (datatable) {
                             console.log(datatable.ctrl);
                             //$("."+datatable.ctrl).alexDataTable(datatable.app, datatable.ctrl, datatable.url, datatable.view)
                             $("." + datatable.ctrl).show();
+                            jQuery(".offcanvas-pane").css("display","block"); 
+                            jQuery('.offcanvas').trigger('refresh');
                             dt_table = $("." + datatable.ctrl).dataTable({
                                 "pageLength": 100,
                                 "processing": true,
@@ -74,6 +78,7 @@
                             })
 
                         })
+                        
 
                         //if (tab.datatable != "") {
                         //$("."+tab.ctrl).alexDataTable(tab.app, tab.ctrl, tab.url, tab.view)

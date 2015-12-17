@@ -14,7 +14,6 @@ jQuery('#eltrekaediitem').live("keyup", function (e) {
 
 var bobj;
 var fororder = false;
-
 function asdf(obj, filter, freesearch) {
 
     bobj = obj;
@@ -30,19 +29,17 @@ function asdf(obj, filter, freesearch) {
         bfilter.push(filter);
         data.filter = bfilter;
     }
-
+    
     $.post("/edi/eltreka/order/fororder", data, function (result) {
 
-        $("#offcanvas-search .offcanvas-body").html(result);
+        //$("#offcanvas-search .offcanvas-body").html(result);
         $("#offcanvas-search .offcanvas-head .text-primary").html(title);
         $(".offcanvas-search").click();
-        fororder = $('.fororder').dataTable({"iDisplayLength": 5000, "bRetrieve": true, "aaSorting": [[6, 'desc']]});
-
-        $(".dataTables_filter").hide();
+        
+        $(".123").alexDataTable("123", "123", "123", "123");
 
         setTimeout(function () {
-            $('.fororder tbody tr:first').find(".productitemqty").val("");
-            $('.fororder tbody tr:first').find(".productitemqty").focus();
+            
         }, 300)
 
 
