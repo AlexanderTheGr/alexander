@@ -5,8 +5,6 @@ namespace PartsboxBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-
-
 use AppBundle\Controller\Main;
 
 class CustomerController extends Main {
@@ -52,7 +50,6 @@ class CustomerController extends Main {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
-
 
     /**
      * @Route("/customer/gettab")

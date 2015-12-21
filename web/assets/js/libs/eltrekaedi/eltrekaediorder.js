@@ -13,7 +13,6 @@ jQuery('#eltrekaediitem').live("keyup", function (e) {
 });
 
 var bobj;
-var fororder = false;
 function asdf(obj, filter, freesearch) {
 
     bobj = obj;
@@ -29,19 +28,18 @@ function asdf(obj, filter, freesearch) {
         bfilter.push(filter);
         data.filter = bfilter;
     }
-    
-    $.post("/edi/eltreka/order/fororder", data, function (result) {
 
+    $.post("/edi/eltreka/order/fororder", data, function (result) {
         //$("#offcanvas-search .offcanvas-body").html(result);
         $("#offcanvas-search .offcanvas-head .text-primary").html(title);
-        $(".offcanvas-search").click();
-        
-        $(".123").alexDataTable("123", "123", "123", "123");
-
-        setTimeout(function () {
-            
-        }, 300)
-
+        var table = dt_tables["ctrlgetoffcanvases"];
+        table.fnFilter(jQuery('#eltrekaediitem').val());
+        //$(".offcanvas-search").click();
 
     })
+}
+function fororder() {
+    if (jQuery('#eltrekaediitem').val()) {
+        $(".offcanvas-search").click();
+    }
 }

@@ -16,10 +16,10 @@ class EltrekaController extends Main {
      * @Route("/edi/eltreka")
      */
     public function indexAction() {
-        
+
         $buttons = array();
-        $buttons[] = array("label"=>'Get PartMaster','position'=>'right','class'=>'btn-success');        
-        
+        $buttons[] = array("label" => 'Get PartMaster', 'position' => 'right', 'class' => 'btn-success');
+
         return $this->render('EdiBundle:Eltreka:index.html.twig', array(
                     'pagename' => 'Eltrekaedis',
                     'url' => '/edi/eltreka/getdatatable',
@@ -74,7 +74,7 @@ class EltrekaController extends Main {
                 $attrs[$key] = strtolower($attr);
             }
             while ($data = fgetcsv($handle, 100000, "\t")) {
-                
+
                 foreach ($data as $key => $val) {
                     $attributes[$attrs[$key]] = $val;
                 }
@@ -93,7 +93,7 @@ class EltrekaController extends Main {
                 foreach ($attributes as $field => $val) {
                     $q[] = "`" . $field . "` = '" . addslashes($val) . "'";
                 }
-                @$eltrekaedi_id = (int)$eltrekaedi->id;
+                @$eltrekaedi_id = (int) $eltrekaedi->id;
                 if ($eltrekaedi_id == 0) {
                     $sql = "replace eltrekaedi set id = '" . $eltrekaedi_id . "', " . implode(",", $q);
                     $em->getConnection()->exec($sql);
@@ -111,15 +111,15 @@ class EltrekaController extends Main {
                 ->getRepository($this->repository)
                 ->find($id);
         $buttons = array();
-        $buttons[] = array("label"=>'Get PartMaster','position'=>'right','class'=>'btn-success');
-        
+        $buttons[] = array("label" => 'Get PartMaster', 'position' => 'right', 'class' => 'btn-success');
+
         $fields["partno"] = array("label" => "Part No");
         $fields["description"] = array("label" => "Description");
         $fields["supplierdescr"] = array("label" => "Supplier");
         $fields["factorypartno"] = array("label" => "Factorypart Ni");
         $fields["wholeprice"] = array("label" => "Wholeprice");
         $fields["retailprice"] = array("label" => "Retailprice");
-        
+
 
         $forms = $this->getFormLyFields($entity, $fields);
         $this->addTab(array("title" => "General", 'buttons' => $buttons, "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
@@ -136,10 +136,8 @@ class EltrekaController extends Main {
         $this->addField(array("name" => "ID", "index" => 'id'))
                 ->addField(array("name" => "Part No", "index" => 'partno', 'search' => 'text'))
                 ->addField(array("name" => "Description", "index" => 'description', 'search' => 'text'))
-                
                 ->addField(array("name" => "Supplier", "index" => 'supplierdescr', 'search' => 'text'))
                 ->addField(array("name" => "Factorypart No", "index" => 'factorypartno', 'search' => 'text'))
-                
                 ->addField(array("name" => "Wholeprice", "index" => 'wholeprice', 'search' => 'text'))
                 ->addField(array("name" => "Retailprice", "index" => 'retailprice', 'search' => 'text'))
 

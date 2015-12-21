@@ -43,11 +43,16 @@ class EltrekaOrderController extends Main {
         $dtparams[] = array("name" => "Product", "index" => 'eltrekaedi:description');
         $dtparams[] = array("name" => "Product", "index" => 'qty');
         $dtparams[] = array("name" => "Product", "index" => 'price');
-
         $params['dtparams'] = $dtparams;
         $params['id'] = $dtparams;
         $params['url'] = '/edi/eltreka/order/getitems/' . $id;
-        $datatables[] = $this->tabDatatable($params);
+        
+        
+       
+        $content = $this->gettabs($id);
+        $content = $this->getoffcanvases($id);
+        
+        $content = $this->content();
 
 
         return $this->render('EdiBundle:Eltreka:view.html.twig', array(
@@ -56,7 +61,7 @@ class EltrekaOrderController extends Main {
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
-                    'tabs' => $this->gettabs($id, $datatables),      
+                    'content' => $content,      
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
@@ -79,7 +84,7 @@ class EltrekaOrderController extends Main {
         );
     }
 
-    protected function gettabs($id, $datatables) {
+    protected function gettabs($id) {
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($id);
@@ -87,24 +92,47 @@ class EltrekaOrderController extends Main {
             $entity = new EltrekaediOrder;
             $this->newentity[$this->repository] = $entity;
         }
-
         $buttons = array();
         $buttons[] = array("label" => 'Get PartMaster', 'position' => 'right', 'class' => 'btn-success');
-        $fields["comments"] = array("label" => "Comments");
-
+        $tabfields["comments"] = array("label" => "Comments");
+        $tabforms = $this->getFormLyFields($entity, $tabfields);
         
-        $offcanvases[] = array('id'=>'asdf',"body"=>'sss');
+        $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
+        $dtparams[] = array("name" => "Product", "index" => 'eltrekaedi:description');
+        $dtparams[] = array("name" => "Product", "index" => 'qty');
+        $dtparams[] = array("name" => "Product", "index" => 'price');
+        $params['dtparams'] = $dtparams;
+        $params['id'] = $dtparams;
+        $params['key'] = 'gettabs_'.$id;
+        $params['url'] = '/edi/eltreka/order/getitems/' . $id;
+        $datatables[] = $this->contentDatatable($params);
+               
         
-        $forms = $this->getFormLyFields($entity, $fields);
-        $this->addTab(array("title" => "General",'offcanvases' => $offcanvases, 'buttons' => $buttons, "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
+        
+        $this->addTab(array("title" => "General", 'buttons' => $buttons, "form" => $tabforms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         if ($entity->getId()) {
-            //$this->addTab(array("title" => "Search", "datatables" => array(), "form" => '', "content" => $this->getTabContentSearch(), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
             $this->addTab(array("title" => "Items",  "datatables" => $datatables, "form" => '', "content" => $this->getTabContentSearch(), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
         }
-
-        $json = $this->tabs();
-        return $json;
+        return $this->tabs();
     }
+    protected function getoffcanvases($id) {
+        $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
+        $dtparams[] = array("name" => "Part No", "index" => 'partno', 'search' => 'text');
+        $dtparams[] = array("name" => "Description", "index" => 'description', 'search' => 'text');
+        $params['dtparams'] = $dtparams;
+        $params['id'] = $dtparams;
+        $params['key'] = 'getoffcanvases_'.$id;
+        $params['url'] = '/edi/eltreka/order/getfororderitems/'.$id;
+        $params["ctrl"] = 'ctrlgetoffcanvases';
+        $params["app"] = 'appgetoffcanvases';
+        $params["drawCallback"] = 'fororder()';
+        
+        $datatables[] = $this->contentDatatable($params);        
+        //$datatables = array();
+        $this->addOffCanvas(array('id'=>'asdf',"content"=>'sss', "index" => $this->generateRandomString(), "datatables" => $datatables));
+        return $this->offcanvases();
+    }
+    
 
     function getTabContentSearch() {
         $response = $this->get('twig')->render('EdiBundle:Eltreka:eltrekaediordersearch.html.twig', array());
@@ -135,16 +163,35 @@ class EltrekaOrderController extends Main {
      */
     public function getitemsAction($id) {
         $session = new Session();
-        foreach ($session->get('params') as $param) {
+        foreach ($session->get('params_gettabs_'.$id) as $param) {
             $this->addField($param);
         }
         $this->repository = 'EdiBundle:EltrekaediOrderItem';
         $this->q_and[] = $this->prefix . ".eltrekaediorder = " . $id;
+        //$this->q_and[] = $this->prefix . ".eltrekaediorder = " . $id;
         $json = $this->datatable();
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+    
+    /**
+     * @Route("/edi/eltreka/order/getfororderitems/{id}")
+     */
+    public function getfororderitemsAction($id) {
+        $session = new Session();
+        foreach ($session->get('params_getoffcanvases_'.$id) as $param) {
+            $this->addField($param);
+        }
+        $this->repository = 'EdiBundle:Eltrekaedi';
+        
+        $json = $this->datatable();
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+    }    
+    
+    
 
     /**
      * @Route("/edi/eltreka/order/getdatatable")

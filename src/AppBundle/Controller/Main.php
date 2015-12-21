@@ -24,13 +24,18 @@ class Main extends Controller {
         
     }
 
+    public function content() {
+        $data["tabs"] = $this->tabs;
+        $data["offcanvases"] = $this->offcanvases;
+        return $data;        
+    }
     public function tabs() {
         $data["tabs"] = $this->tabs;
-        return json_encode($data);
+        return $data;
     }
     public function offcanvases() {
         $data["offcanvases"] = $this->offcanvases;
-        return json_encode($data);
+        return $data;
     }
     public function datatable() {
         ini_set("memory_limit", "1256M");
@@ -222,17 +227,18 @@ class Main extends Controller {
         return $this;
     }    
 
-    function tabDatatable($params) {
+    function contentDatatable($params) {
         $session = new Session();
-        $session->set('params', $params['dtparams']);
+        $session->set('params_'.$params['key'], $params['dtparams']);
         foreach ($params['dtparams'] as $param) {
             $fields[] = array('content' => $param["name"]);
         }
         $datatable = array(
             'url' => $params['url'], // '/order/getitems/' . $id,
             'fields' => $fields,
-            'ctrl' => $this->generateRandomString(),
-            'app' => $this->generateRandomString());
+            'drawCallback' => @$params["drawCallback"],
+            'ctrl' => @$params["ctrl"] ? $params["ctrl"] : $this->generateRandomString(),
+            'app' => @$params["app"] ? $params["app"] : $this->generateRandomString());
         return $datatable;
     }
 
@@ -274,6 +280,22 @@ class Main extends Controller {
         ));
     }
 
+    
+    
+    public function contentAction($ctrl, $app, $url, $content) {
+        
+
+        return $this->render('elements/content.twig', array(
+                    'pagename' => '',
+                    'url' => $url,
+                    'ctrl' => $ctrl,
+                    'app' => $app,
+                    'content' => $content,
+                    'type' => '',
+                    'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
+        ));
+    }    
+    
     public function offCanvasAction($ctrl, $app, $url, $offcanvases) {
         $tabs = (array) json_decode($offcanvases);
         return $this->render('elements/offcanvas.twig', array(

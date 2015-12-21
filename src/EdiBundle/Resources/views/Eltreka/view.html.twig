@@ -3,13 +3,13 @@
 {% for button in buttons %}
         <button class="btn {{ button.class }} {{ button.position }}">{{ button.label }}</button>    
 {% endfor %}    
-{{ render(controller('EdiBundle:Eltreka:tabs', { 'ctrl': ctrl,'app':app,'url':url,'tabs':tabs }) ) }}
+{{ render(controller('EdiBundle:Eltreka:content', { 'ctrl': ctrl,'app':app,'url':url,'content':content }) ) }}
 {% endblock %}
 {% block stylesheets %}
 {% endblock %}
 {% block javascripts %}
 <script>
-    $(".{{ctrl}}").alexTabs("{{app}}", "{{ctrl}}", "{{url}}","{{tabs}}");
+    $(".{{ctrl}}").alexTabs("{{app}}", "{{ctrl}}", "{{url}}","{{content|json_encode()}}");
 </script>
 
 {% endblock %}

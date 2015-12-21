@@ -1,12 +1,13 @@
+var dt_tables = [];
 (function ($) {
-    $.fn.alexTabs = function (app, ctrl, url, tab, custom) {
+    $.fn.alexTabs = function (app, ctrl, url, content, custom) {
         var alexander = this;
         alexander.hide();
         var defaults = {}
         var $dialog = {}
         var settings = $.extend({}, defaults, custom);
-        tabs(app, ctrl, url, tab);
-        function tabs(app, ctrl, url, tab) {
+        tabs(app, ctrl, url, content);
+        function tabs(app, ctrl, url, content) {
             var app = angular.module(app, ['ngSanitize', 'ui.bootstrap', 'base64', 'formly', 'formlyBootstrap', 'ngMessages']).config(function ($interpolateProvider) {
                 $interpolateProvider.startSymbol('[[').endSymbol(']]');
             });
@@ -16,20 +17,18 @@
             app.controller(ctrl, function ($scope, $http, $sce, $base64) {
                 var vm = this;
 
-                var response = angular.fromJson(html_entity_decode(tab));
-
-
-
+                var response = angular.fromJson(html_entity_decode(content));
                 //console.log(html_entity_decode(tab));
                 vm.tabs = response.tabs;
+                vm.offcanvases = response.offcanvases;
+
 
                 alexander.show();
-                
+
                 $scope.deliberatelyTrustDangerousSnippet = function (html) {
                     $scope.snippet = html;
                     return $sce.trustAsHtml($scope.snippet);
                 };
-
 
                 vm.onSubmit = onSubmit;
                 vm.resetAllForms = invokeOnAllFormOptions.bind(null, 'resetModel');
@@ -52,38 +51,8 @@
                 }
 
                 setTimeout(function () {
-                    angular.forEach(vm.tabs, function (tab) {
-                        if (tab.content != "") {
-                            jQuery("#" + tab.index).html(html_entity_decode(tab.content))
-                        }
-                        
-                        angular.forEach(tab.datatables, function (datatable) {
-                            console.log(datatable.ctrl);
-                            //$("."+datatable.ctrl).alexDataTable(datatable.app, datatable.ctrl, datatable.url, datatable.view)
-                            $("." + datatable.ctrl).show();
-                            jQuery(".offcanvas-pane").css("display","block"); 
-                            jQuery('.offcanvas').trigger('refresh');
-                            dt_table = $("." + datatable.ctrl).dataTable({
-                                "pageLength": 100,
-                                "processing": true,
-                                "serverSide": true,
-                                //"initComplete": initComplete,
-                                //"drawCallback": drawCallback,
-                                //"rowCallback": rowCallback,
-                                //"createdRow": createdRow,
-                                "ajax": {
-                                    "method": "post",
-                                    "url": datatable.url,
-                                }
-                            })
-
-                        })
-                        
-
-                        //if (tab.datatable != "") {
-                        //$("."+tab.ctrl).alexDataTable(tab.app, tab.ctrl, tab.url, tab.view)
-                        // }
-                    })
+                    forEach(vm.tabs)
+                    forEach(vm.offcanvases)
                 }, 30)
                 function invokeOnAllFormOptions(fn) {
                     angular.forEach(vm.tabs, function (tab) {
@@ -99,6 +68,35 @@
 
             });
         }
+        function forEach(p) {
+            angular.forEach(p, function (r) {
+                angular.forEach(r.datatables, function (datatable) {
+                    if (r.content != "") {
+                        jQuery("#" + r.index).html(html_entity_decode(r.content))
+                    }
+                    //$("."+datatable.ctrl).alexDataTable(datatable.app, datatable.ctrl, datatable.url, datatable.view)
+                    $("." + datatable.ctrl).show();
+                    var dt_table = $("." + datatable.ctrl).dataTable({
+                        "pageLength": 100,
+                        "processing": true,
+                        "serverSide": true,
+                        //"initComplete": initComplete,
+                        "drawCallback": function() {
+                            eval(datatable.drawCallback);
+                        },
+                        //"rowCallback": rowCallback,
+                        //"createdRow": createdRow,
+
+                        "ajax": {
+                            "method": "post",
+                            "url": datatable.url,
+                        }
+                    })
+                    dt_tables[datatable.ctrl] = dt_table;
+                })
+            })
+        }
+
     }
 })(jQuery);
 function htmlEntities(str) {
