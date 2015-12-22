@@ -6,6 +6,7 @@ namespace EdiBundle\Entity;
  * EltrekaediOrder
  */
 class EltrekaediOrder {
+
     public function getField($field) {
         return $this->$field;
     }
@@ -14,15 +15,11 @@ class EltrekaediOrder {
         $this->$field = $val;
         return $val;
     }
-    /**
-     * @var integer
-     */
-    private $reference;
 
     /**
      * @var integer
      */
-    private $store = '1';
+    private $reference = '0';
 
     /**
      * @var \DateTime
@@ -37,7 +34,17 @@ class EltrekaediOrder {
     /**
      * @var string
      */
-    private $remarks;
+    private $PurchaseOrderNo;
+
+    /**
+     * @var integer
+     */
+    private $StoreNo;
+
+    /**
+     * @var integer
+     */
+    private $PmtTermsCode;
 
     /**
      * @var integer
@@ -75,6 +82,18 @@ class EltrekaediOrder {
     private $id;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $EltrekaediOrderItem;
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->EltrekaediOrderItem = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Set reference
      *
      * @param integer $reference
@@ -94,28 +113,6 @@ class EltrekaediOrder {
      */
     public function getReference() {
         return $this->reference;
-    }
-
-    /**
-     * Set store
-     *
-     * @param integer $store
-     *
-     * @return EltrekaediOrder
-     */
-    public function setStore($store) {
-        $this->store = $store;
-
-        return $this;
-    }
-
-    /**
-     * Get store
-     *
-     * @return integer
-     */
-    public function getStore() {
-        return $this->store;
     }
 
     /**
@@ -163,25 +160,69 @@ class EltrekaediOrder {
     }
 
     /**
-     * Set remarks
+     * Set purchaseOrderNo
      *
-     * @param string $remarks
+     * @param string $purchaseOrderNo
      *
      * @return EltrekaediOrder
      */
-    public function setRemarks($remarks) {
-        $this->remarks = $remarks;
+    public function setPurchaseOrderNo($purchaseOrderNo) {
+        $this->PurchaseOrderNo = $purchaseOrderNo;
 
         return $this;
     }
 
     /**
-     * Get remarks
+     * Get purchaseOrderNo
      *
      * @return string
      */
-    public function getRemarks() {
-        return $this->remarks;
+    public function getPurchaseOrderNo() {
+        return $this->PurchaseOrderNo;
+    }
+
+    /**
+     * Set storeNo
+     *
+     * @param integer $storeNo
+     *
+     * @return EltrekaediOrder
+     */
+    public function setStoreNo($storeNo) {
+        $this->StoreNo = $storeNo;
+
+        return $this;
+    }
+
+    /**
+     * Get storeNo
+     *
+     * @return integer
+     */
+    public function getStoreNo() {
+        return $this->StoreNo;
+    }
+
+    /**
+     * Set pmtTermsCode
+     *
+     * @param integer $pmtTermsCode
+     *
+     * @return EltrekaediOrder
+     */
+    public function setPmtTermsCode($pmtTermsCode) {
+        $this->PmtTermsCode = $pmtTermsCode;
+
+        return $this;
+    }
+
+    /**
+     * Get pmtTermsCode
+     *
+     * @return integer
+     */
+    public function getPmtTermsCode() {
+        return $this->PmtTermsCode;
     }
 
     /**
@@ -325,4 +366,70 @@ class EltrekaediOrder {
         return $this->id;
     }
 
+    /**
+     * Add eltrekaediOrderItem
+     *
+     * @param \EdiBundle\Entity\EltrekaediOrderItem $eltrekaediOrderItem
+     *
+     * @return EltrekaediOrder
+     */
+    public function addEltrekaediOrderItem(\EdiBundle\Entity\EltrekaediOrderItem $eltrekaediOrderItem) {
+        $this->EltrekaediOrderItem[] = $eltrekaediOrderItem;
+
+        return $this;
+    }
+
+    /**
+     * Remove eltrekaediOrderItem
+     *
+     * @param \EdiBundle\Entity\EltrekaediOrderItem $eltrekaediOrderItem
+     */
+    public function removeEltrekaediOrderItem(\EdiBundle\Entity\EltrekaediOrderItem $eltrekaediOrderItem) {
+        $this->EltrekaediOrderItem->removeElement($eltrekaediOrderItem);
+    }
+
+    /**
+     * Get eltrekaediOrderItem
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEltrekaediOrderItem() {
+        return $this->EltrekaediOrderItem;
+    }
+
+    var $client;
+    var $Username = 'TESTUID';
+    var $Password = 'TESTPWD';
+    var $CustomerNo = '999999L';
+    var $soap_url = 'http://195.144.16.7/EltrekkaEDI/EltrekkaEDI.asmx?WSDL';
+
+    private function auth() {
+        $this->client = new \SoapClient($this->soap_url);
+        $ns = 'http://eltrekka.gr/edi/';
+        $headerbody = array('Username' => $this->Username, 'Password' => $this->Password);
+        $header = new \SOAPHeader($ns, 'AuthHeader', $headerbody);
+        $this->client->__setSoapHeaders($header);
+    }
+
+    public function placeOrder() {
+        $this->auth();
+        $params["CustomerNo"] = $this->CustomerNo;
+        $params["PurchaseOrderNo"] = $this->id;
+        $params["StoreNo"] = "";
+        $params["PmtTermsCode"] = 1;
+        $params["Make"] = "";
+        $params["SerialNo"] = "";
+        $params["UserId"] = "";
+
+
+        $params["UserEmail"] = "";
+        $params["ShipToCode"] = "";
+        $params["ShipViaCode"] = "1";
+        $params["PurchaseOrderNo"] = "";
+        $this->client->PlaceOrder($params);
+    }
+
+    private function createPartBuffer() {
+        
+    }
 }

@@ -33,6 +33,9 @@
 .left {
     float: left;    
 }
+.bold {
+    font-weight: bold;
+}
 #orderitem_wrapper .dataTables_length, #orderitem_wrapper .dataTables_filter {
     display: none;   
 }

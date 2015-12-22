@@ -329,4 +329,33 @@ class EltrekaediOrderItem {
     {
         return $this->discount;
     }
+    /**
+     * @var string
+     */
+    private $fprice;
+
+
+    /**
+     * Set fprice
+     *
+     * @param string $fprice
+     *
+     * @return EltrekaediOrderItem
+     */
+    public function setFprice($fprice)
+    {
+        $this->fprice = $fprice;
+
+        return $this;
+    }
+
+    /**
+     * Get fprice
+     *
+     * @return string
+     */
+    public function getFprice()
+    {
+        return $this->fprice;
+    }
 }

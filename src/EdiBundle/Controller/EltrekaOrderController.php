@@ -48,7 +48,8 @@ class EltrekaOrderController extends Main {
         $params['id'] = $dtparams;
         $params['url'] = '/edi/eltreka/order/getitems/' . $id;
 
-
+        $buttons = array();
+        $buttons[] = array("label" => 'Send Order', 'position' => 'right', 'attr'=>'data-id='.$id, 'class' => 'btn-success EltrekaediSendOrder');
 
         $content = $this->gettabs($id);
         $content = $this->getoffcanvases($id);
@@ -100,14 +101,16 @@ class EltrekaOrderController extends Main {
 
         $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
         $dtparams[] = array("name" => "Product", "index" => 'eltrekaedi:description');
-        $dtparams[] = array("name" => "Product", "index" => 'qty');
-        $dtparams[] = array("name" => "Product", "index" => 'price');
+        $dtparams[] = array("name" => "Qty", "input" => "text", "index" => 'qty');
+        $dtparams[] = array("name" => "Price", "input" => "text", "index" => 'price');
+        $dtparams[] = array("name" => "Discount", "input" => "text", "index" => 'discount');
+        $dtparams[] = array("name" => "Final Price", "index" => 'fprice');
         $params['dtparams'] = $dtparams;
         $params['id'] = $dtparams;
         $params['key'] = 'gettabs_' . $id;
         $params['url'] = '/edi/eltreka/order/getitems/' . $id;
         $params["ctrl"] = 'ctrlgettabs';
-        $params["app"] = 'appgettabs';        
+        $params["app"] = 'appgettabs';
         $datatables[] = $this->contentDatatable($params);
 
         $this->addTab(array("title" => "General", 'buttons' => $buttons, "form" => $tabforms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
@@ -143,55 +146,76 @@ class EltrekaOrderController extends Main {
     }
 
     /**
-     * @Route("/edi/eltreka/order/addordertiem/")
+     * @Route("/edi/eltreka/order/addorderitem/")
      */
-    public function addordertiemAction(Request $request) {
-        
+    public function addorderitemAction(Request $request) {
+
 
         $EltrekaediOrder = $this->getDoctrine()
                 ->getRepository('EdiBundle:EltrekaediOrder')
                 ->find($request->request->get("order"));
         $Eltrekaedi = $this->getDoctrine()
                 ->getRepository('EdiBundle:Eltrekaedi')
-                ->find($request->request->get("item"));  
-        
-        $EltrekaediOrderItem = new EltrekaediOrderItem; 
+                ->find($request->request->get("item"));
+
+        $EltrekaediOrderItem = new EltrekaediOrderItem;
         $EltrekaediOrderItem->setEltrekaediorder($EltrekaediOrder);
         $EltrekaediOrderItem->setEltrekaedi($Eltrekaedi);
-        $EltrekaediOrderItem->setField("qty",$request->request->get("qty"));
-        $EltrekaediOrderItem->setField("price",$request->request->get("price"));
-        $EltrekaediOrderItem->setField("discount",0);
-        $EltrekaediOrderItem->setField("chk",1);
+        $EltrekaediOrderItem->setField("qty", $request->request->get("qty"));
+        $EltrekaediOrderItem->setField("price", $request->request->get("price"));
+        $EltrekaediOrderItem->setField("fprice", $request->request->get("price")*$request->request->get("qty"));
+        $EltrekaediOrderItem->setField("discount", 0);
+        $EltrekaediOrderItem->setField("chk", 1);
         
-        $this->flushpersist($EltrekaediOrderItem);
-     
-        
-        $json = json_encode(array());
+
+
+        try {
+            @$this->flushpersist($EltrekaediOrderItem);
+            $json = json_encode(array("error" => false));
+        } catch (\Exception $e) {
+            $json = json_encode(array("error" => true, "message" => "Product Exists"));
+        }
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
 
-    //fororder
     /**
-     * @Route("/edi/eltreka/order/fororder/")
+     * @Route("/edi/eltreka/order/editorderitem/")
      */
-    /*
-      public function fororderAction() {
-      $buttons = array();
-      $buttons[] = array("label" => 'Get PartMaster', 'position' => 'right', 'class' => 'btn-success');
-      return $this->render('EdiBundle:Eltreka:index.html_1.twig', array(
-      'pagename' => 'Eltrekaedis',
-      'url' => '/edi/eltreka/order/getdatatable',
-      'view' => '/edi/eltreka/order/view',
-      'buttons' => $buttons,
-      'ctrl' => $this->generateRandomString(),
-      'app' => $this->generateRandomString(),
-      'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
-      ));
-      }
-     * 
-     */
+    public function editorderitemAction(Request $request) {
+        $EltrekaediOrderItem = $this->getDoctrine()
+                ->getRepository('EdiBundle:EltrekaediOrderItem')
+                ->find($request->request->get("id"));
+        if ($request->request->get("qty"))
+            $EltrekaediOrderItem->setQty($request->request->get("qty"));
+        else if ($request->request->get("price"))
+            $EltrekaediOrderItem->setPrice($request->request->get("price"));
+        else if ($request->request->get("discount"))
+            $EltrekaediOrderItem->setDiscount($request->request->get("discount"));        
+        elseif ($request->request->get("qty") == 0) {
+            try {
+                $this->flushremove($EltrekaediOrderItem);
+                $json = json_encode(array("error" => false));
+            } catch (\Exception $e) {
+                $json = json_encode(array("error" => true, "message" => "Product Exists"));
+            }
+            return new Response(
+               $json, 200, array('Content-Type' => 'application/json')
+            );
+        }
+        $fprice = ($EltrekaediOrderItem->getPrice() * $EltrekaediOrderItem->getQty()) * (1 - ($EltrekaediOrderItem->getDiscount()/100));
+        $EltrekaediOrderItem->setFprice($fprice);
+        try {
+            $this->flushpersist($EltrekaediOrderItem);
+            $json = json_encode(array("error" => false));
+        } catch (\Exception $e) {
+            $json = json_encode(array("error" => true, "message" => "Product Exists"));
+        }
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+    }
 
     /**
      * @Route("/edi/eltreka/order/getitems/{id}")
@@ -205,6 +229,28 @@ class EltrekaOrderController extends Main {
         $this->q_and[] = $this->prefix . ".eltrekaediorder = " . $id;
         //$this->q_and[] = $this->prefix . ".eltrekaediorder = " . $id;
         $json = $this->datatable();
+        
+        $data = (array)json_decode($json);
+        
+        $jsonarr = $data["data"];
+        $jsono = array();
+        foreach($jsonarr as $json) {
+            foreach($json as $key=>$val) {  
+                if ($key == 5) {
+                    @$jsono[$key] += $val;
+                } elseif ($key == 4) {
+                    @$jsono[$key] = "Total";    
+                } else {
+                    $jsono[$key] = '';
+                }
+            }
+        }
+        $jsono["DT_RowClass"] = "bold dt_row";
+        $jsonarr[] = $jsono;
+        $data["data"] = $jsonarr;
+        
+        $json = json_encode($data);
+        
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
@@ -221,6 +267,32 @@ class EltrekaOrderController extends Main {
         $this->repository = 'EdiBundle:Eltrekaedi';
 
         $json = $this->datatable();
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+    }
+    
+    /**
+     * @Route("/edi/eltreka/order/sendorder/")
+     */
+    public function sendorderAction(Request $request) {
+        $json = json_encode(array());
+        
+        $EltrekaediOrder = $this->getDoctrine()
+                ->getRepository('EdiBundle:EltrekaediOrder')
+                ->find($request->request->get("id"));
+        
+        echo @$EltrekaediOrder->getId();
+        /*
+        
+        $out = $EltrekaediOrder->getEltrekaediOrderItem();
+        
+        foreach(@ $out as $d) {
+            echo "SSS";
+            
+        }
+         * 
+         */
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );

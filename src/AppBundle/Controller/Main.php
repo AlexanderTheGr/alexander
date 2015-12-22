@@ -107,7 +107,7 @@ class Main extends Controller {
         $jsonarr = array();
         $r = explode(":", $this->repository);
 
-        foreach ($results as $result) {
+        foreach (@(array)$results as $result) {
             $json = array();
             foreach ($data["fields"] as $field) {
                 $field_relation = explode(":", $field["index"]);
@@ -241,7 +241,7 @@ class Main extends Controller {
         $session = new Session();
         $session->set('params_' . $params['key'], $params['dtparams']);
         foreach ($params['dtparams'] as $param) {
-            $fields[] = array('content' => $param["name"]);
+            $fields[] = array('content' => $param["name"],'input' => @$param["input"]);
         }
         $datatable = array(
             'url' => $params['url'], // '/order/getitems/' . $id,
@@ -356,7 +356,11 @@ class Main extends Controller {
         $em->persist($entity);
         $em->flush();
     }
-
+    function flushremove($entity) {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($entity);
+        $em->flush();
+    }
     function getFormLyFields($entity, $fields) {
         $forms["model"] = array();
         foreach ($fields as $field => $options) {

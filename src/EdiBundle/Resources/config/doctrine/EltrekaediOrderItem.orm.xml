@@ -21,7 +21,7 @@
     <many-to-one
         field="eltrekaediorder"
         target-entity="EltrekaediOrder"
-        inversed-by="EltrekaediOrder"
+        inversed-by="EltrekaediOrderItem"
         join-column="eltrekaediorder">
         <join-column name="eltrekaediorder" referenced-column-name="id" />
     </many-to-one> 
@@ -33,7 +33,7 @@
     </field>
     <field name="price" type="decimal" column="price" precision="10" scale="2" nullable="false"/>
     <field name="discount" type="decimal" column="discount" precision="10" scale="2" nullable="false"/>
-    
+    <field name="fprice" type="decimal" column="fprice" precision="10" scale="2" nullable="false"/>
     <field name="store" type="integer" column="store" nullable="false">
       <options>
         <option name="unsigned"/>
