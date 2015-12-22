@@ -300,4 +300,33 @@ class EltrekaediOrderItem {
         return $this->eltrekaediorder;
     }
 
+    /**
+     * @var string
+     */
+    private $discount;
+
+
+    /**
+     * Set discount
+     *
+     * @param string $discount
+     *
+     * @return EltrekaediOrderItem
+     */
+    public function setDiscount($discount)
+    {
+        $this->discount = $discount;
+
+        return $this;
+    }
+
+    /**
+     * Get discount
+     *
+     * @return string
+     */
+    public function getDiscount()
+    {
+        return $this->discount;
+    }
 }

@@ -5,11 +5,12 @@
       <index name="eltrekaediorder" columns="eltrekaediorder"/>
       <index name="eltrekaedi" columns="eltrekaedi"/>
     </indexes>
+    <unique-constraints>
+      <unique-constraint name="eltrekaediorderitem" columns="eltrekaedi,eltrekaediorder"/>
+    </unique-constraints>    
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-
-
     <many-to-one
         field="eltrekaedi"
         target-entity="Eltrekaedi"
@@ -31,8 +32,8 @@
       </options>
     </field>
     <field name="price" type="decimal" column="price" precision="10" scale="2" nullable="false"/>
-    <field name="disc1prc" type="decimal" column="disc1prc" precision="10" scale="2" nullable="false"/>
-    <field name="lineval" type="decimal" column="lineval" precision="10" scale="2" nullable="false"/>
+    <field name="discount" type="decimal" column="discount" precision="10" scale="2" nullable="false"/>
+    
     <field name="store" type="integer" column="store" nullable="false">
       <options>
         <option name="unsigned"/>

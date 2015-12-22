@@ -112,14 +112,14 @@ class OrderController extends Main {
      * @Route("/order/getdatatable")
      */
     public function getdatatableAction(Request $request) {
-        $this->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
+        $this->addField(array("name" => "ID", "input"=>"checkbox", "index" => 'id', "active" => "active"))
                 ->addField(array("name" => "Παραστατικό", "index" => 'fincode'))
                 ->addField(array("name" => "Customer Name", "index" => 'customerName'))
                 ->addField(array("name" => "Πωλητής", "index" => 'user:email'))
                 ->addField(array("name" => "Δρομολόγιο", "index" => 'route:route'))
                 ->addField(array("name" => "Παραγγελία", "index" => 'reference', 'method' => 'yesno'))
                 ->addField(array("name" => "Προσφορά", "index" => 'noorder', 'method' => 'yesno'))
-                ->addField(array("name" => "Ημιτελής", "index" => 'id', "method" => "imitelis"))
+                ->addField(array("name" => "Ημιτελής", "index" => 'id',  "method" => "imitelis"))
         ;
         $json = $this->datatable();
         return new Response(

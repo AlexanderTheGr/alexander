@@ -88,3 +88,11 @@ table.dataTable tbody tr {
 .tab-pane {
     padding-top: 15px;    
 }
+.dataTables_wrapper {
+    position: relative;
+    clear: both;
+    zoom: 1;
+    background: #fff;
+    border: 1px #ccc solid;
+    padding: 5px;
+}

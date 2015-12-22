@@ -21,26 +21,29 @@ class Main extends Controller {
     var $rmd;
 
     function __construct() {
-        
     }
 
     public function content() {
         $data["tabs"] = $this->tabs;
         $data["offcanvases"] = $this->offcanvases;
-        return $data;        
+        return $data;
     }
+
     public function tabs() {
         $data["tabs"] = $this->tabs;
         return $data;
     }
+
     public function offcanvases() {
         $data["offcanvases"] = $this->offcanvases;
         return $data;
     }
+
     public function datatable() {
         ini_set("memory_limit", "1256M");
         $request = Request::createFromGlobals();
-        $results = array();
+
+ 
         $recordsTotal = 0;
         $recordsFiltered = 0;
         //$this->q_or = array();
@@ -124,7 +127,11 @@ class Main extends Controller {
                     $method = $field["method"] . "Method";
                     $json[] = $this->$method($val);
                 } else {
-                    $json[] = $val;
+                    if (@$field["input"]) {
+                        $json[] = "<input id='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "_" . $result["id"] . "' data-id='" . $result["id"] . "' class='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "' type='" . $field["input"] . "' value='" . $val . "'>";
+                    } else {
+                        $json[] = $val;
+                    }
                 }
             }
             $json["DT_RowClass"] = "dt_row_" . strtolower($r[1]);
@@ -215,6 +222,8 @@ class Main extends Controller {
             }
         }
         $this->fields[] = $field;
+        //print_r($this->fields);
+        //echo "<BR>";
         return $this;
     }
 
@@ -222,14 +231,15 @@ class Main extends Controller {
         $this->tabs[] = $tab;
         return $this;
     }
+
     function addOffCanvas($offcanvas = array()) {
         $this->offcanvases[] = $offcanvas;
         return $this;
-    }    
+    }
 
     function contentDatatable($params) {
         $session = new Session();
-        $session->set('params_'.$params['key'], $params['dtparams']);
+        $session->set('params_' . $params['key'], $params['dtparams']);
         foreach ($params['dtparams'] as $param) {
             $fields[] = array('content' => $param["name"]);
         }
@@ -280,10 +290,8 @@ class Main extends Controller {
         ));
     }
 
-    
-    
     public function contentAction($ctrl, $app, $url, $content) {
-        
+
 
         return $this->render('elements/content.twig', array(
                     'pagename' => '',
@@ -294,8 +302,8 @@ class Main extends Controller {
                     'type' => '',
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
-    }    
-    
+    }
+
     public function offCanvasAction($ctrl, $app, $url, $offcanvases) {
         $tabs = (array) json_decode($offcanvases);
         return $this->render('elements/offcanvas.twig', array(
@@ -307,9 +315,8 @@ class Main extends Controller {
                     'type' => '',
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
-    }    
-    
-    
+    }
+
     function formLybase64() {
         $json = json_encode(array("ok"));
         $content = $this->get("request")->getContent();
@@ -323,7 +330,7 @@ class Main extends Controller {
 
     function save() {
         $data = $this->formLybase64();
-        $em = $this->getDoctrine()->getManager();
+        
         $entities = array();
 
         foreach ($data as $key => $val) {
@@ -333,17 +340,21 @@ class Main extends Controller {
                         ->getRepository($df[0] . ":" . $df[1])
                         ->find($df[3]);
             }
-            if ($df[3] == 0 AND @$entities[$df[0] . ":" . $df[1]]->id == 0) {
-                 $entities[$df[0] . ":" . $df[1]] = $this->newentity[$df[0] . ":" . $df[1]];
+            if ($df[3] == 0 AND @ $entities[$df[0] . ":" . $df[1]]->id == 0) {
+                $entities[$df[0] . ":" . $df[1]] = $this->newentity[$df[0] . ":" . $df[1]];
             }
             $entities[$df[0] . ":" . $df[1]]->setField($df[2], $val);
         }
-        foreach ($entities as $key=>$entity) {
-            $em->persist($entity);
-            $em->flush();
+        foreach ($entities as $key => $entity) {
+            $this->flushpersist($entity);
             $out[$key] = $entity->getId();
         }
         return $out;
+    }
+    function flushpersist($entity) {
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($entity);
+        $em->flush();
     }
 
     function getFormLyFields($entity, $fields) {
