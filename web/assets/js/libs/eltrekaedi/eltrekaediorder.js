@@ -14,13 +14,37 @@ jQuery('#eltrekaediitem').live("keyup", function (e) {
     }
 });
 
-jQuery(".EltrekaediSendOrder").live('click', function (e) {
-        var data = {}
-        data.id = jQuery(this).attr('data-id');
+toastr.options = {
+  "closeButton": false,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": false,
+  "positionClass": "toast-top-full-width",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
 
-        $.post("/edi/eltreka/order/sendorder/", data, function (result) {
+
+jQuery(".EltrekaediSendOrder").live('click', function (e) {
+    var data = {}
+    data.id = jQuery(this).attr('data-id');
+
+    $.post("/edi/eltreka/order/sendorder/", data, function (result) {
+        var json = angular.fromJson(result);
+        if (json.ErrorCode) {
+            toastr.error(json.ErrorDescription, "Error");
+        } else {
             
-        })    
+        }
+    })
 })
 
 jQuery(".EdiBundleEltrekaediOrderItemQty").live('keyup', function (e) {
@@ -31,7 +55,7 @@ jQuery(".EdiBundleEltrekaediOrderItemQty").live('keyup', function (e) {
         $.post("/edi/eltreka/order/editorderitem/", data, function (result) {
             var json = angular.fromJson(result);
             if (json.error) {
-                alert(json.message)
+                toastr.error(json.message, "Error");
             }
             var table = dt_tables["ctrlgettabs"];
             //$(".offcanvas-search").click();
@@ -49,7 +73,7 @@ jQuery(".EdiBundleEltrekaediOrderItemDiscount").live('keyup', function (e) {
         $.post("/edi/eltreka/order/editorderitem/", data, function (result) {
             var json = angular.fromJson(result);
             if (json.error) {
-                alert(json.message)
+                toastr.error(json.message, "Error");
             }
             var table = dt_tables["ctrlgettabs"];
             //$(".offcanvas-search").click();
@@ -66,7 +90,7 @@ jQuery(".EdiBundleEltrekaediOrderItemPrice").live('keyup', function (e) {
         $.post("/edi/eltreka/order/editorderitem/", data, function (result) {
             var json = angular.fromJson(result);
             if (json.error) {
-                alert(json.message)
+                toastr.error(json.message, "Error");
             }
             var table = dt_tables["ctrlgettabs"];
             table.fnFilter();
@@ -84,10 +108,9 @@ jQuery(".EdiBundleEltrekaediRetailprice").live('keyup', function (e) {
         data.price = jQuery(this).val();
         data.qty = 1;
         $.post("/edi/eltreka/order/addorderitem/", data, function (result) {
-
             var json = angular.fromJson(result);
             if (json.error) {
-                alert(json.message)
+                toastr.error(json.message, "Error");
             }
             var table = dt_tables["ctrlgettabs"];
             $(".offcanvas-search").click();

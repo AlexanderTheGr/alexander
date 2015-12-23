@@ -397,39 +397,61 @@ class EltrekaediOrder {
         return $this->EltrekaediOrderItem;
     }
 
-    var $client;
+    var $SoapClient;
     var $Username = 'TESTUID';
     var $Password = 'TESTPWD';
     var $CustomerNo = '999999L';
     var $soap_url = 'http://195.144.16.7/EltrekkaEDI/EltrekkaEDI.asmx?WSDL';
 
     private function auth() {
-        $this->client = new \SoapClient($this->soap_url);
+        if ($this->SoapClient)
+            return $this;
+        $this->SoapClient = new \SoapClient($this->soap_url);
         $ns = 'http://eltrekka.gr/edi/';
         $headerbody = array('Username' => $this->Username, 'Password' => $this->Password);
         $header = new \SOAPHeader($ns, 'AuthHeader', $headerbody);
-        $this->client->__setSoapHeaders($header);
+        $this->SoapClient->__setSoapHeaders($header);
+        return $this;
     }
-
     public function placeOrder() {
         $this->auth();
+        $items = $this->getEltrekaediOrderItem();
         $params["CustomerNo"] = $this->CustomerNo;
-        $params["PurchaseOrderNo"] = $this->id;
-        $params["StoreNo"] = "";
+        $params["PurchaseOrderNo"] = "100".$this->id;
+        $params["StoreNo"] = 10;
         $params["PmtTermsCode"] = 1;
         $params["Make"] = "";
         $params["SerialNo"] = "";
         $params["UserId"] = "";
-
-
         $params["UserEmail"] = "";
         $params["ShipToCode"] = "";
-        $params["ShipViaCode"] = "1";
-        $params["PurchaseOrderNo"] = "";
-        $this->client->PlaceOrder($params);
+        $params["ShipViaCode"] = 1;
+        $params["PartCount"] = count($items);
+        $params["PartTable"] = $this->getPartBuffer($items);
+        $out = $this->SoapClient->PlaceOrder($params);
+        $xmlNode = new \SimpleXMLElement($out->PlaceOrderResult->any);
+        return (array)$xmlNode;
     }
 
-    private function createPartBuffer() {
-        
+    private function getPartBuffer($items) {
+        foreach($items as $item) {
+            $buffer .= "777";
+            $partsNo = $item->getEltrekaedi()->getPartno();
+            while(strlen($partsNo) < 20) {
+                $partsNo .= " ";
+            }
+            $buffer .=  $partsNo;
+            $qty = $item->getQty();
+            while(strlen($qty) < 5) {
+                $qty = "0".$qty;
+            }
+            $buffer .=  $qty;
+            $CustomerPartNo = $this->CustomerNo.$item->getId();
+            while(strlen($CustomerPartNo) < 20) {
+                $CustomerPartNo .= " ";
+            }
+            $buffer .= $CustomerPartNo;
+        }
+        return $buffer;
     }
 }

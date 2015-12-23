@@ -62,26 +62,28 @@ class Main extends Controller {
             $recordsTotal = $em->getRepository($this->repository)->recordsTotal();
             $fields = array();
             foreach ($this->fields as $index => $field) {
-                $fields[] = $field["index"];
-                $field_relation = explode(":", $field["index"]);
-                if (count($field_relation) == 1) {
-                    if ($this->clearstring($dt_search["value"]) != "") {
-                        $this->q_or[] = $this->prefix . "." . $field["index"] . " LIKE '%" . $this->clearstring($dt_search["value"]) . "%'";
-                    }
-                    if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != "") {
-                        $this->q_and[] = $this->prefix . "." . $this->fields[$index]["index"] . " LIKE '%" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "%'";
-                    }
-                    $s[] = $this->prefix . "." . $field_relation[0];
-                } else {
-                    if ($dt_search["value"] === true) {
+                if (@$field["index"]) {
+                    $fields[] = $field["index"];
+                    $field_relation = explode(":", $field["index"]);
+                    if (count($field_relation) == 1) {
                         if ($this->clearstring($dt_search["value"]) != "") {
-                            $this->q_or[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_search["value"]) . "'";
+                            $this->q_or[] = $this->prefix . "." . $field["index"] . " LIKE '%" . $this->clearstring($dt_search["value"]) . "%'";
                         }
-                    }
-                    if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != "") {
-                        $field_relation = explode(":", $this->fields[$index]["index"]);
-                        $this->q_and[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "'";
-                        //$s[] = $this->prefix . "." . $field_relation[0];  
+                        if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != "") {
+                            $this->q_and[] = $this->prefix . "." . $this->fields[$index]["index"] . " LIKE '%" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "%'";
+                        }
+                        $s[] = $this->prefix . "." . $field_relation[0];
+                    } else {
+                        if ($dt_search["value"] === true) {
+                            if ($this->clearstring($dt_search["value"]) != "") {
+                                $this->q_or[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_search["value"]) . "'";
+                            }
+                        }
+                        if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != "") {
+                            $field_relation = explode(":", $this->fields[$index]["index"]);
+                            $this->q_and[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "'";
+                            //$s[] = $this->prefix . "." . $field_relation[0];  
+                        }
                     }
                 }
             }
@@ -110,28 +112,33 @@ class Main extends Controller {
         foreach (@(array)$results as $result) {
             $json = array();
             foreach ($data["fields"] as $field) {
-                $field_relation = explode(":", $field["index"]);
-                if (count($field_relation) > 1) {
-                    //echo $this->repository;
-                    $obj = $em->getRepository($this->repository)->find($result["id"]);
-                    foreach ($field_relation as $relation) {
-
-                        if ($obj)
-                            $obj = $obj->getField($relation);
-                    }
-                    $val = $obj;
-                } else {
-                    $val = $result[$field["index"]];
-                }
-                if (@$field["method"]) {
-                    $method = $field["method"] . "Method";
-                    $json[] = $this->$method($val);
-                } else {
-                    if (@$field["input"]) {
-                        $json[] = "<input id='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "_" . $result["id"] . "' data-id='" . $result["id"] . "' class='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "' type='" . $field["input"] . "' value='" . $val . "'>";
+                if (@$field["index"]) {
+                    $field_relation = explode(":", $field["index"]);
+                    if (count($field_relation) > 1) {
+                        //echo $this->repository;
+                        $obj = $em->getRepository($this->repository)->find($result["id"]);
+                        foreach ($field_relation as $relation) {
+                            if ($obj)
+                                $obj = $obj->getField($relation);
+                        }
+                        $val = $obj;
                     } else {
-                        $json[] = $val;
+                        $val = $result[$field["index"]];
                     }
+                    if (@$field["method"]) {
+                        $method = $field["method"] . "Method";
+                        $json[] = $this->$method($val);
+                    } else {
+                        if (@$field["input"]) {
+                            $json[] = "<input id='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "_" . $result["id"] . "' data-id='" . $result["id"] . "' class='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "' type='" . $field["input"] . "' value='" . $val . "'>";
+                        } else {
+                            $json[] = $val;
+                        }
+                    }
+                } elseif (@$field["function"]) {
+                    $func = $field["function"]; 
+                    $obj = $em->getRepository($this->repository)->find($result["id"]);
+                    $json[] = $obj->$func(count($results));
                 }
             }
             $json["DT_RowClass"] = "dt_row_" . strtolower($r[1]);
@@ -193,7 +200,7 @@ class Main extends Controller {
         $bundle = explode(":", $this->repository);
         if (@$field["type"] == "select") {
             $field["content"] = '<input class="style-primary-bright form-control search_init" type="radio" />';
-        } else {
+        } elseif (@$field["index"]) {
             $field_order = explode(":", $field["index"]);
             if (@$field["method"] == "yesno") {
                 $field["content"] = '<select class="style-primary-bright form-control search_init">';

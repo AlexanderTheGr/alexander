@@ -273,32 +273,7 @@ class EltrekaediOrderItem {
         return $this->eltrekaedi;
     }
 
-    /**
-     * @var \EdiBundle\Entity\EltrekaediOrder
-     */
-    private $eltrekaediorder;
 
-    /**
-     * Set eltrekaediorder
-     *
-     * @param \EdiBundle\Entity\EltrekaediOrder $eltrekaediorder
-     *
-     * @return EltrekaediOrderItem
-     */
-    public function setEltrekaediorder(\EdiBundle\Entity\EltrekaediOrder $eltrekaediorder = null) {
-        $this->eltrekaediorder = $eltrekaediorder;
-
-        return $this;
-    }
-
-    /**
-     * Get eltrekaediorder
-     *
-     * @return \EdiBundle\Entity\EltrekaediOrder
-     */
-    public function getEltrekaediorder() {
-        return $this->eltrekaediorder;
-    }
 
     /**
      * @var string
@@ -357,5 +332,35 @@ class EltrekaediOrderItem {
     public function getFprice()
     {
         return $this->fprice;
+    }
+
+    /**
+     * @var \EdiBundle\Entity\EltrekaediOrder
+     */
+    private $EltrekaediOrder;
+
+
+    /**
+     * Set eltrekaediOrder
+     *
+     * @param \EdiBundle\Entity\EltrekaediOrder $eltrekaediOrder
+     *
+     * @return EltrekaediOrderItem
+     */
+    public function setEltrekaediOrder(\EdiBundle\Entity\EltrekaediOrder $eltrekaediOrder = null)
+    {
+        $this->EltrekaediOrder = $eltrekaediOrder;
+
+        return $this;
+    }
+
+    /**
+     * Get eltrekaediOrder
+     *
+     * @return \EdiBundle\Entity\EltrekaediOrder
+     */
+    public function getEltrekaediOrder()
+    {
+        return $this->EltrekaediOrder;
     }
 }

@@ -36,13 +36,17 @@ class EltrekaController extends Main {
      */
     public function viewAction($id) {
         $buttons = array();
+        $Eltrekaedi = $this->getDoctrine()
+                ->getRepository('EdiBundle:Eltrekaedi')
+                ->find($id);
+        $Eltrekaedi->GetAvailability();
         return $this->render('EdiBundle:Eltreka:view.html.twig', array(
                     'pagename' => 'Eltrekaedis',
                     'url' => '/edi/eltreka/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
-                    'tabs' => $this->gettabs($id),
+                    'content' => $this->gettabs($id),
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }

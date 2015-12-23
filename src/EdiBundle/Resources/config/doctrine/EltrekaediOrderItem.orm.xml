@@ -17,14 +17,16 @@
         inversed-by="Eltrekaedi"
         join-column="eltrekaedi">
         <join-column name="eltrekaedi" referenced-column-name="id" />
-    </many-to-one>      
+    </many-to-one>   
+      
     <many-to-one
-        field="eltrekaediorder"
+        field="EltrekaediOrder"
         target-entity="EltrekaediOrder"
         inversed-by="EltrekaediOrderItem"
         join-column="eltrekaediorder">
         <join-column name="eltrekaediorder" referenced-column-name="id" />
     </many-to-one> 
+    
             
     <field name="qty" type="integer" column="qty" nullable="false">
       <options>

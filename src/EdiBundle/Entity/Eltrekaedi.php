@@ -1,7 +1,7 @@
 <?php
 
 namespace EdiBundle\Entity;
-
+use Symfony\Component\HttpFoundation\Session\Session;
 /**
  * Eltrekaedi
  */
@@ -570,23 +570,29 @@ class Eltrekaedi {
         return $this->heightMm;
     }
 
-    var $client;
-    var $Username = 'TESTUID';
-    var $Password = 'TESTPWD';
-    var $CustomerNo = '999999L';
-    var $soap_url = 'http://195.144.16.7/EltrekkaEDI/EltrekkaEDI.asmx?WSDL';
+    private $SoapClient = false;
+    private $Username = 'TESTUID';
+    private $Password = 'TESTPWD';
+    private $CustomerNo = '999999L';
+    private $soap_url = 'http://195.144.16.7/EltrekkaEDI/EltrekkaEDI.asmx?WSDL';
 
     private function auth() {
-        $this->client = new \SoapClient($this->soap_url);
+   
+        if ($this->SoapClient) {
+            return $this;
+        }   
+        $this->SoapClient = new \SoapClient($this->soap_url);
         $ns = 'http://eltrekka.gr/edi/';
         $headerbody = array('Username' => $this->Username, 'Password' => $this->Password);
         $header = new \SOAPHeader($ns, 'AuthHeader', $headerbody);
-        $this->client->__setSoapHeaders($header);
+        $this->SoapClient->__setSoapHeaders($header);
+        //$session->set('SoapClient', $this->SoapClient);
+        return $this;
     }
 
     function getPartMasterFile() {
         $this->auth();
-        $response = $this->client->GetPartMaster();
+        $response = $this->SoapClient->GetPartMaster();
         $xml = simplexml_load_string($response->GetPartMasterResult->any) or die("Error: Cannot create object");
         if (!trim($xml->ErrorCode) != "") {
             return $xml->PartMasterURL;
@@ -595,8 +601,33 @@ class Eltrekaedi {
         }
     }
 
+    
+ 
+    public function getQtyAvailability($qty = 1) {
+        $this->auth();
+        $params["CustomerNo"] = $this->CustomerNo;
+        $params["EltrekkaRef"] = $this->getPartno();
+        $params["RequestedQty"] = $qty;
+        $out = $this->SoapClient->GetAvailability($params);
+        $xmlNode = new \SimpleXMLElement($out->GetAvailabilityResult->any);
+        $availability = (array)$xmlNode->Item;
+        return $availability;
+    }
+    
+    public function getAvailability($cnt) {
+        if ($cnt > 10) return;  
+        $this->auth();
+        $params["CustomerNo"] = $this->CustomerNo;
+        $params["EltrekkaRef"] = $this->getPartno();
+        $params["RequestedQty"] = 1;
+        $out = $this->SoapClient->GetAvailability($params);
+        $xmlNode = new \SimpleXMLElement($out->GetAvailabilityResult->any);
+        $Availability = (array)$xmlNode->Item->Header;
+        return $Availability["Available"];
+    }
+
     public function getPartMaster() {
-        return;
+
         $this->auth();
         //echo $this->getPartMaster();
         $file = $this->getPartMasterFile();
@@ -620,7 +651,7 @@ class Eltrekaedi {
                 $attributes["lenght_mm"] = str_replace(",", ".", $attributes["lenght_mm"]);
                 $attributes["width_mm"] = str_replace(",", ".", $attributes["width_mm"]);
                 $attributes["height_mm"] = str_replace(",", ".", $attributes["height_mm"]);
-                
+
 
 
                 $Eltrekaedi = $this->getDoctrine()
