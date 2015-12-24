@@ -71,11 +71,13 @@ class EltrekaOrderController extends Main {
     /**
      * @Route("/edi/eltreka/order/save")
      */
-    public function savection() {
+    public function saveAction() {
+
         $entity = new EltrekaediOrder;
         $this->newentity[$this->repository] = $entity;
         $this->newentity[$this->repository]->setField("reference", 0);
         $out = $this->save();
+        
         $jsonarr = array();
         if ($this->newentity[$this->repository]->getId()) {
             $jsonarr["returnurl"] = "/edi/eltreka/order/view/" . $this->newentity[$this->repository]->getId();
@@ -96,7 +98,10 @@ class EltrekaOrderController extends Main {
         }
         $buttons = array();
         $buttons[] = array("label" => 'Get PartMaster', 'position' => 'right', 'class' => 'btn-success');
+        
+        $tabfields["PurchaseOrderNo"] = array("label" => "Purchase Order No","value"=>1);
         $tabfields["comments"] = array("label" => "Comments");
+        
         $tabforms = $this->getFormLyFields($entity, $tabfields);
 
         $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
@@ -160,7 +165,6 @@ class EltrekaOrderController extends Main {
                 ->getRepository('EdiBundle:Eltrekaedi')
                 ->find($request->request->get("item"));
 
-
         $availability = $Eltrekaedi->getQtyAvailability($request->request->get("qty"));
         $Available = (array) $availability["Header"];
         $price = $Available["PriceOnPolicy"];
@@ -178,7 +182,6 @@ class EltrekaOrderController extends Main {
         );
          * 
          */
-
         $EltrekaediOrderItem = new EltrekaediOrderItem;
         $EltrekaediOrderItem->setEltrekaediorder($EltrekaediOrder);
         $EltrekaediOrderItem->setEltrekaedi($Eltrekaedi);
@@ -188,7 +191,6 @@ class EltrekaOrderController extends Main {
         $EltrekaediOrderItem->setField("discount", 0);
         $EltrekaediOrderItem->setField("store", $store);
         $EltrekaediOrderItem->setField("chk", 1);
-
 
         try {
             @$this->flushpersist($EltrekaediOrderItem);
@@ -209,8 +211,6 @@ class EltrekaOrderController extends Main {
                 ->getRepository('EdiBundle:EltrekaediOrderItem')
                 ->find($request->request->get("id"));
         if ($request->request->get("qty")) {
-
-
             $EltrekaediOrderItem->setQty($request->request->get("qty"));
             $availability = $EltrekaediOrderItem->getEltrekaedi()->getQtyAvailability($request->request->get("qty"));
             $Available = (array) $availability["Header"];
@@ -330,12 +330,9 @@ class EltrekaOrderController extends Main {
      * @Route("/edi/eltreka/order/getdatatable")
      */
     public function getdatatableAction(Request $request) {
-
         //$this->repository = 'EdiBundle:Eltrekaedi';
-        $this->addField(array("name" => "ID", "index" => 'id'))
-
-
-        ;
+        $this->addField(array("name" => "ID", "index" => 'id'));
+        $this->addField(array("name" => "Order", "index" => 'PurchaseOrderNo'));
         $json = $this->datatable();
 
         return new Response(

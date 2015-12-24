@@ -24,7 +24,6 @@
             </options>
         </field>
         
-        
         <field name="PurchaseOrderNo" type="text" column="PurchaseOrderNo" length="20" nullable="true">
             <options>
                 <option name="fixed"/>
@@ -35,14 +34,56 @@
             <options>
                 <option name="fixed"/>
             </options>
-        </field>                                
+        </field>   
+                                     
         <field name="PmtTermsCode" type="integer" column="PmtTermsCode" length="1" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>           
         
+        <field name="Make" type="integer" column="Make" length="2" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
         
+        <field name="SerialNo" type="text" column="SerialNo" length="20" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>    
+        
+        <field name="Model" type="text" column="Model" length="10" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>                
+                    
+        <field name="UserId" type="integer" column="UserId" length="7" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>   
+             
+        <field name="UserEmail" type="text" column="UserEmail" length="7" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>          
+        
+        <field name="ShipToCode" type="text" column="ShipToCode" length="3" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>           
+
+        <field name="ShipViaCode" type="integer" column="ShipViaCode" length="1" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>  
+                                                                        
         
         
         <field name="status" type="integer" column="status" nullable="true">

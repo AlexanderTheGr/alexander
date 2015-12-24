@@ -79,7 +79,7 @@ class EltrekaediOrder {
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -453,5 +453,208 @@ class EltrekaediOrder {
             $buffer .= $CustomerPartNo;
         }
         return $buffer;
+    }
+    /**
+     * @var integer
+     */
+    private $Make;
+
+    /**
+     * @var string
+     */
+    private $SerialNo;
+
+    /**
+     * @var string
+     */
+    private $Model;
+
+    /**
+     * @var integer
+     */
+    private $UserId;
+
+    /**
+     * @var string
+     */
+    private $UserEmail;
+
+    /**
+     * @var string
+     */
+    private $ShipToCode;
+
+    /**
+     * @var integer
+     */
+    private $ShipViaCode;
+
+
+    /**
+     * Set make
+     *
+     * @param integer $make
+     *
+     * @return EltrekaediOrder
+     */
+    public function setMake($make)
+    {
+        $this->Make = $make;
+
+        return $this;
+    }
+
+    /**
+     * Get make
+     *
+     * @return integer
+     */
+    public function getMake()
+    {
+        return $this->Make;
+    }
+
+    /**
+     * Set serialNo
+     *
+     * @param string $serialNo
+     *
+     * @return EltrekaediOrder
+     */
+    public function setSerialNo($serialNo)
+    {
+        $this->SerialNo = $serialNo;
+
+        return $this;
+    }
+
+    /**
+     * Get serialNo
+     *
+     * @return string
+     */
+    public function getSerialNo()
+    {
+        return $this->SerialNo;
+    }
+
+    /**
+     * Set model
+     *
+     * @param string $model
+     *
+     * @return EltrekaediOrder
+     */
+    public function setModel($model)
+    {
+        $this->Model = $model;
+
+        return $this;
+    }
+
+    /**
+     * Get model
+     *
+     * @return string
+     */
+    public function getModel()
+    {
+        return $this->Model;
+    }
+
+    /**
+     * Set userId
+     *
+     * @param integer $userId
+     *
+     * @return EltrekaediOrder
+     */
+    public function setUserId($userId)
+    {
+        $this->UserId = $userId;
+
+        return $this;
+    }
+
+    /**
+     * Get userId
+     *
+     * @return integer
+     */
+    public function getUserId()
+    {
+        return $this->UserId;
+    }
+
+    /**
+     * Set userEmail
+     *
+     * @param string $userEmail
+     *
+     * @return EltrekaediOrder
+     */
+    public function setUserEmail($userEmail)
+    {
+        $this->UserEmail = $userEmail;
+
+        return $this;
+    }
+
+    /**
+     * Get userEmail
+     *
+     * @return string
+     */
+    public function getUserEmail()
+    {
+        return $this->UserEmail;
+    }
+
+    /**
+     * Set shipToCode
+     *
+     * @param string $shipToCode
+     *
+     * @return EltrekaediOrder
+     */
+    public function setShipToCode($shipToCode)
+    {
+        $this->ShipToCode = $shipToCode;
+
+        return $this;
+    }
+
+    /**
+     * Get shipToCode
+     *
+     * @return string
+     */
+    public function getShipToCode()
+    {
+        return $this->ShipToCode;
+    }
+
+    /**
+     * Set shipViaCode
+     *
+     * @param integer $shipViaCode
+     *
+     * @return EltrekaediOrder
+     */
+    public function setShipViaCode($shipViaCode)
+    {
+        $this->ShipViaCode = $shipViaCode;
+
+        return $this;
+    }
+
+    /**
+     * Get shipViaCode
+     *
+     * @return integer
+     */
+    public function getShipViaCode()
+    {
+        return $this->ShipViaCode;
     }
 }

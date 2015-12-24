@@ -347,7 +347,7 @@ class Main extends Controller {
                         ->getRepository($df[0] . ":" . $df[1])
                         ->find($df[3]);
             }
-            if ($df[3] == 0 AND @ $entities[$df[0] . ":" . $df[1]]->id == 0) {
+            if ($df[3] == 0) {
                 $entities[$df[0] . ":" . $df[1]] = $this->newentity[$df[0] . ":" . $df[1]];
             }
             $entities[$df[0] . ":" . $df[1]]->setField($df[2], $val);
