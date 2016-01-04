@@ -614,7 +614,7 @@ class Eltrekaedi {
         return $availability;
     }
     
-    public function getAvailability($cnt) {
+    public function getAvailability($cnt=0) {
         if ($cnt > 10) return;  
         $this->auth();
         $params["CustomerNo"] = $this->CustomerNo;

@@ -25,7 +25,7 @@ class Main extends Controller {
 
     public function content() {
         $data["tabs"] = $this->tabs;
-        $data["offcanvases"] = $this->offcanvases;
+        @$data["offcanvases"] = $this->offcanvases;
         return $data;
     }
 

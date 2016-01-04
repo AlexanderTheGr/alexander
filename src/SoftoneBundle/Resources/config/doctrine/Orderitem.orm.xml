@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="SoftoneBundle\Entity\Orderitem"  repository-class="SoftoneBundle\Entity\OrderitemRepository"  table="softone_orderitem">
+    <indexes>
+      <index name="order" columns="order"/>
+      <index name="product" columns="product"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="order" type="integer" column="order" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="qty" type="integer" column="qty" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="price" type="decimal" column="price" precision="10" scale="2" nullable="false"/>
+    <field name="disc1prc" type="decimal" column="disc1prc" precision="10" scale="2" nullable="false"/>
+    <field name="lineval" type="decimal" column="lineval" precision="10" scale="2" nullable="false"/>
+    <field name="store" type="integer" column="store" nullable="false">
+      <options>
+        <option name="unsigned"/>
+        <option name="default">7021</option>
+      </options>
+    </field>
+    <field name="chk" type="boolean" column="chk" nullable="false"/>
+    <many-to-one
+        field="product"
+        target-entity="Product"
+        inversed-by="Products"
+        join-column="product">
+        <join-column name="product" referenced-column-name="id" />
+    </many-to-one>      
+  </entity>
+</doctrine-mapping>

@@ -1,8 +1,0 @@
-services:
-    page_load_listener:
-        class: PartsboxBundle\EventListener\PageLoadListener
-        arguments: 
-            security: "@security.context"
-            container: "@service_container"
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

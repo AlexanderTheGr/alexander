@@ -70,10 +70,11 @@ var dt_tables = [];
         }
         function forEach(p) {
             angular.forEach(p, function (r) {
+                if (r.content != "") {
+                    jQuery("#" + r.index).html(html_entity_decode(r.content))
+                }                
                 angular.forEach(r.datatables, function (datatable) {
-                    if (r.content != "") {
-                        jQuery("#" + r.index).html(html_entity_decode(r.content))
-                    }
+
                     //$("."+datatable.ctrl).alexDataTable(datatable.app, datatable.ctrl, datatable.url, datatable.view)
                     $("." + datatable.ctrl).show();
                     var dt_table = $("." + datatable.ctrl).dataTable({

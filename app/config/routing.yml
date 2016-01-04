@@ -1,3 +1,9 @@
+softone:
+    resource: "@SoftoneBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+
 edi:
     resource: "@EdiBundle/Controller/"
     type:     annotation
@@ -13,5 +19,5 @@ attribute:
     prefix:   /
 
 app:
-    resource: "@PartsboxBundle/Controller/"
+    resource: "@SoftoneBundle/Controller/"
     type:     annotation

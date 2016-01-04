@@ -6,5 +6,5 @@ parameters:
 
 services:
 #    service_name:
-#        class: PartsboxBundle\Directory\ClassName
+#        class: SoftoneBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
