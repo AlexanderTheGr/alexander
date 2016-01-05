@@ -1,6 +1,6 @@
 var b = false;
 var orderid = 0;
-jQuery('#eltrekaediitem').live("keyup", function (e) {
+jQuery('#productfreesearch').live("keyup", function (e) {
     if (e.keyCode == 13) {
         asdf(this);
         var t = $(this).val();
@@ -128,7 +128,7 @@ function asdf(obj, filter, freesearch) {
     b = true;
     $("#offcanvas-search .offcanvas-head .text-primary").html(title);
     var table = dt_tables["ctrlgetoffcanvases"];
-    table.fnFilter(jQuery('#eltrekaediitem').val());
+    table.fnFilter(jQuery('#productfreesearch').val());
     //})
 }
 

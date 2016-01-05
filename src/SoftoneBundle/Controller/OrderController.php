@@ -38,7 +38,7 @@ class OrderController extends Main {
 
         $buttons = array();
         $content = $this->gettabs($id);
-        //$content = $this->getoffcanvases($id);
+        $content = $this->getoffcanvases($id);
 
         $content = $this->content();
 
@@ -82,6 +82,7 @@ class OrderController extends Main {
         $params['url'] = '/order/getitems/' . $id;
         $params['key'] = 'gettabs_' . $id;
         $datatables[] = $this->contentDatatable($params);
+        
 
         $fields["fincode"] = array("label" => "Erp Code");
         $fields["customerName"] = array("label" => "Price Name");
@@ -96,6 +97,39 @@ class OrderController extends Main {
         return $json;
     }
 
+    
+    protected function getoffcanvases($id) {
+        $dtparams[] = array("name" => "ID", "index" => 'id', "input" => 'checkbox', "active" => "active");
+        $dtparams[] = array("name" => "Erp Code", "index" => 'erpCode', 'search' => 'text');
+        $dtparams[] = array("name" => "Title", "index" => 'title', 'search' => 'text');
+        $params['dtparams'] = $dtparams;
+        $params['id'] = $dtparams;
+        $params['key'] = 'getoffcanvases_' . $id;
+        $params['url'] = '/order/getfororderitems/'.$id;
+        $params["ctrl"] = 'ctrlgetoffcanvases';
+        $params["app"] = 'appgetoffcanvases';
+        $params["drawCallback"] = 'fororder(' . $id . ')';
+
+        $datatables[] = $this->contentDatatable($params);
+        //$datatables = array();
+        $this->addOffCanvas(array('id' => 'asdf', "content" => 'sss', "index" => $this->generateRandomString(), "datatables" => $datatables));
+        return $this->offcanvases();
+    }    
+    /**
+     * @Route("/order/getfororderitems/{id}")
+     */
+    public function getfororderitemsAction($id) {
+        $session = new Session();
+        foreach ($session->get('params_getoffcanvases_' . $id) as $param) {
+            $this->addField($param);
+        }
+        $this->repository = 'SoftoneBundle:Product';
+
+        $json = $this->datatable();
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+    }    
     function getTabContentSearch() {
         $response = $this->get('twig')->render('SoftoneBundle:Order:search.html.twig', array());
         return str_replace("\n", "", htmlentities($response));

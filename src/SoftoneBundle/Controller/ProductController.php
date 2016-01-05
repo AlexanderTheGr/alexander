@@ -6,6 +6,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Controller\Main as Main;
+use SoftoneBundle\Entity\Softone as Softone;
+use SoftoneBundle\Entity\Product as Product;
 
 class ProductController extends Main {
 
@@ -57,22 +59,22 @@ class ProductController extends Main {
      * @Route("/product/gettab")
      */
     /*
-    public function gettabs($id) {
+      public function gettabs($id) {
 
 
-        $entity = $this->getDoctrine()
-                ->getRepository($this->repository)
-                ->find($id);
+      $entity = $this->getDoctrine()
+      ->getRepository($this->repository)
+      ->find($id);
 
-        $fields["erpCode"] = array("label" => "Erp Code");
-        $fields["itemPricew01"] = array("label" => "Price Name");
+      $fields["erpCode"] = array("label" => "Erp Code");
+      $fields["itemPricew01"] = array("label" => "Price Name");
 
-        $forms = $this->getFormLyFields($entity, $fields);
-        
-        $this->addTab(array("title" => "General", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
-        $json = $this->tabs();
-        return $json;
-    }
+      $forms = $this->getFormLyFields($entity, $fields);
+
+      $this->addTab(array("title" => "General", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
+      $json = $this->tabs();
+      return $json;
+      }
      * 
      */
 
@@ -87,9 +89,8 @@ class ProductController extends Main {
 
         $json = $this->tabs();
         return $json;
-    }    
-    
-    
+    }
+
     /**
      * 
      * 
@@ -104,17 +105,64 @@ class ProductController extends Main {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
-    
-    
+
     /**
      * @Route("/product/fororderajaxjson")
-     */    
+     */
     public function fororderajaxjsonAction() {
         return new Response(
                 "", 200
-        );        
-        
+        );
     }
- 
+
+    /**
+     * @Route("/product/retrieve")
+     */
+    function retrieveSoftoneDataAction($params = array()) {
+
+        $softone = new Softone();
+        $em = $this->getDoctrine()->getManager();
+        $params["DateL"] = "2016-01-05";
+        $params["DateH"] = "2016-01-05";
+
+        $datas = $softone->getCustomItems($params);
+        foreach ($datas->data as $data) {
+            $data = (array) $data;
+
+            $entity = $this->getDoctrine()
+                    ->getRepository($this->repository)
+                    ->findOneBy(array("reference" => (int) $data["MTRL"]));
+
+            if (@$entity->id == 0) {
+                $entity = new Product();
+                $dt = new \DateTime("now");
+                $entity->setItemV5($dt);
+                $entity->setTs($dt);
+                $entity->setItemInsdate($dt);
+                $entity->setItemUpddate($dt);
+                $entity->setCreated($dt);
+                $entity->setModified($dt);
+            }
+            $entity->setField("reference", (int) $data["MTRL"]);
+            $imporetedData["item_cccfxrelbrand"] = 0;
+            $imporetedData["item_cccfxreltdcode"] = "";
+            //$model->reference = $info[1];
+            foreach ($data as $identifier => $val) {
+                $imporetedData[strtolower("item_" . $identifier)] = addslashes($val);
+                $q[] = "`" . strtolower("item_" . $identifier) . "` = '" . addslashes($val) . "'";
+            }
+            @$entity_id = (int) $entity->id;
+            //if ($eltrekaedi_id == 0) {
+                $sql = "replace softone_product set id = '" . $entity_id . "', " . implode(",", $q);
+                echo $sql;
+                $em->getConnection()->exec($sql);
+            //}
+            //print_r($imporetedData);
+            break;
+        }
+        return new Response(
+                "", 200
+        );
+    }
 
 }

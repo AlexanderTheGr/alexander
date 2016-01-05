@@ -411,7 +411,7 @@ class Product {
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    var $id;
 
     /**
      * Set reference
@@ -1278,7 +1278,7 @@ class Product {
      *
      * @return Product
      */
-    public function setTs($ts) {
+    public function setTs(\DateTime $ts) {
         $this->ts = $ts;
 
         return $this;
@@ -1322,7 +1322,7 @@ class Product {
      *
      * @return Product
      */
-    public function setCreated($created) {
+    public function setCreated(\DateTime $created) {
         $this->created = $created;
 
         return $this;
@@ -1344,7 +1344,7 @@ class Product {
      *
      * @return Product
      */
-    public function setModified($modified) {
+    public function setModified(\DateTime $modified) {
         $this->modified = $modified;
 
         return $this;
