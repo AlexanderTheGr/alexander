@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% for button in buttons %}
+        <button class="btn {{ button.class }} {{ button.position }}">{{ button.label }}</button>    
+{% endfor %}
+{{ render(controller('EdiBundle:Viacar:datatable', { 'ctrl': ctrl,'app':app,'url':url })) }}
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
+
+{% block javascripts %}
+<script>$(".{{ctrl}}").alexDataTable("{{app}}", "{{ctrl}}", "{{url}}", "{{view}}");</script>
+{% endblock %}
