@@ -91,7 +91,7 @@ class ViacarController extends Main {
                 foreach ($data as $key => $val) {
                     $attributes[$attrs[$key]] = $val;
                 }
-                print_r($attributes);
+                
                 $viacaredi = $this->getDoctrine()
                         ->getRepository('EdiBundle:Viacaredi')
                         ->findOneByItemCode($attributes["itemcode"]);

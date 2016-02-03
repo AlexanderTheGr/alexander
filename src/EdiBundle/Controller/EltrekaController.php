@@ -40,6 +40,16 @@ class EltrekaController extends Main {
                 ->getRepository('EdiBundle:Eltrekaedi')
                 ->find($id);
         $Eltrekaedi->GetAvailability();
+        
+        
+        if ($Eltrekaedi->getProduct() == 0) {
+            $product = $Eltrekaedi->toErp();
+            $this->flushpersist($product);
+            $Eltrekaedi->setProduct($product->getId());
+            $this->flushpersist($Eltrekaedi);
+        }
+
+        
         return $this->render('EdiBundle:Eltreka:view.html.twig', array(
                     'pagename' => 'Eltrekaedis',
                     'url' => '/edi/eltreka/save',

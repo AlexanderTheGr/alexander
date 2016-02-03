@@ -2,64 +2,58 @@
 
 namespace EdiBundle\Entity;
 
+use AppBundle\Entity\Entity;
 /**
  * ViacarediOrderItem
  */
-class ViacarediOrderItem {
+class ViacarediOrderItem extends Entity{
 
-    public function getField($field) {
-        return $this->$field;
-    }
 
-    public function setField($field, $val) {
-        $this->$field = $val;
-        return $val;
-    }
 
     /**
      * @var integer
      */
-    private $qty;
+    protected $qty;
 
     /**
      * @var string
      */
-    private $price;
+    protected $price;
 
     /**
      * @var string
      */
-    private $discount;
+    protected $discount;
 
     /**
      * @var string
      */
-    private $fprice;
+    protected $fprice;
 
     /**
      * @var integer
      */
-    private $store = '7021';
+    protected $store = '7021';
 
     /**
      * @var boolean
      */
-    private $chk;
+    protected $chk;
 
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \EdiBundle\Entity\Viacaredi
      */
-    private $viacaredi;
+    protected $viacaredi;
 
     /**
      * @var \EdiBundle\Entity\ViacarediOrder
      */
-    private $ViacarediOrder;
+    protected $ViacarediOrder;
 
     /**
      * Set qty

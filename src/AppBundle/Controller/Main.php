@@ -21,6 +21,7 @@ class Main extends Controller {
     var $rmd;
 
     function __construct() {
+        
     }
 
     public function content() {
@@ -43,7 +44,7 @@ class Main extends Controller {
         ini_set("memory_limit", "1256M");
         $request = Request::createFromGlobals();
 
- 
+
         $recordsTotal = 0;
         $recordsFiltered = 0;
         //$this->q_or = array();
@@ -109,7 +110,7 @@ class Main extends Controller {
         $jsonarr = array();
         $r = explode(":", $this->repository);
 
-        foreach (@(array)$results as $result) {
+        foreach (@(array) $results as $result) {
             $json = array();
             foreach ($data["fields"] as $field) {
                 if (@$field["index"]) {
@@ -136,7 +137,7 @@ class Main extends Controller {
                         }
                     }
                 } elseif (@$field["function"]) {
-                    $func = $field["function"]; 
+                    $func = $field["function"];
                     $obj = $em->getRepository($this->repository)->find($result["id"]);
                     $json[] = $obj->$func(count($results));
                 }
@@ -197,6 +198,7 @@ class Main extends Controller {
     }
 
     function addField($field = array()) {
+
         $bundle = explode(":", $this->repository);
         if (@$field["type"] == "select") {
             $field["content"] = '<input class="style-primary-bright form-control search_init" type="radio" />';
@@ -248,12 +250,13 @@ class Main extends Controller {
         $session = new Session();
         $session->set('params_' . $params['key'], $params['dtparams']);
         foreach ($params['dtparams'] as $param) {
-            $fields[] = array('content' => $param["name"],'input' => @$param["input"]);
+            $fields[] = array('content' => $param["name"], 'input' => @$param["input"]);
         }
         $datatable = array(
             'url' => $params['url'], // '/order/getitems/' . $id,
             'fields' => $fields,
             'drawCallback' => @$params["drawCallback"],
+            'view' => @$params["view"],
             'ctrl' => @$params["ctrl"] ? $params["ctrl"] : $this->generateRandomString(),
             'app' => @$params["app"] ? $params["app"] : $this->generateRandomString());
         return $datatable;
@@ -292,6 +295,18 @@ class Main extends Controller {
                     'ctrl' => $ctrl,
                     'app' => $app,
                     'tabs' => $tabs,
+                    'type' => '',
+                    'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
+        ));
+    }
+
+    public function contentjsonAction($ctrl, $app, $url, $content) {
+        return $this->render('elements/contentjson.twig', array(
+                    'pagename' => '',
+                    'url' => $url,
+                    'ctrl' => $ctrl,
+                    'app' => $app,
+                    'content' => $content,
                     'type' => '',
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
@@ -337,12 +352,19 @@ class Main extends Controller {
 
     function save() {
         $data = $this->formLybase64();
-        
+        $dt = new \DateTime("now");
         $entities = array();
 
         foreach ($data as $key => $val) {
+
             $df = explode(":", $key);
+
+            //echo $df[0] . ":" . $df[1].":".$df[2].":".$df[3]." ---> ".$val."\n";
             if (!@$entities[$df[0] . ":" . $df[1]]) {
+
+
+                //echo $df[0] . ":" . $df[1].":".$df[2].":".$df[3]."\n";
+
                 $entities[$df[0] . ":" . $df[1]] = $this->getDoctrine()
                         ->getRepository($df[0] . ":" . $df[1])
                         ->find($df[3]);
@@ -350,31 +372,98 @@ class Main extends Controller {
             if ($df[3] == 0) {
                 $entities[$df[0] . ":" . $df[1]] = $this->newentity[$df[0] . ":" . $df[1]];
             }
-            $entities[$df[0] . ":" . $df[1]]->setField($df[2], $val);
+            $type = $entities[$df[0] . ":" . $df[1]]->gettype($df[2]);
+            if ($type == 'object') {
+                $obj = $entities[$df[0] . ":" . $df[1]]->getField($df[2]);
+                $entity = $this->getDoctrine()
+                        ->getRepository($obj->repository)
+                        ->find($val);
+                $entities[$df[0] . ":" . $df[1]]->setField($df[2], $entity);
+            } else {
+                $entities[$df[0] . ":" . $df[1]]->setField($df[2], $val);
+            }
         }
         foreach ($entities as $key => $entity) {
+            $entity->setModified($dt);
             $this->flushpersist($entity);
             $out[$key] = $entity->getId();
         }
         return $out;
     }
+
+    function initialazeNewEntity($entity) {
+        $dt = new \DateTime("now");
+        $this->newentity[$this->repository] = $entity;
+        $this->newentity[$this->repository]->setTs($dt);
+        $this->newentity[$this->repository]->setCreated($dt);
+        $this->newentity[$this->repository]->setModified($dt);
+    }
+
     function flushpersist($entity) {
         $em = $this->getDoctrine()->getManager();
         $em->persist($entity);
         $em->flush();
+        return $entity;
     }
+
     function flushremove($entity) {
         $em = $this->getDoctrine()->getManager();
         $em->remove($entity);
         $em->flush();
     }
-    function getFormLyFields($entity, $fields) {
+
+    function getDFormFields($entity, $fields, $id = '') {
+
+        $forms["type"] = 'div';
+        foreach ($fields as $field => $options) {
+            $formsint = array();
+            $formsint["type"] = 'div';
+            $formsint["class"] = 'form-group';
+            @$options["type"] = $options["type"] ? $options["type"] : "input";
+            if ($options["type"] == 'select') {
+                @$options["required"] = $options["required"] ? $options["required"] : true;
+                $datasource = $options["datasource"];
+                $results = $em->getRepository($datasource["repository"])->findAll();
+                $seloptions = array();
+                foreach (@(array) $results as $data) {
+                    $seloptions[] = array("name" => $data->getField($datasource['name']) . "(" . $data->getField($datasource['value']) . ")", "value" => $data->getField($datasource['value']));
+                }
+
+                //$forms["html"][] = array("id" => $this->repository, "id" => $this->repository . ":" . $field . ":" . $entity->getId());
+                //$forms["html"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'defaultValue' => $entity->getField($field)->getId(), "type" => "select", "templateOptions" => array("type" => '', 'options' => $seloptions, 'defaultOptions' => array("value" => $entity->getField($field)->getId()), "label" => $options["label"], "required" => $options["required"]));
+            } else {
+                $formsint["html"][] = array('class' => 'form-control', "value" => $entity->getField($field), "caption" => $options["label"], "name" => $this->repository. ":" . $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'type' => 'text');
+
+                //@$options["required"] = $options["required"] ? $options["required"] : true;
+                //$forms["html"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field), "type" => "input", "templateOptions" => array("type" => '', "label" => $options["label"], "required" => $options["required"]));
+            }
+            $forms["html"][] = $formsint;
+        }
+
+        return $forms;
+    }
+
+    function getFormLyFields($entity, $fields, $id = '') {
         $forms["model"] = array();
+        $forms["id"] = $id;
+        $em = $this->getDoctrine()->getManager();
         foreach ($fields as $field => $options) {
             @$options["type"] = $options["type"] ? $options["type"] : "input";
-            @$options["required"] = $options["required"] ? $options["required"] : true;
-            $forms["fields"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field), "type" => "input", "templateOptions" => array("type" => '', "label" => $options["label"], "required" => $options["required"]));
+            if ($options["type"] == 'select') {
+                @$options["required"] = $options["required"] ? $options["required"] : true;
+                $datasource = $options["datasource"];
+                $results = $em->getRepository($datasource["repository"])->findAll();
+                $seloptions = array();
+                foreach (@(array) $results as $data) {
+                    $seloptions[] = array("name" => $data->getField($datasource['name']) . "(" . $data->getField($datasource['value']) . ")", "value" => $data->getField($datasource['value']));
+                }
+                $forms["fields"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'defaultValue' => $entity->getField($field)->getId(), "type" => "select", "templateOptions" => array("type" => '', 'options' => $seloptions, 'defaultOptions' => array("value" => $entity->getField($field)->getId()), "label" => $options["label"], "required" => $options["required"]));
+            } else {
+                @$options["required"] = $options["required"] ? $options["required"] : true;
+                $forms["fields"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field), "type" => "input", "templateOptions" => array("type" => '', "label" => $options["label"], "required" => $options["required"]));
+            }
         }
+
         return $forms;
     }
 

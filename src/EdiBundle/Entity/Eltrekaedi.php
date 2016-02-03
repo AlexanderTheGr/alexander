@@ -1,20 +1,16 @@
 <?php
 
 namespace EdiBundle\Entity;
+
 use Symfony\Component\HttpFoundation\Session\Session;
+use AppBundle\Entity\Entity;
+
 /**
  * Eltrekaedi
  */
-class Eltrekaedi {
-
-    public function getField($field) {
-        return $this->$field;
-    }
-
-    public function setField($field, $val) {
-        $this->$field = $val;
-        return $val;
-    }
+class Eltrekaedi extends Entity {
+    
+    private $repository = 'EdiBundle:Eltrekaedi';
 
     /**
      * @var integer
@@ -24,102 +20,102 @@ class Eltrekaedi {
     /**
      * @var integer
      */
-    private $sos;
+    protected $sos;
 
     /**
      * @var string
      */
-    private $partno;
+    protected $partno;
 
     /**
      * @var string
      */
-    private $description;
+    protected $description;
 
     /**
      * @var string
      */
-    private $factorypartno;
+    protected $factorypartno;
 
     /**
      * @var integer
      */
-    private $tecdocsupplierno;
+    protected $tecdocsupplierno;
 
     /**
      * @var string
      */
-    private $tecdocpartno;
+    protected $tecdocpartno;
 
     /**
      * @var string
      */
-    private $wholeprice;
+    protected $wholeprice;
 
     /**
      * @var string
      */
-    private $retailprice;
+    protected $retailprice;
 
     /**
      * @var string
      */
-    private $supplierno;
+    protected $supplierno;
 
     /**
      * @var string
      */
-    private $supplierdescr;
+    protected $supplierdescr;
 
     /**
      * @var string
      */
-    private $division;
+    protected $division;
 
     /**
      * @var string
      */
-    private $eltrekkaCat;
+    protected $eltrekkaCat;
 
     /**
      * @var string
      */
-    private $eltrekkaCatDe;
+    protected $eltrekkaCatDe;
 
     /**
      * @var string
      */
-    private $eltrekkaSubCat;
+    protected $eltrekkaSubCat;
 
     /**
      * @var string
      */
-    private $eltrekkaSubCatDe;
+    protected $eltrekkaSubCatDe;
 
     /**
      * @var string
      */
-    private $photo;
+    protected $photo;
 
     /**
      * @var string
      */
-    private $grossWeightGr;
+    protected $grossWeightGr;
 
     /**
      * @var string
      */
-    private $lenghtMm;
+    protected $lenghtMm;
 
     /**
      * @var string
      */
-    private $widthMm;
+    protected $widthMm;
 
     /**
      * @var string
      */
-    private $heightMm;
+    protected $heightMm;
 
     /**
      * Get id
@@ -570,17 +566,17 @@ class Eltrekaedi {
         return $this->heightMm;
     }
 
-    private $SoapClient = false;
-    private $Username = 'TESTUID';
-    private $Password = 'TESTPWD';
-    private $CustomerNo = '999999L';
-    private $soap_url = 'http://195.144.16.7/EltrekkaEDI/EltrekkaEDI.asmx?WSDL';
+    protected $SoapClient = false;
+    protected $Username = 'TESTUID';
+    protected $Password = 'TESTPWD';
+    protected $CustomerNo = '999999L';
+    protected $soap_url = 'http://195.144.16.7/EltrekkaEDI/EltrekkaEDI.asmx?WSDL';
 
-    private function auth() {
-   
+    protected function auth() {
+
         if ($this->SoapClient) {
             return $this;
-        }   
+        }
         $this->SoapClient = new \SoapClient($this->soap_url);
         $ns = 'http://eltrekka.gr/edi/';
         $headerbody = array('Username' => $this->Username, 'Password' => $this->Password);
@@ -601,8 +597,6 @@ class Eltrekaedi {
         }
     }
 
-    
- 
     public function getQtyAvailability($qty = 1) {
         $this->auth();
         $params["CustomerNo"] = $this->CustomerNo;
@@ -610,19 +604,20 @@ class Eltrekaedi {
         $params["RequestedQty"] = $qty;
         $out = $this->SoapClient->GetAvailability($params);
         $xmlNode = new \SimpleXMLElement($out->GetAvailabilityResult->any);
-        $availability = (array)$xmlNode->Item;
+        $availability = (array) $xmlNode->Item;
         return $availability;
     }
-    
-    public function getAvailability($cnt=0) {
-        if ($cnt > 10) return;  
+
+    public function getAvailability($cnt = 0) {
+        if ($cnt > 10)
+            return;
         $this->auth();
         $params["CustomerNo"] = $this->CustomerNo;
         $params["EltrekkaRef"] = $this->getPartno();
         $params["RequestedQty"] = 1;
         $out = $this->SoapClient->GetAvailability($params);
         $xmlNode = new \SimpleXMLElement($out->GetAvailabilityResult->any);
-        $Availability = (array)$xmlNode->Item->Header;
+        $Availability = (array) $xmlNode->Item->Header;
         return $Availability["Available"];
     }
 
@@ -687,6 +682,56 @@ class Eltrekaedi {
                  */
             }
         }
+    }
+
+    public function toErp() {
+        $dt = new \DateTime("now");
+        $product = new \SoftoneBundle\Entity\Product;
+        $product->setSupplierCode($this->factorypartno);
+        $product->setTitle($this->description);
+        $product->setTecdocCode($this->tecdocpartno);
+        $product->setTecdocSupplierId($this->tecdocsupplierno);
+        $product->setErpSupplier($this->supplierdescr);
+        $product->setErpCode($this->partno);
+
+
+        $product->setEdi($this->repository);
+        $product->setEdiId($this->id);
+
+        $product->setItemV5($dt);
+        $product->setTs($dt);
+        $product->setItemInsdate($dt);
+        $product->setItemUpddate($dt);
+        $product->setCreated($dt);
+        $product->setModified($dt);
+        return $product;
+    }
+
+    /**
+     * @var integer
+     */
+    private $product;
+
+    /**
+     * Set product
+     *
+     * @param integer $product
+     *
+     * @return Eltrekaedi
+     */
+    public function setProduct($product) {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return integer
+     */
+    public function getProduct() {
+        return $this->product;
     }
 
 }

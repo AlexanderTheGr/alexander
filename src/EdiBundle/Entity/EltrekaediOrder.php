@@ -2,79 +2,74 @@
 
 namespace EdiBundle\Entity;
 
+use AppBundle\Entity\Entity;
+
 /**
  * EltrekaediOrder
  */
-class EltrekaediOrder {
+class EltrekaediOrder extends Entity {
 
-    public function getField($field) {
-        return $this->$field;
-    }
 
-    public function setField($field, $val) {
-        $this->$field = $val;
-        return $val;
-    }
 
     /**
      * @var integer
      */
-    private $reference = '0';
+    protected $reference = '0';
 
     /**
      * @var \DateTime
      */
-    private $insdate;
+    protected $insdate;
 
     /**
      * @var string
      */
-    private $comments;
+    protected $comments;
 
     /**
      * @var string
      */
-    private $PurchaseOrderNo;
+    protected $PurchaseOrderNo;
 
     /**
      * @var integer
      */
-    private $StoreNo;
+    protected $StoreNo;
 
     /**
      * @var integer
      */
-    private $PmtTermsCode;
+    protected $PmtTermsCode;
 
     /**
      * @var integer
      */
-    private $status;
+    protected $status;
 
     /**
      * @var integer
      */
-    private $actioneer;
+    protected $actioneer;
 
     /**
      * @var \DateTime
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
      */
-    private $modified;
+    protected $modified;
 
     /**
      * @var integer
      */
-    private $user;
+    protected $user;
 
     /**
      * @var integer
      */
-    private $route;
+    protected $route;
 
     /**
      * @var integer
@@ -84,7 +79,7 @@ class EltrekaediOrder {
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $EltrekaediOrderItem;
+    protected $EltrekaediOrderItem;
 
     /**
      * Constructor
@@ -403,7 +398,7 @@ class EltrekaediOrder {
     var $CustomerNo = '999999L';
     var $soap_url = 'http://195.144.16.7/EltrekkaEDI/EltrekkaEDI.asmx?WSDL';
 
-    private function auth() {
+    protected function auth() {
         if ($this->SoapClient)
             return $this;
         $this->SoapClient = new \SoapClient($this->soap_url);
@@ -433,7 +428,7 @@ class EltrekaediOrder {
         return (array)$xmlNode;
     }
 
-    private function getPartBuffer($items) {
+    protected function getPartBuffer($items) {
         foreach($items as $item) {
             $buffer .= "777";
             $partsNo = $item->getEltrekaedi()->getPartno();
@@ -457,37 +452,37 @@ class EltrekaediOrder {
     /**
      * @var integer
      */
-    private $Make;
+    protected $Make;
 
     /**
      * @var string
      */
-    private $SerialNo;
+    protected $SerialNo;
 
     /**
      * @var string
      */
-    private $Model;
+    protected $Model;
 
     /**
      * @var integer
      */
-    private $UserId;
+    protected $UserId;
 
     /**
      * @var string
      */
-    private $UserEmail;
+    protected $UserEmail;
 
     /**
      * @var string
      */
-    private $ShipToCode;
+    protected $ShipToCode;
 
     /**
      * @var integer
      */
-    private $ShipViaCode;
+    protected $ShipViaCode;
 
 
     /**

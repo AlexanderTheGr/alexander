@@ -2,64 +2,57 @@
 
 namespace EdiBundle\Entity;
 
+use AppBundle\Entity\Entity;
 /**
  * EltrekaediOrderItem
  */
-class EltrekaediOrderItem {
+class EltrekaediOrderItem extends Entity {
 
-    public function getField($field) {
-        return $this->$field;
-    }
-
-    public function setField($field, $val) {
-        $this->$field = $val;
-        return $val;
-    }
 
     /**
      * @var integer
      */
-    private $order;
+    protected $order;
 
     /**
      * @var integer
      */
-    private $product;
+    protected $product;
 
     /**
      * @var integer
      */
-    private $qty;
+    protected $qty;
 
     /**
      * @var string
      */
-    private $price;
+    protected $price;
 
     /**
      * @var string
      */
-    private $disc1prc;
+    protected $disc1prc;
 
     /**
      * @var string
      */
-    private $lineval;
+    protected $lineval;
 
     /**
      * @var integer
      */
-    private $store = '7021';
+    protected $store = '7021';
 
     /**
      * @var boolean
      */
-    private $chk;
+    protected $chk;
 
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * Set order
@@ -249,7 +242,7 @@ class EltrekaediOrderItem {
     /**
      * @var \EdiBundle\Entity\Eltrekaedi
      */
-    private $eltrekaedi;
+    protected $eltrekaedi;
 
     /**
      * Set eltrekaedi
@@ -278,7 +271,7 @@ class EltrekaediOrderItem {
     /**
      * @var string
      */
-    private $discount;
+    protected $discount;
 
 
     /**
@@ -307,7 +300,7 @@ class EltrekaediOrderItem {
     /**
      * @var string
      */
-    private $fprice;
+    protected $fprice;
 
 
     /**
@@ -337,7 +330,7 @@ class EltrekaediOrderItem {
     /**
      * @var \EdiBundle\Entity\EltrekaediOrder
      */
-    private $EltrekaediOrder;
+    protected $EltrekaediOrder;
 
 
     /**

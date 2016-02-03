@@ -1633,4 +1633,62 @@ class Product {
     }
 
 
+    /**
+     * @var string
+     */
+    private $edi;
+
+    /**
+     * @var integer
+     */
+    private $ediId;
+
+
+    /**
+     * Set edi
+     *
+     * @param string $edi
+     *
+     * @return Product
+     */
+    public function setEdi($edi)
+    {
+        $this->edi = $edi;
+
+        return $this;
+    }
+
+    /**
+     * Get edi
+     *
+     * @return string
+     */
+    public function getEdi()
+    {
+        return $this->edi;
+    }
+
+    /**
+     * Set ediId
+     *
+     * @param integer $ediId
+     *
+     * @return Product
+     */
+    public function setEdiId($ediId)
+    {
+        $this->ediId = $ediId;
+
+        return $this;
+    }
+
+    /**
+     * Get ediId
+     *
+     * @return integer
+     */
+    public function getEdiId()
+    {
+        return $this->ediId;
+    }
 }

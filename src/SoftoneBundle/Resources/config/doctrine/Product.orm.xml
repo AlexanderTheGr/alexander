@@ -10,6 +10,11 @@
             <index name="search" columns="search"/>
             <index name="gnisia" columns="gnisia"/>
             <index name="item_cccfxcode1" columns="item_cccfxcode1"/>
+            
+            <index name="gnisia" columns="gnisia"/>
+            <index name="edi_id" columns="edi_id"/>
+            
+            
         </indexes>
 
         <id name="id" type="integer" column="id">
@@ -30,6 +35,19 @@
                 <option name="fixed"/>
             </options>
         </field>
+        
+        <field name="edi" type="string" column="edi" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>        
+        <field name="ediId" type="integer" column="edi_id" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>        
+        
+        
         <field name="tecdocCode" type="string" column="tecdoc_code" length="255" nullable="true">
             <options>
                 <option name="fixed"/>

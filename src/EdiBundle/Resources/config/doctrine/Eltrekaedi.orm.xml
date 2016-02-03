@@ -3,7 +3,11 @@
   <entity name="EdiBundle\Entity\Eltrekaedi" repository-class="EdiBundle\Entity\EltrekaediRepository" table="eltrekaedi">
     <unique-constraints>
       <unique-constraint name="partsno" columns="partno"/>
+      <index-constraint name="product" columns="product"/>
     </unique-constraints>
+    <indexes>
+      <index name="product" columns="product"/>
+    </indexes>    
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
@@ -32,6 +36,13 @@
         <option name="unsigned"/>
       </options>
     </field>
+    
+    <field name="product" type="integer" column="product" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    
     <field name="tecdocpartno" type="string" column="tecdocpartno" length="255" nullable="false">
       <options>
         <option name="fixed"/>
@@ -83,5 +94,7 @@
     <field name="lenghtMm" type="decimal" column="lenght_mm" precision="10" scale="2" nullable="false"/>
     <field name="widthMm" type="decimal" column="width_mm" precision="10" scale="2" nullable="false"/>
     <field name="heightMm" type="decimal" column="height_mm" precision="10" scale="2" nullable="false"/>
+
+    
   </entity>
 </doctrine-mapping>

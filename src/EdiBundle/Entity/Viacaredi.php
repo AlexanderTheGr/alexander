@@ -2,69 +2,62 @@
 
 namespace EdiBundle\Entity;
 
+use AppBundle\Entity\Entity;
+
 /**
  * Viacaredi
  */
-class Viacaredi {
-
-    public function getField($field) {
-        return $this->$field;
-    }
-
-    public function setField($field, $val) {
-        $this->$field = $val;
-        return $val;
-    }
+class Viacaredi extends Entity {
 
     /**
      * @var string
      */
-    private $itemCode;
+    protected $itemCode;
 
     /**
      * @var string
      */
-    private $brand;
+    protected $brand;
 
     /**
      * @var string
      */
-    private $partno;
+    protected $partno;
 
     /**
      * @var string
      */
-    private $description;
+    protected $description;
 
     /**
      * @var integer
      */
-    private $dlnr;
+    protected $dlnr;
 
     /**
      * @var string
      */
-    private $artNr;
+    protected $artNr;
 
     /**
      * @var integer
      */
-    private $status;
+    protected $status;
 
     /**
      * @var integer
      */
-    private $actioneer;
+    protected $actioneer;
 
     /**
      * @var \DateTime
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
      */
-    private $modified;
+    protected $modified;
 
     /**
      * @var integer
@@ -338,7 +331,7 @@ class Viacaredi {
     /**
      * @var string
      */
-    private $retailprice;
+    protected $retailprice;
 
     /**
      * Set retailprice
@@ -362,7 +355,7 @@ class Viacaredi {
         return $this->retailprice;
     }
 
-    private $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=getiteminfo';
+    protected $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=getiteminfo';
 
     public function getQtyAvailability($qty = 1) {
         $data_string = '{ "ApiToken": "de1751fa-f91c-4b7c-89a9-9cfbaf0e5b50", "Items": [ { "ItemCode": "' . $this->itemCode . '", "ReqQty": 1 } ] } ';
@@ -381,7 +374,7 @@ class Viacaredi {
         //print_r($re);
         $out["PriceOnPolicy"] = $re->Items[0]->UnitPrice;
         $out["Availability"] = $re->Items[0]->Availability;
-        
+
         //echo print_r($re);
         return $out;
     }

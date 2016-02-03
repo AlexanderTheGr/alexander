@@ -2,74 +2,67 @@
 
 namespace EdiBundle\Entity;
 
+use AppBundle\Entity\Entity;
 /**
  * ViacarediOrder
  */
-class ViacarediOrder {
+class ViacarediOrder extends Entity{
 
-    public function getField($field) {
-        return $this->$field;
-    }
-
-    public function setField($field, $val) {
-        $this->$field = $val;
-        return $val;
-    }
 
     /**
      * @var integer
      */
-    private $reference = '0';
+    protected $reference = '0';
 
     /**
      * @var \DateTime
      */
-    private $insdate;
+    protected $insdate;
 
     /**
      * @var string
      */
-    private $remarks;
+    protected $remarks;
 
     /**
      * @var integer
      */
-    private $status;
+    protected $status;
 
     /**
      * @var integer
      */
-    private $actioneer;
+    protected $actioneer;
 
     /**
      * @var \DateTime
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
      */
-    private $modified;
+    protected $modified;
 
     /**
      * @var integer
      */
-    private $user;
+    protected $user;
 
     /**
      * @var integer
      */
-    private $route;
+    protected $route;
 
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $ViacarediOrderItem;
+    protected $ViacarediOrderItem;
 
     /**
      * Constructor
@@ -317,7 +310,7 @@ class ViacarediOrder {
     }
 
    
-    private $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=postorder';
+    protected $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=postorder';
     public function placeOrder() {
          // { "ApiToken": "de1751fa-f91c-4b7c-89a9-9cfbaf0e5b50", "Remarks": "Test Order", "Items": [ { "ItemCode": "8GH007157901", "ReqQty": 1, "UnitPrice": 15.58 }, { "ItemCode": "W 940 (10)", "ReqQty": 2, "UnitPrice": 7.28 }, { "ItemCode": "DRM17082", "ReqQty": 1, "UnitPrice": 122.80 } ] } 
         $items = $this->getViacarediOrderItem();
