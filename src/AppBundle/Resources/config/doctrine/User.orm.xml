@@ -44,7 +44,7 @@
     </field>
     <field name="ts" type="datetime" column="ts" nullable="false">
       <options>
-        <option name="default">CURRENT_TIMESTAMP</option>
+        
       </options>
     </field>
     <field name="status" type="string" column="status" length="255" nullable="false">

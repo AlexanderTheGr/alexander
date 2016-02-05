@@ -27,7 +27,7 @@
     </field>
     <field name="ts" type="datetime" column="ts" nullable="false">
       <options>
-        <option name="default">CURRENT_TIMESTAMP</option>
+        
       </options>
     </field>
     <field name="actioneer" type="integer" column="actioneer" nullable="true">
