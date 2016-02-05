@@ -76,10 +76,13 @@ class EltrekaController extends Main {
      * @Route("/edi/eltreka/getPartMaster")
      */
     public function getPartMasterAction() {
+        $this->getPartMaster();
+    }
+    
+    public function getPartMaster() {
 
         $eltrekaedi = new Eltrekaedi();
-        $file = "http://195.144.16.7/EltrekkaEDI/Temp/Parts/97ZQW6PS.txt"; //$eltrekaedi->getPartMasterFile();
-        echo $file;
+        $file = $eltrekaedi->getPartMasterFile();       
         $em = $this->getDoctrine()->getManager();
         if ((($handle = fopen($file, "r")) !== FALSE)) {
             $data = fgetcsv($handle, 100000, "\t");
@@ -114,7 +117,7 @@ class EltrekaController extends Main {
                 }
             }
         }
-    }
+    }    
 
     /**
      * @Route("/edi/eltreka/gettab")
@@ -162,5 +165,12 @@ class EltrekaController extends Main {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
-
+    
+    /**
+     * @Route("/edi/eltreka/install")
+     */
+    public function installAction(Request $request) {
+        $this->install();
+        $this->getPartMaster();
+    }
 }

@@ -70,8 +70,10 @@ class ViacarController extends Main {
      * @Route("/edi/viacar/getPartMaster")
      */
     public function getPartMasterAction() {
+        $this->getPartMaster();
+    }
 
-
+    public function getPartMaster() {
         //echo $this->getPartMaster();
         //$fiestr = gzdecode(file_get_contents($this->getPartMasterFile()));
         //file_put_contents('file.csv', $fiestr);
@@ -91,11 +93,11 @@ class ViacarController extends Main {
                 foreach ($data as $key => $val) {
                     $attributes[$attrs[$key]] = $val;
                 }
-                
+
                 $viacaredi = $this->getDoctrine()
                         ->getRepository('EdiBundle:Viacaredi')
                         ->findOneByItemCode($attributes["itemcode"]);
-                
+
                 $q = array();
                 foreach ($attributes as $field => $val) {
                     $q[] = "`" . $field . "` = '" . addslashes($val) . "'";
@@ -108,7 +110,6 @@ class ViacarController extends Main {
                 //if ($i++ > 10) exit;
             }
         }
-        exit;
     }
 
     /**
@@ -125,9 +126,6 @@ class ViacarController extends Main {
         $fields["partno"] = array("label" => "Part No");
         $fields["description"] = array("label" => "Description");
         //$fields["supplierdescr"] = array("label" => "Supplier");
-
-
-
         $forms = $this->getFormLyFields($entity, $fields);
         $this->addTab(array("title" => "General", 'buttons' => $buttons, "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         $json = $this->tabs();
@@ -150,6 +148,14 @@ class ViacarController extends Main {
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
+    }
+
+    /**
+     * @Route("/edi/viacar/install")
+     */
+    public function installAction(Request $request) {
+        $this->install();
+        $this->getPartMaster();
     }
 
 }

@@ -467,4 +467,29 @@ class Main extends Controller {
         return $forms;
     }
 
+    
+    public function install(Request $request) {
+        // replace this example code with whatever you need
+        set_time_limit(100000);
+        ini_set('memory_limit', '128M');
+        $kernel = $this->get('kernel');
+        $application = new Application($kernel);
+        $application->setAutoExit(false);
+        $options = array('command' => 'doctrine:schema:update', "--force" => true);
+        $input = new ArrayInput(array(
+            'command' => 'doctrine:schema:update',
+            "--force" => true
+        ));
+        // You can use NullOutput() if you don't need the output
+        $output = new BufferedOutput();
+        $application->run($input, $output);
+
+        // return the output, don't use if you used NullOutput()
+        $content = $output->fetch();
+        return $this->render('default/index.html.twig', array(
+                    'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
+        ));
+    }      
+    
+    
 }
