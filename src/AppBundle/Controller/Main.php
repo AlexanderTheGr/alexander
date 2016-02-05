@@ -475,7 +475,7 @@ class Main extends Controller {
     public function install() {
         // replace this example code with whatever you need
         set_time_limit(100000);
-        ini_set('memory_limit', '128M');
+        //ini_set('memory_limit', '128M');
         $kernel = $this->get('kernel');
         $application = new Application($kernel);
         $application->setAutoExit(false);
