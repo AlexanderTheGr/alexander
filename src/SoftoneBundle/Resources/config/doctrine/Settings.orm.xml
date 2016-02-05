@@ -33,11 +33,8 @@
         <option name="fixed"/>
       </options>
     </field>
-    <field name="ts" type="datetime" column="ts" nullable="false">
-      <options>
-        <option name="default">CURRENT_TIMESTAMP</option>
-      </options>
-    </field>
+    <field name="ts" type="datetime" column="ts" nullable="false"/>
+
     <field name="actioneer" type="integer" column="actioneer" nullable="true">
       <options>
         <option name="unsigned"/>
