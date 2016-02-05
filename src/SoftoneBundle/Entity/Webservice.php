@@ -17,49 +17,49 @@ class Webservice
      *
      * @ORM\Column(name="name", type="string", length=100, nullable=false)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="url", type="string", length=255, nullable=false)
      */
-    private $url;
+    protected $url;
 
     /**
      * @var string
      *
      * @ORM\Column(name="crendencials", type="text", length=65535, nullable=false)
      */
-    private $crendencials;
+    protected $crendencials;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="ts", type="datetime", nullable=false)
      */
-    private $ts = 'CURRENT_TIMESTAMP';
+    protected $ts = 'CURRENT_TIMESTAMP';
 
     /**
      * @var integer
      *
      * @ORM\Column(name="actioneer", type="integer", nullable=false)
      */
-    private $actioneer;
+    protected $actioneer;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created", type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="modified", type="datetime", nullable=false)
      */
-    private $modified;
+    protected $modified;
 
     /**
      * @var integer
@@ -68,7 +68,7 @@ class Webservice
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
 

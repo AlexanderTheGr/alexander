@@ -17,28 +17,28 @@ class WebserviceProduct
      *
      * @ORM\Column(name="product", type="integer", nullable=false)
      */
-    private $product;
+    protected $product;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="webservice", type="integer", nullable=false)
      */
-    private $webservice;
+    protected $webservice;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="article_id", type="integer", nullable=false)
      */
-    private $articleId;
+    protected $articleId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="article_name", type="string", length=255, nullable=false)
      */
-    private $articleName;
+    protected $articleName;
 
     /**
      * @var integer
@@ -47,7 +47,7 @@ class WebserviceProduct
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
 

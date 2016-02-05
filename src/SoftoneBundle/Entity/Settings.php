@@ -17,63 +17,63 @@ class Settings
      *
      * @ORM\Column(name="key", type="string", length=255, nullable=false)
      */
-    private $key;
+    protected $key;
 
     /**
      * @var string
      *
      * @ORM\Column(name="label", type="string", length=255, nullable=false)
      */
-    private $label;
+    protected $label;
 
     /**
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=255, nullable=false)
      */
-    private $type = 'text';
+    protected $type = 'text';
 
     /**
      * @var string
      *
      * @ORM\Column(name="multidata", type="text", length=65535, nullable=false)
      */
-    private $multidata;
+    protected $multidata;
 
     /**
      * @var string
      *
      * @ORM\Column(name="value", type="text", length=65535, nullable=false)
      */
-    private $value;
+    protected $value;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="ts", type="datetime", nullable=false)
      */
-    private $ts = 'CURRENT_TIMESTAMP';
+    protected $ts = 'CURRENT_TIMESTAMP';
 
     /**
      * @var integer
      *
      * @ORM\Column(name="actioneer", type="integer", nullable=true)
      */
-    private $actioneer;
+    protected $actioneer;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created", type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="modified", type="datetime", nullable=false)
      */
-    private $modified;
+    protected $modified;
 
     /**
      * @var integer
@@ -82,7 +82,7 @@ class Settings
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
 

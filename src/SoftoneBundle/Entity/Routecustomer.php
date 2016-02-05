@@ -17,21 +17,21 @@ class Routecustomer
      *
      * @ORM\Column(name="route", type="integer", nullable=false)
      */
-    private $route;
+    protected $route;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="customer", type="integer", nullable=false)
      */
-    private $customer;
+    protected $customer;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="default", type="boolean", nullable=false)
      */
-    private $default;
+    protected $default;
 
     /**
      * @var integer
@@ -40,7 +40,7 @@ class Routecustomer
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
 

@@ -19,7 +19,7 @@ class Synafies
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      */
-    private $id1;
+    protected $id1;
 
     /**
      * @var integer
@@ -28,7 +28,7 @@ class Synafies
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      */
-    private $id2;
+    protected $id2;
 
 
 

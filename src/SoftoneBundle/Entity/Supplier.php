@@ -26,140 +26,140 @@ class Supplier {
      *
      * @ORM\Column(name="reference", type="integer", nullable=false)
      */
-    private $reference;
+    protected $reference;
 
     /**
      * @var string
      *
      * @ORM\Column(name="supplier_code", type="string", length=255, nullable=false)
      */
-    private $supplierCode;
+    protected $supplierCode;
 
     /**
      * @var string
      *
      * @ORM\Column(name="supplier_trdr_supfindata_lbal", type="string", length=255, nullable=false)
      */
-    private $supplierTrdrSupfindataLbal;
+    protected $supplierTrdrSupfindataLbal;
 
     /**
      * @var string
      *
      * @ORM\Column(name="supplier_name", type="string", length=255, nullable=false)
      */
-    private $supplierName;
+    protected $supplierName;
 
     /**
      * @var string
      *
      * @ORM\Column(name="supplier_afm", type="string", length=255, nullable=false)
      */
-    private $supplierAfm;
+    protected $supplierAfm;
 
     /**
      * @var string
      *
      * @ORM\Column(name="supplier_address", type="string", length=255, nullable=false)
      */
-    private $supplierAddress;
+    protected $supplierAddress;
 
     /**
      * @var string
      *
      * @ORM\Column(name="supplier_district", type="string", length=255, nullable=false)
      */
-    private $supplierDistrict;
+    protected $supplierDistrict;
 
     /**
      * @var string
      *
      * @ORM\Column(name="supplier_zip", type="string", length=255, nullable=false)
      */
-    private $supplierZip;
+    protected $supplierZip;
 
     /**
      * @var string
      *
      * @ORM\Column(name="supplier_city", type="string", length=255, nullable=false)
      */
-    private $supplierCity;
+    protected $supplierCity;
 
     /**
      * @var string
      *
      * @ORM\Column(name="supplier_phone01", type="string", length=255, nullable=false)
      */
-    private $supplierPhone01;
+    protected $supplierPhone01;
 
     /**
      * @var string
      *
      * @ORM\Column(name="supplier_phone02", type="string", length=255, nullable=false)
      */
-    private $supplierPhone02;
+    protected $supplierPhone02;
 
     /**
      * @var string
      *
      * @ORM\Column(name="supplier_fax", type="string", length=255, nullable=false)
      */
-    private $supplierFax;
+    protected $supplierFax;
 
     /**
      * @var string
      *
      * @ORM\Column(name="supplier_webpage", type="string", length=255, nullable=false)
      */
-    private $supplierWebpage;
+    protected $supplierWebpage;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="supplier_upddate", type="datetime", nullable=false)
      */
-    private $supplierUpddate;
+    protected $supplierUpddate;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="supplier_insdate", type="datetime", nullable=false)
      */
-    private $supplierInsdate;
+    protected $supplierInsdate;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="ts", type="datetime", nullable=false)
      */
-    private $ts = 'CURRENT_TIMESTAMP';
+    protected $ts = 'CURRENT_TIMESTAMP';
 
     /**
      * @var integer
      *
      * @ORM\Column(name="actioneer", type="integer", nullable=false)
      */
-    private $actioneer;
+    protected $actioneer;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created", type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="modified", type="datetime", nullable=false)
      */
-    private $modified;
+    protected $modified;
 
     /**
      * @var string
      *
      * @ORM\Column(name="flat_data", type="text", length=65535, nullable=false)
      */
-    private $flatData;
+    protected $flatData;
 
     /**
      * @var integer
@@ -168,7 +168,7 @@ class Supplier {
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * Set reference

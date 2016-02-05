@@ -11,79 +11,79 @@
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
         </id>
-        <field name="reference" type="integer" column="reference" nullable="false">
+        <field name="reference" type="integer" column="reference" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
         </field>
 
-        <field name="store" type="integer" column="store" nullable="false">
+        <field name="store" type="integer" column="store" nullable="true">
             <options>
                 <option name="unsigned"/>
                 <option name="default">1</option>
             </options>
         </field>
-        <field name="customer" type="integer" column="customer" nullable="false">
+        <field name="customer" type="integer" column="customer" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
         </field>
-        <field name="customerName" type="string" column="customer_name" length="255" nullable="false">
+        <field name="customerName" type="string" column="customer_name" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="customerName2" type="string" column="customer_name2" length="255" nullable="false">
+        <field name="customerName2" type="string" column="customer_name2" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="tfprms" type="integer" column="tfprms" nullable="false">
+        <field name="tfprms" type="integer" column="tfprms" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
         </field>
-        <field name="fprms" type="integer" column="fprms" nullable="false">
+        <field name="fprms" type="integer" column="fprms" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
         </field>
-        <field name="insdate" type="datetime" column="insdate" nullable="false"/>
-        <field name="seriesnum" type="integer" column="seriesnum" nullable="false">
+        <field name="insdate" type="datetime" column="insdate" nullable="true"/>
+        <field name="seriesnum" type="integer" column="seriesnum" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
         </field>
-        <field name="series" type="integer" column="series" nullable="false">
+        <field name="series" type="integer" column="series" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
         </field>
-        <field name="fincode" type="string" column="fincode" length="255" nullable="false">
+        <field name="fincode" type="string" column="fincode" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="expn" type="decimal" column="expn" precision="10" scale="2" nullable="false"/>
-        <field name="disc1prc" type="decimal" column="disc1prc" precision="10" scale="2" nullable="false"/>
-        <field name="comments" type="text" column="comments" length="65535" nullable="false">
+        <field name="expn" type="decimal" column="expn" precision="10" scale="2" nullable="true"/>
+        <field name="disc1prc" type="decimal" column="disc1prc" precision="10" scale="2" nullable="true"/>
+        <field name="comments" type="text" column="comments" length="65535" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="fullytrans" type="boolean" column="fullytrans" nullable="false"/>
-        <field name="trdbranch" type="integer" column="trdbranch" nullable="false">
+        <field name="fullytrans" type="boolean" column="fullytrans" nullable="true"/>
+        <field name="trdbranch" type="integer" column="trdbranch" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
         </field>
-        <field name="remarks" type="text" column="remarks" length="65535" nullable="false">
+        <field name="remarks" type="text" column="remarks" length="65535" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="noorder" type="boolean" column="noorder" nullable="false"/>
-        <field name="status" type="integer" column="status" nullable="false">
+        <field name="noorder" type="boolean" column="noorder" nullable="true"/>
+        <field name="status" type="integer" column="status" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
@@ -93,8 +93,14 @@
                 <option name="unsigned"/>
             </options>
         </field>
-        <field name="created" type="datetime" column="created" nullable="false"/>
-        <field name="modified" type="datetime" column="modified" nullable="false"/>
+        
+        <field name="ts" type="datetime" column="ts" nullable="true">
+            <options>
+                <option name="default">CURRENT_TIMESTAMP</option>
+            </options>
+        </field>        
+        <field name="created" type="datetime" column="created" nullable="true"/>
+        <field name="modified" type="datetime" column="modified" nullable="true"/>
     
         <many-to-one
             field="user"

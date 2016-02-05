@@ -26,84 +26,84 @@ class User {
      *
      * @ORM\Column(name="email", type="string", length=45, nullable=true)
      */
-    private $email;
+    protected $email;
 
     /**
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=45, nullable=true)
      */
-    private $username;
+    protected $username;
 
     /**
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=80, nullable=true)
      */
-    private $password;
+    protected $password;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="store", type="integer", nullable=false)
      */
-    private $store;
+    protected $store;
 
     /**
      * @var string
      *
      * @ORM\Column(name="key", type="string", length=50, nullable=true)
      */
-    private $key;
+    protected $key;
 
     /**
      * @var string
      *
      * @ORM\Column(name="role", type="string", length=255, nullable=true)
      */
-    private $role;
+    protected $role;
 
     /**
      * @var string
      *
      * @ORM\Column(name="appkey", type="string", length=255, nullable=false)
      */
-    private $appkey;
+    protected $appkey;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="ts", type="datetime", nullable=false)
      */
-    private $ts = 'CURRENT_TIMESTAMP';
+    protected $ts = 'CURRENT_TIMESTAMP';
 
     /**
      * @var string
      *
      * @ORM\Column(name="status", type="string", length=255, nullable=false)
      */
-    private $status = 'active';
+    protected $status = 'active';
 
     /**
      * @var integer
      *
      * @ORM\Column(name="actioneer", type="integer", nullable=true)
      */
-    private $actioneer;
+    protected $actioneer;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created", type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="modified", type="datetime", nullable=false)
      */
-    private $modified;
+    protected $modified;
 
     /**
      * @var integer
@@ -112,7 +112,7 @@ class User {
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * Set email

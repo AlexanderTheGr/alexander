@@ -17,28 +17,28 @@ class Brand
      *
      * @ORM\Column(name="brand", type="string", length=255, nullable=false)
      */
-    private $brand;
+    protected $brand;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="enable", type="boolean", nullable=false)
      */
-    private $enable = '0';
+    protected $enable = '0';
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="status", type="boolean", nullable=false)
      */
-    private $status = '1';
+    protected $status = '1';
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="top", type="boolean", nullable=false)
      */
-    private $top;
+    protected $top;
 
     /**
      * @var integer
@@ -47,7 +47,7 @@ class Brand
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
 

@@ -17,7 +17,7 @@ class CategoryLang
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var integer
@@ -26,7 +26,7 @@ class CategoryLang
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \SoftoneBundle\Entity\Language
@@ -36,7 +36,7 @@ class CategoryLang
      *   @ORM\JoinColumn(name="language", referencedColumnName="id")
      * })
      */
-    private $language;
+    protected $language;
 
     /**
      * @var \SoftoneBundle\Entity\Category
@@ -46,7 +46,7 @@ class CategoryLang
      *   @ORM\JoinColumn(name="category", referencedColumnName="id")
      * })
      */
-    private $category;
+    protected $category;
 
 
 

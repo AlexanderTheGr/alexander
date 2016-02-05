@@ -17,63 +17,63 @@ class Store
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
      */
-    private $title;
+    protected $title;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="series", type="integer", nullable=false)
      */
-    private $series;
+    protected $series;
 
     /**
      * @var string
      *
      * @ORM\Column(name="field", type="string", length=255, nullable=false)
      */
-    private $field;
+    protected $field;
 
     /**
      * @var string
      *
      * @ORM\Column(name="field2", type="string", length=255, nullable=false)
      */
-    private $field2;
+    protected $field2;
 
     /**
      * @var string
      *
      * @ORM\Column(name="rafi", type="string", length=255, nullable=false)
      */
-    private $rafi;
+    protected $rafi;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="ts", type="datetime", nullable=false)
      */
-    private $ts = 'CURRENT_TIMESTAMP';
+    protected $ts = 'CURRENT_TIMESTAMP';
 
     /**
      * @var integer
      *
      * @ORM\Column(name="actioneer", type="integer", nullable=false)
      */
-    private $actioneer;
+    protected $actioneer;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created", type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="modified", type="datetime", nullable=false)
      */
-    private $modified;
+    protected $modified;
 
     /**
      * @var integer
@@ -82,7 +82,7 @@ class Store
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
 

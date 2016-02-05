@@ -24,385 +24,385 @@ class Product {
      *
      * @ORM\Column(name="reference", type="integer", nullable=false)
      */
-    private $reference;
+    protected $reference;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="catalogue", type="integer", nullable=false)
      */
-    private $catalogue;
+    protected $catalogue;
 
     /**
      * @var string
      *
      * @ORM\Column(name="erp_code", type="string", length=255, nullable=false)
      */
-    private $erpCode;
+    protected $erpCode;
 
     /**
      * @var string
      *
      * @ORM\Column(name="tecdoc_code", type="string", length=255, nullable=false)
      */
-    private $tecdocCode;
+    protected $tecdocCode;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="tecdoc_supplier_id", type="integer", nullable=true)
      */
-    private $tecdocSupplierId;
+    protected $tecdocSupplierId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="supplier_code", type="string", length=255, nullable=false)
      */
-    private $supplierCode;
+    protected $supplierCode;
 
     /**
      * @var string
      *
      * @ORM\Column(name="erp_supplier", type="string", length=255, nullable=false)
      */
-    private $erpSupplier;
+    protected $erpSupplier;
 
     /**
      * @var string
      *
      * @ORM\Column(name="title", type="text", length=65535, nullable=false)
      */
-    private $title;
+    protected $title;
 
     /**
      * @var string
      *
      * @ORM\Column(name="disc1prc", type="decimal", precision=10, scale=2, nullable=false)
      */
-    private $disc1prc;
+    protected $disc1prc;
 
     /**
      * @var string
      *
      * @ORM\Column(name="tecdoc_article_name", type="string", length=255, nullable=false)
      */
-    private $tecdocArticleName;
+    protected $tecdocArticleName;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="tecdoc_generic_article_id", type="integer", nullable=false)
      */
-    private $tecdocGenericArticleId;
+    protected $tecdocGenericArticleId;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="item_insdate", type="datetime", nullable=false)
      */
-    private $itemInsdate;
+    protected $itemInsdate;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="item_upddate", type="datetime", nullable=false)
      */
-    private $itemUpddate;
+    protected $itemUpddate;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="item_isactive", type="boolean", nullable=false)
      */
-    private $itemIsactive = '1';
+    protected $itemIsactive = '1';
 
     /**
      * @var integer
      *
      * @ORM\Column(name="item_cccfxrelbrand", type="integer", nullable=false)
      */
-    private $itemCccfxrelbrand;
+    protected $itemCccfxrelbrand;
 
     /**
      * @var string
      *
      * @ORM\Column(name="item_cccfxreltdcode", type="string", length=255, nullable=false)
      */
-    private $itemCccfxreltdcode;
+    protected $itemCccfxreltdcode;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="item_vat", type="integer", nullable=false)
      */
-    private $itemVat;
+    protected $itemVat;
 
     /**
      * @var string
      *
      * @ORM\Column(name="item_cccfxcode1", type="string", length=255, nullable=false)
      */
-    private $itemCccfxcode1;
+    protected $itemCccfxcode1;
 
     /**
      * @var string
      *
      * @ORM\Column(name="item_mtrmanfctr", type="string", length=255, nullable=false)
      */
-    private $itemMtrmanfctr;
+    protected $itemMtrmanfctr;
 
     /**
      * @var string
      *
      * @ORM\Column(name="item_pricer", type="decimal", precision=10, scale=2, nullable=false)
      */
-    private $itemPricer;
+    protected $itemPricer;
 
     /**
      * @var string
      *
      * @ORM\Column(name="item_pricew", type="decimal", precision=10, scale=0, nullable=false)
      */
-    private $itemPricew;
+    protected $itemPricew;
 
     /**
      * @var string
      *
      * @ORM\Column(name="item_pricew01", type="decimal", precision=10, scale=2, nullable=false)
      */
-    private $itemPricew01;
+    protected $itemPricew01;
 
     /**
      * @var string
      *
      * @ORM\Column(name="item_pricew02", type="decimal", precision=10, scale=2, nullable=false)
      */
-    private $itemPricew02;
+    protected $itemPricew02;
 
     /**
      * @var string
      *
      * @ORM\Column(name="item_pricew03", type="decimal", precision=10, scale=2, nullable=false)
      */
-    private $itemPricew03;
+    protected $itemPricew03;
 
     /**
      * @var string
      *
      * @ORM\Column(name="item_pricer01", type="decimal", precision=10, scale=2, nullable=false)
      */
-    private $itemPricer01;
+    protected $itemPricer01;
 
     /**
      * @var string
      *
      * @ORM\Column(name="item_pricer02", type="decimal", precision=10, scale=2, nullable=false)
      */
-    private $itemPricer02;
+    protected $itemPricer02;
 
     /**
      * @var string
      *
      * @ORM\Column(name="item_markupw", type="decimal", precision=10, scale=2, nullable=false)
      */
-    private $itemMarkupw;
+    protected $itemMarkupw;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="item_mtrunit1", type="integer", nullable=false)
      */
-    private $itemMtrunit1;
+    protected $itemMtrunit1;
 
     /**
      * @var string
      *
      * @ORM\Column(name="item_name1", type="string", length=255, nullable=false)
      */
-    private $itemName1;
+    protected $itemName1;
 
     /**
      * @var string
      *
      * @ORM\Column(name="item_name", type="string", length=255, nullable=false)
      */
-    private $itemName;
+    protected $itemName;
 
     /**
      * @var string
      *
      * @ORM\Column(name="item_code", type="string", length=255, nullable=false)
      */
-    private $itemCode;
+    protected $itemCode;
 
     /**
      * @var string
      *
      * @ORM\Column(name="item_code1", type="string", length=255, nullable=false)
      */
-    private $itemCode1;
+    protected $itemCode1;
 
     /**
      * @var string
      *
      * @ORM\Column(name="item_code2", type="string", length=255, nullable=false)
      */
-    private $itemCode2;
+    protected $itemCode2;
 
     /**
      * @var string
      *
      * @ORM\Column(name="item_mtrplace", type="string", length=255, nullable=false)
      */
-    private $itemMtrplace;
+    protected $itemMtrplace;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="item_mtrsup", type="integer", nullable=false)
      */
-    private $itemMtrsup;
+    protected $itemMtrsup;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="item_mtrcategory", type="integer", nullable=false)
      */
-    private $itemMtrcategory;
+    protected $itemMtrcategory;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="item_mtrl_itemtrdata_qty1", type="integer", nullable=false)
      */
-    private $itemMtrlItemtrdataQty1;
+    protected $itemMtrlItemtrdataQty1;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="updated", type="boolean", nullable=false)
      */
-    private $updated = '1';
+    protected $updated = '1';
 
     /**
      * @var string
      *
      * @ORM\Column(name="media", type="string", length=255, nullable=false)
      */
-    private $media;
+    protected $media;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="ts", type="datetime", nullable=false)
      */
-    private $ts = 'CURRENT_TIMESTAMP';
+    protected $ts = 'CURRENT_TIMESTAMP';
 
     /**
      * @var integer
      *
      * @ORM\Column(name="actioneer", type="integer", nullable=false)
      */
-    private $actioneer;
+    protected $actioneer;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created", type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="modified", type="datetime", nullable=false)
      */
-    private $modified;
+    protected $modified;
 
     /**
      * @var string
      *
      * @ORM\Column(name="flat_data", type="text", nullable=false)
      */
-    private $flatData;
+    protected $flatData;
 
     /**
      * @var string
      *
      * @ORM\Column(name="search", type="string", length=255, nullable=false)
      */
-    private $search;
+    protected $search;
 
     /**
      * @var string
      *
      * @ORM\Column(name="gnisia", type="string", length=255, nullable=false)
      */
-    private $gnisia;
+    protected $gnisia;
 
     /**
      * @var string
      *
      * @ORM\Column(name="search2", type="text", length=65535, nullable=false)
      */
-    private $search2;
+    protected $search2;
 
     /**
      * @var string
      *
      * @ORM\Column(name="item_mtrl_iteextra_num02", type="decimal", precision=10, scale=2, nullable=false)
      */
-    private $itemMtrlIteextraNum02;
+    protected $itemMtrlIteextraNum02;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="item_v3", type="integer", nullable=false)
      */
-    private $itemV3;
+    protected $itemV3;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="item_v4", type="integer", nullable=false)
      */
-    private $itemV4;
+    protected $itemV4;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="item_v5", type="datetime", nullable=false)
      */
-    private $itemV5;
+    protected $itemV5;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="item_v6", type="integer", nullable=false)
      */
-    private $itemV6;
+    protected $itemV6;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="item_v7", type="integer", nullable=false)
      */
-    private $itemV7;
+    protected $itemV7;
 
     /**
      * @var string
      *
      * @ORM\Column(name="rafi1", type="string", length=255, nullable=false)
      */
-    private $rafi1;
+    protected $rafi1;
 
     /**
      * @var string
      *
      * @ORM\Column(name="rafi2", type="string", length=255, nullable=false)
      */
-    private $rafi2;
+    protected $rafi2;
 
     /**
      * @var integer
@@ -1636,12 +1636,12 @@ class Product {
     /**
      * @var string
      */
-    private $edi;
+    protected $edi;
 
     /**
      * @var integer
      */
-    private $ediId;
+    protected $ediId;
 
 
     /**

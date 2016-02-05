@@ -17,21 +17,21 @@ class Customerrule
      *
      * @ORM\Column(name="customer", type="integer", nullable=false)
      */
-    private $customer;
+    protected $customer;
 
     /**
      * @var string
      *
      * @ORM\Column(name="val", type="decimal", precision=10, scale=2, nullable=false)
      */
-    private $val;
+    protected $val;
 
     /**
      * @var string
      *
      * @ORM\Column(name="supplier", type="string", length=255, nullable=false)
      */
-    private $supplier;
+    protected $supplier;
 
     /**
      * @var integer
@@ -40,7 +40,7 @@ class Customerrule
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
 

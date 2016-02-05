@@ -17,21 +17,21 @@ class ParastatikaTypes
      *
      * @ORM\Column(name="perigrafi", type="string", length=255, nullable=false)
      */
-    private $perigrafi;
+    protected $perigrafi;
 
     /**
      * @var string
      *
      * @ORM\Column(name="symperifora", type="string", length=255, nullable=false)
      */
-    private $symperifora;
+    protected $symperifora;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="enabled", type="boolean", nullable=false)
      */
-    private $enabled;
+    protected $enabled;
 
     /**
      * @var integer
@@ -40,7 +40,7 @@ class ParastatikaTypes
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
 

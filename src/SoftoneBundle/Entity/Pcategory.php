@@ -17,63 +17,63 @@ class Pcategory
      *
      * @ORM\Column(name="reference", type="integer", nullable=false)
      */
-    private $reference;
+    protected $reference;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="itecategory_mtrcategory", type="integer", nullable=false)
      */
-    private $itecategoryMtrcategory;
+    protected $itecategoryMtrcategory;
 
     /**
      * @var string
      *
      * @ORM\Column(name="itecategory_code", type="string", length=255, nullable=false)
      */
-    private $itecategoryCode;
+    protected $itecategoryCode;
 
     /**
      * @var string
      *
      * @ORM\Column(name="itecategory_name", type="string", length=255, nullable=false)
      */
-    private $itecategoryName;
+    protected $itecategoryName;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="ts", type="datetime", nullable=false)
      */
-    private $ts = 'CURRENT_TIMESTAMP';
+    protected $ts = 'CURRENT_TIMESTAMP';
 
     /**
      * @var integer
      *
      * @ORM\Column(name="actioneer", type="integer", nullable=false)
      */
-    private $actioneer;
+    protected $actioneer;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created", type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="modified", type="datetime", nullable=false)
      */
-    private $modified;
+    protected $modified;
 
     /**
      * @var string
      *
      * @ORM\Column(name="flat_data", type="text", length=65535, nullable=false)
      */
-    private $flatData;
+    protected $flatData;
 
     /**
      * @var integer
@@ -82,7 +82,7 @@ class Pcategory
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
 

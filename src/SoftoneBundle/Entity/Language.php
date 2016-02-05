@@ -17,7 +17,7 @@ class Language
      *
      * @ORM\Column(name="lang", type="string", length=255, nullable=false)
      */
-    private $lang;
+    protected $lang;
 
     /**
      * @var integer
@@ -26,7 +26,7 @@ class Language
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
 

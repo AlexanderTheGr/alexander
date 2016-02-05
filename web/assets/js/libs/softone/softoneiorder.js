@@ -37,7 +37,7 @@ jQuery(".EltrekaediSendOrder").live('click', function (e) {
     var data = {}
     data.id = jQuery(this).attr('data-id');
 
-    $.post("/edi/eltreka/order/sendorder/", data, function (result) {
+    $.post("order/sendorder/", data, function (result) {
         var json = angular.fromJson(result);
         if (json.ErrorCode) {
             toastr.error(json.ErrorDescription, "Error");
@@ -52,7 +52,7 @@ jQuery(".EdiBundleEltrekaediOrderItemQty").live('keyup', function (e) {
         var data = {}
         data.id = jQuery(this).attr('data-id');
         data.qty = jQuery(this).val();
-        $.post("/edi/eltreka/order/editorderitem/", data, function (result) {
+        $.post("/order/editorderitem/", data, function (result) {
             var json = angular.fromJson(result);
             if (json.error) {
                 toastr.error(json.message, "Error");
@@ -65,12 +65,12 @@ jQuery(".EdiBundleEltrekaediOrderItemQty").live('keyup', function (e) {
 })
 
 
-jQuery(".EdiBundleEltrekaediOrderItemDiscount").live('keyup', function (e) {
+jQuery(".SoftoneBundleOrderitemDisc1prc").live('keyup', function (e) {
     if (e.keyCode == 13) {
         var data = {}
         data.id = jQuery(this).attr('data-id');
         data.discount = jQuery(this).val();
-        $.post("/edi/eltreka/order/editorderitem/", data, function (result) {
+        $.post("/order/editorderitem/", data, function (result) {
             var json = angular.fromJson(result);
             if (json.error) {
                 toastr.error(json.message, "Error");
@@ -82,12 +82,12 @@ jQuery(".EdiBundleEltrekaediOrderItemDiscount").live('keyup', function (e) {
     }
 })
 
-jQuery(".EdiBundleEltrekaediOrderItemPrice").live('keyup', function (e) {
+jQuery(".SoftoneBundleOrderitemPrice").live('keyup', function (e) {
     if (e.keyCode == 13) {
         var data = {}
         data.id = jQuery(this).attr('data-id');
         data.price = jQuery(this).val();
-        $.post("/edi/eltreka/order/editorderitem/", data, function (result) {
+        $.post("/order/editorderitem/", data, function (result) {
             var json = angular.fromJson(result);
             if (json.error) {
                 toastr.error(json.message, "Error");
@@ -100,14 +100,14 @@ jQuery(".EdiBundleEltrekaediOrderItemPrice").live('keyup', function (e) {
 
 
 
-jQuery(".EdiBundleEltrekaediRetailprice").live('keyup', function (e) {
+jQuery(".SoftoneBundleProductItemPricew01").live('keyup', function (e) {
     if (e.keyCode == 13) {
         var data = {}
         data.order = orderid;
         data.item = jQuery(this).attr('data-id');
         data.price = jQuery(this).val();
         data.qty = 1;
-        $.post("/edi/eltreka/order/addorderitem/", data, function (result) {
+        $.post("/order/addorderitem/", data, function (result) {
             var json = angular.fromJson(result);
             if (json.error) {
                 toastr.error(json.message, "Error");
@@ -133,7 +133,7 @@ function asdf(obj, filter, freesearch) {
 }
 
 function fororder(order) {
-    if (jQuery('#eltrekaediitem').val() && b == true) {
+    if (jQuery('#productfreesearch').val() && b == true) {
         orderid = order;
         $(".offcanvas-search").click();
         b = false;

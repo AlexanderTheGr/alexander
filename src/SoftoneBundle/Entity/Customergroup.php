@@ -17,14 +17,14 @@ class Customergroup
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
      */
-    private $title;
+    protected $title;
 
     /**
      * @var string
      *
      * @ORM\Column(name="base_price", type="string", length=255, nullable=false)
      */
-    private $basePrice;
+    protected $basePrice;
 
     /**
      * @var integer
@@ -33,7 +33,7 @@ class Customergroup
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
 

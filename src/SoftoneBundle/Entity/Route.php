@@ -17,14 +17,14 @@ class Route {
      *
      * @ORM\Column(name="route", type="string", length=255, nullable=false)
      */
-    private $route;
+    protected $route;
 
     /**
      * @var string
      *
      * @ORM\Column(name="schedule", type="string", length=255, nullable=false)
      */
-    private $schedule;
+    protected $schedule;
 
     /**
      * @var integer
@@ -33,7 +33,7 @@ class Route {
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
     protected $products;
 
     public function __construct() {
@@ -100,7 +100,7 @@ class Route {
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $customers;
+    protected $customers;
 
     /**
      * Add customer

@@ -17,21 +17,21 @@ class BrandGroup
      *
      * @ORM\Column(name="brand", type="integer", nullable=false)
      */
-    private $brand;
+    protected $brand;
 
     /**
      * @var string
      *
      * @ORM\Column(name="brand_group", type="string", length=255, nullable=false)
      */
-    private $brandGroup;
+    protected $brandGroup;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="enable", type="boolean", nullable=false)
      */
-    private $enable = '0';
+    protected $enable = '0';
 
     /**
      * @var integer
@@ -40,7 +40,7 @@ class BrandGroup
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
 

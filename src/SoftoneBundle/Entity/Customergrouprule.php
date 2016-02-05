@@ -17,14 +17,14 @@ class Customergrouprule
      *
      * @ORM\Column(name="val", type="decimal", precision=10, scale=2, nullable=false)
      */
-    private $val;
+    protected $val;
 
     /**
      * @var string
      *
      * @ORM\Column(name="supplier", type="string", length=255, nullable=false)
      */
-    private $supplier;
+    protected $supplier;
 
     /**
      * @var integer
@@ -33,7 +33,7 @@ class Customergrouprule
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \SoftoneBundle\Entity\Customergroup
@@ -43,7 +43,7 @@ class Customergrouprule
      *   @ORM\JoinColumn(name="group", referencedColumnName="id")
      * })
      */
-    private $group;
+    protected $group;
 
 
 

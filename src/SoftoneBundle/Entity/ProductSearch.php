@@ -17,35 +17,35 @@ class ProductSearch
      *
      * @ORM\Column(name="item_code", type="string", length=255, nullable=false)
      */
-    private $itemCode;
+    protected $itemCode;
 
     /**
      * @var string
      *
      * @ORM\Column(name="item_code1", type="string", length=255, nullable=false)
      */
-    private $itemCode1;
+    protected $itemCode1;
 
     /**
      * @var string
      *
      * @ORM\Column(name="item_code2", type="string", length=255, nullable=false)
      */
-    private $itemCode2;
+    protected $itemCode2;
 
     /**
      * @var string
      *
      * @ORM\Column(name="search", type="string", length=255, nullable=false)
      */
-    private $search;
+    protected $search;
 
     /**
      * @var string
      *
      * @ORM\Column(name="gnisia", type="string", length=255, nullable=false)
      */
-    private $gnisia;
+    protected $gnisia;
 
     /**
      * @var integer
@@ -54,7 +54,7 @@ class ProductSearch
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
 

@@ -17,14 +17,14 @@ class Sisxetiseis
      *
      * @ORM\Column(name="product", type="integer", nullable=false)
      */
-    private $product;
+    protected $product;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="sisxetisi", type="integer", nullable=false)
      */
-    private $sisxetisi;
+    protected $sisxetisi;
 
     /**
      * @var integer
@@ -33,7 +33,7 @@ class Sisxetiseis
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
 

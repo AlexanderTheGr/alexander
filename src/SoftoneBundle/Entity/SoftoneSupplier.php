@@ -17,14 +17,14 @@ class SoftoneSupplier
      *
      * @ORM\Column(name="code", type="string", length=255, nullable=false)
      */
-    private $code;
+    protected $code;
 
     /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
      */
-    private $title;
+    protected $title;
 
     /**
      * @var integer
@@ -33,7 +33,7 @@ class SoftoneSupplier
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
 

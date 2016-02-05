@@ -17,70 +17,70 @@ class Reportsearch
      *
      * @ORM\Column(name="customer_id", type="integer", nullable=false)
      */
-    private $customerId;
+    protected $customerId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="search", type="string", length=255, nullable=false)
      */
-    private $search;
+    protected $search;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="cat", type="integer", nullable=false)
      */
-    private $cat;
+    protected $cat;
 
     /**
      * @var string
      *
      * @ORM\Column(name="session_id", type="string", length=255, nullable=false)
      */
-    private $sessionId;
+    protected $sessionId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="ip", type="string", length=20, nullable=false)
      */
-    private $ip;
+    protected $ip;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="ts", type="datetime", nullable=false)
      */
-    private $ts = 'CURRENT_TIMESTAMP';
+    protected $ts = 'CURRENT_TIMESTAMP';
 
     /**
      * @var integer
      *
      * @ORM\Column(name="actioneer", type="integer", nullable=false)
      */
-    private $actioneer;
+    protected $actioneer;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created", type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="modified", type="datetime", nullable=false)
      */
-    private $modified;
+    protected $modified;
 
     /**
      * @var string
      *
      * @ORM\Column(name="flat_data", type="text", length=65535, nullable=false)
      */
-    private $flatData;
+    protected $flatData;
 
     /**
      * @var integer
@@ -89,7 +89,7 @@ class Reportsearch
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
 

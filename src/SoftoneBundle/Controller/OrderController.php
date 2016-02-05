@@ -7,10 +7,13 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Controller\Main as Main;
+use SoftoneBundle\Entity\Order as Order;
+use SoftoneBundle\Entity\Orderitem as Orderitem;
 
 class OrderController extends Main {
 
     var $repository = 'SoftoneBundle:Order';
+    var $newentity = '';
 
     /**
      * @Route("/order/order")
@@ -44,7 +47,7 @@ class OrderController extends Main {
 
 
         return $this->render('SoftoneBundle:Order:view.html.twig', array(
-                    'pagename' => 'Eltrekaedis',
+                    'pagename' => 's',
                     'url' => '/order/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
@@ -57,9 +60,16 @@ class OrderController extends Main {
     /**
      * @Route("/order/save")
      */
-    public function savection() {
-        $this->save();
-        $json = json_encode(array("ok"));
+    public function saveAction() {
+        $entity = new Order;
+        $this->initialazeNewEntity($entity);
+        $this->newentity[$this->repository]->setField("status", 1);
+        $out = $this->save();
+        $jsonarr = array();
+        if ($this->newentity[$this->repository]->getId()) {
+            $jsonarr["returnurl"] = "/order/view/" . $this->newentity[$this->repository]->getId();
+        }
+        $json = json_encode($jsonarr);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
@@ -72,20 +82,30 @@ class OrderController extends Main {
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($id);
+        if ($id == 0 AND @ $entity->id == 0) {
+            $entity = new Order;
+            $this->newentity[$this->repository] = $entity;
+        }
 
         $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
         $dtparams[] = array("name" => "Product", "index" => 'product:title');
         $dtparams[] = array("name" => "Rafi", "index" => 'product:rafi1');
         $dtparams[] = array("name" => "Supplier", "index" => 'product:erpSupplier');
+        $dtparams[] = array("name" => "Qty", "input" => "text", "index" => 'qty');
+        $dtparams[] = array("name" => "Price", "input" => "text", "index" => 'price');
+        $dtparams[] = array("name" => "Discount", "input" => "text", "index" => 'disc1prc');
+        $dtparams[] = array("name" => "Final Price", "index" => 'lineval');        
+        
         $params['dtparams'] = $dtparams;
         $params['id'] = $dtparams;
         $params['url'] = '/order/getitems/' . $id;
         $params['key'] = 'gettabs_' . $id;
-        $datatables[] = $this->contentDatatable($params);
+        $params["ctrl"] = 'ctrlgettabs';
+        $params["app"] = 'appgettabs';        
+        $datatables[] = $this->contentDatatable($params);        
         
-
-        $fields["fincode"] = array("label" => "Erp Code");
-        $fields["customerName"] = array("label" => "Price Name");
+        $fields["fincode"] = array("label" => "Code");
+        $fields["customerName"] = array("label" => "Customer Name");
         $forms = $this->getFormLyFields($entity, $fields);
         $this->addTab(array("title" => "General", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         if ($entity->getId()) {
@@ -102,6 +122,9 @@ class OrderController extends Main {
         $dtparams[] = array("name" => "ID", "index" => 'id', "input" => 'checkbox', "active" => "active");
         $dtparams[] = array("name" => "Erp Code", "index" => 'erpCode', 'search' => 'text');
         $dtparams[] = array("name" => "Title", "index" => 'title', 'search' => 'text');
+        $dtparams[] = array("name" => "Price", "index" => 'itemPricew01', "input" => 'text', 'search' => 'text');
+        //$dtparams[] = array("name" => "ID", "function" => 'getAvailability', "active" => "active");
+        
         $params['dtparams'] = $dtparams;
         $params['id'] = $dtparams;
         $params['key'] = 'getoffcanvases_' . $id;
@@ -183,7 +206,109 @@ class OrderController extends Main {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+    
+    
+    /**
+     * @Route("/order/addorderitem/")
+     */
+    public function addorderitemAction(Request $request) {
 
+
+        $order = $this->getDoctrine()
+                ->getRepository('SoftoneBundle:Order')
+                ->find($request->request->get("order"));
+        $product = $this->getDoctrine()
+                ->getRepository('SoftoneBundle:Product')
+                ->find($request->request->get("item"));
+        /*
+        $availability = $->getQtyAvailability($request->request->get("qty"));
+        $Available = (array) $availability["Header"];
+        $price = $Available["PriceOnPolicy"];
+        if ($availability["Header"]["Available"] == 'N') {
+            $json = json_encode(array("error" => true, "message" => $Available["Available"]));
+            return new Response(
+                    $json, 200, array('Content-Type' => 'application/json')
+            );
+        }
+        $store = $Available["SUGGESTED_STORE"];
+        /*
+        $json = json_encode($availability);
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+         * 
+         */
+        $orderItem = new OrderItem;
+        $orderItem->setOrder($order);
+        $orderItem->setProduct($product);
+        $orderItem->setField("qty", $request->request->get("qty"));
+        $orderItem->setField("price", $request->request->get("price"));
+        $orderItem->setField("lineval", $request->request->get("price") * $request->request->get("qty"));
+        $orderItem->setField("disc1prc", 0);
+        //$orderItem->setField("store", $store);
+        $orderItem->setField("chk", 1);
+
+        try {
+            @$this->flushpersist($orderItem);
+            $json = json_encode(array("error" => false));
+        } catch (\Exception $e) {
+            $json = json_encode(array("error" => true, "message" => $e->getMessage()));
+        }
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+    }    
+    /**
+     * @Route("/edi/eltreka/order/editorderitem/")
+     */
+    public function editorderitemAction(Request $request) {
+        $orderItem = $this->getDoctrine()
+                ->getRepository('SoftoneBundle:OrderItem')
+                ->find($request->request->get("id"));
+        if ($request->request->get("qty")) {
+            $orderItem->setQty($request->request->get("qty"));
+            //$availability = $$orderItem->get$order()->getQtyAvailability($request->request->get("qty"));
+            //$Available = (array) $availability["Header"];
+            //$store = $Available["SUGGESTED_STORE"];
+            /*
+            if ($availability["Header"]["Available"] == 'N') {
+                $json = json_encode(array("error" => true, "message" => $Available["Available"]));
+                return new Response(
+                        $json, 200, array('Content-Type' => 'application/json')
+                );
+            }
+             * 
+             */
+            $price = $Available["PriceOnPolicy"];
+            $orderItem->setPrice($price);
+            $orderItem->setField("store", $store);
+        } else if ($request->request->get("price"))
+            $orderItem->setPrice($request->request->get("price"));
+        else if ($request->request->get("discount"))
+            $orderItem->setDisc1prc($request->request->get("discount"));
+        elseif ($request->request->get("qty") == 0) {
+            try {
+                $this->flushremove($$orderItem);
+                $json = json_encode(array("error" => false));
+            } catch (\Exception $e) {
+                $json = json_encode(array("error" => true, "message" => "Product Exists"));
+            }
+            return new Response(
+                    $json, 200, array('Content-Type' => 'application/json')
+            );
+        }
+        $fprice = ($orderItem->getPrice() * $orderItem->getQty()) * (1 - ($orderItem->getDiscount() / 100));
+        $orderItem->setFprice($fprice);
+        try {
+            $this->flushpersist($orderItem);
+            $json = json_encode(array("error" => false));
+        } catch (\Exception $e) {
+            $json = json_encode(array("error" => true, "message" => "Product Exists"));
+        }
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+    }
     function imitelisMethod($value) {
         return "YES";
     }

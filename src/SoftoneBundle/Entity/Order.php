@@ -4,190 +4,184 @@ namespace SoftoneBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use AppBundle\Entity\Entity;
 /**
  * Order
  *
  * @ORM\Table(name="order", indexes={@ORM\Index(name="user_id", columns={"actioneer"}), @ORM\Index(name="customer", columns={"customer"}), @ORM\Index(name="status", columns={"status"}), @ORM\Index(name="store", columns={"store"}), @ORM\Index(name="route", columns={"route"})})
  * @ORM\Entity
  */
-class Order {
+class Order extends Entity {
 
-    public function getField($field) {
-        return $this->$field;
-    }
 
-    public function setField($field, $val) {
-        $this->$field = $val;
-        return $val;
-    }
 
     /**
      * @var integer
      *
      * @ORM\Column(name="reference", type="integer", nullable=false)
      */
-    private $reference;
+    protected $reference;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="user", type="integer", nullable=false)
      */
-    private $user;
+    protected $user;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="store", type="integer", nullable=false)
      */
-    private $store = '1';
+    protected $store = '1';
 
     /**
      * @var integer
      *
      * @ORM\Column(name="route", type="integer", nullable=false)
      */
-    private $route;
+    protected $route;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="customer", type="integer", nullable=false)
      */
-    private $customer;
+    protected $customer;
 
     /**
      * @var string
      *
      * @ORM\Column(name="customer_name", type="string", length=255, nullable=false)
      */
-    private $customerName;
+    protected $customerName;
 
     /**
      * @var string
      *
      * @ORM\Column(name="customer_name2", type="string", length=255, nullable=false)
      */
-    private $customerName2;
+    protected $customerName2;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="tfprms", type="integer", nullable=false)
      */
-    private $tfprms;
+    protected $tfprms;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="fprms", type="integer", nullable=false)
      */
-    private $fprms;
+    protected $fprms;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="insdate", type="datetime", nullable=false)
      */
-    private $insdate;
+    protected $insdate;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="seriesnum", type="integer", nullable=false)
      */
-    private $seriesnum;
+    protected $seriesnum;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="series", type="integer", nullable=false)
      */
-    private $series;
+    protected $series;
 
     /**
      * @var string
      *
      * @ORM\Column(name="fincode", type="string", length=255, nullable=false)
      */
-    private $fincode;
+    protected $fincode;
 
     /**
      * @var string
      *
      * @ORM\Column(name="expn", type="decimal", precision=10, scale=2, nullable=false)
      */
-    private $expn;
+    protected $expn;
 
     /**
      * @var string
      *
      * @ORM\Column(name="disc1prc", type="decimal", precision=10, scale=2, nullable=false)
      */
-    private $disc1prc;
+    protected $disc1prc;
 
     /**
      * @var string
      *
      * @ORM\Column(name="comments", type="text", length=65535, nullable=false)
      */
-    private $comments;
+    protected $comments;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="fullytrans", type="boolean", nullable=false)
      */
-    private $fullytrans;
+    protected $fullytrans;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="trdbranch", type="integer", nullable=false)
      */
-    private $trdbranch;
+    protected $trdbranch;
 
     /**
      * @var string
      *
      * @ORM\Column(name="remarks", type="text", length=65535, nullable=false)
      */
-    private $remarks;
+    protected $remarks;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="noorder", type="boolean", nullable=false)
      */
-    private $noorder;
+    protected $noorder;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="status", type="integer", nullable=false)
      */
-    private $status;
+    protected $status;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="actioneer", type="integer", nullable=true)
      */
-    private $actioneer;
+    protected $actioneer;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created", type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="modified", type="datetime", nullable=false)
      */
-    private $modified;
+    protected $modified;
 
     /**
      * @var integer
@@ -196,7 +190,7 @@ class Order {
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * Set reference
@@ -739,5 +733,34 @@ class Order {
     public function getRoute()
     {
         return $this->route;
+    }
+    /**
+     * @var \DateTime
+     */
+    protected $ts = 'CURRENT_TIMESTAMP';
+
+
+    /**
+     * Set ts
+     *
+     * @param \DateTime $ts
+     *
+     * @return Order
+     */
+    public function setTs($ts)
+    {
+        $this->ts = $ts;
+
+        return $this;
+    }
+
+    /**
+     * Get ts
+     *
+     * @return \DateTime
+     */
+    public function getTs()
+    {
+        return $this->ts;
     }
 }

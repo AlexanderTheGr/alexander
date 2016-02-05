@@ -17,28 +17,28 @@ class ProductCatalogueMap
      *
      * @ORM\Column(name="catalogue", type="integer", nullable=false)
      */
-    private $catalogue;
+    protected $catalogue;
 
     /**
      * @var string
      *
      * @ORM\Column(name="attribute", type="string", length=255, nullable=false)
      */
-    private $attribute;
+    protected $attribute;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="csvfield", type="integer", nullable=false)
      */
-    private $csvfield;
+    protected $csvfield;
 
     /**
      * @var integer
@@ -47,7 +47,7 @@ class ProductCatalogueMap
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
 

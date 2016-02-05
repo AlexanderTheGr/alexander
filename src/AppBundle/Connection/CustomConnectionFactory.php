@@ -17,7 +17,7 @@ class CustomConnectionFactory extends ConnectionFactory {
         $params['driver'] = 'pdo_mysql';
         $params['host'] = 'localhost';
         $params['port'] = 3306;
-        $params['dbname'] = 'partsbox_symfony';
+        $params['dbname'] = 'partsbox_symfony3';
         $params['user'] = 'root';
         $params['password'] = '123456';
 

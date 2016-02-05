@@ -17,77 +17,77 @@ class BrandModelType
      *
      * @ORM\Column(name="brand_model", type="integer", nullable=false)
      */
-    private $brandModel;
+    protected $brandModel;
 
     /**
      * @var string
      *
      * @ORM\Column(name="brand_model_type", type="string", length=255, nullable=false)
      */
-    private $brandModelType;
+    protected $brandModelType;
 
     /**
      * @var string
      *
      * @ORM\Column(name="nodes", type="text", nullable=false)
      */
-    private $nodes;
+    protected $nodes;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="need_update", type="boolean", nullable=false)
      */
-    private $needUpdate = '1';
+    protected $needUpdate = '1';
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="updated", type="datetime", nullable=false)
      */
-    private $updated;
+    protected $updated;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="enable", type="boolean", nullable=false)
      */
-    private $enable = '0';
+    protected $enable = '0';
 
     /**
      * @var string
      *
      * @ORM\Column(name="motor_type", type="string", length=255, nullable=false)
      */
-    private $motorType;
+    protected $motorType;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="power_hp", type="integer", nullable=false)
      */
-    private $powerHp;
+    protected $powerHp;
 
     /**
      * @var string
      *
      * @ORM\Column(name="details", type="text", length=65535, nullable=false)
      */
-    private $details;
+    protected $details;
 
     /**
      * @var string
      *
      * @ORM\Column(name="engine", type="text", length=65535, nullable=false)
      */
-    private $engine;
+    protected $engine;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="status", type="boolean", nullable=false)
      */
-    private $status = '1';
+    protected $status = '1';
 
     /**
      * @var integer
@@ -96,7 +96,7 @@ class BrandModelType
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
 

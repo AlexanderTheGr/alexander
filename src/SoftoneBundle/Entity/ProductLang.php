@@ -17,28 +17,28 @@ class ProductLang
      *
      * @ORM\Column(name="product", type="integer", nullable=false)
      */
-    private $product;
+    protected $product;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="language", type="integer", nullable=false)
      */
-    private $language;
+    protected $language;
 
     /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
      */
-    private $title;
+    protected $title;
 
     /**
      * @var string
      *
      * @ORM\Column(name="tecdoc_article_name", type="string", length=255, nullable=false)
      */
-    private $tecdocArticleName;
+    protected $tecdocArticleName;
 
     /**
      * @var integer
@@ -47,7 +47,7 @@ class ProductLang
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
 

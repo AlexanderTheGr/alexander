@@ -17,7 +17,7 @@ class ProductFreesearch
      *
      * @ORM\Column(name="data_index", type="text", length=65535, nullable=false)
      */
-    private $dataIndex;
+    protected $dataIndex;
 
     /**
      * @var integer
@@ -26,7 +26,7 @@ class ProductFreesearch
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
 

@@ -24,189 +24,189 @@ class Customer {
      *
      * @ORM\Column(name="reference", type="integer", nullable=false)
      */
-    private $reference;
+    protected $reference;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="group", type="integer", nullable=false)
      */
-    private $group;
+    protected $group;
 
     /**
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=45, nullable=true)
      */
-    private $email;
+    protected $email;
 
     /**
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=45, nullable=true)
      */
-    private $username;
+    protected $username;
 
     /**
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=80, nullable=true)
      */
-    private $password;
+    protected $password;
 
     /**
      * @var string
      *
      * @ORM\Column(name="customer_code", type="string", length=255, nullable=false)
      */
-    private $customerCode;
+    protected $customerCode;
 
     /**
      * @var string
      *
      * @ORM\Column(name="customer_name", type="string", length=255, nullable=false)
      */
-    private $customerName;
+    protected $customerName;
 
     /**
      * @var string
      *
      * @ORM\Column(name="customer_afm", type="string", length=255, nullable=false)
      */
-    private $customerAfm;
+    protected $customerAfm;
 
     /**
      * @var string
      *
      * @ORM\Column(name="customer_address", type="string", length=255, nullable=false)
      */
-    private $customerAddress;
+    protected $customerAddress;
 
     /**
      * @var string
      *
      * @ORM\Column(name="customer_district", type="string", length=255, nullable=false)
      */
-    private $customerDistrict;
+    protected $customerDistrict;
 
     /**
      * @var string
      *
      * @ORM\Column(name="customer_city", type="string", length=255, nullable=false)
      */
-    private $customerCity;
+    protected $customerCity;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="customer_zip", type="integer", nullable=false)
      */
-    private $customerZip;
+    protected $customerZip;
 
     /**
      * @var string
      *
      * @ORM\Column(name="customer_phone01", type="string", length=255, nullable=false)
      */
-    private $customerPhone01;
+    protected $customerPhone01;
 
     /**
      * @var string
      *
      * @ORM\Column(name="customer_phone02", type="string", length=255, nullable=false)
      */
-    private $customerPhone02;
+    protected $customerPhone02;
 
     /**
      * @var string
      *
      * @ORM\Column(name="customer_trdr_cusextra_varchar03", type="string", length=255, nullable=false)
      */
-    private $customerTrdrCusextraVarchar03;
+    protected $customerTrdrCusextraVarchar03;
 
     /**
      * @var string
      *
      * @ORM\Column(name="customer_fax", type="string", length=255, nullable=false)
      */
-    private $customerFax;
+    protected $customerFax;
 
     /**
      * @var string
      *
      * @ORM\Column(name="customer_webpage", type="string", length=255, nullable=false)
      */
-    private $customerWebpage;
+    protected $customerWebpage;
 
     /**
      * @var string
      *
      * @ORM\Column(name="customer_email", type="string", length=255, nullable=false)
      */
-    private $customerEmail;
+    protected $customerEmail;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="customer_payment", type="integer", nullable=false)
      */
-    private $customerPayment;
+    protected $customerPayment;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="customer_trdcategory", type="integer", nullable=false)
      */
-    private $customerTrdcategory;
+    protected $customerTrdcategory;
 
     /**
      * @var string
      *
      * @ORM\Column(name="price_field", type="string", length=255, nullable=false)
      */
-    private $priceField;
+    protected $priceField;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="ts", type="datetime", nullable=false)
      */
-    private $ts = 'CURRENT_TIMESTAMP';
+    protected $ts = 'CURRENT_TIMESTAMP';
 
     /**
      * @var string
      *
      * @ORM\Column(name="status", type="string", length=255, nullable=false)
      */
-    private $status = 'active';
+    protected $status = 'active';
 
     /**
      * @var integer
      *
      * @ORM\Column(name="actioneer", type="integer", nullable=true)
      */
-    private $actioneer;
+    protected $actioneer;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created", type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="modified", type="datetime", nullable=false)
      */
-    private $modified;
+    protected $modified;
 
     /**
      * @var string
      *
      * @ORM\Column(name="flat_data", type="text", nullable=false)
      */
-    private $flatData;
+    protected $flatData;
 
     /**
      * @var integer
@@ -215,7 +215,7 @@ class Customer {
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * Set reference
@@ -823,7 +823,7 @@ class Customer {
     /**
      * @var \SoftoneBundle\Entity\Route
      */
-    private $route;
+    protected $route;
 
     /**
      * Set route

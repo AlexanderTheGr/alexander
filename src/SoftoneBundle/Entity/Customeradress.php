@@ -17,112 +17,112 @@ class Customeradress
      *
      * @ORM\Column(name="reference", type="integer", nullable=false)
      */
-    private $reference;
+    protected $reference;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="customer", type="integer", nullable=false)
      */
-    private $customer;
+    protected $customer;
 
     /**
      * @var string
      *
      * @ORM\Column(name="code", type="string", length=20, nullable=false)
      */
-    private $code;
+    protected $code;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="country", type="integer", nullable=false)
      */
-    private $country = '1000';
+    protected $country = '1000';
 
     /**
      * @var string
      *
      * @ORM\Column(name="city", type="string", length=255, nullable=false)
      */
-    private $city;
+    protected $city;
 
     /**
      * @var string
      *
      * @ORM\Column(name="zip", type="string", length=25, nullable=false)
      */
-    private $zip;
+    protected $zip;
 
     /**
      * @var string
      *
      * @ORM\Column(name="district", type="string", length=255, nullable=false)
      */
-    private $district;
+    protected $district;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="district1", type="integer", nullable=false)
      */
-    private $district1;
+    protected $district1;
 
     /**
      * @var string
      *
      * @ORM\Column(name="address", type="string", length=255, nullable=false)
      */
-    private $address;
+    protected $address;
 
     /**
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=false)
      */
-    private $email;
+    protected $email;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="branch", type="integer", nullable=false)
      */
-    private $branch;
+    protected $branch;
 
     /**
      * @var string
      *
      * @ORM\Column(name="discount", type="decimal", precision=10, scale=2, nullable=false)
      */
-    private $discount;
+    protected $discount;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="iscenter", type="boolean", nullable=false)
      */
-    private $iscenter;
+    protected $iscenter;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="isactive", type="boolean", nullable=false)
      */
-    private $isactive;
+    protected $isactive;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="vatsts", type="integer", nullable=false)
      */
-    private $vatsts = '1';
+    protected $vatsts = '1';
 
     /**
      * @var integer
@@ -131,7 +131,7 @@ class Customeradress
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
 

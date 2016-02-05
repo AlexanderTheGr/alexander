@@ -17,7 +17,7 @@ class OrderStatus
      *
      * @ORM\Column(name="status", type="string", length=255, nullable=false)
      */
-    private $status;
+    protected $status;
 
     /**
      * @var integer
@@ -26,7 +26,7 @@ class OrderStatus
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
 

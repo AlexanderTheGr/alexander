@@ -17,56 +17,56 @@ class BrandModel
      *
      * @ORM\Column(name="brand", type="integer", nullable=false)
      */
-    private $brand;
+    protected $brand;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="group", type="integer", nullable=false)
      */
-    private $group;
+    protected $group;
 
     /**
      * @var string
      *
      * @ORM\Column(name="group_name", type="string", length=255, nullable=false)
      */
-    private $groupName;
+    protected $groupName;
 
     /**
      * @var string
      *
      * @ORM\Column(name="brand_model", type="string", length=255, nullable=false)
      */
-    private $brandModel;
+    protected $brandModel;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="year_from", type="integer", nullable=false)
      */
-    private $yearFrom;
+    protected $yearFrom;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="year_to", type="integer", nullable=false)
      */
-    private $yearTo;
+    protected $yearTo;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="enable", type="boolean", nullable=false)
      */
-    private $enable = '0';
+    protected $enable = '0';
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="status", type="boolean", nullable=false)
      */
-    private $status = '1';
+    protected $status = '1';
 
     /**
      * @var integer
@@ -75,7 +75,7 @@ class BrandModel
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
 

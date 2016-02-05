@@ -20,69 +20,49 @@ class Orderitem {
     /**
      * @var integer
      */
-    private $order;
+    protected $order;
 
     /**
      * @var integer
      */
-    private $qty;
+    protected $qty;
 
     /**
      * @var string
      */
-    private $price;
+    protected $price;
 
     /**
      * @var string
      */
-    private $disc1prc;
+    protected $disc1prc;
 
     /**
      * @var string
      */
-    private $lineval;
+    protected $lineval;
 
     /**
      * @var integer
      */
-    private $store = '7021';
+    protected $store = '7021';
 
     /**
      * @var boolean
      */
-    private $chk;
+    protected $chk;
 
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \SoftoneBundle\Entity\Product
      */
-    private $product;
+    protected $product;
 
-    /**
-     * Set order
-     *
-     * @param integer $order
-     *
-     * @return Orderitem
-     */
-    public function setOrder($order) {
-        $this->order = $order;
 
-        return $this;
-    }
-
-    /**
-     * Get order
-     *
-     * @return integer
-     */
-    public function getOrder() {
-        return $this->order;
-    }
 
     /**
      * Set qty
@@ -247,4 +227,28 @@ class Orderitem {
         return $this->product;
     }
 
+
+    /**
+     * Set order
+     *
+     * @param \SoftoneBundle\Entity\Order $order
+     *
+     * @return Orderitem
+     */
+    public function setOrder(\SoftoneBundle\Entity\Order $order = null)
+    {
+        $this->order = $order;
+
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return \SoftoneBundle\Entity\Order
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
 }

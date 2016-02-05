@@ -17,7 +17,7 @@ class ProductCatalogue
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var integer
@@ -26,7 +26,7 @@ class ProductCatalogue
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
 
 
