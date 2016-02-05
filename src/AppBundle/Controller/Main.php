@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\Console\Application as Application;
+use Symfony\Component\Console\Input\ArrayInput as ArrayInput;
 
 class Main extends Controller {
 
