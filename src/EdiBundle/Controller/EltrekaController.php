@@ -169,7 +169,7 @@ class EltrekaController extends Main {
     /**
      * @Route("/edi/eltreka/install")
      */
-    public function installAction(Request $request) {
+    public function installAction() {
         $this->install();
         $this->getPartMaster();
     }
