@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\Console\Application as Application;
+
 class Main extends Controller {
 
     var $fields = array();
