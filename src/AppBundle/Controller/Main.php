@@ -475,7 +475,6 @@ class Main extends Controller {
         $kernel = $this->get('kernel');
         $application = new Application($kernel);
         $application->setAutoExit(false);
-        $options = array('command' => 'doctrine:schema:update', "--force" => true);
         $input = new ArrayInput(array(
             'command' => 'doctrine:schema:update',
             "--force" => true
@@ -483,6 +482,14 @@ class Main extends Controller {
         // You can use NullOutput() if you don't need the output
         $output = new BufferedOutput();
         $application->run($input, $output);
+        
+        $input = new ArrayInput(array(
+            'command' => 'app/console assetic:dump',
+            "--watch" => true
+        ));        
+        $application->run($input, $output);
+        
+      
 
         // return the output, don't use if you used NullOutput()
         $content = $output->fetch();
