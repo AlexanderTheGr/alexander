@@ -21,7 +21,7 @@ class CustomConnectionFactory extends ConnectionFactory {
         $params['user'] = 'root';
         $params['password'] = '123456';
         
-        $params['dbname'] = 'partsbox_db';
+        $params['dbname'] = 'partsbox_db2';
         $params['user'] = 'partsbox';
         $params['password'] = ')7uT[LJOPyX$';
         
