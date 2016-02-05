@@ -20,7 +20,11 @@ class CustomConnectionFactory extends ConnectionFactory {
         $params['dbname'] = 'partsbox_symfony3';
         $params['user'] = 'root';
         $params['password'] = '123456';
-
+        
+        $params['dbname'] = 'partsbox_db';
+        $params['user'] = 'partsbox';
+        $params['password'] = ')7uT[LJOPyX$';
+        
         //continue with regular connection creation using new params
         return parent::createConnection($params, $config, $eventManager, $mappingTypes);
     }
