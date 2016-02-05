@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\Console\Application as Application;
 use Symfony\Component\Console\Input\ArrayInput as ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput as BufferedOutput;
 
 class Main extends Controller {
 
