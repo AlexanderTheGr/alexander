@@ -493,8 +493,6 @@ class Main extends Controller {
         ));        
         $application->run($input, $output);
         
-      
-
         // return the output, don't use if you used NullOutput()
         $content = $output->fetch();
         return $this->render('default/index.html.twig', array(

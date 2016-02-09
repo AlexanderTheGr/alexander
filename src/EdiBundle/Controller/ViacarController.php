@@ -78,7 +78,7 @@ class ViacarController extends Main {
         //$fiestr = gzdecode(file_get_contents($this->getPartMasterFile()));
         //file_put_contents('file.csv', $fiestr);
         set_time_limit(100000);
-        ini_set('memory_limit', '128M');
+        ini_set('memory_limit', '1256M');
         $file = 'file.csv';
         $em = $this->getDoctrine()->getManager();
         if ((($handle = fopen($file, "r")) !== FALSE)) {

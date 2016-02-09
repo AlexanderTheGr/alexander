@@ -32,6 +32,27 @@ class ProductController extends Main {
      * @Route("/product/view/{id}")
      */
     public function viewAction($id) {
+
+
+        $buttons = array();
+
+        $content = $this->gettabs($id);
+        //$content = $this->getoffcanvases($id);
+
+        $content = $this->content();
+
+
+        return $this->render('SoftoneBundle:Product:view.html.twig', array(
+                    'pagename' => 's',
+                    'url' => '/product/save',
+                    'buttons' => $buttons,
+                    'ctrl' => $this->generateRandomString(),
+                    'app' => $this->generateRandomString(),
+                    'content' => $content,
+                    'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
+        ));
+
+
         $datatables = array();
         return $this->render('SoftoneBundle:Product:view.html.twig', array(
                     'pagename' => 'Product',
@@ -78,10 +99,11 @@ class ProductController extends Main {
      * 
      */
 
-    public function gettabs($id, $datatables) {
+    public function gettabs($id) {
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($id);
+        $entity->updatetecdoc();
         $fields["erpCode"] = array("label" => "Erp Code");
         $fields["itemPricew01"] = array("label" => "Price Name");
         $forms = $this->getFormLyFields($entity, $fields);
@@ -98,6 +120,7 @@ class ProductController extends Main {
      */
     public function getdatatableAction(Request $request) {
         $this->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
+                ->addField(array("name" => "Title", "index" => 'title'))
                 ->addField(array("name" => "Code", "index" => 'erpCode'))
                 ->addField(array("name" => "Price", "index" => 'itemPricew01'));
         $json = $this->datatable();
@@ -119,16 +142,17 @@ class ProductController extends Main {
      * @Route("/product/retrieve")
      */
     function retrieveSoftoneDataAction($params = array()) {
-
+        set_time_limit(100000);
+        ini_set('memory_limit', '2256M');
         $softone = new Softone();
         $em = $this->getDoctrine()->getManager();
-        $params["DateL"] = "2016-01-05";
-        $params["DateH"] = "2016-01-05";
+        $fields = $em->getClassMetadata('SoftoneBundle\Entity\Product')->getFieldNames();
+        $params["DateL"] = "2016-02-01";
+        $params["DateH"] = "2016-02-09";
 
         $datas = $softone->getCustomItems($params);
         foreach ($datas->data as $data) {
             $data = (array) $data;
-
             $entity = $this->getDoctrine()
                     ->getRepository($this->repository)
                     ->findOneBy(array("reference" => (int) $data["MTRL"]));
@@ -143,22 +167,36 @@ class ProductController extends Main {
                 $entity->setCreated($dt);
                 $entity->setModified($dt);
             }
+            $imporetedData = array();
             $entity->setField("reference", (int) $data["MTRL"]);
             $imporetedData["item_cccfxrelbrand"] = 0;
             $imporetedData["item_cccfxreltdcode"] = "";
             //$model->reference = $info[1];
+            
+            $entity->setField('erpCode',@$data["CODE"]);
+            $entity->setField('supplierCode',@$data["CODE2"]);
+            $entity->setField('title',@$data["NAME"]);
+            $entity->setField('tecdocCode',@$data["CCCFXRELTDCODE"]);
+            $entity->setField('tecdocSupplierId',@$data["CCCFXRELBRAND"]);
+            
+            $this->flushpersist($entity);
+            $q = array();
             foreach ($data as $identifier => $val) {
                 $imporetedData[strtolower("item_" . $identifier)] = addslashes($val);
-                $q[] = "`" . strtolower("item_" . $identifier) . "` = '" . addslashes($val) . "'";
+                $ad = strtolower($identifier);
+                $baz = "item" . ucwords(str_replace("_", " ", $ad));
+                if (in_array($baz, $fields)) {
+                    $q[] = "`" . strtolower("item_" . $identifier) . "` = '" . addslashes($val) . "'";
+                    //$entity->setField($baz, $val);
+                }
             }
             @$entity_id = (int) $entity->id;
-            //if ($eltrekaedi_id == 0) {
-                $sql = "replace softone_product set id = '" . $entity_id . "', " . implode(",", $q);
-                echo $sql;
+            if (@$entity_id > 0) {
+                $sql = "update softone_product set " . implode(",", $q) . " where id = '" . $entity_id . "'";
                 $em->getConnection()->exec($sql);
-            //}
-            //print_r($imporetedData);
-            break;
+            }
+            $entity->updatetecdoc();
+            if (@$i++ > 500) break;
         }
         return new Response(
                 "", 200

@@ -3,13 +3,18 @@
 namespace SoftoneBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\Entity;
+
+
+use SoftoneBundle\Entity\Softone as Softone;
 
 /**
  * Product
  *
  * @ORM\Entity(repositoryClass="SoftoneBundle\Entity\ProductRepository")
  */
-class Product {
+class Product extends Entity {
+
     public function getField($field) {
         return $this->$field;
     }
@@ -1632,7 +1637,6 @@ class Product {
         return $this->id;
     }
 
-
     /**
      * @var string
      */
@@ -1643,7 +1647,6 @@ class Product {
      */
     protected $ediId;
 
-
     /**
      * Set edi
      *
@@ -1651,8 +1654,7 @@ class Product {
      *
      * @return Product
      */
-    public function setEdi($edi)
-    {
+    public function setEdi($edi) {
         $this->edi = $edi;
 
         return $this;
@@ -1663,8 +1665,7 @@ class Product {
      *
      * @return string
      */
-    public function getEdi()
-    {
+    public function getEdi() {
         return $this->edi;
     }
 
@@ -1675,8 +1676,7 @@ class Product {
      *
      * @return Product
      */
-    public function setEdiId($ediId)
-    {
+    public function setEdiId($ediId) {
         $this->ediId = $ediId;
 
         return $this;
@@ -1687,8 +1687,148 @@ class Product {
      *
      * @return integer
      */
-    public function getEdiId()
-    {
+    public function getEdiId() {
         return $this->ediId;
     }
+
+    function updatetecdoc() {
+        //$data = array("service" => "login", 'username' => 'dev', 'password' => 'dev', 'appId' => '2000');
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+
+        //$data_string = json_encode($data);
+        $url = "http://service2.fastwebltd.com/";
+
+        $fields = array(
+            'action' => 'updateTecdoc',
+            'tecdoc_code' => $this->tecdocCode,
+            'tecdoc_supplier_id' => $this->tecdocSupplierId,
+        );
+        //print_r($fields);
+        $fields_string = '';
+        foreach ($fields as $key => $value) {
+            $fields_string .= $key . '=' . $value . '&';
+        }
+        rtrim($fields_string, '&');
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, count($fields));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+        $out = json_decode(curl_exec($ch));
+
+        //echo print_r($out);
+
+        try {
+            //$webserviceProduct = WebserviceProduct::model()->findByAttributes(array('product' =>  $model->id,"webservice"=>$this->webservice));
+            //$sql = "Delete from SoftoneBundle:WebserviceProduct p where p.product = '" . $this->id . "'";
+            //$em->createQuery($sql)->getResult();
+            //$em->execute();
+            if (@$out->articleId) {
+                $this->setTecdocArticleId($out->articleId);
+                $this->setTecdocArticleName($out->articleName);
+                //$this->setTecdocGenericArticleId($out->articleName);
+                $em->persist($this);
+                $em->flush();
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            exit;
+        }
+        //echo $result;
+    }
+
+    /**
+     * @var integer
+     */
+    private $tecdocArticleId;
+
+    /**
+     * Set tecdocArticleId
+     *
+     * @param integer $tecdocArticleId
+     *
+     * @return Product
+     */
+    public function setTecdocArticleId($tecdocArticleId) {
+        $this->tecdocArticleId = $tecdocArticleId;
+
+        return $this;
+    }
+
+    /**
+     * Get tecdocArticleId
+     *
+     * @return integer
+     */
+    public function getTecdocArticleId() {
+        return $this->tecdocArticleId;
+    }
+
+    /**
+     * @var string
+     */
+    private $itemPricer03;
+
+    /**
+     * Set itemPricer03
+     *
+     * @param string $itemPricer03
+     *
+     * @return Product
+     */
+    public function setItemPricer03($itemPricer03) {
+        $this->itemPricer03 = $itemPricer03;
+
+        return $this;
+    }
+
+    /**
+     * Get itemPricer03
+     *
+     * @return string
+     */
+    public function getItemPricer03() {
+        return $this->itemPricer03;
+    }
+
+    public function calculate($customer) {
+        $softone = new Softone();
+        //foreach ($order->_items_ as $item) {
+        $items = array();
+        $items[] = $this->reference;
+        //}
+        $object = "SALDOC";
+        $objectArr = array();
+        $objectArr[0]["TRDR"] = $customer->reference;
+        $objectArr[0]["SERIESNUM"] = "00";
+        $objectArr[0]["FINCODE"] = "00";
+        $objectArr[0]["PAYMENT"] = 1000;
+        //$objectArr[0]["TFPRMS"] = $model->tfprms;
+        //$objectArr[0]["FPRMS"] = $model->fprms;
+        $objectArr[0]["SERIES"] = 7021; //$model->series;
+        //$objectArr[0]["DISC1PRC"] = 10;
+
+        $dataOut[$object] = (array) $objectArr;
+        $k = 9000001;
+        $dataOut["ITELINES"] = array();
+        $vat = 1310;
+        foreach ($products as $product) {
+            if ($product->reference > 0)
+                $dataOut["ITELINES"][] = array("QTY1" => 1, "VAT" => $vat, "LINENUM" => $product->id, "MTRL" => $product->reference);
+        }
+        //echo "1";
+        //print_r($dataOut);
+        $locateinfo = "MTRL,NAME,PRICE,QTY1,VAT;ITELINES:DISC1PRC,ITELINES:LINEVAL,MTRL,MTRL_ITEM_CODE,MTRL_ITEM_CODE1,MTRL_ITEM_NAME,MTRL_ITEM_NAME1,PRICE,QTY1;SALDOC:BUSUNITS,EXPN,TRDR,MTRL,PRICE,QTY1,VAT";
+        //echo "<pre>";
+        //print_r($dataOut);
+
+        $out = $softone->calculate((array) $dataOut, $object, "", "", $locateinfo);
+    }
+
 }

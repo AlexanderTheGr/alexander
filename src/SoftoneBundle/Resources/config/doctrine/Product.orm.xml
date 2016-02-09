@@ -7,11 +7,10 @@
             <index name="reference" columns="reference"/>
             <index name="erp_code" columns="erp_code"/>
             <index name="item_code" columns="item_code"/>
-            <index name="search" columns="search"/>
-            <index name="gnisia" columns="gnisia"/>
+
+
             <index name="item_cccfxcode1" columns="item_cccfxcode1"/>
             
-            <index name="gnisia" columns="gnisia"/>
             <index name="edi_id" columns="edi_id"/>
             
             
@@ -53,11 +52,18 @@
                 <option name="fixed"/>
             </options>
         </field>
+        
         <field name="tecdocSupplierId" type="integer" column="tecdoc_supplier_id" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
         </field>
+        
+        <field name="tecdocArticleId" type="integer" column="tecdoc_article_id" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>        
         <field name="supplierCode" type="string" column="supplier_code" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
@@ -123,12 +129,11 @@
         <field name="itemPricew03" type="decimal" column="item_pricew03" precision="10" scale="2" nullable="true"/>
         <field name="itemPricer01" type="decimal" column="item_pricer01" precision="10" scale="2" nullable="true"/>
         <field name="itemPricer02" type="decimal" column="item_pricer02" precision="10" scale="2" nullable="true"/>
-        <field name="itemMarkupw" type="decimal" column="item_markupw" precision="10" scale="2" nullable="true"/>
-        <field name="itemMtrunit1" type="integer" column="item_mtrunit1" nullable="true">
-            <options>
-                <option name="unsigned"/>
-            </options>
-        </field>
+        <field name="itemPricer03" type="decimal" column="item_pricer03" precision="10" scale="2" nullable="true"/>
+        <options>
+            <option name="unsigned"/>
+        </options>
+
         <field name="itemName1" type="string" column="item_name1" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
@@ -196,57 +201,7 @@
         </field>
         <field name="created" type="datetime" column="created" nullable="true"/>
         <field name="modified" type="datetime" column="modified" nullable="true"/>
-        <field name="flatData" type="text" column="flat_data" nullable="true">
-            <options>
-                <option name="fixed"/>
-            </options>
-        </field>
-        <field name="search" type="string" column="search" length="255" nullable="true">
-            <options>
-                <option name="fixed"/>
-            </options>
-        </field>
-        <field name="gnisia" type="string" column="gnisia" length="255" nullable="true">
-            <options>
-                <option name="fixed"/>
-            </options>
-        </field>
-        <field name="search2" type="text" column="search2" length="65535" nullable="true">
-            <options>
-                <option name="fixed"/>
-            </options>
-        </field>
-        <field name="itemMtrlIteextraNum02" type="decimal" column="item_mtrl_iteextra_num02" precision="10" scale="2" nullable="true"/>
-        <field name="itemV3" type="integer" column="item_v3" nullable="true">
-            <options>
-                <option name="unsigned"/>
-            </options>
-        </field>
-        <field name="itemV4" type="integer" column="item_v4" nullable="true">
-            <options>
-                <option name="unsigned"/>
-            </options>
-        </field>
-        <field name="itemV5" type="datetime" column="item_v5" nullable="true"/>
-        <field name="itemV6" type="integer" column="item_v6" nullable="true">
-            <options>
-                <option name="unsigned"/>
-            </options>
-        </field>
-        <field name="itemV7" type="integer" column="item_v7" nullable="true">
-            <options>
-                <option name="unsigned"/>
-            </options>
-        </field>
-        <field name="rafi1" type="string" column="rafi1" length="255" nullable="true">
-            <options>
-                <option name="fixed"/>
-            </options>
-        </field>
-        <field name="rafi2" type="string" column="rafi2" length="255" nullable="true">
-            <options>
-                <option name="fixed"/>
-            </options>
-        </field>
+
+
     </entity>
 </doctrine-mapping>

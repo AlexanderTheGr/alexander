@@ -47,7 +47,7 @@ jQuery(".EltrekaediSendOrder").live('click', function (e) {
     })
 })
 
-jQuery(".EdiBundleEltrekaediOrderItemQty").live('keyup', function (e) {
+jQuery(".SoftoneBundleOrderitemQty").live('keyup', function (e) {
     if (e.keyCode == 13) {
         var data = {}
         data.id = jQuery(this).attr('data-id');

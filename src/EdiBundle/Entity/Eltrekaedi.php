@@ -9,7 +9,7 @@ use AppBundle\Entity\Entity;
  * Eltrekaedi
  */
 class Eltrekaedi extends Entity {
-    
+
     private $repository = 'EdiBundle:Eltrekaedi';
 
     /**
@@ -685,6 +685,13 @@ class Eltrekaedi extends Entity {
     }
 
     public function toErp() {
+        if ($this->getProduct() > 0) return;
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+
         $dt = new \DateTime("now");
         $product = new \SoftoneBundle\Entity\Product;
         $product->setSupplierCode($this->factorypartno);
@@ -693,18 +700,21 @@ class Eltrekaedi extends Entity {
         $product->setTecdocSupplierId($this->tecdocsupplierno);
         $product->setErpSupplier($this->supplierdescr);
         $product->setErpCode($this->partno);
-
-
         $product->setEdi($this->repository);
         $product->setEdiId($this->id);
-
         $product->setItemV5($dt);
         $product->setTs($dt);
         $product->setItemInsdate($dt);
         $product->setItemUpddate($dt);
         $product->setCreated($dt);
         $product->setModified($dt);
-        return $product;
+        $em->persist($product);
+        $em->flush();
+        $product->updatetecdoc();
+        $this->setProduct($product->getId());
+        $em->persist($this);
+        $em->flush();
+        return;
     }
 
     /**

@@ -13,18 +13,27 @@ class CustomConnectionFactory extends ConnectionFactory {
         // A real-world example might obtain them from zookeeper,
         // consul or etcd for example. You'll probably want to cache
         // anything you obtain from such a service too.
-
+        //print_r($_SERVER);REMOTE_ADDR
         $params['driver'] = 'pdo_mysql';
         $params['host'] = 'localhost';
         $params['port'] = 3306;
-        $params['dbname'] = 'partsbox_symfony3';
-        $params['user'] = 'root';
-        $params['password'] = '123456';
-        
-        $params['dbname'] = 'partsbox_db2';
-        $params['user'] = 'partsbox';
-        $params['password'] = ')7uT[LJOPyX$';
-        
+        /*
+        if ($_SERVER["REMOTE_ADDR"] == '127.0.0.1') {
+            
+            $params['dbname'] = 'partsbox_symfony';
+            $params['user'] = 'root';
+            $params['password'] = '123456';
+            
+        } else {
+            $params['dbname'] = 'partsbox_db2';
+            $params['user'] = 'partsbox';
+            $params['password'] = ')7uT[LJOPyX$';
+        }
+         * 
+         */
+             $params['dbname'] = 'partsbox_symfony';
+            $params['user'] = 'root';
+            $params['password'] = '123456';       
         //continue with regular connection creation using new params
         return parent::createConnection($params, $config, $eventManager, $mappingTypes);
     }

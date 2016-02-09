@@ -42,12 +42,7 @@ class EltrekaController extends Main {
         $Eltrekaedi->GetAvailability();
         
         
-        if ($Eltrekaedi->getProduct() == 0) {
-            $product = $Eltrekaedi->toErp();
-            $this->flushpersist($product);
-            $Eltrekaedi->setProduct($product->getId());
-            $this->flushpersist($Eltrekaedi);
-        }
+        $Eltrekaedi->toErp();
 
         
         return $this->render('EdiBundle:Eltreka:view.html.twig', array(
