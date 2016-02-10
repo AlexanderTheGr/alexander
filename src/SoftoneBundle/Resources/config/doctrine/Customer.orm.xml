@@ -9,12 +9,12 @@
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
         </id>
-        <field name="reference" type="integer" column="reference" nullable="false">
+        <field name="reference" type="integer" column="reference" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
         </field>
-        <field name="group" type="integer" column="group" nullable="false">
+        <field name="group" type="integer" column="`group`" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
@@ -35,109 +35,106 @@
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="customerCode" type="string" column="customer_code" length="255" nullable="false">
+        <field name="customerCode" type="string" column="customer_code" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="customerName" type="string" column="customer_name" length="255" nullable="false">
+        <field name="customerName" type="string" column="customer_name" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="customerAfm" type="string" column="customer_afm" length="255" nullable="false">
+        <field name="customerAfm" type="string" column="customer_afm" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="customerAddress" type="string" column="customer_address" length="255" nullable="false">
+        <field name="customerAddress" type="string" column="customer_address" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="customerDistrict" type="string" column="customer_district" length="255" nullable="false">
+        <field name="customerDistrict" type="string" column="customer_district" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="customerCity" type="string" column="customer_city" length="255" nullable="false">
+        <field name="customerCity" type="string" column="customer_city" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="customerZip" type="integer" column="customer_zip" nullable="false">
+        <field name="customerZip" type="integer" column="customer_zip" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
         </field>
-        <field name="customerPhone01" type="string" column="customer_phone01" length="255" nullable="false">
+        <field name="customerPhone01" type="string" column="customer_phone01" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="customerPhone02" type="string" column="customer_phone02" length="255" nullable="false">
+        <field name="customerPhone02" type="string" column="customer_phone02" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="customerTrdrCusextraVarchar03" type="string" column="customer_trdr_cusextra_varchar03" length="255" nullable="false">
+        <field name="customerTrdrCusextraVarchar03" type="string" column="customer_trdr_cusextra_varchar03" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="customerFax" type="string" column="customer_fax" length="255" nullable="false">
+        <field name="customerFax" type="string" column="customer_fax" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="customerWebpage" type="string" column="customer_webpage" length="255" nullable="false">
+        <field name="customerWebpage" type="string" column="customer_webpage" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="customerEmail" type="string" column="customer_email" length="255" nullable="false">
+        <field name="customerEmail" type="string" column="customer_email" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="customerPayment" type="integer" column="customer_payment" nullable="false">
+        <field name="customerPayment" type="integer" column="customer_payment" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
         </field>
-        <field name="customerTrdcategory" type="integer" column="customer_trdcategory" nullable="false">
+        <field name="customerTrdcategory" type="integer" column="customer_trdcategory" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
         </field>
-        <field name="priceField" type="string" column="price_field" length="255" nullable="false">
+        <field name="priceField" type="string" column="price_field" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="ts" type="datetime" column="ts" nullable="false">
+        <field name="ts" type="datetime" column="ts" nullable="true">
             <options>
                 
             </options>
         </field>
-        <field name="status" type="string" column="status" length="255" nullable="false">
+        <field name="status" type="string" column="status" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
                 <option name="default">active</option>
             </options>
         </field>
+        
         <field name="actioneer" type="integer" column="actioneer" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
         </field>
-        <field name="created" type="datetime" column="created" nullable="false"/>
-        <field name="modified" type="datetime" column="modified" nullable="false"/>
-        <field name="flatData" type="text" column="flat_data" nullable="false">
-            <options>
-                <option name="fixed"/>
-            </options>
-        </field>
+        <field name="created" type="datetime" column="created" nullable="true"/>
+        <field name="modified" type="datetime" column="modified" nullable="true"/>
+
         
         <many-to-one
             field="route"
@@ -146,5 +143,6 @@
             join-column="route">
             <join-column name="route" referenced-column-name="id" />
         </many-to-one>
+        <one-to-many field="addresses" target-entity="Customeraddress" mapped-by="Customer" />
     </entity>
 </doctrine-mapping>

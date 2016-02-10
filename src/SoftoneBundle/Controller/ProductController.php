@@ -138,9 +138,7 @@ class ProductController extends Main {
         );
     }
 
-    /**
-     * @Route("/product/retrieve")
-     */
+
     function retrieveSoftoneDataAction($params = array()) {
         set_time_limit(100000);
         ini_set('memory_limit', '2256M');
@@ -160,7 +158,6 @@ class ProductController extends Main {
             if (@$entity->id == 0) {
                 $entity = new Product();
                 $dt = new \DateTime("now");
-                $entity->setItemV5($dt);
                 $entity->setTs($dt);
                 $entity->setItemInsdate($dt);
                 $entity->setItemUpddate($dt);
@@ -172,13 +169,13 @@ class ProductController extends Main {
             $imporetedData["item_cccfxrelbrand"] = 0;
             $imporetedData["item_cccfxreltdcode"] = "";
             //$model->reference = $info[1];
-            
-            $entity->setField('erpCode',@$data["CODE"]);
-            $entity->setField('supplierCode',@$data["CODE2"]);
-            $entity->setField('title',@$data["NAME"]);
-            $entity->setField('tecdocCode',@$data["CCCFXRELTDCODE"]);
-            $entity->setField('tecdocSupplierId',@$data["CCCFXRELBRAND"]);
-            
+
+            $entity->setField('erpCode', @$data["CODE"]);
+            $entity->setField('supplierCode', @$data["CODE2"]);
+            $entity->setField('title', @$data["NAME"]);
+            $entity->setField('tecdocCode', @$data["CCCFXRELTDCODE"]);
+            $entity->setField('tecdocSupplierId', @$data["CCCFXRELBRAND"]);
+
             $this->flushpersist($entity);
             $q = array();
             foreach ($data as $identifier => $val) {
@@ -196,7 +193,8 @@ class ProductController extends Main {
                 $em->getConnection()->exec($sql);
             }
             $entity->updatetecdoc();
-            if (@$i++ > 500) break;
+            if (@$i++ > 500)
+                break;
         }
         return new Response(
                 "", 200

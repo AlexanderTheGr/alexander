@@ -3,6 +3,9 @@
 namespace SoftoneBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\Entity;
+
+use SoftoneBundle\Entity\Softone as Softone;
 
 /**
  * Customer
@@ -10,15 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="customer", indexes={@ORM\Index(name="user_id", columns={"actioneer"}), @ORM\Index(name="customer_code", columns={"customer_code"}) })
  * @ORM\Entity
  */
-class Customer {
+class Customer extends Entity {
 
-    public function getField($field) {
-        return $this->$field;
-    }
-    public function setField($field,$val) {
-        $this->$field = $val;
-        return $val;
-    }
+
     /**
      * @var integer
      *
@@ -215,7 +212,7 @@ class Customer {
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    var $id;
 
     /**
      * Set reference
@@ -846,4 +843,50 @@ class Customer {
         return $this->route;
     }
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $addresses;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add address
+     *
+     * @param \SoftoneBundle\Entity\Customeradress $address
+     *
+     * @return Customer
+     */
+    public function addAddress(\SoftoneBundle\Entity\Customeradress $address)
+    {
+        $this->addresses[] = $address;
+
+        return $this;
+    }
+
+    /**
+     * Remove address
+     *
+     * @param \SoftoneBundle\Entity\Customeradress $address
+     */
+    public function removeAddress(\SoftoneBundle\Entity\Customeradress $address)
+    {
+        $this->addresses->removeElement($address);
+    }
+
+    /**
+     * Get addresses
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAddresses()
+    {
+        return $this->addresses;
+    }
 }

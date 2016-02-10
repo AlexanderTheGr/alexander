@@ -15,22 +15,54 @@ jQuery('#productfreesearch').live("keyup", function (e) {
 });
 
 toastr.options = {
-  "closeButton": false,
-  "debug": false,
-  "newestOnTop": false,
-  "progressBar": false,
-  "positionClass": "toast-top-full-width",
-  "preventDuplicates": false,
-  "onclick": null,
-  "showDuration": "300",
-  "hideDuration": "1000",
-  "timeOut": "5000",
-  "extendedTimeOut": "1000",
-  "showEasing": "swing",
-  "hideEasing": "linear",
-  "showMethod": "fadeIn",
-  "hideMethod": "fadeOut"
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-top-full-width",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
 }
+
+setTimeout(function () {
+
+    jQuery("input").each(function () {
+        var customerName = jQuery(this).attr("id");
+        if (customerName != undefined) {
+            var customerNameArr = customerName.split(":");
+            var SoftoneBundleOrdercustomerName = customerNameArr[0] + customerNameArr[1] + customerNameArr[2];
+            orderid = customerNameArr[3];
+            if (SoftoneBundleOrdercustomerName == 'SoftoneBundleOrdercustomerName') {
+                customerName = this;
+                var $elem = jQuery(customerName).autocomplete({
+                    source: "/customer/autocompletesearch",
+                    method: "POST",
+                    minLength: 2,
+                    select: function (event, ui) {
+                        var data = {}
+                        data.id = customerNameArr[3];
+                        data.customer = ui.item.id;
+                        data.customerName = ui.item.label;
+                        $.post("/order/saveCustomer", data, function (result) {
+                            if (result.returnurl) {
+                                location.href = result.returnurl;
+                            }
+                        })
+                    }
+                })
+            }
+        }
+    })
+
+}, 1000)
 
 
 jQuery(".EltrekaediSendOrder").live('click', function (e) {
@@ -42,7 +74,7 @@ jQuery(".EltrekaediSendOrder").live('click', function (e) {
         if (json.ErrorCode) {
             toastr.error(json.ErrorDescription, "Error");
         } else {
-            
+
         }
     })
 })
@@ -100,13 +132,13 @@ jQuery(".SoftoneBundleOrderitemPrice").live('keyup', function (e) {
 
 
 
-jQuery(".SoftoneBundleProductItemPricew01").live('keyup', function (e) {
+jQuery(".SoftoneBundleProductQty").live('keyup', function (e) {
     if (e.keyCode == 13) {
         var data = {}
         data.order = orderid;
         data.item = jQuery(this).attr('data-id');
-        data.price = jQuery(this).val();
-        data.qty = 1;
+        data.price = jQuery("#SoftoneBundleProductItemPricew01_"+data.item).val();
+        data.qty = jQuery(this).val();
         $.post("/order/addorderitem/", data, function (result) {
             var json = angular.fromJson(result);
             if (json.error) {
@@ -129,6 +161,9 @@ function asdf(obj, filter, freesearch) {
     $("#offcanvas-search .offcanvas-head .text-primary").html(title);
     var table = dt_tables["ctrlgetoffcanvases"];
     table.fnFilter(jQuery('#productfreesearch').val());
+    setTimeout(function(){
+        jQuery(".SoftoneBundleProductQty").val(1);    
+    },1000)
     //})
 }
 

@@ -2,148 +2,104 @@
 
 namespace SoftoneBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
- * Customeradress
- *
- * @ORM\Table(name="customeradress", indexes={@ORM\Index(name="reference", columns={"reference"})})
- * @ORM\Entity
+ * Customeraddress
  */
-class Customeradress
-{
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="reference", type="integer", nullable=false)
-     */
-    protected $reference;
+class Customeraddress {
 
     /**
      * @var integer
-     *
-     * @ORM\Column(name="customer", type="integer", nullable=false)
      */
-    protected $customer;
+    private $reference;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="code", type="string", length=20, nullable=false)
      */
-    protected $code;
+    private $code;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
-    protected $name;
+    private $name;
 
     /**
      * @var integer
-     *
-     * @ORM\Column(name="country", type="integer", nullable=false)
      */
-    protected $country = '1000';
+    private $country = '1000';
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="city", type="string", length=255, nullable=false)
      */
-    protected $city;
+    private $city;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="zip", type="string", length=25, nullable=false)
      */
-    protected $zip;
+    private $zip;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="district", type="string", length=255, nullable=false)
      */
-    protected $district;
+    private $district;
 
     /**
      * @var integer
-     *
-     * @ORM\Column(name="district1", type="integer", nullable=false)
      */
-    protected $district1;
+    private $district1;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="address", type="string", length=255, nullable=false)
      */
-    protected $address;
+    private $address;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255, nullable=false)
      */
-    protected $email;
+    private $email;
 
     /**
      * @var integer
-     *
-     * @ORM\Column(name="branch", type="integer", nullable=false)
      */
-    protected $branch;
+    private $branch;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="discount", type="decimal", precision=10, scale=2, nullable=false)
      */
-    protected $discount;
+    private $discount;
 
     /**
      * @var boolean
-     *
-     * @ORM\Column(name="iscenter", type="boolean", nullable=false)
      */
-    protected $iscenter;
+    private $iscenter;
 
     /**
      * @var boolean
-     *
-     * @ORM\Column(name="isactive", type="boolean", nullable=false)
      */
-    protected $isactive;
+    private $isactive;
 
     /**
      * @var integer
-     *
-     * @ORM\Column(name="vatsts", type="integer", nullable=false)
      */
-    protected $vatsts = '1';
+    private $vatsts = '1';
 
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    var $id;
 
-
+    /**
+     * @var \SoftoneBundle\Entity\Customeraddress
+     */
+    private $customer;
 
     /**
      * Set reference
      *
      * @param integer $reference
      *
-     * @return Customeradress
+     * @return Customeraddress
      */
-    public function setReference($reference)
-    {
+    public function setReference($reference) {
         $this->reference = $reference;
 
         return $this;
@@ -154,33 +110,8 @@ class Customeradress
      *
      * @return integer
      */
-    public function getReference()
-    {
+    public function getReference() {
         return $this->reference;
-    }
-
-    /**
-     * Set customer
-     *
-     * @param integer $customer
-     *
-     * @return Customeradress
-     */
-    public function setCustomer($customer)
-    {
-        $this->customer = $customer;
-
-        return $this;
-    }
-
-    /**
-     * Get customer
-     *
-     * @return integer
-     */
-    public function getCustomer()
-    {
-        return $this->customer;
     }
 
     /**
@@ -188,10 +119,9 @@ class Customeradress
      *
      * @param string $code
      *
-     * @return Customeradress
+     * @return Customeraddress
      */
-    public function setCode($code)
-    {
+    public function setCode($code) {
         $this->code = $code;
 
         return $this;
@@ -202,8 +132,7 @@ class Customeradress
      *
      * @return string
      */
-    public function getCode()
-    {
+    public function getCode() {
         return $this->code;
     }
 
@@ -212,10 +141,9 @@ class Customeradress
      *
      * @param string $name
      *
-     * @return Customeradress
+     * @return Customeraddress
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -226,8 +154,7 @@ class Customeradress
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -236,10 +163,9 @@ class Customeradress
      *
      * @param integer $country
      *
-     * @return Customeradress
+     * @return Customeraddress
      */
-    public function setCountry($country)
-    {
+    public function setCountry($country) {
         $this->country = $country;
 
         return $this;
@@ -250,8 +176,7 @@ class Customeradress
      *
      * @return integer
      */
-    public function getCountry()
-    {
+    public function getCountry() {
         return $this->country;
     }
 
@@ -260,10 +185,9 @@ class Customeradress
      *
      * @param string $city
      *
-     * @return Customeradress
+     * @return Customeraddress
      */
-    public function setCity($city)
-    {
+    public function setCity($city) {
         $this->city = $city;
 
         return $this;
@@ -274,8 +198,7 @@ class Customeradress
      *
      * @return string
      */
-    public function getCity()
-    {
+    public function getCity() {
         return $this->city;
     }
 
@@ -284,10 +207,9 @@ class Customeradress
      *
      * @param string $zip
      *
-     * @return Customeradress
+     * @return Customeraddress
      */
-    public function setZip($zip)
-    {
+    public function setZip($zip) {
         $this->zip = $zip;
 
         return $this;
@@ -298,8 +220,7 @@ class Customeradress
      *
      * @return string
      */
-    public function getZip()
-    {
+    public function getZip() {
         return $this->zip;
     }
 
@@ -308,10 +229,9 @@ class Customeradress
      *
      * @param string $district
      *
-     * @return Customeradress
+     * @return Customeraddress
      */
-    public function setDistrict($district)
-    {
+    public function setDistrict($district) {
         $this->district = $district;
 
         return $this;
@@ -322,8 +242,7 @@ class Customeradress
      *
      * @return string
      */
-    public function getDistrict()
-    {
+    public function getDistrict() {
         return $this->district;
     }
 
@@ -332,10 +251,9 @@ class Customeradress
      *
      * @param integer $district1
      *
-     * @return Customeradress
+     * @return Customeraddress
      */
-    public function setDistrict1($district1)
-    {
+    public function setDistrict1($district1) {
         $this->district1 = $district1;
 
         return $this;
@@ -346,8 +264,7 @@ class Customeradress
      *
      * @return integer
      */
-    public function getDistrict1()
-    {
+    public function getDistrict1() {
         return $this->district1;
     }
 
@@ -356,10 +273,9 @@ class Customeradress
      *
      * @param string $address
      *
-     * @return Customeradress
+     * @return Customeraddress
      */
-    public function setAddress($address)
-    {
+    public function setAddress($address) {
         $this->address = $address;
 
         return $this;
@@ -370,8 +286,7 @@ class Customeradress
      *
      * @return string
      */
-    public function getAddress()
-    {
+    public function getAddress() {
         return $this->address;
     }
 
@@ -380,10 +295,9 @@ class Customeradress
      *
      * @param string $email
      *
-     * @return Customeradress
+     * @return Customeraddress
      */
-    public function setEmail($email)
-    {
+    public function setEmail($email) {
         $this->email = $email;
 
         return $this;
@@ -394,8 +308,7 @@ class Customeradress
      *
      * @return string
      */
-    public function getEmail()
-    {
+    public function getEmail() {
         return $this->email;
     }
 
@@ -404,10 +317,9 @@ class Customeradress
      *
      * @param integer $branch
      *
-     * @return Customeradress
+     * @return Customeraddress
      */
-    public function setBranch($branch)
-    {
+    public function setBranch($branch) {
         $this->branch = $branch;
 
         return $this;
@@ -418,8 +330,7 @@ class Customeradress
      *
      * @return integer
      */
-    public function getBranch()
-    {
+    public function getBranch() {
         return $this->branch;
     }
 
@@ -428,10 +339,9 @@ class Customeradress
      *
      * @param string $discount
      *
-     * @return Customeradress
+     * @return Customeraddress
      */
-    public function setDiscount($discount)
-    {
+    public function setDiscount($discount) {
         $this->discount = $discount;
 
         return $this;
@@ -442,8 +352,7 @@ class Customeradress
      *
      * @return string
      */
-    public function getDiscount()
-    {
+    public function getDiscount() {
         return $this->discount;
     }
 
@@ -452,10 +361,9 @@ class Customeradress
      *
      * @param boolean $iscenter
      *
-     * @return Customeradress
+     * @return Customeraddress
      */
-    public function setIscenter($iscenter)
-    {
+    public function setIscenter($iscenter) {
         $this->iscenter = $iscenter;
 
         return $this;
@@ -466,8 +374,7 @@ class Customeradress
      *
      * @return boolean
      */
-    public function getIscenter()
-    {
+    public function getIscenter() {
         return $this->iscenter;
     }
 
@@ -476,10 +383,9 @@ class Customeradress
      *
      * @param boolean $isactive
      *
-     * @return Customeradress
+     * @return Customeraddress
      */
-    public function setIsactive($isactive)
-    {
+    public function setIsactive($isactive) {
         $this->isactive = $isactive;
 
         return $this;
@@ -490,8 +396,7 @@ class Customeradress
      *
      * @return boolean
      */
-    public function getIsactive()
-    {
+    public function getIsactive() {
         return $this->isactive;
     }
 
@@ -500,10 +405,9 @@ class Customeradress
      *
      * @param integer $vatsts
      *
-     * @return Customeradress
+     * @return Customeraddress
      */
-    public function setVatsts($vatsts)
-    {
+    public function setVatsts($vatsts) {
         $this->vatsts = $vatsts;
 
         return $this;
@@ -514,8 +418,7 @@ class Customeradress
      *
      * @return integer
      */
-    public function getVatsts()
-    {
+    public function getVatsts() {
         return $this->vatsts;
     }
 
@@ -524,8 +427,29 @@ class Customeradress
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
+
+    /**
+     * Set customer
+     *
+     * @param \SoftoneBundle\Entity\Customeraddress $customer
+     *
+     * @return Customeraddress
+     */
+    public function setCustomer(\SoftoneBundle\Entity\Customer $customer = null) {
+        $this->customer = $customer;
+        return $this;
+    }
+
+    /**
+     * Get customer
+     *
+     * @return \SoftoneBundle\Entity\Customeraddress
+     */
+    public function getCustomer() {
+        return $this->customer;
+    }
+
 }

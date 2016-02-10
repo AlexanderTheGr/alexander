@@ -464,7 +464,7 @@ class Main extends Controller {
                 $forms["fields"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'defaultValue' => $entity->getField($field)->getId(), "type" => "select", "templateOptions" => array("type" => '', 'options' => $seloptions, 'defaultOptions' => array("value" => $entity->getField($field)->getId()), "label" => $options["label"], "required" => $options["required"]));
             } else {
                 @$options["required"] = $options["required"] ? $options["required"] : true;
-                $forms["fields"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field), "type" => "input", "templateOptions" => array("type" => '', "label" => $options["label"], "required" => $options["required"]));
+                $forms["fields"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field), "type" => "input", "templateOptions" => array("type" => '', 'class'=>'asss',"label" => $options["label"], "required" => $options["required"]));
             }
         }
 

@@ -425,6 +425,10 @@ class Product extends Entity {
      *
      * @return Product
      */
+    
+    
+    var $qty;
+    
     public function setReference($reference) {
         $this->reference = $reference;
 

@@ -36,17 +36,11 @@ class OrderController extends Main {
      */
     public function viewAction($id) {
 
-
-
-
-
         $buttons = array();
         $content = $this->gettabs($id);
         $content = $this->getoffcanvases($id);
 
         $content = $this->content();
-
-
         return $this->render('SoftoneBundle:Order:view.html.twig', array(
                     'pagename' => 's',
                     'url' => '/order/save',
@@ -71,6 +65,36 @@ class OrderController extends Main {
             $jsonarr["returnurl"] = "/order/view/" . $this->newentity[$this->repository]->getId();
         }
         $json = json_encode($jsonarr);
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+    }
+
+    /**
+     * @Route("/order/saveCustomer")
+     */
+    public function saveCustomerAction(Request $request) {
+        $request->request->get("customerName");
+        $request->request->get("customer");
+        $id = $request->request->get("id");
+        
+        $entity = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->find($id);
+        if ($id == 0 AND @ $entity->id == 0) {
+            $entity = new Order;
+            $this->initialazeNewEntity($entity);
+            $this->newentity[$this->repository]->setField("status", 1);
+        }
+        
+        $entity->setCustomerName($request->request->get("customerName"));
+        $entity->setCustomer($request->request->get("customer"));
+
+        $this->flushpersist($entity);
+
+        $jsonarr["returnurl"] = "/order/view/" . $entity->getId();
+        $json = json_encode($jsonarr);
+        
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
@@ -105,8 +129,9 @@ class OrderController extends Main {
         $params["app"] = 'appgettabs';
         $datatables[] = $this->contentDatatable($params);
 
+        $fields["customerName"] = array("label" => "Customer Name", 'class' => 'asdfg');
         $fields["fincode"] = array("label" => "Code");
-        $fields["customerName"] = array("label" => "Customer Name");
+
         $forms = $this->getFormLyFields($entity, $fields);
         $this->addTab(array("title" => "General", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         if ($entity->getId()) {
@@ -125,6 +150,8 @@ class OrderController extends Main {
         $dtparams[] = array("name" => "Title", "index" => 'title', 'search' => 'text');
         $dtparams[] = array("name" => "Supplier", "index" => 'erpSupplier', 'search' => 'text');
         $dtparams[] = array("name" => "Price", "index" => 'itemPricew01', "input" => 'text', 'search' => 'text');
+        
+        $dtparams[] = array("name" => "QTY", "index" => 'qty', "input" => 'text', 'search' => 'text');
         //$dtparams[] = array("name" => "ID", "function" => 'getAvailability', "active" => "active");
 
         $params['dtparams'] = $dtparams;
@@ -168,9 +195,10 @@ class OrderController extends Main {
 
         $s = array();
         $f = array();
+        
         if ($request->request->get("length")) {
             $em = $this->getDoctrine()->getManager();
-
+            $orderFields = $em->getClassMetadata('SoftoneBundle\Entity\Product')->getFieldNames();
             $doctrineConfig = $em->getConfiguration();
             $doctrineConfig->addCustomStringFunction('FIELD', 'DoctrineExtensions\Query\Mysql\Field');
 
@@ -190,20 +218,23 @@ class OrderController extends Main {
                         $fields[] = $field["index"];
                         $field_relation = explode(":", $field["index"]);
                         if (count($field_relation) == 1) {
-                            if ($this->clearstring($dt_search["value"]) != "") {
+                            if ($this->clearstring($dt_search["value"]) != "" AND in_array($field["index"], $orderFields)) {
                                 $this->q_or[] = $this->prefix . "." . $field["index"] . " LIKE '%" . $this->clearstring($dt_search["value"]) . "%'";
                             }
-                            if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != "") {
+                            if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != "" AND in_array($this->fields[$index]["index"], $orderFields)) {
                                 $this->q_and[] = $this->prefix . "." . $this->fields[$index]["index"] . " LIKE '%" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "%'";
                             }
-                            $s[] = $this->prefix . "." . $field_relation[0];
+                            if (in_array($field_relation[0], $orderFields)) {
+                                $s[] = $this->prefix . "." . $field_relation[0];
+                            }
+                            
                         } else {
                             if ($dt_search["value"] === true) {
-                                if ($this->clearstring($dt_search["value"]) != "") {
+                                if ($this->clearstring($dt_search["value"]) != ""  AND in_array($field_relation[0], $orderFields)) {
                                     $this->q_or[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_search["value"]) . "'";
                                 }
                             }
-                            if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != "") {
+                            if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != ""  AND in_array($field_relation[0], $orderFields)) {
                                 $field_relation = explode(":", $this->fields[$index]["index"]);
                                 $this->q_and[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "'";
                                 //$s[] = $this->prefix . "." . $field_relation[0];  
@@ -249,7 +280,7 @@ class OrderController extends Main {
                             }
                             $val = $obj;
                         } else {
-                            $val = $result[$field["index"]];
+                            $val = @$result[$field["index"]];
                         }
                         if (@$field["method"]) {
                             $method = $field["method"] . "Method";
@@ -259,7 +290,8 @@ class OrderController extends Main {
                                 $obj = $em->getRepository($this->repository)->find($result["id"]);
                                 $ref = $obj->getField('reference'); //$result[$field["reference"]];
                                 $f[] = $obj->getField('tecdocArticleId');
-                                $json[] = "<input data-id='" . $result["id"] . "' data-rep='" . $this->repository . "' data-ref='" . $ref . "' id='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "_" . $result["id"] . "' data-id='" . $result["id"] . "' class='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "' type='" . $field["input"] . "' value='---'>";
+                                $value = $field["index"] == 'qty' ? 1 : '---';
+                                $json[] = "<input data-id='" . $result["id"] . "' data-rep='" . $this->repository . "' data-ref='" . $ref . "' id='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "_" . $result["id"] . "' data-id='" . $result["id"] . "' class='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "' type='" . $field["input"] . "' value='$value'>";
                             } else {
                                 $json[] = $val;
                             }
@@ -291,6 +323,7 @@ class OrderController extends Main {
                 $json[] = "<span  car='' class='product_info' ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span>";
                 $json[] = "<span  car='' class='product_info' ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->genericArticleName . "</span>";
                 $json[] = "<span  car='' class='product_info' ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->brandName . "</span>";
+                $json[] = "";
                 $json[] = "";
 
                 $jsonarr[] = $json;
@@ -330,14 +363,14 @@ class OrderController extends Main {
 
         $out = $softone->calculate((array) $dataOut, $object, "", "", $locateinfo);
 
-        foreach($out->data->ITELINES as $item) {
-            $jsonarr[$item->MTRL][5] = str_replace("value='---'","value='".$item->LINEVAL."'",$jsonarr[$item->MTRL][5]);            
+        foreach ($out->data->ITELINES as $item) {
+            $jsonarr[$item->MTRL][5] = str_replace("value='---'", "value='" . $item->LINEVAL . "'", $jsonarr[$item->MTRL][5]);
         }
         $jsonarr2 = array();
-        foreach($jsonarr as $json) {
+        foreach ($jsonarr as $json) {
             $jsonarr2[] = $json;
         }
-        
+
         return $jsonarr2;
     }
 
@@ -501,13 +534,12 @@ class OrderController extends Main {
     /**
      * @Route("/order/editorderitem/")
      */
-    
     public function editorderitemAction(Request $request) {
         $orderItem = $this->getDoctrine()
                 ->getRepository('SoftoneBundle:Orderitem')
                 ->find($request->request->get("id"));
         if ($request->request->get("qty")) {
-            $orderItem->setQty($request->request->get("qty"));       
+            $orderItem->setQty($request->request->get("qty"));
         } else if ($request->request->get("price"))
             $orderItem->setPrice($request->request->get("price"));
         else if ($request->request->get("discount"))
