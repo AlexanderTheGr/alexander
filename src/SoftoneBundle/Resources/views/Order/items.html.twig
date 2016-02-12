@@ -1,0 +1,19 @@
+{% block body %}
+    <table class="table table-striped dataTable">
+        <tr>
+            <td>k</td>
+            <td>k</td>
+            <td>k</td>
+        </tr>
+        {% for row in content %}
+        <tr>
+            {% for f in row %}
+            <td>{{f}}</td>
+            {% endfor %}
+        </tr>
+         {% endfor %}
+    </table>
+      
+
+
+{% endblock %}

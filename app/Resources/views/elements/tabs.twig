@@ -1,53 +1,55 @@
 {% block body %}
-<a class="btn btn-icon-toggle btn-default offcanvas-search" href="#asdf" data-toggle="offcanvas" data-backdrop="false">kkkk</a>
-
-<div class="alexander {{ctrl}}" ng-app="{{app}}" ng-controller="{{ctrl}} as vm">
-
-    <form ng-submit="vm.onSubmit()" name="vm.form" class="form" id="{{ctrl}}" novalidate>      
-        <button type="submit" class="btn btn-primary submit-button" ng-disabled="vm.form.$invalid">Submit</button>
-        <button type="button" class="btn btn-default" ng-click="vm.resetAllForms()">Reset</button>          
-        <uib-tabset>
-            <uib-tab ng-repeat="tab in vm.tabs" heading="[[ tab.title ]]" active="tab.active" disable="tab.disable">
-                <div id="[[ tab.index ]]"></div>     
-                <formly-form model="tab.form.model" fields="tab.form.fields" form="vm.form" options="tab.form.options"></formly-form>
-                <div ng-repeat="datatable in tab.datatables"> 
-                    <table class="alexander table table-striped dataTable [[datatable.ctrl]]">
-                        <thead>
-                            <tr>
-                                <td  ng-repeat="field in datatable.fields">
-                                    [[ field.content ]]
-                                </td>
-                            </tr> 
-                            <tr>
-                                <td ng-repeat="field in datatable.fields">[[ field.name ]]</td>
-                            </tr>                
-                        </thead> 
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="offcanvas">
-                <div ng-repeat="offcanvas in tab.offcanvases" id="[[ offcanvas.id ]]" style='width: 1600px' class="{{ctrl}} offcanvas-pane style-default-light">
-                    <div class="offcanvas-head">
-                        <header class="text-primary">Search</header>
-                        <div class="offcanvas-tools">
-                            <a class="btn btn-icon-toggle btn-default-light pull-right" data-dismiss="offcanvas">
-                                <i class="md md-close"></i>
-                            </a>
-                        </div>
+    <a class="btn btn-icon-toggle btn-default offcanvas-search" href="#asdf" data-toggle="offcanvas" data-backdrop="false">kkkk</a>
+    <div class="alexander {{ctrl}}" ng-app="{{app}}" ng-controller="{{ctrl}} as vm">
+        <form ng-submit="vm.onSubmit()" name="vm.form" class="form" id="{{ctrl}}" novalidate>      
+            <button type="submit" class="btn btn-primary submit-button" ng-disabled="vm.form.$invalid">Submit</button>
+            <button type="button" class="btn btn-default" ng-click="vm.resetAllForms()">Reset</button>          
+            <uib-tabset>
+                <uib-tab ng-repeat="tab in vm.tabs" heading="[[ tab.title ]]" active="tab.active" disable="tab.disable">
+                        
+                    <formly-form model="tab.form.model" fields="tab.form.fields" form="vm.form" options="tab.form.options"></formly-form>
+                    <div ng-repeat="datatable in tab.datatables"> 
+                        <table class="alexander table table-striped dataTable [[datatable.ctrl]]">
+                            <thead>
+                                <tr>
+                                    <td  ng-repeat="field in datatable.fields">
+                                        [[ field.content ]]
+                                    </td>
+                                </tr> 
+                                <tr>
+                                    <td ng-repeat="field in datatable.fields">[[ field.name ]]</td>
+                                </tr>                
+                            </thead> 
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="offcanvas-body">
-                        [[ offcanvas.body ]]
+                    
+                    <div id="[[ tab.index ]]"></div> 
+                    
+                    
+                    <div class="offcanvas">
+                        <div ng-repeat="offcanvas in tab.offcanvases" id="[[ offcanvas.id ]]" style='width: 1600px' class="{{ctrl}} offcanvas-pane style-default-light">
+                            <div class="offcanvas-head">
+                                <header class="text-primary">Search</header>
+                                <div class="offcanvas-tools">
+                                    <a class="btn btn-icon-toggle btn-default-light pull-right" data-dismiss="offcanvas">
+                                        <i class="md md-close"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="offcanvas-body">
+                                [[ offcanvas.body ]]
+                            </div>
+                        </div>  
                     </div>
-                </div>  
-                </div>
-                
-                
-                
-            </uib-tab>
-        </uib-tabset>  
-    </form>
-</div>    
+
+
+
+                </uib-tab>
+            </uib-tabset>  
+        </form>
+    </div>    
 {% endblock %}
 
 {% block stylesheets %}

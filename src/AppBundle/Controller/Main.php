@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-
 use Symfony\Component\Console\Application as Application;
 use Symfony\Component\Console\Input\ArrayInput as ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput as BufferedOutput;
@@ -379,9 +378,11 @@ class Main extends Controller {
             $type = $entities[$df[0] . ":" . $df[1]]->gettype($df[2]);
             if ($type == 'object') {
                 $obj = $entities[$df[0] . ":" . $df[1]]->getField($df[2]);
+                $repository =  $entities[$df[0] . ":" . $df[1]]->getRepositories($df[2]);
                 $entity = $this->getDoctrine()
-                        ->getRepository($obj->repository)
+                        ->getRepository($repository)
                         ->find($val);
+                
                 $entities[$df[0] . ":" . $df[1]]->setField($df[2], $entity);
             } else {
                 $entities[$df[0] . ":" . $df[1]]->setField($df[2], $val);
@@ -404,10 +405,15 @@ class Main extends Controller {
     }
 
     function flushpersist($entity) {
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($entity);
-        $em->flush();
-        return $entity;
+        //try {
+            $em = $this->getDoctrine()->getManager();
+            //echo $entity->getRoute();
+            $em->persist($entity);
+            $em->flush();
+            return $entity;
+        //} catch (\Doctrine\DBAL\DBALException $e) {
+        //    return $entity;
+        //}
     }
 
     function flushremove($entity) {
@@ -436,7 +442,7 @@ class Main extends Controller {
                 //$forms["html"][] = array("id" => $this->repository, "id" => $this->repository . ":" . $field . ":" . $entity->getId());
                 //$forms["html"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'defaultValue' => $entity->getField($field)->getId(), "type" => "select", "templateOptions" => array("type" => '', 'options' => $seloptions, 'defaultOptions' => array("value" => $entity->getField($field)->getId()), "label" => $options["label"], "required" => $options["required"]));
             } else {
-                $formsint["html"][] = array('class' => 'form-control', "value" => $entity->getField($field), "caption" => $options["label"], "name" => $this->repository. ":" . $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'type' => 'text');
+                $formsint["html"][] = array('class' => 'form-control', "value" => $entity->getField($field), "caption" => $options["label"], "name" => $this->repository . ":" . $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'type' => 'text');
 
                 //@$options["required"] = $options["required"] ? $options["required"] : true;
                 //$forms["html"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field), "type" => "input", "templateOptions" => array("type" => '', "label" => $options["label"], "required" => $options["required"]));
@@ -461,17 +467,17 @@ class Main extends Controller {
                 foreach (@(array) $results as $data) {
                     $seloptions[] = array("name" => $data->getField($datasource['name']) . "(" . $data->getField($datasource['value']) . ")", "value" => $data->getField($datasource['value']));
                 }
-                $forms["fields"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'defaultValue' => $entity->getField($field)->getId(), "type" => "select", "templateOptions" => array("type" => '', 'options' => $seloptions, 'defaultOptions' => array("value" => $entity->getField($field)->getId()), "label" => $options["label"], "required" => $options["required"]));
+                $defaultValue = $entity->getField($field) ? $entity->getField($field)->getId() : NULL;
+                $forms["fields"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'defaultValue' => $defaultValue, "type" => "select", "templateOptions" => array("type" => '', 'options' => $seloptions, 'defaultOptions' => array("value" => $defaultValue), "label" => $options["label"], "required" => $options["required"]));
             } else {
                 @$options["required"] = $options["required"] ? $options["required"] : true;
-                $forms["fields"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field), "type" => "input", "templateOptions" => array("type" => '', 'class'=>'asss',"label" => $options["label"], "required" => $options["required"]));
+                $forms["fields"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field), "type" => "input", "templateOptions" => array("type" => '', 'class' => 'asss', "label" => $options["label"], "required" => $options["required"]));
             }
         }
 
         return $forms;
     }
 
-    
     public function install() {
         // replace this example code with whatever you need
         set_time_limit(100000);
@@ -486,19 +492,18 @@ class Main extends Controller {
         // You can use NullOutput() if you don't need the output
         $output = new BufferedOutput();
         $application->run($input, $output);
-        
+
         $input = new ArrayInput(array(
             'command' => 'app/console assetic:dump',
             "--watch" => true
-        ));        
+        ));
         $application->run($input, $output);
-        
+
         // return the output, don't use if you used NullOutput()
         $content = $output->fetch();
         return $this->render('default/index.html.twig', array(
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
-    }      
-    
-    
+    }
+
 }

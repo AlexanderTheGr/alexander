@@ -3,8 +3,8 @@
 namespace SoftoneBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use AppBundle\Entity\Entity;
+
 /**
  * Order
  *
@@ -12,8 +12,48 @@ use AppBundle\Entity\Entity;
  * @ORM\Entity
  */
 class Order extends Entity {
+    
 
+    private $repository = 'SoftoneBundle:Order';
 
+    
+    
+    private $types = array();
+    var $repositories = array();
+
+    public function __construct() {
+        $this->repositories['route'] = 'SoftoneBundle:Route';
+        $this->types['route'] = 'object';
+        $this->route = new \SoftoneBundle\Entity\Route;
+        $this->items = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function getField($field) {
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
+
+    public function getRepository() {
+        return $this->repository;
+    }
+    public function getRepositories($repo) {
+        $this->repositories['route'] = 'SoftoneBundle:Route';
+        return  $this->repositories[$repo];
+    }
+    public function gettype($field) {
+        $this->types['route'] = 'object';
+        if (@$this->types[$field] != '') {
+            return @$this->types[$field];
+        }
+        if (gettype($field) != NULL) {
+            return gettype($this->$field);
+        }
+        return 'string';
+    }    
 
     /**
      * @var integer
@@ -235,7 +275,6 @@ class Order extends Entity {
     public function getStore() {
         return $this->store;
     }
-
 
     /**
      * Set customer
@@ -686,7 +725,6 @@ class Order extends Entity {
         return $this->id;
     }
 
-
     /**
      * Set user
      *
@@ -694,8 +732,7 @@ class Order extends Entity {
      *
      * @return Order
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
-    {
+    public function setUser(\AppBundle\Entity\User $user = null) {
         $this->user = $user;
 
         return $this;
@@ -706,8 +743,7 @@ class Order extends Entity {
      *
      * @return \AppBundle\Entity\User
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 
@@ -718,8 +754,7 @@ class Order extends Entity {
      *
      * @return Order
      */
-    public function setRoute(\SoftoneBundle\Entity\Route $route = null)
-    {
+    public function setRoute(\SoftoneBundle\Entity\Route $route = null) {
         $this->route = $route;
 
         return $this;
@@ -730,15 +765,14 @@ class Order extends Entity {
      *
      * @return \SoftoneBundle\Entity\Route
      */
-    public function getRoute()
-    {
+    public function getRoute() {
         return $this->route;
     }
+
     /**
      * @var \DateTime
      */
     protected $ts = 'CURRENT_TIMESTAMP';
-
 
     /**
      * Set ts
@@ -747,8 +781,7 @@ class Order extends Entity {
      *
      * @return Order
      */
-    public function setTs($ts)
-    {
+    public function setTs($ts) {
         $this->ts = $ts;
 
         return $this;
@@ -759,8 +792,47 @@ class Order extends Entity {
      *
      * @return \DateTime
      */
-    public function getTs()
-    {
+    public function getTs() {
         return $this->ts;
+    }
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $items;
+
+
+    /**
+     * Add item
+     *
+     * @param \SoftoneBundle\Entity\Orderitem $item
+     *
+     * @return Order
+     */
+    public function addItem(\SoftoneBundle\Entity\Orderitem $item)
+    {
+        $this->items[] = $item;
+
+        return $this;
+    }
+
+    /**
+     * Remove item
+     *
+     * @param \SoftoneBundle\Entity\Orderitem $item
+     */
+    public function removeItem(\SoftoneBundle\Entity\Orderitem $item)
+    {
+        $this->items->removeElement($item);
+    }
+
+    /**
+     * Get items
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getItems()
+    {
+        return $this->items;
     }
 }

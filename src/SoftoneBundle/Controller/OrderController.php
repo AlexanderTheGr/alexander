@@ -77,7 +77,7 @@ class OrderController extends Main {
         $request->request->get("customerName");
         $request->request->get("customer");
         $id = $request->request->get("id");
-        
+
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($id);
@@ -86,7 +86,7 @@ class OrderController extends Main {
             $this->initialazeNewEntity($entity);
             $this->newentity[$this->repository]->setField("status", 1);
         }
-        
+
         $entity->setCustomerName($request->request->get("customerName"));
         $entity->setCustomer($request->request->get("customer"));
 
@@ -94,7 +94,7 @@ class OrderController extends Main {
 
         $jsonarr["returnurl"] = "/order/view/" . $entity->getId();
         $json = json_encode($jsonarr);
-        
+
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
@@ -107,9 +107,14 @@ class OrderController extends Main {
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($id);
+
         if ($id == 0 AND @ $entity->id == 0) {
             $entity = new Order;
             $this->newentity[$this->repository] = $entity;
+            $fields["customerName"] = array("label" => "Customer Name", 'class' => 'asdfg');
+        } else {
+            $fields["customerName"] = array("label" => "Customer Name", 'class' => 'asdfg');
+            $fields["route"] = array("label" => "Route", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Route', 'name' => 'route', 'value' => 'id'));
         }
 
         $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
@@ -129,18 +134,25 @@ class OrderController extends Main {
         $params["app"] = 'appgettabs';
         $datatables[] = $this->contentDatatable($params);
 
-        $fields["customerName"] = array("label" => "Customer Name", 'class' => 'asdfg');
-        $fields["fincode"] = array("label" => "Code");
 
         $forms = $this->getFormLyFields($entity, $fields);
         $this->addTab(array("title" => "General", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         if ($entity->getId()) {
             $this->addTab(array("title" => "Search", "datatables" => array(), "form" => '', "content" => $this->getTabContentSearch(), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
-            $this->addTab(array("title" => "Items", "datatables" => $datatables, "form" => '', "content" => "", "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
+            $this->addTab(array("title" => "Items", "datatables" => $datatables, "form" => '', "content" => $this->getTotals($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
             $this->addTab(array("title" => "Customer Details", "datatables" => array(), "form" => '', "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
         }
         $json = $this->tabs();
         return $json;
+    }
+
+    function getTotals($entity) {
+        $total = 0;
+        foreach ($entity->getItems() as $item) {
+            @$total += $item->getLineval();
+        }
+        $response = $this->get('twig')->render('SoftoneBundle:Order:totals.html.twig', array('total' => $total));
+        return str_replace("\n", "", htmlentities($response));
     }
 
     protected function getoffcanvases($id) {
@@ -150,7 +162,7 @@ class OrderController extends Main {
         $dtparams[] = array("name" => "Title", "index" => 'title', 'search' => 'text');
         $dtparams[] = array("name" => "Supplier", "index" => 'erpSupplier', 'search' => 'text');
         $dtparams[] = array("name" => "Price", "index" => 'itemPricew01', "input" => 'text', 'search' => 'text');
-        
+
         $dtparams[] = array("name" => "QTY", "index" => 'qty', "input" => 'text', 'search' => 'text');
         //$dtparams[] = array("name" => "ID", "function" => 'getAvailability', "active" => "active");
 
@@ -195,7 +207,7 @@ class OrderController extends Main {
 
         $s = array();
         $f = array();
-        
+
         if ($request->request->get("length")) {
             $em = $this->getDoctrine()->getManager();
             $orderFields = $em->getClassMetadata('SoftoneBundle\Entity\Product')->getFieldNames();
@@ -227,14 +239,13 @@ class OrderController extends Main {
                             if (in_array($field_relation[0], $orderFields)) {
                                 $s[] = $this->prefix . "." . $field_relation[0];
                             }
-                            
                         } else {
                             if ($dt_search["value"] === true) {
-                                if ($this->clearstring($dt_search["value"]) != ""  AND in_array($field_relation[0], $orderFields)) {
+                                if ($this->clearstring($dt_search["value"]) != "" AND in_array($field_relation[0], $orderFields)) {
                                     $this->q_or[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_search["value"]) . "'";
                                 }
                             }
-                            if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != ""  AND in_array($field_relation[0], $orderFields)) {
+                            if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != "" AND in_array($field_relation[0], $orderFields)) {
                                 $field_relation = explode(":", $this->fields[$index]["index"]);
                                 $this->q_and[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "'";
                                 //$s[] = $this->prefix . "." . $field_relation[0];  
@@ -459,9 +470,54 @@ class OrderController extends Main {
                 ->addField(array("name" => "Ημιτελής", "index" => 'id', "method" => "imitelis"))
         ;
         $json = $this->datatable();
+
+
+
+        $datatable = json_decode($json);
+        $datatable->data = (array) $datatable->data;
+        foreach ($datatable->data as $key => $table) {
+            $table = (array) $table;
+            $table1 = array();
+            foreach ($table as $f => $val) {
+                if ($f == 0) {
+                    $table1[$f] = $val.$this->getOrderItemsPopup($val);
+                } else {
+                     $table1[$f] = $val;
+                }
+            }
+            $datatable->data[$key] = $table1;
+        }
+        $json = json_encode($datatable);
+
+
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
+    }
+
+    function getOrderItemsPopup($id) {
+        $id = (int)$id;
+        
+        $entity = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->find($id);
+        $content = array();
+        if ($entity) {
+            $html = $entity->getId();        
+            
+            foreach ($entity->getItems() as $item) {
+                $items = array();
+                $items[] = $item->getId();
+                $items[] = $item->getProduct()->getTitle();
+                $items[] = $item->getQty();
+                $items[] = $item->getLineval();
+                $content[] = $items;
+            }
+        }
+        
+        $response = $this->get('twig')->render('SoftoneBundle:Order:items.html.twig', array('content' => $content));
+        return $response;
+        
     }
 
     /**
@@ -475,6 +531,20 @@ class OrderController extends Main {
         $this->repository = 'SoftoneBundle:Orderitem';
         $this->q_and[] = $this->prefix . ".order = " . $id;
         $json = $this->datatable();
+
+        $datatable = json_decode($json);
+        $datatable->data = (array) $datatable->data;
+        foreach ($datatable->data as $key => $table) {
+            $table = (array) $table;
+            $table1 = array();
+            foreach ($table as $f => $val) {
+                $table1[$f] = $val;
+            }
+            $datatable->data[$key] = $table1;
+        }
+        $json = json_encode($datatable);
+
+
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );

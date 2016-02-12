@@ -101,7 +101,9 @@
         </field>        
         <field name="created" type="datetime" column="created" nullable="true"/>
         <field name="modified" type="datetime" column="modified" nullable="true"/>
-    
+        
+        <one-to-many field="items" target-entity="Orderitem" mapped-by="order" />
+        
         <many-to-one
             field="user"
             target-entity="AppBundle\Entity\User"
@@ -114,7 +116,10 @@
             target-entity="Route"
             inversed-by="Orders"
             join-column="route">
-            <join-column name="route" referenced-column-name="id" />
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+            <join-column name="route" referenced-column-name="id"/>
         </many-to-one>        
     </entity>
 </doctrine-mapping>
