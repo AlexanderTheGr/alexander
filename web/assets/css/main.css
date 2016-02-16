@@ -99,3 +99,13 @@ table.dataTable tbody tr {
     border: 1px #ccc solid;
     padding: 5px;
 }
+.orderitemstable {
+    width: 400px;   
+    border: 1px #888 solid;
+    position:absolute;
+    display: none;
+    left:0;
+}
+.orderitemstable table{
+    width: 100%;
+}

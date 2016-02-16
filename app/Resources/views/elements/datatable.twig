@@ -1,19 +1,24 @@
 {% block body %}  
-<div ng-app="{{app}}" ng-controller="{{ctrl}}"> 
-    <button class="btn btn-success btn_new btn_new_{{ctrl}}">Add New</button>   
-    <table class="alexander table table-striped dataTable {{ctrl}}">
-        <thead>
-            <tr>
-                <td  ng-repeat="field in fields" ng-bind-html="deliberatelyTrustDangerousSnippet(field.content)">
-                    [[ field.content ]]
-                </td>
-            </tr> 
-            <tr>
-                <td ng-repeat="field in fields">[[ field.name ]]</td>
-            </tr>                
-        </thead> 
-        <tbody>
-        </tbody>
-    </table>
-</div>
+    <div ng-app="{{app}}" ng-controller="{{ctrl}}"> 
+        <div class="gui-controls">
+            <button class="addnew btn-primary btn ink-reaction btn btn-success btn_new btn_new_{{ctrl}}">
+                <div class="gui-icon"><i class="md md-add"></i></div>
+                <span class="title">Add New</span>   
+            </button>   
+        </div>  
+        <table class="alexander table table-striped dataTable {{ctrl}}">
+            <thead>
+                <tr>
+                    <td  ng-repeat="field in fields" ng-bind-html="deliberatelyTrustDangerousSnippet(field.content)">
+                        [[ field.content ]]
+                    </td>
+                </tr> 
+                <tr>
+                    <td ng-repeat="field in fields">[[ field.name ]]</td>
+                </tr>                
+            </thead> 
+            <tbody>
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

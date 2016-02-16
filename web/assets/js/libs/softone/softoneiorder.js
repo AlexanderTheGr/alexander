@@ -174,3 +174,12 @@ function fororder(order) {
         b = false;
     }
 }
+
+jQuery(".alexander tr").live('mouseover',function(){
+    //alert('sss');
+    jQuery(this).find('.orderitemstable').show();
+});
+jQuery(".alexander tr").live('mouseout',function(){
+    //alert('sss');
+    jQuery('.orderitemstable').hide();
+});

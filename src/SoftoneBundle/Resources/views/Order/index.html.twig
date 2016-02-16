@@ -9,5 +9,6 @@
 {% endblock %}
 
 {% block javascripts %}
+<script src="{{  asset('assets/js/libs/softone/softoneiorder.js') }}"></script>    
 <script>$(".{{ctrl}}").alexDataTable("{{app}}", "{{ctrl}}", "{{url}}", "{{view}}");</script>
 {% endblock %}

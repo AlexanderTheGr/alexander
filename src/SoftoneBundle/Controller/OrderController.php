@@ -176,7 +176,7 @@ class OrderController extends Main {
 
         $datatables[] = $this->contentDatatable($params);
         //$datatables = array();
-        $this->addOffCanvas(array('id' => 'asdf', "content" => 'sss', "index" => $this->generateRandomString(), "datatables" => $datatables));
+        $this->addOffCanvas(array('id' => 'asdf', "content" => '', "index" => $this->generateRandomString(), "datatables" => $datatables));
         return $this->offcanvases();
     }
 
@@ -477,12 +477,16 @@ class OrderController extends Main {
         $datatable->data = (array) $datatable->data;
         foreach ($datatable->data as $key => $table) {
             $table = (array) $table;
+            $tbl = (array) $table;
             $table1 = array();
             foreach ($table as $f => $val) {
-                if ($f == 0) {
-                    $table1[$f] = $val.$this->getOrderItemsPopup($val);
+                if ($f == 0 AND $f != 'DT_RowId' AND $f != 'DT_RowClass') {
+                    $table1[$f] = $val;
+                    $table1[1] = $this->getOrderItemsPopup($val);
+                } else if ($f == 1){
+                    $table1[$f] = $table1[1].$val;
                 } else {
-                     $table1[$f] = $val;
+                    $table1[$f] = $val;
                 }
             }
             $datatable->data[$key] = $table1;
@@ -496,28 +500,34 @@ class OrderController extends Main {
     }
 
     function getOrderItemsPopup($id) {
-        $id = (int)$id;
-        
+        $id = (int) $id;
+
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($id);
         $content = array();
         if ($entity) {
-            $html = $entity->getId();        
-            
+            $html = $entity->getId();
+
             foreach ($entity->getItems() as $item) {
                 $items = array();
-                $items[] = $item->getId();
-                $items[] = $item->getProduct()->getTitle();
-                $items[] = $item->getQty();
-                $items[] = $item->getLineval();
+                $items["id"] = $item->getId();
+                $items["Title"] = $item->getProduct()->getTitle();
+                $items["Qty"] = $item->getQty();
+                $items["Price"] = $item->getLineval();
+                @$total +=  $item->getLineval(); 
                 $content[] = $items;
             }
+            $items = array();
+            $items["id"] = "";
+            $items["Title"] = "";
+            $items["Qty"] = "";
+            $items["Price"] = @$total;
+            $content[] = $items;            
         }
-        
+
         $response = $this->get('twig')->render('SoftoneBundle:Order:items.html.twig', array('content' => $content));
         return $response;
-        
     }
 
     /**
