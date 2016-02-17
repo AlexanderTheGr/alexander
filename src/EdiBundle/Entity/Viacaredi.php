@@ -358,7 +358,7 @@ class Viacaredi extends Entity {
     protected $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=getiteminfo';
 
     public function getQtyAvailability($qty = 1) {
-        $data_string = '{ "ApiToken": "de1751fa-f91c-4b7c-89a9-9cfbaf0e5b50", "Items": [ { "ItemCode": "' . $this->itemCode . '", "ReqQty": 1 } ] } ';
+        $data_string = '{ "ApiToken": "'.$this->getSetting("EdiBundle:Viacar:apiToken").'", "Items": [ { "ItemCode": "' . $this->itemCode . '", "ReqQty": 1 } ] } ';
         //return 10;
 
         $result = file_get_contents($this->requerstUrl, null, stream_context_create(array(
