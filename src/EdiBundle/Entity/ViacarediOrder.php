@@ -3,11 +3,11 @@
 namespace EdiBundle\Entity;
 
 use AppBundle\Entity\Entity;
+
 /**
  * ViacarediOrder
  */
-class ViacarediOrder extends Entity{
-
+class ViacarediOrder extends Entity {
 
     /**
      * @var integer
@@ -309,15 +309,15 @@ class ViacarediOrder extends Entity{
         return $this->ViacarediOrderItem;
     }
 
-   
     protected $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=postorder';
+
     public function placeOrder() {
-         // { "ApiToken": "de1751fa-f91c-4b7c-89a9-9cfbaf0e5b50", "Remarks": "Test Order", "Items": [ { "ItemCode": "8GH007157901", "ReqQty": 1, "UnitPrice": 15.58 }, { "ItemCode": "W 940 (10)", "ReqQty": 2, "UnitPrice": 7.28 }, { "ItemCode": "DRM17082", "ReqQty": 1, "UnitPrice": 122.80 } ] } 
+        // { "ApiToken": "de1751fa-f91c-4b7c-89a9-9cfbaf0e5b50", "Remarks": "Test Order", "Items": [ { "ItemCode": "8GH007157901", "ReqQty": 1, "UnitPrice": 15.58 }, { "ItemCode": "W 940 (10)", "ReqQty": 2, "UnitPrice": 7.28 }, { "ItemCode": "DRM17082", "ReqQty": 1, "UnitPrice": 122.80 } ] } 
         $items = $this->getViacarediOrderItem();
-        $obj['ApiToken'] = 'de1751fa-f91c-4b7c-89a9-9cfbaf0e5b50';
-        $obj['Remarks'] = $this->remarks; 
-        
-        foreach($items as $item) {
+        $obj['ApiToken'] = $this->getSetting("EdiBundle:Viacar:apiToken");
+        $obj['Remarks'] = $this->remarks;
+
+        foreach ($items as $item) {
             $itemObj = array();
             $itemObj["ItemCode"] = $item->getViacaredi()->getItemCode();
             $itemObj["UnitPrice"] = $item->getPrice();
@@ -325,7 +325,7 @@ class ViacarediOrder extends Entity{
             $obj['Items'][] = $itemObj;
         }
         $data_string = json_encode($obj);
-        
+
         $result = file_get_contents($this->requerstUrl, null, stream_context_create(array(
             'http' => array(
                 'method' => 'POST',
@@ -334,9 +334,9 @@ class ViacarediOrder extends Entity{
                 . 'Content-Length: ' . strlen($data_string) . "\r\n",
                 'content' => $data_string,
             ),
-        )));        
+        )));
         $re = json_decode($result);
         print_r($re);
     }
-    
+
 }

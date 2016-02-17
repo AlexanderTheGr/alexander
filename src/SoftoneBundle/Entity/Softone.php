@@ -1,23 +1,30 @@
 <?php
 
 namespace SoftoneBundle\Entity;
+use AppBundle\Entity\Entity;
 
-class Softone {
+class Softone extends Entity {
 
     var $authenticateClientID;
     var $loginClientID;
-    var $appId = 156;
-    var $username = 'WebAdmin';
-    var $password = 'user123#!';
-	
-    var $requerstUrl = 'http://bsautospare.oncloud.gr/s1services';
-	
-	
+    
+    
+    var $appId = 0;
+    var $username = '';
+    var $password = '';
+    var $requerstUrl = '';
+    
+    
     //var $requerstUrl = 'http://foxnet.oncloud.gr/s1services';
 	
 
     function __construct() {
         //session_start();
+        $this->appId = $this->getSetting("SoftoneBundle:Softone:appId");
+        $this->username = $this->getSetting("SoftoneBundle:Softone:username");
+        $this->password  = $this->getSetting("SoftoneBundle:Softone:password");
+        $this->requerstUrl = $this->getSetting("SoftoneBundle:Softone:requerstUrl");
+        
         $loginData = $this->login();
         $this->authenticate($loginData);
     }

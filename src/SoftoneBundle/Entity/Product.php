@@ -4,8 +4,6 @@ namespace SoftoneBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Entity;
-
-
 use SoftoneBundle\Entity\Softone as Softone;
 
 /**
@@ -425,10 +423,8 @@ class Product extends Entity {
      *
      * @return Product
      */
-    
-    
     var $qty;
-    
+
     public function setReference($reference) {
         $this->reference = $reference;
 
@@ -1704,7 +1700,7 @@ class Product extends Entity {
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         //$data_string = json_encode($data);
-        $url = "http://service2.fastwebltd.com/";
+        $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
 
         $fields = array(
             'action' => 'updateTecdoc',

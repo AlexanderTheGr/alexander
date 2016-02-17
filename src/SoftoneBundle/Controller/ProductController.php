@@ -9,12 +9,15 @@ use AppBundle\Controller\Main as Main;
 use SoftoneBundle\Entity\Softone as Softone;
 use SoftoneBundle\Entity\Product as Product;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 class ProductController extends Main {
 
     var $repository = 'SoftoneBundle:Product';
 
     /**
      * @Route("/product/product")
+     * @Security("has_role('admin')")
      */
     public function indexAction() {
 

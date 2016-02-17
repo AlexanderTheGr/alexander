@@ -567,20 +567,28 @@ class Eltrekaedi extends Entity {
     }
 
     protected $SoapClient = false;
-    protected $Username = 'TESTUID';
-    protected $Password = 'TESTPWD';
-    protected $CustomerNo = '999999L';
-    protected $soap_url = 'http://195.144.16.7/EltrekkaEDI/EltrekkaEDI.asmx?WSDL';
+    
+    protected $Username = '';
+    protected $Password = '';
+    protected $CustomerNo = '';
+    protected $SoapUrl = '';
+    protected $SoapNs = '';
 
     protected function auth() {
 
+        $this->SoapUrl = $this->getSetting("EdiBundle:Eltreka:SoapUrl");
+        $this->SoapNs = $this->getSetting("EdiBundle:Eltreka:SoapNs");
+        $this->Username = $this->getSetting("EdiBundle:Eltreka:Username");
+        $this->Password = $this->getSetting("EdiBundle:Eltreka:Password");
+        $this->CustomerNo = $this->getSetting("EdiBundle:Eltreka:CustomerNo");
+        
         if ($this->SoapClient) {
             return $this;
         }
-        $this->SoapClient = new \SoapClient($this->soap_url);
-        $ns = 'http://eltrekka.gr/edi/';
+
+        $this->SoapClient = new \SoapClient($this->SoapUrl);
         $headerbody = array('Username' => $this->Username, 'Password' => $this->Password);
-        $header = new \SOAPHeader($ns, 'AuthHeader', $headerbody);
+        $header = new \SOAPHeader($this->SoapNs, 'AuthHeader', $headerbody);
         $this->SoapClient->__setSoapHeaders($header);
         //$session->set('SoapClient', $this->SoapClient);
         return $this;
@@ -685,7 +693,8 @@ class Eltrekaedi extends Entity {
     }
 
     public function toErp() {
-        if ($this->getProduct() > 0) return;
+        if ($this->getProduct() > 0)
+            return;
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();

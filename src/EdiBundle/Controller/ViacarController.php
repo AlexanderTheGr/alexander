@@ -63,7 +63,10 @@ class ViacarController extends Main {
     }
 
     public function getPartMasterFile() {
-        return 'http://zerog.gr/edi/fw.ashx?method=getinventoryfile&apiToken=de1751fa-f91c-4b7c-89a9-9cfbaf0e5b50';
+        
+        $apiToken = $this->getSetting("EdiBundle:Viacar:apiToken");
+        
+        return 'http://zerog.gr/edi/fw.ashx?method=getinventoryfile&apiToken='.$apiToken;
     }
 
     /**

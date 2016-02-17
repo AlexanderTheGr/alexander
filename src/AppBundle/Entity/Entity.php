@@ -12,7 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Entity {
 
- 
     private $types = array();
     private $repositories = array();
 
@@ -37,6 +36,19 @@ class Entity {
             return gettype($this->$field);
         }
         return 'string';
+    }
+
+    function getSetting($path) {
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }       
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $repository = $em->getRepository('AppBundle:Setting');
+        $setting = $repository->findOneBy(
+                array('path' => $path)
+        );
+        return $setting->getValue();
     }
 
 }

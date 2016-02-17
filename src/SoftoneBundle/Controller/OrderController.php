@@ -390,7 +390,7 @@ class OrderController extends Main {
         //$data = file_get_contents(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term");
         //return $data;
         //} else {
-        $url = "http://service2.fastwebltd.com/";
+        $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
         $fields = array(
             'action' => 'getSearchByIds',
             'search' => $search
@@ -417,7 +417,7 @@ class OrderController extends Main {
         //   return $data;
         //} else {
         //ADBRP002
-        $url = "http://service2.fastwebltd.com/";
+        $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
         $fields = array(
             'action' => 'getSearch',
             'search' => $search

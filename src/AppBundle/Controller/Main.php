@@ -155,6 +155,8 @@ class Main extends Controller {
         return json_encode($data);
     }
 
+
+    
     function yesnoMethod($value) {
         return $value ? "YES" : "NO";
     }
@@ -506,4 +508,16 @@ class Main extends Controller {
         ));
     }
 
+    
+    
+    
+    function getSetting($path) {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('AppBundle:Setting');
+        $setting = $repository->findOneBy(
+                array('path' => $path)
+        );
+        return $setting->getValue();
+    }
+    
 }
