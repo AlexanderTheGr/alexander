@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Console\Application as Application;
 use Symfony\Component\Console\Input\ArrayInput as ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput as BufferedOutput;
+use AppBundle\Entity\Setting as Setting;
 
 class Main extends Controller {
 
@@ -517,6 +518,15 @@ class Main extends Controller {
         $setting = $repository->findOneBy(
                 array('path' => $path)
         );
+        if (!$setting) {
+            $dt = new \DateTime("now");
+            $setting = new Setting;
+            $setting->setTs($dt);
+            $setting->setCreated($dt);
+            $setting->setCreated($dt);
+            $setting->setPath($path);
+            $this->flushpersist($setting);
+        }
         return $setting->getValue();
     }
     

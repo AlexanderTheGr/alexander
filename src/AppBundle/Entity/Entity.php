@@ -42,12 +42,22 @@ class Entity {
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
-        }       
+        }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         $repository = $em->getRepository('AppBundle:Setting');
         $setting = $repository->findOneBy(
                 array('path' => $path)
         );
+        if (!$setting) {
+            $dt = new \DateTime("now");
+            $setting = new Setting;
+            $setting->setTs($dt);
+            $setting->setCreated($dt);
+            $setting->setModified($dt);
+            $setting->setPath($path);
+            $em->persist($setting);
+            $em->flush();
+        }
         return $setting->getValue();
     }
 

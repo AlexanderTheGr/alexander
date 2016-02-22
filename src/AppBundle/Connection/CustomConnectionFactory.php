@@ -18,22 +18,22 @@ class CustomConnectionFactory extends ConnectionFactory {
         $params['host'] = 'localhost';
         $params['port'] = 3306;
         /*
-        if ($_SERVER["REMOTE_ADDR"] == '127.0.0.1') {
-            
-            $params['dbname'] = 'partsbox_symfony';
-            $params['user'] = 'root';
-            $params['password'] = '123456';
-            
-        } else {
-            $params['dbname'] = 'partsbox_db2';
-            $params['user'] = 'partsbox';
-            $params['password'] = ')7uT[LJOPyX$';
-        }
+          if ($_SERVER["REMOTE_ADDR"] == '127.0.0.1') {
+
+          $params['dbname'] = 'partsbox_symfony';
+          $params['user'] = 'root';
+          $params['password'] = '123456';
+
+          } else {
+          $params['dbname'] = 'partsbox_db2';
+          $params['user'] = 'partsbox';
+          $params['password'] = ')7uT[LJOPyX$';
+          }
          * 
          */
-             $params['dbname'] = 'partsbox_symfony';
-            $params['user'] = 'root';
-            $params['password'] = '123456';       
+        $params['dbname'] = 'partsbox_symfony';
+        $params['user'] = 'root';
+        $params['password'] = '123456';
         //continue with regular connection creation using new params
         return parent::createConnection($params, $config, $eventManager, $mappingTypes);
     }
