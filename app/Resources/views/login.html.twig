@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+
+        <!-- BEGIN META -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="keywords" content="your,keywords">
+        <meta name="description" content="Short explanation about this website">
+        <!-- END META -->
+        <!-- BEGIN STYLESHEETS -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:300italic,400italic,300,400,500,700,900' rel='stylesheet' type='text/css'/>
+        <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/theme-4/bootstrap.css') }}" />
+        <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/theme-4/materialadmin.css') }}" />
+        <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/theme-4/font-awesome.min.css') }}" />
+        <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/theme-4/material-design-iconic-font.min.css') }}" />
+        <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/theme-4/libs/DataTables/jquery.dataTables.css') }}">
+        <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/theme-4/libs/toastr/toastr.css') }}">
+        <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+        <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/theme-4/libs/jquery-ui/jquery-ui-theme.css') }}">
+
+    {% block stylesheets %}{% endblock %}
+    <!-- END STYLESHEETS -->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="//assets/js/libs/utils/html5shiv.js?1403934957"></script>
+    <script type="text/javascript" src="//assets/js/libs/utils/respond.min.js?1403934956"></script>
+    <![endif]-->
+</head>
+<body class="menubar-hoverable header-fixed ">
+
+
+            <!-- BEGIN LOGIN SECTION -->
+        <section class="section-account">
+            <div class="img-backdrop" style="background-image: url('/assets/img/img16.jpg')"></div>
+            <div class="spacer"></div>
+            <div class="card contain-sm style-transparent">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <br/>
+                            <img style="height: 50px;" src="/assets/img/logo.png"/>
+                            <br/><br/>
+                            <form class="form floating-label" action="{{ path('login') }}" accept-charset="utf-8" method="post">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="LoginForm_email" name="LoginForm[email]">
+                                    <label for="email">Email</label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" id="LoginForm_password" name="LoginForm[password]">
+                                    <label for="password">Password</label>
+                                    <p class="help-block"><a href="#">Forgotten?</a></p>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-xs-6 text-left">
+                                        <div class="checkbox checkbox-inline checkbox-styled">
+                                            <label>
+                                                <input type="checkbox"> <span>Remember me</span>
+                                            </label>
+                                        </div>
+                                    </div><!--end .col -->
+                                    <div class="col-xs-6 text-right">
+                                        <button class="btn btn-primary btn-raised" type="submit">Login</button>
+                                    </div><!--end .col -->
+                                </div><!--end .row -->
+                            </form>
+                        </div><!--end .col -->
+                        <!--div class="col-sm-5 col-sm-offset-1 text-center">
+                            <br><br>
+                            <h3 class="text-light">
+                                No account yet?
+                            </h3>
+                            <a class="btn btn-block btn-raised btn-primary" href="#">Sign up here</a>
+                            <br><br>
+                            <h3 class="text-light">
+                                or
+                            </h3>
+                            <p>
+                                <a href="#" class="btn btn-block btn-raised btn-info"><i class="fa fa-facebook pull-left"></i>Login with Facebook</a>
+                            </p>
+                            <p>
+                                <a href="#" class="btn btn-block btn-raised btn-info"><i class="fa fa-twitter pull-left"></i>Login with Twitter</a>
+                            </p>
+                        </div><!--end .col ->
+                    </div--><!--end .row -->
+                </div><!--end .card-body -->
+            </div><!--end .card -->
+        </section>
+
+{% javascripts
+            'assets/js/libs/jquery/jquery-1.11.2.min.js'
+            'assets/js/libs/jquery/jquery-migrate-1.2.1.min.js' 
+            'assets/js/libs/jquery-ui/jquery-ui.min.js' 
+            'assets/js/libs/bootstrap/bootstrap.min.js'
+            'assets/js/libs/spin.js/spin.min.js'
+            'assets/js/core/source/*'
+            'assets/js/libs/toastr/toastr.js'
+            'assets/js/libs/autosize/jquery.autosize.min.js'
+            'assets/js/libs/nanoscroller/jquery.nanoscroller.min.js'
+            'assets/js/libs/DataTables/jquery.dataTables.min.js'
+            'assets/js/libs/angular/api-check.js' 
+            'assets/js/libs/angular/angular.js' 
+            'assets/js/libs/angular/angular-ui-bootstrap.js' 
+            'assets/js/libs/angular/angular-ui-bootstrap-tpls.js' 
+            'assets/js/libs/angular/angular-sanitize.js' 
+            'assets/js/libs/angular/angular-formly.js' 
+            'assets/js/libs/angular/angular-animate.js' 
+            'assets/js/libs/angular/angular-messages.js' 
+            'assets/js/libs/angular/angular-formly-templates-bootstrap.js' 
+            'assets/js/libs/angular/angular-base64.js' 
+            'assets/js/libs/alexander/*' 
+            'assets/js/libs/edi/*' 
+
+%}
+
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %} 
+
+
+{% block javascripts %}{% endblock %}
+<!-- END JAVASCRIPT -->    
+</body>
+</html>

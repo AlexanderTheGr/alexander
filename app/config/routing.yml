@@ -19,5 +19,5 @@ attribute:
     prefix:   /
 
 app:
-    resource: "@SoftoneBundle/Controller/"
+    resource: "@AppBundle/Controller/"
     type:     annotation

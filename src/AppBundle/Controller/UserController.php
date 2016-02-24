@@ -26,6 +26,7 @@ class UserController extends Main {
         ));
     }
 
+    
 
     /**
      * @Route("/user/view/{id}")

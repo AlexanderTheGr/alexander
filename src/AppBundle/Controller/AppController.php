@@ -16,6 +16,7 @@ class AppController extends Main {
     public function installAction(Request $request) {
         // replace this example code with whatever you need
         $this->install();
-    }    
+    }   
+    
 
 }

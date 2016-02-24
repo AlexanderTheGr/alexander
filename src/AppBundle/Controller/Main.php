@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,6 +28,7 @@ class Main extends Controller {
     function __construct() {
         
     }
+
 
     public function content() {
         $data["tabs"] = $this->tabs;
@@ -156,8 +158,6 @@ class Main extends Controller {
         return json_encode($data);
     }
 
-
-    
     function yesnoMethod($value) {
         return $value ? "YES" : "NO";
     }
@@ -381,11 +381,11 @@ class Main extends Controller {
             $type = $entities[$df[0] . ":" . $df[1]]->gettype($df[2]);
             if ($type == 'object') {
                 $obj = $entities[$df[0] . ":" . $df[1]]->getField($df[2]);
-                $repository =  $entities[$df[0] . ":" . $df[1]]->getRepositories($df[2]);
+                $repository = $entities[$df[0] . ":" . $df[1]]->getRepositories($df[2]);
                 $entity = $this->getDoctrine()
                         ->getRepository($repository)
                         ->find($val);
-                
+
                 $entities[$df[0] . ":" . $df[1]]->setField($df[2], $entity);
             } else {
                 $entities[$df[0] . ":" . $df[1]]->setField($df[2], $val);
@@ -409,11 +409,11 @@ class Main extends Controller {
 
     function flushpersist($entity) {
         //try {
-            $em = $this->getDoctrine()->getManager();
-            //echo $entity->getRoute();
-            $em->persist($entity);
-            $em->flush();
-            return $entity;
+        $em = $this->getDoctrine()->getManager();
+        //echo $entity->getRoute();
+        $em->persist($entity);
+        $em->flush();
+        return $entity;
         //} catch (\Doctrine\DBAL\DBALException $e) {
         //    return $entity;
         //}
@@ -509,9 +509,6 @@ class Main extends Controller {
         ));
     }
 
-    
-    
-    
     function getSetting($path) {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('AppBundle:Setting');
@@ -529,5 +526,5 @@ class Main extends Controller {
         }
         return $setting->getValue();
     }
-    
+
 }
