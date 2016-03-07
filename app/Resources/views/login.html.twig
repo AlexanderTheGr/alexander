@@ -43,13 +43,13 @@
                             <br/>
                             <img style="height: 50px;" src="/assets/img/logo.png"/>
                             <br/><br/>
-                            <form class="form floating-label" action="{{ path('login') }}" accept-charset="utf-8" method="post">
+                            <form class="form floating-label" action="/login_check" accept-charset="utf-8" method="post">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="LoginForm_email" name="LoginForm[email]">
-                                    <label for="email">Email</label>
+                                    <input type="text" class="form-control" id="username" value="{{ last_username }}" name="_username">
+                                    <label for="email">Username</label>
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control" id="LoginForm_password" name="LoginForm[password]">
+                                    <input type="password" class="form-control" id="password" name="_password">
                                     <label for="password">Password</label>
                                     <p class="help-block"><a href="#">Forgotten?</a></p>
                                 </div>
@@ -58,7 +58,7 @@
                                     <div class="col-xs-6 text-left">
                                         <div class="checkbox checkbox-inline checkbox-styled">
                                             <label>
-                                                <input type="checkbox"> <span>Remember me</span>
+                                                <input type="checkbox" id="remember_me" name="_remember_me" checked /><span>Remember me</span>
                                             </label>
                                         </div>
                                     </div><!--end .col -->

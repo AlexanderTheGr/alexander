@@ -17,7 +17,7 @@ class ProductController extends Main {
 
     /**
      * @Route("/product/product")
-     * @Security("has_role('admin')")
+     * 
      */
     public function indexAction() {
 

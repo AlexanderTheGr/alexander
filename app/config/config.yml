@@ -78,3 +78,8 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+services:    
+    login_manager:
+        class:     AppBundle\Security\TimeAuthenticator
+        arguments: ["@security.password_encoder"]
