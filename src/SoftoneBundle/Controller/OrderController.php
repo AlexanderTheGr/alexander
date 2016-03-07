@@ -326,7 +326,7 @@ class OrderController extends Main {
                     $jsonarr[(int) $result["reference"]] = $json;
             }
             
-            $jsonarr = $this->softoneCalculate($jsonarr);
+            //$jsonarr = $this->softoneCalculate($jsonarr);
 
             //print_r($articleIds);
             $de = array_diff((array) $articleIds, (array) $f);
@@ -350,13 +350,12 @@ class OrderController extends Main {
             // print_r($p);
         }
         $data["data"] = $jsonarr;
-        $data["recordsTotal"] = count($jsonarr);
-        $data["recordsFiltered"] = count($jsonarr);
+        $data["recordsTotal"] = $recordsTotal;
+        $data["recordsFiltered"] = $recordsFiltered;
         return json_encode($data);
     }
 
     public function softoneCalculate($jsonarr) {
-        
         $jsonarr2 = array();
         foreach ($jsonarr as $json) {
             $jsonarr2[] = $json;
