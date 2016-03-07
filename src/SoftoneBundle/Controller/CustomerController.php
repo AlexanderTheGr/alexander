@@ -12,6 +12,7 @@ use SoftoneBundle\Entity\Customer as Customer;
 class CustomerController extends Main {
 
     var $repository = 'SoftoneBundle:Customer';
+    var $newentity = '';
 
     /**
      * @Route("/customer/customer")
@@ -34,10 +35,10 @@ class CustomerController extends Main {
         $json = json_encode(array("ok"));
 
         $em = $this->getDoctrine()->getManager();
-        
+
 
         $query = $em->createQuery(
-                        "SELECT p.id, p.customerName,p.customerAfm,p.customerCode FROM " . $this->repository . " " . $this->prefix . " where p.customerName LIKE '%" . $_GET["term"] . "%' OR p.customerAfm LIKE '%" . $_GET["term"] . "%' OR p.customerCode LIKE '%" . $_GET["term"] . "%'"     
+                        "SELECT p.id, p.customerName,p.customerAfm,p.customerCode FROM " . $this->repository . " " . $this->prefix . " where p.customerName LIKE '%" . $_GET["term"] . "%' OR p.customerAfm LIKE '%" . $_GET["term"] . "%' OR p.customerCode LIKE '%" . $_GET["term"] . "%'"
                 )
                 ->setMaxResults(20)
                 ->setFirstResult(0);
@@ -71,7 +72,7 @@ class CustomerController extends Main {
 
         return $this->render('SoftoneBundle:Product:view.html.twig', array(
                     'pagename' => 's',
-                    'url' => '/product/save',
+                    'url' => '/customer/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
@@ -84,8 +85,15 @@ class CustomerController extends Main {
      * @Route("/customer/save")
      */
     public function savection() {
-        $this->save();
-        $json = json_encode(array("ok"));
+        $entity = new Customer;
+        $this->initialazeNewEntity($entity);
+        $this->newentity[$this->repository]->setField("status", 1);
+        $out = $this->save();
+        $jsonarr = array();
+        if ($this->newentity[$this->repository]->getId()) {
+            $jsonarr["returnurl"] = "/customer/view/" . $this->newentity[$this->repository]->getId();
+        }
+        $json = json_encode($jsonarr);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
@@ -99,6 +107,13 @@ class CustomerController extends Main {
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($id);
+
+        if ($id == 0 AND @ $entity->id == 0) {
+            $entity = new Customer;
+            $this->newentity[$this->repository] = $entity;
+        }
+
+
         $fields["customerCode"] = array("label" => "Customer Code");
         $fields["customerName"] = array("label" => "Customer Name");
         $fields["customerAfm"] = array("label" => "Customer Afm");
