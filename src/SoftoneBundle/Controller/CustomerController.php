@@ -88,6 +88,7 @@ class CustomerController extends Main {
         $entity = new Customer;
         $this->initialazeNewEntity($entity);
         $this->newentity[$this->repository]->setField("status", 1);
+        $this->newentity[$this->repository]->setField("reference", 1);
         $out = $this->save();
         $jsonarr = array();
         if ($this->newentity[$this->repository]->getId()) {
