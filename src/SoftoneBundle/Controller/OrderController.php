@@ -320,12 +320,12 @@ class OrderController extends Main {
                         $json[] = $obj->$func(count($results));
                     }
                 }
-                $json["DT_RowClass"] = "dt_row_" . strtolower($r[1]);
-                $json["DT_RowId"] = 'dt_id_' . strtolower($r[1]) . '_' . $result["id"];
+                //$json["DT_RowClass"] = "dt_row_" . strtolower($r[1]);
+                //$json["DT_RowId"] = 'dt_id_' . strtolower($r[1]) . '_' . $result["id"];
                 if ($result["reference"])
                     $jsonarr[(int) $result["reference"]] = $json;
             }
-
+            
             $jsonarr = $this->softoneCalculate($jsonarr);
 
             //print_r($articleIds);
@@ -346,15 +346,23 @@ class OrderController extends Main {
 
                 $jsonarr[] = $json;
             }
+    
             // print_r($p);
         }
         $data["data"] = $jsonarr;
-        $data["recordsTotal"] = $recordsTotal;
-        $data["recordsFiltered"] = $recordsFiltered;
+        $data["recordsTotal"] = count($jsonarr);
+        $data["recordsFiltered"] = count($jsonarr);
         return json_encode($data);
     }
 
     public function softoneCalculate($jsonarr) {
+        
+        $jsonarr2 = array();
+        foreach ($jsonarr as $json) {
+            $jsonarr2[] = $json;
+        }
+        return $jsonarr2;
+        
         $softone = new Softone();
         $object = "SALDOC";
         $objectArr = array();
@@ -377,6 +385,7 @@ class OrderController extends Main {
         }
         //echo "1";
         //print_r($dataOut);
+        return $jsonarr;
         $locateinfo = "MTRL,NAME,PRICE,QTY1,VAT;ITELINES:DISC1PRC,ITELINES:LINEVAL,MTRL,MTRL_ITEM_CODE,MTRL_ITEM_CODE1,MTRL_ITEM_NAME,MTRL_ITEM_NAME1,PRICE,QTY1;SALDOC:BUSUNITS,EXPN,TRDR,MTRL,PRICE,QTY1,VAT";
 
         $out = $softone->calculate((array) $dataOut, $object, "", "", $locateinfo);
