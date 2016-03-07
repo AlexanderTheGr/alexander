@@ -410,14 +410,13 @@ class Main extends Controller {
 
     function flushpersist($entity) {
         //try {
+        
         $em = $this->getDoctrine()->getManager();
-        //echo $entity->getRoute();
+
         $em->persist($entity);
         $em->flush();
         return $entity;
-        //} catch (\Doctrine\DBAL\DBALException $e) {
-        //    return $entity;
-        //}
+
     }
 
     function flushremove($entity) {

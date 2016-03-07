@@ -59,6 +59,7 @@ class OrderController extends Main {
         $entity = new Order;
         $this->initialazeNewEntity($entity);
         $this->newentity[$this->repository]->setField("status", 1);
+        //$this->newentity[$this->repository]->setField("route", 0);
         $out = $this->save();
         $jsonarr = array();
         if ($this->newentity[$this->repository]->getId()) {
@@ -86,9 +87,14 @@ class OrderController extends Main {
             $this->initialazeNewEntity($entity);
             $this->newentity[$this->repository]->setField("status", 1);
         }
-
+        
         $entity->setCustomerName($request->request->get("customerName"));
         $entity->setCustomer($request->request->get("customer"));
+        
+        $route = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Route")
+                ->find(1);
+        $entity->setRoute($route);
 
         $this->flushpersist($entity);
 
@@ -112,6 +118,7 @@ class OrderController extends Main {
             $entity = new Order;
             $this->newentity[$this->repository] = $entity;
             $fields["customerName"] = array("label" => "Customer Name", 'class' => 'asdfg');
+            
         } else {
             $fields["customerName"] = array("label" => "Customer Name", 'class' => 'asdfg');
             $fields["route"] = array("label" => "Route", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Route', 'name' => 'route', 'value' => 'id'));
