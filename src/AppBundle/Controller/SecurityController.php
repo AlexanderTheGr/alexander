@@ -9,6 +9,9 @@ use AppBundle\Controller\Main as Main;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArrayInput;
+
 class SecurityController extends Main {
 
     /**
