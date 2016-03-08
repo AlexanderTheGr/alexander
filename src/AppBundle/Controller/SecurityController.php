@@ -8,10 +8,10 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Controller\Main as Main;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
+use AppBundle\Entity\User;
 
 class SecurityController extends Main {
 
@@ -19,17 +19,17 @@ class SecurityController extends Main {
      * @Route("/login", name="login")
      */
     public function loginAction(Request $request) {
-        
+
 
         $this->install();
-        
+
         $login = $request->request->get("LoginForm");
         $session = $request->getSession();
         $authenticationUtils = $this->get('security.authentication_utils');
         $error = $authenticationUtils->getLastAuthenticationError();
-        $lastUsername = $authenticationUtils->getLastUsername();    
-        
-                
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+
         return $this->render('AppBundle:Security:login.html.twig', array(
                     'pagename' => 'Login',
                     'last_username' => $lastUsername,
@@ -41,7 +41,7 @@ class SecurityController extends Main {
         $kernel = $this->get('kernel');
         $application = new Application($kernel);
         $application->setAutoExit(false);
-
+        $ser = explode(".", $_SERVER["HTTP_HOST"]);
         //$options = array('command' => 'doctrine:schema:update', "--force" => true);
         $input = new ArrayInput(array(
             'command' => 'doctrine:schema:update',
@@ -60,32 +60,56 @@ class SecurityController extends Main {
         $this->getSetting("EdiBundle:Eltreka:SoapUrl");
         $this->getSetting("EdiBundle:Eltreka:SoapNs");
         $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
+
+
+        $user = $this->getDoctrine()
+                ->getRepository("AppBundle:User")
+                ->find(1);
+
+        if (@$user->id == 0) {
+            $user = new User;
+            $dt = new \DateTime("now");
+            
+            $encodeFactory = $this->container->get('security.encoder_factory');
+            
+            $user->setTs($dt);
+            $user->setCreated($dt);
+            $user->setModified($dt);
+            $user->setEmail($ser[0] . "@partsbox.com");
+            $user->setUsername($ser[0]);
+            $encoder = $encodeFactory->getEncoder($user);
+            $user->setPassword($encoder->encodePassword($ser[0], $user->getSalt()));
+            $this->flushpersist($user);           
+            
+        }
     }
-    
-    
+
     /**
      * @Route("/login_check", name="login_check")
-     */    
+     */
     public function loginCheckAction(Request $request) {
         
-    
     }
+
     /**
      * @Route("/login_failure", name="login_failure")
-     */    
+     */
     public function loginFailureAction(Request $request) {
-    
-    } 
+        
+    }
+
     /**
      * @Route("/access_denied", name="access_denied")
-     */    
+     */
     public function accessDeniedAction(Request $request) {
-    
-    }    
+        
+    }
+
     /**
      * @Route("/logout", name="logout")
-     */    
+     */
     public function logoutAction(Request $request) {
-    
-    }        
+        
+    }
+
 }
