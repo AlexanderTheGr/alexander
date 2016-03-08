@@ -538,7 +538,7 @@ class Main extends Controller {
             $setting = new Setting;
             $setting->setTs($dt);
             $setting->setCreated($dt);
-            $setting->setCreated($dt);
+            $setting->setModified($dt);
             $setting->setPath($path);
             $this->flushpersist($setting);
         }
