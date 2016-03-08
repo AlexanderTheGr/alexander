@@ -492,6 +492,7 @@ class Main extends Controller {
             'command' => 'doctrine:schema:update',
             "--force" => true
         ));
+        echo 'sss';
         // You can use NullOutput() if you don't need the output
         $output = new BufferedOutput();
         $application->run($input, $output);
