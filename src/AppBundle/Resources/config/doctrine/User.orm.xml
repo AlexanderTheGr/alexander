@@ -37,7 +37,7 @@
         <option name="fixed"/>
       </options>
     </field>
-    <field name="appkey" type="string" column="appkey" length="255" nullable="false">
+    <field name="appkey" type="string" column="appkey" length="255" nullable="true">
       <options>
         <option name="fixed"/>
       </options>
@@ -47,7 +47,7 @@
         
       </options>
     </field>
-    <field name="status" type="string" column="status" length="255" nullable="false">
+    <field name="status" type="string" column="status" length="255" nullable="true">
       <options>
         <option name="fixed"/>
         <option name="default">active</option>
