@@ -485,14 +485,18 @@ class Main extends Controller {
         // replace this example code with whatever you need
         set_time_limit(100000);
         //ini_set('memory_limit', '128M');
+
+
         $kernel = $this->get('kernel');
         $application = new Application($kernel);
         $application->setAutoExit(false);
+
+        $options = array('command' => 'doctrine:schema:update', "--force" => true);
         $input = new ArrayInput(array(
             'command' => 'doctrine:schema:update',
             "--force" => true
         ));
-        echo 'sss';
+
         // You can use NullOutput() if you don't need the output
         $output = new BufferedOutput();
         $application->run($input, $output);
