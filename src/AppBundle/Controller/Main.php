@@ -491,7 +491,7 @@ class Main extends Controller {
         $application = new Application($kernel);
         $application->setAutoExit(false);
 
-        $options = array('command' => 'doctrine:schema:update', "--force" => true);
+        //$options = array('command' => 'doctrine:schema:update', "--force" => true);
         $input = new ArrayInput(array(
             'command' => 'doctrine:schema:update',
             "--force" => true
