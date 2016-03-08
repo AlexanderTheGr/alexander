@@ -34,7 +34,7 @@ class AppController extends Controller {
         $output = new BufferedOutput();
         $application->run($input, $output);
         $input = new ArrayInput(array(
-            'command' => 'app/console assetic:dump',
+            'command' => 'assetic:dump',
             "--watch" => true
         ));
         $application->run($input, $output);
