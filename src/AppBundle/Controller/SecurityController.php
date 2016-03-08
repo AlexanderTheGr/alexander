@@ -75,6 +75,7 @@ class SecurityController extends Main {
             $user->setTs($dt);
             $user->setCreated($dt);
             $user->setModified($dt);
+            $user->setStore(0);
             $user->setEmail($ser[0] . "@partsbox.com");
             $user->setUsername($ser[0]);
             $encoder = $encodeFactory->getEncoder($user);
