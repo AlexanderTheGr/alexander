@@ -12,8 +12,9 @@ class AppController extends Main {
     * @Route("/app/install")
     */
     public function installAction(Request $request) {
-        exit;
+        
         $this->install();
+        exit;
     }      
 
 }
