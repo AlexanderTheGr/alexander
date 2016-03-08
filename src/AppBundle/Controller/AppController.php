@@ -13,7 +13,7 @@ class AppController extends Main {
     */
     public function installAction(Request $request) {
         
-        $this->install();
+        return $this->install();
         exit;
     }      
 
