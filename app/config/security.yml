@@ -23,7 +23,7 @@ security:
             pattern:   ^/login$
             anonymous: ~        
         main:
-            pattern:    ^/
+            anonymous: ~
             provider: our_db_provider
             access_denied_url: /access_denied
             form_login:
