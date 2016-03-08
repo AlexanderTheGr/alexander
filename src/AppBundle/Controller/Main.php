@@ -529,7 +529,7 @@ class Main extends Controller {
         $content = $output->fetch();
 
         // return new Response(""), if you used NullOutput()
-        echo  Response($content);        
+        return new Response($content);        
         
         
         
