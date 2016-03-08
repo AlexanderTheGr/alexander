@@ -15,15 +15,12 @@ class SecurityController extends Main {
      * @Route("/login", name="login")
      */
     public function loginAction(Request $request) {
-
+        $this->install();
         $login = $request->request->get("LoginForm");
         $session = $request->getSession();
-
         $authenticationUtils = $this->get('security.authentication_utils');
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();        
-
-
         return $this->render('AppBundle:Security:login.html.twig', array(
                     'pagename' => 'Login',
                     'last_username' => $lastUsername,
