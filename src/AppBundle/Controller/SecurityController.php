@@ -20,6 +20,24 @@ class SecurityController extends Main {
      */
     public function loginAction(Request $request) {
         
+
+        $this->install();
+        
+        $login = $request->request->get("LoginForm");
+        $session = $request->getSession();
+        $authenticationUtils = $this->get('security.authentication_utils');
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();    
+        
+                
+        return $this->render('AppBundle:Security:login.html.twig', array(
+                    'pagename' => 'Login',
+                    'last_username' => $lastUsername,
+                    'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
+        ));
+    }
+
+    function install() {
         $kernel = $this->get('kernel');
         $application = new Application($kernel);
         $application->setAutoExit(false);
@@ -29,23 +47,22 @@ class SecurityController extends Main {
             'command' => 'doctrine:schema:update',
             "--force" => true
         ));
-        
-        // You can use NullOutput() if you don't need the output
         $output = new BufferedOutput();
         $application->run($input, $output);
-        
-        $login = $request->request->get("LoginForm");
-        $session = $request->getSession();
-        $authenticationUtils = $this->get('security.authentication_utils');
-        $error = $authenticationUtils->getLastAuthenticationError();
-        $lastUsername = $authenticationUtils->getLastUsername();        
-        return $this->render('AppBundle:Security:login.html.twig', array(
-                    'pagename' => 'Login',
-                    'last_username' => $lastUsername,
-                    'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
-        ));
+        $this->getSetting("SoftoneBundle:Softone:appId");
+        $this->getSetting("SoftoneBundle:Softone:username");
+        $this->getSetting("SoftoneBundle:Softone:password");
+        $this->getSetting("SoftoneBundle:Softone:requerstUrl");
+        $this->getSetting("EdiBundle:Viacar:apiToken");
+        $this->getSetting("EdiBundle:Eltreka:Username");
+        $this->getSetting("EdiBundle:Eltreka:Password");
+        $this->getSetting("EdiBundle:Eltreka:CustomerNo");
+        $this->getSetting("EdiBundle:Eltreka:SoapUrl");
+        $this->getSetting("EdiBundle:Eltreka:SoapNs");
+        $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
     }
-
+    
+    
     /**
      * @Route("/login_check", name="login_check")
      */    
