@@ -20,6 +20,7 @@ class AppKernel extends Kernel {
             new EavBundle\EavBundle(),
             new AccessBundle\AccessBundle(),
             new EdiBundle\EdiBundle(),
+            new AdminBundle\AdminBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

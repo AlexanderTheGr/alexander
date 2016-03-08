@@ -30,8 +30,7 @@ security:
                 login_path: /login
                 check_path: /login_check
                 failure_path: /login_failure
-                
-                # field names for the username and password fields
+
                 username_parameter: _username
                 password_parameter: _password
             logout:
