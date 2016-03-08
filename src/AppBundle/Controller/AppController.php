@@ -30,14 +30,11 @@ class AppController extends Controller {
             'command' => 'doctrine:schema:update',
             "--force" => true
         ));
+        
         // You can use NullOutput() if you don't need the output
         $output = new BufferedOutput();
         $application->run($input, $output);
-        $input = new ArrayInput(array(
-            'command' => 'assetic:dump',
-            "--watch" => true
-        ));
-        $application->run($input, $output);
+
         // return the output, don't use if you used NullOutput()
         $content = $output->fetch();
         return new Response($content); 

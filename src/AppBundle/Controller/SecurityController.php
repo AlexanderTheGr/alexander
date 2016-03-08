@@ -15,7 +15,21 @@ class SecurityController extends Main {
      * @Route("/login", name="login")
      */
     public function loginAction(Request $request) {
-        $this->install();
+        
+        $kernel = $this->get('kernel');
+        $application = new Application($kernel);
+        $application->setAutoExit(false);
+
+        //$options = array('command' => 'doctrine:schema:update', "--force" => true);
+        $input = new ArrayInput(array(
+            'command' => 'doctrine:schema:update',
+            "--force" => true
+        ));
+        
+        // You can use NullOutput() if you don't need the output
+        $output = new BufferedOutput();
+        $application->run($input, $output);
+        
         $login = $request->request->get("LoginForm");
         $session = $request->getSession();
         $authenticationUtils = $this->get('security.authentication_utils');
