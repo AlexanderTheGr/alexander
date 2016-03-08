@@ -486,7 +486,7 @@ class Main extends Controller {
         set_time_limit(100000);
         //ini_set('memory_limit', '128M');
 
-
+        /*
         $kernel = $this->get('kernel');
         $application = new Application($kernel);
         $application->setAutoExit(false);
@@ -509,6 +509,35 @@ class Main extends Controller {
 
         // return the output, don't use if you used NullOutput()
         $content = $output->fetch();
+        */
+        
+        
+        
+        $kernel = $this->get('kernel');
+        $application = new Application($kernel);
+        $application->setAutoExit(false);
+
+        $input = new ArrayInput(array(
+           'command' => 'doctrine:schema:update',
+           '--message-limit' => $messages,
+        ));
+        // You can use NullOutput() if you don't need the output
+        $output = new BufferedOutput();
+        $application->run($input, $output);
+
+        // return the output, don't use if you used NullOutput()
+        $content = $output->fetch();
+
+        // return new Response(""), if you used NullOutput()
+        return new Response($content);        
+        
+        
+        
+        
+        
+        
+        
+        
         return $this->render('default/index.html.twig', array(
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
