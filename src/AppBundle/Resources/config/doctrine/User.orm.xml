@@ -27,7 +27,7 @@
         <option name="unsigned"/>
       </options>
     </field>
-    <field name="key" type="string" column="key" length="50" nullable="true">
+    <field name="key" type="string" column="`key`" length="50" nullable="true">
       <options>
         <option name="fixed"/>
       </options>
