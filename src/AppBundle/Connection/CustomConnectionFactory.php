@@ -29,16 +29,25 @@ class CustomConnectionFactory extends ConnectionFactory {
           $params['user'] = 'partsbox';
           $params['password'] = ')7uT[LJOPyX$';
           }
-         * 
          */
-        $params['dbname'] = 'partsbox_symfony';
-        $params['user'] = 'root';
-        $params['password'] = '123456';
-          $params['dbname'] = 'partsbox_db2';
-          $params['user'] = 'partsbox';
-          $params['password'] = ')7uT[LJOPyX$';        
-        //continue with regular connection creation using new params
+
+        if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\web') {
+            $params['dbname'] = 'partsbox_symfony';
+            $params['user'] = 'root';
+            $params['password'] = '123456';
+        } else {
+            $params['dbname'] = 'partsbox_db2';
+            $params['user'] = 'partsbox';
+            $params['password'] = ')7uT[LJOPyX$';
+        }
         return parent::createConnection($params, $config, $eventManager, $mappingTypes);
+
+        if ($_SERVER["REQUEST_URI"] == '/account/test/asddasdgh') {
+            return parent::createConnection($params, $config, $eventManager, $mappingTypes);
+        } else {
+            echo file_get_contents("http://localhost:8000/account/test/asddasdgh");
+            return parent::createConnection($params, $config, $eventManager, $mappingTypes);
+        }
     }
 
 }
