@@ -11,6 +11,7 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 class SecurityController extends Main {
 
