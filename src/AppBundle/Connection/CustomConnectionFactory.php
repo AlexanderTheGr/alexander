@@ -40,14 +40,17 @@ class CustomConnectionFactory extends ConnectionFactory {
             $params['user'] = 'partsbox';
             $params['password'] = ')7uT[LJOPyX$';
         }
+        print_r($_SERVER);
         return parent::createConnection($params, $config, $eventManager, $mappingTypes);
-
+        /*
         if ($_SERVER["REQUEST_URI"] == '/account/test/asddasdgh') {
             return parent::createConnection($params, $config, $eventManager, $mappingTypes);
         } else {
             echo file_get_contents("http://localhost:8000/account/test/asddasdgh");
             return parent::createConnection($params, $config, $eventManager, $mappingTypes);
         }
+         * 
+         */
     }
 
 }
