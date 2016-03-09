@@ -113,7 +113,7 @@ class User implements UserInterface, \Serializable {
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    var $id;
 
     /**
      * Set email
