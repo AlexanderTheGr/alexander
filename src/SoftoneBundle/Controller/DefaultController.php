@@ -46,8 +46,8 @@ class DefaultController extends Controller {
         ));
         // return the output, don't use if you used NullOutput()
         $content = $output->fetch();
-        return new Response($content);   
-        exit;
+        //return new Response($content);   
+
 
         return $this->render('default/index.html.twig', array(
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),

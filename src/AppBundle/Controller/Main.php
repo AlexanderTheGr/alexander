@@ -360,23 +360,14 @@ class Main extends Controller {
         $data = $this->formLybase64();
         $dt = new \DateTime("now");
         $entities = array();
-
         foreach ($data as $key => $val) {
-
             $df = explode(":", $key);
-
-            //echo $df[0] . ":" . $df[1].":".$df[2].":".$df[3]." ---> ".$val."\n";
             if (!@$entities[$df[0] . ":" . $df[1]]) {
-
-
-                //echo $df[0] . ":" . $df[1].":".$df[2].":".$df[3]."\n";
-
                 $entities[$df[0] . ":" . $df[1]] = $this->getDoctrine()
                         ->getRepository($df[0] . ":" . $df[1])
                         ->find($df[3]);
             }
             if ($df[3] == 0) {
-                
                 $entities[$df[0] . ":" . $df[1]] = $this->newentity[$df[0] . ":" . $df[1]];
             }
             $type = $entities[$df[0] . ":" . $df[1]]->gettype($df[2]);
@@ -461,6 +452,7 @@ class Main extends Controller {
         $forms["id"] = $id;
         $em = $this->getDoctrine()->getManager();
         foreach ($fields as $field => $options) {
+            
             @$options["type"] = $options["type"] ? $options["type"] : "input";
             if ($options["type"] == 'select') {
                 @$options["required"] = $options["required"] ? $options["required"] : true;
@@ -473,7 +465,18 @@ class Main extends Controller {
                 $defaultValue = $entity->getField($field) ? $entity->getField($field)->getId() : NULL;
                 $forms["fields"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'defaultValue' => $defaultValue, "type" => "select", "templateOptions" => array("type" => '', 'options' => $seloptions, 'defaultOptions' => array("value" => $defaultValue), "label" => $options["label"], "required" => $options["required"]));
             } else {
-                @$options["required"] = $options["required"] ? $options["required"] : true;
+                
+                //echo "A".@$options["required"]."<BR>";
+                
+                if (@$options["required"] == '') {
+                    $options["required"] = true;
+                } else {
+                    $options["required"] = false;
+                }                
+                //@$options["required"] = $options["required"] != '' ? $options["required"] > 0 ? true : false : true;
+                
+   
+                
                 $forms["fields"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field), "type" => "input", "templateOptions" => array("type" => '', 'class' => 'asss', "label" => $options["label"], "required" => $options["required"]));
             }
         }

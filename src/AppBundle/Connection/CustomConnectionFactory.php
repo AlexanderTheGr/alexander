@@ -30,31 +30,21 @@ class CustomConnectionFactory extends ConnectionFactory {
           $params['password'] = ')7uT[LJOPyX$';
           }
          */
-        
+        $databale = @explode(".", $_SERVER["HTTP_HOST"]);
+
         if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\web') {
             $params['dbname'] = 'partsbox_symfony';
             $params['user'] = 'root';
             $params['password'] = '123456';
-        } else {
-
-            $databale = explode(".", $_SERVER["HTTP_HOST"]);
+        } elseif ($databale[0]) {
             $params['dbname'] = 'partsbox_'.$databale[0];
             $params['user'] = 'partsbox';
             $params['password'] = ')7uT[LJOPyX$';     
-            
-            /*
-            if ($_SERVER["HTTP_HOST"] == "partsbox5.fastwebltd.com") {
-                $params['dbname'] = 'partsbox_db2';
-                $params['user'] = 'partsbox';
-                $params['password'] = ')7uT[LJOPyX$';
-            } else {
-                $params['dbname'] = 'partsbox_db3';
-                $params['user'] = 'partsbox';
-                $params['password'] = ')7uT[LJOPyX$';                
-            }
-             * 
-             */
-        }              
+        } else {
+            $params['dbname'] = 'partsbox_symfony';
+            $params['user'] = 'root';
+            $params['password'] = '123456';            
+        }             
 
         return parent::createConnection($params, $config, $eventManager, $mappingTypes);
         /*

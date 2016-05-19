@@ -157,6 +157,7 @@ class CustomerController extends Main {
         $date = "2016-02-01";
         $filters = "CUSTOMER.UPDDATE=" . $date . "&CUSTOMER.UPDDATE_TO=" . date("Y-m-d");
         $datas = $softone->retrieveData($params["softone_object"], $params["list"], $filters);
+        print_r($datas);
         foreach ($datas as $data) {
             $data = (array) $data;
             $zoominfo = $data["zoominfo"];

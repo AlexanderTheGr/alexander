@@ -127,7 +127,7 @@ class Softone extends Entity {
 			"DateL"=> $params["DateL"],
 			"DateH"=> $params["DateH"]
         );
-        return $this->doRequest($params,"http://bsautospare.oncloud.gr/s1services/JS/SiteData.Items/getItems");
+        return $this->doRequest($params,$this->requerstUrl."/JS/SiteData.Items/getItems");
     }	
     function getCustomerAddresses($params=false) {
         $params = array(
@@ -137,7 +137,7 @@ class Softone extends Entity {
 			"DateL"=> $params["DateL"],
 			"DateH"=> $params["DateH"]
         );
-        return $this->doRequest($params,"http://bsautospare.oncloud.gr/s1services/JS/SiteData.Items/getAddresses");
+        return $this->doRequest($params,$this->requerstUrl."/JS/SiteData.Items/getAddresses");
     }		
     function getDialog($obj, $list = "") {
         $params = array(

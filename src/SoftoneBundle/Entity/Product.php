@@ -1725,7 +1725,7 @@ class Product extends Entity {
         //echo print_r($out);
 
         try {
-            //$webserviceProduct = WebserviceProduct::model()->findByAttributes(array('product' =>  $model->id,"webservice"=>$this->webservice));
+            //$webserviceProduct = WebserviceProduct::model()->findByAttributes(array('product' =>  $this->id,"webservice"=>$this->webservice));
             //$sql = "Delete from SoftoneBundle:WebserviceProduct p where p.product = '" . $this->id . "'";
             //$em->createQuery($sql)->getResult();
             //$em->execute();
@@ -1809,9 +1809,9 @@ class Product extends Entity {
         $objectArr[0]["SERIESNUM"] = "00";
         $objectArr[0]["FINCODE"] = "00";
         $objectArr[0]["PAYMENT"] = 1000;
-        //$objectArr[0]["TFPRMS"] = $model->tfprms;
-        //$objectArr[0]["FPRMS"] = $model->fprms;
-        $objectArr[0]["SERIES"] = 7021; //$model->series;
+        //$objectArr[0]["TFPRMS"] = $this->tfprms;
+        //$objectArr[0]["FPRMS"] = $this->fprms;
+        $objectArr[0]["SERIES"] = 7021; //$this->series;
         //$objectArr[0]["DISC1PRC"] = 10;
 
         $dataOut[$object] = (array) $objectArr;
@@ -1829,6 +1829,90 @@ class Product extends Entity {
         //print_r($dataOut);
 
         $out = $softone->calculate((array) $dataOut, $object, "", "", $locateinfo);
+    }
+
+    function toSoftone() {
+
+
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $object = "ITEM";
+        $softone = new Softone();
+        //$fields = $softone->retrieveFields($object, $params["list"]);
+
+
+        $fields[] = "item_code";
+        $fields[] = "item_name";
+        $fields[] = "item_code1";
+        $fields[] = "item_code2";
+        $fields[] = "item_name1";
+        $fields[] = "item_mtrunit1";
+        $fields[] = "item_pricew";
+        $fields[] = "item_pricer";
+        $fields[] = "item_pricew01";
+        $fields[] = "item_pricer01";
+        $fields[] = "item_pricew02";
+        $fields[] = "item_pricew03";
+        $fields[] = "item_pricer02";
+        $fields[] = "item_vat";
+        $fields[] = "item_mtrmanfctr";
+        $fields[] = "item_mtrplace";
+        $fields[] = "item_isactive";
+
+        //$fields[] = "item_mtrsup";
+        $fields[] = "item_mtrcategory";
+        $fields[] = "item_markupw";
+        $fields[] = "item_isactive";
+
+        $fields[] = "item_cccfxreltdcode";
+        $fields[] = "item_cccfxrelbrand";
+        //print_r($fields); 
+        //return;
+        $objectArr = array();        
+        $objectArr2 = array();
+        if ($this->reference > 0) {
+            $data = $softone->getData($object, $this->reference);
+            $objectArr = $data->data->$object;
+            $objectArr2 = (array) $objectArr[0];
+        }                   
+        foreach ($fields as $field) {
+            $field1 = strtoupper(str_replace(strtolower($object) . "_", "", $field));
+            $field2 = lcfirst($this->createName($field));
+            //echo $field2 . "<BR>";
+            @$objectArr2[$field1] = $this->$field2;
+            //}
+        }
+        $objectArr2["MTRUNIT1"] = 101;
+        $objectArr2["CODE2"] = $this->supplierCode;
+        $objectArr2["ISACTIVE"] = $this->itemIsactive;
+        $objectArr[0] = $objectArr2;
+        $dataOut[$object] = (array) $objectArr;
+        @$dataOut["ITEEXTRA"][0] = array("NUM02" => $this->item_mtrl_iteextra_num02);
+        $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
+        if ($out->id > 0) {
+            $this->reference = $out->id;
+            $em->persist($this);
+            $em->flush();            
+        }
+    }
+
+    function createName($str) {
+        $strArr = explode("_", $str);
+        $i = 0;
+        $b = "";
+        foreach ($strArr as $a) {
+            $b .= ucfirst($a);
+        }
+        $strArr = explode(".", $b);
+        $i = 0;
+        $b = "";
+        foreach ($strArr as $a) {
+            $b .= ucfirst($a);
+        }
+        return $b;
     }
 
 }

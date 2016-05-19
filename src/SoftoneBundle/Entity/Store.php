@@ -4,14 +4,23 @@ namespace SoftoneBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use AppBundle\Entity\Entity;
 /**
  * Store
  *
  * @ORM\Table(name="store")
  * @ORM\Entity
  */
-class Store
-{
+class Store extends Entity {
+
+    public function getField($field) {
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
     /**
      * @var string
      *
@@ -84,8 +93,6 @@ class Store
      */
     protected $id;
 
-
-
     /**
      * Set title
      *
@@ -93,8 +100,7 @@ class Store
      *
      * @return Store
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
 
         return $this;
@@ -105,8 +111,7 @@ class Store
      *
      * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -117,8 +122,7 @@ class Store
      *
      * @return Store
      */
-    public function setSeries($series)
-    {
+    public function setSeries($series) {
         $this->series = $series;
 
         return $this;
@@ -129,58 +133,11 @@ class Store
      *
      * @return integer
      */
-    public function getSeries()
-    {
+    public function getSeries() {
         return $this->series;
     }
 
-    /**
-     * Set field
-     *
-     * @param string $field
-     *
-     * @return Store
-     */
-    public function setField($field)
-    {
-        $this->field = $field;
 
-        return $this;
-    }
-
-    /**
-     * Get field
-     *
-     * @return string
-     */
-    public function getField()
-    {
-        return $this->field;
-    }
-
-    /**
-     * Set field2
-     *
-     * @param string $field2
-     *
-     * @return Store
-     */
-    public function setField2($field2)
-    {
-        $this->field2 = $field2;
-
-        return $this;
-    }
-
-    /**
-     * Get field2
-     *
-     * @return string
-     */
-    public function getField2()
-    {
-        return $this->field2;
-    }
 
     /**
      * Set rafi
@@ -189,8 +146,7 @@ class Store
      *
      * @return Store
      */
-    public function setRafi($rafi)
-    {
+    public function setRafi($rafi) {
         $this->rafi = $rafi;
 
         return $this;
@@ -201,8 +157,7 @@ class Store
      *
      * @return string
      */
-    public function getRafi()
-    {
+    public function getRafi() {
         return $this->rafi;
     }
 
@@ -213,8 +168,7 @@ class Store
      *
      * @return Store
      */
-    public function setTs($ts)
-    {
+    public function setTs($ts) {
         $this->ts = $ts;
 
         return $this;
@@ -225,8 +179,7 @@ class Store
      *
      * @return \DateTime
      */
-    public function getTs()
-    {
+    public function getTs() {
         return $this->ts;
     }
 
@@ -237,8 +190,7 @@ class Store
      *
      * @return Store
      */
-    public function setActioneer($actioneer)
-    {
+    public function setActioneer($actioneer) {
         $this->actioneer = $actioneer;
 
         return $this;
@@ -249,8 +201,7 @@ class Store
      *
      * @return integer
      */
-    public function getActioneer()
-    {
+    public function getActioneer() {
         return $this->actioneer;
     }
 
@@ -261,8 +212,7 @@ class Store
      *
      * @return Store
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -273,8 +223,7 @@ class Store
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -285,8 +234,7 @@ class Store
      *
      * @return Store
      */
-    public function setModified($modified)
-    {
+    public function setModified($modified) {
         $this->modified = $modified;
 
         return $this;
@@ -297,8 +245,7 @@ class Store
      *
      * @return \DateTime
      */
-    public function getModified()
-    {
+    public function getModified() {
         return $this->modified;
     }
 
@@ -307,8 +254,8 @@ class Store
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
+
 }

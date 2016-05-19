@@ -21,7 +21,7 @@ class SecurityController extends Main {
     public function loginAction(Request $request) {
 
 
-        $this->install();
+        //$this->install();
 
         $login = $request->request->get("LoginForm");
         $session = $request->getSession();

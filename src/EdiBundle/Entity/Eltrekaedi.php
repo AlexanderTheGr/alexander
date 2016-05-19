@@ -567,7 +567,6 @@ class Eltrekaedi extends Entity {
     }
 
     protected $SoapClient = false;
-    
     protected $Username = '';
     protected $Password = '';
     protected $CustomerNo = '';
@@ -581,7 +580,7 @@ class Eltrekaedi extends Entity {
         $this->Username = $this->getSetting("EdiBundle:Eltreka:Username");
         $this->Password = $this->getSetting("EdiBundle:Eltreka:Password");
         $this->CustomerNo = $this->getSetting("EdiBundle:Eltreka:CustomerNo");
-        
+
         if ($this->SoapClient) {
             return $this;
         }

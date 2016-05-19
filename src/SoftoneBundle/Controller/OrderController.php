@@ -359,12 +359,12 @@ class OrderController extends Main {
         foreach ($jsonarr as $json) {
             $jsonarr2[] = $json;
         }
-        return $jsonarr2;
+        //return $jsonarr2;
         
         $softone = new Softone();
         $object = "SALDOC";
         $objectArr = array();
-        $objectArr[0]["TRDR"] = 3392;
+        $objectArr[0]["TRDR"] = 0;
         $objectArr[0]["SERIESNUM"] = 1;
         $objectArr[0]["FINCODE"] = 1;
         $objectArr[0]["PAYMENT"] = 1000;
@@ -386,7 +386,7 @@ class OrderController extends Main {
         $locateinfo = "MTRL,NAME,PRICE,QTY1,VAT;ITELINES:DISC1PRC,ITELINES:LINEVAL,MTRL,MTRL_ITEM_CODE,MTRL_ITEM_CODE1,MTRL_ITEM_NAME,MTRL_ITEM_NAME1,PRICE,QTY1;SALDOC:BUSUNITS,EXPN,TRDR,MTRL,PRICE,QTY1,VAT";
 
         $out = $softone->calculate((array) $dataOut, $object, "", "", $locateinfo);
-
+        //print_r($out);
         foreach ($out->data->ITELINES as $item) {
             $jsonarr[$item->MTRL][5] = str_replace("value='---'", "value='" . $item->LINEVAL . "'", $jsonarr[$item->MTRL][5]);
         }

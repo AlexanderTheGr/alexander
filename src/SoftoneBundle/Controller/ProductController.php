@@ -36,15 +36,19 @@ class ProductController extends Main {
      */
     public function viewAction($id) {
 
-
         $buttons = array();
 
+        
+        $product = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->find($id);
+        
+        
+        //$product->toSoftone();
+        //exit;
         $content = $this->gettabs($id);
         //$content = $this->getoffcanvases($id);
-
         $content = $this->content();
-
-
         return $this->render('SoftoneBundle:Product:view.html.twig', array(
                     'pagename' => 's',
                     'url' => '/product/save',
@@ -140,8 +144,11 @@ class ProductController extends Main {
                 "", 200
         );
     }
-
-
+    
+    /**
+     * 
+     * @Route("/product/retrieveSoftone")
+     */
     function retrieveSoftoneDataAction($params = array()) {
         set_time_limit(100000);
         ini_set('memory_limit', '2256M');
@@ -151,7 +158,13 @@ class ProductController extends Main {
         $params["DateL"] = "2016-02-01";
         $params["DateH"] = "2016-02-09";
 
+        
         $datas = $softone->getCustomItems($params);
+
+        //$datas = $softone->retrieveData("ITEM");
+        print_r($datas);
+        exit;        
+        
         foreach ($datas->data as $data) {
             $data = (array) $data;
             $entity = $this->getDoctrine()
@@ -171,7 +184,6 @@ class ProductController extends Main {
             $entity->setField("reference", (int) $data["MTRL"]);
             $imporetedData["item_cccfxrelbrand"] = 0;
             $imporetedData["item_cccfxreltdcode"] = "";
-            //$model->reference = $info[1];
 
             $entity->setField('erpCode', @$data["CODE"]);
             $entity->setField('supplierCode', @$data["CODE2"]);

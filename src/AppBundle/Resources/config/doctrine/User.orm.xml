@@ -22,11 +22,18 @@
         <option name="fixed"/>
       </options>
     </field>
-    <field name="store" type="integer" column="store" nullable="false">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
+    
+    <many-to-one
+        field="softoneStore"
+        target-entity="SoftoneBundle\Entity\Store"
+        inversed-by="Stores"
+        join-column="store">
+        <cascade>
+            <cascade-persist/>
+        </cascade>
+        <join-column name="store" referenced-column-name="id"/>
+    </many-to-one> 
+    
     <field name="key" type="string" column="`key`" length="50" nullable="true">
       <options>
         <option name="fixed"/>

@@ -5,13 +5,28 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use AppBundle\Entity\Entity;
 /**
  * User
  *
  * @ORM\Table(name="user", indexes={@ORM\Index(name="user_id", columns={"actioneer"})})
  * @ORM\Entity
  */
-class User implements UserInterface, \Serializable {
+class User extends Entity implements UserInterface, \Serializable {
+
+    private $repository = 'AppBundle:User';
+
+    
+    
+    private $types = array();
+    var $repositories = array();
+
+    public function __construct() {
+        $this->repositories['softoneStore'] = 'SoftoneBundle:Store';
+        $this->types['softoneStore'] = 'object';
+        $this->softoneStore = new \SoftoneBundle\Entity\Store;
+        $this->items = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     public function getField($field) {
         return $this->$field;
@@ -22,89 +37,108 @@ class User implements UserInterface, \Serializable {
         return $val;
     }
 
+    public function getRepository() {
+        return $this->repository;
+    }
+    public function getRepositories($repo) {
+        $this->repositories['softoneStore'] = 'SoftoneBundle:Store';
+        return  $this->repositories[$repo];
+    }
+    public function gettype($field) {
+        $this->types['softoneStore'] = 'object';
+        if (@$this->types[$field] != '') {
+            return @$this->types[$field];
+        }
+        if (gettype($field) != NULL) {
+            return gettype($this->$field);
+        }
+        return 'string';
+    }    
+
+
     /**
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=45, nullable=true)
      */
-    private $email;
+    protected $email;
 
     /**
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=45, nullable=true)
      */
-    private $username;
+    protected $username;
 
     /**
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=80, nullable=true)
      */
-    private $password;
+    protected $password;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="store", type="integer", nullable=false)
      */
-    private $store;
+    protected $store;
 
     /**
      * @var string
      *
      * @ORM\Column(name="key", type="string", length=50, nullable=true)
      */
-    private $key;
+    protected $key;
 
     /**
      * @var string
      *
      * @ORM\Column(name="role", type="string", length=255, nullable=true)
      */
-    private $role;
+    protected $role;
 
     /**
      * @var string
      *
      * @ORM\Column(name="appkey", type="string", length=255, nullable=false)
      */
-    private $appkey;
+    protected $appkey;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="ts", type="datetime", nullable=false)
      */
-    private $ts = 'CURRENT_TIMESTAMP';
+    protected $ts = 'CURRENT_TIMESTAMP';
 
     /**
      * @var string
      *
      * @ORM\Column(name="status", type="string", length=255, nullable=false)
      */
-    private $status = 'active';
+    protected $status = 'active';
 
     /**
      * @var integer
      *
      * @ORM\Column(name="actioneer", type="integer", nullable=true)
      */
-    private $actioneer;
+    protected $actioneer;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created", type="datetime", nullable=false)
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="modified", type="datetime", nullable=false)
      */
-    private $modified;
+    protected $modified;
 
     /**
      * @var integer
@@ -424,4 +458,33 @@ class User implements UserInterface, \Serializable {
                 ) = unserialize($serialized);
     }
 
+    /**
+     * @var \SoftoneBundle\Entity\Store
+     */
+    protected $softoneStore;
+
+
+    /**
+     * Set softoneStore
+     *
+     * @param \SoftoneBundle\Entity\Store $softoneStore
+     *
+     * @return User
+     */
+    public function setSoftoneStore(\SoftoneBundle\Entity\Store $softoneStore = null)
+    {
+        $this->softoneStore = $softoneStore;
+
+        return $this;
+    }
+
+    /**
+     * Get softoneStore
+     *
+     * @return \SoftoneBundle\Entity\Store
+     */
+    public function getSoftoneStore()
+    {
+        return $this->softoneStore;
+    }
 }
