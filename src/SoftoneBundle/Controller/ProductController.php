@@ -146,57 +146,77 @@ class ProductController extends Main {
         );
     }
     
-    
     function retrieveMtrcategory() {
-        $this->object = 'itecategory';
+        $this->softone_object = 'itecategory';
         $this->repository = 'SoftoneBundle:Pcategory';
-        $this->table = 'MTRCATEGORY';
-        
-        
+        $this->softone_table = 'MTRCATEGORY';
+        $this->table = 'softone_[category';
+        $this->object = 'SoftoneBundle\Entity\Pcategory';
+        $this->filter = '';
+        $this->retrieve();
+    }
+    function retrieveMtrl() {
+        $this->softone_object = 'item';
+        $this->repository = 'SoftoneBundle:Product';
+        $this->softone_table = 'MTRL';
+        $this->table = 'softone_product';
+        $this->object = 'SoftoneBundle\Entity\Product';
+        $where = '';
+        $this->filter = 'WHERE M.SODTYPE=51 '.$where;
+        $this->retrieve();
+    }
+    
+    
+    function retrieve() {
+        $object =  $this->object;
         $em = $this->getDoctrine()->getManager();
-        $fields = $em->getClassMetadata('SoftoneBundle\Entity\Pcategory')->getFieldNames();
+        $fields = $em->getClassMetadata($this->object)->getFieldNames();
         $itemfield = array();
-        $itemfield[] = "M.".$this->table;        
+        $itemfield[] = "M.".$this->softone_table;        
         foreach($fields as $field) {
             $ffield = " ".$field;
-            if (strpos($ffield,$this->object) == true) {
-                $itemfield[] = "M.".strtoupper(str_replace($this->object,"",$field));
+            if (strpos($ffield,$this->softone_object) == true) {
+                $itemfield[] = "M.".strtoupper(str_replace($this->softone_object,"",$field));
             }
         }
         $selfields = implode(",",$itemfield);
-        $params["fSQL"] = 'SELECT '.$selfields.' FROM '.$this->table.' M';
+        $params["fSQL"] = 'SELECT '.$selfields.' FROM '.$this->softone_table.' M '.$this->filter;
         echo  $params["fSQL"];
         
         $softone = new Softone();
         $datas = $softone->createSql($params);
+        //print_r($datas);
+        //exit;
         foreach ($datas->data as $data) {
             $data = (array) $data;
             $entity = $this->getDoctrine()
                     ->getRepository($this->repository)
-                    ->findOneBy(array("reference" => (int) $data[$this->table]));
+                    ->findOneBy(array("reference" => (int) $data[$this->softone_table]));
+            
+            $dt = new \DateTime("now");
             if (@$entity->id == 0) {
-                $entity = new SoftoneBundle\Entity\Pcategory();
-                $dt = new \DateTime("now");
+                $entity = new $object();    
                 $entity->setTs($dt);               
                 $entity->setCreated($dt);
                 $entity->setModified($dt);
             }
+            
             $imporetedData = array();
-            $entity->setReference($data[$this->table]);
+            $entity->setReference($data[$this->softone_table]);
             $this->flushpersist($entity);
             $q = array();
             foreach ($data as $identifier => $val) {
-                $imporetedData[strtolower($this->object."_" . $identifier)] = addslashes($val);
+                $imporetedData[strtolower($this->softone_object."_" . $identifier)] = addslashes($val);
                 $ad = strtolower($identifier);
-                $baz = $this->object . ucwords(str_replace("_", " ", $ad));
+                $baz = $this->softone_object . ucwords(str_replace("_", " ", $ad));
                 if (in_array($baz, $fields)) {
-                    $q[] = "`" . strtolower($this->object."_" . $identifier) . "` = '" . addslashes($val) . "'";
+                    $q[] = "`" . strtolower($this->softone_object."_" . $identifier) . "` = '" . addslashes($val) . "'";
                     //$entity->setField($baz, $val);
                 }
             }
             @$entity_id = (int) $entity->id;
             if (@$entity_id > 0) {
-                $sql = "update softone_pcategory set " . implode(",", $q) . " where id = '" . $entity_id . "'";
+                $sql = "update ".  strtolower($this->table)." set " . implode(",", $q) . " where id = '" . $entity_id . "'";
                 $em->getConnection()->exec($sql);
             }
 
@@ -205,23 +225,6 @@ class ProductController extends Main {
         }        
     }   
     
-    
-    function retrieveMtrl() {
-        $em = $this->getDoctrine()->getManager();
-        $fields = $em->getClassMetadata('SoftoneBundle\Entity\Product')->getFieldNames();
-        $itemfield = array();
-        $itemfield[] = "M.MTRCATEGORY";        
-        foreach($fields as $field) {
-            $ffield = " ".$field;
-            if (strpos($ffield,$this->object) == true) {
-                $itemfield[] = "M.".strtoupper(str_replace($this->object,"",$field));
-            }
-        }
-        $selfields = implode(",",$itemfield);
-        $params["fSQL"] = 'SELECT '.$selfields.' FROM MTRL M WHERE M.SODTYPE=51 '.$where;
-        echo  $params["fSQL"];        
-        
-    }
     /**
      * 
      * @Route("/product/retrieveSoftone")
@@ -230,20 +233,11 @@ class ProductController extends Main {
         
         set_time_limit(100000);
         ini_set('memory_limit', '2256M');
-       
-
-        
-        echo $this->retrieveMtrcategory();
+        echo $this->retrieveMtrl();
 
         return new Response(
                 "", 200
-        );
-
-        
-        $datas = $softone->getCustomItems($params);
-
-        print_r($datas);
-        exit;        
+        );  
         
         foreach ($datas->data as $data) {
             $data = (array) $data;
