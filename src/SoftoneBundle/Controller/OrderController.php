@@ -87,10 +87,10 @@ class OrderController extends Main {
             $this->initialazeNewEntity($entity);
             $this->newentity[$this->repository]->setField("status", 1);
         }
-        
+
         $entity->setCustomerName($request->request->get("customerName"));
         $entity->setCustomer($request->request->get("customer"));
-        
+
         $route = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Route")
                 ->find(1);
@@ -118,7 +118,6 @@ class OrderController extends Main {
             $entity = new Order;
             $this->newentity[$this->repository] = $entity;
             $fields["customerName"] = array("label" => "Customer Name", 'class' => 'asdfg');
-            
         } else {
             $fields["customerName"] = array("label" => "Customer Name", 'class' => 'asdfg');
             $fields["route"] = array("label" => "Route", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Route', 'name' => 'route', 'value' => 'id'));
@@ -281,7 +280,10 @@ class OrderController extends Main {
                 $results = $query->getResult();
             }
             $data["fields"] = $this->fields;
+
             $jsonarr = array();
+            $jsonarrnoref = array();
+
             $r = explode(":", $this->repository);
             $i = 0;
             foreach (@(array) $results as $result) {
@@ -322,11 +324,17 @@ class OrderController extends Main {
                 }
                 $json["DT_RowClass"] = "dt_row_" . strtolower($r[1]);
                 $json["DT_RowId"] = 'dt_id_' . strtolower($r[1]) . '_' . $result["id"];
-                if ($result["reference"])
+                if ($result["reference"]) {
                     $jsonarr[(int) $result["reference"]] = $json;
+                } else {
+                    $jsonarrnoref[$result["id"]] = $json;
+                }
             }
 
             $jsonarr = $this->softoneCalculate($jsonarr);
+            //echo count($jsonarr);
+            $jsonarr = array_merge($jsonarr, $jsonarrnoref);
+
 
             //print_r($articleIds);
             $de = array_diff((array) $articleIds, (array) $f);
@@ -348,6 +356,8 @@ class OrderController extends Main {
             }
             // print_r($p);
         }
+        //$jsonarr = array_merge($jsonarr, $jsonarrnoref);
+
         $data["data"] = $jsonarr;
         $data["recordsTotal"] = $recordsTotal;
         $data["recordsFiltered"] = $recordsFiltered;
@@ -360,11 +370,11 @@ class OrderController extends Main {
             $jsonarr2[] = $json;
         }
         //return $jsonarr2;
-        
+
         $softone = new Softone();
         $object = "SALDOC";
         $objectArr = array();
-        $objectArr[0]["TRDR"] = 0;
+        $objectArr[0]["TRDR"] = 29;
         $objectArr[0]["SERIESNUM"] = 1;
         $objectArr[0]["FINCODE"] = 1;
         $objectArr[0]["PAYMENT"] = 1000;
@@ -386,6 +396,7 @@ class OrderController extends Main {
         $locateinfo = "MTRL,NAME,PRICE,QTY1,VAT;ITELINES:DISC1PRC,ITELINES:LINEVAL,MTRL,MTRL_ITEM_CODE,MTRL_ITEM_CODE1,MTRL_ITEM_NAME,MTRL_ITEM_NAME1,PRICE,QTY1;SALDOC:BUSUNITS,EXPN,TRDR,MTRL,PRICE,QTY1,VAT";
 
         $out = $softone->calculate((array) $dataOut, $object, "", "", $locateinfo);
+
         //print_r($out);
         foreach ($out->data->ITELINES as $item) {
             $jsonarr[$item->MTRL][5] = str_replace("value='---'", "value='" . $item->LINEVAL . "'", $jsonarr[$item->MTRL][5]);
@@ -496,8 +507,8 @@ class OrderController extends Main {
                 if ($f == 0 AND $f != 'DT_RowId' AND $f != 'DT_RowClass') {
                     $table1[$f] = $val;
                     $table1[1] = $this->getOrderItemsPopup($val);
-                } else if ($f == 1){
-                    $table1[$f] = $table1[1].$val;
+                } else if ($f == 1) {
+                    $table1[$f] = $table1[1] . $val;
                 } else {
                     $table1[$f] = $val;
                 }
@@ -528,7 +539,7 @@ class OrderController extends Main {
                 $items["Title"] = $item->getProduct()->getTitle();
                 $items["Qty"] = $item->getQty();
                 $items["Price"] = $item->getLineval();
-                @$total +=  $item->getLineval(); 
+                @$total += $item->getLineval();
                 $content[] = $items;
             }
             $items = array();
@@ -536,7 +547,7 @@ class OrderController extends Main {
             $items["Title"] = "";
             $items["Qty"] = "";
             $items["Price"] = @$total;
-            $content[] = $items;            
+            $content[] = $items;
         }
 
         $response = $this->get('twig')->render('SoftoneBundle:Order:items.html.twig', array('content' => $content));
@@ -606,6 +617,11 @@ class OrderController extends Main {
         $orderItem = new Orderitem;
         $orderItem->setOrder($order);
         $orderItem->setProduct($product);
+        
+        if (!$product->reference) {
+            $product = $this->saveProductSoftone($product);
+        }
+        
         $orderItem->setField("qty", $request->request->get("qty"));
         $orderItem->setField("price", $request->request->get("price"));
         $orderItem->setField("lineval", $request->request->get("price") * $request->request->get("qty"));
@@ -622,6 +638,91 @@ class OrderController extends Main {
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
+    }
+
+    function saveProductSoftone($model) {
+
+
+
+        $object = "ITEM";
+        $softone = new Softone();
+        //$fields = $softone->retrieveFields($object, $params["list"]);
+
+
+        $fields[] = "item_code";
+        $fields[] = "item_name";
+        $fields[] = "item_code1";
+        $fields[] = "item_code2";
+        $fields[] = "item_name1";
+        $fields[] = "item_mtrunit1";
+        $fields[] = "item_pricew";
+        $fields[] = "item_pricer";
+        $fields[] = "item_pricew01";
+        $fields[] = "item_pricer01";
+        $fields[] = "item_pricew02";
+        $fields[] = "item_pricew03";
+        $fields[] = "item_pricer02";
+        $fields[] = "item_vat";
+        $fields[] = "item_mtrmanfctr";
+        $fields[] = "item_mtrplace";
+        $fields[] = "item_isactive";
+
+        //$fields[] = "item_mtrsup";
+        $fields[] = "item_mtrcategory";
+        $fields[] = "item_markupw";
+        $fields[] = "item_isactive";
+
+        $fields[] = "item_cccfxreltdcode";
+        $fields[] = "item_cccfxrelbrand";
+        //print_r($fields); 
+        //return;
+        //echo 'sss';
+        if ($model->reference) {
+            $data = $softone->getData($object, $model->reference);
+            $objectArr = $data->data->$object;
+            $objectArr2 = (array) $objectArr[0];
+            foreach ($fields as $field) {
+                $field1 = strtoupper(str_replace(strtolower($object) . "_", "", $field));    
+                $objectArr2[$field1] = $model->getField($field);
+                //}
+            }
+            $objectArr2["CODE2"] = $model->supplier_code;
+            $objectArr2["ISACTIVE"] = $model->item_isactive;
+            $objectArr2["PRICER01"] = $objectArr2["PRICEW01"] * 1.23;
+            $objectArr2["PRICER02"] = $objectArr2["PRICEW02"] * 1.23;
+            $objectArr[0] = $objectArr2;
+            $dataOut[$object] = (array) $objectArr;
+            $dataOut["ITEEXTRA"][0] = array("NUM02" => $model->item_mtrl_iteextra_num02);
+            //print_r($dataOut);
+            $out = $softone->setData((array) $dataOut, $object, $model->reference);
+            //print_r($out);
+        } else {
+            $objectArr = array();
+            foreach ($fields as $field) {
+                $field1 = strtoupper(str_replace(strtolower($object) . "_", "", $field));
+                
+                $as = explode("_", $field);
+                $asf = $as[0].ucfirst($as[1]);                
+                
+                $objectArr2[$field1] = $model->getField($asf);
+            }
+            $objectArr2["MTRUNIT1"] = 101;//$model->supplierCode;
+            //$objectArr2["ISACTIVE"] = $model->item_isactive;
+            $objectArr2["PRICER01"] = $objectArr2["PRICEW01"] * 1.23;
+            $objectArr2["PRICER02"] = $objectArr2["PRICEW02"] * 1.23;
+            $objectArr[0] = $objectArr2;
+            $dataOut[$object] = (array) $objectArr;
+            //$dataOut["ITEEXTRA"][0] = array("NUM02" => $model->item_mtrl_iteextra_num02);
+            //print_r($dataOut);
+            $out = $softone->setData((array) $dataOut, $object, (int) $model->reference);
+
+            if ($out->id > 0) {
+                $model->setField("reference", $out->id);
+                @$this->flushpersist($model);
+            }
+            //print_r($out);
+        }
+        return $model;
     }
 
     /**

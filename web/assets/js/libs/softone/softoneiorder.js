@@ -1,6 +1,7 @@
 var b = false;
 var orderid = 0;
 jQuery('#productfreesearch').live("keyup", function (e) {
+    
     if (e.keyCode == 13) {
         asdf(this);
         var t = $(this).val();

@@ -3,6 +3,8 @@
 namespace SoftoneBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\Entity;
+use SoftoneBundle\Entity\Softone as Softone;
 
 /**
  * Pcategory
@@ -10,14 +12,23 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="pcategory", indexes={@ORM\Index(name="reference", columns={"reference"})})
  * @ORM\Entity
  */
-class Pcategory
-{
+class Pcategory extends Entity {
+
+    public function getField($field) {
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
+
     /**
      * @var integer
      *
      * @ORM\Column(name="reference", type="integer", nullable=false)
      */
-    protected $reference;
+    var $reference;
 
     /**
      * @var integer
@@ -82,9 +93,7 @@ class Pcategory
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
-
-
+    var $id;
 
     /**
      * Set reference
@@ -93,8 +102,7 @@ class Pcategory
      *
      * @return Pcategory
      */
-    public function setReference($reference)
-    {
+    public function setReference($reference) {
         $this->reference = $reference;
 
         return $this;
@@ -105,8 +113,7 @@ class Pcategory
      *
      * @return integer
      */
-    public function getReference()
-    {
+    public function getReference() {
         return $this->reference;
     }
 
@@ -117,8 +124,7 @@ class Pcategory
      *
      * @return Pcategory
      */
-    public function setItecategoryMtrcategory($itecategoryMtrcategory)
-    {
+    public function setItecategoryMtrcategory($itecategoryMtrcategory) {
         $this->itecategoryMtrcategory = $itecategoryMtrcategory;
 
         return $this;
@@ -129,8 +135,7 @@ class Pcategory
      *
      * @return integer
      */
-    public function getItecategoryMtrcategory()
-    {
+    public function getItecategoryMtrcategory() {
         return $this->itecategoryMtrcategory;
     }
 
@@ -141,8 +146,7 @@ class Pcategory
      *
      * @return Pcategory
      */
-    public function setItecategoryCode($itecategoryCode)
-    {
+    public function setItecategoryCode($itecategoryCode) {
         $this->itecategoryCode = $itecategoryCode;
 
         return $this;
@@ -153,8 +157,7 @@ class Pcategory
      *
      * @return string
      */
-    public function getItecategoryCode()
-    {
+    public function getItecategoryCode() {
         return $this->itecategoryCode;
     }
 
@@ -165,8 +168,7 @@ class Pcategory
      *
      * @return Pcategory
      */
-    public function setItecategoryName($itecategoryName)
-    {
+    public function setItecategoryName($itecategoryName) {
         $this->itecategoryName = $itecategoryName;
 
         return $this;
@@ -177,8 +179,7 @@ class Pcategory
      *
      * @return string
      */
-    public function getItecategoryName()
-    {
+    public function getItecategoryName() {
         return $this->itecategoryName;
     }
 
@@ -189,8 +190,7 @@ class Pcategory
      *
      * @return Pcategory
      */
-    public function setTs($ts)
-    {
+    public function setTs($ts) {
         $this->ts = $ts;
 
         return $this;
@@ -201,8 +201,7 @@ class Pcategory
      *
      * @return \DateTime
      */
-    public function getTs()
-    {
+    public function getTs() {
         return $this->ts;
     }
 
@@ -213,8 +212,7 @@ class Pcategory
      *
      * @return Pcategory
      */
-    public function setActioneer($actioneer)
-    {
+    public function setActioneer($actioneer) {
         $this->actioneer = $actioneer;
 
         return $this;
@@ -225,8 +223,7 @@ class Pcategory
      *
      * @return integer
      */
-    public function getActioneer()
-    {
+    public function getActioneer() {
         return $this->actioneer;
     }
 
@@ -237,8 +234,7 @@ class Pcategory
      *
      * @return Pcategory
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -249,8 +245,7 @@ class Pcategory
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -261,8 +256,7 @@ class Pcategory
      *
      * @return Pcategory
      */
-    public function setModified($modified)
-    {
+    public function setModified($modified) {
         $this->modified = $modified;
 
         return $this;
@@ -273,8 +267,7 @@ class Pcategory
      *
      * @return \DateTime
      */
-    public function getModified()
-    {
+    public function getModified() {
         return $this->modified;
     }
 
@@ -285,8 +278,7 @@ class Pcategory
      *
      * @return Pcategory
      */
-    public function setFlatData($flatData)
-    {
+    public function setFlatData($flatData) {
         $this->flatData = $flatData;
 
         return $this;
@@ -297,8 +289,7 @@ class Pcategory
      *
      * @return string
      */
-    public function getFlatData()
-    {
+    public function getFlatData() {
         return $this->flatData;
     }
 
@@ -307,8 +298,8 @@ class Pcategory
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
+
 }

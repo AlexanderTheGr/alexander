@@ -23,7 +23,7 @@
       </options>
     </field>
     
-    <many-to-one
+    <!--many-to-one
         field="softoneStore"
         target-entity="SoftoneBundle\Entity\Store"
         inversed-by="Stores"
@@ -32,7 +32,7 @@
             <cascade-persist/>
         </cascade>
         <join-column name="store" referenced-column-name="id"/>
-    </many-to-one> 
+    </many-to-one--> 
     
     <field name="key" type="string" column="`key`" length="50" nullable="true">
       <options>
@@ -49,7 +49,7 @@
         <option name="fixed"/>
       </options>
     </field>
-    <field name="ts" type="datetime" column="ts" nullable="false">
+    <field name="ts" type="datetime" column="ts" nullable="true">
       <options>
         
       </options>
@@ -65,7 +65,7 @@
         <option name="unsigned"/>
       </options>
     </field>
-    <field name="created" type="datetime" column="created" nullable="false"/>
-    <field name="modified" type="datetime" column="modified" nullable="false"/>
+    <field name="created" type="datetime" column="created" nullable="true"/>
+    <field name="modified" type="datetime" column="modified" nullable="true"/>
   </entity>
 </doctrine-mapping>

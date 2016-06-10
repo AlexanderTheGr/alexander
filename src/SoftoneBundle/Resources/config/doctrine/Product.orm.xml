@@ -6,19 +6,14 @@
             <index name="catalogue" columns="catalogue"/>
             <index name="reference" columns="reference"/>
             <index name="erp_code" columns="erp_code"/>
-            <index name="item_code" columns="item_code"/>
-
-
-            <index name="item_cccfxcode1" columns="item_cccfxcode1"/>
-            
-            <index name="edi_id" columns="edi_id"/>
-            
-            
+            <index name="item_code" columns="item_code"/>  
+            <index name="edi_id" columns="edi_id"/>    
         </indexes>
 
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
         </id>
+        
         <field name="reference" type="integer" column="reference" nullable="true">
             <options>
                 <option name="unsigned"/>
@@ -29,6 +24,7 @@
                 <option name="unsigned"/>
             </options>
         </field>
+        
         <field name="erpCode" type="string" column="erp_code" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
@@ -39,47 +35,45 @@
             <options>
                 <option name="fixed"/>
             </options>
-        </field>        
+        </field>  
+              
         <field name="ediId" type="integer" column="edi_id" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
         </field>        
         
-        
+        <field name="title" type="text" column="title" length="65535" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>    
+            
         <field name="tecdocCode" type="string" column="tecdoc_code" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
-        
         <field name="tecdocSupplierId" type="integer" column="tecdoc_supplier_id" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
         </field>
-        
         <field name="tecdocArticleId" type="integer" column="tecdoc_article_id" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
-        </field>        
+        </field>       
         <field name="supplierCode" type="string" column="supplier_code" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
-        </field>
+        </field> 
         <field name="erpSupplier" type="string" column="erp_supplier" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="title" type="text" column="title" length="65535" nullable="true">
-            <options>
-                <option name="fixed"/>
-            </options>
-        </field>
-        <field name="disc1prc" type="decimal" column="disc1prc" precision="10" scale="2" nullable="true"/>
         <field name="tecdocArticleName" type="string" column="tecdoc_article_name" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
@@ -90,6 +84,9 @@
                 <option name="unsigned"/>
             </options>
         </field>
+        
+        
+        
         <field name="itemInsdate" type="datetime" column="item_insdate" nullable="true"/>
         <field name="itemUpddate" type="datetime" column="item_upddate" nullable="true"/>
         <field name="itemIsactive" type="boolean" column="item_isactive" nullable="true">
@@ -97,24 +94,9 @@
                 <option name="default">1</option>
             </options>
         </field>
-        <field name="itemCccfxrelbrand" type="integer" column="item_cccfxrelbrand" nullable="true">
-            <options>
-                <option name="unsigned"/>
-            </options>
-        </field>
-        <field name="itemCccfxreltdcode" type="string" column="item_cccfxreltdcode" length="255" nullable="true">
-            <options>
-                <option name="fixed"/>
-            </options>
-        </field>
         <field name="itemVat" type="integer" column="item_vat" nullable="true">
             <options>
                 <option name="unsigned"/>
-            </options>
-        </field>
-        <field name="itemCccfxcode1" type="string" column="item_cccfxcode1" length="255" nullable="true">
-            <options>
-                <option name="fixed"/>
             </options>
         </field>
         <field name="itemMtrmanfctr" type="string" column="item_mtrmanfctr" length="255" nullable="true">
@@ -122,86 +104,116 @@
                 <option name="fixed"/>
             </options>
         </field>
+         <field name="itemMtrmark" type="integer" column="item_mtrmark" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>           
         <field name="itemPricer" type="decimal" column="item_pricer" precision="10" scale="2" nullable="true"/>
         <field name="itemPricew" type="decimal" column="item_pricew" precision="10" scale="0" nullable="true"/>
+        
         <field name="itemPricew01" type="decimal" column="item_pricew01" precision="10" scale="2" nullable="true"/>
         <field name="itemPricew02" type="decimal" column="item_pricew02" precision="10" scale="2" nullable="true"/>
         <field name="itemPricew03" type="decimal" column="item_pricew03" precision="10" scale="2" nullable="true"/>
+        <field name="itemPricew04" type="decimal" column="item_pricew04" precision="10" scale="2" nullable="true"/>
+        <field name="itemPricew05" type="decimal" column="item_pricew05" precision="10" scale="2" nullable="true"/>
+        
         <field name="itemPricer01" type="decimal" column="item_pricer01" precision="10" scale="2" nullable="true"/>
         <field name="itemPricer02" type="decimal" column="item_pricer02" precision="10" scale="2" nullable="true"/>
         <field name="itemPricer03" type="decimal" column="item_pricer03" precision="10" scale="2" nullable="true"/>
+        <field name="itemPricer04" type="decimal" column="item_pricer04" precision="10" scale="2" nullable="true"/>
+        <field name="itemPricer05" type="decimal" column="item_pricer05" precision="10" scale="2" nullable="true"/>
+        
         <options>
             <option name="unsigned"/>
         </options>
-
-        <field name="itemName1" type="string" column="item_name1" length="255" nullable="true">
-            <options>
-                <option name="fixed"/>
-            </options>
-        </field>
+        
         <field name="itemName" type="string" column="item_name" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
+        
+        <field name="itemName1" type="string" column="item_name1" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>   
+             
         <field name="itemCode" type="string" column="item_code" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
+        
         <field name="itemCode1" type="string" column="item_code1" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
+        
         <field name="itemCode2" type="string" column="item_code2" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
+        
+        <field name="itemApvcode" type="string" column="item_apvcode" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field> 
+               
         <field name="itemMtrplace" type="string" column="item_mtrplace" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
+    
         <field name="itemMtrsup" type="integer" column="item_mtrsup" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
         </field>
+        
         <field name="itemMtrcategory" type="integer" column="item_mtrcategory" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
         </field>
-        <field name="itemMtrlItemtrdataQty1" type="integer" column="item_mtrl_itemtrdata_qty1" nullable="true">
+        
+        <field name="itemMtrgroup" type="integer" column="item_mtrgroup" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
         </field>
+        
         <field name="updated" type="boolean" column="updated" nullable="true">
             <options>
                 <option name="default">1</option>
             </options>
         </field>
+        
         <field name="media" type="string" column="media" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
+        
         <field name="ts" type="datetime" column="ts" nullable="true">
             <options>
                 
             </options>
         </field>
+        
         <field name="actioneer" type="integer" column="actioneer" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
         </field>
+        
         <field name="created" type="datetime" column="created" nullable="true"/>
         <field name="modified" type="datetime" column="modified" nullable="true"/>
-
 
     </entity>
 </doctrine-mapping>

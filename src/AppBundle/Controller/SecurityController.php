@@ -21,7 +21,7 @@ class SecurityController extends Main {
     public function loginAction(Request $request) {
 
 
-        //$this->install();
+        $this->install();
 
         $login = $request->request->get("LoginForm");
         $session = $request->getSession();
@@ -38,10 +38,14 @@ class SecurityController extends Main {
     }
 
     function install() {
+        $ser = explode(".", $_SERVER["HTTP_HOST"]);
+        
         $kernel = $this->get('kernel');
         $application = new Application($kernel);
         $application->setAutoExit(false);
-        $ser = explode(".", $_SERVER["HTTP_HOST"]);
+        
+        set_time_limit(100000);          
+            
         //$options = array('command' => 'doctrine:schema:update', "--force" => true);
         $input = new ArrayInput(array(
             'command' => 'doctrine:schema:update',
@@ -60,22 +64,24 @@ class SecurityController extends Main {
         $this->getSetting("EdiBundle:Eltreka:SoapUrl");
         $this->getSetting("EdiBundle:Eltreka:SoapNs");
         $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
-
+        
 
         $user = $this->getDoctrine()
                 ->getRepository("AppBundle:User")
                 ->find(1);
 
+
         if (@$user->id == 0) {
             $user = new User;
             $dt = new \DateTime("now");
-            
+            $this->newentity['AppBundle:User'] = $user;
             $encodeFactory = $this->container->get('security.encoder_factory');
             
             $user->setTs($dt);
             $user->setCreated($dt);
             $user->setModified($dt);
-            $user->setStore(0);
+            $ser[0] = 'admin';
+            //$user->setStore($store);
             $user->setEmail($ser[0] . "@partsbox.com");
             $user->setUsername($ser[0]);
             $encoder = $encodeFactory->getEncoder($user);

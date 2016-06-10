@@ -258,4 +258,28 @@ class Store extends Entity {
         return $this->id;
     }
 
+
+    /**
+     * Set field2
+     *
+     * @param string $field2
+     *
+     * @return Store
+     */
+    public function setField2($field2)
+    {
+        $this->field2 = $field2;
+
+        return $this;
+    }
+
+    /**
+     * Get field2
+     *
+     * @return string
+     */
+    public function getField2()
+    {
+        return $this->field2;
+    }
 }

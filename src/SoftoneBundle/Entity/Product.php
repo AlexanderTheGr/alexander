@@ -27,7 +27,7 @@ class Product extends Entity {
      *
      * @ORM\Column(name="reference", type="integer", nullable=false)
      */
-    protected $reference;
+    var $reference;
 
     /**
      * @var integer
@@ -1915,4 +1915,207 @@ class Product extends Entity {
         return $b;
     }
 
+    /**
+     * @var string
+     */
+    private $itemPricew04;
+
+    /**
+     * @var string
+     */
+    private $itemPricew05;
+
+    /**
+     * @var string
+     */
+    private $itemPricer04;
+
+    /**
+     * @var string
+     */
+    private $itemPricer05;
+
+
+    /**
+     * Set itemPricew04
+     *
+     * @param string $itemPricew04
+     *
+     * @return Product
+     */
+    public function setItemPricew04($itemPricew04)
+    {
+        $this->itemPricew04 = $itemPricew04;
+
+        return $this;
+    }
+
+    /**
+     * Get itemPricew04
+     *
+     * @return string
+     */
+    public function getItemPricew04()
+    {
+        return $this->itemPricew04;
+    }
+
+    /**
+     * Set itemPricew05
+     *
+     * @param string $itemPricew05
+     *
+     * @return Product
+     */
+    public function setItemPricew05($itemPricew05)
+    {
+        $this->itemPricew05 = $itemPricew05;
+
+        return $this;
+    }
+
+    /**
+     * Get itemPricew05
+     *
+     * @return string
+     */
+    public function getItemPricew05()
+    {
+        return $this->itemPricew05;
+    }
+
+    /**
+     * Set itemPricer04
+     *
+     * @param string $itemPricer04
+     *
+     * @return Product
+     */
+    public function setItemPricer04($itemPricer04)
+    {
+        $this->itemPricer04 = $itemPricer04;
+
+        return $this;
+    }
+
+    /**
+     * Get itemPricer04
+     *
+     * @return string
+     */
+    public function getItemPricer04()
+    {
+        return $this->itemPricer04;
+    }
+
+    /**
+     * Set itemPricer05
+     *
+     * @param string $itemPricer05
+     *
+     * @return Product
+     */
+    public function setItemPricer05($itemPricer05)
+    {
+        $this->itemPricer05 = $itemPricer05;
+
+        return $this;
+    }
+
+    /**
+     * Get itemPricer05
+     *
+     * @return string
+     */
+    public function getItemPricer05()
+    {
+        return $this->itemPricer05;
+    }
+    /**
+     * @var integer
+     */
+    private $itemMtrmark;
+
+    /**
+     * @var string
+     */
+    private $itemApvcode;
+
+    /**
+     * @var integer
+     */
+    private $itemMtrgroup;
+
+
+    /**
+     * Set itemMtrmark
+     *
+     * @param integer $itemMtrmark
+     *
+     * @return Product
+     */
+    public function setItemMtrmark($itemMtrmark)
+    {
+        $this->itemMtrmark = $itemMtrmark;
+
+        return $this;
+    }
+
+    /**
+     * Get itemMtrmark
+     *
+     * @return integer
+     */
+    public function getItemMtrmark()
+    {
+        return $this->itemMtrmark;
+    }
+
+    /**
+     * Set itemApvcode
+     *
+     * @param string $itemApvcode
+     *
+     * @return Product
+     */
+    public function setItemApvcode($itemApvcode)
+    {
+        $this->itemApvcode = $itemApvcode;
+
+        return $this;
+    }
+
+    /**
+     * Get itemApvcode
+     *
+     * @return string
+     */
+    public function getItemApvcode()
+    {
+        return $this->itemApvcode;
+    }
+
+    /**
+     * Set itemMtrgroup
+     *
+     * @param integer $itemMtrgroup
+     *
+     * @return Product
+     */
+    public function setItemMtrgroup($itemMtrgroup)
+    {
+        $this->itemMtrgroup = $itemMtrgroup;
+
+        return $this;
+    }
+
+    /**
+     * Get itemMtrgroup
+     *
+     * @return integer
+     */
+    public function getItemMtrgroup()
+    {
+        return $this->itemMtrgroup;
+    }
 }

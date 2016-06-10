@@ -7,39 +7,39 @@
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="reference" type="integer" column="reference" nullable="false">
+    <field name="reference" type="integer" column="reference" nullable="true">
       <options>
         <option name="unsigned"/>
       </options>
     </field>
-    <field name="itecategoryMtrcategory" type="integer" column="itecategory_mtrcategory" nullable="false">
+    <field name="itecategoryMtrcategory" type="integer" column="itecategory_mtrcategory" nullable="true">
       <options>
         <option name="unsigned"/>
       </options>
     </field>
-    <field name="itecategoryCode" type="string" column="itecategory_code" length="255" nullable="false">
+    <field name="itecategoryCode" type="string" column="itecategory_code" length="255" nullable="true">
       <options>
         <option name="fixed"/>
       </options>
     </field>
-    <field name="itecategoryName" type="string" column="itecategory_name" length="255" nullable="false">
+    <field name="itecategoryName" type="string" column="itecategory_name" length="255" nullable="true">
       <options>
         <option name="fixed"/>
       </options>
     </field>
-    <field name="ts" type="datetime" column="ts" nullable="false">
+    <field name="ts" type="datetime" column="ts" nullable="true">
       <options>
         
       </options>
     </field>
-    <field name="actioneer" type="integer" column="actioneer" nullable="false">
+    <field name="actioneer" type="integer" column="actioneer" nullable="true">
       <options>
         <option name="unsigned"/>
       </options>
     </field>
-    <field name="created" type="datetime" column="created" nullable="false"/>
-    <field name="modified" type="datetime" column="modified" nullable="false"/>
-    <field name="flatData" type="text" column="flat_data" length="65535" nullable="false">
+    <field name="created" type="datetime" column="created" nullable="true"/>
+    <field name="modified" type="datetime" column="modified" nullable="true"/>
+    <field name="flatData" type="text" column="flat_data" length="65535" nullable="true">
       <options>
         <option name="fixed"/>
       </options>

@@ -392,18 +392,21 @@ class Main extends Controller {
     }
 
     function initialazeNewEntity($entity) {
-        $dt = new \DateTime("now");
-        $this->newentity[$this->repository] = $entity;
-        $this->newentity[$this->repository]->setTs($dt);
-        $this->newentity[$this->repository]->setCreated($dt);
-        $this->newentity[$this->repository]->setModified($dt);
+        if (@$this->newentity[$this->repository]) {
+            $dt = new \DateTime("now");
+            echo 'ss';
+            exit;
+            $this->newentity[$this->repository] = $entity;
+            $this->newentity[$this->repository]->setTs($dt);
+            $this->newentity[$this->repository]->setCreated($dt);
+            $this->newentity[$this->repository]->setModified($dt);
+        }
     }
 
     function flushpersist($entity) {
-        //try {
         
-        $em = $this->getDoctrine()->getManager();
 
+        $em = $this->getDoctrine()->getManager();
         $em->persist($entity);
         $em->flush();
         return $entity;
