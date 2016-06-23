@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\ArrayInput as ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput as BufferedOutput;
 use AppBundle\Entity\Setting as Setting;
 
+
 class Main extends Controller {
 
     var $fields = array();
@@ -28,8 +29,6 @@ class Main extends Controller {
     function __construct() {
         
     }
-
-
     public function content() {
         $data["tabs"] = $this->tabs;
         @$data["offcanvases"] = $this->offcanvases;
@@ -394,8 +393,6 @@ class Main extends Controller {
     function initialazeNewEntity($entity) {
         if (@$this->newentity[$this->repository]) {
             $dt = new \DateTime("now");
-            echo 'ss';
-            exit;
             $this->newentity[$this->repository] = $entity;
             $this->newentity[$this->repository]->setTs($dt);
             $this->newentity[$this->repository]->setCreated($dt);
@@ -477,9 +474,6 @@ class Main extends Controller {
                     $options["required"] = false;
                 }                
                 //@$options["required"] = $options["required"] != '' ? $options["required"] > 0 ? true : false : true;
-                
-   
-                
                 $forms["fields"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field), "type" => "input", "templateOptions" => array("type" => '', 'class' => 'asss', "label" => $options["label"], "required" => $options["required"]));
             }
         }
@@ -515,19 +509,9 @@ class Main extends Controller {
 
         // return the output, don't use if you used NullOutput()
         $content = $output->fetch();
-        
-        
-        
 
         return new Response($content);        
-        
-        
-        
-        
-        
-        
-        
-        
+
         return $this->render('default/index.html.twig', array(
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
@@ -550,5 +534,25 @@ class Main extends Controller {
         }
         return $setting->getValue();
     }
-
+    
+    function setSetting($path,$value) {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('AppBundle:Setting');
+        $setting = $repository->findOneBy(
+                array('path' => $path)
+        );
+        if (!$setting) {
+            $dt = new \DateTime("now");
+            $setting = new Setting;
+            $setting->setTs($dt);
+            $setting->setCreated($dt);
+            $setting->setModified($dt);
+            $setting->setPath($path);
+            $this->flushpersist($setting);
+        }
+        $setting->setValue($value);
+        $this->flushpersist($setting);
+        return $setting->getValue();
+    }
+ 
 }

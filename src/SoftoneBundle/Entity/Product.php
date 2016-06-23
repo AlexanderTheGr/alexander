@@ -1707,7 +1707,7 @@ class Product extends Entity {
             'tecdoc_code' => $this->tecdocCode,
             'tecdoc_supplier_id' => $this->tecdocSupplierId,
         );
-        //print_r($fields);
+        print_r($fields);
         $fields_string = '';
         foreach ($fields as $key => $value) {
             $fields_string .= $key . '=' . $value . '&';

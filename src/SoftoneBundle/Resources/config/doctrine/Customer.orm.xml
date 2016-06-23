@@ -80,11 +80,6 @@
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="customerTrdrCusextraVarchar03" type="string" column="customer_trdr_cusextra_varchar03" length="255" nullable="true">
-            <options>
-                <option name="fixed"/>
-            </options>
-        </field>
         <field name="customerFax" type="string" column="customer_fax" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
@@ -115,6 +110,11 @@
                 <option name="fixed"/>
             </options>
         </field>
+        
+        
+        <field name="customerInsdate" type="datetime" column="customer_insdate" nullable="true"/>
+        <field name="customerUpddate" type="datetime" column="customer_upddate" nullable="true"/>
+                
         <field name="ts" type="datetime" column="ts" nullable="true">
             <options>
                 

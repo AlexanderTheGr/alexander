@@ -11,7 +11,7 @@ use SoftoneBundle\Entity\Order as Order;
 use SoftoneBundle\Entity\Orderitem as Orderitem;
 use SoftoneBundle\Entity\Softone as Softone;
 
-class OrderController extends Main {
+class OrderController extends \SoftoneBundle\Controller\SoftoneController  {
 
     var $repository = 'SoftoneBundle:Order';
     var $newentity = '';
@@ -84,8 +84,9 @@ class OrderController extends Main {
                 ->find($id);
         if ($id == 0 AND @ $entity->id == 0) {
             $entity = new Order;
+            $this->newentity[$this->repository] = $entity;
             $this->initialazeNewEntity($entity);
-            $this->newentity[$this->repository]->setField("status", 1);
+            @$this->newentity[$this->repository]->setField("status", 1);
         }
 
         $entity->setCustomerName($request->request->get("customerName"));

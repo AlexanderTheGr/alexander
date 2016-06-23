@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Controller\Main as Main;
 
-class SupplierController extends Main {
+class SupplierController extends \SoftoneBundle\Controller\SoftoneController  {
 
     var $repository = 'SoftoneBundle:Supplier';
 

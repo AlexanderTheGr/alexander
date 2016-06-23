@@ -13,7 +13,7 @@
         <option name="fixed"/>
       </options>
     </field>
-    <field name="value" type="string" column="value" length="255" nullable="true">
+    <field name="value" type="string" column="value" length="65535" nullable="true">
       <options>
         <option name="fixed"/>
       </options>

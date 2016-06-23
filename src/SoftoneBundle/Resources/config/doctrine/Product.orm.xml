@@ -85,8 +85,6 @@
             </options>
         </field>
         
-        
-        
         <field name="itemInsdate" type="datetime" column="item_insdate" nullable="true"/>
         <field name="itemUpddate" type="datetime" column="item_upddate" nullable="true"/>
         <field name="itemIsactive" type="boolean" column="item_isactive" nullable="true">

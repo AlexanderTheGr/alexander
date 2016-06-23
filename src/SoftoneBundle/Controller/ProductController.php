@@ -9,13 +9,13 @@ use AppBundle\Controller\Main as Main;
 use SoftoneBundle\Entity\Softone as Softone;
 use SoftoneBundle\Entity\Product as Product;
 use SoftoneBundle\Entity\Pcategory as Pcategory;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-class ProductController extends Main {
+class ProductController extends \SoftoneBundle\Controller\SoftoneController  {
 
     var $repository = 'SoftoneBundle:Product';
     var $object = 'item';
+
     /**
      * @Route("/product/product")
      * 
@@ -39,12 +39,12 @@ class ProductController extends Main {
 
         $buttons = array();
 
-        
+
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($id);
-        
-        
+
+
         //$product->toSoftone();
         //exit;
         $content = $this->gettabs($id);
@@ -115,7 +115,13 @@ class ProductController extends Main {
         $fields["erpCode"] = array("label" => "Erp Code");
         $fields["itemPricew01"] = array("label" => "Price Name");
         $forms = $this->getFormLyFields($entity, $fields);
-        $this->addTab(array("title" => "General", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
+        
+        $tabs[] = array("title" => "General", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
+        
+        
+        foreach($tabs as $tab) {
+            $this->addTab($tab);
+        }
 
         $json = $this->tabs();
         return $json;
@@ -127,10 +133,20 @@ class ProductController extends Main {
      * @Route("/product/getdatatable")
      */
     public function getdatatableAction(Request $request) {
-        $this->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
-                ->addField(array("name" => "Title", "index" => 'title'))
-                ->addField(array("name" => "Code", "index" => 'erpCode'))
-                ->addField(array("name" => "Price", "index" => 'itemPricew01'));
+        
+        /*
+        $fields[] = array("name" => "ID", "index" => 'id', "active" => "active");
+        $fields[] = array("name" => "Title", "index" => 'title');
+        $fields[] = array("name" => "Code", "index" => 'erpCode');
+        $fields[] = array("name" => "Price", "index" => 'itemPricew01');
+        $this->setSetting("SoftoneBundle:Product:getdatatable", serialize($fields));
+        */
+        $fields = unserialize($this->getSetting("SoftoneBundle:Product:getdatatable"));        
+        
+        foreach ($fields as $field) {
+            $this->addField($field);
+        }
+        
         $json = $this->datatable();
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
@@ -145,147 +161,64 @@ class ProductController extends Main {
                 "", 200
         );
     }
-    
-    function retrieveMtrcategory() {
-        $this->softone_object = 'itecategory';
-        $this->repository = 'SoftoneBundle:Pcategory';
-        $this->softone_table = 'MTRCATEGORY';
-        $this->table = 'softone_[category';
-        $this->object = 'SoftoneBundle\Entity\Pcategory';
-        $this->filter = '';
-        $this->retrieve();
-    }
-    function retrieveMtrl() {
-        $this->softone_object = 'item';
-        $this->repository = 'SoftoneBundle:Product';
-        $this->softone_table = 'MTRL';
-        $this->table = 'softone_product';
-        $this->object = 'SoftoneBundle\Entity\Product';
-        $where = '';
-        $this->filter = 'WHERE M.SODTYPE=51 '.$where;
-        $this->retrieve();
-    }
-    
-    
-    function retrieve() {
-        $object =  $this->object;
-        $em = $this->getDoctrine()->getManager();
-        $fields = $em->getClassMetadata($this->object)->getFieldNames();
-        $itemfield = array();
-        $itemfield[] = "M.".$this->softone_table;        
-        foreach($fields as $field) {
-            $ffield = " ".$field;
-            if (strpos($ffield,$this->softone_object) == true) {
-                $itemfield[] = "M.".strtoupper(str_replace($this->softone_object,"",$field));
-            }
-        }
-        $selfields = implode(",",$itemfield);
-        $params["fSQL"] = 'SELECT '.$selfields.' FROM '.$this->softone_table.' M '.$this->filter;
-        echo  $params["fSQL"];
-        
-        $softone = new Softone();
-        $datas = $softone->createSql($params);
-        //print_r($datas);
-        //exit;
-        foreach ($datas->data as $data) {
-            $data = (array) $data;
-            $entity = $this->getDoctrine()
-                    ->getRepository($this->repository)
-                    ->findOneBy(array("reference" => (int) $data[$this->softone_table]));
-            
-            $dt = new \DateTime("now");
-            if (@$entity->id == 0) {
-                $entity = new $object();    
-                $entity->setTs($dt);               
-                $entity->setCreated($dt);
-                $entity->setModified($dt);
-            }
-            
-            $imporetedData = array();
-            $entity->setReference($data[$this->softone_table]);
-            $this->flushpersist($entity);
-            $q = array();
-            foreach ($data as $identifier => $val) {
-                $imporetedData[strtolower($this->softone_object."_" . $identifier)] = addslashes($val);
-                $ad = strtolower($identifier);
-                $baz = $this->softone_object . ucwords(str_replace("_", " ", $ad));
-                if (in_array($baz, $fields)) {
-                    $q[] = "`" . strtolower($this->softone_object."_" . $identifier) . "` = '" . addslashes($val) . "'";
-                    //$entity->setField($baz, $val);
-                }
-            }
-            @$entity_id = (int) $entity->id;
-            if (@$entity_id > 0) {
-                $sql = "update ".  strtolower($this->table)." set " . implode(",", $q) . " where id = '" . $entity_id . "'";
-                $em->getConnection()->exec($sql);
-            }
 
-            if (@$i++ > 500)
-                break;
-        }        
-    }   
-    
+    function retrieveMtrcategory() {
+        /*
+        $params["softone_object"] = 'itecategory';
+        $params["repository"] = 'SoftoneBundle:Pcategory';
+        $params["softone_table"] = 'MTRCATEGORY';
+        $params["table"] = 'softone_pcategory';
+        $params["object"] = 'SoftoneBundle\Entity\Pcategory';
+        $params["filter"] = '';
+        $params["relation"] = array();
+        $params["extra"] = array();
+        $params["extrafunction"] = array();
+        $this->setSetting("SoftoneBundle:Product:retrieveMtrcategory", serialize($params));
+        */
+        $params = unserialize($this->getSetting("SoftoneBundle:Product:retrieveMtrcategory"));
+        $this->retrieve($params);
+    }
+
+    function retrieveMtrl() {
+        /*
+        $where = '';
+        $params["softone_object"] = "item";
+        $params["repository"] = 'SoftoneBundle:Product';
+        $params["softone_table"] = 'MTRL';
+        $params["table"] = 'softone_product';
+        $params["object"] = 'SoftoneBundle\Entity\Product';
+        $params["filter"] = 'WHERE M.SODTYPE=51 ' . $where;
+        $params["relation"] = array();
+        $params["extra"] = array();
+        $params["extrafunction"] = array();
+        //$params["extra"]["CCCFXRELTDCODE"] = "CCCFXRELTDCODE";
+        //$params["extra"]["CCCFXRELBRAND"] = "CCCFXRELBRAND";
+        $params["relation"]["reference"] = "MTRL";
+        $params["relation"]["erpCode"] = "CODE";
+        $params["relation"]["supplierCode"] = "CODE2";
+        $params["relation"]["title"] = "NAME";
+        $params["relation"]["tecdocCode"] = "APVCODE";
+        $params["relation"]["tecdocSupplierId"] = "MTRMARK";
+        $params["extrafunction"][] = "updatetecdoc";
+        $this->setSetting("SoftoneBundle:Product:retrieveMtrl", serialize($params));
+        */
+        $params = unserialize($this->getSetting("SoftoneBundle:Product:retrieveMtrl"));
+        $this->retrieve($params);
+    }
+
     /**
      * 
      * @Route("/product/retrieveSoftone")
      */
     function retrieveSoftoneDataAction($params = array()) {
-        
         set_time_limit(100000);
         ini_set('memory_limit', '2256M');
+        echo $this->retrieveMtrcategory();
         echo $this->retrieveMtrl();
-
-        return new Response(
-                "", 200
-        );  
         
-        foreach ($datas->data as $data) {
-            $data = (array) $data;
-            $entity = $this->getDoctrine()
-                    ->getRepository($this->repository)
-                    ->findOneBy(array("reference" => (int) $data["MTRL"]));
-
-            if (@$entity->id == 0) {
-                $entity = new Product();
-                $dt = new \DateTime("now");
-                $entity->setTs($dt);
-                $entity->setItemInsdate($dt);
-                $entity->setItemUpddate($dt);
-                $entity->setCreated($dt);
-                $entity->setModified($dt);
-            }
-            $imporetedData = array();
-            
-            $entity->setField("reference", (int) $data["MTRL"]);
-            $entity->setField('erpCode', @$data["CODE"]);
-            $entity->setField('supplierCode', @$data["CODE2"]);
-            $entity->setField('title', @$data["NAME"]);
-            $entity->setField('tecdocCode', @$data["CCCFXRELTDCODE"]);
-            $entity->setField('tecdocSupplierId', @$data["CCCFXRELBRAND"]);
-
-            $this->flushpersist($entity);
-            $q = array();
-            foreach ($data as $identifier => $val) {
-                $imporetedData[strtolower($this->object."_" . $identifier)] = addslashes($val);
-                $ad = strtolower($identifier);
-                $baz = $this->object . ucwords(str_replace("_", " ", $ad));
-                if (in_array($baz, $fields)) {
-                    $q[] = "`" . strtolower($this->object."_" . $identifier) . "` = '" . addslashes($val) . "'";
-                    //$entity->setField($baz, $val);
-                }
-            }
-            @$entity_id = (int) $entity->id;
-            if (@$entity_id > 0) {
-                $sql = "update softone_product set " . implode(",", $q) . " where id = '" . $entity_id . "'";
-                $em->getConnection()->exec($sql);
-            }
-            $entity->updatetecdoc();
-            if (@$i++ > 500)
-                break;
-        }
         return new Response(
                 "", 200
         );
-    }
 
+    }
 }

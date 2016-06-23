@@ -9,7 +9,7 @@ use AppBundle\Controller\Main;
 use SoftoneBundle\Entity\Softone as Softone;
 use SoftoneBundle\Entity\Customer as Customer;
 
-class CustomerController extends Main {
+class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
     var $repository = 'SoftoneBundle:Customer';
     var $newentity = '';
@@ -144,10 +144,36 @@ class CustomerController extends Main {
         );
     }
 
+    function retrieveCustomer() {
+        $where = '';
+        $params["softone_object"] = 'customer';
+        $params["repository"] = 'SoftoneBundle:Customer';
+        $params["softone_table"] = 'TRDR';
+        $params["table"] = 'softone_customer';
+        $params["object"] = 'SoftoneBundle\Entity\Customer';
+        $params["filter"] = '';
+        $params["filter"] = 'WHERE M.SODTYPE=13 ' . $where;
+        $params["relation"] = array();
+        $params["extra"] = array();
+        $params["extrafunction"] = array();
+        $this->setSetting("SoftoneBundle:Customer:retrieveCustomer", serialize($params));
+
+        $params = unserialize($this->getSetting("SoftoneBundle:Customer:retrieveCustomer"));
+        $this->retrieve($params);
+    }
+
     /**
      * @Route("/customer/retrieve")
      */
     function retrieveSoftoneData($params = array()) {
+
+        $this->retrieveCustomer();
+
+        return new Response(
+                "", 200
+        );
+
+
         $params = array("softone_object" => "CUSTOMER", "eav_model" => "customer", "model" => "Customer", "list" => "monitor");
         set_time_limit(100000);
         ini_set('memory_limit', '2256M');
@@ -158,7 +184,7 @@ class CustomerController extends Main {
         $filters = "CUSTOMER.UPDDATE=" . $date . "&CUSTOMER.UPDDATE_TO=" . date("Y-m-d");
         $datas = $softone->retrieveData($params["softone_object"], $params["list"], $filters);
         print_r($datas);
-        
+
         foreach ($datas as $data) {
             $data = (array) $data;
             $zoominfo = $data["zoominfo"];

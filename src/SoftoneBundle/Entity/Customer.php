@@ -4,7 +4,6 @@ namespace SoftoneBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Entity;
-
 use SoftoneBundle\Entity\Softone as Softone;
 
 /**
@@ -15,6 +14,14 @@ use SoftoneBundle\Entity\Softone as Softone;
  */
 class Customer extends Entity {
 
+    public function getField($field) {
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
 
     /**
      * @var integer
@@ -851,8 +858,7 @@ class Customer extends Entity {
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -863,8 +869,7 @@ class Customer extends Entity {
      *
      * @return Customer
      */
-    public function addAddress(\SoftoneBundle\Entity\Customeradress $address)
-    {
+    public function addAddress(\SoftoneBundle\Entity\Customeradress $address) {
         $this->addresses[] = $address;
 
         return $this;
@@ -875,8 +880,7 @@ class Customer extends Entity {
      *
      * @param \SoftoneBundle\Entity\Customeradress $address
      */
-    public function removeAddress(\SoftoneBundle\Entity\Customeradress $address)
-    {
+    public function removeAddress(\SoftoneBundle\Entity\Customeradress $address) {
         $this->addresses->removeElement($address);
     }
 
@@ -885,8 +889,62 @@ class Customer extends Entity {
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getAddresses()
-    {
+    public function getAddresses() {
         return $this->addresses;
     }
+
+    /**
+     * @var \DateTime
+     */
+    private $customerInsdate;
+
+    /**
+     * @var \DateTime
+     */
+    private $customerUpddate;
+
+    /**
+     * Set customerInsdate
+     *
+     * @param \DateTime $customerInsdate
+     *
+     * @return Customer
+     */
+    public function setCustomerInsdate($customerInsdate) {
+        $this->customerInsdate = $customerInsdate;
+
+        return $this;
+    }
+
+    /**
+     * Get customerInsdate
+     *
+     * @return \DateTime
+     */
+    public function getCustomerInsdate() {
+        return $this->customerInsdate;
+    }
+
+    /**
+     * Set customerUpddate
+     *
+     * @param \DateTime $customerUpddate
+     *
+     * @return Customer
+     */
+    public function setCustomerUpddate($customerUpddate) {
+        $this->customerUpddate = $customerUpddate;
+
+        return $this;
+    }
+
+    /**
+     * Get customerUpddate
+     *
+     * @return \DateTime
+     */
+    public function getCustomerUpddate() {
+        return $this->customerUpddate;
+    }
+
 }

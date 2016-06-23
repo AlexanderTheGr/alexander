@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Controller\Main as Main;
 
 
-class RouteController extends Main {
+class RouteController extends \SoftoneBundle\Controller\SoftoneController  {
 
     var $repository = 'SoftoneBundle:Route';
     var $newentity = '';
