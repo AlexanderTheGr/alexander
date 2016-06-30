@@ -66,6 +66,21 @@ setTimeout(function () {
 }, 1000)
 
 
+
+jQuery(".savesoftone").live('click', function (e) {
+    var data = {}
+    data.id = jQuery(this).attr('data-id');
+
+    $.post("/order/saveSoftone", data, function (result) {
+        var json = angular.fromJson(result);
+        if (json.error) {
+            toastr.error(json.error, "Error");
+        } else {
+            toastr.success(json.error, "Success");
+        }
+    })    
+})
+
 jQuery(".EltrekaediSendOrder").live('click', function (e) {
     var data = {}
     data.id = jQuery(this).attr('data-id');
@@ -168,8 +183,27 @@ function asdf(obj, filter, freesearch) {
     //})
 }
 
+
+function asdf2(obj) {
+
+    //var data = {}
+    //var title = 'Αναζήτηση για "' + $(obj).val() + '"';
+    //data.terms = $(obj).val();
+
+    //$.post("/edi/eltreka/order/fororder", data, function (result) {
+    b = true;
+    //$("#offcanvas-search .offcanvas-head .text-primary").html(title);
+    var table = dt_tables["ctrlgetoffcanvases"];
+    table.fnFilter(obj.all);
+    //$(".offcanvas-search").click();
+    setTimeout(function(){
+        jQuery(".SoftoneBundleProductQty").val(1);    
+    },1000)
+    //})
+}
+
 function fororder(order) {
-    if (jQuery('#productfreesearch').val() && b == true) {
+    if (b == true) {
         orderid = order;
         $(".offcanvas-search").click();
         b = false;

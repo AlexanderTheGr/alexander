@@ -105,6 +105,14 @@
         <one-to-many field="items" target-entity="Orderitem" mapped-by="order" />
         
         <many-to-one
+            field="vat"
+            target-entity="SoftoneBundle\Entity\Vat"
+            inversed-by="Vats"
+            join-column="vat">
+            <join-column name="vat" referenced-column-name="id" />
+        </many-to-one>    
+                
+        <many-to-one
             field="user"
             target-entity="AppBundle\Entity\User"
             inversed-by="Orders"

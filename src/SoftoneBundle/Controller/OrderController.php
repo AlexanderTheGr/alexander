@@ -11,7 +11,7 @@ use SoftoneBundle\Entity\Order as Order;
 use SoftoneBundle\Entity\Orderitem as Orderitem;
 use SoftoneBundle\Entity\Softone as Softone;
 
-class OrderController extends \SoftoneBundle\Controller\SoftoneController  {
+class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
     var $repository = 'SoftoneBundle:Order';
     var $newentity = '';
@@ -43,6 +43,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController  {
         $content = $this->content();
         return $this->render('SoftoneBundle:Order:view.html.twig', array(
                     'pagename' => 's',
+                    'order' => $id,
                     'url' => '/order/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
@@ -79,27 +80,43 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController  {
         $request->request->get("customer");
         $id = $request->request->get("id");
 
-        $entity = $this->getDoctrine()
+        $order = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($id);
-        if ($id == 0 AND @ $entity->id == 0) {
-            $entity = new Order;
-            $this->newentity[$this->repository] = $entity;
-            $this->initialazeNewEntity($entity);
+
+
+
+        if ($id == 0 AND @ $order->id == 0) {
+            $order = new Order;
+            $this->newentity[$this->repository] = $order;
+            $this->initialazeNewEntity($order);
             @$this->newentity[$this->repository]->setField("status", 1);
         }
 
-        $entity->setCustomerName($request->request->get("customerName"));
-        $entity->setCustomer($request->request->get("customer"));
+        $order->setCustomerName($request->request->get("customerName"));
+        $order->setCustomer($request->request->get("customer"));
+
+        $customer = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Customer")
+                ->find($request->request->get("customer"));
+
+        //$this->setSetting("SoftoneBundle:Product:Vat", 1310);
+        $vatid = $this->getSetting("SoftoneBundle:Product:Vat");
+        $vat = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Vat")
+                ->findOneBy(array('enable' => 1, 'vatsts' => $customer->getVatsts()));
+
+        $order->setVat($vat);
 
         $route = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Route")
                 ->find(1);
-        $entity->setRoute($route);
 
-        $this->flushpersist($entity);
+        $order->setRoute($route);
 
-        $jsonarr["returnurl"] = "/order/view/" . $entity->getId();
+        $this->flushpersist($order);
+
+        $jsonarr["returnurl"] = "/order/view/" . $order->getId();
         $json = json_encode($jsonarr);
 
         return new Response(
@@ -145,7 +162,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController  {
         $forms = $this->getFormLyFields($entity, $fields);
         $this->addTab(array("title" => "General", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         if ($entity->getId()) {
-            $this->addTab(array("title" => "Search", "datatables" => array(), "form" => '', "content" => $this->getTabContentSearch(), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
+            $this->addTab(array("title" => "Search", "datatables" => array(), "form" => '', "content" => $this->getTabContentSearch($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
             $this->addTab(array("title" => "Items", "datatables" => $datatables, "form" => '', "content" => $this->getTotals($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
             $this->addTab(array("title" => "Customer Details", "datatables" => array(), "form" => '', "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
         }
@@ -197,13 +214,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController  {
         }
         $this->repository = 'SoftoneBundle:Product';
 
-        $json = $this->fororderitemsDatatable();
+        $json = $this->fororderitemsDatatable($id);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
 
-    public function fororderitemsDatatable() {
+    public function fororderitemsDatatable($id = false) {
         ini_set("memory_limit", "1256M");
         $request = Request::createFromGlobals();
 
@@ -227,7 +244,16 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController  {
             //$recordsTotal = $em->getRepository($this->repository)->recordsTotal();
             $fields = array();
             $jsonarr = array();
-            $articleIds = unserialize($this->getArticlesSearch($this->clearstring($dt_search["value"])));
+
+            $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($dt_search["value"])));
+            @$articleIds2 = unserialize(base64_decode($dt_search["value"]));
+
+
+
+            $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
+
+            //print_r($articleIds2["articleIds"]);
+
             if ($this->clearstring($dt_search["value"]) != "") {
 
                 $softone = new Softone();
@@ -311,6 +337,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController  {
                                 $obj = $em->getRepository($this->repository)->find($result["id"]);
                                 $ref = $obj->getField('reference'); //$result[$field["reference"]];
                                 $f[] = $obj->getField('tecdocArticleId');
+                                //$articleIds[] = $obj->getField('tecdocArticleId');
                                 $value = $field["index"] == 'qty' ? 1 : '---';
                                 $json[] = "<input data-id='" . $result["id"] . "' data-rep='" . $this->repository . "' data-ref='" . $ref . "' id='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "_" . $result["id"] . "' data-id='" . $result["id"] . "' class='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "' type='" . $field["input"] . "' value='$value'>";
                             } else {
@@ -332,13 +359,16 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController  {
                 }
             }
 
-            $jsonarr = $this->softoneCalculate($jsonarr);
+            $jsonarr = $this->softoneCalculate($jsonarr, $id);
             //echo count($jsonarr);
             $jsonarr = array_merge($jsonarr, $jsonarrnoref);
 
 
             //print_r($articleIds);
+            $f = array_unique((array) $f);
+            $articleIds = array_unique((array) $articleIds);
             $de = array_diff((array) $articleIds, (array) $f);
+            //print_r($de);
             $out = unserialize($this->getArticlesSearchByIds(implode(",", (array) $de)));
             $p = array();
             foreach ($out as $v) {
@@ -365,7 +395,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController  {
         return json_encode($data);
     }
 
-    public function softoneCalculate($jsonarr) {
+    public function softoneCalculate($jsonarr, $id) {
+
+        $order = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Order")
+                ->find($id);
+        $customer = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Customer")
+                ->find($order->getCustomer());
         $jsonarr2 = array();
         foreach ($jsonarr as $json) {
             $jsonarr2[] = $json;
@@ -375,7 +412,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController  {
         $softone = new Softone();
         $object = "SALDOC";
         $objectArr = array();
-        $objectArr[0]["TRDR"] = 29;
+        $objectArr[0]["TRDR"] = $customer->getReference();
         $objectArr[0]["SERIESNUM"] = 1;
         $objectArr[0]["FINCODE"] = 1;
         $objectArr[0]["PAYMENT"] = 1000;
@@ -387,17 +424,16 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController  {
         $dataOut[$object] = (array) $objectArr;
         $k = 9000001;
         $dataOut["ITELINES"] = array();
-        $vat = 1310;
+
+        $vat = $id > 0 ? $order->getVat()->getId() : $this->getSetting("SoftoneBundle:Product:Vat");
+
         foreach ($jsonarr as $MTRL => $json) {
             if ($MTRL)
                 $dataOut["ITELINES"][] = array("QTY1" => 1, "VAT" => $vat, "LINENUM" => $json[1], "MTRL" => $MTRL);
         }
-        //echo "1";
-        //print_r($dataOut);
+
         $locateinfo = "MTRL,NAME,PRICE,QTY1,VAT;ITELINES:DISC1PRC,ITELINES:LINEVAL,MTRL,MTRL_ITEM_CODE,MTRL_ITEM_CODE1,MTRL_ITEM_NAME,MTRL_ITEM_NAME1,PRICE,QTY1;SALDOC:BUSUNITS,EXPN,TRDR,MTRL,PRICE,QTY1,VAT";
-
         $out = $softone->calculate((array) $dataOut, $object, "", "", $locateinfo);
-
         //print_r($out);
         foreach ($out->data->ITELINES as $item) {
             $jsonarr[$item->MTRL][5] = str_replace("value='---'", "value='" . $item->LINEVAL . "'", $jsonarr[$item->MTRL][5]);
@@ -408,6 +444,69 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController  {
         }
 
         return $jsonarr2;
+    }
+
+    /**
+     * @Route("/order/saveSoftone")
+     */
+    function saveSoftone(Request $request) {
+        $id = $request->request->get("id");
+        $softone = new Softone();
+        $object = "SALDOC";
+        $order = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Order")
+                ->find($id);
+        $customer = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Customer")
+                ->find($order->getCustomer());
+        $vat = $id > 0 ? $order->getVat()->getId() : $this->getSetting("SoftoneBundle:Product:Vat");
+
+        if ($order->getReference() > 0) {
+            $data = $softone->delData($object, (int) $order->getReference());
+        }
+        $objectArr = array();
+        $objectArr[0]["TRDR"] = $customer->getReference();
+        $objectArr[0]["SERIESNUM"] = 10;
+        $objectArr[0]["FINCODE"] = 10;
+        $objectArr[0]["PAYMENT"] = 1000;
+        //$objectArr[0]["TFPRMS"] = $model->tfprms;
+        //$objectArr[0]["FPRMS"] = $model->fprms;
+        $objectArr[0]["SERIES"] = 7021; //$model->series;
+        $objectArr[0]["VATSTS"] = $customer->getCustomerVatsts();
+        //$objectArr[0]["DISC1PRC"] = 10;   
+        $dataOut[$object] = (array) $objectArr;
+
+
+        $dataOut["ITELINES"] = array();
+
+        $k = 0;
+
+        foreach ($order->getItems() as $item) {
+            //$dataOut["ITELINES"][] = array("QTY1" => $item->getQty(), "VAT" => $vat, "LINENUM" => $item->getLineval(), "MTRL" => $item->getProduct()->getReference());
+            $dataOut["ITELINES"][] = array(
+                "VAT" => $vat,
+                "QTY1" => $item->getQty(),
+                "LINENUM" => $k++,
+                "MTRL" => $item->getProduct()->getReference(),
+                "PRICE" => $item->getPrice(),
+                "LINEVAL" => $item->getLineval(),
+                "DISC1PRC" => $item->getDisc1prc()
+            );
+        }
+
+        $locateinfo = "MTRL,NAME,PRICE,QTY1,VAT;ITELINES:DISC1PRC,ITELINES:LINEVAL,MTRL,MTRL_ITEM_CODE,MTRL_ITEM_CODE1,MTRL_ITEM_NAME,MTRL_ITEM_NAME1,PRICE,QTY1;SALDOC:BUSUNITS,EXPN,TRDR,MTRL,PRICE,QTY1,VAT";
+
+        $out = $softone->setData((array) $dataOut, $object, (int) 0);
+
+
+        if (@$out->id > 0) {
+            $order->setReference($out->id);
+            $this->flushpersist($order);
+        }
+        $json = json_encode($out);
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
     }
 
     public function getArticlesSearchByIds($search) {
@@ -462,9 +561,115 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController  {
         //}
     }
 
-    function getTabContentSearch() {
-        $response = $this->get('twig')->render('SoftoneBundle:Order:search.html.twig', array());
+    function getTabContentSearch($order) {
+        $response = $this->get('twig')->render('SoftoneBundle:Order:search.html.twig', array(
+            'brands' => $this->getBrands(),
+            'order' => $order->getId()
+        ));
         return str_replace("\n", "", htmlentities($response));
+    }
+
+    function getBrands() {
+        $repository = $this->getDoctrine()->getRepository('SoftoneBundle:Brand');
+        $brands = $repository->findAll();
+        return $brands;
+    }
+
+    /**
+     * @Route("/order/getmodels")
+     */
+    function getmodels(Request $request) {
+        $repository = $this->getDoctrine()->getRepository('SoftoneBundle:BrandModel');
+        $brandsmodels = $repository->findBy(array('brand' => $request->request->get("brand")));
+        $out = array();
+        foreach ($brandsmodels as $brandsmodel) {
+            $o["id"] = $brandsmodel->getId();
+            $o["name"] = $brandsmodel->getBrandModel();
+            $out[] = $o;
+        }
+
+        $json = json_encode($out);
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+    }
+
+    /**
+     * @Route("/order/getmodeltypes")
+     */
+    function getmodeltypes(Request $request) {
+        $repository = $this->getDoctrine()->getRepository('SoftoneBundle:BrandModelType');
+        $brandsmodeltypes = $repository->findBy(array('brandModel' => $request->request->get("model")));
+        $out = array();
+        foreach ($brandsmodeltypes as $brandsmodeltype) {
+            $o["id"] = $brandsmodeltype->getId();
+            if ($brandsmodeltype->getEngine() != "") {
+                $o["name"] = $brandsmodeltype->getBrandModelType() . " (" . $brandsmodeltype->getEngine() . ")";
+            } else {
+                $o["name"] = $brandsmodeltype->getBrandModelType();
+            }
+            $out[] = $o;
+        }
+
+        $json = json_encode($out);
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+    }
+
+    /**
+     * @Route("/order/getcategories")
+     */
+    function getcategories(Request $request) {
+
+        $url = "http://service4.fastwebltd.com/";
+        $fields = array(
+            'action' => 'getcarcategories',
+            'linkingTargetId' => $request->request->get("car")
+        );
+        $fields_string = "";
+        foreach ($fields as $key => $value) {
+            $fields_string .= $key . '=' . $value . '&';
+        }
+        rtrim($fields_string, '&');
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, count($fields));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $data = curl_exec($ch);
+        $data = unserialize($data);
+
+
+        $repository = $this->getDoctrine()->getRepository('SoftoneBundle:Product');
+        $query = $repository->createQueryBuilder('p')
+                ->where('p.tecdocArticleId > :tecdocArticleId')
+                ->setParameter('tecdocArticleId', '0')
+                ->getQuery();
+
+        $products = $query->getResult();
+        $tecdocArticleIds = array();
+        foreach ($products as $product) {
+            $tecdocArticleIds[] = $product->getTecdocArticleId();
+        }
+        //print_r($tecdocArticleIds);
+
+        foreach ($data as $key => $dt) {
+            $matched = array_intersect(@(array) $dt->articleIds, $tecdocArticleIds);
+            $dt->matched = array();
+            $dt->matched = base64_encode(serialize($matched));
+            $dt->matched_count = count($matched);
+            $all["matched"] = (array) $matched;
+            $all["articleIds"] = @(array) $dt->articleIds;
+            $dt->all = base64_encode(serialize($all));
+            //$data[$key] = $dt;
+        }
+        $json = json_encode($data);
+        //$data = unserialize($data);
+
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
     }
 
     public function getTabContentItems() {
@@ -565,7 +770,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController  {
         }
         $this->repository = 'SoftoneBundle:Orderitem';
         $this->q_and[] = $this->prefix . ".order = " . $id;
-        $json = $this->datatable();
+        $json = $this->itemsdatatable();
 
         $datatable = json_decode($json);
         $datatable->data = (array) $datatable->data;
@@ -583,6 +788,27 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController  {
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
+    }
+
+    public function itemsdatatable() {
+        $data = json_decode($this->datatable());
+        $total = 0;
+        foreach ($data->data as $item) {
+            $of = "7";
+            ;
+            $total += $item->$of;
+        }
+        $json[0] = "";
+        $json[1] = "";
+        $json[2] = "";
+        $json[3] = "";
+        $json[4] = "";
+        $json[5] = "";
+        $json[6] = "Total";
+        $json[7] = $total;
+
+        $data->data[] = $json;
+        return json_encode($data);
     }
 
     /**
@@ -618,11 +844,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController  {
         $orderItem = new Orderitem;
         $orderItem->setOrder($order);
         $orderItem->setProduct($product);
-        
+
         if (!$product->reference) {
             $product = $this->saveProductSoftone($product);
         }
-        
+
         $orderItem->setField("qty", $request->request->get("qty"));
         $orderItem->setField("price", $request->request->get("price"));
         $orderItem->setField("lineval", $request->request->get("price") * $request->request->get("qty"));
@@ -683,7 +909,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController  {
             $objectArr = $data->data->$object;
             $objectArr2 = (array) $objectArr[0];
             foreach ($fields as $field) {
-                $field1 = strtoupper(str_replace(strtolower($object) . "_", "", $field));    
+                $field1 = strtoupper(str_replace(strtolower($object) . "_", "", $field));
                 $objectArr2[$field1] = $model->getField($field);
                 //}
             }
@@ -701,13 +927,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController  {
             $objectArr = array();
             foreach ($fields as $field) {
                 $field1 = strtoupper(str_replace(strtolower($object) . "_", "", $field));
-                
+
                 $as = explode("_", $field);
-                $asf = $as[0].ucfirst($as[1]);                
-                
+                $asf = $as[0] . ucfirst($as[1]);
+
                 $objectArr2[$field1] = $model->getField($asf);
             }
-            $objectArr2["MTRUNIT1"] = 101;//$model->supplierCode;
+            $objectArr2["MTRUNIT1"] = 101; //$model->supplierCode;
             //$objectArr2["ISACTIVE"] = $model->item_isactive;
             $objectArr2["PRICER01"] = $objectArr2["PRICEW01"] * 1.23;
             $objectArr2["PRICER02"] = $objectArr2["PRICEW02"] * 1.23;

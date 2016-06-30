@@ -1,20 +1,195 @@
 {% block body %}
-<div>   
-    <div class="" style="float:left;  width: 100%; margin: 0; padding: 0"> 
-        <div class="col-lg-6 ">
-            <div class="col-lg-12 ">
-                <div class="height-2 form" style="float:left;  width: 100%; margin: 0; padding: 0">
-                    <input id="productfreesearch" class='form-control productfreesearch' placeholder="Ελεύθερη Αναζήτηση" type="text">  
-                    <input id="productitem" class='form-control productitem' placeholder="Αναζήτηση με Κωδικό" type="text">        
-                </div> 
-            </div>
-            <div class="col-lg-12 ">
+    <div>   
+        <div class="" style="float:left;  width: 100%; margin: 0; padding: 0"> 
+            <div class="col-lg-6 ">
+                <div class="col-lg-12 ">
+                    <div class="height-2 form" style="float:left;  width: 100%; margin: 0; padding: 0">
+                        <input id="productfreesearch" class='form-control productfreesearch' placeholder="Ελεύθερη Αναζήτηση" type="text">  
+                        <input id="productitem" class='form-control productitem' placeholder="Αναζήτηση με Κωδικό" type="text">        
+                    </div> 
+                </div>
+                <div class="col-lg-12 ">
 
-            </div>    
-        </div>
-        <div class="col-lg-6 ">
-            <div class='categories'></div>    
-        </div>
-    </div>    
-</div>
+
+                    <div class="panel-group" id="accordion5">
+                        <div class="card panel">
+                            <div class="card-head style-info card-head collapsed" data-toggle="collapse" data-parent="#accordion5" data-target="#accordion5-1">
+                                <header>
+                                    <i class="fa fa-automobile"></i> Αναζήτηση με Όχημα
+                                </header>
+                                <div class="tools">
+
+                                    <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+                                </div>
+                            </div>
+                            <div id="accordion5-1" class="collapse">
+                                <div class="card-body">
+                                    <div class='plaisio'>
+                                        <select style="width:100%" name="brand_id" class="brand-select" class="brand-select" title="" onchange="">
+                                            <option value="0">Επιλέξτε Μάρκα</option>
+                                            {% for brand in brands %}
+                                                <option value="{{brand.id}}">{{brand.brand}}</option>
+                                            {% endfor %}    
+                                        </select>
+                                    </div>
+                                    <div class='plaisio'>
+                                        <select style="width:100%" name="brand_model_id" class="brand_model-select inactive" class="brand_model-select" title="" onchange="">
+
+                                        </select>   
+                                    </div>
+                                    <div class='plaisio'>
+                                        <select  style="width:100%" name="brand_model_type_id" class="brand_model_type-select inactive" class="brand_model-select" title="" onchange="">
+                                        </select>  
+                                    </div>
+                                    <button type="btn" id="gogo" title="Αναζήτηση" class="gogo button"><span><span>Αναζήτηση</span></span></button>                  
+                                </div>
+                            </div>
+                        </div><!--end .panel -->
+                        <div class="card panel">
+                            <div class="card-head style-info card-head collapsed" data-toggle="collapse" data-parent="#accordion5" data-target="#accordion5-3">
+                                <header>
+                                    <i class="fa fa-cogs"></i> Αναζήτηση με Κινητήρα
+                                </header>
+                                <div class="tools">
+                                    <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+                                </div>
+                            </div>
+                            <div id="accordion5-3" class="collapse">
+                                <div class="card-body">
+                                    Παρακαλώ πληκτρολογήστε τον κωδικό του Κινητήρα<BR>
+                                    Π.χ. AR32310<BR>
+                                    <input class="form-control" placeholder="Γράψτε τον Κωδικό" id="searchmotor" type="text" name="s" value="" class="searchmotor input-text" maxlength="" />
+
+                                </div>
+                            </div>
+                        </div><!--end .panel -->
+
+                    </div>                
+
+                </div>    
+            </div>
+            <div class="col-lg-6 ">
+                <div class='categories'></div>    
+            </div>
+        </div>    
+    </div>
 {% endblock %}
+
+{% block javascripts %}
+    <script>
+        jQuery(".brand-select").chosen({width: '100%'});
+        jQuery(".brand_model-select").chosen({width: '100%'});
+        jQuery(".brand_model_type-select").chosen({width: '100%'});
+
+
+        jQuery(".brand-select").change(function () {
+            var data = {};
+            data.brand = jQuery(this).val();
+            
+            jQuery("#productfreesearch").val("");
+            jQuery("#productitem").val("");
+            var group_name = "";
+            jQuery('.brand_model-select').text("");
+            jQuery('.brand_model_type-select').text("");
+
+            jQuery('.brand_model-select').addClass("inactive");
+            jQuery('.brand_model_type-select').addClass("inactive");
+            jQuery('.search-form button.button span').removeClass("active");
+            jQuery(".brand-select").trigger("chosen:updated");
+            jQuery(".brand_model-select").trigger("chosen:updated");
+            jQuery(".brand_model_type-select").trigger("chosen:updated");
+            jQuery.post("/order/getmodels", data, function (json) {
+                if (json) {
+                    jQuery('.brand_model-select').removeClass("inactive");
+                }
+                jQuery('.brand_model-select').text("");
+                jQuery('.brand_model_type-select').text("");
+                var sop = "";
+                var a = 0;
+                jQuery.each(json, function (i, optionHtml) {
+                    jQuery('.brand_model-select').append(jQuery('<option>').text(optionHtml.name).attr('value', optionHtml.id));
+                });
+                jQuery(".brand-select").trigger("chosen:updated");
+                jQuery(".brand_model-select").trigger("chosen:updated");
+                jQuery(".brand_model_type-select").trigger("chosen:updated");
+
+            });
+        });
+        jQuery(".brand_model-select").change(function () {
+            var data = {};
+            data.brand = jQuery(".brand-select").val();
+            data.model = jQuery(this).val();
+            var motor_type = "";
+            var sop = "";
+            jQuery('.brand_model_type-select').addClass("inactive");
+            jQuery('.search-form button.button span').removeClass("active");
+            jQuery.post("/order/getmodeltypes", data, function (json) {
+                if (json) {
+                    jQuery('.brand_model_type-select').removeClass("inactive");
+                }
+                jQuery('.brand_model_type-select').text("");
+                var a = 0;
+                jQuery.each(json, function (i, optionHtml) {
+                    jQuery('.brand_model_type-select').append(jQuery('<option>').text(optionHtml.name).attr('value', optionHtml.id));
+                });
+                jQuery(".brand-select").trigger("chosen:updated");
+                jQuery(".brand_model-select").trigger("chosen:updated");
+                jQuery(".brand_model_type-select").trigger("chosen:updated");
+            })
+        });
+        jQuery(".gogo").click(function () {
+            var data = {};
+            data.car = jQuery(".brand_model_type-select").val();
+            data.order = '{{order}}';
+            jQuery(".subcategories").html("");
+            jQuery(".categories").html("");
+            if (data.car > 0) {
+                jQuery.post("/order/getcategories", data, function (json) {
+                    var nodes = [];
+                    var articles_count = [];
+                    var matched_count = [];
+                    var html = '<div style="float:left; width:100%" id="accordion">';
+                    var as = json;
+
+                    jQuery.each(as, function (i, optionHtml) {
+                        if (!nodes[optionHtml.parentNodeId]) {
+                            nodes[optionHtml.parentNodeId] = [];
+                            articles_count[optionHtml.parentNodeId] = 0;
+                            matched_count[optionHtml.parentNodeId] = 0;
+                        }
+                        nodes[optionHtml.parentNodeId].push(optionHtml);
+                        articles_count[optionHtml.parentNodeId] += optionHtml.articles_count*1;
+                        matched_count[optionHtml.parentNodeId] += optionHtml.matched_count*1;
+                    });
+
+                    jQuery.each(json, function (i, optionHtml) {
+                        if (optionHtml.parentNodeId == 0) {
+                            html += '<h3 class="style-info">' + optionHtml.assemblyGroupName + ' ('+matched_count[optionHtml.assemblyGroupNodeId]+') (<span style="font-size:10px; color:blue">'+articles_count[optionHtml.assemblyGroupNodeId]+'</span>)</h3>';
+                            html += '<div class="subcategoriesul" data-id="' + optionHtml.assemblyGroupNodeId + '">';
+                            html += '<ul class="list">';
+                            if (nodes[optionHtml.assemblyGroupNodeId]) {
+                                jQuery.each(nodes[optionHtml.assemblyGroupNodeId], function (o, node) {
+                                    html += '<li class="subcategoriesli" data-all="'+node.all+'" style="cursor:pointer">' + node.assemblyGroupName + ' ('+node.matched_count+') (<span style="font-size:10px; color:blue">'+node.articles_count+'</span>)</li>';
+                                });
+                            }
+                            html += '<ul>';
+                            html += '</div>';
+                        }
+                    });
+                    html += '</div>';
+                    jQuery('.categories').append(html);
+                    jQuery("#accordion").accordion({collapsible: true, active: false});
+                })
+            }
+        });
+        jQuery(".subcategoriesli").live('click',function(){
+            var data = {};
+            data.car = jQuery(".brand_model_type-select").val();
+            data.order = '{{order}}';
+            data.all = jQuery(this).attr('data-all');
+            asdf2(data);
+        });
+
+    </script>
+{% endblock %}
+

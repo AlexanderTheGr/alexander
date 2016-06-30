@@ -835,4 +835,33 @@ class Order extends Entity {
     {
         return $this->items;
     }
+    /**
+     * @var \SoftoneBundle\Entity\Vat
+     */
+    private $vat;
+
+
+    /**
+     * Set vat
+     *
+     * @param \SoftoneBundle\Entity\Vat $vat
+     *
+     * @return Order
+     */
+    public function setVat(\SoftoneBundle\Entity\Vat $vat = null)
+    {
+        $this->vat = $vat;
+
+        return $this;
+    }
+
+    /**
+     * Get vat
+     *
+     * @return \SoftoneBundle\Entity\Vat
+     */
+    public function getVat()
+    {
+        return $this->vat;
+    }
 }

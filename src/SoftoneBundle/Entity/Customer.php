@@ -947,4 +947,33 @@ class Customer extends Entity {
         return $this->customerUpddate;
     }
 
+    /**
+     * @var integer
+     */
+    private $customerVatsts;
+
+
+    /**
+     * Set customerVatsts
+     *
+     * @param integer $customerVatsts
+     *
+     * @return Customer
+     */
+    public function setCustomerVatsts($customerVatsts)
+    {
+        $this->customerVatsts = $customerVatsts;
+
+        return $this;
+    }
+
+    /**
+     * Get customerVatsts
+     *
+     * @return integer
+     */
+    public function getCustomerVatsts()
+    {
+        return $this->customerVatsts;
+    }
 }

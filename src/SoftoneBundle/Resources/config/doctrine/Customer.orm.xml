@@ -105,6 +105,11 @@
                 <option name="unsigned"/>
             </options>
         </field>
+        <field name="customerVatsts" type="integer" column="customer_vatsts" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>        
         <field name="priceField" type="string" column="price_field" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
