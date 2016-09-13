@@ -477,7 +477,6 @@ class Main extends Controller {
                 $forms["fields"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field), "type" => "input", "templateOptions" => array("type" => '', 'class' => 'asss', "label" => $options["label"], "required" => $options["required"]));
             }
         }
-
         return $forms;
     }
 

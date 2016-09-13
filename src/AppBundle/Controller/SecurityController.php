@@ -21,8 +21,8 @@ class SecurityController extends Main {
     public function loginAction(Request $request) {
 
 
-        $this->install();
-
+        //$this->install();
+        //exit;  
         $login = $request->request->get("LoginForm");
         $session = $request->getSession();
         $authenticationUtils = $this->get('security.authentication_utils');
@@ -64,13 +64,12 @@ class SecurityController extends Main {
         $this->getSetting("EdiBundle:Eltreka:SoapUrl");
         $this->getSetting("EdiBundle:Eltreka:SoapNs");
         $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
-        
+
 
         $user = $this->getDoctrine()
                 ->getRepository("AppBundle:User")
                 ->find(1);
-
-
+        
         if (@$user->id == 0) {
             $user = new User;
             $dt = new \DateTime("now");

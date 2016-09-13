@@ -13,6 +13,14 @@ use SoftoneBundle\Entity\Softone as Softone;
  */
 class Product extends Entity {
 
+    
+    
+    public function __construct() {
+        $this->repositories['tecdocSupplierId'] = 'SoftoneBundle:SoftoneSupplier';
+        $this->types['tecdocSupplierId'] = 'object';
+        $this->tecdocSupplierId = new \SoftoneBundle\Entity\SoftoneSupplier;
+    }
+    
     public function getField($field) {
         return $this->$field;
     }
@@ -21,7 +29,25 @@ class Product extends Entity {
         $this->$field = $val;
         return $val;
     }
-
+    
+    public function getRepository() {
+        return $this->repository;
+    }
+    public function getRepositories($repo) {
+        $this->repositories['tecdocSupplierId'] = 'SoftoneBundle:SoftoneSupplier';
+        return  $this->repositories[$repo];
+    }
+    public function gettype($field) {
+        $this->types['tecdocSupplierId'] = 'object';
+        if (@$this->types[$field] != '') {
+            return @$this->types[$field];
+        }
+        if (gettype($field) != NULL) {
+            return gettype($this->$field);
+        }
+        return 'string';
+    }   
+    
     /**
      * @var integer
      *
@@ -506,27 +532,7 @@ class Product extends Entity {
         return $this->tecdocCode;
     }
 
-    /**
-     * Set tecdocSupplierId
-     *
-     * @param integer $tecdocSupplierId
-     *
-     * @return Product
-     */
-    public function setTecdocSupplierId($tecdocSupplierId) {
-        $this->tecdocSupplierId = $tecdocSupplierId;
 
-        return $this;
-    }
-
-    /**
-     * Get tecdocSupplierId
-     *
-     * @return integer
-     */
-    public function getTecdocSupplierId() {
-        return $this->tecdocSupplierId;
-    }
 
     /**
      * Set supplierCode
@@ -1693,6 +1699,7 @@ class Product extends Entity {
 
     function updatetecdoc() {
         //$data = array("service" => "login", 'username' => 'dev', 'password' => 'dev', 'appId' => '2000');
+        
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
@@ -1705,12 +1712,12 @@ class Product extends Entity {
         $fields = array(
             'action' => 'updateTecdoc',
             'tecdoc_code' => $this->tecdocCode,
-            'tecdoc_supplier_id' => $this->tecdocSupplierId,
+            'tecdoc_supplier_id' => $this->getTecdocSupplierId()->getId(),
         );
-        print_r($fields);
+
         $fields_string = '';
         foreach ($fields as $key => $value) {
-            $fields_string .= $key . '=' . $value . '&';
+            @$fields_string .= $key . '=' . $value . '&';
         }
         rtrim($fields_string, '&');
         $ch = curl_init();
@@ -2117,5 +2124,29 @@ class Product extends Entity {
     public function getItemMtrgroup()
     {
         return $this->itemMtrgroup;
+    }
+
+    /**
+     * Set tecdocSupplierId
+     *
+     * @param \SoftoneBundle\Entity\SoftoneSupplier $tecdocSupplierId
+     *
+     * @return Product
+     */
+    public function setTecdocSupplierId(\SoftoneBundle\Entity\SoftoneSupplier $tecdocSupplierId = null)
+    {
+        $this->tecdocSupplierId = $tecdocSupplierId;
+
+        return $this;
+    }
+
+    /**
+     * Get tecdocSupplierId
+     *
+     * @return \SoftoneBundle\Entity\SoftoneSupplier
+     */
+    public function getTecdocSupplierId()
+    {
+        return $this->tecdocSupplierId;
     }
 }

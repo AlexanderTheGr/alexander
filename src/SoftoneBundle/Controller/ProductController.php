@@ -79,6 +79,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController  {
     public function savection() {
         $this->save();
         $json = json_encode(array("ok"));
+        $entity->updatetecdoc();
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
@@ -109,11 +110,23 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController  {
 
     public function gettabs($id) {
         $entity = $this->getDoctrine()
-                ->getRepository($this->repository)
+                ->getRepository('SoftoneBundle:Product')
                 ->find($id);
+        if ($id == 0 AND @ $entity->id == 0) {
+            $entity = new Product;
+        }
         $entity->updatetecdoc();
+        $fields["title"] = array("label" => "Title");
         $fields["erpCode"] = array("label" => "Erp Code");
-        $fields["itemPricew01"] = array("label" => "Price Name");
+        $fields["tecdocCode"] = array("label" => "Tecdoc Code");
+        
+        $fields["tecdocSupplierId"] = array("label" => "Tecdoc Supplier", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id'));
+        
+        
+        
+        $fields["itemPricew"] = array("label" => "Price");
+        $fields["itemPricer"] = array("label" => "Price");
+        
         $forms = $this->getFormLyFields($entity, $fields);
         
         $tabs[] = array("title" => "General", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);

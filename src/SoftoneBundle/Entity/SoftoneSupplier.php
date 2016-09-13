@@ -3,15 +3,25 @@
 namespace SoftoneBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use AppBundle\Entity\Entity;
+use SoftoneBundle\Entity\Softone as Softone;
 /**
  * SoftoneSupplier
  *
  * @ORM\Table(name="softone_supplier")
  * @ORM\Entity
  */
-class SoftoneSupplier
-{
+class SoftoneSupplier extends Entity {
+
+    public function getField($field) {
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
+
     /**
      * @var string
      *
@@ -35,8 +45,6 @@ class SoftoneSupplier
      */
     protected $id;
 
-
-
     /**
      * Set code
      *
@@ -44,8 +52,7 @@ class SoftoneSupplier
      *
      * @return SoftoneSupplier
      */
-    public function setCode($code)
-    {
+    public function setCode($code) {
         $this->code = $code;
 
         return $this;
@@ -56,8 +63,7 @@ class SoftoneSupplier
      *
      * @return string
      */
-    public function getCode()
-    {
+    public function getCode() {
         return $this->code;
     }
 
@@ -68,8 +74,7 @@ class SoftoneSupplier
      *
      * @return SoftoneSupplier
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
 
         return $this;
@@ -80,8 +85,7 @@ class SoftoneSupplier
      *
      * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -90,8 +94,8 @@ class SoftoneSupplier
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
+
 }

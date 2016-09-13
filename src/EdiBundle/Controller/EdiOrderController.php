@@ -10,7 +10,7 @@ use EdiBundle\Entity\ViacarediOrder as ViacarediOrder;
 use EdiBundle\Entity\ViacarediOrderItem as ViacarediOrderItem;
 use AppBundle\Controller\Main as Main;
 
-class ViacarOrderController extends Main {
+class EdiOrderController extends Main {
 
     var $repository = 'EdiBundle:ViacarediOrder';
     var $newentity = '';

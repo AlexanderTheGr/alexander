@@ -5,25 +5,25 @@ namespace EdiBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use EdiBundle\Entity\Viacaredi;
+use EdiBundle\Entity\EdiItem;
 use AppBundle\Controller\Main as Main;
 
-class ViacarController extends Main {
+class EdiController extends Main {
 
-    var $repository = 'EdiBundle:Viacaredi';
+    var $repository = 'EdiBundle:EdiItem';
 
     /**
-     * @Route("/edi/viacar")
+     * @Route("/edi/edi")
      */
     public function indexAction() {
 
         $buttons = array();
         $buttons[] = array("label" => 'Get PartMaster', 'position' => 'right', 'class' => 'btn-success');
 
-        return $this->render('EdiBundle:Viacar:index.html.twig', array(
-                    'pagename' => 'Viacaredis',
-                    'url' => '/edi/viacar/getdatatable',
-                    'view' => '/edi/viacar/view',
+        return $this->render('EdiBundle:Edi:index.html.twig', array(
+                    'pagename' => 'EdiItems',
+                    'url' => '/edi/edi/getdatatable',
+                    'view' => '/edi/edi/view',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
@@ -32,17 +32,17 @@ class ViacarController extends Main {
     }
 
     /**
-     * @Route("/edi/viacar/view/{id}")
+     * @Route("/edi/edi/view/{id}")
      */
     public function viewAction($id) {
         $buttons = array();
-        $Viacaredi = $this->getDoctrine()
-                ->getRepository('EdiBundle:Viacaredi')
+        $EdiItem = $this->getDoctrine()
+                ->getRepository('EdiBundle:EdiItem')
                 ->find($id);
-        $Viacaredi->GetAvailability();
-        return $this->render('EdiBundle:Viacar:view.html.twig', array(
-                    'pagename' => 'Viacaredis',
-                    'url' => '/edi/viacar/save',
+        $EdiItem->GetAvailability();
+        return $this->render('EdiBundle:Edi:view.html.twig', array(
+                    'pagename' => 'EdiItems',
+                    'url' => '/edi/edi/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
@@ -52,7 +52,7 @@ class ViacarController extends Main {
     }
 
     /**
-     * @Route("/edi/viacar/save")
+     * @Route("/edi/edi/save")
      */
     public function savection() {
         $this->save();
@@ -64,13 +64,13 @@ class ViacarController extends Main {
 
     public function getPartMasterFile() {
         
-        $apiToken = $this->getSetting("EdiBundle:Viacar:apiToken");
+        $apiToken = $this->getSetting("EdiBundle:Edi:apiToken");
         
         return 'http://zerog.gr/edi/fw.ashx?method=getinventoryfile&apiToken='.$apiToken;
     }
 
     /**
-     * @Route("/edi/viacar/getPartMaster")
+     * @Route("/edi/edi/getPartMaster")
      */
     public function getPartMasterAction() {
         $this->getPartMaster();
@@ -97,17 +97,17 @@ class ViacarController extends Main {
                     $attributes[$attrs[$key]] = $val;
                 }
 
-                $viacaredi = $this->getDoctrine()
-                        ->getRepository('EdiBundle:Viacaredi')
+                $ediedi = $this->getDoctrine()
+                        ->getRepository('EdiBundle:EdiItem')
                         ->findOneByItemCode($attributes["itemcode"]);
 
                 $q = array();
                 foreach ($attributes as $field => $val) {
                     $q[] = "`" . $field . "` = '" . addslashes($val) . "'";
                 }
-                @$viacaredi_id = (int) $viacaredi->id;
-                if (@$viacaredi_id == 0) {
-                    $sql = "replace viacaredi set id = '" . $viacaredi_id . "', " . implode(",", $q);
+                @$ediedi_id = (int) $ediedi->id;
+                if (@$ediedi_id == 0) {
+                    $sql = "replace ediedi set id = '" . $ediedi_id . "', " . implode(",", $q);
                     $em->getConnection()->exec($sql);
                 }
                 //if ($i++ > 10) exit;
@@ -116,7 +116,7 @@ class ViacarController extends Main {
     }
 
     /**
-     * @Route("/edi/viacar/gettab")
+     * @Route("/edi/edi/gettab")
      */
     public function gettabs($id) {
 
@@ -136,11 +136,11 @@ class ViacarController extends Main {
     }
 
     /**
-     * @Route("/edi/viacar/getdatatable")
+     * @Route("/edi/edi/getdatatable")
      */
     public function getdatatableAction(Request $request) {
 
-        $this->repository = 'EdiBundle:Viacaredi';
+        $this->repository = 'EdiBundle:EdiItem';
         $this->addField(array("name" => "ID", "index" => 'id'))
                 ->addField(array("name" => "Item Code", "index" => 'itemCode', 'search' => 'text'))
                 ->addField(array("name" => "Brand", "index" => 'brand', 'search' => 'text'))
@@ -154,7 +154,7 @@ class ViacarController extends Main {
     }
 
     /**
-     * @Route("/edi/viacar/install")
+     * @Route("/edi/edi/install")
      */
     public function installAction(Request $request) {
         $this->install();

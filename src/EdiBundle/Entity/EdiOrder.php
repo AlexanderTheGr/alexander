@@ -1,0 +1,332 @@
+<?php
+
+namespace EdiBundle\Entity;
+
+/**
+ * EdiOrder
+ */
+class EdiOrder
+{
+    /**
+     * @var integer
+     */
+    private $reference = '0';
+
+    /**
+     * @var \DateTime
+     */
+    private $insdate;
+
+    /**
+     * @var string
+     */
+    private $remarks;
+
+    /**
+     * @var integer
+     */
+    private $status;
+
+    /**
+     * @var integer
+     */
+    private $actioneer;
+
+    /**
+     * @var \DateTime
+     */
+    private $created;
+
+    /**
+     * @var \DateTime
+     */
+    private $modified;
+
+    /**
+     * @var integer
+     */
+    private $user;
+
+    /**
+     * @var integer
+     */
+    private $route;
+
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $EdiOrderItem;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->EdiOrderItem = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set reference
+     *
+     * @param integer $reference
+     *
+     * @return EdiOrder
+     */
+    public function setReference($reference)
+    {
+        $this->reference = $reference;
+
+        return $this;
+    }
+
+    /**
+     * Get reference
+     *
+     * @return integer
+     */
+    public function getReference()
+    {
+        return $this->reference;
+    }
+
+    /**
+     * Set insdate
+     *
+     * @param \DateTime $insdate
+     *
+     * @return EdiOrder
+     */
+    public function setInsdate($insdate)
+    {
+        $this->insdate = $insdate;
+
+        return $this;
+    }
+
+    /**
+     * Get insdate
+     *
+     * @return \DateTime
+     */
+    public function getInsdate()
+    {
+        return $this->insdate;
+    }
+
+    /**
+     * Set remarks
+     *
+     * @param string $remarks
+     *
+     * @return EdiOrder
+     */
+    public function setRemarks($remarks)
+    {
+        $this->remarks = $remarks;
+
+        return $this;
+    }
+
+    /**
+     * Get remarks
+     *
+     * @return string
+     */
+    public function getRemarks()
+    {
+        return $this->remarks;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     *
+     * @return EdiOrder
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set actioneer
+     *
+     * @param integer $actioneer
+     *
+     * @return EdiOrder
+     */
+    public function setActioneer($actioneer)
+    {
+        $this->actioneer = $actioneer;
+
+        return $this;
+    }
+
+    /**
+     * Get actioneer
+     *
+     * @return integer
+     */
+    public function getActioneer()
+    {
+        return $this->actioneer;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     *
+     * @return EdiOrder
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set modified
+     *
+     * @param \DateTime $modified
+     *
+     * @return EdiOrder
+     */
+    public function setModified($modified)
+    {
+        $this->modified = $modified;
+
+        return $this;
+    }
+
+    /**
+     * Get modified
+     *
+     * @return \DateTime
+     */
+    public function getModified()
+    {
+        return $this->modified;
+    }
+
+    /**
+     * Set user
+     *
+     * @param integer $user
+     *
+     * @return EdiOrder
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return integer
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set route
+     *
+     * @param integer $route
+     *
+     * @return EdiOrder
+     */
+    public function setRoute($route)
+    {
+        $this->route = $route;
+
+        return $this;
+    }
+
+    /**
+     * Get route
+     *
+     * @return integer
+     */
+    public function getRoute()
+    {
+        return $this->route;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Add ediOrderItem
+     *
+     * @param \EdiBundle\Entity\EdiOrderItem $ediOrderItem
+     *
+     * @return EdiOrder
+     */
+    public function addEdiOrderItem(\EdiBundle\Entity\EdiOrderItem $ediOrderItem)
+    {
+        $this->EdiOrderItem[] = $ediOrderItem;
+
+        return $this;
+    }
+
+    /**
+     * Remove ediOrderItem
+     *
+     * @param \EdiBundle\Entity\EdiOrderItem $ediOrderItem
+     */
+    public function removeEdiOrderItem(\EdiBundle\Entity\EdiOrderItem $ediOrderItem)
+    {
+        $this->EdiOrderItem->removeElement($ediOrderItem);
+    }
+
+    /**
+     * Get ediOrderItem
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEdiOrderItem()
+    {
+        return $this->EdiOrderItem;
+    }
+}

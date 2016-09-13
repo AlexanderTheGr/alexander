@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <entity name="EdiBundle\Entity\ViacarediOrder" repository-class="EdiBundle\Entity\ViacarediOrderRepository"  table="viacaredi_order">
+    <entity name="EdiBundle\Entity\EdiOrder" repository-class="EdiBundle\Entity\EdiOrderRepository"  table="edi_order">
         <indexes>
             <index name="user_id" columns="actioneer"/>
             <index name="status" columns="status"/>
@@ -45,6 +45,6 @@
                 <option name="unsigned"/>
             </options>
         </field>    
-        <one-to-many field="ViacarediOrderItem" target-entity="ViacarediOrderItem" mapped-by="ViacarediOrder" />
+        <one-to-many field="EdiOrderItem" target-entity="EdiOrderItem" mapped-by="EdiOrder" />
     </entity>
 </doctrine-mapping>

@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="EdiBundle\Entity\ViacarediOrderItem" repository-class="EdiBundle\Entity\ViacarediOrderItemRepository"  table="viacaredi_order_item">
+  <entity name="EdiBundle\Entity\EdiOrderItem" repository-class="EdiBundle\Entity\EdiOrderItemRepository"  table="edi_order_item">
     <indexes>
-      <index name="viacarediorder" columns="viacarediorder"/>
-      <index name="viacaredi" columns="viacaredi"/>
+      <index name="ediorder" columns="ediorder"/>
+      <index name="ediitem" columns="ediitem"/>
     </indexes>
     <unique-constraints>
-      <unique-constraint name="viacarediorderitem" columns="viacaredi,viacarediorder"/>
+      <unique-constraint name="ediorderitem" columns="ediitem,ediorder"/>
     </unique-constraints>    
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
+    
     <many-to-one
-        field="viacaredi"
-        target-entity="Viacaredi"
-        inversed-by="Viacaredi"
-        join-column="viacaredi">
-        <join-column name="viacaredi" referenced-column-name="id" />
+        field="EdiItem"
+        target-entity="EdiItem"
+        inversed-by="EdiItem"
+        join-column="ediitem">
+        <join-column name="ediitem" referenced-column-name="id" />
     </many-to-one>   
       
     <many-to-one
-        field="ViacarediOrder"
-        target-entity="ViacarediOrder"
-        inversed-by="ViacarediOrderItem"
-        join-column="viacarediorder">
-        <join-column name="viacarediorder" referenced-column-name="id" />
+        field="EdiOrder"
+        target-entity="EdiOrder"
+        inversed-by="EdiOrderItem"
+        join-column="ediorder">
+        <join-column name="ediorder" referenced-column-name="id" />
     </many-to-one> 
-    
-            
+       
     <field name="qty" type="integer" column="qty" nullable="false">
       <options>
         <option name="unsigned"/>

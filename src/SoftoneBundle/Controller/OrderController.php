@@ -396,13 +396,15 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     public function softoneCalculate($jsonarr, $id) {
-
+        if ((int)$id == 0) exit;
         $order = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Order")
                 ->find($id);
-        $customer = $this->getDoctrine()
-                ->getRepository("SoftoneBundle:Customer")
-                ->find($order->getCustomer());
+        if ($id > 0) {
+            $customer = $this->getDoctrine()
+                    ->getRepository("SoftoneBundle:Customer")
+                    ->find($order->getCustomer());
+        }
         $jsonarr2 = array();
         foreach ($jsonarr as $json) {
             $jsonarr2[] = $json;

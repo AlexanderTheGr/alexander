@@ -1,44 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <entity name="EdiBundle\Entity\Viacaredi" repository-class="EdiBundle\Entity\ViacarediRepository" table="viacaredi">
+    <entity name="EdiBundle\Entity\Edi" repository-class="EdiBundle\Entity\EdiRepository" table="edi">
         <unique-constraints>
-            <unique-constraint name="partsno" columns="partno"/>
+            <unique-constraint name="token" columns="token"/>
         </unique-constraints>
+        
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
         </id>
-
-        <field name="itemCode" type="string" column="itemcode" length="255" nullable="false">
+        <field name="name" type="string" column="name" length="255" nullable="false">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="brand" type="string" column="brand" length="255" nullable="false">
+        <field name="token" type="string" column="token" length="255" nullable="false">
             <options>
                 <option name="fixed"/>
             </options>
-        </field>    
-
-        <field name="partno" type="string" column="partno" length="255" nullable="false">
-            <options>
-                <option name="fixed"/>
-            </options>
-        </field> 
-        <field name="description" type="string" column="description" length="255" nullable="false">
-            <options>
-                <option name="fixed"/>
-            </options>
-        </field> 
-        <field name="dlnr" type="integer" column="dlnr" length="11" nullable="false">
-            <options>
-                <option name="fixed"/>
-            </options>
-        </field> 
-        <field name="artNr" type="string" column="artnr" length="255" nullable="false">
-            <options>
-                <option name="fixed"/>
-            </options>
-        </field>  
+        </field>   
         <field name="status" type="integer" column="status" nullable="true">
             <options>
                 <option name="unsigned"/>
