@@ -12,7 +12,6 @@ use Symfony\Component\Console\Input\ArrayInput as ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput as BufferedOutput;
 use AppBundle\Entity\Setting as Setting;
 
-
 class Main extends Controller {
 
     var $fields = array();
@@ -29,6 +28,7 @@ class Main extends Controller {
     function __construct() {
         
     }
+
     public function content() {
         $data["tabs"] = $this->tabs;
         @$data["offcanvases"] = $this->offcanvases;
@@ -43,6 +43,18 @@ class Main extends Controller {
     public function offcanvases() {
         $data["offcanvases"] = $this->offcanvases;
         return $data;
+    }
+
+    public function collection($repository) {
+        $em = $this->getDoctrine()->getManager();
+        
+        $query = $em->createQuery(
+                'SELECT  ' . $this->select . '
+                                FROM ' . $repository . ' ' . $this->prefix . '
+                                ' . $this->where 
+        );
+        //exit;
+        return $query->getResult();
     }
 
     public function datatable() {
@@ -165,7 +177,7 @@ class Main extends Controller {
         return addslashes(str_replace(array("'"), "", trim($string)));
     }
 
-    function createSelect($s) {
+    function createSelect($s = array()) {
         foreach ($s as $v => $f) {
             //$s[$v] = "IDENTITY(".$f.")";
         }
@@ -205,7 +217,7 @@ class Main extends Controller {
     function addField($field = array()) {
 
         $bundle = explode(":", $this->repository);
-        if (@$field["type"] == "select") {
+        if (@$field["type"] == "select" AND 1==2) {
             $field["content"] = '<input class="style-primary-bright form-control search_init" type="radio" />';
         } elseif (@$field["index"]) {
             $field_order = explode(":", $field["index"]);
@@ -367,6 +379,7 @@ class Main extends Controller {
                         ->find($df[3]);
             }
             if ($df[3] == 0) {
+
                 $entities[$df[0] . ":" . $df[1]] = $this->newentity[$df[0] . ":" . $df[1]];
             }
             $type = $entities[$df[0] . ":" . $df[1]]->gettype($df[2]);
@@ -401,13 +414,12 @@ class Main extends Controller {
     }
 
     function flushpersist($entity) {
-        
+
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($entity);
         $em->flush();
         return $entity;
-
     }
 
     function flushremove($entity) {
@@ -452,7 +464,7 @@ class Main extends Controller {
         $forms["id"] = $id;
         $em = $this->getDoctrine()->getManager();
         foreach ($fields as $field => $options) {
-            
+
             @$options["type"] = $options["type"] ? $options["type"] : "input";
             if ($options["type"] == 'select') {
                 @$options["required"] = $options["required"] ? $options["required"] : true;
@@ -465,14 +477,14 @@ class Main extends Controller {
                 $defaultValue = $entity->getField($field) ? $entity->getField($field)->getId() : NULL;
                 $forms["fields"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'defaultValue' => $defaultValue, "type" => "select", "templateOptions" => array("type" => '', 'options' => $seloptions, 'defaultOptions' => array("value" => $defaultValue), "label" => $options["label"], "required" => $options["required"]));
             } else {
-                
+
                 //echo "A".@$options["required"]."<BR>";
-                
+
                 if (@$options["required"] == '') {
                     $options["required"] = true;
                 } else {
                     $options["required"] = false;
-                }                
+                }
                 //@$options["required"] = $options["required"] != '' ? $options["required"] > 0 ? true : false : true;
                 $forms["fields"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field), "type" => "input", "templateOptions" => array("type" => '', 'class' => 'asss', "label" => $options["label"], "required" => $options["required"]));
             }
@@ -485,7 +497,7 @@ class Main extends Controller {
         set_time_limit(100000);
         //ini_set('memory_limit', '128M');
 
-        
+
         $kernel = $this->get('kernel');
         $application = new Application($kernel);
         $application->setAutoExit(false);
@@ -509,7 +521,7 @@ class Main extends Controller {
         // return the output, don't use if you used NullOutput()
         $content = $output->fetch();
 
-        return new Response($content);        
+        return new Response($content);
 
         return $this->render('default/index.html.twig', array(
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
@@ -533,8 +545,8 @@ class Main extends Controller {
         }
         return $setting->getValue();
     }
-    
-    function setSetting($path,$value) {
+
+    function setSetting($path, $value) {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('AppBundle:Setting');
         $setting = $repository->findOneBy(
@@ -553,5 +565,5 @@ class Main extends Controller {
         $this->flushpersist($setting);
         return $setting->getValue();
     }
- 
+
 }

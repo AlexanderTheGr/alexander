@@ -13,6 +13,11 @@
                 <option name="fixed"/>
             </options>
         </field>
+        <field name="func" type="string" column="func" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>        
         <field name="token" type="string" column="token" length="255" nullable="false">
             <options>
                 <option name="fixed"/>
@@ -28,7 +33,6 @@
                 <option name="unsigned"/>
             </options>
         </field>
-        <field name="retailprice" type="decimal" column="retailprice" precision="10" scale="2" nullable="false"/>
         <field name="created" type="datetime" column="created" nullable="true"/>
         <field name="modified" type="datetime" column="modified" nullable="true"/>                    
     </entity>

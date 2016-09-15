@@ -18,6 +18,10 @@ class Pcategory extends Entity {
         return $this->$field;
     }
 
+    public function setRepositories() {
+        
+    }
+
     public function setField($field, $val) {
         $this->$field = $val;
         return $val;

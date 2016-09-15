@@ -4,6 +4,7 @@
     <unique-constraints>
       <unique-constraint name="partsno" columns="partno"/>
       <index-constraint name="product" columns="product"/>
+      <index-constraint name="ediitem" columns="ediitem"/>
     </unique-constraints>
     <indexes>
       <index name="product" columns="product"/>
@@ -43,6 +44,12 @@
       </options>
     </field>
     
+    <field name="ediitem" type="integer" column="ediitem" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+        
     <field name="tecdocpartno" type="string" column="tecdocpartno" length="255" nullable="false">
       <options>
         <option name="fixed"/>

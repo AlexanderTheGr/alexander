@@ -4,7 +4,7 @@
 {% for button in buttons %}
         <button class="btn {{ button.class }} {{ button.position }}">{{ button.label }}</button>    
 {% endfor %}
-{{ render(controller('EdiBundle:Viacar:datatable', { 'ctrl': ctrl,'app':app,'url':url })) }}
+{{ render(controller('EdiBundle:Edi:datatable', { 'ctrl': ctrl,'app':app,'url':url })) }}
 {% endblock %}
 
 {% block stylesheets %}

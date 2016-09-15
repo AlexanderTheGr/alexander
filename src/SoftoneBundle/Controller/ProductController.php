@@ -11,7 +11,7 @@ use SoftoneBundle\Entity\Product as Product;
 use SoftoneBundle\Entity\Pcategory as Pcategory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-class ProductController extends \SoftoneBundle\Controller\SoftoneController  {
+class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
     var $repository = 'SoftoneBundle:Product';
     var $object = 'item';
@@ -119,20 +119,20 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController  {
         $fields["title"] = array("label" => "Title");
         $fields["erpCode"] = array("label" => "Erp Code");
         $fields["tecdocCode"] = array("label" => "Tecdoc Code");
-        
+
         $fields["tecdocSupplierId"] = array("label" => "Tecdoc Supplier", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id'));
-        
-        
-        
+
+
+
         $fields["itemPricew"] = array("label" => "Price");
         $fields["itemPricer"] = array("label" => "Price");
-        
+
         $forms = $this->getFormLyFields($entity, $fields);
-        
+
         $tabs[] = array("title" => "General", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
-        
-        
-        foreach($tabs as $tab) {
+
+
+        foreach ($tabs as $tab) {
             $this->addTab($tab);
         }
 
@@ -146,20 +146,22 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController  {
      * @Route("/product/getdatatable")
      */
     public function getdatatableAction(Request $request) {
-        
-        /*
-        $fields[] = array("name" => "ID", "index" => 'id', "active" => "active");
-        $fields[] = array("name" => "Title", "index" => 'title');
-        $fields[] = array("name" => "Code", "index" => 'erpCode');
-        $fields[] = array("name" => "Price", "index" => 'itemPricew01');
-        $this->setSetting("SoftoneBundle:Product:getdatatable", serialize($fields));
-        */
-        $fields = unserialize($this->getSetting("SoftoneBundle:Product:getdatatable"));        
-        
+
+
+        $fields = unserialize($this->getSetting("SoftoneBundle:Product:getdatatable"));
+        if (!count($fields) == 0) {
+            $fields[] = array("name" => "ID", "index" => 'id', "active" => "active");
+            $fields[] = array("name" => "Title", "index" => 'title');
+            $fields[] = array("name" => "Code", "index" => 'erpCode');
+            $fields[] = array("name" => "Price", "index" => 'itemPricew01');
+            $this->setSetting("SoftoneBundle:Product:getdatatable", serialize($fields));
+        }
+
+
         foreach ($fields as $field) {
             $this->addField($field);
         }
-        
+
         $json = $this->datatable();
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
@@ -176,46 +178,47 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController  {
     }
 
     function retrieveMtrcategory() {
-        /*
-        $params["softone_object"] = 'itecategory';
-        $params["repository"] = 'SoftoneBundle:Pcategory';
-        $params["softone_table"] = 'MTRCATEGORY';
-        $params["table"] = 'softone_pcategory';
-        $params["object"] = 'SoftoneBundle\Entity\Pcategory';
-        $params["filter"] = '';
-        $params["relation"] = array();
-        $params["extra"] = array();
-        $params["extrafunction"] = array();
-        $this->setSetting("SoftoneBundle:Product:retrieveMtrcategory", serialize($params));
-        */
         $params = unserialize($this->getSetting("SoftoneBundle:Product:retrieveMtrcategory"));
+        if (count($params) > 0) {
+            $params["softone_object"] = 'itecategory';
+            $params["repository"] = 'SoftoneBundle:Pcategory';
+            $params["softone_table"] = 'MTRCATEGORY';
+            $params["table"] = 'softone_pcategory';
+            $params["object"] = 'SoftoneBundle\Entity\Pcategory';
+            $params["filter"] = '';
+            $params["relation"] = array();
+            $params["extra"] = array();
+            $params["extrafunction"] = array();
+            $this->setSetting("SoftoneBundle:Product:retrieveMtrcategory", serialize($params));
+        }
+
         $this->retrieve($params);
     }
 
     function retrieveMtrl() {
-        /*
-        $where = '';
-        $params["softone_object"] = "item";
-        $params["repository"] = 'SoftoneBundle:Product';
-        $params["softone_table"] = 'MTRL';
-        $params["table"] = 'softone_product';
-        $params["object"] = 'SoftoneBundle\Entity\Product';
-        $params["filter"] = 'WHERE M.SODTYPE=51 ' . $where;
-        $params["relation"] = array();
-        $params["extra"] = array();
-        $params["extrafunction"] = array();
-        //$params["extra"]["CCCFXRELTDCODE"] = "CCCFXRELTDCODE";
-        //$params["extra"]["CCCFXRELBRAND"] = "CCCFXRELBRAND";
-        $params["relation"]["reference"] = "MTRL";
-        $params["relation"]["erpCode"] = "CODE";
-        $params["relation"]["supplierCode"] = "CODE2";
-        $params["relation"]["title"] = "NAME";
-        $params["relation"]["tecdocCode"] = "APVCODE";
-        $params["relation"]["tecdocSupplierId"] = "MTRMARK";
-        $params["extrafunction"][] = "updatetecdoc";
-        $this->setSetting("SoftoneBundle:Product:retrieveMtrl", serialize($params));
-        */
         $params = unserialize($this->getSetting("SoftoneBundle:Product:retrieveMtrl"));
+        if (count($params) > 0) {
+            $where = '';
+            $params["softone_object"] = "item";
+            $params["repository"] = 'SoftoneBundle:Product';
+            $params["softone_table"] = 'MTRL';
+            $params["table"] = 'softone_product';
+            $params["object"] = 'SoftoneBundle\Entity\Product';
+            $params["filter"] = 'WHERE M.SODTYPE=51 ' . $where;
+            $params["relation"] = array();
+            $params["extra"] = array();
+            $params["extrafunction"] = array();
+            //$params["extra"]["CCCFXRELTDCODE"] = "CCCFXRELTDCODE";
+            //$params["extra"]["CCCFXRELBRAND"] = "CCCFXRELBRAND";
+            $params["relation"]["reference"] = "MTRL";
+            $params["relation"]["erpCode"] = "CODE";
+            $params["relation"]["supplierCode"] = "CODE2";
+            $params["relation"]["title"] = "NAME";
+            $params["relation"]["tecdocCode"] = "APVCODE";
+            $params["relation"]["tecdocSupplierId"] = "MTRMARK";
+            $params["extrafunction"][] = "updatetecdoc";
+            $this->setSetting("SoftoneBundle:Product:retrieveMtrl", serialize($params));
+        }
         $this->retrieve($params);
     }
 
@@ -228,10 +231,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController  {
         ini_set('memory_limit', '2256M');
         echo $this->retrieveMtrcategory();
         echo $this->retrieveMtrl();
-        
+
         return new Response(
                 "", 200
         );
-
     }
+
 }

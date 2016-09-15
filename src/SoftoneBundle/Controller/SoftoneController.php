@@ -9,6 +9,7 @@ use AppBundle\Controller\Main as Main;
 use SoftoneBundle\Entity\Softone as Softone;
 use SoftoneBundle\Entity\Product as Product;
 use SoftoneBundle\Entity\Pcategory as Pcategory;
+use SoftoneBundle\Entity\TecdocSupplier as TecdocSupplier;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class SoftoneController extends  Main {
@@ -38,7 +39,7 @@ class SoftoneController extends  Main {
 
         $selfields = implode(",", $itemfield);
         $params["fSQL"] = 'SELECT ' . $selfields . ' FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
-        echo $params["fSQL"];
+        //echo $params["fSQL"];
         //$params["fSQL"] = 'SELECT M.* FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
         //echo $params["fSQL"];
         //return;
@@ -58,11 +59,21 @@ class SoftoneController extends  Main {
                 $entity->setTs($dt);
                 $entity->setCreated($dt);
                 $entity->setModified($dt);
+            } else {
+                $entity->setRepositories();                
             }
+            
+            @print_r($entity->repositories);
             foreach ($params["relation"] as $field => $extra) {
+                //echo $field." - ".@$data[$extra]."<BR>";
                 if (@$data[$extra] AND in_array($field, $fields)) {
                     $entity->setField($field, @$data[$extra]);
                 }
+                //echo @$entity->repositories[$field];
+                if (@$data[$extra] AND @$entity->repositories[$field]) {
+                    $rel = $this->getDoctrine()->getRepository($entity->repositories[$field])->findOneById($data[$extra]);
+                    $entity->setField($field, $rel);
+                }                
             }
 
             $imporetedData = array();

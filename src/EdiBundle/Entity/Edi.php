@@ -2,20 +2,58 @@
 
 namespace EdiBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\Entity;
+use SoftoneBundle\Entity\Softone as Softone;
+
+
 /**
  * Edi
  */
-class Edi
-{
+class Edi extends Entity {
+
+    public function __construct() {
+        //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:SoftoneSupplier';
+        //$this->types['tecdocSupplierId'] = 'object';
+        //$this->tecdocSupplierId = new \SoftoneBundle\Entity\SoftoneSupplier;
+    }
+    
+    public function getField($field) {
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
+    
+    public function getRepository() {
+        return $this->repository;
+    }
+    public function getRepositories($repo) {
+        //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:SoftoneSupplier';
+        return  $this->repositories[$repo];
+    }
+    public function gettype($field) {
+        //$this->types['tecdocSupplierId'] = 'object';
+        if (@$this->types[$field] != '') {
+            return @$this->types[$field];
+        }
+        if (gettype($field) != NULL) {
+            return gettype($this->$field);
+        }
+        return 'string';
+    }   
+           
     /**
      * @var string
      */
-    private $name;
+    var $name;
 
     /**
      * @var string
      */
-    private $token;
+    var $token;
 
     /**
      * @var integer
@@ -30,7 +68,7 @@ class Edi
     /**
      * @var string
      */
-    private $retailprice;
+    //private $retailprice;
 
     /**
      * @var \DateTime
@@ -47,7 +85,6 @@ class Edi
      */
     private $id;
 
-
     /**
      * Set name
      *
@@ -55,8 +92,7 @@ class Edi
      *
      * @return Edi
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -67,8 +103,7 @@ class Edi
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -79,8 +114,7 @@ class Edi
      *
      * @return Edi
      */
-    public function setToken($token)
-    {
+    public function setToken($token) {
         $this->token = $token;
 
         return $this;
@@ -91,8 +125,7 @@ class Edi
      *
      * @return string
      */
-    public function getToken()
-    {
+    public function getToken() {
         return $this->token;
     }
 
@@ -103,8 +136,7 @@ class Edi
      *
      * @return Edi
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->status = $status;
 
         return $this;
@@ -115,8 +147,7 @@ class Edi
      *
      * @return integer
      */
-    public function getStatus()
-    {
+    public function getStatus() {
         return $this->status;
     }
 
@@ -127,8 +158,7 @@ class Edi
      *
      * @return Edi
      */
-    public function setActioneer($actioneer)
-    {
+    public function setActioneer($actioneer) {
         $this->actioneer = $actioneer;
 
         return $this;
@@ -139,8 +169,7 @@ class Edi
      *
      * @return integer
      */
-    public function getActioneer()
-    {
+    public function getActioneer() {
         return $this->actioneer;
     }
 
@@ -151,8 +180,7 @@ class Edi
      *
      * @return Edi
      */
-    public function setRetailprice($retailprice)
-    {
+    public function setRetailprice($retailprice) {
         $this->retailprice = $retailprice;
 
         return $this;
@@ -163,8 +191,7 @@ class Edi
      *
      * @return string
      */
-    public function getRetailprice()
-    {
+    public function getRetailprice() {
         return $this->retailprice;
     }
 
@@ -175,8 +202,7 @@ class Edi
      *
      * @return Edi
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -187,8 +213,7 @@ class Edi
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -199,8 +224,7 @@ class Edi
      *
      * @return Edi
      */
-    public function setModified($modified)
-    {
+    public function setModified($modified) {
         $this->modified = $modified;
 
         return $this;
@@ -211,8 +235,7 @@ class Edi
      *
      * @return \DateTime
      */
-    public function getModified()
-    {
+    public function getModified() {
         return $this->modified;
     }
 
@@ -221,8 +244,37 @@ class Edi
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
+    }
+
+    /**
+     * @var string
+     */
+    private $func;
+
+
+    /**
+     * Set func
+     *
+     * @param string $func
+     *
+     * @return Edi
+     */
+    public function setFunc($func)
+    {
+        $this->func = $func;
+
+        return $this;
+    }
+
+    /**
+     * Get func
+     *
+     * @return string
+     */
+    public function getFunc()
+    {
+        return $this->func;
     }
 }

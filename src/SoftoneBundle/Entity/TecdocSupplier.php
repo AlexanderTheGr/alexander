@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="tecdoc_supplier")
  * @ORM\Entity
  */
-class TecdocSupplier
-{
+class TecdocSupplier {
+
     /**
      * @var string
      *
@@ -56,8 +56,6 @@ class TecdocSupplier
      */
     protected $id;
 
-
-
     /**
      * Set supplier
      *
@@ -65,8 +63,7 @@ class TecdocSupplier
      *
      * @return TecdocSupplier
      */
-    public function setSupplier($supplier)
-    {
+    public function setSupplier($supplier) {
         $this->supplier = $supplier;
 
         return $this;
@@ -77,8 +74,7 @@ class TecdocSupplier
      *
      * @return string
      */
-    public function getSupplier()
-    {
+    public function getSupplier() {
         return $this->supplier;
     }
 
@@ -89,8 +85,7 @@ class TecdocSupplier
      *
      * @return TecdocSupplier
      */
-    public function setTs($ts)
-    {
+    public function setTs($ts) {
         $this->ts = $ts;
 
         return $this;
@@ -101,8 +96,7 @@ class TecdocSupplier
      *
      * @return \DateTime
      */
-    public function getTs()
-    {
+    public function getTs() {
         return $this->ts;
     }
 
@@ -113,8 +107,7 @@ class TecdocSupplier
      *
      * @return TecdocSupplier
      */
-    public function setActioneer($actioneer)
-    {
+    public function setActioneer($actioneer) {
         $this->actioneer = $actioneer;
 
         return $this;
@@ -125,8 +118,7 @@ class TecdocSupplier
      *
      * @return integer
      */
-    public function getActioneer()
-    {
+    public function getActioneer() {
         return $this->actioneer;
     }
 
@@ -137,8 +129,7 @@ class TecdocSupplier
      *
      * @return TecdocSupplier
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -149,8 +140,7 @@ class TecdocSupplier
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -161,8 +151,7 @@ class TecdocSupplier
      *
      * @return TecdocSupplier
      */
-    public function setModified($modified)
-    {
+    public function setModified($modified) {
         $this->modified = $modified;
 
         return $this;
@@ -173,8 +162,7 @@ class TecdocSupplier
      *
      * @return \DateTime
      */
-    public function getModified()
-    {
+    public function getModified() {
         return $this->modified;
     }
 
@@ -183,8 +171,8 @@ class TecdocSupplier
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
+
 }

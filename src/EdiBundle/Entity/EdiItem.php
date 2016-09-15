@@ -2,11 +2,24 @@
 
 namespace EdiBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\Entity;
+use SoftoneBundle\Entity\Softone as Softone;
+
 /**
  * EdiItem
  */
-class EdiItem
-{
+class EdiItem extends Entity {
+
+    public function getField($field) {
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
+
     /**
      * @var string
      */
@@ -65,8 +78,7 @@ class EdiItem
     /**
      * @var integer
      */
-    private $id;
-
+    var $id;
 
     /**
      * Set itemCode
@@ -75,8 +87,7 @@ class EdiItem
      *
      * @return EdiItem
      */
-    public function setItemCode($itemCode)
-    {
+    public function setItemCode($itemCode) {
         $this->itemCode = $itemCode;
 
         return $this;
@@ -87,8 +98,7 @@ class EdiItem
      *
      * @return string
      */
-    public function getItemCode()
-    {
+    public function getItemCode() {
         return $this->itemCode;
     }
 
@@ -99,8 +109,7 @@ class EdiItem
      *
      * @return EdiItem
      */
-    public function setBrand($brand)
-    {
+    public function setBrand($brand) {
         $this->brand = $brand;
 
         return $this;
@@ -111,8 +120,7 @@ class EdiItem
      *
      * @return string
      */
-    public function getBrand()
-    {
+    public function getBrand() {
         return $this->brand;
     }
 
@@ -123,8 +131,7 @@ class EdiItem
      *
      * @return EdiItem
      */
-    public function setPartno($partno)
-    {
+    public function setPartno($partno) {
         $this->partno = $partno;
 
         return $this;
@@ -135,8 +142,7 @@ class EdiItem
      *
      * @return string
      */
-    public function getPartno()
-    {
+    public function getPartno() {
         return $this->partno;
     }
 
@@ -147,8 +153,7 @@ class EdiItem
      *
      * @return EdiItem
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -159,8 +164,7 @@ class EdiItem
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -171,8 +175,7 @@ class EdiItem
      *
      * @return EdiItem
      */
-    public function setDlnr($dlnr)
-    {
+    public function setDlnr($dlnr) {
         $this->dlnr = $dlnr;
 
         return $this;
@@ -183,8 +186,7 @@ class EdiItem
      *
      * @return integer
      */
-    public function getDlnr()
-    {
+    public function getDlnr() {
         return $this->dlnr;
     }
 
@@ -195,8 +197,7 @@ class EdiItem
      *
      * @return EdiItem
      */
-    public function setArtNr($artNr)
-    {
+    public function setArtNr($artNr) {
         $this->artNr = $artNr;
 
         return $this;
@@ -207,8 +208,7 @@ class EdiItem
      *
      * @return string
      */
-    public function getArtNr()
-    {
+    public function getArtNr() {
         return $this->artNr;
     }
 
@@ -219,8 +219,7 @@ class EdiItem
      *
      * @return EdiItem
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->status = $status;
 
         return $this;
@@ -231,8 +230,7 @@ class EdiItem
      *
      * @return integer
      */
-    public function getStatus()
-    {
+    public function getStatus() {
         return $this->status;
     }
 
@@ -243,8 +241,7 @@ class EdiItem
      *
      * @return EdiItem
      */
-    public function setActioneer($actioneer)
-    {
+    public function setActioneer($actioneer) {
         $this->actioneer = $actioneer;
 
         return $this;
@@ -255,8 +252,7 @@ class EdiItem
      *
      * @return integer
      */
-    public function getActioneer()
-    {
+    public function getActioneer() {
         return $this->actioneer;
     }
 
@@ -267,8 +263,7 @@ class EdiItem
      *
      * @return EdiItem
      */
-    public function setRetailprice($retailprice)
-    {
+    public function setRetailprice($retailprice) {
         $this->retailprice = $retailprice;
 
         return $this;
@@ -279,8 +274,7 @@ class EdiItem
      *
      * @return string
      */
-    public function getRetailprice()
-    {
+    public function getRetailprice() {
         return $this->retailprice;
     }
 
@@ -291,8 +285,7 @@ class EdiItem
      *
      * @return EdiItem
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -303,8 +296,7 @@ class EdiItem
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -315,8 +307,7 @@ class EdiItem
      *
      * @return EdiItem
      */
-    public function setModified($modified)
-    {
+    public function setModified($modified) {
         $this->modified = $modified;
 
         return $this;
@@ -327,8 +318,7 @@ class EdiItem
      *
      * @return \DateTime
      */
-    public function getModified()
-    {
+    public function getModified() {
         return $this->modified;
     }
 
@@ -337,15 +327,14 @@ class EdiItem
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
+
     /**
      * @var \EdiBundle\Entity\Edi
      */
     private $Edi;
-
 
     /**
      * Set edi
@@ -354,8 +343,7 @@ class EdiItem
      *
      * @return EdiItem
      */
-    public function setEdi(\EdiBundle\Entity\Edi $edi = null)
-    {
+    public function setEdi(\EdiBundle\Entity\Edi $edi = null) {
         $this->Edi = $edi;
 
         return $this;
@@ -366,8 +354,149 @@ class EdiItem
      *
      * @return \EdiBundle\Entity\Edi
      */
-    public function getEdi()
-    {
+    public function getEdi() {
         return $this->Edi;
+    }
+
+    
+    function updatetecdoc($forceupdate = false) {
+        //$data = array("service" => "login", 'username' => 'dev', 'password' => 'dev', 'appId' => '2000');
+        if ((int)$this->dlnr == 0 OR $this->artNr == '') return;
+        if ($this->getTecdocArticleId() > 0 and $forceupdate == false) return;
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+
+        //$data_string = json_encode($data);
+        $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
+
+        $fields = array(
+            'action' => 'updateTecdoc',
+            'tecdoc_code' => $this->artNr,
+            'tecdoc_supplier_id' => $this->dlnr,
+        );
+
+        $fields_string = '';
+        foreach ($fields as $key => $value) {
+            @$fields_string .= $key . '=' . $value . '&';
+        }
+        rtrim($fields_string, '&');
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, count($fields));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+        $out = json_decode(curl_exec($ch));
+
+        //echo print_r($out);
+
+        try {
+            //$webserviceProduct = WebserviceProduct::model()->findByAttributes(array('product' =>  $this->id,"webservice"=>$this->webservice));
+            //$sql = "Delete from SoftoneBundle:WebserviceProduct p where p.product = '" . $this->id . "'";
+            //$em->createQuery($sql)->getResult();
+            //$em->execute();
+            if (@$out->articleId) {
+                $this->setTecdocArticleId($out->articleId);
+                $this->setTecdocArticleName($out->articleName);
+                //$this->setTecdocGenericArticleId($out->articleName);
+                $em->persist($this);
+                $em->flush();
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            exit;
+        }
+        //echo $result;
+    }    
+    /**
+     * @var string
+     */
+    private $tecdocArticleName;
+
+    /**
+     * @var integer
+     */
+    private $tecdocGenericArticleId;
+
+    /**
+     * @var integer
+     */
+    private $tecdocArticleId;
+
+
+    /**
+     * Set tecdocArticleName
+     *
+     * @param string $tecdocArticleName
+     *
+     * @return EdiItem
+     */
+    public function setTecdocArticleName($tecdocArticleName)
+    {
+        $this->tecdocArticleName = $tecdocArticleName;
+
+        return $this;
+    }
+
+    /**
+     * Get tecdocArticleName
+     *
+     * @return string
+     */
+    public function getTecdocArticleName()
+    {
+        return $this->tecdocArticleName;
+    }
+
+    /**
+     * Set tecdocGenericArticleId
+     *
+     * @param integer $tecdocGenericArticleId
+     *
+     * @return EdiItem
+     */
+    public function setTecdocGenericArticleId($tecdocGenericArticleId)
+    {
+        $this->tecdocGenericArticleId = $tecdocGenericArticleId;
+
+        return $this;
+    }
+
+    /**
+     * Get tecdocGenericArticleId
+     *
+     * @return integer
+     */
+    public function getTecdocGenericArticleId()
+    {
+        return $this->tecdocGenericArticleId;
+    }
+
+    /**
+     * Set tecdocArticleId
+     *
+     * @param integer $tecdocArticleId
+     *
+     * @return EdiItem
+     */
+    public function setTecdocArticleId($tecdocArticleId)
+    {
+        $this->tecdocArticleId = $tecdocArticleId;
+
+        return $this;
+    }
+
+    /**
+     * Get tecdocArticleId
+     *
+     * @return integer
+     */
+    public function getTecdocArticleId()
+    {
+        return $this->tecdocArticleId;
     }
 }

@@ -5,6 +5,7 @@ namespace SoftoneBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Entity;
 use SoftoneBundle\Entity\Softone as Softone;
+use SoftoneBundle\Entity\TecdocSupplier as TecdocSupplier;
 
 /**
  * Product
@@ -13,15 +14,14 @@ use SoftoneBundle\Entity\Softone as Softone;
  */
 class Product extends Entity {
 
-    
-    
+    var $repositories = array();
+
     public function __construct() {
-        $this->repositories['tecdocSupplierId'] = 'SoftoneBundle:SoftoneSupplier';
-        $this->types['tecdocSupplierId'] = 'object';
-        $this->tecdocSupplierId = new \SoftoneBundle\Entity\SoftoneSupplier;
+        $this->setRepositories();
     }
-    
+
     public function getField($field) {
+
         return $this->$field;
     }
 
@@ -29,14 +29,22 @@ class Product extends Entity {
         $this->$field = $val;
         return $val;
     }
+
+    public function setRepositories() {
+        $this->repositories['tecdocSupplierId'] = 'SoftoneBundle:TecdocSupplier';
+        $this->types['tecdocSupplierId'] = 'object';   
+        //$this->tecdocSupplierId = new \SoftoneBundle\Entity\TecdocSupplier;
+    }
     
     public function getRepository() {
         return $this->repository;
     }
+
     public function getRepositories($repo) {
-        $this->repositories['tecdocSupplierId'] = 'SoftoneBundle:SoftoneSupplier';
-        return  $this->repositories[$repo];
+        $this->repositories['tecdocSupplierId'] = 'SoftoneBundle:TecdocSupplier';
+        return $this->repositories[$repo];
     }
+
     public function gettype($field) {
         $this->types['tecdocSupplierId'] = 'object';
         if (@$this->types[$field] != '') {
@@ -46,8 +54,8 @@ class Product extends Entity {
             return gettype($this->$field);
         }
         return 'string';
-    }   
-    
+    }
+
     /**
      * @var integer
      *
@@ -531,8 +539,6 @@ class Product extends Entity {
     public function getTecdocCode() {
         return $this->tecdocCode;
     }
-
-
 
     /**
      * Set supplierCode
@@ -1699,7 +1705,7 @@ class Product extends Entity {
 
     function updatetecdoc() {
         //$data = array("service" => "login", 'username' => 'dev', 'password' => 'dev', 'appId' => '2000');
-        
+        if ($this->getTecdocSupplierId() == null) return;
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
@@ -1878,13 +1884,13 @@ class Product extends Entity {
         $fields[] = "item_cccfxrelbrand";
         //print_r($fields); 
         //return;
-        $objectArr = array();        
+        $objectArr = array();
         $objectArr2 = array();
         if ($this->reference > 0) {
             $data = $softone->getData($object, $this->reference);
             $objectArr = $data->data->$object;
             $objectArr2 = (array) $objectArr[0];
-        }                   
+        }
         foreach ($fields as $field) {
             $field1 = strtoupper(str_replace(strtolower($object) . "_", "", $field));
             $field2 = lcfirst($this->createName($field));
@@ -1902,7 +1908,7 @@ class Product extends Entity {
         if ($out->id > 0) {
             $this->reference = $out->id;
             $em->persist($this);
-            $em->flush();            
+            $em->flush();
         }
     }
 
@@ -1942,7 +1948,6 @@ class Product extends Entity {
      */
     private $itemPricer05;
 
-
     /**
      * Set itemPricew04
      *
@@ -1950,8 +1955,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setItemPricew04($itemPricew04)
-    {
+    public function setItemPricew04($itemPricew04) {
         $this->itemPricew04 = $itemPricew04;
 
         return $this;
@@ -1962,8 +1966,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getItemPricew04()
-    {
+    public function getItemPricew04() {
         return $this->itemPricew04;
     }
 
@@ -1974,8 +1977,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setItemPricew05($itemPricew05)
-    {
+    public function setItemPricew05($itemPricew05) {
         $this->itemPricew05 = $itemPricew05;
 
         return $this;
@@ -1986,8 +1988,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getItemPricew05()
-    {
+    public function getItemPricew05() {
         return $this->itemPricew05;
     }
 
@@ -1998,8 +1999,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setItemPricer04($itemPricer04)
-    {
+    public function setItemPricer04($itemPricer04) {
         $this->itemPricer04 = $itemPricer04;
 
         return $this;
@@ -2010,8 +2010,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getItemPricer04()
-    {
+    public function getItemPricer04() {
         return $this->itemPricer04;
     }
 
@@ -2022,8 +2021,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setItemPricer05($itemPricer05)
-    {
+    public function setItemPricer05($itemPricer05) {
         $this->itemPricer05 = $itemPricer05;
 
         return $this;
@@ -2034,10 +2032,10 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getItemPricer05()
-    {
+    public function getItemPricer05() {
         return $this->itemPricer05;
     }
+
     /**
      * @var integer
      */
@@ -2053,7 +2051,6 @@ class Product extends Entity {
      */
     private $itemMtrgroup;
 
-
     /**
      * Set itemMtrmark
      *
@@ -2061,8 +2058,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setItemMtrmark($itemMtrmark)
-    {
+    public function setItemMtrmark($itemMtrmark) {
         $this->itemMtrmark = $itemMtrmark;
 
         return $this;
@@ -2073,8 +2069,7 @@ class Product extends Entity {
      *
      * @return integer
      */
-    public function getItemMtrmark()
-    {
+    public function getItemMtrmark() {
         return $this->itemMtrmark;
     }
 
@@ -2085,8 +2080,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setItemApvcode($itemApvcode)
-    {
+    public function setItemApvcode($itemApvcode) {
         $this->itemApvcode = $itemApvcode;
 
         return $this;
@@ -2097,8 +2091,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getItemApvcode()
-    {
+    public function getItemApvcode() {
         return $this->itemApvcode;
     }
 
@@ -2109,8 +2102,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setItemMtrgroup($itemMtrgroup)
-    {
+    public function setItemMtrgroup($itemMtrgroup) {
         $this->itemMtrgroup = $itemMtrgroup;
 
         return $this;
@@ -2121,32 +2113,29 @@ class Product extends Entity {
      *
      * @return integer
      */
-    public function getItemMtrgroup()
-    {
+    public function getItemMtrgroup() {
         return $this->itemMtrgroup;
     }
 
     /**
      * Set tecdocSupplierId
      *
-     * @param \SoftoneBundle\Entity\SoftoneSupplier $tecdocSupplierId
+     * @param \SoftoneBundle\Entity\TecdocSupplier $tecdocSupplierId
      *
      * @return Product
      */
-    public function setTecdocSupplierId(\SoftoneBundle\Entity\SoftoneSupplier $tecdocSupplierId = null)
-    {
+    public function setTecdocSupplierId(\SoftoneBundle\Entity\TecdocSupplier $tecdocSupplierId = null) {
         $this->tecdocSupplierId = $tecdocSupplierId;
-
         return $this;
     }
 
     /**
      * Get tecdocSupplierId
      *
-     * @return \SoftoneBundle\Entity\SoftoneSupplier
+     * @return \SoftoneBundle\Entity\TecdocSupplier
      */
-    public function getTecdocSupplierId()
-    {
+    public function getTecdocSupplierId() {
         return $this->tecdocSupplierId;
     }
+
 }

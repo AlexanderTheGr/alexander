@@ -752,4 +752,33 @@ class Eltrekaedi extends Entity {
         return $this->product;
     }
 
+    /**
+     * @var integer
+     */
+    private $ediitem;
+
+
+    /**
+     * Set ediitem
+     *
+     * @param integer $ediitem
+     *
+     * @return Eltrekaedi
+     */
+    public function setEdiitem($ediitem)
+    {
+        $this->ediitem = $ediitem;
+
+        return $this;
+    }
+
+    /**
+     * Get ediitem
+     *
+     * @return integer
+     */
+    public function getEdiitem()
+    {
+        return $this->ediitem;
+    }
 }
