@@ -147,15 +147,15 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function getdatatableAction(Request $request) {
 
-
+        $fields = array();
         $fields = unserialize($this->getSetting("SoftoneBundle:Product:getdatatable"));
-        if (!count($fields) == 0) {
+        if (count($fields) == 0) {
             $fields[] = array("name" => "ID", "index" => 'id', "active" => "active");
             $fields[] = array("name" => "Title", "index" => 'title');
             $fields[] = array("name" => "Code", "index" => 'erpCode');
             $fields[] = array("name" => "Price", "index" => 'itemPricew01');
             $this->setSetting("SoftoneBundle:Product:getdatatable", serialize($fields));
-        }
+       }
 
 
         foreach ($fields as $field) {

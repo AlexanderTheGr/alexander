@@ -355,6 +355,7 @@ class Softone extends Entity {
     }
 
     function retrieveData($obj, $list = "", $filters = "") {
+
         $fields = $this->getBrowserInfo($obj, $list, $filters);
 
         foreach ($fields->fields as $key => $field) {
@@ -362,7 +363,7 @@ class Softone extends Entity {
         }
 
         $datas = $this->getBrowser($obj, $list, $filters);
-
+        print_r($datas);
         $retrievedDataTable = array();
         foreach ((array) $datas->rows as $row) {
             $retrievedDataRow = array();

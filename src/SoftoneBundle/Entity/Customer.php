@@ -6,15 +6,25 @@ use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Entity;
 use SoftoneBundle\Entity\Softone as Softone;
 
+
 /**
  * Customer
  *
  * @ORM\Table(name="customer", indexes={@ORM\Index(name="user_id", columns={"actioneer"}), @ORM\Index(name="customer_code", columns={"customer_code"}) })
  * @ORM\Entity
  */
+
 class Customer extends Entity {
 
+    var $repositories = array();
+
+    public function __construct() {
+        $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->setRepositories();
+    }
+
     public function getField($field) {
+
         return $this->$field;
     }
 
@@ -22,6 +32,34 @@ class Customer extends Entity {
         $this->$field = $val;
         return $val;
     }
+
+    public function setRepositories() {
+        //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:TecdocSupplier';
+        $this->types['tecdocSupplierId'] = 'object';   
+        //$this->tecdocSupplierId = new \SoftoneBundle\Entity\TecdocSupplier;
+    }
+    
+    public function getRepository() {
+        return $this->repository;
+    }
+
+    public function getRepositories($repo) {
+        //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:TecdocSupplier';
+        return $this->repositories[$repo];
+    }
+
+    public function gettype($field) {
+        $this->types['tecdocSupplierId'] = 'object';
+        if (@$this->types[$field] != '') {
+            return @$this->types[$field];
+        }
+        if (gettype($field) != NULL) {
+            return gettype($this->$field);
+        }
+        return 'string';
+    }
+    
+
 
     /**
      * @var integer
@@ -855,12 +893,6 @@ class Customer extends Entity {
      */
     private $addresses;
 
-    /**
-     * Constructor
-     */
-    public function __construct() {
-        $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Add address
@@ -952,7 +984,6 @@ class Customer extends Entity {
      */
     private $customerVatsts;
 
-
     /**
      * Set customerVatsts
      *
@@ -960,8 +991,7 @@ class Customer extends Entity {
      *
      * @return Customer
      */
-    public function setCustomerVatsts($customerVatsts)
-    {
+    public function setCustomerVatsts($customerVatsts) {
         $this->customerVatsts = $customerVatsts;
 
         return $this;
@@ -972,8 +1002,8 @@ class Customer extends Entity {
      *
      * @return integer
      */
-    public function getCustomerVatsts()
-    {
+    public function getCustomerVatsts() {
         return $this->customerVatsts;
     }
+
 }

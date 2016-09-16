@@ -169,10 +169,6 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
         $this->retrieveCustomer();
 
-        return new Response(
-                "", 200
-        );
-
 
         $params = array("softone_object" => "CUSTOMER", "eav_model" => "customer", "model" => "Customer", "list" => "monitor");
         set_time_limit(100000);
@@ -183,7 +179,6 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $date = "2016-02-01";
         $filters = "CUSTOMER.UPDDATE=" . $date . "&CUSTOMER.UPDDATE_TO=" . date("Y-m-d");
         $datas = $softone->retrieveData($params["softone_object"], $params["list"], $filters);
-        print_r($datas);
 
         foreach ($datas as $data) {
             $data = (array) $data;
@@ -231,28 +226,29 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $em->getConnection()->exec($sql);
         $fields = $em->getClassMetadata('SoftoneBundle\Entity\Customeraddress')->getFieldNames();
         //print_r($datas);
-        foreach ($datas->data as $data) {
-            $data = (array) $data;
-            $customer = $this->getDoctrine()
-                    ->getRepository($this->repository)
-                    ->findOneBy(array("reference" => (int) $data["TRDR"]));
+        if (@$datas->data)
+            foreach ($datas->data as $data) {
+                $data = (array) $data;
+                $customer = $this->getDoctrine()
+                        ->getRepository($this->repository)
+                        ->findOneBy(array("reference" => (int) $data["TRDR"]));
 
-            $entity = new \SoftoneBundle\Entity\Customeraddress();
-            $entity->setCustomer($customer);
-            $entity->setReference($data["TRDR"]);
-            $this->flushpersist($entity);
-            $q = array();
-            foreach ($data as $identifier => $val) {
-                if (in_array(strtolower($identifier), $fields)) {
-                    $q[] = "`" . strtolower($identifier) . "` = '" . addslashes($val) . "'";
-                    //$entity->setField($baz, $val);
+                $entity = new \SoftoneBundle\Entity\Customeraddress();
+                $entity->setCustomer($customer);
+                $entity->setReference($data["TRDR"]);
+                $this->flushpersist($entity);
+                $q = array();
+                foreach ($data as $identifier => $val) {
+                    if (in_array(strtolower($identifier), $fields)) {
+                        $q[] = "`" . strtolower($identifier) . "` = '" . addslashes($val) . "'";
+                        //$entity->setField($baz, $val);
+                    }
                 }
+                @$entity_id = (int) $entity->id;
+                $sql = "update softone_customeraddress set " . implode(",", $q) . " where id = '" . $entity_id . "'";
+                $em->getConnection()->exec($sql);
+                //echo $sql . "<BR>";
             }
-            @$entity_id = (int) $entity->id;
-            $sql = "update softone_customeraddress set " . implode(",", $q) . " where id = '" . $entity_id . "'";
-            $em->getConnection()->exec($sql);
-            //echo $sql . "<BR>";
-        }
         exit;
     }
 

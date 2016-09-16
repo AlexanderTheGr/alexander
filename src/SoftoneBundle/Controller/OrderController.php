@@ -102,12 +102,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
         //$this->setSetting("SoftoneBundle:Product:Vat", 1310);
         $vatid = $this->getSetting("SoftoneBundle:Product:Vat");
+        
         $vat = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Vat")
-                ->findOneBy(array('enable' => 1, 'vatsts' => $customer->getVatsts()));
+                ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
 
         $order->setVat($vat);
-
+        
         $route = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Route")
                 ->find(1);
@@ -180,16 +181,16 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     protected function getoffcanvases($id) {
+        
+        $dtparams = array();
         $dtparams[] = array("name" => "ID", "index" => 'id', "input" => 'checkbox', "active" => "active");
         $dtparams[] = array("name" => "Erp Code", "index" => 'erpCode', 'search' => 'text');
         $dtparams[] = array("name" => "TecDoc Code", "index" => 'tecdocCode', 'search' => 'text');
         $dtparams[] = array("name" => "Title", "index" => 'title', 'search' => 'text');
         $dtparams[] = array("name" => "Supplier", "index" => 'erpSupplier', 'search' => 'text');
         $dtparams[] = array("name" => "Price", "index" => 'itemPricew01', "input" => 'text', 'search' => 'text');
-
         $dtparams[] = array("name" => "QTY", "index" => 'qty', "input" => 'text', 'search' => 'text');
         //$dtparams[] = array("name" => "ID", "function" => 'getAvailability', "active" => "active");
-
         $params['dtparams'] = $dtparams;
         $params['id'] = $dtparams;
         $params['key'] = 'getoffcanvases_' . $id;
@@ -197,10 +198,33 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $params["ctrl"] = 'ctrlgetoffcanvases';
         $params["app"] = 'appgetoffcanvases';
         $params["drawCallback"] = 'fororder(' . $id . ')';
-
         $datatables[] = $this->contentDatatable($params);
+        
+        
+        
+        
+        
+        $dtparams = array();
+        $dtparams[] = array("name" => "Edi", "index" => 'Edi:name', 'search' => 'select','type'=>'select');
+        $dtparams[] = array("name" => "Item Code", "index" => 'itemCode', 'search' => 'text');
+        $dtparams[] = array("name" => "Brand", "index" => 'brand', 'search' => 'text');
+        $dtparams[] = array("name" => "Part No", "index" => 'partno', 'search' => 'text');
+        $dtparams[] = array("name" => "Description", "index" => 'description', 'search' => 'text');
+        $dtparams[] = array("name" => "Tecdoc Name", "index" => 'tecdocArticleName', 'search' => 'text');
+        
+        $params['dtparams'] = $dtparams;
+        $params['id'] = $dtparams;
+        $params['key'] = 'getoffcanvases2_' . $id;
+        $params['url'] = '/edi/ediitem/getdatatable';
+        $params["ctrl"] = 'ctrlgetoffcanvases2';
+        $params["app"] = 'appgetoffcanvases2';
+        $params["drawCallback"] = 'fororder(' . $id . ')';
+        $datatables[] = $this->contentDatatable($params);        
+        
+        
         //$datatables = array();
         $this->addOffCanvas(array('id' => 'asdf', "content" => '', "index" => $this->generateRandomString(), "datatables" => $datatables));
+        //$this->addOffCanvas(array('id' => 'asdf2', "content" => '', "index" => $this->generateRandomString(), "datatables" => $datatables));
         return $this->offcanvases();
     }
 
@@ -358,6 +382,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $jsonarrnoref[$result["id"]] = $json;
                 }
             }
+            
+            
 
             $jsonarr = $this->softoneCalculate($jsonarr, $id);
             //echo count($jsonarr);
@@ -427,16 +453,19 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $k = 9000001;
         $dataOut["ITELINES"] = array();
 
-        $vat = $id > 0 ? $order->getVat()->getId() : $this->getSetting("SoftoneBundle:Product:Vat");
-
+        $vat = $id > 0 ? $order->getVat()->getVatsts() : $this->getSetting("SoftoneBundle:Product:Vat");
+        //$vat = 2310;
+        
         foreach ($jsonarr as $MTRL => $json) {
             if ($MTRL)
                 $dataOut["ITELINES"][] = array("QTY1" => 1, "VAT" => $vat, "LINENUM" => $json[1], "MTRL" => $MTRL);
         }
-
+        
+        //print_r($dataOut);
         $locateinfo = "MTRL,NAME,PRICE,QTY1,VAT;ITELINES:DISC1PRC,ITELINES:LINEVAL,MTRL,MTRL_ITEM_CODE,MTRL_ITEM_CODE1,MTRL_ITEM_NAME,MTRL_ITEM_NAME1,PRICE,QTY1;SALDOC:BUSUNITS,EXPN,TRDR,MTRL,PRICE,QTY1,VAT";
         $out = $softone->calculate((array) $dataOut, $object, "", "", $locateinfo);
         //print_r($out);
+        //exit;
         foreach ($out->data->ITELINES as $item) {
             $jsonarr[$item->MTRL][5] = str_replace("value='---'", "value='" . $item->LINEVAL . "'", $jsonarr[$item->MTRL][5]);
         }
@@ -461,15 +490,16 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($order->getCustomer());
-        $vat = $id > 0 ? $order->getVat()->getId() : $this->getSetting("SoftoneBundle:Product:Vat");
+        $vat = $id > 0 ? $order->getVat()->getVatsts() : $this->getSetting("SoftoneBundle:Product:Vat");
+        //$vat = $id > 0 ? $order->getVat()->getId() : $this->getSetting("SoftoneBundle:Product:Vat");
 
         if ($order->getReference() > 0) {
             $data = $softone->delData($object, (int) $order->getReference());
         }
         $objectArr = array();
         $objectArr[0]["TRDR"] = $customer->getReference();
-        $objectArr[0]["SERIESNUM"] = 10;
-        $objectArr[0]["FINCODE"] = 10;
+        $objectArr[0]["SERIESNUM"] = $order->getId();
+        $objectArr[0]["FINCODE"] = $order->getFincode();
         $objectArr[0]["PAYMENT"] = 1000;
         //$objectArr[0]["TFPRMS"] = $model->tfprms;
         //$objectArr[0]["FPRMS"] = $model->fprms;
@@ -499,7 +529,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $locateinfo = "MTRL,NAME,PRICE,QTY1,VAT;ITELINES:DISC1PRC,ITELINES:LINEVAL,MTRL,MTRL_ITEM_CODE,MTRL_ITEM_CODE1,MTRL_ITEM_NAME,MTRL_ITEM_NAME1,PRICE,QTY1;SALDOC:BUSUNITS,EXPN,TRDR,MTRL,PRICE,QTY1,VAT";
 
         $out = $softone->setData((array) $dataOut, $object, (int) 0);
-
+        //print_r($out);
 
         if (@$out->id > 0) {
             $order->setReference($out->id);
