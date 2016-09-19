@@ -1,6 +1,6 @@
 {% block body %}
     <a class="btn btn-icon-toggle btn-default offcanvas-search" href="#asdf" data-toggle="offcanvas" data-backdrop="false">kkkk</a>
-
+    
     <div class="alexander {{ctrl}}" ng-app="{{app}}" ng-controller="{{ctrl}} as vm">
 
         <form ng-submit="vm.onSubmit()" name="vm.form" class="form" id="{{ctrl}}" novalidate>      
@@ -30,6 +30,8 @@
                 </uib-tab>
             </uib-tabset> 
             <div class="offcanvas">
+                
+                
                 <div ng-repeat="offcanvas in vm.offcanvases" id="[[ offcanvas.id ]]" style='width: 1600px' style='width: 1600px' class="{{ctrl}} offcanvas-pane style-default-light">
                     <div class="offcanvas-head">
                         <header class="text-primary">Search</header>
@@ -40,6 +42,7 @@
                         </div>
                     </div>
                     <div class="offcanvas-body">
+                        <div id="extracanvascontent" ></div>
                         <div id="[[ offcanvas.index ]]"></div>
                         <div ng-repeat="datatable in offcanvas.datatables" class="dt[[datatable.ctrl]]"> 
                             <table class="alexander table table-striped dataTable [[datatable.ctrl]]">

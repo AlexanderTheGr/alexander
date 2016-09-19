@@ -41,6 +41,7 @@
                                     }
                                 })
                             }, 1)
+                            //alert(ctrl);
                             dt_tables[ctrl] = dt_table;
                         });
             });

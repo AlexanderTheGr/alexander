@@ -205,6 +205,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         
         
         $dtparams = array();
+        $dtparams[] = array("name" => "ID", "index" => 'id', "input" => 'checkbox', "active" => "active");
         $dtparams[] = array("name" => "Edi", "index" => 'Edi:name', 'search' => 'select','type'=>'select');
         $dtparams[] = array("name" => "Item Code", "index" => 'itemCode', 'search' => 'text');
         $dtparams[] = array("name" => "Brand", "index" => 'brand', 'search' => 'text');
@@ -212,13 +213,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $dtparams[] = array("name" => "Description", "index" => 'description', 'search' => 'text');
         $dtparams[] = array("name" => "Tecdoc Name", "index" => 'tecdocArticleName', 'search' => 'text');
         
+        
         $params['dtparams'] = $dtparams;
         $params['id'] = $dtparams;
         $params['key'] = 'getoffcanvases2_' . $id;
-        $params['url'] = '/edi/ediitem/getdatatable';
+        $params['url'] = '/edi/ediitem/getorderdatatable/1';
         $params["ctrl"] = 'ctrlgetoffcanvases2';
         $params["app"] = 'appgetoffcanvases2';
-        $params["drawCallback"] = 'fororder(' . $id . ')';
+        $params["drawCallback"] = 'fororder2(' . $id . ')';
         $datatables[] = $this->contentDatatable($params);        
         
         
@@ -255,7 +257,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
         $s = array();
         $f = array();
-
+        $jsonarr = array();
         if ($request->request->get("length")) {
             $em = $this->getDoctrine()->getManager();
             $orderFields = $em->getClassMetadata('SoftoneBundle\Entity\Product')->getFieldNames();
@@ -277,10 +279,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
 
             //print_r($articleIds2["articleIds"]);
-
+            
             if ($this->clearstring($dt_search["value"]) != "") {
 
-                $softone = new Softone();
+                //$softone = new Softone();
                 $recordsTotal = $em->getRepository($this->repository)->recordsTotal();
                 foreach ($this->fields as $index => $field) {
                     if (@$field["index"]) {
@@ -328,6 +330,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         )
                         ->setMaxResults($request->request->get("length"))
                         ->setFirstResult($request->request->get("start"));
+                
+                /*
+                echo 'SELECT  ' . $this->select . ', p.reference
+                                FROM ' . $this->repository . ' ' . $this->prefix . '
+                                ' . $this->where . ' ' . $tecdoc_article . '
+                                ORDER BY ' . $this->orderBy;
+                //exit;
+                */
                 $results = $query->getResult();
             }
             $data["fields"] = $this->fields;
@@ -385,7 +395,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             
             
 
-            $jsonarr = $this->softoneCalculate($jsonarr, $id);
+            //$jsonarr = $this->softoneCalculate($jsonarr, $id);
             //echo count($jsonarr);
             $jsonarr = array_merge($jsonarr, $jsonarrnoref);
 

@@ -64,7 +64,7 @@ class EdiItemController extends Main {
 
     public function getPartMasterFile() {
         $apiToken = $this->getSetting("EdiBundle:Edi:apiToken");
-        return 'http://zerog.gr/edi/fw.ashx?method=getinventoryfile&apiToken='.$apiToken;
+        return 'http://zerog.gr/edi/fw.ashx?method=getinventoryfile&apiToken=' . $apiToken;
     }
 
     /**
@@ -140,21 +140,90 @@ class EdiItemController extends Main {
 
         $this->repository = 'EdiBundle:EdiItem';
         $this->addField(array("name" => "ID", "index" => 'id'))
-                ->addField(array("name" => "Edi", "index" => 'Edi:name', 'search' => 'select','type'=>'select'))
+                ->addField(array("name" => "Edi", "index" => 'Edi:name', 'search' => 'select', 'type' => 'select'))
                 ->addField(array("name" => "Item Code", "index" => 'itemCode', 'search' => 'text'))
                 ->addField(array("name" => "Brand", "index" => 'brand', 'search' => 'text'))
                 ->addField(array("name" => "Part No", "index" => 'partno', 'search' => 'text'))
                 ->addField(array("name" => "Description", "index" => 'description', 'search' => 'text'))
                 ->addField(array("name" => "Tecdoc Name", "index" => 'tecdocArticleName', 'search' => 'text'))
-                
-                ;
+
+        ;
         $json = $this->datatable();
 
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
-    
+
+    /**
+     * @Route("/edi/ediitem/getorderedis")
+     */
+    public function getOrderEdisAction(Request $request) {
+        //echo 'SELECT  ' . $this->prefix . '.id FROM ' . $this->repository . ' where ' . $this->prefix . '.partno = "' . $request->request->get("terms") . '"';
+        $html = "";
+        $em = $this->getDoctrine()->getManager();
+        
+
+        
+        
+        $query = $em->createQuery(
+                "SELECT  distinct(e.id) as eid, e.name as edi
+                    FROM " . $this->repository . " p, EdiBundle:Edi e
+                    where 
+                        e.id = p.Edi AND
+                        p.partno LIKE '%" . $request->request->get("terms") . "%'"
+        );
+        $results = $query->getResult();
+        $html .= '<button type="button" class="edibutton btn btn-raised ink-reaction" data-id="0">Invetory</button>';
+        $edi = array();
+        foreach ($results as $data) {
+            $edi[$data['eid']] = $data;
+        }
+        $query = $em->createQuery(
+                "SELECT  e.id, e.name
+                    FROM EdiBundle:Edi e"
+        );
+        $results = $query->getResult();       
+        
+        foreach ($results as $dt) {
+            if (@$edi[$dt['id']]) {
+                $data = $edi[$dt['id']];
+                $html .= '<button type="button" class="edibutton btn btn-raised ink-reaction btn-success" data-id="' . $data['eid'] . '">' . $data['edi'] . '</button>';
+            } else {
+                $html .= '<button type="button" class="btn btn-raised ink-reaction btn-danger" data-id="' . $dt['id'] . '">' . $dt['name'] . '</button>';
+            }
+
+         }        
+        
+        
+        $json["html"] = $html;
+        return new Response(
+                json_encode($json), 200, array('Content-Type' => 'application/json')
+        );
+        exit;
+    }
+
+    /**
+     * @Route("/edi/ediitem/getorderdatatable/{id}")
+     */
+    public function getOrderDatatableAction(Request $request, $id) {
+
+        $this->repository = 'EdiBundle:EdiItem';
+        $this->addField(array("name" => "ID", "index" => 'id'))
+                ->addField(array("name" => "Edi", "index" => 'Edi:name', 'search' => 'select', 'type' => 'select'))
+                ->addField(array("name" => "Item Code", "index" => 'itemCode', 'search' => 'text'))
+                ->addField(array("name" => "Brand", "index" => 'brand', 'search' => 'text'))
+                ->addField(array("name" => "Part No", "index" => 'partno', 'search' => 'text'))
+                ->addField(array("name" => "Description", "index" => 'description', 'search' => 'text'))
+                ->addField(array("name" => "Tecdoc Name", "index" => 'tecdocArticleName', 'search' => 'text'))
+
+        ;
+        $json = $this->datatable();
+
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+    }
 
     /**
      * @Route("/edi/ediitem/install")

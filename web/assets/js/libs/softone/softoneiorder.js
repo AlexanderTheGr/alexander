@@ -1,7 +1,7 @@
 var b = false;
 var orderid = 0;
 jQuery('#productfreesearch').live("keyup", function (e) {
-    
+
     if (e.keyCode == 13) {
         asdf(this);
         var t = $(this).val();
@@ -78,7 +78,7 @@ jQuery(".savesoftone").live('click', function (e) {
         } else {
             toastr.success(json.error, "Success");
         }
-    })    
+    })
 })
 
 jQuery(".EltrekaediSendOrder").live('click', function (e) {
@@ -153,7 +153,7 @@ jQuery(".SoftoneBundleProductQty").live('keyup', function (e) {
         var data = {}
         data.order = orderid;
         data.item = jQuery(this).attr('data-id');
-        data.price = jQuery("#SoftoneBundleProductItemPricew01_"+data.item).val();
+        data.price = jQuery("#SoftoneBundleProductItemPricew01_" + data.item).val();
         data.qty = jQuery(this).val();
         $.post("/order/addorderitem/", data, function (result) {
             var json = angular.fromJson(result);
@@ -175,11 +175,23 @@ function asdf(obj, filter, freesearch) {
     //$.post("/edi/eltreka/order/fororder", data, function (result) {
     b = true;
     $("#offcanvas-search .offcanvas-head .text-primary").html(title);
+
+    
+    var table = dt_tables["ctrlgetoffcanvases2"];
+    table.fnFilter(2,1);
+    table.fnFilter(jQuery('#productfreesearch').val(),4);    
+    jQuery("#DataTables_Table_2_wrapper").hide();
+    jQuery("#DataTables_Table_1_wrapper").show();    
+    $.post("/edi/ediitem/getorderedis", data, function (result) {
+        $("#extracanvascontent").html(result.html);
+    })
+   
+    
     var table = dt_tables["ctrlgetoffcanvases"];
     table.fnFilter(jQuery('#productfreesearch').val());
-    setTimeout(function(){
-        jQuery(".SoftoneBundleProductQty").val(1);    
-    },1000)
+    setTimeout(function () {
+        jQuery(".SoftoneBundleProductQty").val(1);
+    }, 1000)
     //})
 }
 
@@ -188,33 +200,54 @@ function asdf2(obj) {
 
     //var data = {}
     //var title = 'Αναζήτηση για "' + $(obj).val() + '"';
-    //data.terms = $(obj).val();
-
+    //data.terms = $(obj).val()
     //$.post("/edi/eltreka/order/fororder", data, function (result) {
     b = true;
     //$("#offcanvas-search .offcanvas-head .text-primary").html(title);
     var table = dt_tables["ctrlgetoffcanvases"];
     table.fnFilter(obj.all);
     //$(".offcanvas-search").click();
-    setTimeout(function(){
-        jQuery(".SoftoneBundleProductQty").val(1);    
-    },1000)
+    setTimeout(function () {
+        jQuery(".SoftoneBundleProductQty").val(1);
+    }, 1000)
     //})
 }
-
+function fororder2(order) {
+    
+    
+}
 function fororder(order) {
     if (b == true) {
         orderid = order;
         $(".offcanvas-search").click();
         b = false;
     }
+    setTimeout(function () {
+        b = true;
+    },1000)
 }
 
-jQuery(".alexander tr").live('mouseover',function(){
+jQuery(".edibutton").live('click', function () {
+    var edi = jQuery(this).attr("data-id")
+    if (edi == 0) {
+        jQuery("#DataTables_Table_2_wrapper").hide();
+        jQuery("#DataTables_Table_1_wrapper").show();        
+    } else {
+        var table = dt_tables["ctrlgetoffcanvases2"];   
+        table.fnFilter(edi,1,function() {
+
+        });
+        table.fnFilter(jQuery('#productfreesearch').val(),4);  
+        jQuery("#DataTables_Table_1_wrapper").hide();
+        jQuery("#DataTables_Table_2_wrapper").show();
+    }    
+});
+
+jQuery(".alexander tr").live('mouseover', function () {
     //alert('sss');
     jQuery(this).find('.orderitemstable').show();
 });
-jQuery(".alexander tr").live('mouseout',function(){
+jQuery(".alexander tr").live('mouseout', function () {
     //alert('sss');
     jQuery('.orderitemstable').hide();
 });
