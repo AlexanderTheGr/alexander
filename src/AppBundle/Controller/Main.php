@@ -57,7 +57,7 @@ class Main extends Controller {
         return $query->getResult();
     }
 
-    public function datatable() {
+    public function datatable($funct = false) {
         ini_set("memory_limit", "1256M");
         $request = Request::createFromGlobals();
 
@@ -163,6 +163,13 @@ class Main extends Controller {
             $json["DT_RowId"] = 'dt_id_' . strtolower($r[1]) . '_' . $result["id"];
             $jsonarr[] = $json;
         }
+        if ($funct) {
+            $jsonarrnoref = array();
+            $jsonarr = $this->$funct($jsonarr);
+            $jsonarr = array_merge($jsonarr, $jsonarrnoref);
+        }
+        
+        
         $data["data"] = $jsonarr;
         $data["recordsTotal"] = $recordsTotal;
         $data["recordsFiltered"] = $recordsFiltered;

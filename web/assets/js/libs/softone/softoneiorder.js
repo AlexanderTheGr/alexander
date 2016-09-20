@@ -176,10 +176,11 @@ function asdf(obj, filter, freesearch) {
     b = true;
     $("#offcanvas-search .offcanvas-head .text-primary").html(title);
 
-    
+    /*
     var table = dt_tables["ctrlgetoffcanvases2"];
     table.fnFilter(2,1);
     table.fnFilter(jQuery('#productfreesearch').val(),4);    
+    */
     jQuery("#DataTables_Table_2_wrapper").hide();
     jQuery("#DataTables_Table_1_wrapper").show();    
     $.post("/edi/ediitem/getorderedis", data, function (result) {

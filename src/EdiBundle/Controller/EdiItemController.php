@@ -145,10 +145,11 @@ class EdiItemController extends Main {
                 ->addField(array("name" => "Brand", "index" => 'brand', 'search' => 'text'))
                 ->addField(array("name" => "Part No", "index" => 'partno', 'search' => 'text'))
                 ->addField(array("name" => "Description", "index" => 'description', 'search' => 'text'))
-                ->addField(array("name" => "Tecdoc Name", "index" => 'tecdocArticleName', 'search' => 'text'))
+                ->addField(array("name" => "Price", "index" => 'retailprice', 'search' => 'text'))
 
         ;
-        $json = $this->datatable();
+        $json = $this->datatable('setEdiQtyAvailability');
+        //$json = $this->datatable();
 
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
@@ -162,10 +163,10 @@ class EdiItemController extends Main {
         //echo 'SELECT  ' . $this->prefix . '.id FROM ' . $this->repository . ' where ' . $this->prefix . '.partno = "' . $request->request->get("terms") . '"';
         $html = "";
         $em = $this->getDoctrine()->getManager();
-        
 
-        
-        
+
+
+
         $query = $em->createQuery(
                 "SELECT  distinct(e.id) as eid, e.name as edi
                     FROM " . $this->repository . " p, EdiBundle:Edi e
@@ -183,9 +184,9 @@ class EdiItemController extends Main {
                 "SELECT  e.id, e.name
                     FROM EdiBundle:Edi e"
         );
-        $results = $query->getResult();       
-        
-        
+        $results = $query->getResult();
+
+
         foreach ($results as $dt) {
             if (@$edi[$dt['id']]) {
                 $data = $edi[$dt['id']];
@@ -193,10 +194,9 @@ class EdiItemController extends Main {
             } else {
                 $html .= '<button type="button" class="btn btn-raised ink-reaction btn-danger" data-id="' . $dt['id'] . '">' . $dt['name'] . '</button>';
             }
+        }
 
-         }        
-        
-        
+
         $json["html"] = $html;
         return new Response(
                 json_encode($json), 200, array('Content-Type' => 'application/json')
@@ -216,14 +216,85 @@ class EdiItemController extends Main {
                 ->addField(array("name" => "Brand", "index" => 'brand', 'search' => 'text'))
                 ->addField(array("name" => "Part No", "index" => 'partno', 'search' => 'text'))
                 ->addField(array("name" => "Description", "index" => 'description', 'search' => 'text'))
-                ->addField(array("name" => "Tecdoc Name", "index" => 'tecdocArticleName', 'search' => 'text'))
+                //->addField(array("name" => "Tecdoc Name", "index" => 'tecdocArticleName', 'search' => 'text'))
+                ->addField(array("name" => "Price", "index" => 'retailprice', 'search' => 'text'))
 
         ;
-        $json = $this->datatable();
+        $json = $this->datatable('setEdiQtyAvailability');
 
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
+    }
+
+    function setEdiQtyAvailability($jsonarr) {
+        //return;
+        //return $jsonarr;
+        $datas = array();
+        foreach ($jsonarr as $key => $json) {
+
+            $entity = $this->getDoctrine()
+                    ->getRepository($this->repository)
+                    ->find($json[0]);
+
+            if (@!$datas[$entity->getEdi()->getId()]) {
+                $datas[$entity->getEdi()->getId()]['ApiToken'] = $entity->getEdi()->getToken();
+                $datas[$entity->getEdi()->getId()]['Items'] = array();
+            }
+            $Items[$entity->getEdi()->getId()]["ItemCode"] = $entity->getPartno();
+            $Items[$entity->getEdi()->getId()]["ReqQty"] = 1;
+            $datas[$entity->getEdi()->getId()]['Items'][] = $Items[$entity->getEdi()->getId()];
+            $ands[$entity->getPartno()] = $key;
+            //$jsonarr2[(int)$key] = $json;
+        }
+        //print_r($datas);
+        //print_r($datas);
+        $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=getiteminfo';
+        //$data_string = '{ "ApiToken": "b5ab708b-0716-4c91-a8f3-b6513990fe3c", "Items": [ { "ItemCode": "' . $this->erp_code . '", "ReqQty": 1 } ] } ';
+        //return 10;
+
+
+        foreach ($datas as $catalogue => $data) {
+            $data_string = json_encode($data);
+            //print_r($data);
+            //turn;
+            $result = file_get_contents($requerstUrl, null, stream_context_create(array(
+                'http' => array(
+                    'method' => 'POST',
+                    'header' =>
+                    'Content-Type: application/json' . "\r\n"
+                    . 'Content-Length: ' . strlen($data_string) . "\r\n",
+                    'content' => $data_string,
+                ),
+            )));
+            $re = json_decode($result);
+
+            //print_r($jsonarr2);
+            //return;
+            if (@count($re->Items))
+                foreach ($re->Items as $Item) {
+                    $qty = $Item->Availability == 'green' ? 100 : 0;
+                    $Item->UnitPrice;
+                    //echo $Item->ItemCode."\n";
+                    if (@$jsonarr[$ands[$Item->ItemCode]])
+                        @$jsonarr[$ands[$Item->ItemCode]]['6'] = number_format($Item->UnitPrice, 2, '.', '');
+                }
+        }
+        //print_r($jsonarr2);
+        return $jsonarr;
+        /*
+          if (round($this->retail,2) != round($Item->UnitPrice,2)) {
+          $this->retail = $Item->UnitPrice;
+          $this->retail_special = $Item->UnitPrice;
+          $out["Availability"] = $Item->Availability;
+          $this->fretail = $this->retail * (1+($this->markup/100)) + $this->markupplus;
+          $this->fretail_special  = $this->retail_special * (1+($this->markup/100)) + $this->markupplus;
+          $this->fretail_special = $this->fretail_special > 0 ? $this->fretail_special : $this->fretail;
+          $this->updated == 0;
+          $this->save();
+          $this->updateProduct();
+          }
+         */
     }
 
     /**
