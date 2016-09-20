@@ -132,7 +132,7 @@ class EdiController extends Main {
                             ->getRepository('EdiBundle:EdiItem')
                             ->findOneBy(array("itemCode" => $attributes["itemcode"], "Edi" => $ediedi));
                 }
-                $ediediitem->updatetecdoc();
+                //$ediediitem->updatetecdoc();
                 //if ($i++ > 6000) exit;
             }
         }
