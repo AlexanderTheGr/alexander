@@ -185,6 +185,7 @@ class EdiItemController extends Main {
         );
         $results = $query->getResult();       
         
+        
         foreach ($results as $dt) {
             if (@$edi[$dt['id']]) {
                 $data = $edi[$dt['id']];
