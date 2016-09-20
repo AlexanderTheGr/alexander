@@ -51,7 +51,7 @@ class SecurityController extends Main {
             'command' => 'doctrine:schema:update',
             "--force" => true
         ));
-        echo 'sssss';
+        //echo 'sssss';
         $output = new BufferedOutput();
         $application->run($input, $output);
         $this->getSetting("SoftoneBundle:Softone:appId");
