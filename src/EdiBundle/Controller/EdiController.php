@@ -76,7 +76,9 @@ class EdiController extends Main {
     public function getPartMasterAction() {
         $this->createSelect(array($this->prefix . ".token", $this->prefix . ".func", $this->prefix . ".id"));
         $collection = $this->collection($this->repository);
+        $i = 0;
         foreach ($collection as $entity) {
+            if ($i++ <= 1) continue;
             $func = $entity["func"];
             $this->$func($entity);
         }
@@ -92,7 +94,7 @@ class EdiController extends Main {
         $fiestr = gzdecode(file_get_contents($this->getEdiPartMasterFile($entity["token"])));
         file_put_contents($file, $fiestr);
         set_time_limit(100000);
-        ini_set('memory_limit', '1256M');
+        ini_set('memory_limit', '4096M');
         
         //return;
         $em = $this->getDoctrine()->getManager();
@@ -105,7 +107,7 @@ class EdiController extends Main {
             print_r($attrs);
             $i = 0;
             while ($data = fgetcsv($handle, 1000, "\t")) {
-                if ($i++ == 0) continue;
+                //if ($i++ == 0) continue;
                 foreach ($data as $key => $val) {
                     $attributes[$attrs[$key]] = $val;
                 }
