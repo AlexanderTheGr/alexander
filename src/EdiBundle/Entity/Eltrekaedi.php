@@ -781,4 +781,33 @@ class Eltrekaedi extends Entity {
     {
         return $this->ediitem;
     }
+    /**
+     * @var integer
+     */
+    private $moq;
+
+
+    /**
+     * Set moq
+     *
+     * @param integer $moq
+     *
+     * @return Eltrekaedi
+     */
+    public function setMoq($moq)
+    {
+        $this->moq = $moq;
+
+        return $this;
+    }
+
+    /**
+     * Get moq
+     *
+     * @return integer
+     */
+    public function getMoq()
+    {
+        return $this->moq;
+    }
 }

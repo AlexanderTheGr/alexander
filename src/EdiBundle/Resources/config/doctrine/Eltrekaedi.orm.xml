@@ -49,6 +49,12 @@
         <option name="unsigned"/>
       </options>
     </field>
+    
+    <field name="moq" type="integer" column="moq" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>    
         
     <field name="tecdocpartno" type="string" column="tecdocpartno" length="255" nullable="false">
       <options>
