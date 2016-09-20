@@ -88,7 +88,7 @@ class EdiItemController extends Main {
             foreach ($data as $key => $attr) {
                 $attrs[$key] = strtolower($attr);
             }
-            print_r($attrs);
+            //print_r($attrs);
             $i = 0;
             while ($data = fgetcsv($handle, 100000, "\t")) {
                 foreach ($data as $key => $val) {
@@ -150,7 +150,6 @@ class EdiItemController extends Main {
         ;
         $json = $this->datatable('setEdiQtyAvailability');
         //$json = $this->datatable();
-
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
@@ -231,6 +230,9 @@ class EdiItemController extends Main {
         //return;
         //return $jsonarr;
         $datas = array();
+        //print_r($jsonarr);
+        if (count($jsonarr) > 25 OR count($jsonarr) == 0) return $jsonarr;
+        //return;
         foreach ($jsonarr as $key => $json) {
 
             $entity = $this->getDoctrine()
@@ -269,7 +271,7 @@ class EdiItemController extends Main {
             )));
             $re = json_decode($result);
 
-            //print_r($jsonarr2);
+            //print_r($re);
             //return;
             if (@count($re->Items))
                 foreach ($re->Items as $Item) {
@@ -280,7 +282,7 @@ class EdiItemController extends Main {
                         @$jsonarr[$ands[$Item->ItemCode]]['6'] = number_format($Item->UnitPrice, 2, '.', '');
                 }
         }
-        print_r($jsonarr);
+        //print_r($jsonarr);
         return $jsonarr;
         /*
           if (round($this->retail,2) != round($Item->UnitPrice,2)) {

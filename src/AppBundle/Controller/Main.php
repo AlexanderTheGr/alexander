@@ -165,8 +165,10 @@ class Main extends Controller {
         }
         if ($funct) {
             $jsonarrnoref = array();
-            $jsonarr = $this->$funct($jsonarr);
-            $jsonarr = array_merge($jsonarr, $jsonarrnoref);
+            if (count($jsonarr)) {
+                $jsonarr = $this->$funct($jsonarr);
+                $jsonarr = array_merge($jsonarr, $jsonarrnoref);
+            }
         }
         
         
@@ -254,6 +256,7 @@ class Main extends Controller {
                 $field["content"] = '<input class="style-primary-bright form-control search_init" type="text" />';
             }
         }
+        
         $this->fields[] = $field;
         //print_r($this->fields);
         //echo "<BR>";
