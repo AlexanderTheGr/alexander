@@ -47,12 +47,22 @@ class SecurityController extends Main {
         set_time_limit(100000);          
             
         //$options = array('command' => 'doctrine:schema:update', "--force" => true);
+        //app/console assetic:dump --watch
+        
         $input = new ArrayInput(array(
             'command' => 'doctrine:schema:update',
             "--force" => true
         ));
         $output = new BufferedOutput();
         $application->run($input, $output);
+        
+        $input = new ArrayInput(array(
+            'command' => 'assetic:dump',
+            "--watch" => true
+        ));
+        $output = new BufferedOutput();
+        
+        $application->run($input, $output);        
         $this->getSetting("SoftoneBundle:Softone:appId");
         $this->getSetting("SoftoneBundle:Softone:username");
         $this->getSetting("SoftoneBundle:Softone:password");
