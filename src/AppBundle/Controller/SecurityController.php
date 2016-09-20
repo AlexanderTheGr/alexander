@@ -56,13 +56,6 @@ class SecurityController extends Main {
         $output = new BufferedOutput();
         $application->run($input, $output);
         
-        $input = new ArrayInput(array(
-            'command' => 'assetic:dump',
-            "--watch" => true
-        ));
-        $output = new BufferedOutput();
-        
-        $application->run($input, $output);        
         $this->getSetting("SoftoneBundle:Softone:appId");
         $this->getSetting("SoftoneBundle:Softone:username");
         $this->getSetting("SoftoneBundle:Softone:password");
