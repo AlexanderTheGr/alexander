@@ -104,7 +104,7 @@ class EdiController extends Main {
             }
             print_r($attrs);
             $i = 0;
-            while ($data = fgetcsv($handle, 100000, "\t")) {
+            while ($data = fgetcsv($handle, 1000, "\t")) {
                 foreach ($data as $key => $val) {
                     $attributes[$attrs[$key]] = $val;
                 }
