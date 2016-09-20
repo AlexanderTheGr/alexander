@@ -282,7 +282,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             
             if ($this->clearstring($dt_search["value"]) != "") {
 
-                //$softone = new Softone();
+                $softone = new Softone();
                 $recordsTotal = $em->getRepository($this->repository)->recordsTotal();
                 foreach ($this->fields as $index => $field) {
                     if (@$field["index"]) {
@@ -393,9 +393,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 }
             }
             
-            
-
-            //$jsonarr = $this->softoneCalculate($jsonarr, $id);
+            $jsonarr = $this->softoneCalculate($jsonarr, $id);
             //echo count($jsonarr);
             $jsonarr = array_merge($jsonarr, $jsonarrnoref);
 

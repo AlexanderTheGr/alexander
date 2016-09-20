@@ -110,7 +110,7 @@ class EdiController extends Main {
             while ($data = fgetcsv($handle, 1000, "\t")) {
                 //if ($i++ == 0) continue;
                 foreach ($data as $key => $val) {
-                    $attributes[$attrs[$key]] = $val;
+                    $attributes[$attrs[$key]] = trim(addslashes($val));
                 }
 
                 if (@!$ediedis[$entity["id"]]) {
@@ -156,7 +156,7 @@ class EdiController extends Main {
             $i = 0;
             while ($data = fgetcsv($handle, 100000, "\t")) {
                 foreach ($data as $key => $val) {
-                    $attributes[$attrs[$key]] = $val;
+                    $attributes[$attrs[$key]] = trim(addslashes($val));
                 }
                 $attributes["wholeprice"] = str_replace(",", ".", $attributes["wholeprice"]);
                 $attributes["retailprice"] = str_replace(",", ".", $attributes["retailprice"]);
