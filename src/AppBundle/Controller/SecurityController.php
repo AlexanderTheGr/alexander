@@ -21,7 +21,7 @@ class SecurityController extends Main {
     public function loginAction(Request $request) {
 
 
-        //$this->install();
+        $this->install();
         //exit;  
         $login = $request->request->get("LoginForm");
         $session = $request->getSession();
@@ -47,15 +47,13 @@ class SecurityController extends Main {
         set_time_limit(100000);          
             
         //$options = array('command' => 'doctrine:schema:update', "--force" => true);
-        //app/console assetic:dump --watch
-        
         $input = new ArrayInput(array(
             'command' => 'doctrine:schema:update',
             "--force" => true
         ));
+        echo 'sssss';
         $output = new BufferedOutput();
         $application->run($input, $output);
-        
         $this->getSetting("SoftoneBundle:Softone:appId");
         $this->getSetting("SoftoneBundle:Softone:username");
         $this->getSetting("SoftoneBundle:Softone:password");
