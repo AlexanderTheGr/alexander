@@ -197,7 +197,7 @@ class EdiController extends Main {
                             ->findOneBy(array("itemCode" => $attributes["partno"], "Edi" => $ediedi));
                     @$ediedi_id = (int) $ediediitem->id;
                 }
-                $ediediitem->updatetecdoc();
+                //$ediediitem->updatetecdoc();
 
                 $eltrekaedi = $this->getDoctrine()
                         ->getRepository('EdiBundle:Eltrekaedi')
