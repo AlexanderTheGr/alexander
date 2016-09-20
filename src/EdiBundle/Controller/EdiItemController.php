@@ -280,7 +280,7 @@ class EdiItemController extends Main {
                         @$jsonarr[$ands[$Item->ItemCode]]['6'] = number_format($Item->UnitPrice, 2, '.', '');
                 }
         }
-        //print_r($jsonarr2);
+        print_r($jsonarr);
         return $jsonarr;
         /*
           if (round($this->retail,2) != round($Item->UnitPrice,2)) {
