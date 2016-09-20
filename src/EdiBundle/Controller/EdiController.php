@@ -92,7 +92,7 @@ class EdiController extends Main {
         file_put_contents($apiToken . '.csv', $fiestr);
         set_time_limit(100000);
         ini_set('memory_limit', '1256M');
-        $file = $apiToken . '.csv';
+        $file = "/home2/partsbox/".$apiToken . '.csv';
         //return;
         $em = $this->getDoctrine()->getManager();
         if ((($handle = fopen($file, "r")) !== FALSE)) {
