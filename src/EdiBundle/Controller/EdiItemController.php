@@ -217,37 +217,173 @@ class EdiItemController extends Main {
                 ->addField(array("name" => "Description", "index" => 'description', 'search' => 'text'))
                 //->addField(array("name" => "Tecdoc Name", "index" => 'tecdocArticleName', 'search' => 'text'))
                 ->addField(array("name" => "Price", "index" => 'retailprice', 'search' => 'text'))
+                ->addField(array("name" => "ID", "function" => 'getQty1', "active" => "active"))
+                ->addField(array("name" => "ID", "function" => 'getQty2', "active" => "active"))
+
 
         ;
-        $json = $this->datatable('setEdiQtyAvailability');
+        $json = $this->ediitemdatatable('setEdiQtyAvailability');
 
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
 
+    public function ediitemdatatable($funct = false) {
+        ini_set("memory_limit", "1256M");
+        $request = Request::createFromGlobals();
+
+
+        $recordsTotal = 0;
+        $recordsFiltered = 0;
+        //$this->q_or = array();
+        //$this->q_and = array();
+
+        $s = array();
+        if ($request->request->get("length")) {
+            $em = $this->getDoctrine()->getManager();
+
+            $doctrineConfig = $em->getConfiguration();
+            $doctrineConfig->addCustomStringFunction('FIELD', 'DoctrineExtensions\Query\Mysql\Field');
+
+            $dt_order = $request->request->get("order");
+            $dt_search = $request->request->get("search");
+            $dt_columns = $request->request->get("columns");
+            $recordsTotal = $em->getRepository($this->repository)->recordsTotal();
+            $fields = array();
+            foreach ($this->fields as $index => $field) {
+                if (@$field["index"]) {
+                    $fields[] = $field["index"];
+                    $field_relation = explode(":", $field["index"]);
+                    if (count($field_relation) == 1) {
+                        if ($this->clearstring($dt_search["value"]) != "") {
+                            $this->q_or[] = $this->prefix . "." . $field["index"] . " LIKE '%" . $this->clearstring($dt_search["value"]) . "%'";
+                        }
+                        if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != "") {
+                            $this->q_and[] = $this->prefix . "." . $this->fields[$index]["index"] . " LIKE '%" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "%'";
+                        }
+                        $s[] = $this->prefix . "." . $field_relation[0];
+                    } else {
+                        if ($dt_search["value"] === true) {
+                            if ($this->clearstring($dt_search["value"]) != "") {
+                                $this->q_or[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_search["value"]) . "'";
+                            }
+                        }
+                        if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != "") {
+                            $field_relation = explode(":", $this->fields[$index]["index"]);
+                            $this->q_and[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "'";
+                            //$s[] = $this->prefix . "." . $field_relation[0];  
+                        }
+                    }
+                }
+            }
+
+            $this->createWhere();
+            $this->createOrderBy($fields, $dt_order);
+            $this->createSelect($s);
+            $select = count($s) > 0 ? implode(",", $s) : $this->prefix . ".*";
+
+            $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
+
+            $query = $em->createQuery(
+                            'SELECT  ' . $this->select . '
+                                FROM ' . $this->repository . ' ' . $this->prefix . '
+                                ' . $this->where . '
+                                ORDER BY ' . $this->orderBy
+                    )
+                    ->setMaxResults($request->request->get("length"))
+                    ->setFirstResult($request->request->get("start"));
+            $results = $query->getResult();
+        }
+        $data["fields"] = $this->fields;
+        $jsonarr = array();
+        $r = explode(":", $this->repository);
+
+        foreach (@(array) $results as $result) {
+            $json = array();
+            $obj = $em->getRepository($this->repository)->find($result["id"]);
+            foreach ($data["fields"] as $field) {
+                if (@$field["index"]) {
+                    $field_relation = explode(":", $field["index"]);
+                    if (count($field_relation) > 1) {
+                        //echo $this->repository;
+                        //$obj = $em->getRepository($this->repository)->find($result["id"]);
+                        foreach ($field_relation as $relation) {
+                            if ($obj)
+                                $obj = $obj->getField($relation);
+                        }
+                        $val = $obj;
+                    } else {
+                        $val = $result[$field["index"]];
+                    }
+                    if (@$field["method"]) {
+                        $method = $field["method"] . "Method";
+                        $json[] = $this->$method($val);
+                    } else {
+                        if (@$field["input"]) {
+                            $json[] = "<input id='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "_" . $result["id"] . "' data-id='" . $result["id"] . "' class='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "' type='" . $field["input"] . "' value='" . $val . "'>";
+                        } else {
+                            $json[] = $val;
+                        }
+                    }
+                } elseif (@$field["function"]) {
+                    $func = $field["function"];
+                    $obj = $em->getRepository($this->repository)->find($result["id"]);
+                    $json[] = $obj->$func(count($results));
+                }
+            }
+            $prd = $obj->getProduct() > 0 ? ' bold ' : '';
+            $json["DT_RowClass"] = $prd . "dt_row_" . strtolower($r[1]);
+
+            $json["DT_RowId"] = 'dt_id_' . strtolower($r[1]) . '_' . $result["id"];
+            $jsonarr[] = $json;
+        }
+        if ($funct) {
+            $jsonarrnoref = array();
+            if (count($jsonarr)) {
+                $jsonarr = $this->$funct($jsonarr);
+                $jsonarr = array_merge($jsonarr, $jsonarrnoref);
+            }
+        }
+
+        $data["data"] = $jsonarr;
+        $data["recordsTotal"] = $recordsTotal;
+        $data["recordsFiltered"] = $recordsFiltered;
+        return json_encode($data);
+    }
+
     function setEdiQtyAvailability($jsonarr) {
+        $limit = 25;
         //return;
         //return $jsonarr;
         $datas = array();
         //print_r($jsonarr);
-        if (count($jsonarr) > 25 OR count($jsonarr) == 0) return $jsonarr;
+        if (count($jsonarr) >= $limit*5 OR count($jsonarr) == 0)
+            return $jsonarr;
         //return;
+        $i = 0;
+        $k = 0;
         foreach ($jsonarr as $key => $json) {
 
+
+            if ($i++ % $limit == 0) {
+                $k++;
+            }
             $entity = $this->getDoctrine()
                     ->getRepository($this->repository)
                     ->find($json[0]);
 
-            if (@!$datas[$entity->getEdi()->getId()]) {
-                $datas[$entity->getEdi()->getId()]['ApiToken'] = $entity->getEdi()->getToken();
-                $datas[$entity->getEdi()->getId()]['Items'] = array();
+            if (@!$datas[$entity->getEdi()->getId()][$k]) {
+                $datas[$entity->getEdi()->getId()][$k]['ApiToken'] = $entity->getEdi()->getToken();
+                $datas[$entity->getEdi()->getId()][$k]['Items'] = array();
             }
-            $Items[$entity->getEdi()->getId()]["ItemCode"] = $entity->getPartno();
-            $Items[$entity->getEdi()->getId()]["ReqQty"] = 1;
-            $datas[$entity->getEdi()->getId()]['Items'][] = $Items[$entity->getEdi()->getId()];
+            $Items[$entity->getEdi()->getId()][$k]["ItemCode"] = $entity->getPartno();
+            $Items[$entity->getEdi()->getId()][$k]["ReqQty"] = 1;
+            $datas[$entity->getEdi()->getId()][$k]['Items'][] = $Items[$entity->getEdi()->getId()][$k];
+
             $ands[$entity->getPartno()] = $key;
             //$jsonarr2[(int)$key] = $json;
+            @$jsonarr[$key]['DT_RowClass'] .= ' text-danger ';
         }
         //print_r($datas);
         //print_r($datas);
@@ -256,32 +392,42 @@ class EdiItemController extends Main {
         //return 10;
 
 
-        foreach ($datas as $catalogue => $data) {
-            $data_string = json_encode($data);
-            //print_r($data);
-            //turn;
-            $result = file_get_contents($requerstUrl, null, stream_context_create(array(
-                'http' => array(
-                    'method' => 'POST',
-                    'header' =>
-                    'Content-Type: application/json' . "\r\n"
-                    . 'Content-Length: ' . strlen($data_string) . "\r\n",
-                    'content' => $data_string,
-                ),
-            )));
-            $re = json_decode($result);
+        foreach ($datas as $catalogue => $packs) {
 
-            //print_r($re);
-            //return;
-            if (@count($re->Items))
-                foreach ($re->Items as $Item) {
-                    $qty = $Item->Availability == 'green' ? 100 : 0;
-                    $Item->UnitPrice;
-                    //echo $Item->ItemCode."\n";
-                    if (@$jsonarr[$ands[$Item->ItemCode]])
-                        @$jsonarr[$ands[$Item->ItemCode]]['6'] = number_format($Item->UnitPrice, 2, '.', '');
+            foreach ($packs as $k => $data) {
+                $data_string = json_encode($data);
+                //print_r($data);
+                //continue;
+                $result = file_get_contents($requerstUrl, null, stream_context_create(array(
+                    'http' => array(
+                        'method' => 'POST',
+                        'header' =>
+                        'Content-Type: application/json' . "\r\n"
+                        . 'Content-Length: ' . strlen($data_string) . "\r\n",
+                        'content' => $data_string,
+                    ),
+                )));
+                $re = json_decode($result);
+
+                //print_r($re);
+                //continue;
+                if (@count($re->Items)) {
+                    foreach ($re->Items as $Item) {
+                        $qty = $Item->Availability == 'green' ? 100 : 0;
+                        $Item->UnitPrice;
+                        //echo $Item->ItemCode."\n";
+                        if (@$jsonarr[$ands[$Item->ItemCode]]) {
+                            @$jsonarr[$ands[$Item->ItemCode]]['6'] = number_format($Item->UnitPrice, 2, '.', '');
+                            if ($Item->Availability == 'green') {
+                                @$jsonarr[$ands[$Item->ItemCode]]['DT_RowClass'] .= ' text-success ';
+                            }
+                        }
+                    }
                 }
+            }
         }
+
+
         //print_r($jsonarr);
         return $jsonarr;
         /*

@@ -236,5 +236,46 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 "", 200
         );
     }
+    //getmodeltypes
+
+    /**
+     * 
+     * @Route("/product/getmodels")
+     */
+    function getModelsAction(Request $request) {
+        $url = 'http://www.partsbay.gr/antallaktika/init/getmodels';
+        $fields_string = '';
+        $fields["brand"] = $request->request->get("brand");
+        foreach ($fields as $key => $value) {
+            @$fields_string .= $key . '=' . $value . '&';
+        }
+        rtrim($fields_string, '&');
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, count($fields));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $out = json_decode(curl_exec($ch));
+    }    
+    /**
+     * 
+     * @Route("/product/getmodeltypes")
+     */
+    function getModeltypesAction(Request $request) {
+        $url = 'http://www.partsbay.gr/antallaktika/init/getmodeltypes';
+        $fields_string = '';
+        $fields["brand"] = $request->request->get("brand");
+        $fields["model"] = $request->request->get("model");
+        foreach ($fields as $key => $value) {
+            @$fields_string .= $key . '=' . $value . '&';
+        }
+        rtrim($fields_string, '&');
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, count($fields));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $out = json_decode(curl_exec($ch));
+    }       
 
 }

@@ -2,11 +2,23 @@
 
 namespace EdiBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\Entity;
+use SoftoneBundle\Entity\Softone as Softone;
 /**
  * EdiOrderItem
  */
-class EdiOrderItem
-{
+class EdiOrderItem extends Entity {
+
+    public function getField($field) {
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
+
     /**
      * @var integer
      */
@@ -40,7 +52,7 @@ class EdiOrderItem
     /**
      * @var integer
      */
-    private $id;
+    var $id;
 
     /**
      * @var \EdiBundle\Entity\EdiItem
@@ -52,7 +64,6 @@ class EdiOrderItem
      */
     private $EdiOrder;
 
-
     /**
      * Set qty
      *
@@ -60,8 +71,7 @@ class EdiOrderItem
      *
      * @return EdiOrderItem
      */
-    public function setQty($qty)
-    {
+    public function setQty($qty) {
         $this->qty = $qty;
 
         return $this;
@@ -72,8 +82,7 @@ class EdiOrderItem
      *
      * @return integer
      */
-    public function getQty()
-    {
+    public function getQty() {
         return $this->qty;
     }
 
@@ -84,8 +93,7 @@ class EdiOrderItem
      *
      * @return EdiOrderItem
      */
-    public function setPrice($price)
-    {
+    public function setPrice($price) {
         $this->price = $price;
 
         return $this;
@@ -96,8 +104,7 @@ class EdiOrderItem
      *
      * @return string
      */
-    public function getPrice()
-    {
+    public function getPrice() {
         return $this->price;
     }
 
@@ -108,8 +115,7 @@ class EdiOrderItem
      *
      * @return EdiOrderItem
      */
-    public function setDiscount($discount)
-    {
+    public function setDiscount($discount) {
         $this->discount = $discount;
 
         return $this;
@@ -120,8 +126,7 @@ class EdiOrderItem
      *
      * @return string
      */
-    public function getDiscount()
-    {
+    public function getDiscount() {
         return $this->discount;
     }
 
@@ -132,8 +137,7 @@ class EdiOrderItem
      *
      * @return EdiOrderItem
      */
-    public function setFprice($fprice)
-    {
+    public function setFprice($fprice) {
         $this->fprice = $fprice;
 
         return $this;
@@ -144,8 +148,7 @@ class EdiOrderItem
      *
      * @return string
      */
-    public function getFprice()
-    {
+    public function getFprice() {
         return $this->fprice;
     }
 
@@ -156,8 +159,7 @@ class EdiOrderItem
      *
      * @return EdiOrderItem
      */
-    public function setStore($store)
-    {
+    public function setStore($store) {
         $this->store = $store;
 
         return $this;
@@ -168,8 +170,7 @@ class EdiOrderItem
      *
      * @return integer
      */
-    public function getStore()
-    {
+    public function getStore() {
         return $this->store;
     }
 
@@ -180,8 +181,7 @@ class EdiOrderItem
      *
      * @return EdiOrderItem
      */
-    public function setChk($chk)
-    {
+    public function setChk($chk) {
         $this->chk = $chk;
 
         return $this;
@@ -192,8 +192,7 @@ class EdiOrderItem
      *
      * @return boolean
      */
-    public function getChk()
-    {
+    public function getChk() {
         return $this->chk;
     }
 
@@ -202,8 +201,7 @@ class EdiOrderItem
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -214,8 +212,7 @@ class EdiOrderItem
      *
      * @return EdiOrderItem
      */
-    public function setEdiItem(\EdiBundle\Entity\EdiItem $ediItem = null)
-    {
+    public function setEdiItem(\EdiBundle\Entity\EdiItem $ediItem = null) {
         $this->EdiItem = $ediItem;
 
         return $this;
@@ -226,8 +223,7 @@ class EdiOrderItem
      *
      * @return \EdiBundle\Entity\EdiItem
      */
-    public function getEdiItem()
-    {
+    public function getEdiItem() {
         return $this->EdiItem;
     }
 
@@ -238,8 +234,7 @@ class EdiOrderItem
      *
      * @return EdiOrderItem
      */
-    public function setEdiOrder(\EdiBundle\Entity\EdiOrder $ediOrder = null)
-    {
+    public function setEdiOrder(\EdiBundle\Entity\EdiOrder $ediOrder = null) {
         $this->EdiOrder = $ediOrder;
 
         return $this;
@@ -250,8 +245,8 @@ class EdiOrderItem
      *
      * @return \EdiBundle\Entity\EdiOrder
      */
-    public function getEdiOrder()
-    {
+    public function getEdiOrder() {
         return $this->EdiOrder;
     }
+
 }

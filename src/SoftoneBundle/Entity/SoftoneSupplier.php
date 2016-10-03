@@ -43,7 +43,7 @@ class SoftoneSupplier extends Entity {
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    var $id;
 
     /**
      * Set code
@@ -96,6 +96,16 @@ class SoftoneSupplier extends Entity {
      */
     public function getId() {
         return $this->id;
+    }
+    
+    
+    function toSoftone() {
+        $softone = new Softone();
+        $params["fSQL"] = "SELECT * FROM MTRMANFCTR where MTRMANFCTR = ".$this->id;
+        $datas = $softone->createSql($params); 
+        if (@count($datas->data)) return;
+        $params["fSQL"] = 'Insert INTO MTRMANFCTR (MTRMANFCTR,NAME,CODE,COMPANY) VALUES ('.$this->id.',\''.$this->title.'\', \''.$this->code.'\',1000)';
+        print_r($softone->createSql($params));       
     }
 
 }

@@ -54,7 +54,7 @@ class TecdocSupplier {
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    var $id;
 
     /**
      * Set supplier
@@ -173,6 +173,45 @@ class TecdocSupplier {
      */
     public function getId() {
         return $this->id;
+    }
+
+    
+    
+    function updateToSoftone() {
+        global $kernel;
+        set_time_limit(100000);
+        $softone = new Softone();
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+
+
+        $query = $em->createQuery(
+                "SELECT  p.id as id, p.supplier as supplier
+                    FROM SoftoneBundle:TecdocSupplier p"
+        );
+        $i = 0;
+        $results = $query->getResult();
+        foreach ($results as $data) {
+            $params["fSQL"] = "SELECT * FROM MTRMARK where MTRMARK = " . $data["id"];
+            $datas = $softone->createSql($params);
+            if (@count($datas->data))
+                continue;
+            $params["fSQL"] = 'Insert INTO MTRMARK (MTRMARK,NAME,CODE,COMPANY,SODTYPE) VALUES (' . $data["id"] . ',\'' . $data["supplier"]. '\', \'' . $data["id"] . '\',1000,51)';
+            print_r($softone->createSql($params));
+            //if ($i++ > 5) exit;
+        }
+    }
+
+    function toSoftone() {
+        $softone = new Softone();
+        $params["fSQL"] = "SELECT * FROM MTRMARK where MTRMARK = " . $this->id;
+        $datas = $softone->createSql($params);
+        if (@count($datas->data))
+            return;
+        $params["fSQL"] = 'Insert INTO MTRMARK (MTRMARK,NAME,CODE,COMPANY,SODTYPE) VALUES (' . $this->id . ',\'' . $this->supplier . '\', \'' . $this->id . '\',1000,51)';
+        print_r($softone->createSql($params));
     }
 
 }

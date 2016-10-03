@@ -33,16 +33,16 @@ toastr.options = {
 }
 
 
-jQuery(".ViacarediSendOrder").live('click', function (e) {
+jQuery(".EdiSendOrder").live('click', function (e) {
     var data = {}
     data.id = jQuery(this).attr('data-id');
 
-    $.post("/edi/viacar/order/sendorder/", data, function (result) {
+    $.post("/edi/edi/order/sendorder/", data, function (result) {
         var json = angular.fromJson(result);
         if (json.ErrorCode) {
             toastr.error(json.ErrorDescription, "Error");
         } else {
-            
+            toastr.success(json.error, "Success");
         }
     })
 })

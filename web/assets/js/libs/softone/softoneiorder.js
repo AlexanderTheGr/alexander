@@ -81,7 +81,7 @@ jQuery(".savesoftone").live('click', function (e) {
     })
 })
 
-jQuery(".EltrekaediSendOrder").live('click', function (e) {
+jQuery(".EdiSendOrder").live('click', function (e) {
     var data = {}
     data.id = jQuery(this).attr('data-id');
 
@@ -227,6 +227,17 @@ function fororder(order) {
         b = true;
     },1000)
 }
+
+jQuery('.ediiteqty1').live("keyup", function (e) {
+    if (e.keyCode == 13) {
+        var data = {};
+        data.id = jQuery(this).attr('data-id');
+        data.qty = jQuery(this).val();
+        $.post("/edi/order/addorderitem/", data, function (result) {
+            
+        })
+    }
+});
 
 jQuery(".edibutton").live('click', function () {
     var edi = jQuery(this).attr("data-id")

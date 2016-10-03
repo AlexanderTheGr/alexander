@@ -129,6 +129,7 @@ class Main extends Controller {
 
         foreach (@(array) $results as $result) {
             $json = array();
+            //$obj = $em->getRepository($this->repository)->find($result["id"]);
             foreach ($data["fields"] as $field) {
                 if (@$field["index"]) {
                     $field_relation = explode(":", $field["index"]);
@@ -155,7 +156,7 @@ class Main extends Controller {
                     }
                 } elseif (@$field["function"]) {
                     $func = $field["function"];
-                    $obj = $em->getRepository($this->repository)->find($result["id"]);
+                    //$obj = $em->getRepository($this->repository)->find($result["id"]);
                     $json[] = $obj->$func(count($results));
                 }
             }

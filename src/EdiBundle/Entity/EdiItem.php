@@ -358,11 +358,12 @@ class EdiItem extends Entity {
         return $this->Edi;
     }
 
-    
     function updatetecdoc($forceupdate = false) {
         //$data = array("service" => "login", 'username' => 'dev', 'password' => 'dev', 'appId' => '2000');
-        if ((int)$this->dlnr == 0 OR $this->artNr == '') return;
-        if ($this->getTecdocArticleId() > 0 and $forceupdate == false) return;
+        if ((int) $this->dlnr == 0 OR $this->artNr == '')
+            return;
+        if ($this->getTecdocArticleId() > 0 and $forceupdate == false)
+            return;
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
@@ -411,7 +412,8 @@ class EdiItem extends Entity {
             exit;
         }
         //echo $result;
-    }    
+    }
+
     /**
      * @var string
      */
@@ -427,7 +429,6 @@ class EdiItem extends Entity {
      */
     private $tecdocArticleId;
 
-
     /**
      * Set tecdocArticleName
      *
@@ -435,8 +436,7 @@ class EdiItem extends Entity {
      *
      * @return EdiItem
      */
-    public function setTecdocArticleName($tecdocArticleName)
-    {
+    public function setTecdocArticleName($tecdocArticleName) {
         $this->tecdocArticleName = $tecdocArticleName;
 
         return $this;
@@ -447,8 +447,7 @@ class EdiItem extends Entity {
      *
      * @return string
      */
-    public function getTecdocArticleName()
-    {
+    public function getTecdocArticleName() {
         return $this->tecdocArticleName;
     }
 
@@ -459,8 +458,7 @@ class EdiItem extends Entity {
      *
      * @return EdiItem
      */
-    public function setTecdocGenericArticleId($tecdocGenericArticleId)
-    {
+    public function setTecdocGenericArticleId($tecdocGenericArticleId) {
         $this->tecdocGenericArticleId = $tecdocGenericArticleId;
 
         return $this;
@@ -471,8 +469,7 @@ class EdiItem extends Entity {
      *
      * @return integer
      */
-    public function getTecdocGenericArticleId()
-    {
+    public function getTecdocGenericArticleId() {
         return $this->tecdocGenericArticleId;
     }
 
@@ -483,11 +480,156 @@ class EdiItem extends Entity {
      *
      * @return EdiItem
      */
-    public function setTecdocArticleId($tecdocArticleId)
-    {
+    public function setTecdocArticleId($tecdocArticleId) {
         $this->tecdocArticleId = $tecdocArticleId;
 
         return $this;
+    }
+
+    public function toErp() {
+
+
+
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+
+        //$TecdocSupplier = new \SoftoneBundle\Entity\TecdocSupplier;
+        //$TecdocSupplier->updateToSoftone();
+        $this->brand = $this->fixsuppliers($this->brand);
+
+        $SoftoneSupplier = $em->getRepository("SoftoneBundle:SoftoneSupplier")
+                ->findOneBy(array('title' => $this->brand));
+
+        //echo $SoftoneSupplier->id;
+        //exit;
+        if (@$SoftoneSupplier->id == 0) {
+
+            $TecdocSupplier = $em->getRepository("SoftoneBundle:TecdocSupplier")
+                    ->findOneBy(array('supplier' => $this->brand));
+            if (@$TecdocSupplier->id == 0) {
+                $SoftoneSupplier = new \SoftoneBundle\Entity\SoftoneSupplier;
+                $SoftoneSupplier->setTitle($this->brand);
+                $SoftoneSupplier->setCode(' ');
+                $em->persist($SoftoneSupplier);
+                $em->flush();
+                $SoftoneSupplier->setCode("S" . $SoftoneSupplier->getId());
+                $em->persist($SoftoneSupplier);
+                $em->flush();
+                $SoftoneSupplier->toSoftone();
+            } else {
+                $SoftoneSupplier = new \SoftoneBundle\Entity\SoftoneSupplier;
+                $SoftoneSupplier->setTitle($TecdocSupplier->getSupplier());
+                $SoftoneSupplier->setCode("T" . $TecdocSupplier->id);
+                $em->persist($SoftoneSupplier);
+                $em->flush();
+                $SoftoneSupplier->toSoftone();
+            }
+        } else {
+            
+        }
+
+        $TecdocSupplier = $em->getRepository("SoftoneBundle:TecdocSupplier")
+                ->find($this->dlnr);
+
+        if ($this->getProduct() > 0) {
+
+            $product = $em->getRepository("SoftoneBundle:Product")->find($this->getProduct());
+            //if ($product->getReference() == 0) {
+            $product->setItemMtrmanfctr($SoftoneSupplier->getId());
+            $product->setErpCode($this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode());
+            $product->setItemCode($product->getErpCode());
+            $em->persist($product);
+            $em->flush();
+            if ($TecdocSupplier) {
+                $product->setTecdocSupplierId($TecdocSupplier);
+                //$TecdocSupplier->toSoftone(); 
+            }
+            $product->toSoftone();
+            echo $this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode();
+            return;
+        }
+
+        $dt = new \DateTime("now");
+        $product = new \SoftoneBundle\Entity\Product;
+        $product->setSupplierCode($this->partno);
+        $product->setTitle($this->description);
+        $product->setTecdocCode($this->artNr);
+
+
+        $product->setItemMtrmark($this->dlnr);
+        $product->setItemName($this->description);
+        //$product->setItemCode($this->partno);
+        $product->setItemApvcode($this->artNr);
+        $product->setErpSupplier($this->brand);
+        $product->setItemMtrmanfctr($SoftoneSupplier->getId());
+        $product->setErpCode($this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode());
+        $product->setItemCode($product->getErpCode());
+        $product->setEdi($this->getEdi()->getId());
+        $product->setEdiId($this->id);
+
+
+        $product->setItemV5($dt);
+        $product->setTs($dt);
+        $product->setItemInsdate($dt);
+        $product->setItemUpddate($dt);
+        $product->setCreated($dt);
+        $product->setModified($dt);
+        $em->persist($product);
+        $em->flush();
+        $product->updatetecdoc();
+        $product->toSoftone();
+        $this->updatetecdoc();
+
+        $this->setProduct($product->getId());
+        $em->persist($this);
+        $em->flush();
+
+        return;
+    }
+
+    function fixsuppliers($supplier) {
+        $supplier = str_replace("MANN", "MANN-FILTER", $supplier);
+        $supplier = str_replace("MEAT&DORIA", "MEAT & DORIA", $supplier);
+        $supplier = str_replace("BEHR-HELLA", "BEHR HELLA SERVICE", $supplier);
+        $supplier = str_replace("BLUEPRINT", "BLUE-PRINT", $supplier);
+        $supplier = str_replace("BLUE PRINT", "BLUE-PRINT", $supplier);
+        $supplier = str_replace("BENDIX WBK", "BENDIX", $supplier);
+        $supplier = str_replace("CONTI-TECH", "CONTITECH", $supplier);
+        $supplier = str_replace("Fai AutoParts", "FAI AutoParts", $supplier);
+        $supplier = str_replace("FIAAM", "COOPERSFIAAM FILTERS", $supplier);
+        $supplier = str_replace("FIBA", "FI.BA", $supplier);
+        $supplier = str_replace("FLENOR", "FLENNOR", $supplier);
+        $supplier = str_replace("FRITECH", "fri.tech.", $supplier);
+        $supplier = str_replace("HERTH & BUSS JAKOPARTS", "HERTH+BUSS JAKOPARTS", $supplier);
+        $supplier = str_replace("KAYABA", "KYB", $supplier);
+        $supplier = str_replace("KM", "KM Germany", $supplier);
+        $supplier = str_replace("LUK", "LuK", $supplier);
+        $supplier = str_replace("MANN", "MANN-FILTER", $supplier);
+        $supplier = str_replace("MANN-FILTER-FILTER", "MANN-FILTER", $supplier);
+        $supplier = str_replace("MANN-FILTEREX", "MANN-FILTER", $supplier);
+        $supplier = str_replace("METALCAUCHO", "Metalcaucho", $supplier);
+        $supplier = str_replace("MULLER", "MULLER FILTER", $supplier);
+        $supplier = str_replace("RICAMBI", "GENERAL RICAMBI", $supplier);
+        $supplier = str_replace("VERNET", "CALORSTAT by Vernet", $supplier);
+        $supplier = str_replace("ZIMMERMANN-FILTER", "ZIMMERMANN", $supplier);
+        $supplier = str_replace("FEBI", "FEBI BILSTEIN", $supplier);
+        $supplier = str_replace("LESJ?FORS", "LESJOFORS", $supplier);
+        $supplier = str_replace("LEMF?RDER", "LEMFORDER", $supplier);
+        return $supplier;
+    }
+
+    private function clearCode($code) {
+        $code = str_replace(" ", "", $code);
+        $code = str_replace(".", "", $code);
+        $code = str_replace("-", "", $code);
+        $code = str_replace("/", "", $code);
+        $code = str_replace(")", "", $code);
+        $code = str_replace("(", "", $code);
+        $code = strtoupper($code);
+        return $code;
     }
 
     /**
@@ -495,8 +637,121 @@ class EdiItem extends Entity {
      *
      * @return integer
      */
-    public function getTecdocArticleId()
-    {
+    public function getTecdocArticleId() {
         return $this->tecdocArticleId;
     }
+
+    public function getQty1() {
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $qty = 0;
+        $query = $em->createQuery(
+                        'SELECT p
+                        FROM EdiBundle:EdiOrder p
+                        WHERE 
+                        p.reference = 0
+                        AND p.Edi = :edi'
+                )->setParameter('edi', $this->getEdi());
+        $EdiOrder = $query->setMaxResults(1)->getOneOrNullResult();
+        if (@ $EdiOrder->id > 0) {
+
+            $query = $em->createQuery(
+                    'SELECT p
+                                FROM EdiBundle:EdiOrderItem p
+                                WHERE 
+                                p.EdiItem = ' . $this->getId() . '
+                                AND p.EdiOrder = ' . $EdiOrder->getId() . ''
+            );
+
+            $EdiOrderItem = $query->setMaxResults(1)->getOneOrNullResult();
+            if (@ $EdiOrderItem->id > 0) {
+                $qty = $EdiOrderItem->getQty();
+            }
+        }
+
+        return "<input type='text' data-id='" . $this->id . "' name='qty1_" . $this->id . "' value='" . $qty . "' size=2 id='qty1_" . $this->id . "' class='ediiteqty1'>";
+    }
+
+    public function getQty2() {
+        return "<input type='text' data-id='" . $this->id . "' name='qty2_" . $this->id . "' size=2  id='qty1_" . $this->id . "' class='ediiteqty2'>";
+    }
+
+    public function getQtyAvailability($cnt = 0) {
+        if ($cnt > 10)
+            return;
+    }
+
+    /**
+     * @var integer
+     */
+    private $product;
+
+    /**
+     * Set product
+     *
+     * @param integer $product
+     *
+     * @return EdiItem
+     */
+    public function setProduct($product) {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return integer
+     */
+    public function getProduct() {
+        return $this->product;
+    }
+
+    function getEdiQtyAvailability($qty = 1) {
+        //return;
+        //return $jsonarr;
+        $datas = array();
+        //print_r($jsonarr);
+        $data['ApiToken'] = $this->getEdi()->getToken();
+        $data['Items'] = array();
+        
+        $Item["ItemCode"] = $this->getPartno();
+        $Item["ReqQty"] = $qty;
+        
+        $data['Items'][] = $Item;
+        //$jsonarr2[(int)$key] = $json;
+        //print_r($datas);
+        //print_r($datas);
+        $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=getiteminfo';
+        //$data_string = '{ "ApiToken": "b5ab708b-0716-4c91-a8f3-b6513990fe3c", "Items": [ { "ItemCode": "' . $this->erp_code . '", "ReqQty": 1 } ] } ';
+        //return 10;
+        $data_string = json_encode($data);
+        print_r($data);
+        //turn;
+        $result = file_get_contents($requerstUrl, null, stream_context_create(array(
+            'http' => array(
+                'method' => 'POST',
+                'header' =>
+                'Content-Type: application/json' . "\r\n"
+                . 'Content-Length: ' . strlen($data_string) . "\r\n",
+                'content' => $data_string,
+            ),
+        )));
+
+        $re = json_decode($result);
+
+
+        //return;
+        if (@count($re->Items))
+            foreach ($re->Items as $Item) {
+                return number_format($Item->UnitPrice, 2, '.', '');
+            }
+
+        //print_r($jsonarr);
+    }
+
 }

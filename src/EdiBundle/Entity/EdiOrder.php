@@ -2,11 +2,24 @@
 
 namespace EdiBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\Entity;
+use SoftoneBundle\Entity\Softone as Softone;
+
 /**
  * EdiOrder
  */
-class EdiOrder
-{
+class EdiOrder extends Entity {
+
+    public function getField($field) {
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
+
     /**
      * @var integer
      */
@@ -55,7 +68,7 @@ class EdiOrder
     /**
      * @var integer
      */
-    private $id;
+    var $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -65,8 +78,7 @@ class EdiOrder
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->EdiOrderItem = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -77,8 +89,7 @@ class EdiOrder
      *
      * @return EdiOrder
      */
-    public function setReference($reference)
-    {
+    public function setReference($reference) {
         $this->reference = $reference;
 
         return $this;
@@ -89,8 +100,7 @@ class EdiOrder
      *
      * @return integer
      */
-    public function getReference()
-    {
+    public function getReference() {
         return $this->reference;
     }
 
@@ -101,8 +111,7 @@ class EdiOrder
      *
      * @return EdiOrder
      */
-    public function setInsdate($insdate)
-    {
+    public function setInsdate($insdate) {
         $this->insdate = $insdate;
 
         return $this;
@@ -113,8 +122,7 @@ class EdiOrder
      *
      * @return \DateTime
      */
-    public function getInsdate()
-    {
+    public function getInsdate() {
         return $this->insdate;
     }
 
@@ -125,8 +133,7 @@ class EdiOrder
      *
      * @return EdiOrder
      */
-    public function setRemarks($remarks)
-    {
+    public function setRemarks($remarks) {
         $this->remarks = $remarks;
 
         return $this;
@@ -137,8 +144,7 @@ class EdiOrder
      *
      * @return string
      */
-    public function getRemarks()
-    {
+    public function getRemarks() {
         return $this->remarks;
     }
 
@@ -149,8 +155,7 @@ class EdiOrder
      *
      * @return EdiOrder
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->status = $status;
 
         return $this;
@@ -161,8 +166,7 @@ class EdiOrder
      *
      * @return integer
      */
-    public function getStatus()
-    {
+    public function getStatus() {
         return $this->status;
     }
 
@@ -173,8 +177,7 @@ class EdiOrder
      *
      * @return EdiOrder
      */
-    public function setActioneer($actioneer)
-    {
+    public function setActioneer($actioneer) {
         $this->actioneer = $actioneer;
 
         return $this;
@@ -185,8 +188,7 @@ class EdiOrder
      *
      * @return integer
      */
-    public function getActioneer()
-    {
+    public function getActioneer() {
         return $this->actioneer;
     }
 
@@ -197,8 +199,7 @@ class EdiOrder
      *
      * @return EdiOrder
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -209,8 +210,7 @@ class EdiOrder
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -221,8 +221,7 @@ class EdiOrder
      *
      * @return EdiOrder
      */
-    public function setModified($modified)
-    {
+    public function setModified($modified) {
         $this->modified = $modified;
 
         return $this;
@@ -233,8 +232,7 @@ class EdiOrder
      *
      * @return \DateTime
      */
-    public function getModified()
-    {
+    public function getModified() {
         return $this->modified;
     }
 
@@ -245,8 +243,7 @@ class EdiOrder
      *
      * @return EdiOrder
      */
-    public function setUser($user)
-    {
+    public function setUser($user) {
         $this->user = $user;
 
         return $this;
@@ -257,8 +254,7 @@ class EdiOrder
      *
      * @return integer
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 
@@ -269,8 +265,7 @@ class EdiOrder
      *
      * @return EdiOrder
      */
-    public function setRoute($route)
-    {
+    public function setRoute($route) {
         $this->route = $route;
 
         return $this;
@@ -281,8 +276,7 @@ class EdiOrder
      *
      * @return integer
      */
-    public function getRoute()
-    {
+    public function getRoute() {
         return $this->route;
     }
 
@@ -291,8 +285,7 @@ class EdiOrder
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -303,8 +296,7 @@ class EdiOrder
      *
      * @return EdiOrder
      */
-    public function addEdiOrderItem(\EdiBundle\Entity\EdiOrderItem $ediOrderItem)
-    {
+    public function addEdiOrderItem(\EdiBundle\Entity\EdiOrderItem $ediOrderItem) {
         $this->EdiOrderItem[] = $ediOrderItem;
 
         return $this;
@@ -315,8 +307,7 @@ class EdiOrder
      *
      * @param \EdiBundle\Entity\EdiOrderItem $ediOrderItem
      */
-    public function removeEdiOrderItem(\EdiBundle\Entity\EdiOrderItem $ediOrderItem)
-    {
+    public function removeEdiOrderItem(\EdiBundle\Entity\EdiOrderItem $ediOrderItem) {
         $this->EdiOrderItem->removeElement($ediOrderItem);
     }
 
@@ -325,8 +316,73 @@ class EdiOrder
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getEdiOrderItem()
-    {
+    public function getEdiOrderItems() {
         return $this->EdiOrderItem;
     }
+
+    /**
+     * @var \EdiBundle\Entity\Edi
+     */
+    private $Edi;
+
+    /**
+     * Set edi
+     *
+     * @param \EdiBundle\Entity\Edi $edi
+     *
+     * @return EdiOrder
+     */
+    public function setEdi(\EdiBundle\Entity\Edi $edi = null) {
+        $this->Edi = $edi;
+
+        return $this;
+    }
+
+    /**
+     * Get edi
+     *
+     * @return \EdiBundle\Entity\Edi
+     */
+    public function getEdi() {
+        return $this->Edi;
+    }
+
+    function sendOrder() {
+        $datas = array();
+        //print_r($jsonarr);
+        $data['ApiToken'] = $this->getEdi()->getToken();
+        $data['Items'] = array();
+        foreach ($this->getEdiOrderItems() as $ediitem) {
+            $Item["ItemCode"] = $ediitem->getEdiItem()->getPartno();
+            $Item["ReqQty"] = $ediitem->getQty();
+            $Item["UnitPrice"] = $ediitem->getPrice();
+            $data['Items'][] = $Item;
+        }
+
+        //$jsonarr2[(int)$key] = $json;
+        //print_r($datas);
+        //print_r($datas);
+        $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=postorder';
+        //$data_string = '{ "ApiToken": "b5ab708b-0716-4c91-a8f3-b6513990fe3c", "Items": [ { "ItemCode": "' . $this->erp_code . '", "ReqQty": 1 } ] } ';
+        //return 10;
+        $data_string = json_encode($data);
+        print_r($data);
+        //return;
+        $result = file_get_contents($requerstUrl, null, stream_context_create(array(
+            'http' => array(
+                'method' => 'POST',
+                'header' =>
+                'Content-Type: application/json' . "\r\n"
+                . 'Content-Length: ' . strlen($data_string) . "\r\n",
+                'content' => $data_string,
+            ),
+        )));
+
+        return json_decode($result);
+
+
+
+        //print_r($jsonarr);        
+    }
+
 }

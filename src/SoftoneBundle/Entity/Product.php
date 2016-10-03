@@ -1846,7 +1846,7 @@ class Product extends Entity {
 
     function toSoftone() {
 
-
+        //if ($this->reference)
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
@@ -1879,6 +1879,7 @@ class Product extends Entity {
         $fields[] = "item_mtrcategory";
         $fields[] = "item_markupw";
         $fields[] = "item_isactive";
+        $fields[] = "item_mtrmark";
 
         $fields[] = "item_cccfxreltdcode";
         $fields[] = "item_cccfxrelbrand";
@@ -1899,16 +1900,26 @@ class Product extends Entity {
             //}
         }
         $objectArr2["MTRUNIT1"] = 101;
+        $objectArr2["VAT"] = 1310;
         $objectArr2["CODE2"] = $this->supplierCode;
         $objectArr2["ISACTIVE"] = $this->itemIsactive;
+        $objectArr2["MTRMANFCTR"] = $this->itemMtrmanfctr  > 0 ? $this->itemMtrmanfctr : 1000;
+        
         $objectArr[0] = $objectArr2;
         $dataOut[$object] = (array) $objectArr;
-        @$dataOut["ITEEXTRA"][0] = array("NUM02" => $this->item_mtrl_iteextra_num02);
+        //@$dataOut["ITEEXTRA"][0] = array("NUM02" => $this->item_mtrl_iteextra_num02);
+        //print_r(@$dataOut);
         $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
-        if ($out->id > 0) {
+        //print_r($out);
+        
+        if (@$out->id > 0) {
             $this->reference = $out->id;
             $em->persist($this);
             $em->flush();
+            $this->itemMtrmark = $this->itemMtrmark > 0 ? $this->itemMtrmark : 1000;
+            $this->itemMtrmanfctr = $this->itemMtrmanfctr  > 0 ? $this->itemMtrmanfctr : 1000;
+            $params["fSQL"] = "UPDATE MTRL SET MTRMANFCTR=".$this->itemMtrmanfctr." , MTRMARK=".$this->itemMtrmark." WHERE MTRL = ".$this->reference;
+            print_r($softone->createSql($params));            
         }
     }
 

@@ -6,6 +6,7 @@
             <index name="status" columns="status"/>
             <index name="user" columns="user"/>
             <index name="route" columns="route"/>
+            <index name="edi" columns="edi"/>
         </indexes>
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
@@ -46,5 +47,12 @@
             </options>
         </field>    
         <one-to-many field="EdiOrderItem" target-entity="EdiOrderItem" mapped-by="EdiOrder" />
+        <many-to-one
+            field="Edi"
+            target-entity="Edi"
+            inversed-by="Edi"
+            join-column="edi">
+            <join-column name="edi" referenced-column-name="id" />
+        </many-to-one>           
     </entity>
 </doctrine-mapping>

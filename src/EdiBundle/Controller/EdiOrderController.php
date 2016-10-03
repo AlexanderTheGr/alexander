@@ -6,27 +6,27 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use EdiBundle\Entity\ViacarediOrder as ViacarediOrder;
-use EdiBundle\Entity\ViacarediOrderItem as ViacarediOrderItem;
+use EdiBundle\Entity\EdiOrder as EdiOrder;
+use EdiBundle\Entity\EdiOrderItem as EdiOrderItem;
 use AppBundle\Controller\Main as Main;
 
 class EdiOrderController extends Main {
 
-    var $repository = 'EdiBundle:ViacarediOrder';
+    var $repository = 'EdiBundle:EdiOrder';
     var $newentity = '';
 
     /**
-     * @Route("/edi/viacar/order")
+     * @Route("/edi/edi/order")
      */
     public function indexAction() {
 
         $buttons = array();
         $buttons[] = array("label" => 'Get PartMaster', 'position' => 'right', 'class' => 'btn-success');
 
-        return $this->render('EdiBundle:Viacar:index.html.twig', array(
-                    'pagename' => 'Viacaredis',
-                    'url' => '/edi/viacar/order/getdatatable',
-                    'view' => '/edi/viacar/order/view',
+        return $this->render('EdiBundle:Edi:index.html.twig', array(
+                    'pagename' => 'Edis',
+                    'url' => '/edi/edi/order/getdatatable',
+                    'view' => '/edi/edi/order/view',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
@@ -35,7 +35,7 @@ class EdiOrderController extends Main {
     }
 
     /**
-     * @Route("/edi/viacar/order/view/{id}")
+     * @Route("/edi/edi/order/view/{id}")
      */
     public function viewAction($id) {
         $buttons = array();
@@ -46,10 +46,19 @@ class EdiOrderController extends Main {
         $dtparams[] = array("name" => "Product", "index" => 'price');
         $params['dtparams'] = $dtparams;
         $params['id'] = $dtparams;
-        $params['url'] = '/edi/viacar/order/getitems/' . $id;
+        $params['url'] = '/edi/edi/order/getitems/' . $id;
 
         $buttons = array();
-        $buttons[] = array("label" => 'Send Order', 'position' => 'right', 'attr' => 'data-id=' . $id, 'class' => 'btn-success ViacarediSendOrder');
+
+        $json = json_encode(array());
+        $EdiOrder = $this->getDoctrine()
+                ->getRepository('EdiBundle:EdiOrder')
+                ->find($id);
+
+        if ($EdiOrder->getReference() == 0) {
+            $buttons[] = array("label" => 'Send Order', 'position' => 'right', 'attr' => 'data-id=' . $id, 'class' => 'btn-success EdiSendOrder');
+        }
+
 
         $content = $this->gettabs($id);
         $content = $this->getoffcanvases($id);
@@ -57,9 +66,9 @@ class EdiOrderController extends Main {
         $content = $this->content();
 
 
-        return $this->render('EdiBundle:Viacar:view.html.twig', array(
-                    'pagename' => 'Viacaredis',
-                    'url' => '/edi/viacar/order/save',
+        return $this->render('EdiBundle:Edi:view.html.twig', array(
+                    'pagename' => 'Edis',
+                    'url' => '/edi/edi/order/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
@@ -69,18 +78,18 @@ class EdiOrderController extends Main {
     }
 
     /**
-     * @Route("/edi/viacar/order/save")
+     * @Route("/edi/edi/order/save")
      */
     public function saveAction() {
 
-        $entity = new ViacarediOrder;
+        $entity = new EdiOrder;
         $this->newentity[$this->repository] = $entity;
         $this->newentity[$this->repository]->setField("reference", 0);
         $out = $this->save();
-        
+
         $jsonarr = array();
         if ($this->newentity[$this->repository]->getId()) {
-            $jsonarr["returnurl"] = "/edi/viacar/order/view/" . $this->newentity[$this->repository]->getId();
+            $jsonarr["returnurl"] = "/edi/edi/order/view/" . $this->newentity[$this->repository]->getId();
         }
         $json = json_encode($jsonarr);
         return new Response(
@@ -93,29 +102,37 @@ class EdiOrderController extends Main {
                 ->getRepository($this->repository)
                 ->find($id);
         if ($id == 0 AND @ $entity->id == 0) {
-            $entity = new ViacarediOrder;
+            $entity = new EdiOrder;
             $this->newentity[$this->repository] = $entity;
         }
         $buttons = array();
         $buttons[] = array("label" => 'Get PartMaster', 'position' => 'right', 'class' => 'btn-success');
-        
+
         //$tabfields["PurchaseOrderNo"] = array("label" => "Purchase Order No","value"=>1);
         $tabfields["remarks"] = array("label" => "Remarks");
-        
+
         $tabforms = $this->getFormLyFields($entity, $tabfields);
 
         $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
-        $dtparams[] = array("name" => "Code", "index" => 'viacaredi:partno');
-        $dtparams[] = array("name" => "Product", "index" => 'viacaredi:description');
-        $dtparams[] = array("name" => "Store", "index" => 'store');
-        $dtparams[] = array("name" => "Qty", "input" => "text", "index" => 'qty');
-        $dtparams[] = array("name" => "Price", "input" => "text", "index" => 'price');
-        $dtparams[] = array("name" => "Discount", "input" => "text", "index" => 'discount');
+        $dtparams[] = array("name" => "Code", "index" => 'EdiItem:partno');
+        $dtparams[] = array("name" => "Product", "index" => 'EdiItem:description');
+        //$dtparams[] = array("name" => "Store", "index" => 'store');
+
+        if ($entity->getReference() == 0) {
+            $dtparams[] = array("name" => "Qty", "input" => "text", "index" => 'qty');
+        } else {
+            $dtparams[] = array("name" => "Qty", "index" => 'qty');
+        }
+
+        $dtparams[] = array("name" => "Price", "index" => 'price');
+
+
+        //$dtparams[] = array("name" => "Discount", "index" => 'discount');
         $dtparams[] = array("name" => "Final Price", "index" => 'fprice');
         $params['dtparams'] = $dtparams;
         $params['id'] = $dtparams;
         $params['key'] = 'gettabs_' . $id;
-        $params['url'] = '/edi/viacar/order/getitems/' . $id;
+        $params['url'] = '/edi/edi/order/getitems/' . $id;
         $params["ctrl"] = 'ctrlgettabs';
         $params["app"] = 'appgettabs';
         $datatables[] = $this->contentDatatable($params);
@@ -136,7 +153,7 @@ class EdiOrderController extends Main {
         $params['dtparams'] = $dtparams;
         $params['id'] = $dtparams;
         $params['key'] = 'getoffcanvases_' . $id;
-        $params['url'] = '/edi/viacar/order/getfororderitems/' . $id;
+        $params['url'] = '/edi/edi/order/getfororderitems/' . $id;
         $params["ctrl"] = 'ctrlgetoffcanvases';
         $params["app"] = 'appgetoffcanvases';
         $params["drawCallback"] = 'fororder(' . $id . ')';
@@ -148,52 +165,96 @@ class EdiOrderController extends Main {
     }
 
     function getTabContentSearch() {
-        $response = $this->get('twig')->render('EdiBundle:Viacar:viacarediordersearch.html.twig', array());
+        $response = $this->get('twig')->render('EdiBundle:Edi:viacarediordersearch.html.twig', array());
         return str_replace("\n", "", htmlentities($response));
     }
 
     /**
-     * @Route("/edi/viacar/order/addorderitem/")
+     * @Route("/edi/order/addorderitem/")
      */
     public function addorderitemAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $Ediitem = $this->getDoctrine()
+                ->getRepository('EdiBundle:EdiItem')
+                ->find($request->request->get("id"));
+        $Ediitem->toErp();
+        if ($request->request->get("order") > 0) {
+            $EdiOrder = $this->getDoctrine()
+                    ->getRepository('EdiBundle:EdiOrder')
+                    ->find($request->request->get("order"));
+        } elseif ($request->request->get("order") == 0) {
 
+            $query = $em->createQuery(
+                            'SELECT p
+                            FROM EdiBundle:EdiOrder p
+                            WHERE 
+                            p.reference = 0
+                            AND p.Edi = :edi'
+                    )->setParameter('edi', $Ediitem->getEdi());
+            $EdiOrder = $query->setMaxResults(1)->getOneOrNullResult();
 
-        $ViacarediOrder = $this->getDoctrine()
-                ->getRepository('EdiBundle:ViacarediOrder')
-                ->find($request->request->get("order"));
-        $Viacaredi = $this->getDoctrine()
-                ->getRepository('EdiBundle:Viacaredi')
-                ->find($request->request->get("item"));
-
-        $availability = $Viacaredi->getQtyAvailability($request->request->get("qty"));
-        //$Available = (array) $availability["Header"];
-        $price = $availability["PriceOnPolicy"];
-        if ($availability["Availability"] != 'green') {
-            $json = json_encode(array("error" => true, "message" => $Available["Available"]));
-            return new Response(
-                    $json, 200, array('Content-Type' => 'application/json')
-            );
+            if (@ $EdiOrder->id == 0) {
+                $EdiOrder = new EdiOrder;
+                $dt = new \DateTime("now");
+                $this->newentity[$this->repository] = $EdiOrder;
+                $EdiOrder->setEdi($Ediitem->getEdi());
+                $EdiOrder->setRemarks($Ediitem->getEdi()->getName());
+                $EdiOrder->setInsdate($dt);
+                $EdiOrder->setCreated($dt);
+                $EdiOrder->setModified($dt);
+                $this->flushpersist($EdiOrder);
+            }
         }
-        $store = 1;//$Available["SUGGESTED_STORE"];
+
+
+        //$availability = $Ediitem->getQtyAvailability($request->request->get("qty"));
+        //$Available = (array) $availability["Header"];
+        //$price = $availability["PriceOnPolicy"];
+        $price = 0;
         /*
-        $json = json_encode($availability);
-        return new Response(
-                $json, 200, array('Content-Type' => 'application/json')
-        );
+          if (@$availability["Availability"] != 'green') {
+          $json = json_encode(array("error" => true, "message" => $Available["Available"]));
+          return new Response(
+          $json, 200, array('Content-Type' => 'application/json')
+          );
+          }
+         */
+        $store = 1; //$Available["SUGGESTED_STORE"];
+        /*
+          $json = json_encode($availability);
+          return new Response(
+          $json, 200, array('Content-Type' => 'application/json')
+          );
          * 
          */
-        $ViacarediOrderItem = new ViacarediOrderItem;
-        $ViacarediOrderItem->setViacarediorder($ViacarediOrder);
-        $ViacarediOrderItem->setViacaredi($Viacaredi);
-        $ViacarediOrderItem->setField("qty", $request->request->get("qty"));
-        $ViacarediOrderItem->setField("price", $price);
-        $ViacarediOrderItem->setField("fprice", $request->request->get("price") * $request->request->get("qty"));
-        $ViacarediOrderItem->setField("discount", 0);
-        $ViacarediOrderItem->setField("store", $store);
-        $ViacarediOrderItem->setField("chk", 1);
+
+        $query = $em->createQuery(
+                'SELECT p
+                            FROM EdiBundle:EdiOrderItem p
+                            WHERE 
+                            p.EdiItem = ' . $Ediitem->getId() . '
+                            AND p.EdiOrder = ' . $EdiOrder->getId() . ''
+        );
+        $EdiOrderItem = $query->setMaxResults(1)->getOneOrNullResult();
+
+        if (@ $EdiOrderItem->id == 0) {
+            $EdiOrderItem = new EdiOrderItem;
+        }
+        $qty = $request->request->get("qty");
+
+        $price = $Ediitem->getEdiQtyAvailability($qty);
+        //echo $price;
+        $EdiOrderItem->setEdiOrder($EdiOrder);
+        $EdiOrderItem->setEdiItem($Ediitem);
+        $EdiOrderItem->setField("qty", $qty);
+        $EdiOrderItem->setField("price", $price);
+        $EdiOrderItem->setField("fprice", $price * $qty);
+        $EdiOrderItem->setField("discount", 0);
+        $EdiOrderItem->setField("store", $store);
+        $EdiOrderItem->setField("chk", 1);
 
         try {
-            @$this->flushpersist($ViacarediOrderItem);
+            $this->flushpersist($EdiOrderItem);
             $json = json_encode(array("error" => false));
         } catch (\Exception $e) {
             $json = json_encode(array("error" => true, "message" => "Product Exists"));
@@ -204,15 +265,15 @@ class EdiOrderController extends Main {
     }
 
     /**
-     * @Route("/edi/viacar/order/editorderitem/")
+     * @Route("/edi/edi/order/editorderitem/")
      */
     public function editorderitemAction(Request $request) {
-        $ViacarediOrderItem = $this->getDoctrine()
-                ->getRepository('EdiBundle:ViacarediOrderItem')
+        $EdiOrderItem = $this->getDoctrine()
+                ->getRepository('EdiBundle:EdiOrderItem')
                 ->find($request->request->get("id"));
         if ($request->request->get("qty")) {
-            $ViacarediOrderItem->setQty($request->request->get("qty"));
-            $availability = $ViacarediOrderItem->getViacaredi()->getQtyAvailability($request->request->get("qty"));
+            $EdiOrderItem->setQty($request->request->get("qty"));
+            $availability = $EdiOrderItem->getEdi()->getQtyAvailability($request->request->get("qty"));
             $Available = (array) $availability["Header"];
             $store = $Available["SUGGESTED_STORE"];
             if ($availability["Header"]["Available"] == 'N') {
@@ -222,15 +283,15 @@ class EdiOrderController extends Main {
                 );
             }
             $price = $Available["PriceOnPolicy"];
-            $ViacarediOrderItem->setPrice($price);
-            $ViacarediOrderItem->setField("store", $store);
+            $EdiOrderItem->setPrice($price);
+            $EdiOrderItem->setField("store", $store);
         } else if ($request->request->get("price"))
-            $ViacarediOrderItem->setPrice($request->request->get("price"));
+            $EdiOrderItem->setPrice($request->request->get("price"));
         else if ($request->request->get("discount"))
-            $ViacarediOrderItem->setDiscount($request->request->get("discount"));
+            $EdiOrderItem->setDiscount($request->request->get("discount"));
         elseif ($request->request->get("qty") == 0) {
             try {
-                $this->flushremove($ViacarediOrderItem);
+                $this->flushremove($EdiOrderItem);
                 $json = json_encode(array("error" => false));
             } catch (\Exception $e) {
                 $json = json_encode(array("error" => true, "message" => "Product Exists"));
@@ -239,10 +300,10 @@ class EdiOrderController extends Main {
                     $json, 200, array('Content-Type' => 'application/json')
             );
         }
-        $fprice = ($ViacarediOrderItem->getPrice() * $ViacarediOrderItem->getQty()) * (1 - ($ViacarediOrderItem->getDiscount() / 100));
-        $ViacarediOrderItem->setFprice($fprice);
+        $fprice = ($EdiOrderItem->getPrice() * $EdiOrderItem->getQty()) * (1 - ($EdiOrderItem->getDiscount() / 100));
+        $EdiOrderItem->setFprice($fprice);
         try {
-            $this->flushpersist($ViacarediOrderItem);
+            $this->flushpersist($EdiOrderItem);
             $json = json_encode(array("error" => false));
         } catch (\Exception $e) {
             $json = json_encode(array("error" => true, "message" => "Product Exists"));
@@ -253,15 +314,15 @@ class EdiOrderController extends Main {
     }
 
     /**
-     * @Route("/edi/viacar/order/getitems/{id}")
+     * @Route("/edi/edi/order/getitems/{id}")
      */
     public function getitemsAction($id) {
         $session = new Session();
         foreach ($session->get('params_gettabs_' . $id) as $param) {
             $this->addField($param);
         }
-        $this->repository = 'EdiBundle:ViacarediOrderItem';
-        $this->q_and[] = $this->prefix . ".ViacarediOrder = " . $id;
+        $this->repository = 'EdiBundle:EdiOrderItem';
+        $this->q_and[] = $this->prefix . ".EdiOrder = " . $id;
         //$this->q_and[] = $this->prefix . ".viacarediorder = " . $id;
         $json = $this->datatable();
 
@@ -294,14 +355,14 @@ class EdiOrderController extends Main {
     }
 
     /**
-     * @Route("/edi/viacar/order/getfororderitems/{id}")
+     * @Route("/edi/edi/order/getfororderitems/{id}")
      */
     public function getfororderitemsAction($id) {
         $session = new Session();
         foreach ($session->get('params_getoffcanvases_' . $id) as $param) {
             $this->addField($param);
         }
-        $this->repository = 'EdiBundle:Viacaredi';
+        $this->repository = 'EdiBundle:EdiItem';
 
         $json = $this->datatable();
         return new Response(
@@ -310,16 +371,18 @@ class EdiOrderController extends Main {
     }
 
     /**
-     * @Route("/edi/viacar/order/sendorder/")
+     * @Route("/edi/edi/order/sendorder/")
      */
     public function sendorderAction(Request $request) {
         $json = json_encode(array());
-
-        $ViacarediOrder = $this->getDoctrine()
-                ->getRepository('EdiBundle:ViacarediOrder')
+        $EdiOrder = $this->getDoctrine()
+                ->getRepository('EdiBundle:EdiOrder')
                 ->find($request->request->get("id"));
-
-        $json = json_encode(@$ViacarediOrder->placeOrder());
+        if ($EdiOrder->getReference() == 0) {
+            $order = @$EdiOrder->sendOrder();
+            $EdiOrder->setReference($order->OrderId);
+            $this->flushpersist($EdiOrder);
+        }
 
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
@@ -327,11 +390,12 @@ class EdiOrderController extends Main {
     }
 
     /**
-     * @Route("/edi/viacar/order/getdatatable")
+     * @Route("/edi/edi/order/getdatatable")
      */
     public function getdatatableAction(Request $request) {
-        //$this->repository = 'EdiBundle:Viacaredi';
+        //$this->repository = 'EdiBundle:Edi';
         $this->addField(array("name" => "ID", "index" => 'id'));
+        $this->addField(array("name" => "Reference", "index" => 'reference'));
         $this->addField(array("name" => "Order", "index" => 'remarks'));
         $json = $this->datatable();
 
