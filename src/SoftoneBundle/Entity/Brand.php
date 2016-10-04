@@ -156,4 +156,91 @@ class Brand
     {
         return $this->id;
     }
+    /**
+     * @var boolean
+     */
+    private $mod_pc;
+
+    /**
+     * @var boolean
+     */
+    private $mod_cv;
+
+    /**
+     * @var boolean
+     */
+    private $mod_cc;
+
+
+    /**
+     * Set modPc
+     *
+     * @param boolean $modPc
+     *
+     * @return Brand
+     */
+    public function setModPc($modPc)
+    {
+        $this->mod_pc = $modPc;
+
+        return $this;
+    }
+
+    /**
+     * Get modPc
+     *
+     * @return boolean
+     */
+    public function getModPc()
+    {
+        return $this->mod_pc;
+    }
+
+    /**
+     * Set modCv
+     *
+     * @param boolean $modCv
+     *
+     * @return Brand
+     */
+    public function setModCv($modCv)
+    {
+        $this->mod_cv = $modCv;
+
+        return $this;
+    }
+
+    /**
+     * Get modCv
+     *
+     * @return boolean
+     */
+    public function getModCv()
+    {
+        return $this->mod_cv;
+    }
+
+    /**
+     * Set modCc
+     *
+     * @param boolean $modCc
+     *
+     * @return Brand
+     */
+    public function setModCc($modCc)
+    {
+        $this->mod_cc = $modCc;
+
+        return $this;
+    }
+
+    /**
+     * Get modCc
+     *
+     * @return boolean
+     */
+    public function getModCc()
+    {
+        return $this->mod_cc;
+    }
 }

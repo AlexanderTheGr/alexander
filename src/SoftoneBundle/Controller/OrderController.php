@@ -190,6 +190,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $dtparams[] = array("name" => "Supplier", "index" => 'erpSupplier', 'search' => 'text');
         $dtparams[] = array("name" => "Price", "index" => 'itemPricew01', "input" => 'text', 'search' => 'text');
         $dtparams[] = array("name" => "QTY", "index" => 'qty', "input" => 'text', 'search' => 'text');
+        $dtparams[] = array("name" => "EDI", "index" => 'edi', "input" => 'text', 'search' => 'text');
         //$dtparams[] = array("name" => "ID", "function" => 'getAvailability', "active" => "active");
         $params['dtparams'] = $dtparams;
         $params['id'] = $dtparams;
@@ -378,6 +379,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 $f[] = $obj->getField('tecdocArticleId');
                                 //$articleIds[] = $obj->getField('tecdocArticleId');
                                 $value = $field["index"] == 'qty' ? 1 : '---';
+                                $value = $field["index"] == 'edi' ? 1 : '---';
                                 $json[] = "<input data-id='" . $result["id"] . "' data-rep='" . $this->repository . "' data-ref='" . $ref . "' id='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "_" . $result["id"] . "' data-id='" . $result["id"] . "' class='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "' type='" . $field["input"] . "' value='$value'>";
                             } else {
                                 $json[] = $val;
@@ -419,6 +421,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $json[] = "<span  car='' class='product_info' ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span>";
                 $json[] = "<span  car='' class='product_info' ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->genericArticleName . "</span>";
                 $json[] = "<span  car='' class='product_info' ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->brandName . "</span>";
+                $json[] = "";
                 $json[] = "";
                 $json[] = "";
 
@@ -481,6 +484,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //exit;
         foreach ($out->data->ITELINES as $item) {
             $jsonarr[$item->MTRL][5] = str_replace("value='---'", "value='" . $item->LINEVAL . "'", $jsonarr[$item->MTRL][5]);
+            $jsonarr[$item->MTRL][6] = str_replace("value='---'", "value='" . $item->LINEVAL . "'", $jsonarr[$item->MTRL][6]);
         }
         $jsonarr2 = array();
         foreach ($jsonarr as $json) {
@@ -616,7 +620,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
     function getBrands() {
         $repository = $this->getDoctrine()->getRepository('SoftoneBundle:Brand');
-        $brands = $repository->findAll();
+        $brands = $repository->findAll(array(),array('brand' => 'ASC'));
         return $brands;
     }
 

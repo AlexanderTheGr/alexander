@@ -174,10 +174,22 @@ class EdiOrderController extends Main {
      */
     public function addorderitemAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $Ediitem = $this->getDoctrine()
-                ->getRepository('EdiBundle:EdiItem')
-                ->find($request->request->get("id"));
-        $Ediitem->toErp();
+
+        if ($request->request->get("id") > 0) {
+            $Ediitem = $this->getDoctrine()
+                    ->getRepository('EdiBundle:EdiItem')
+                    ->find($request->request->get("id"));
+            $Ediitem->toErp();
+        } elseif ($request->request->get("product") > 0) {
+            $Ediitem = $this->getDoctrine()
+                    ->getRepository('EdiBundle:EdiItem')
+                    ->findOneBy(array("product"=>$request->request->get("product")));
+        } else {
+            return;
+        }
+        
+        if (@$Ediitem->id == 0) return;
+        
         if ($request->request->get("order") > 0) {
             $EdiOrder = $this->getDoctrine()
                     ->getRepository('EdiBundle:EdiOrder')

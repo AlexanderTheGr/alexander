@@ -47,5 +47,8 @@
         <option name="default">1</option>
       </options>
     </field>
+    <field name="mod_pc" type="boolean" column="mod_pc" nullable="false"/>
+    <field name="mod_cv" type="boolean" column="mod_cv" nullable="false"/>
+    <field name="mod_cc" type="boolean" column="mod_cc" nullable="false"/>       
   </entity>
 </doctrine-mapping>
