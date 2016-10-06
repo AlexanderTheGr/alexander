@@ -1,8 +1,8 @@
 var b = false;
 var orderid = 0;
-jQuery('#viacarediitem').live("keyup", function (e) {
+jQuery('#ediediitem').live("keyup", function (e) {
     if (e.keyCode == 13) {
-        viacarasdf(this);
+        ediasdf(this);
         var t = $(this).val();
         jQuery('#productfreesearch').val("");
         jQuery(".brand-select").val(0);
@@ -47,12 +47,12 @@ jQuery(".EdiSendOrder").live('click', function (e) {
     })
 })
 
-jQuery(".EdiBundleViacarediOrderItemQty").live('keyup', function (e) {
+jQuery(".EdiBundleEdiOrderItemQty").live('keyup', function (e) {
     if (e.keyCode == 13) {
         var data = {}
         data.id = jQuery(this).attr('data-id');
         data.qty = jQuery(this).val();
-        $.post("/edi/viacar/order/editorderitem/", data, function (result) {
+        $.post("/edi/edi/order/editorderitem/", data, function (result) {
             var json = angular.fromJson(result);
             if (json.error) {
                 toastr.error(json.message, "Error");
@@ -70,7 +70,7 @@ jQuery(".EdiBundleViacarediOrderItemDiscount").live('keyup', function (e) {
         var data = {}
         data.id = jQuery(this).attr('data-id');
         data.discount = jQuery(this).val();
-        $.post("/edi/viacar/order/editorderitem/", data, function (result) {
+        $.post("/edi/edi/order/editorderitem/", data, function (result) {
             var json = angular.fromJson(result);
             if (json.error) {
                 toastr.error(json.message, "Error");
@@ -87,7 +87,7 @@ jQuery(".EdiBundleViacarediOrderItemPrice").live('keyup', function (e) {
         var data = {}
         data.id = jQuery(this).attr('data-id');
         data.price = jQuery(this).val();
-        $.post("/edi/viacar/order/editorderitem/", data, function (result) {
+        $.post("/edi/edi/order/editorderitem/", data, function (result) {
             var json = angular.fromJson(result);
             if (json.error) {
                 toastr.error(json.message, "Error");
@@ -107,7 +107,7 @@ jQuery(".EdiBundleViacarediRetailprice").live('keyup', function (e) {
         data.item = jQuery(this).attr('data-id');
         data.price = jQuery(this).val();
         data.qty = 1;
-        $.post("/edi/viacar/order/addorderitem/", data, function (result) {
+        $.post("/edi/edi/order/addorderitem/", data, function (result) {
             var json = angular.fromJson(result);
             if (json.error) {
                 toastr.error(json.message, "Error");
@@ -118,22 +118,22 @@ jQuery(".EdiBundleViacarediRetailprice").live('keyup', function (e) {
         })
     }
 })
-function viacarasdf(obj, filter, freesearch) {
+function ediasdf(obj, filter, freesearch) {
 
     var data = {}
     var title = 'Αναζήτηση για "' + $(obj).val() + '"';
     data.terms = $(obj).val();
 
-    //$.post("/edi/viacar/order/fororder", data, function (result) {
+    //$.post("/edi/edi/order/fororder", data, function (result) {
     b = true;
     $("#offcanvas-search .offcanvas-head .text-primary").html(title);
     var table = dt_tables["ctrlgetoffcanvases"];
-    table.fnFilter(jQuery('#viacarediitem').val());
+    table.fnFilter(jQuery('#ediediitem').val());
     //})
 }
 
 function fororder(order) {
-    if (jQuery('#viacarediitem').val() && b == true) {
+    if (jQuery('#ediediitem').val() && b == true) {
         orderid = order;
         $(".offcanvas-search").click();
         b = false;

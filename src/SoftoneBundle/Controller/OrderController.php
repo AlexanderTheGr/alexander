@@ -671,7 +671,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
      */
     function getcategories(Request $request) {
 
-        $url = "http://service4.fastwebltd.com/";
+        //$url = "http://service4.fastwebltd.com/";
+        $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
         $fields = array(
             'action' => 'getcarcategories',
             'linkingTargetId' => $request->request->get("car")
@@ -688,7 +689,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         $data = curl_exec($ch);
         $data = unserialize($data);
-
 
         $repository = $this->getDoctrine()->getRepository('SoftoneBundle:Product');
         $query = $repository->createQueryBuilder('p')

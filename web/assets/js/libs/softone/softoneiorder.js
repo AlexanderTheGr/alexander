@@ -3,6 +3,7 @@ var orderid = 0;
 jQuery('#productfreesearch').live("keyup", function (e) {
 
     if (e.keyCode == 13) {
+     
         asdf(this);
         var t = $(this).val();
         jQuery('#productfreesearch').val("");
@@ -12,6 +13,7 @@ jQuery('#productfreesearch').live("keyup", function (e) {
         jQuery(".brand-select").trigger("chosen:updated")
         jQuery(".brand_model-select").trigger("chosen:updated");
         jQuery(".brand_model_type-select").trigger("chosen:updated");
+        
     }
 });
 
@@ -191,6 +193,8 @@ function asdf(obj, filter, freesearch) {
 
     var table = dt_tables["ctrlgetoffcanvases"];
     table.fnFilter(jQuery('#productfreesearch').val());
+    var table2 = dt_tables["ctrlgetoffcanvases2"];
+    table2.fnFilter('');       
     setTimeout(function () {
         jQuery(".SoftoneBundleProductQty").val(1);
     }, 1000)
@@ -207,7 +211,9 @@ function asdf2(obj) {
     b = true;
     //$("#offcanvas-search .offcanvas-head .text-primary").html(title);
     var table = dt_tables["ctrlgetoffcanvases"];
+    var table2 = dt_tables["ctrlgetoffcanvases2"];
     table.fnFilter(obj.all);
+    table2.fnFilter(obj.all);
     //$(".offcanvas-search").click();
     setTimeout(function () {
         jQuery(".SoftoneBundleProductQty").val(1);
@@ -226,8 +232,9 @@ function fororder(order) {
         data.value = $("#DataTables_Table_1_filter input").val();
         $.post("/edi/ediitem/getorderedis", data, function (result) {
             $("#extracanvascontent").html(result.html);
-        })        
+        })
         jQuery("#DataTables_Table_2_wrapper").hide();
+        jQuery("#DataTables_Table_1_wrapper").show();
         b = false;
     }
     setTimeout(function () {
@@ -235,7 +242,7 @@ function fororder(order) {
     }, 1000)
 }
 
-jQuery('.ediiteqty1, .SoftoneBundleProductEdi').live("keyup", function (e) {
+jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .SoftoneBundleProductEdi').live("keyup", function (e) {
     if (e.keyCode == 13) {
         var data = {};
         if (jQuery(this).attr('class') == 'SoftoneBundleProductEdi') {
@@ -250,6 +257,7 @@ jQuery('.ediiteqty1, .SoftoneBundleProductEdi').live("keyup", function (e) {
     }
 });
 
+
 jQuery(".edibutton").live('click', function () {
     var edi = jQuery(this).attr("data-id")
     if (edi == 0) {
@@ -259,8 +267,29 @@ jQuery(".edibutton").live('click', function () {
         var table = dt_tables["ctrlgetoffcanvases2"];
         table.fnFilter(edi, 1, jQuery('#productfreesearch').val(), true, false);
         table.fnFilter(jQuery('#productfreesearch').val(), 4, true, false);
+        //table.fnFilter('aaaa', 14, true, false);
+        //var articleIds = 'asas';
         jQuery("#DataTables_Table_1_wrapper").hide();
         jQuery("#DataTables_Table_2_wrapper").show();
+        /*
+         table.fnDestroy();
+         oTable.product = $('#product').dataTable({
+         "sAjaxSource": 'http://192.168.1.105/developing/monitor/product/product/ajaxjson',
+         "sServerMethod": 'POST',
+         "sPaginationType": 'full_numbers',
+         "fnServerParams": function (aoData) {
+         aoData.push({"name": "articleIds", "value": articleIds});
+         },
+         "aLengthMenu": [[100, 150, 200, -1], [100, 150, 200, 'All']],
+         "iDisplayLength": 100, "bPaginate": true,
+         "bFilter": true, "fnInitComplete": function () {
+         loadUi()
+         }, "bAutoWidth": false, "bInfo": true, "bRetrieve": 'true', "aaSorting": [[0, 'desc']], "aoColumns": [null, null, null, null, null, null, null, null], "bProcessing": true, });
+         */
+
+
+
+
     }
 });
 

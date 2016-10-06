@@ -248,6 +248,11 @@ class EdiItemController extends Main {
 
             $dt_order = $request->request->get("order");
             $dt_search = $request->request->get("search");
+            $articles = unserialize(base64_decode($dt_search["value"]));
+
+            //print_r(base64_decode($dt_search["value"]));
+            $dt_search["value"] = '';
+
             $dt_columns = $request->request->get("columns");
             $recordsTotal = $em->getRepository($this->repository)->recordsTotal();
             $fields = array();
@@ -284,6 +289,12 @@ class EdiItemController extends Main {
             $select = count($s) > 0 ? implode(",", $s) : $this->prefix . ".*";
 
             $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
+            //$articles["articleIds"][] = 4631442;
+            if (count($articles["articleIds"])) {
+                $this->where .= " AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articles["articleIds"])) . ")";
+            }
+
+            //echo $this->where."\n\n";
 
             $query = $em->createQuery(
                             'SELECT  ' . $this->select . '
@@ -352,74 +363,154 @@ class EdiItemController extends Main {
         return json_encode($data);
     }
 
+    protected $SoapClient = false;
+    protected $Username = '';
+    protected $Password = '';
+    protected $CustomerNo = '';
+    protected $SoapUrl = '';
+    protected $SoapNs = '';
+
+    protected function eltekaAuth() {
+
+        $this->SoapUrl = $this->getSetting("EdiBundle:Eltreka:SoapUrl");
+        $this->SoapNs = $this->getSetting("EdiBundle:Eltreka:SoapNs");
+        $this->Username = $this->getSetting("EdiBundle:Eltreka:Username");
+        $this->Password = $this->getSetting("EdiBundle:Eltreka:Password");
+        $this->CustomerNo = $this->getSetting("EdiBundle:Eltreka:CustomerNo");
+
+        if ($this->SoapClient) {
+            return $this->SoapClient;
+        }
+
+        $this->SoapClient = new \SoapClient($this->SoapUrl);
+        $headerbody = array('Username' => $this->Username, 'Password' => $this->Password);
+        $header = new \SOAPHeader($this->SoapNs, 'AuthHeader', $headerbody);
+        $this->SoapClient->__setSoapHeaders($header);
+        //$session->set('SoapClient', $this->SoapClient);
+        return $this->SoapClient;
+    }
+
+    function getEltrekaQtyAvailability($itemCode) {
+        //return;
+        /*
+          $url = "http://b2bnew.lourakis.gr/antallaktika/init/geteltrekaavailability";
+          $fields = array(
+          'appkey' => 'bkyh69yokmcludwuu2',
+          'partno' => $itemCode,
+          );
+          $fields_string = '';
+          foreach ($fields as $key => $value) {
+          @$fields_string .= $key . '=' . $value . '&';
+          }
+          rtrim($fields_string, '&');
+          $ch = curl_init();
+          curl_setopt($ch, CURLOPT_URL, $url);
+          curl_setopt($ch, CURLOPT_POST, count($fields));
+          curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+          $out = json_decode(curl_exec($ch));
+          print_r($out);
+         * ?
+         *
+         */
+        return unserialize(file_get_contents("http://b2bnew.lourakis.gr/antallaktika/init/geteltrekaavailability?itemCode=" . $itemCode));
+        //return $out;        
+    }
+
     function setEdiQtyAvailability($jsonarr) {
         $limit = 25;
         //return;
         //return $jsonarr;
         $datas = array();
         //print_r($jsonarr);
-        if (count($jsonarr) >= $limit*5 OR count($jsonarr) == 0)
+
+        $request = Request::createFromGlobals();
+        $dt_columns = $request->request->get("columns");
+        if ($dt_columns[1]["search"]["value"] == 4) {
+            foreach ((array)$this->getEltrekaQtyAvailability($dt_columns[4]["search"]["value"]) as $data) {
+                $eltrekaavailability[$data["erp_code"]] = $data["apothema"];
+            }
+            $elteka = $this->eltekaAuth();
+        }
+
+        if (count($jsonarr) >= $limit * 5 OR count($jsonarr) == 0)
             return $jsonarr;
+
+
+        
+
         //return;
         $i = 0;
         $k = 0;
         foreach ($jsonarr as $key => $json) {
-
-
             if ($i++ % $limit == 0) {
                 $k++;
             }
             $entity = $this->getDoctrine()
                     ->getRepository($this->repository)
                     ->find($json[0]);
+            if (strlen($entity->getEdi()->getToken()) == 36) { // is viakar, liakopoulos
+                if (@!$datas[$entity->getEdi()->getId()][$k]) {
+                    $datas[$entity->getEdi()->getId()][$k]['ApiToken'] = $entity->getEdi()->getToken();
+                    $datas[$entity->getEdi()->getId()][$k]['Items'] = array();
+                }
+                $Items[$entity->getEdi()->getId()][$k]["ItemCode"] = $entity->getPartno();
+                $Items[$entity->getEdi()->getId()][$k]["ReqQty"] = 1;
+                $datas[$entity->getEdi()->getId()][$k]['Items'][] = $Items[$entity->getEdi()->getId()][$k];
 
-            if (@!$datas[$entity->getEdi()->getId()][$k]) {
-                $datas[$entity->getEdi()->getId()][$k]['ApiToken'] = $entity->getEdi()->getToken();
-                $datas[$entity->getEdi()->getId()][$k]['Items'] = array();
+                $ands[$entity->getPartno()] = $key;
+            } else {
+                @$jsonarr[$key]['DT_RowClass'] .= $eltrekaavailability[$entity->getItemcode()] > 0 ? ' text-success ' : ' text-danger ';
+                $response = $elteka->getPartPrice(array('CustomerNo' => $this->CustomerNo, "EltrekkaRef" => $entity->getItemcode()));
+                $xml = $response->GetPartPriceResult->any;
+                $xml = simplexml_load_string($xml);
+                //echo "---".$xml->Item->WholePrice."\n";
+                @$jsonarr[$key]['6'] = number_format((float) $xml->Item->PriceOnPolicy, 2, '.', '');
+                /*
+                  $response = $elteka->getAvailability(
+                  array('CustomerNo' => $this->CustomerNo,
+                  "RequestedQty" => 1,
+                  "EltrekkaRef" => $entity->getItemcode()));
+                  $xml = $response->GetAvailabilityResult->any;
+                  $xml = simplexml_load_string($xml);
+                  @$jsonarr[$key]['6'] = number_format((float) $xml->Item->Header->PriceOnPolicy, 2, '.', '');
+                  @$jsonarr[$key]['DT_RowClass'] .= $xml->Item->Header->Available == "Y" ? ' text-success ' : ' text-danger ';
+                 * 
+                 */
             }
-            $Items[$entity->getEdi()->getId()][$k]["ItemCode"] = $entity->getPartno();
-            $Items[$entity->getEdi()->getId()][$k]["ReqQty"] = 1;
-            $datas[$entity->getEdi()->getId()][$k]['Items'][] = $Items[$entity->getEdi()->getId()][$k];
-
-            $ands[$entity->getPartno()] = $key;
             //$jsonarr2[(int)$key] = $json;
             @$jsonarr[$key]['DT_RowClass'] .= ' text-danger ';
         }
-        //print_r($datas);
-        //print_r($datas);
-        $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=getiteminfo';
-        //$data_string = '{ "ApiToken": "b5ab708b-0716-4c91-a8f3-b6513990fe3c", "Items": [ { "ItemCode": "' . $this->erp_code . '", "ReqQty": 1 } ] } ';
-        //return 10;
+        if (count($datas)) {
+            $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=getiteminfo';
+            foreach ($datas as $catalogue => $packs) {
+                foreach ($packs as $k => $data) {
+                    $data_string = json_encode($data);
+                    //print_r($data);
+                    //continue;
+                    $result = file_get_contents($requerstUrl, null, stream_context_create(array(
+                        'http' => array(
+                            'method' => 'POST',
+                            'header' =>
+                            'Content-Type: application/json' . "\r\n"
+                            . 'Content-Length: ' . strlen($data_string) . "\r\n",
+                            'content' => $data_string,
+                        ),
+                    )));
+                    $re = json_decode($result);
 
-
-        foreach ($datas as $catalogue => $packs) {
-
-            foreach ($packs as $k => $data) {
-                $data_string = json_encode($data);
-                //print_r($data);
-                //continue;
-                $result = file_get_contents($requerstUrl, null, stream_context_create(array(
-                    'http' => array(
-                        'method' => 'POST',
-                        'header' =>
-                        'Content-Type: application/json' . "\r\n"
-                        . 'Content-Length: ' . strlen($data_string) . "\r\n",
-                        'content' => $data_string,
-                    ),
-                )));
-                $re = json_decode($result);
-
-                //print_r($re);
-                //continue;
-                if (@count($re->Items)) {
-                    foreach ($re->Items as $Item) {
-                        $qty = $Item->Availability == 'green' ? 100 : 0;
-                        $Item->UnitPrice;
-                        //echo $Item->ItemCode."\n";
-                        if (@$jsonarr[$ands[$Item->ItemCode]]) {
-                            @$jsonarr[$ands[$Item->ItemCode]]['6'] = number_format($Item->UnitPrice, 2, '.', '');
-                            if ($Item->Availability == 'green') {
-                                @$jsonarr[$ands[$Item->ItemCode]]['DT_RowClass'] .= ' text-success ';
+                    //print_r($re);
+                    //continue;
+                    if (@count($re->Items)) {
+                        foreach ($re->Items as $Item) {
+                            $qty = $Item->Availability == 'green' ? 100 : 0;
+                            $Item->UnitPrice;
+                            //echo $Item->ItemCode."\n";
+                            if (@$jsonarr[$ands[$Item->ItemCode]]) {
+                                @$jsonarr[$ands[$Item->ItemCode]]['6'] = number_format($Item->UnitPrice, 2, '.', '');
+                                if ($Item->Availability == 'green') {
+                                    @$jsonarr[$ands[$Item->ItemCode]]['DT_RowClass'] .= ' text-success ';
+                                }
                             }
                         }
                     }

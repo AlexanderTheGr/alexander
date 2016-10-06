@@ -285,6 +285,7 @@ class EdiOrderController extends Main {
                 ->find($request->request->get("id"));
         if ($request->request->get("qty")) {
             $EdiOrderItem->setQty($request->request->get("qty"));
+            /*
             $availability = $EdiOrderItem->getEdi()->getQtyAvailability($request->request->get("qty"));
             $Available = (array) $availability["Header"];
             $store = $Available["SUGGESTED_STORE"];
@@ -294,9 +295,12 @@ class EdiOrderController extends Main {
                         $json, 200, array('Content-Type' => 'application/json')
                 );
             }
-            $price = $Available["PriceOnPolicy"];
-            $EdiOrderItem->setPrice($price);
-            $EdiOrderItem->setField("store", $store);
+             * 
+             */
+            //$price = $Available["PriceOnPolicy"];
+            //$EdiOrderItem->setPrice($price);
+           // $EdiOrderItem->setField("store", $store);
+            
         } else if ($request->request->get("price"))
             $EdiOrderItem->setPrice($request->request->get("price"));
         else if ($request->request->get("discount"))

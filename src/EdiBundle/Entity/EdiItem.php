@@ -358,62 +358,6 @@ class EdiItem extends Entity {
         return $this->Edi;
     }
 
-    function updatetecdoc($forceupdate = false) {
-        //$data = array("service" => "login", 'username' => 'dev', 'password' => 'dev', 'appId' => '2000');
-        if ((int) $this->dlnr == 0 OR $this->artNr == '')
-            return;
-        if ($this->getTecdocArticleId() > 0 and $forceupdate == false)
-            return;
-        global $kernel;
-        if ('AppCache' == get_class($kernel)) {
-            $kernel = $kernel->getKernel();
-        }
-        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
-
-        //$data_string = json_encode($data);
-        $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
-
-        $fields = array(
-            'action' => 'updateTecdoc',
-            'tecdoc_code' => $this->artNr,
-            'tecdoc_supplier_id' => $this->dlnr,
-        );
-
-        $fields_string = '';
-        foreach ($fields as $key => $value) {
-            @$fields_string .= $key . '=' . $value . '&';
-        }
-        rtrim($fields_string, '&');
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, count($fields));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-
-        $out = json_decode(curl_exec($ch));
-
-        //echo print_r($out);
-
-        try {
-            //$webserviceProduct = WebserviceProduct::model()->findByAttributes(array('product' =>  $this->id,"webservice"=>$this->webservice));
-            //$sql = "Delete from SoftoneBundle:WebserviceProduct p where p.product = '" . $this->id . "'";
-            //$em->createQuery($sql)->getResult();
-            //$em->execute();
-            if (@$out->articleId) {
-                $this->setTecdocArticleId($out->articleId);
-                $this->setTecdocArticleName($out->articleName);
-                //$this->setTecdocGenericArticleId($out->articleName);
-                $em->persist($this);
-                $em->flush();
-            }
-        } catch (Exception $e) {
-            echo $e->getMessage();
-            exit;
-        }
-        //echo $result;
-    }
-
     /**
      * @var string
      */
@@ -486,7 +430,16 @@ class EdiItem extends Entity {
         return $this;
     }
 
-    public function toErp() {
+    function updatetecdoc($forceupdate = false) {
+        //$data = array("service" => "login", 'username' => 'dev', 'password' => 'dev', 'appId' => '2000');
+
+        if ((int) $this->dlnr == 0 OR $this->artNr == '')
+            return;
+
+
+        //echo $this->getTecdocArticleId();
+        if ($this->getTecdocArticleId() > 0 and $forceupdate == false)
+            return;
 
 
 
@@ -496,6 +449,61 @@ class EdiItem extends Entity {
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
 
+        //$data_string = json_encode($data);
+        $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
+
+        @$fields = array(
+            'action' => 'updateTecdoc',
+            'tecdoc_code' => $this->artNr,
+            'tecdoc_supplier_id' => $this->dlnr,
+        );
+
+
+        $fields_string = '';
+        foreach ($fields as $key => $value) {
+            @$fields_string .= $key . '=' . $value . '&';
+        }
+        rtrim($fields_string, '&');
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, count($fields));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+        $out = json_decode(curl_exec($ch));
+
+        echo print_r($out);
+
+        try {
+            //$webserviceProduct = WebserviceProduct::model()->findByAttributes(array('product' =>  $this->id,"webservice"=>$this->webservice));
+            //$sql = "Delete from SoftoneBundle:WebserviceProduct p where p.product = '" . $this->id . "'";
+            //$em->createQuery($sql)->getResult();
+            //$em->execute();
+            if (@$out->articleId) {
+                $this->setTecdocArticleId($out->articleId);
+                $this->setTecdocArticleName($out->articleName);
+                //$this->setTecdocGenericArticleId($out->articleName);
+                $em->persist($this);
+                $em->flush();
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            exit;
+        }
+        //echo $result;
+    }
+
+    public function toErp() {
+
+
+
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $this->updatetecdoc();
         //$TecdocSupplier = new \SoftoneBundle\Entity\TecdocSupplier;
         //$TecdocSupplier->updateToSoftone();
         $this->brand = $this->fixsuppliers($this->brand);
@@ -711,47 +719,103 @@ class EdiItem extends Entity {
         return $this->product;
     }
 
+    function getEltrekaQtyAvailability() {
+        //return;
+        $url = "http://b2bnew.lourakis.gr/antallaktika/init/geteltrekaavailability";
+        $fields = array(
+            'appkey' => 'bkyh69yokmcludwuu2',
+            'partno' => $this->itemCode,
+        );
+
+        $fields_string = '';
+        foreach ($fields as $key => $value) {
+            @$fields_string .= $key . '=' . $value . '&';
+        }
+        rtrim($fields_string, '&');
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, count($fields));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $out = json_decode(curl_exec($ch));
+        return $out;
+    }
+
     function getEdiQtyAvailability($qty = 1) {
         //return;
         //return $jsonarr;
         $datas = array();
+        if (strlen($this->getEdi()->getToken()) == 36) {
+            //print_r($jsonarr);
+            $data['ApiToken'] = $this->getEdi()->getToken();
+            $data['Items'] = array();
+
+            $Item["ItemCode"] = $this->getPartno();
+            $Item["ReqQty"] = $qty;
+
+            $data['Items'][] = $Item;
+            //$jsonarr2[(int)$key] = $json;
+            //print_r($datas);
+            //print_r($datas);
+            $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=getiteminfo';
+            //$data_string = '{ "ApiToken": "b5ab708b-0716-4c91-a8f3-b6513990fe3c", "Items": [ { "ItemCode": "' . $this->erp_code . '", "ReqQty": 1 } ] } ';
+            //return 10;
+            $data_string = json_encode($data);
+            print_r($data);
+            //turn;
+            $result = file_get_contents($requerstUrl, null, stream_context_create(array(
+                'http' => array(
+                    'method' => 'POST',
+                    'header' =>
+                    'Content-Type: application/json' . "\r\n"
+                    . 'Content-Length: ' . strlen($data_string) . "\r\n",
+                    'content' => $data_string,
+                ),
+            )));
+
+            $re = json_decode($result);
+
+
+            //return;
+            if (@count($re->Items))
+                foreach ($re->Items as $Item) {
+                    return number_format($Item->UnitPrice, 2, '.', '');
+                }
+        } else {
+            $elteka = $this->eltekaAuth();
+            $response = $elteka->getPartPrice(array('CustomerNo' => $this->CustomerNo, "EltrekkaRef" => $this->getItemcode()));
+            $xml = $response->GetPartPriceResult->any;
+            $xml = simplexml_load_string($xml);
+            return $xml->Item->PriceOnPolicy;
+        }
         //print_r($jsonarr);
-        $data['ApiToken'] = $this->getEdi()->getToken();
-        $data['Items'] = array();
-        
-        $Item["ItemCode"] = $this->getPartno();
-        $Item["ReqQty"] = $qty;
-        
-        $data['Items'][] = $Item;
-        //$jsonarr2[(int)$key] = $json;
-        //print_r($datas);
-        //print_r($datas);
-        $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=getiteminfo';
-        //$data_string = '{ "ApiToken": "b5ab708b-0716-4c91-a8f3-b6513990fe3c", "Items": [ { "ItemCode": "' . $this->erp_code . '", "ReqQty": 1 } ] } ';
-        //return 10;
-        $data_string = json_encode($data);
-        print_r($data);
-        //turn;
-        $result = file_get_contents($requerstUrl, null, stream_context_create(array(
-            'http' => array(
-                'method' => 'POST',
-                'header' =>
-                'Content-Type: application/json' . "\r\n"
-                . 'Content-Length: ' . strlen($data_string) . "\r\n",
-                'content' => $data_string,
-            ),
-        )));
+    }
 
-        $re = json_decode($result);
+    protected $SoapClient = false;
+    protected $Username = '';
+    protected $Password = '';
+    protected $CustomerNo = '';
+    protected $SoapUrl = '';
+    protected $SoapNs = '';
 
+    protected function eltekaAuth() {
 
-        //return;
-        if (@count($re->Items))
-            foreach ($re->Items as $Item) {
-                return number_format($Item->UnitPrice, 2, '.', '');
-            }
+        $this->SoapUrl = $this->getSetting("EdiBundle:Eltreka:SoapUrl");
+        $this->SoapNs = $this->getSetting("EdiBundle:Eltreka:SoapNs");
+        $this->Username = $this->getSetting("EdiBundle:Eltreka:Username");
+        $this->Password = $this->getSetting("EdiBundle:Eltreka:Password");
+        $this->CustomerNo = $this->getSetting("EdiBundle:Eltreka:CustomerNo");
 
-        //print_r($jsonarr);
+        if ($this->SoapClient) {
+            return $this->SoapClient;
+        }
+
+        $this->SoapClient = new \SoapClient($this->SoapUrl);
+        $headerbody = array('Username' => $this->Username, 'Password' => $this->Password);
+        $header = new \SOAPHeader($this->SoapNs, 'AuthHeader', $headerbody);
+        $this->SoapClient->__setSoapHeaders($header);
+        //$session->set('SoapClient', $this->SoapClient);
+        return $this->SoapClient;
     }
 
 }

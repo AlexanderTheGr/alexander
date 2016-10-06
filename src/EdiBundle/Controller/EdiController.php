@@ -87,7 +87,7 @@ class EdiController extends Main {
 
     public function getEdiPartMaster($entity) {
         //echo $this->getPartMaster();
-        return;
+        //return;
         $apiToken = $entity["token"];
         echo $apiToken . "<BR>";
         //return;
@@ -136,13 +136,14 @@ class EdiController extends Main {
                             ->getRepository('EdiBundle:EdiItem')
                             ->findOneBy(array("itemCode" => $attributes["itemcode"], "Edi" => $ediedi));
                 }
-                //$ediediitem->updatetecdoc();
+                $ediediitem->updatetecdoc();
                 //if ($i++ > 6000) exit;
             }
         }
     }
 
     public function getEltrekaPartMaster($entity) {
+        return;
         set_time_limit(100000);
         $eltrekaedi = new Eltrekaedi();
         $file = $eltrekaedi->getPartMasterFile();
@@ -198,7 +199,7 @@ class EdiController extends Main {
                             ->findOneBy(array("itemCode" => $attributes["partno"], "Edi" => $ediedi));
                     @$ediedi_id = (int) $ediediitem->id;
                 }
-                //$ediediitem->updatetecdoc();
+                $ediediitem->updatetecdoc();
 
                 $eltrekaedi = $this->getDoctrine()
                         ->getRepository('EdiBundle:Eltrekaedi')
