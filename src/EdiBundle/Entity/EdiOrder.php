@@ -350,39 +350,63 @@ class EdiOrder extends Entity {
     function sendOrder() {
         $datas = array();
         //print_r($jsonarr);
-        $data['ApiToken'] = $this->getEdi()->getToken();
-        $data['Items'] = array();
-        foreach ($this->getEdiOrderItems() as $ediitem) {
-            $Item["ItemCode"] = $ediitem->getEdiItem()->getPartno();
-            $Item["ReqQty"] = $ediitem->getQty();
-            $Item["UnitPrice"] = $ediitem->getPrice();
-            $data['Items'][] = $Item;
+        if (strlen($this->getEdi()->getToken()) == 36) {
+            $data['ApiToken'] = $this->getEdi()->getToken();
+            $data['Items'] = array();
+            foreach ($this->getEdiOrderItems() as $ediitem) {
+                $Item["ItemCode"] = $ediitem->getEdiItem()->getPartno();
+                $Item["ReqQty"] = $ediitem->getQty();
+                $Item["UnitPrice"] = $ediitem->getPrice();
+                $data['Items'][] = $Item;
+            }
+
+            //$jsonarr2[(int)$key] = $json;
+            //print_r($datas);
+            //print_r($datas);
+            $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=postorder';
+            //$data_string = '{ "ApiToken": "b5ab708b-0716-4c91-a8f3-b6513990fe3c", "Items": [ { "ItemCode": "' . $this->erp_code . '", "ReqQty": 1 } ] } ';
+            //return 10;
+            $data_string = json_encode($data);
+            print_r($data);
+            //return;
+            $result = file_get_contents($requerstUrl, null, stream_context_create(array(
+                'http' => array(
+                    'method' => 'POST',
+                    'header' =>
+                    'Content-Type: application/json' . "\r\n"
+                    . 'Content-Length: ' . strlen($data_string) . "\r\n",
+                    'content' => $data_string,
+                ),
+            )));
+
+            return json_decode($result);
+        } else {
+            $elteka = $this->eltekaAuth();
+            foreach ($this->getEdiOrderItems() as $ediitem) {
+                
+            }            
         }
-
-        //$jsonarr2[(int)$key] = $json;
-        //print_r($datas);
-        //print_r($datas);
-        $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=postorder';
-        //$data_string = '{ "ApiToken": "b5ab708b-0716-4c91-a8f3-b6513990fe3c", "Items": [ { "ItemCode": "' . $this->erp_code . '", "ReqQty": 1 } ] } ';
-        //return 10;
-        $data_string = json_encode($data);
-        print_r($data);
-        //return;
-        $result = file_get_contents($requerstUrl, null, stream_context_create(array(
-            'http' => array(
-                'method' => 'POST',
-                'header' =>
-                'Content-Type: application/json' . "\r\n"
-                . 'Content-Length: ' . strlen($data_string) . "\r\n",
-                'content' => $data_string,
-            ),
-        )));
-
-        return json_decode($result);
-
 
 
         //print_r($jsonarr);        
     }
+    protected function eltekaAuth() {
 
+        $this->SoapUrl = $this->getSetting("EdiBundle:Eltreka:SoapUrl");
+        $this->SoapNs = $this->getSetting("EdiBundle:Eltreka:SoapNs");
+        $this->Username = $this->getSetting("EdiBundle:Eltreka:Username");
+        $this->Password = $this->getSetting("EdiBundle:Eltreka:Password");
+        $this->CustomerNo = $this->getSetting("EdiBundle:Eltreka:CustomerNo");
+
+        if ($this->SoapClient) {
+            return $this->SoapClient;
+        }
+
+        $this->SoapClient = new \SoapClient($this->SoapUrl);
+        $headerbody = array('Username' => $this->Username, 'Password' => $this->Password);
+        $header = new \SOAPHeader($this->SoapNs, 'AuthHeader', $headerbody);
+        $this->SoapClient->__setSoapHeaders($header);
+        //$session->set('SoapClient', $this->SoapClient);
+        return $this->SoapClient;
+    }
 }
