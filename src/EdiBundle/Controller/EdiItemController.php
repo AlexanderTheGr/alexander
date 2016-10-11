@@ -314,7 +314,7 @@ class EdiItemController extends Main {
 
             
             $articles["articleIds"][] = 2556734;
-			print_r($articles["articleIds"]);
+            //print_r($articles["articleIds"]);
             if (count($articles["articleIds"])) {
                 $this->where .= " AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articles["articleIds"])) . ")";
             }
