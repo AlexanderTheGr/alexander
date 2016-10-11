@@ -229,6 +229,29 @@ class EdiItemController extends Main {
         );
     }
 
+    /**
+     * @Route("/edi/ediitem/updatetecdoc")
+     */
+    public function getUpdateTecdocAction($funct = false) {
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+                "SELECT  p.id
+                    FROM " . $this->repository . " p, EdiBundle:Edi e
+                    where 
+                        e.id = p.Edi"
+        );
+        $results = $query->getResult();
+        echo count( $results);
+        $i=0;
+        foreach($results as $result) {
+            $ediediitem = $em->getRepository($this->repository)->find($result["id"]);
+            $ediediitem->updatetecdoc();
+            if ($i++ > 100) exit;
+        }
+        exit;
+         
+    }
+
     public function ediitemdatatable($funct = false) {
         ini_set("memory_limit", "1256M");
         $request = Request::createFromGlobals();
@@ -427,7 +450,7 @@ class EdiItemController extends Main {
         $request = Request::createFromGlobals();
         $dt_columns = $request->request->get("columns");
         if ($dt_columns[1]["search"]["value"] == 4) {
-            foreach ((array)$this->getEltrekaQtyAvailability($dt_columns[4]["search"]["value"]) as $data) {
+            foreach ((array) $this->getEltrekaQtyAvailability($dt_columns[4]["search"]["value"]) as $data) {
                 $eltrekaavailability[$data["erp_code"]] = $data["apothema"];
             }
             $elteka = $this->eltekaAuth();
@@ -437,7 +460,7 @@ class EdiItemController extends Main {
             return $jsonarr;
 
 
-        
+
 
         //return;
         $i = 0;

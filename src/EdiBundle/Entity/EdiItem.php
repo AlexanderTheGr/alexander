@@ -473,7 +473,7 @@ class EdiItem extends Entity {
 
         $out = json_decode(curl_exec($ch));
 
-        echo print_r($out);
+        //echo print_r($out);
 
         try {
             //$webserviceProduct = WebserviceProduct::model()->findByAttributes(array('product' =>  $this->id,"webservice"=>$this->webservice));
