@@ -312,14 +312,16 @@ class EdiItemController extends Main {
             $this->createSelect($s);
             $select = count($s) > 0 ? implode(",", $s) : $this->prefix . ".*";
 
-            $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
-            //$articles["articleIds"][] = 4631442;
+            
+            $articles["articleIds"][] = 2556734;
+			print_r($articles["articleIds"]);
             if (count($articles["articleIds"])) {
                 $this->where .= " AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articles["articleIds"])) . ")";
             }
 
-            //echo $this->where."\n\n";
-
+            echo $this->where."\n\n";
+            $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
+            
             $query = $em->createQuery(
                             'SELECT  ' . $this->select . '
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
