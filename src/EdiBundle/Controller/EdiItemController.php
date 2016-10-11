@@ -313,7 +313,7 @@ class EdiItemController extends Main {
             $select = count($s) > 0 ? implode(",", $s) : $this->prefix . ".*";
 
             
-            $articles["articleIds"][] = 2556734;
+            //$articles["articleIds"][] = 2556734;
             //print_r($articles["articleIds"]);
             if (count($articles["articleIds"])) {
                 $this->where .= " AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articles["articleIds"])) . ")";
