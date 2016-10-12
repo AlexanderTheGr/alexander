@@ -382,6 +382,14 @@ class EdiOrder extends Entity {
             return json_decode($result);
         } else {
             $elteka = $this->eltekaAuth();
+            
+            
+            $response = $elteka->GetCustomerShipTo(array("CustomerNo" => $this->CustomerNo));
+            
+            echo $response;
+            //$xml = $response->EltrekkaCustomerShippingPoints;
+            //$xml = simplexml_load_string($xml);
+            
             $PartTable = array();
             $params = array(
                 "CustomerNo" => $this->CustomerNo,
@@ -399,7 +407,7 @@ class EdiOrder extends Entity {
                 "PartTable" => $this->createPartBuffer($elteka)
             );
             print_r($params);
-            $result = $elteka->PlaceOrder($params);
+            //$result = $elteka->PlaceOrder($params);
             print_r($result);
         }
 
