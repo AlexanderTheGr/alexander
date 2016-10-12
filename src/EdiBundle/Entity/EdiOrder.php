@@ -389,7 +389,7 @@ class EdiOrder extends Entity {
                 "PurchaseOrderNo" => "EL-" . $this->getId(),
                 "PmtTermsCode" => 2,
                 "Make" => "",
-                "SerialNo" => "",
+                "SerialNo" => "10",
                 "Model" => "",
                 "UserId" => "",
                 "UserEmail" => "",
@@ -399,7 +399,7 @@ class EdiOrder extends Entity {
                 "PartTable" => $this->createPartBuffer($elteka)
             );
             print_r($params);
-            //$result = $elteka->PlaceOrder($params);
+            $result = $elteka->PlaceOrder($params);
             print_r($result);
         }
 
@@ -414,12 +414,14 @@ class EdiOrder extends Entity {
             $buffer .= str_pad($ediitem->getEdiItem()->getItemcode(), 20);
             $buffer .= str_pad($ediitem->getQty(), 5, "0", STR_PAD_LEFT);
             $buffer .= str_pad($ediitem->getEdiItem()->getItemcode(), 20);
-
+            /*
             $response = $elteka->getAvailability(
                     array('CustomerNo' => $this->CustomerNo,
                         "RequestedQty" => 1,
                         "EltrekkaRef" => $ediitem->getEdiItem()->getItemcode()));
-            print_r($response);
+            //print_r($response);
+             * 
+             */
         }
         return $buffer;
     }
