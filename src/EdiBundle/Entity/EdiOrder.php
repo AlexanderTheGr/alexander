@@ -382,43 +382,42 @@ class EdiOrder extends Entity {
             return json_decode($result);
         } else {
             $elteka = $this->eltekaAuth();
-            foreach ($this->getEdiOrderItems() as $ediitem) {
-                $PartTable = array();
-                $params = array(
-                    "CustomerNo"=>$this->CustomerNo,
-                    "StoreNo" => "",
-                    "PurchaseOrderNo"=>"EL-".$this->getId(),
-                    "PmtTermsCode"=>2,
-                    "Make"=>"",
-                    "SerialNo"=>"",
-                    "Model"=>"",
-                    "UserId"=>"",
-                    "UserEmail"=>"",
-                    "ShipToCode"=>"",
-                    "ShipVia"=>2,
-                    "PartCount"=>count($this->getEdiOrderItems()),
-                    "PartTable"=>$this->createPartBuffer()
-                );
-                print_r($params);
-                $result = $elteka->PlaceOrder($params);
-                print_r($result);
-            }            
+            $PartTable = array();
+            $params = array(
+                "CustomerNo" => $this->CustomerNo,
+                "StoreNo" => "",
+                "PurchaseOrderNo" => "EL-" . $this->getId(),
+                "PmtTermsCode" => 2,
+                "Make" => "",
+                "SerialNo" => "",
+                "Model" => "",
+                "UserId" => "",
+                "UserEmail" => "",
+                "ShipToCode" => "",
+                "ShipVia" => 2,
+                "PartCount" => count($this->getEdiOrderItems()),
+                "PartTable" => $this->createPartBuffer()
+            );
+            print_r($params);
+            $result = $elteka->PlaceOrder($params);
+            print_r($result);
         }
 
 
         //print_r($jsonarr);        
     }
-    
+
     protected function createPartBuffer() {
         $buffer = "";
         foreach ($this->getEdiOrderItems() as $ediitem) {
             $buffer .= "777";
-            $buffer .= str_pad($ediitem->getEdiItem()->getItemcode(),20);
+            $buffer .= str_pad($ediitem->getEdiItem()->getItemcode(), 20);
             $buffer .= str_pad($ediitem->getQty(), 5, "0", STR_PAD_LEFT);
-            $buffer .= str_pad($ediitem->getEdiItem()->getItemcode(),20);
+            $buffer .= str_pad($ediitem->getEdiItem()->getItemcode(), 20);
         }
         return $buffer;
     }
+
     protected function eltekaAuth() {
 
         $this->SoapUrl = $this->getSetting("EdiBundle:Eltreka:SoapUrl");
@@ -438,4 +437,5 @@ class EdiOrder extends Entity {
         //$session->set('SoapClient', $this->SoapClient);
         return $this->SoapClient;
     }
+
 }
