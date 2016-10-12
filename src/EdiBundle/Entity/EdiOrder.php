@@ -386,7 +386,7 @@ class EdiOrder extends Entity {
             
             $response = $elteka->GetCustomerShipTo(array("CustomerNo" => $this->CustomerNo));
             
-            echo $response;
+            print_r($response);
             //$xml = $response->EltrekkaCustomerShippingPoints;
             //$xml = simplexml_load_string($xml);
             
