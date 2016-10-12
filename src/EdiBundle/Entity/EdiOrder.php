@@ -396,7 +396,7 @@ class EdiOrder extends Entity {
                 "ShipToCode" => "",
                 "ShipVia" => 2,
                 "PartCount" => count($this->getEdiOrderItems()),
-                "PartTable" => $this->createPartBuffer()
+                "PartTable" => $this->createPartBuffer($elteka)
             );
             print_r($params);
             //$result = $elteka->PlaceOrder($params);
@@ -407,7 +407,7 @@ class EdiOrder extends Entity {
         //print_r($jsonarr);        
     }
 
-    protected function createPartBuffer() {
+    protected function createPartBuffer($elteka) {
         $buffer = "";
         foreach ($this->getEdiOrderItems() as $ediitem) {
             $buffer .= "777";
