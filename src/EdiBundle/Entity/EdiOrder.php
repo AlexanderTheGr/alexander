@@ -399,6 +399,7 @@ class EdiOrder extends Entity {
                     "PartCount"=>count($this->getEdiOrderItems()),
                     "PartTable"=>$this->createPartBuffer()
                 );
+                print_r($params);
                 $result = $elteka->PlaceOrder($params);
                 print_r($result);
             }            
@@ -416,6 +417,7 @@ class EdiOrder extends Entity {
             $buffer .= str_pad($ediitem->getQty(), 5, "0", STR_PAD_LEFT);
             $buffer .= str_pad($ediitem->getEdiItem()->getItemcode(),20);
         }
+        return $buffer;
     }
     protected function eltekaAuth() {
 
