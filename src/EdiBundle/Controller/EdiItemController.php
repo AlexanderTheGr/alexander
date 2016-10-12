@@ -487,11 +487,15 @@ class EdiItemController extends Main {
                 $ands[$entity->getPartno()] = $key;
             } else {
                 @$jsonarr[$key]['DT_RowClass'] .= $eltrekaavailability[$entity->getItemcode()] > 0 ? ' text-success ' : ' text-danger ';
+                /*
                 $response = $elteka->getPartPrice(array('CustomerNo' => $this->CustomerNo, "EltrekkaRef" => $entity->getItemcode()));
                 $xml = $response->GetPartPriceResult->any;
                 $xml = simplexml_load_string($xml);
+                $price = (float) $xml->Item->PriceOnPolicy;
+                */
+                
                 //echo "---".$xml->Item->WholePrice."\n";
-                @$jsonarr[$key]['6'] = number_format((float) $xml->Item->PriceOnPolicy, 2, '.', '');
+                //@$jsonarr[$key]['6'] = number_format($price, 2, '.', '');
                 /*
                   $response = $elteka->getAvailability(
                   array('CustomerNo' => $this->CustomerNo,
