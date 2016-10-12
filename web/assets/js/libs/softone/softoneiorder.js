@@ -299,3 +299,7 @@ jQuery(".alexander tr").live('mouseout', function () {
     //alert('sss');
     jQuery('.orderitemstable').hide();
 });
+
+jQuery("offcanvas-tools md-close").live("click",function(){
+    $(".offcanvas-search").click();
+})
