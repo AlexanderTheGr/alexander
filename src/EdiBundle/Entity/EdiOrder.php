@@ -418,7 +418,7 @@ class EdiOrder extends Entity {
             $response = $elteka->getAvailability(
                     array('CustomerNo' => $this->CustomerNo,
                         "RequestedQty" => 1,
-                        "EltrekkaRef" => $ediitem->getItemcode()));
+                        "EltrekkaRef" => $ediitem->getEdiItem()->getItemcode()));
             print_r($response);
         }
         return $buffer;
