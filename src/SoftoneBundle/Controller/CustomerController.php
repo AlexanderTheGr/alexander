@@ -87,6 +87,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
     public function saveAction() {
         $entity = new Customer;
         //$this->repository = "SoftoneBundle:Customer";
+        $this->newentity[$this->repository] = $entity;
         $this->initialazeNewEntity($entity);
         $this->newentity[$this->repository]->setField("status", 1);
         $this->newentity[$this->repository]->setField("reference", 1);
