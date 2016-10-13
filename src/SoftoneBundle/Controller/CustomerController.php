@@ -93,10 +93,10 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $this->newentity[$this->repository]->setField("status", 1);
         $this->newentity[$this->repository]->setField("reference", 1);
         $this->newentity[$this->repository]->setField("group", 1);
-        $entity->toSoftone();
         $out = $this->save();
         $jsonarr = array();
         if ($this->newentity[$this->repository]->getId()) {
+            $this->newentity[$this->repository]->toSoftone();
             $jsonarr["returnurl"] = "/customer/view/" . $this->newentity[$this->repository]->getId();
         }
         $json = json_encode($jsonarr);
