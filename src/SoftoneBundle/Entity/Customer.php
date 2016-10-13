@@ -1054,6 +1054,10 @@ class Customer extends Entity {
         print_r(@$dataOut);
         $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
         print_r($out);
-        
+        if (@$out->id > 0) {
+            $this->reference = $out->id;
+            $em->persist($this);
+            $em->flush(); 
+        }        
     }
 }
