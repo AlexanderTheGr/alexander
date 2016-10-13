@@ -1033,7 +1033,6 @@ class Customer extends Entity {
             @$objectArr2[$field1] = $this->$field2;
             //}
         }
-
         
         $objectArr[0] = $objectArr2;
         $dataOut[$object] = (array) $objectArr;
