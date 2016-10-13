@@ -94,6 +94,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $this->newentity[$this->repository]->setField("reference", 1);
         $this->newentity[$this->repository]->setField("group", 1);
         $out = $this->save();
+        print_r($out);
         $jsonarr = array();
         if ($this->newentity[$this->repository]->getId()) {
             $this->newentity[$this->repository]->toSoftone();
