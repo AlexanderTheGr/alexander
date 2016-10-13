@@ -410,6 +410,7 @@ class Main extends Controller {
             $entity->setModified($dt);
             $this->flushpersist($entity);
             $out[$key] = $entity->getId();
+            $this->newentity[$key] = $entity;
         }
         return $out;
     }
