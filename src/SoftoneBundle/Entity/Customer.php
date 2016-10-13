@@ -58,7 +58,21 @@ class Customer extends Entity {
         }
         return 'string';
     }
-    
+    function createName($str) {
+        $strArr = explode("_", $str);
+        $i = 0;
+        $b = "";
+        foreach ($strArr as $a) {
+            $b .= ucfirst($a);
+        }
+        $strArr = explode(".", $b);
+        $i = 0;
+        $b = "";
+        foreach ($strArr as $a) {
+            $b .= ucfirst($a);
+        }
+        return $b;
+    }    
 
 
     /**
