@@ -1005,5 +1005,42 @@ class Customer extends Entity {
     public function getCustomerVatsts() {
         return $this->customerVatsts;
     }
+    function toSoftone() {
 
+        //if ($this->reference)
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $object = "CUSTOMER";
+        $softone = new Softone();
+        //$fields = $softone->retrieveFields($object, $params["list"]);
+
+        //print_r($fields); 
+        //return;
+        $objectArr = array();
+        $objectArr2 = array();
+        if ($this->reference > 0) {
+            $data = $softone->getData($object, $this->reference);
+            $objectArr = $data->data->$object;
+            $objectArr2 = (array) $objectArr[0];
+        }
+        foreach ($fields as $field) {
+            $field1 = strtoupper(str_replace(strtolower($object) . "_", "", $field));
+            $field2 = lcfirst($this->createName($field));
+            //echo $field2 . "<BR>";
+            @$objectArr2[$field1] = $this->$field2;
+            //}
+        }
+
+        
+        $objectArr[0] = $objectArr2;
+        $dataOut[$object] = (array) $objectArr;
+        //@$dataOut["ITEEXTRA"][0] = array("NUM02" => $this->item_mtrl_iteextra_num02);
+        print_r(@$dataOut);
+        $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
+        print_r($out);
+        
+    }
 }
