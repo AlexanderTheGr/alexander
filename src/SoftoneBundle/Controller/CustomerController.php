@@ -12,7 +12,7 @@ use SoftoneBundle\Entity\Customer as Customer;
 class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
     var $repository = 'SoftoneBundle:Customer';
-    var $newentity = '';
+    var $newentity = array();
 
     /**
      * @Route("/customer/customer")
@@ -84,8 +84,9 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
     /**
      * @Route("/customer/save")
      */
-    public function savection() {
+    public function saveAction() {
         $entity = new Customer;
+        //$this->repository = "SoftoneBundle:Customer";
         $this->initialazeNewEntity($entity);
         $this->newentity[$this->repository]->setField("status", 1);
         $this->newentity[$this->repository]->setField("reference", 1);
