@@ -1058,7 +1058,7 @@ class Customer extends Entity {
         if (@$out->id > 0) {
             $filters = "CUSTOMER.CODE=" . $this->customerCode . "&CUSTOMER.CODE_TO=" . $this->customerCode;
             $datas = $softone->retrieveData($object, $params["list"], $filters);
-            print_r($data->data->$object);
+            print_r($datas[0]->data->$object);
             //$em->persist($this);
             //$em->flush(); 
             
