@@ -1079,9 +1079,7 @@ class Customer extends Entity {
                 $em->persist($this);
                 $em->flush();
             }
-            $customerCode = (int) $this->getSetting("SoftoneBundle:Customer:customerCode");
-            $customerCode++;
-            $this->setSetting("SoftoneBundle:Customer:customerCode", $customerCode);
+
         }
     }
 
