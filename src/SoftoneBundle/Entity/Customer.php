@@ -1028,16 +1028,26 @@ class Customer extends Entity {
         $object = "CUSTOMER";
         $softone = new Softone();
         $fields = $softone->retrieveFields($object, $params["list"]);
-        echo $this->reference . "\n";
-        print_r($fields);
+        //echo $this->reference . "\n";
+        //print_r($fields);
         $objectArr = array();
         $objectArr2 = array();
         if ((int) $this->reference > 0) {
             $data = $softone->getData($object, $this->reference);
-            print_r($data);
+            //print_r($data);
             $objectArr = $data->data->$object;
-            print_r($objectArr);
+            //print_r($objectArr);
             $objectArr2 = (array) $objectArr[0];
+        } else {
+            $filters = "CUSTOMER.CODE=" . $this->customerCode . "&CUSTOMER.CODE_TO=" . $this->customerCode;
+            $datas = $softone->retrieveData($object, $params["list"], $filters);
+            foreach ($datas as $data) {
+                $data = (array) $data;
+                $zoominfo = $data["zoominfo"];
+                $info = explode(";", $zoominfo);
+                $this->reference = $info[1];
+                break;
+            }            
         }
         foreach ($fields as $field) {
             $field1 = strtoupper(str_replace(strtolower($object) . "_", "", $field));
@@ -1046,13 +1056,12 @@ class Customer extends Entity {
             @$objectArr2[$field1] = $this->$field2;
             //}
         }
-
         $objectArr[0] = $objectArr2;
         $dataOut[$object] = (array) $objectArr;
         //@$dataOut["ITEEXTRA"][0] = array("NUM02" => $this->item_mtrl_iteextra_num02);
-        print_r(@$dataOut);
+        //print_r(@$dataOut);
         $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
-        print_r($out);
+        //print_r($out);
         if (@$out->id > 0) {
             $filters = "CUSTOMER.CODE=" . $this->customerCode . "&CUSTOMER.CODE_TO=" . $this->customerCode;
             $datas = $softone->retrieveData($object, $params["list"], $filters);
