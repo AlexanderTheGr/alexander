@@ -143,7 +143,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $fields["customerName"] = array("label" => "Customer Name", 'class' => 'asdfg');
             $fields["fincode"] = array("label" => "Code", 'class' => 'asdfg');
         } else {
-            if ($entity->fincode = '') {
+            if ($entity->getFincode() = '') {
                 $fincode = (int) $this->getSetting("SoftoneBundle:Order:fincode");
                 $entity->setField("fincode", str_pad($fincode, 7, "0", STR_PAD_LEFT));
                 $fincode++;
