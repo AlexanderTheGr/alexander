@@ -1035,13 +1035,10 @@ class Customer extends Entity {
         $objectArr = array();
         $objectArr2 = array();
         if ((int)$this->reference > 0) {
-            echo 'ssssssss';
             $data = $softone->getData($object, $this->reference);
             print_r($data);
             $objectArr = $data->data->$object;
-            
             print_r($objectArr);
-            
             $objectArr2 = (array) $objectArr[0];
         }
         foreach ($fields as $field) {
@@ -1059,9 +1056,12 @@ class Customer extends Entity {
         $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
         print_r($out);
         if (@$out->id > 0) {
-            $this->reference = $out->id;
-            $em->persist($this);
-            $em->flush(); 
+            $filters = "CUSTOMER.CODE=" . $this->customerCode . "&CUSTOMER.CODE_TO=" . $this->customerCode;
+            $datas = $softone->retrieveData($params["softone_object"], $params["list"], $filters);
+            print_r($data->data->$object);
+            //$em->persist($this);
+            //$em->flush(); 
+            
         }        
     }
 }
