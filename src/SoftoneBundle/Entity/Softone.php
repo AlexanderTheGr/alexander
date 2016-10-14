@@ -363,7 +363,7 @@ class Softone extends Entity {
         }
 
         $datas = $this->getBrowser($obj, $list, $filters);
-        print_r($datas);
+        //print_r($datas);
         $retrievedDataTable = array();
         foreach ((array) $datas->rows as $row) {
             $retrievedDataRow = array();
