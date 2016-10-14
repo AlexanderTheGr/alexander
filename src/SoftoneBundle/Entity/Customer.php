@@ -1037,9 +1037,10 @@ class Customer extends Entity {
         $objectArr2 = array();
         if ($this->reference > 0) {
             $data = $softone->getData($object, $this->reference);
+            print_r($data);
             $objectArr = $data->data->$object;
             
-            print_r($objectArr);
+            //print_r($objectArr);
             
             $objectArr2 = (array) $objectArr[0];
         }
