@@ -97,12 +97,11 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
         $jsonarr = array();
         if ($this->newentity[$this->repository]->getId()) {
-            if ($this->newentity[$this->repository]->reference > 0) {
+            if ($this->newentity[$this->repository]->getReference() > 0) {
                 $customerCode = (int) $this->getSetting("SoftoneBundle:Customer:customerCode");
                 $customerCode++;
                 $this->setSetting("SoftoneBundle:Customer:customerCode", $customerCode);
             }
-
             $this->newentity[$this->repository]->toSoftone();
             $jsonarr["returnurl"] = "/customer/view/" . $this->newentity[$this->repository]->getId();
         }
