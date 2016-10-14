@@ -1031,8 +1031,8 @@ class Customer extends Entity {
         $softone = new Softone();
         $fields = $softone->retrieveFields($object, $params["list"]);
 
-        //print_r($fields); 
-        //return;
+        print_r($fields); 
+        return;
         $objectArr = array();
         $objectArr2 = array();
         if ($this->reference > 0) {
