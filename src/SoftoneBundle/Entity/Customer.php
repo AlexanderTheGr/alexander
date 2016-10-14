@@ -1032,16 +1032,15 @@ class Customer extends Entity {
         $fields = $softone->retrieveFields($object, $params["list"]);
         echo $this->reference."\n";
         print_r($fields); 
-        return;
         $objectArr = array();
         $objectArr2 = array();
-        if ($this->reference > 0) {
+        if ((int)$this->reference > 0) {
             echo 'ssssssss';
             $data = $softone->getData($object, $this->reference);
             print_r($data);
             $objectArr = $data->data->$object;
             
-            //print_r($objectArr);
+            print_r($objectArr);
             
             $objectArr2 = (array) $objectArr[0];
         }
