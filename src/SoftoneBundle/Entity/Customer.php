@@ -1040,7 +1040,7 @@ class Customer extends Entity {
             $objectArr2 = (array) $objectArr[0];
         } else {
             $filters = "CUSTOMER.CODE=" . $this->customerCode . "&CUSTOMER.CODE_TO=" . $this->customerCode;
-            $datas = $softone->retrieveData($object, $params["list"], $filters);
+            $datas = $softone->retrieveData($object, "partsbox", $filters);
             foreach ($datas as $data) {
                 $data = (array) $data;
                 $zoominfo = $data["zoominfo"];
@@ -1067,7 +1067,7 @@ class Customer extends Entity {
         //print_r($out);
         if (@$out->id > 0) {
             $filters = "CUSTOMER.CODE=" . $this->customerCode . "&CUSTOMER.CODE_TO=" . $this->customerCode;
-            $datas = $softone->retrieveData($object, $params["list"], $filters);
+            $datas = $softone->retrieveData($object, "partsbox", $filters);
             foreach ($datas as $data) {
                 $data = (array) $data;
                 $zoominfo = $data["zoominfo"];
