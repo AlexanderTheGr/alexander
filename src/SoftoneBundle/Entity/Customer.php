@@ -1078,5 +1078,4 @@ class Customer extends Entity {
             }
         }
     }
-
 }
