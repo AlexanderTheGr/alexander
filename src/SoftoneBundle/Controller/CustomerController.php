@@ -86,7 +86,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function saveAction() {
         $entity = new Customer;
-        
+
         //$this->repository = "SoftoneBundle:Customer";
         $this->newentity[$this->repository] = $entity;
         $this->initialazeNewEntity($entity);
@@ -94,9 +94,15 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $this->newentity[$this->repository]->setField("reference", 1);
         $this->newentity[$this->repository]->setField("group", 1);
         $out = $this->save();
-        
+
         $jsonarr = array();
         if ($this->newentity[$this->repository]->getId()) {
+            if ($this->newentity[$this->repository]->reference > 0) {
+                $customerCode = (int) $this->getSetting("SoftoneBundle:Customer:customerCode");
+                $customerCode++;
+                $this->setSetting("SoftoneBundle:Customer:customerCode", $customerCode);
+            }
+
             $this->newentity[$this->repository]->toSoftone();
             $jsonarr["returnurl"] = "/customer/view/" . $this->newentity[$this->repository]->getId();
         }
@@ -117,7 +123,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
         if ($id == 0 AND @ $entity->id == 0) {
             $entity = new Customer;
-            $customerCode = (int)$this->getSetting("SoftoneBundle:Customer:customerCode");
+            $customerCode = (int) $this->getSetting("SoftoneBundle:Customer:customerCode");
             $entity->setField("customerCode", str_pad($customerCode, 6, "0", STR_PAD_LEFT));
             $this->newentity[$this->repository] = $entity;
         }
