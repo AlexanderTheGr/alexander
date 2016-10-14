@@ -6,14 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Entity;
 use SoftoneBundle\Entity\Softone as Softone;
 
-
 /**
  * Customer
  *
  * @ORM\Table(name="customer", indexes={@ORM\Index(name="user_id", columns={"actioneer"}), @ORM\Index(name="customer_code", columns={"customer_code"}) })
  * @ORM\Entity
  */
-
 class Customer extends Entity {
 
     var $repositories = array();
@@ -35,10 +33,10 @@ class Customer extends Entity {
 
     public function setRepositories() {
         //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:TecdocSupplier';
-        $this->types['tecdocSupplierId'] = 'object';   
+        $this->types['tecdocSupplierId'] = 'object';
         //$this->tecdocSupplierId = new \SoftoneBundle\Entity\TecdocSupplier;
     }
-    
+
     public function getRepository() {
         return $this->repository;
     }
@@ -58,6 +56,7 @@ class Customer extends Entity {
         }
         return 'string';
     }
+
     function createName($str) {
         $strArr = explode("_", $str);
         $i = 0;
@@ -72,8 +71,7 @@ class Customer extends Entity {
             $b .= ucfirst($a);
         }
         return $b;
-    }    
-
+    }
 
     /**
      * @var integer
@@ -907,7 +905,6 @@ class Customer extends Entity {
      */
     private $addresses;
 
-
     /**
      * Add address
      *
@@ -1019,6 +1016,7 @@ class Customer extends Entity {
     public function getCustomerVatsts() {
         return $this->customerVatsts;
     }
+
     function toSoftone() {
 
         //if ($this->reference)
@@ -1030,11 +1028,11 @@ class Customer extends Entity {
         $object = "CUSTOMER";
         $softone = new Softone();
         $fields = $softone->retrieveFields($object, $params["list"]);
-        echo $this->reference."\n";
-        print_r($fields); 
+        echo $this->reference . "\n";
+        print_r($fields);
         $objectArr = array();
         $objectArr2 = array();
-        if ((int)$this->reference > 0) {
+        if ((int) $this->reference > 0) {
             $data = $softone->getData($object, $this->reference);
             print_r($data);
             $objectArr = $data->data->$object;
@@ -1048,7 +1046,7 @@ class Customer extends Entity {
             @$objectArr2[$field1] = $this->$field2;
             //}
         }
-        
+
         $objectArr[0] = $objectArr2;
         $dataOut[$object] = (array) $objectArr;
         //@$dataOut["ITEEXTRA"][0] = array("NUM02" => $this->item_mtrl_iteextra_num02);
@@ -1058,10 +1056,15 @@ class Customer extends Entity {
         if (@$out->id > 0) {
             $filters = "CUSTOMER.CODE=" . $this->customerCode . "&CUSTOMER.CODE_TO=" . $this->customerCode;
             $datas = $softone->retrieveData($object, $params["list"], $filters);
-            print_r($datas[0]->data->$object);
+            foreach ($datas as $data) {
+                $data = (array) $data;
+                $zoominfo = $data["zoominfo"];
+                $info = explode(";", $zoominfo);
+                echo $info[1];
+            }
             //$em->persist($this);
             //$em->flush(); 
-            
-        }        
+        }
     }
+
 }
