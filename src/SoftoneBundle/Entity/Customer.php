@@ -1027,7 +1027,7 @@ class Customer extends Entity {
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         $object = "CUSTOMER";
         $softone = new Softone();
-        $fields = $softone->retrieveFields($object, $params["list"]);
+        $fields = $softone->retrieveFields($object, "partsbox");
         //echo $this->reference . "\n";
         //print_r($fields);
         $objectArr = array();
