@@ -1,11 +1,21 @@
 <?php
 
 namespace SoftoneBundle\Entity;
-
+use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\Entity;
 /**
  * Vat
  */
-class Vat {
+class Vat extends Entity {
+
+    public function getField($field) {
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
 
     /**
      * @var string
@@ -53,7 +63,6 @@ class Vat {
      */
     private $vatsts;
 
-
     /**
      * Set vatsts
      *
@@ -61,8 +70,7 @@ class Vat {
      *
      * @return Vat
      */
-    public function setVatsts($vatsts)
-    {
+    public function setVatsts($vatsts) {
         $this->vatsts = $vatsts;
 
         return $this;
@@ -73,15 +81,14 @@ class Vat {
      *
      * @return integer
      */
-    public function getVatsts()
-    {
+    public function getVatsts() {
         return $this->vatsts;
     }
+
     /**
      * @var boolean
      */
     private $enable = '0';
-
 
     /**
      * Set enable
@@ -90,8 +97,7 @@ class Vat {
      *
      * @return Vat
      */
-    public function setEnable($enable)
-    {
+    public function setEnable($enable) {
         $this->enable = $enable;
 
         return $this;
@@ -102,8 +108,8 @@ class Vat {
      *
      * @return boolean
      */
-    public function getEnable()
-    {
+    public function getEnable() {
         return $this->enable;
     }
+
 }
