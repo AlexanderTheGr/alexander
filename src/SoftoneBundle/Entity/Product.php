@@ -32,10 +32,10 @@ class Product extends Entity {
 
     public function setRepositories() {
         $this->repositories['tecdocSupplierId'] = 'SoftoneBundle:TecdocSupplier';
-        $this->types['tecdocSupplierId'] = 'object';   
+        $this->types['tecdocSupplierId'] = 'object';
         //$this->tecdocSupplierId = new \SoftoneBundle\Entity\TecdocSupplier;
     }
-    
+
     public function getRepository() {
         return $this->repository;
     }
@@ -1705,7 +1705,8 @@ class Product extends Entity {
 
     function updatetecdoc() {
         //$data = array("service" => "login", 'username' => 'dev', 'password' => 'dev', 'appId' => '2000');
-        if ($this->getTecdocSupplierId() == null) return;
+        if ($this->getTecdocSupplierId() == null)
+            return;
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
@@ -1891,7 +1892,21 @@ class Product extends Entity {
             $data = $softone->getData($object, $this->reference);
             $objectArr = $data->data->$object;
             $objectArr2 = (array) $objectArr[0];
+        } else {
+            $filters = $object.".CODE=" . $this->itemCode . "&".$object.".CODE_TO=" . $this->itemCode;
+            $datas = $softone->retrieveData($object, "partsbox", $filters);
+            foreach ($datas as $data) {
+                $data = (array) $data;
+                $zoominfo = $data["zoominfo"];
+                $info = explode(";", $zoominfo);
+                $this->reference = $info[1];
+                break;
+            }
+            $data = $softone->getData($object, $this->reference);
+            $objectArr = $data->data->$object;
+            $objectArr2 = (array) $objectArr[0];
         }
+
         foreach ($fields as $field) {
             $field1 = strtoupper(str_replace(strtolower($object) . "_", "", $field));
             $field2 = lcfirst($this->createName($field));
@@ -1899,27 +1914,28 @@ class Product extends Entity {
             @$objectArr2[$field1] = $this->$field2;
             //}
         }
+
         $objectArr2["MTRUNIT1"] = 101;
         $objectArr2["VAT"] = 1310;
         $objectArr2["CODE2"] = $this->supplierCode;
         $objectArr2["ISACTIVE"] = $this->itemIsactive;
-        $objectArr2["MTRMANFCTR"] = $this->itemMtrmanfctr  > 0 ? $this->itemMtrmanfctr : 1000;
-        
+        $objectArr2["MTRMANFCTR"] = $this->itemMtrmanfctr > 0 ? $this->itemMtrmanfctr : 1000;
+
         $objectArr[0] = $objectArr2;
         $dataOut[$object] = (array) $objectArr;
         //@$dataOut["ITEEXTRA"][0] = array("NUM02" => $this->item_mtrl_iteextra_num02);
         //print_r(@$dataOut);
         $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
         //print_r($out);
-        
+
         if (@$out->id > 0) {
             $this->reference = $out->id;
             $em->persist($this);
             $em->flush();
             $this->itemMtrmark = $this->itemMtrmark > 0 ? $this->itemMtrmark : 1000;
-            $this->itemMtrmanfctr = $this->itemMtrmanfctr  > 0 ? $this->itemMtrmanfctr : 1000;
-            $params["fSQL"] = "UPDATE MTRL SET MTRMANFCTR=".$this->itemMtrmanfctr." , MTRMARK=".$this->itemMtrmark." WHERE MTRL = ".$this->reference;
-            print_r($softone->createSql($params));            
+            $this->itemMtrmanfctr = $this->itemMtrmanfctr > 0 ? $this->itemMtrmanfctr : 1000;
+            $params["fSQL"] = "UPDATE MTRL SET MTRMANFCTR=" . $this->itemMtrmanfctr . " , MTRMARK=" . $this->itemMtrmark . " WHERE MTRL = " . $this->reference;
+            print_r($softone->createSql($params));
         }
     }
 
