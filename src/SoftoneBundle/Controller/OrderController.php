@@ -137,12 +137,18 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $entity = new Order;
             $this->newentity[$this->repository] = $entity;
             $fincode = (int) $this->getSetting("SoftoneBundle:Order:fincode");
-            $order->setField("fincode", str_pad($fincode, 7, "0", STR_PAD_LEFT));
+            $entity->setField("fincode", str_pad($fincode, 7, "0", STR_PAD_LEFT));
             $fincode++;
             $this->setSetting("SoftoneBundle:Order:fincode",$fincode);            
             $fields["customerName"] = array("label" => "Customer Name", 'class' => 'asdfg');
             $fields["fincode"] = array("label" => "Code", 'class' => 'asdfg');
         } else {
+            if ($entity->fincode = '') {
+                $fincode = (int) $this->getSetting("SoftoneBundle:Order:fincode");
+                $entity->setField("fincode", str_pad($fincode, 7, "0", STR_PAD_LEFT));
+                $fincode++;
+                $this->setSetting("SoftoneBundle:Order:fincode",$fincode);  
+            }
             $fields["fincode"] = array("label" => "Code", 'class' => 'asdfg');
             $fields["customerName"] = array("label" => "Customer Name", 'class' => 'asdfg');
             $fields["route"] = array("label" => "Route", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Route', 'name' => 'route', 'value' => 'id'));
