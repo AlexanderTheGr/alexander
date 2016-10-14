@@ -1893,7 +1893,7 @@ class Product extends Entity {
             $objectArr = $data->data->$object;
             $objectArr2 = (array) $objectArr[0];
         } else {
-            $filters = $object.".CODE=" . $this->itemCode . "&".$object.".CODE_TO=" . $this->itemCode;
+            $filters = $object . ".CODE=" . $this->itemCode . "&" . $object . ".CODE_TO=" . $this->itemCode;
             $datas = $softone->retrieveData($object, "partsbox", $filters);
             foreach ($datas as $data) {
                 $data = (array) $data;
@@ -1914,13 +1914,11 @@ class Product extends Entity {
             @$objectArr2[$field1] = $this->$field2;
             //}
         }
-
         $objectArr2["MTRUNIT1"] = 101;
         $objectArr2["VAT"] = 1310;
         $objectArr2["CODE2"] = $this->supplierCode;
         $objectArr2["ISACTIVE"] = $this->itemIsactive;
         $objectArr2["MTRMANFCTR"] = $this->itemMtrmanfctr > 0 ? $this->itemMtrmanfctr : 1000;
-
         $objectArr[0] = $objectArr2;
         $dataOut[$object] = (array) $objectArr;
         //@$dataOut["ITEEXTRA"][0] = array("NUM02" => $this->item_mtrl_iteextra_num02);
