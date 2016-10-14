@@ -126,7 +126,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             $entity->setField("customerCode", str_pad($customerCode, 7, "0", STR_PAD_LEFT));
             $this->newentity[$this->repository] = $entity;
         }
-
+        
 
         $fields["customerCode"] = array("label" => "Customer Code");
         $fields["customerName"] = array("label" => "Customer Name");
@@ -180,7 +180,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
     function retrieveSoftoneData($params = array()) {
 
         $this->retrieveCustomer();
-
+        $params["list"] = 'partsbox';
 
         $params = array("softone_object" => "CUSTOMER", "eav_model" => "customer", "model" => "Customer", "list" => "monitor");
         set_time_limit(100000);
