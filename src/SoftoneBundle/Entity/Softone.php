@@ -355,13 +355,10 @@ class Softone extends Entity {
     }
 
     function retrieveData($obj, $list = "", $filters = "") {
-
         $fields = $this->getBrowserInfo($obj, $list, $filters);
-
         foreach ($fields->fields as $key => $field) {
             $fieldRow[$key] = str_replace(".", "_", strtolower($field->name));
         }
-
         $datas = $this->getBrowser($obj, $list, $filters);
         //print_r($datas);
         $retrievedDataTable = array();

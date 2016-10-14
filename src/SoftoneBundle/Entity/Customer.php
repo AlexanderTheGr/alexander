@@ -1047,7 +1047,10 @@ class Customer extends Entity {
                 $info = explode(";", $zoominfo);
                 $this->reference = $info[1];
                 break;
-            }            
+            }
+            $data = $softone->getData($object, $this->reference);
+            $objectArr = $data->data->$object;
+            $objectArr2 = (array) $objectArr[0];
         }
         foreach ($fields as $field) {
             $field1 = strtoupper(str_replace(strtolower($object) . "_", "", $field));
@@ -1074,8 +1077,9 @@ class Customer extends Entity {
             }
             if ($this->reference > 0) {
                 $em->persist($this);
-                $em->flush(); 
+                $em->flush();
             }
         }
     }
+
 }
