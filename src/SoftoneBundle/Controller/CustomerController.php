@@ -119,8 +119,6 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             $entity = new Customer;
             $customerCode = (int)$this->getSetting("SoftoneBundle:Customer:customerCode");
             $entity->setField("customerCode", str_pad($customerCode, 6, "0", STR_PAD_LEFT));
-            $customerCode++;
-            $this->setSetting("SoftoneBundle:Customer:customerCode",$customerCode);
             $this->newentity[$this->repository] = $entity;
         }
 
