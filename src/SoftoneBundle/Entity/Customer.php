@@ -1060,10 +1060,13 @@ class Customer extends Entity {
                 $data = (array) $data;
                 $zoominfo = $data["zoominfo"];
                 $info = explode(";", $zoominfo);
-                echo $info[1];
+                $this->reference = $info[1];
+                break;
             }
-            //$em->persist($this);
-            //$em->flush(); 
+            if ($this->reference > 0) {
+                $em->persist($this);
+                $em->flush(); 
+            }
         }
     }
 
