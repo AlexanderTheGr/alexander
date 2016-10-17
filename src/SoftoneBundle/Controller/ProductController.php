@@ -130,7 +130,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $forms = $this->getFormLyFields($entity, $fields);
 
         $tabs[] = array("title" => "General", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
-
+        $tabs[] = array("title" => "General 2", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
 
         foreach ($tabs as $tab) {
             $this->addTab($tab);
