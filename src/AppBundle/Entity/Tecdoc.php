@@ -503,8 +503,8 @@ class Tecdoc extends Entity {
     }
 
     private function package($data) {
-        $package = new stdClass();
-        $package->data = new stdClass();
+        $package = new \stdClass();
+        $package->data = new \stdClass();
         $package->data->array = $data;
         $package->data->empty = empty($data);
         $package->status = 200;
