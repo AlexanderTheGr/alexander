@@ -362,7 +362,14 @@ class Tecdoc extends Entity {
         );
         return $this->package($this->tecdoc->getArticleImages($params["articleId"]));
     }
-
+    public function getArticlesSearchByIds($params) {
+	
+        if ($this->useSOAP) {
+            return $this->soap->getArticleIds3($params);
+        } else {
+            return $this->package($this->tecdoc->getArticlesSearchByIds($params["search"]));
+        }
+    }
     public function getOriginals($params) {
         $params = array(
             "country" => $this->country,
