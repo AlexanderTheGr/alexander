@@ -31,7 +31,7 @@ class Tecdoc extends Entity {
             require_once "/tecdoc3/php/Tecdoc4.php";
         }
         $this->linkingTargetType = "C";
-        $this->tecdoc = new Tecdoc_first();
+        $this->tecdoc = new \Tecdoc_first();
     }
 
     public function setLng($lng) {
