@@ -5,8 +5,8 @@
   require Mage::getBaseDir() . "/zois/Tecdoc.php";
   }
  */
-if (file_exists("/tecdoc2/php/Tecdoc2.php")) {
-    require "/tecdoc2/php/Tecdoc2.php";
+if (file_exists("/tecdoc3/php/Tecdoc3.php")) {
+    require "/tecdoc3/php/Tecdoc4.php";
 }
 namespace AppBundle\Entity;
 use AppBundle\Entity\Entity;
