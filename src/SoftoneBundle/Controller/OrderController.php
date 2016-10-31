@@ -635,6 +635,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $params = array('search' => $search);
             $tecdoc = new Tecdoc();
             $articles = $tecdoc->getArticlesSearch($params);
+            print_r($articles);
             foreach ($articles->data->array as $v) {
                 $articleIds[] = $v->articleId;
             }
