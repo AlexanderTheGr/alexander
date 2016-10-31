@@ -10,6 +10,7 @@ use AppBundle\Controller\Main as Main;
 use SoftoneBundle\Entity\Order as Order;
 use SoftoneBundle\Entity\Orderitem as Orderitem;
 use SoftoneBundle\Entity\Softone as Softone;
+use AppBundle\Entity\Tecdoc as Tecdoc;
 
 class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
@@ -102,13 +103,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
         //$this->setSetting("SoftoneBundle:Product:Vat", 1310);
         $vatid = $this->getSetting("SoftoneBundle:Product:Vat");
-        
+
         $vat = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Vat")
                 ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
 
         $order->setVat($vat);
-        
+
         $route = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Route")
                 ->find(1);
@@ -139,7 +140,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $fincode = (int) $this->getSetting("SoftoneBundle:Order:fincode");
             $entity->setField("fincode", str_pad($fincode, 7, "0", STR_PAD_LEFT));
             $fincode++;
-            $this->setSetting("SoftoneBundle:Order:fincode",$fincode);            
+            $this->setSetting("SoftoneBundle:Order:fincode", $fincode);
             $fields["customerName"] = array("label" => "Customer Name", 'class' => 'asdfg');
             $fields["fincode"] = array("label" => "Code", 'class' => 'asdfg');
         } else {
@@ -147,7 +148,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $fincode = (int) $this->getSetting("SoftoneBundle:Order:fincode");
                 $entity->setField("fincode", str_pad($fincode, 7, "0", STR_PAD_LEFT));
                 $fincode++;
-                $this->setSetting("SoftoneBundle:Order:fincode",$fincode);  
+                $this->setSetting("SoftoneBundle:Order:fincode", $fincode);
             }
             $fields["fincode"] = array("label" => "Code", 'class' => 'asdfg');
             $fields["customerName"] = array("label" => "Customer Name", 'class' => 'asdfg');
@@ -194,7 +195,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     protected function getoffcanvases($id) {
-        
+
         $dtparams = array();
         $dtparams[] = array("name" => "ID", "index" => 'id', "input" => 'checkbox', "active" => "active");
         $dtparams[] = array("name" => "Erp Code", "index" => 'erpCode', 'search' => 'text');
@@ -213,14 +214,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $params["app"] = 'appgetoffcanvases';
         $params["drawCallback"] = 'fororder(' . $id . ')';
         $datatables[] = $this->contentDatatable($params);
-        
-        
-        
-        
-        
+
+
+
+
+
         $dtparams = array();
         $dtparams[] = array("name" => "ID", "index" => 'id', "input" => 'checkbox', "active" => "active");
-        $dtparams[] = array("name" => "Edi", "index" => 'Edi:name', 'search' => 'select','type'=>'select');
+        $dtparams[] = array("name" => "Edi", "index" => 'Edi:name', 'search' => 'select', 'type' => 'select');
         $dtparams[] = array("name" => "Item Code", "index" => 'itemCode', 'search' => 'text');
         $dtparams[] = array("name" => "Brand", "index" => 'brand', 'search' => 'text');
         $dtparams[] = array("name" => "Part No", "index" => 'partno', 'search' => 'text');
@@ -230,9 +231,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $dtparams[] = array("name" => "QTY1", "index" => 'qty1', "input" => 'text', 'search' => 'text');
         $dtparams[] = array("name" => "QTY2", "index" => 'qty2', "input" => 'text', 'search' => 'text');
         //$dtparams[] = array("name" => "QTY", "index" => 'qty', "input" => 'text', 'search' => 'text');
-        
-        
-        
+
+
+
         $params['dtparams'] = $dtparams;
         $params['id'] = $dtparams;
         $params['key'] = 'getoffcanvases2_' . $id;
@@ -240,9 +241,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $params["ctrl"] = 'ctrlgetoffcanvases2';
         $params["app"] = 'appgetoffcanvases2';
         $params["drawCallback"] = 'fororder2(' . $id . ')';
-        $datatables[] = $this->contentDatatable($params);        
-        
-        
+        $datatables[] = $this->contentDatatable($params);
+
+
         //$datatables = array();
         $this->addOffCanvas(array('id' => 'asdf', "content" => '', "index" => $this->generateRandomString(), "datatables" => $datatables));
         //$this->addOffCanvas(array('id' => 'asdf2', "content" => '', "index" => $this->generateRandomString(), "datatables" => $datatables));
@@ -298,7 +299,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
 
             //print_r($articleIds2["articleIds"]);
-            
+
             if ($this->clearstring($dt_search["value"]) != "") {
 
                 $softone = new Softone();
@@ -349,14 +350,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         )
                         ->setMaxResults($request->request->get("length"))
                         ->setFirstResult($request->request->get("start"));
-                
+
                 /*
-                echo 'SELECT  ' . $this->select . ', p.reference
-                                FROM ' . $this->repository . ' ' . $this->prefix . '
-                                ' . $this->where . ' ' . $tecdoc_article . '
-                                ORDER BY ' . $this->orderBy;
-                //exit;
-                */
+                  echo 'SELECT  ' . $this->select . ', p.reference
+                  FROM ' . $this->repository . ' ' . $this->prefix . '
+                  ' . $this->where . ' ' . $tecdoc_article . '
+                  ORDER BY ' . $this->orderBy;
+                  //exit;
+                 */
                 $results = $query->getResult();
             }
             $data["fields"] = $this->fields;
@@ -412,7 +413,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $jsonarrnoref[$result["id"]] = $json;
                 }
             }
-            
+
             $jsonarr = $this->softoneCalculate($jsonarr, $id);
             //echo count($jsonarr);
             $jsonarr = array_merge($jsonarr, $jsonarrnoref);
@@ -451,7 +452,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     public function softoneCalculate($jsonarr, $id) {
-        if ((int)$id == 0) exit;
+        if ((int) $id == 0)
+            exit;
         $order = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Order")
                 ->find($id);
@@ -484,12 +486,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
         $vat = $id > 0 ? $order->getVat()->getVatsts() : $this->getSetting("SoftoneBundle:Product:Vat");
         //$vat = 2310;
-        
+
         foreach ($jsonarr as $MTRL => $json) {
             if ($MTRL)
                 $dataOut["ITELINES"][] = array("QTY1" => 1, "VAT" => $vat, "LINENUM" => $json[1], "MTRL" => $MTRL);
         }
-        
+
         //print_r($dataOut);
         $locateinfo = "MTRL,NAME,PRICE,QTY1,VAT;ITELINES:DISC1PRC,ITELINES:LINEVAL,MTRL,MTRL_ITEM_CODE,MTRL_ITEM_CODE1,MTRL_ITEM_NAME,MTRL_ITEM_NAME1,PRICE,QTY1;SALDOC:BUSUNITS,EXPN,TRDR,MTRL,PRICE,QTY1,VAT";
         $out = $softone->calculate((array) $dataOut, $object, "", "", $locateinfo);
@@ -576,22 +578,31 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //$data = file_get_contents(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term");
         //return $data;
         //} else {
-        $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
-        $fields = array(
-            'action' => 'getSearchByIds',
-            'search' => $search
-        );
-        $fields_string = '';
-        foreach ($fields as $key => $value) {
-            $fields_string .= $key . '=' . $value . '&';
+
+
+        if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\web') {
+            $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
+            $fields = array(
+                'action' => 'getSearchByIds',
+                'search' => $search
+            );
+            $fields_string = '';
+            foreach ($fields as $key => $value) {
+                $fields_string .= $key . '=' . $value . '&';
+            }
+            rtrim($fields_string, '&');
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, count($fields));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            $data = curl_exec($ch);
+        } else {
+            $params = array('search' => $search);
+            $tecdoc = new Tecdoc();
+            $articles = $tecdoc->getArticlesSearchByIds($params);
+            $data = serialize($articles->data->array);
         }
-        rtrim($fields_string, '&');
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, count($fields));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        $data = curl_exec($ch);
         //file_put_contents(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term", $data);
         return $data;
         //}
@@ -603,22 +614,32 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //   return $data;
         //} else {
         //ADBRP002
-        $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
-        $fields = array(
-            'action' => 'getSearch',
-            'search' => $search
-        );
-        $fields_string = '';
-        foreach ($fields as $key => $value) {
-            $fields_string .= $key . '=' . $value . '&';
+        if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\web') {
+            $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
+            $fields = array(
+                'action' => 'getSearch',
+                'search' => $search
+            );
+            $fields_string = '';
+            foreach ($fields as $key => $value) {
+                $fields_string .= $key . '=' . $value . '&';
+            }
+            rtrim($fields_string, '&');
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, count($fields));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            $data = curl_exec($ch);
+        } else {
+            $params = array('search' => $search);
+            $tecdoc = new Tecdoc();
+            $articles = $tecdoc->getArticlesSearch($params);
+            foreach ($articles->data->array as $v) {
+                $articleIds[] = $v->articleId;
+            }
+            $data = serialize($articleIds);
         }
-        rtrim($fields_string, '&');
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, count($fields));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        $data = curl_exec($ch);
         return $data;
         //}
     }
@@ -633,7 +654,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
     function getBrands() {
         $repository = $this->getDoctrine()->getRepository('SoftoneBundle:Brand');
-        $brands = $repository->findAll(array(),array('brand' => 'ASC'));
+        $brands = $repository->findAll(array(), array('brand' => 'ASC'));
         return $brands;
     }
 
@@ -685,23 +706,33 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     function getcategories(Request $request) {
 
         //$url = "http://service4.fastwebltd.com/";
-        $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
-        $fields = array(
-            'action' => 'getcarcategories',
-            'linkingTargetId' => $request->request->get("car")
-        );
-        $fields_string = "";
-        foreach ($fields as $key => $value) {
-            $fields_string .= $key . '=' . $value . '&';
+
+
+
+        if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\web') {
+            $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
+            $fields = array(
+                'action' => 'getcarcategories',
+                'linkingTargetId' => $request->request->get("car")
+            );
+            $fields_string = "";
+            foreach ($fields as $key => $value) {
+                $fields_string .= $key . '=' . $value . '&';
+            }
+            rtrim($fields_string, '&');
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, count($fields));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            $data = curl_exec($ch);
+            $data = unserialize($data);
+        } else {
+            $params = array('linkingTargetId' => $request->request->get("car"));
+            $tecdoc = new Tecdoc();
+            $data = $tecdoc->linkedChildNodesAllLinkingTargetTree($params);
         }
-        rtrim($fields_string, '&');
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, count($fields));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        $data = curl_exec($ch);
-        $data = unserialize($data);
+        
 
         $repository = $this->getDoctrine()->getRepository('SoftoneBundle:Product');
         $query = $repository->createQueryBuilder('p')

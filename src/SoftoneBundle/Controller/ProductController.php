@@ -3,6 +3,7 @@
 namespace SoftoneBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Controller\Main as Main;
@@ -129,8 +130,27 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $forms = $this->getFormLyFields($entity, $fields);
 
+        $entity2 = new Product;
+        $fields2["erpCode"] = array("label" => "Erp Code", "className"=>"synafiacode");
+        $forms2 = $this->getFormLyFields($entity2, $fields2);
+        
+        $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
+        $dtparams[] = array("name" => "Title", "index" => 'title');
+        $dtparams[] = array("name" => "Code", "index" => 'erpCode');
+        $dtparams[] = array("name" => "Price", "index" => 'itemPricew01');
+        
+        $params['dtparams'] = $dtparams;
+        $params['id'] = $dtparams;
+        $params['url'] = '/product/getrelation/' . $id;
+        $params['key'] = 'gettabs_' . $id;
+        $params["ctrl"] = 'ctrlgettabs';
+        $params["app"] = 'appgettabs';
+        $datatables[] = $this->contentDatatable($params);
+
+
+
         $tabs[] = array("title" => "General", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
-        $tabs[] = array("title" => "General 2", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
+        $tabs[] = array("title" => "Retaltions", "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
 
         foreach ($tabs as $tab) {
             $this->addTab($tab);
@@ -139,7 +159,37 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $json = $this->tabs();
         return $json;
     }
+    
+    /**
+     * @Route("/product/getrelation/{id}")
+     */
+    public function getrelationAction($id) {
+        $session = new Session();
+        foreach ($session->get('params_gettabs_' . $id) as $param) {
+            $this->addField($param);
+        }
+        $this->repository = 'SoftoneBundle:Product';
+        $this->q_and[] = $this->prefix . ".id in  (Select k.sisxetisi FROM SoftoneBundle:Sisxetiseis k where k.product = '".$id."')";
+        $json = $this->datatable();
 
+        $datatable = json_decode($json);
+        $datatable->data = (array) $datatable->data;
+        foreach ($datatable->data as $key => $table) {
+            $table = (array) $table;
+            $table1 = array();
+            foreach ($table as $f => $val) {
+                $table1[$f] = $val;
+            }
+            $datatable->data[$key] = $table1;
+        }
+        $json = json_encode($datatable);
+
+
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+    }
+    
     /**
      * 
      * 
@@ -155,7 +205,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $fields[] = array("name" => "Code", "index" => 'erpCode');
             $fields[] = array("name" => "Price", "index" => 'itemPricew01');
             $this->setSetting("SoftoneBundle:Product:getdatatable", serialize($fields));
-       }
+        }
 
 
         foreach ($fields as $field) {
@@ -236,7 +286,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 "", 200
         );
     }
-    
+
     //getmodeltypes
     /**
      * 
@@ -256,8 +306,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         $out = json_decode(curl_exec($ch));
-    }  
-    
+    }
+
     /**
      * 
      * @Route("/product/getmodels")
@@ -276,7 +326,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         $out = json_decode(curl_exec($ch));
-    }    
+    }
+
     /**
      * 
      * @Route("/product/getmodeltypes")
@@ -296,6 +347,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         $out = json_decode(curl_exec($ch));
-    }       
+    }
 
 }

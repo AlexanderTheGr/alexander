@@ -4,6 +4,7 @@ namespace EdiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Entity;
+use AppBundle\Entity\Tecdoc as Tecdoc;
 use SoftoneBundle\Entity\Softone as Softone;
 
 /**
@@ -448,33 +449,56 @@ class EdiItem extends Entity {
             $kernel = $kernel->getKernel();
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
-
         //$data_string = json_encode($data);
-        $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
-
-        @$fields = array(
-            'action' => 'updateTecdoc',
-            'tecdoc_code' => $this->artNr,
-            'tecdoc_supplier_id' => $this->dlnr,
-        );
-
-
-        $fields_string = '';
-        foreach ($fields as $key => $value) {
-            @$fields_string .= $key . '=' . $value . '&';
+        if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\web') {
+            $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
+            @$fields = array(
+                'action' => 'updateTecdoc',
+                'tecdoc_code' => $this->artNr,
+                'tecdoc_supplier_id' => $this->dlnr,
+            );
+            $fields_string = '';
+            foreach ($fields as $key => $value) {
+                @$fields_string .= $key . '=' . $value . '&';
+            }
+            rtrim($fields_string, '&');
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, count($fields));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            $out = json_decode(curl_exec($ch));
+            
+        } else {
+            $postparams = array(
+                "articleNumber" => $this->artNr,
+                "brandno" => $this->dlnr
+            );
+            $tecdoc = new Tecdoc();
+            $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($params);
+            $tectdoccode = $postparams["tecdoc_code"];
+            if (count($articleDirectSearchAllNumbers->data->array) == 0) {
+                $articleId = $tecdoc->getCorrectArtcleNr($tectdoccode, $postparams["tecdoc_supplier_id"]);
+                if ($article != $tectdoccode) {
+                    $params = array(
+                        "articleNumber" => $articleId,
+                        "brandno" => $postparams["tecdoc_supplier_id"]
+                    );
+                    $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($params);
+                }
+            }
+            if (count($articleDirectSearchAllNumbers->data->array) == 0) {
+                $articleId = $tecdoc->getCorrectArtcleNr2(strtolower($tectdoccode), $postparams["tecdoc_supplier_id"]);
+                if ($article != strtolower($tectdoccode)) {
+                    $params = array(
+                        "articleNumber" => $articleId,
+                        "brandno" => $postparams["tecdoc_supplier_id"]
+                    );
+                    $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($params);
+                }
+            }
+            $out = $articleDirectSearchAllNumbers->data->array[0];
         }
-        rtrim($fields_string, '&');
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, count($fields));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-
-        $out = json_decode(curl_exec($ch));
-
-        //echo print_r($out);
-
         try {
             //$webserviceProduct = WebserviceProduct::model()->findByAttributes(array('product' =>  $this->id,"webservice"=>$this->webservice));
             //$sql = "Delete from SoftoneBundle:WebserviceProduct p where p.product = '" . $this->id . "'";
@@ -495,8 +519,6 @@ class EdiItem extends Entity {
     }
 
     public function toErp() {
-
-
 
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
