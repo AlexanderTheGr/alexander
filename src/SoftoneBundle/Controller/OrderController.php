@@ -580,7 +580,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //} else {
 
 
-        if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\web') {
+        if ($_SERVER["DOCUMENT_ROOT1"] == 'C:\symfony\alexander\web') {
             $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
             $fields = array(
                 'action' => 'getSearchByIds',
@@ -614,7 +614,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //   return $data;
         //} else {
         //ADBRP002
-        if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\webl') {
+        
+        if ($_SERVER["DOCUMENT_ROOT1"] == 'C:\symfony\alexander\web') {
             $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
             $fields = array(
                 'action' => 'getSearch',
@@ -631,6 +632,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
             $data = curl_exec($ch);
+            
         } else {
             $params = array('search' => $search);
             $tecdoc = new Tecdoc();
@@ -711,7 +713,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
 
 
-        if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\web') {
+        if ($_SERVER["DOCUMENT_ROOT1"] == 'C:\symfony\alexander\web') {
             $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
             $fields = array(
                 'action' => 'getcarcategories',
