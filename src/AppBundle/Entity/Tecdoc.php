@@ -10,6 +10,9 @@ namespace AppBundle\Entity;
 
 use AppBundle\Entity\Entity;
 
+if (file_exists("/tecdoc3/php/Tecdoc3.php")) {
+    require_once "/tecdoc3/php/Tecdoc4.php";
+}
 class Tecdoc extends Entity {
 
     public $soap;
@@ -27,9 +30,7 @@ class Tecdoc extends Entity {
 
     public function __construct() {
 
-        if (file_exists("/tecdoc3/php/Tecdoc3.php")) {
-            require_once "/tecdoc3/php/Tecdoc4.php";
-        }
+
         $this->linkingTargetType = "C";
         $this->tecdoc = new \Tecdoc_first();
     }
