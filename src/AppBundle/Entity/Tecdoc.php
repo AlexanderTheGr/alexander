@@ -175,6 +175,7 @@ class Tecdoc extends Entity {
         if ($this->useSOAP) {
             return $this->soap->getArticleIds3($params);
         } else {
+            echo $params["search"];
             return $this->package($this->tecdoc->getArticlesSearch($params["search"]));
         }
     }
