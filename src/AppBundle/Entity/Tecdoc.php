@@ -5,10 +5,9 @@
   require Mage::getBaseDir() . "/zois/Tecdoc.php";
   }
  */
-if (file_exists("/tecdoc3/php/Tecdoc3.php")) {
-    require "/tecdoc3/php/Tecdoc4.php";
-}
+
 namespace AppBundle\Entity;
+
 use AppBundle\Entity\Entity;
 
 class Tecdoc extends Entity {
@@ -28,16 +27,17 @@ class Tecdoc extends Entity {
 
     public function __construct() {
 
-
+        if (file_exists("/tecdoc3/php/Tecdoc3.php")) {
+            require_once "/tecdoc3/php/Tecdoc4.php";
+        }
         $this->linkingTargetType = "C";
         $this->tecdoc = new Tecdoc_first();
-		
     }
-	
-	public function setLng($lng) {
-		$this->tecdoc->lng = $lng;
-	}
-	
+
+    public function setLng($lng) {
+        $this->tecdoc->lng = $lng;
+    }
+
     public function getVehicleManufacturers($params) {
         $params = array(
             "carType" => 1,
@@ -144,7 +144,6 @@ class Tecdoc extends Entity {
             "provider" => $this->provider,
             "linkingTargetType" => $this->linkingTargetType,
             "sort" => 2,
-            
             /*
               "brandNo" => array(
               "empty" => empty($this->articleIdsParams["brandNo"]) ? true : false,
@@ -158,7 +157,6 @@ class Tecdoc extends Entity {
              */
 //            "brandNo" => $params["brandNo"],
 //            "genericArticleId" => $params["genericArticleId"],
-            
             "assemblyGroupNodeId" => (int) $params["assemblyGroupNodeId"],
             "linkingTargetId" => (int) $params["linkingTargetId"],
         );
@@ -261,14 +259,14 @@ class Tecdoc extends Entity {
 
 
         if (count($articleIds) > 0) {
-			$resource = Mage::getSingleton('core/resource');
-			$readConnection = $resource->getConnection('core_read');
+            $resource = Mage::getSingleton('core/resource');
+            $readConnection = $resource->getConnection('core_read');
 
-			
-			
-			$query = 'SELECT count(id) as cnt FROM autoparts_tecdoc_product WHERE model_type="'.$params["linkingTargetId"].'" AND tecdoc_article_id in ('.implode(',',$articleIds).')';
-			$cnt = $readConnection->fetchOne($query);
-			
+
+
+            $query = 'SELECT count(id) as cnt FROM autoparts_tecdoc_product WHERE model_type="' . $params["linkingTargetId"] . '" AND tecdoc_article_id in (' . implode(',', $articleIds) . ')';
+            $cnt = $readConnection->fetchOne($query);
+
             //$articles = Mage::getSingleton('tecdoc/product')->getCollection()->addFieldToFilter('tecdoc_article_id', array('in' => $articleIds));
             //$sql        = "Select id autoparts_tecdoc_product where tecdoc_article_id in (".explode(",",$articleIds).")";
             //$articles   = $connection->fetchAll($sql); 
@@ -431,33 +429,33 @@ class Tecdoc extends Entity {
 
     public function createCategory($category, $v) {
         if ($category->getEntityId() > 0) {
-			//$category = Mage::getModel('catalog/category');
-			//$category->setEntityId($v->assemblyGroupNodeId);
-			
-			
-			return $category;
-			
-			$category->setName($v->assemblyGroupName);
-			$category->setWeight($v->weight);
-			$category->setQty(1);
-			$category->setUrlKey($this->greeklish($v->assemblyGroupName));
-			$category->setIsActive(1);
-			$category->setIsAnchor(1); //for active achor
-			//$category->setStoreId(Mage::app()->getStore()->getId());
-			$category->setStoreId(2);
-			$category->save();
-			
-			/*
-			if ($v->parentNodeId > 0) {
-				try {
-					$this->setParentCategory($category, $v->parentNodeId);
-				} catch (Exception $e) {
-					$this->setParentCategory($category, $this->tecdoccategory);
-				}
-			} else {
-				$this->setParentCategory($category, $this->tecdoccategory);
-			}
-			*/
+            //$category = Mage::getModel('catalog/category');
+            //$category->setEntityId($v->assemblyGroupNodeId);
+
+
+            return $category;
+
+            $category->setName($v->assemblyGroupName);
+            $category->setWeight($v->weight);
+            $category->setQty(1);
+            $category->setUrlKey($this->greeklish($v->assemblyGroupName));
+            $category->setIsActive(1);
+            $category->setIsAnchor(1); //for active achor
+            //$category->setStoreId(Mage::app()->getStore()->getId());
+            $category->setStoreId(2);
+            $category->save();
+
+            /*
+              if ($v->parentNodeId > 0) {
+              try {
+              $this->setParentCategory($category, $v->parentNodeId);
+              } catch (Exception $e) {
+              $this->setParentCategory($category, $this->tecdoccategory);
+              }
+              } else {
+              $this->setParentCategory($category, $this->tecdoccategory);
+              }
+             */
             return $category;
         } else {
             $category = Mage::getModel('catalog/category');
