@@ -95,7 +95,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->findOneBy(array('erpCode' => $request->request->get("erp_code")));
-        $json = json_encode($product);
+        //$json = json_encode($product);
+        print_r($product);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
