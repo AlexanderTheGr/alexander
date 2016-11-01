@@ -135,7 +135,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository('SoftoneBundle:Sisxetiseis')
                 ->findBy(array('sisxetisi' => $sisx->getProduct()));
 
-
         foreach ($sisxetiseis as $sisxetis) {
             if ($sisx->getSisxetisi() != $sisxetis->getProduct()) {
                 $sisxetisi = $this->getDoctrine()
@@ -146,11 +145,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     $sisxetisi->setProduct($sisx->getSisxetisi());
                     $sisxetisi->setSisxetisi($sisxetis->getProduct());
                     @$this->flushpersist($sisxetisi);
-
+                    $this->updateSisxetiseis($sisxetisi);
                     $sisxetisi = new Sisxetiseis();
                     $sisxetisi->setProduct($sisxetis->getProduct());
                     $sisxetisi->setSisxetisi($sisx->getSisxetisi());
                     @$this->flushpersist($sisxetisi);
+                    $this->updateSisxetiseis($sisxetisi);
                 }
             }
         }
