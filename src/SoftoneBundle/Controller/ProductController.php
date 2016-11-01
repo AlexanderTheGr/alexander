@@ -140,17 +140,27 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $sisxetisi = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:Sisxetiseis')
                         ->findOneBy(array('product' => $sisx->getSisxetisi(), 'sisxetisi' => $sisxetis->getProduct()));
+                
                 if (count($sisxetisi) == 0) {
                     $sisxetisi = new Sisxetiseis();
                     $sisxetisi->setProduct($sisx->getSisxetisi());
                     $sisxetisi->setSisxetisi($sisxetis->getProduct());
-                    @$this->flushpersist($sisxetisi);
-                    $this->updateSisxetiseis($sisxetisi);
+                    try {
+                        @$this->flushpersist($sisxetisi);
+                        $this->updateSisxetiseis($sisxetisi);
+                    } catch (Exception $e) {
+                        
+                    }
+                
                     $sisxetisi = new Sisxetiseis();
                     $sisxetisi->setProduct($sisxetis->getProduct());
                     $sisxetisi->setSisxetisi($sisx->getSisxetisi());
-                    @$this->flushpersist($sisxetisi);
-                    $this->updateSisxetiseis($sisxetisi);
+                    try {
+                        @$this->flushpersist($sisxetisi);
+                        $this->updateSisxetiseis($sisxetisi);
+                    } catch (Exception $e) {
+                        
+                    }
                 }
             }
         }
