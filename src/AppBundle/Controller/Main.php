@@ -434,6 +434,7 @@ class Main extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($entity);
+        $em->merge($entity);
         $em->flush();
         return $entity;
     }
