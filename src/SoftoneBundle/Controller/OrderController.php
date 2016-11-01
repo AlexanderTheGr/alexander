@@ -341,9 +341,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $this->createWhere();
                 $sql = 'SELECT  po.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                ' . $this->where . ' ' . $tecdoc_article;
+                                ' . str_replace("p.", "po.",$this->where) . ' ' . $tecdoc_article;
 
-                echo  $sql;
+                //echo  $sql;
                 $this->prefix = "p";
                 $this->q_or[] = $this->prefix . ".id in  (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (".$sql."))";
                 
