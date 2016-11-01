@@ -148,7 +148,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     @$this->flushpersist($sisxetisi);
 
                     $sisxetisi = new Sisxetiseis();
-                    $sisxetisi->setProduct($$sisxetis->getProduct());
+                    $sisxetisi->setProduct($sisxetis->getProduct());
                     $sisxetisi->setSisxetisi($sisx->getSisxetisi());
                     @$this->flushpersist($sisxetisi);
                 }
