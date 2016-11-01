@@ -335,7 +335,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 
                 
                 
-                $this->q_or[] = $this->prefix . ".id in  (Select k.sisxetisi FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi = '" . $this->prefix . ".id')";
+                $this->q_or[] = $this->prefix . ".id in  (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi = '" . $this->prefix . ".id')";
                 
                 
                 
@@ -355,7 +355,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 ' . $this->where . ' ' . $tecdoc_article . '
                                 ORDER BY ' . $this->orderBy;
                 
-                echo  $sql;
+                //echo  $sql;
                 
                 
                 $query = $em->createQuery(
