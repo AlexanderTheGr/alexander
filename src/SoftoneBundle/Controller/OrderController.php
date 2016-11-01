@@ -348,11 +348,18 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $tecdoc_article = '';
                 if (count((array) $articleIds))
                     $tecdoc_article = 'OR p.tecdocArticleId in (' . implode(",", $articleIds) . ')';
-                $query = $em->createQuery(
-                                'SELECT  ' . $this->select . ', p.reference
+                
+                
+                $sql = 'SELECT  ' . $this->select . ', p.reference
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
                                 ' . $this->where . ' ' . $tecdoc_article . '
-                                ORDER BY ' . $this->orderBy
+                                ORDER BY ' . $this->orderBy;
+                
+                echo  $sql;
+                
+                
+                $query = $em->createQuery(
+                                 $sql
                         )
                         ->setMaxResults($request->request->get("length"))
                         ->setFirstResult($request->request->get("start"));
