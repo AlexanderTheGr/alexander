@@ -145,7 +145,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             if (count($sisxetisi) == 0) {
                 $sisxetisi = new Sisxetiseis();
                 $sisxetisi->setProduct($sisx->getProduct());
-                $sisxetisi->setSisxetisi($sisxetis->getSisxetisi());
+                $sisxetisi->setSisxetisi($sisxetis->getProduct());
                 @$this->flushpersist($sisxetisi);
             }            
         }      
