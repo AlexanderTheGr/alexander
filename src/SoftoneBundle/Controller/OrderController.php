@@ -364,7 +364,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 ' . $this->where . ' ' . $tecdoc_article . '
                                 ORDER BY ' . $this->orderBy;
 
-                
+                echo $sql;
+                exit;
 
 
                 $query = $em->createQuery(
