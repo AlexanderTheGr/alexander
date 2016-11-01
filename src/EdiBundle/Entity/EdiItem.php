@@ -500,6 +500,7 @@ class EdiItem extends Entity {
             $out = $articleDirectSearchAllNumbers->data->array[0];
         }
         try {
+            //$em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
             //$webserviceProduct = WebserviceProduct::model()->findByAttributes(array('product' =>  $this->id,"webservice"=>$this->webservice));
             //$sql = "Delete from SoftoneBundle:WebserviceProduct p where p.product = '" . $this->id . "'";
             //$em->createQuery($sql)->getResult();
@@ -519,6 +520,8 @@ class EdiItem extends Entity {
     }
 
     public function toErp() {
+
+
 
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
