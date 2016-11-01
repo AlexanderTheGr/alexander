@@ -100,6 +100,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $idArr = explode(":",$request->request->get("id"));
         $id = (int)$idArr[3];
         
+        $asd[] = $id;
+        $asd[] = $product->getId();
+        $json = json_encode($asd);
         if ($id > 0 AND count($product)>0) {
             $sisxetisi = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Sisxetiseis')
