@@ -108,7 +108,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     ->getRepository('SoftoneBundle:Sisxetiseis')
                     ->findOneBy(array('product' => $id,'sisxetisi'=>$product->getId())); 
             
-            if (count($product) == 0) {
+            if (count($sisxetisi) == 0) {
                 $sisxetisi = new Sisxetiseis();
                 $sisxetisi->setProduct($id);
                 $sisxetisi->setSisxetisi($product->getId());
