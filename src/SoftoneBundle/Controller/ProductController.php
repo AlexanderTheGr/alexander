@@ -126,11 +126,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
                     $sisxetisi = new Sisxetiseis();
                     $sisxetisi->setProduct($id);
-                    $sisxetisi->setSisxetisi($sisxet->getId());
+                    $sisxetisi->setSisxetisi($sisxet->getSisxetisi());
                     @$this->flushpersist($sisxetisi);
 
                     $sisxetisi = new Sisxetiseis();
-                    $sisxetisi->setProduct($sisxet->getId());
+                    $sisxetisi->setProduct($sisxet->getSisxetisi());
                     $sisxetisi->setSisxetisi($id);
                     @$this->flushpersist($sisxetisi);
                 }
@@ -142,11 +142,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
                     $sisxetisi = new Sisxetiseis();
                     $sisxetisi->setProduct($id);
-                    $sisxetisi->setSisxetisi($sisxet->getId());
+                    $sisxetisi->setSisxetisi($sisxet->getSisxetisi());
                     @$this->flushpersist($sisxetisi);
 
                     $sisxetisi = new Sisxetiseis();
-                    $sisxetisi->setProduct($sisxet->getId());
+                    $sisxetisi->setProduct($sisxet->getSisxetisi());
                     $sisxetisi->setSisxetisi($id);
                     @$this->flushpersist($sisxetisi);
                 }
@@ -159,11 +159,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
                     $sisxetisi = new Sisxetiseis();
                     $sisxetisi->setProduct($product->getId());
-                    $sisxetisi->setSisxetisi($sisxet->getId());
+                    $sisxetisi->setSisxetisi($sisxet->getSisxetisi());
                     @$this->flushpersist($sisxetisi);
 
                     $sisxetisi = new Sisxetiseis();
-                    $sisxetisi->setProduct($sisxet->getId());
+                    $sisxetisi->setProduct($sisxet->getSisxetisi());
                     $sisxetisi->setSisxetisi($product->getId());
                     @$this->flushpersist($sisxetisi);
                 }
@@ -175,11 +175,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
                     $sisxetisi = new Sisxetiseis();
                     $sisxetisi->setProduct($product->getId());
-                    $sisxetisi->setSisxetisi($sisxet->getId());
+                    $sisxetisi->setSisxetisi($sisxet->getSisxetisi());
                     @$this->flushpersist($sisxetisi);
 
                     $sisxetisi = new Sisxetiseis();
-                    $sisxetisi->setProduct($sisxet->getId());
+                    $sisxetisi->setProduct($sisxet->getSisxetisi());
                     $sisxetisi->setSisxetisi($product->getId());
                     @$this->flushpersist($sisxetisi);
                 }
