@@ -113,13 +113,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $sisxetisi->setProduct($id);
                 $sisxetisi->setSisxetisi($product->getId());
                 @$this->flushpersist($sisxetisi);
-
+                $this->updateSisxetiseis($sisxetisi);
                 $sisxetisi = new Sisxetiseis();
                 $sisxetisi->setProduct($product->getId());
                 $sisxetisi->setSisxetisi($id);
                 @$this->flushpersist($sisxetisi);
-
-
+                $this->updateSisxetiseis($sisxetisi);
             }
         }
 
@@ -128,6 +127,27 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
+    }
+
+    function updateSisxetiseis($sisxetisi) {
+        $sisxetiseis = $this->getDoctrine()
+                ->getRepository('SoftoneBundle:Sisxetiseis')
+                ->findBy(array('product' => $sisxetisi->getProduct()));
+        foreach($sisxetiseis as $sisxetis) {
+            $sisxetisi = $this->getDoctrine()
+                    ->getRepository('SoftoneBundle:Sisxetiseis')
+                    ->findOneBy(array('product' => $sisxetisi->getProduct(), 'sisxetisi' => $sisxetis->getSisxetisi()));
+            if (count($sisxetisi) == 0) {
+                $sisxetisi = new Sisxetiseis();
+                $sisxetisi->setProduct($sisxetisi->getProduct());
+                $sisxetisi->setSisxetisi($sisxetis->getSisxetisi());
+                @$this->flushpersist($sisxetisi);
+                $sisxetisi = new Sisxetiseis();
+                $sisxetisi->setProduct($sisxetis->getSisxetisi());
+                $sisxetisi->setSisxetisi($sisxetisi->getProduct());
+                @$this->flushpersist($sisxetisi);
+            }            
+        }
     }
 
     /**
