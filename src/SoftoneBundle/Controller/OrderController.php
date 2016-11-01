@@ -331,7 +331,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         }
                     }
                 }
-
+                
+                
+                
+                
+                $this->q_or[] = $this->prefix . ".id in  (Select k.sisxetisi FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi = '" . $this->prefix . ".id')";
+                
+                
+                
                 $this->createWhere();
                 $this->createOrderBy($fields, $dt_order);
                 $this->createSelect($s);
