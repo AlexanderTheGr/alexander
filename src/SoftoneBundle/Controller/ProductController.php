@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Controller\Main as Main;
 use SoftoneBundle\Entity\Softone as Softone;
 use SoftoneBundle\Entity\Product as Product;
+use SoftoneBundle\Entity\Sisxetiseis as Sisxetiseis;
 use SoftoneBundle\Entity\Pcategory as Pcategory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
@@ -95,8 +96,25 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->findOneBy(array('erpCode' => $request->request->get("erp_code")));
+        
+        $idArr = explode(":",$request->request->get("id"));
+        $id = (int)$idArr[3];
+        
+        if ($id > 0 AND count($product)>0) {
+            $sisxetisi = $this->getDoctrine()
+                    ->getRepository('SoftoneBundle:Sisxetiseis')
+                    ->findOneBy(array('product' => $id,'sisxetisi'=>$product->getId())); 
+            
+            if (count($product) == 0) {
+                $sisxetisi = new Sisxetiseis();
+                $sisxetisi->setProduct($id);
+                $sisxetisi->setSisxetisi($product->getId());
+                @$this->flushpersist($sisxetisi);
+            }
+        }
+        
         //$json = json_encode($product);
-        print_r($product);
+        //print_r($product);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
