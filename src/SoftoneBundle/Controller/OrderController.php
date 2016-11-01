@@ -333,7 +333,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 }
 
 
-
+                if (count((array) $articleIds))
+                    $tecdoc_article = 'OR p.tecdocArticleId in (' . implode(",", $articleIds) . ')';
 
 
 
@@ -355,8 +356,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                 $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
                 $tecdoc_article = '';
-                if (count((array) $articleIds))
-                    $tecdoc_article = 'OR p.tecdocArticleId in (' . implode(",", $articleIds) . ')';
+
 
 
                 $sql = 'SELECT  ' . $this->select . ', p.reference
