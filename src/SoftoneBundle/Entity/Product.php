@@ -1716,6 +1716,7 @@ class Product extends Entity {
 
         //$data_string = json_encode($data);
         $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
+        /*
         if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\webb') {
             $fields = array(
                 'action' => 'updateTecdoc',
@@ -1734,6 +1735,7 @@ class Product extends Entity {
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
             $out = json_decode(curl_exec($ch));
         } else {
+        */    
             $postparams = array(
                 "articleNumber" => $this->tecdocCode,
                 "brandno" => $this->getTecdocSupplierId()->getId()
@@ -1762,7 +1764,7 @@ class Product extends Entity {
                 }
             }
             $out = $articleDirectSearchAllNumbers->data->array[0];
-        }
+       // }
         //echo print_r($out);
 
         try {
