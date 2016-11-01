@@ -87,6 +87,21 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     /**
+     * @Route("/product/addRelation")
+     */
+    public function addRelation(Request $request) {
+
+        $json = json_encode(array("ok"));
+        $product = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->findOneBy(array('erp_code' => $request->request->get("erp_code")));
+        $json = json_encode($product);
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+    }
+
+    /**
      * @Route("/product/gettab")
      */
     /*
@@ -131,14 +146,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $forms = $this->getFormLyFields($entity, $fields);
 
         $entity2 = new Product;
-        $fields2["erpCode"] = array("label" => "Erp Code", "className"=>"synafiacode");
+        $fields2["erpCode"] = array("label" => "Erp Code", "className" => "synafiacode");
         $forms2 = $this->getFormLyFields($entity2, $fields2);
-        
+
         $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
         $dtparams[] = array("name" => "Title", "index" => 'title');
         $dtparams[] = array("name" => "Code", "index" => 'erpCode');
         $dtparams[] = array("name" => "Price", "index" => 'itemPricew01');
-        
+
         $params['dtparams'] = $dtparams;
         $params['id'] = $dtparams;
         $params['url'] = '/product/getrelation/' . $id;
@@ -159,7 +174,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $json = $this->tabs();
         return $json;
     }
-    
+
     /**
      * @Route("/product/getrelation/{id}")
      */
@@ -169,7 +184,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $this->addField($param);
         }
         $this->repository = 'SoftoneBundle:Product';
-        $this->q_and[] = $this->prefix . ".id in  (Select k.sisxetisi FROM SoftoneBundle:Sisxetiseis k where k.product = '".$id."')";
+        $this->q_and[] = $this->prefix . ".id in  (Select k.sisxetisi FROM SoftoneBundle:Sisxetiseis k where k.product = '" . $id . "')";
         $json = $this->datatable();
 
         $datatable = json_decode($json);
@@ -189,7 +204,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
-    
+
     /**
      * 
      * 

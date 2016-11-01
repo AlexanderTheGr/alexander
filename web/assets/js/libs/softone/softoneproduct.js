@@ -1,6 +1,14 @@
 jQuery('.synafiacode input').live("keyup", function (e) {
     if (e.keyCode == 13) {
-        alert($(this).val());
+        //alert($(this).val());
+        var data = {};
+        data.erp_code = $(this).val();
+        $.post("/product/addRelation", data, function (result) {
+            if (result.returnurl) {
+                location.href = result.returnurl;
+            }
+        })
+
     }
 });
 
