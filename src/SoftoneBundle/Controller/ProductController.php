@@ -151,7 +151,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     } catch (Exception $e) {
                         
                     }
-                
+                }    
+                $sisxetisi = $this->getDoctrine()
+                        ->getRepository('SoftoneBundle:Sisxetiseis')
+                        ->findOneBy(array('sisxetisi' => $sisx->getSisxetisi(), 'product' => $sisxetis->getProduct()));                
+                if (count($sisxetisi) == 0) {
                     $sisxetisi = new Sisxetiseis();
                     $sisxetisi->setProduct($sisxetis->getProduct());
                     $sisxetisi->setSisxetisi($sisx->getSisxetisi());
