@@ -337,11 +337,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
 
 
-
-                $this->createWhere();
-
-
                 $this->prefix = "po";
+                $this->createWhere();
                 $sql = 'SELECT  po.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
                                 ' . $this->where . ' ' . $tecdoc_article;
@@ -366,7 +363,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 ' . $this->where . ' ' . $tecdoc_article . '
                                 ORDER BY ' . $this->orderBy;
 
-                echo  $sql;
+                //echo  $sql;
 
 
                 $query = $em->createQuery(
