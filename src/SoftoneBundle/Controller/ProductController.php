@@ -114,7 +114,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $sisxetisi->setSisxetisi($product->getId());
                 @$this->flushpersist($sisxetisi);
                 $this->updateSisxetiseis($sisxetisi);
-
+            }
+            $sisxetisi = $this->getDoctrine()
+                    ->getRepository('SoftoneBundle:Sisxetiseis')
+                    ->findOneBy(array('sisxetisi' => $id, 'product' => $product->getId()));            
+            if (count($sisxetisi) == 0) {
                 $sisxetisi = new Sisxetiseis();
                 $sisxetisi->setProduct($product->getId());
                 $sisxetisi->setSisxetisi($id);
