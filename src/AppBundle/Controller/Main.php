@@ -502,7 +502,7 @@ class Main extends Controller {
                     $options["required"] = false;
                 }
                 //@$options["required"] = $options["required"] != '' ? $options["required"] > 0 ? true : false : true;
-                @$forms["fields"][] = array("key" => $field, "className" => $options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field), "type" => "input", "templateOptions" => array("type" => '', 'class' => '', "label" => $options["label"], "required" => $options["required"]));
+                @$forms["fields"][] = array("key" => $field, "className" => (string)$options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field), "type" => "input", "templateOptions" => array("type" => '', 'class' => '', "label" => $options["label"], "required" => $options["required"]));
             }
         }
         return $forms;
