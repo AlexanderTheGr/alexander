@@ -3,7 +3,7 @@ jQuery('.synafiacode input').live("keyup", function (e) {
         //alert($(this).val());
         var data = {};
         data.erp_code = $(this).val();
-        data.id = $(this).getId();
+        data.id = $(this).attr("id");
         $.post("/product/addRelation", data, function (result) {
             if (result.returnurl) {
                 location.href = result.returnurl;
