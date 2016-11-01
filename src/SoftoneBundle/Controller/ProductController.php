@@ -104,16 +104,22 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $asd[] = $product->getId();
         $json = json_encode($asd);
         if ($id > 0 AND count($product)>0) {
+            
             $sisxetisi = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Sisxetiseis')
                     ->findOneBy(array('product' => $id,'sisxetisi'=>$product->getId())); 
-            
             if (count($sisxetisi) == 0) {
                 $sisxetisi = new Sisxetiseis();
                 $sisxetisi->setProduct($id);
                 $sisxetisi->setSisxetisi($product->getId());
                 @$this->flushpersist($sisxetisi);
+                
+                $sisxetisi = new Sisxetiseis();
+                $sisxetisi->setProduct($product->getId());
+                $sisxetisi->setSisxetisi($id);
+                @$this->flushpersist($sisxetisi);                
             }
+            
         }
         
         //$json = json_encode($product);
