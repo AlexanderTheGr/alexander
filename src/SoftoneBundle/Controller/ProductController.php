@@ -136,15 +136,15 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         foreach($sisxetiseis as $sisxetis) {
             $sisxetisi = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Sisxetiseis')
-                    ->findOneBy(array('product' => $sisxetisi->getProduct(), 'sisxetisi' => $sisxetis->getSisxetisi()));
+                    ->findOneBy(array('product' => $sisx->getProduct(), 'sisxetisi' => $sisxetis->getSisxetisi()));
             if (count($sisxetisi) == 0) {
                 $sisxetisi = new Sisxetiseis();
-                $sisxetisi->setProduct($sisxetisi->getProduct());
+                $sisxetisi->setProduct($sisx->getProduct());
                 $sisxetisi->setSisxetisi($sisxetis->getSisxetisi());
                 @$this->flushpersist($sisxetisi);
                 $sisxetisi = new Sisxetiseis();
                 $sisxetisi->setProduct($sisxetis->getSisxetisi());
-                $sisxetisi->setSisxetisi($sisxetisi->getProduct());
+                $sisxetisi->setSisxetisi($sisx->getProduct());
                 @$this->flushpersist($sisxetisi);
             }            
         }
@@ -157,12 +157,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     ->findOneBy(array('product' => $sisxetisi->getProduct(), 'sisxetisi' => $sisxetis->getSisxetisi()));
             if (count($sisxetisi) == 0) {
                 $sisxetisi = new Sisxetiseis();
-                $sisxetisi->setProduct($sisxetisi->getProduct());
+                $sisxetisi->setProduct($sisx->getProduct());
                 $sisxetisi->setSisxetisi($sisxetis->getSisxetisi());
                 @$this->flushpersist($sisxetisi);
                 $sisxetisi = new Sisxetiseis();
                 $sisxetisi->setProduct($sisxetis->getSisxetisi());
-                $sisxetisi->setSisxetisi($sisxetisi->getProduct());
+                $sisxetisi->setSisxetisi($sisx->getProduct());
                 @$this->flushpersist($sisxetisi);
             }            
         }        
