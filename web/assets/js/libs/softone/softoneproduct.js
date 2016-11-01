@@ -5,6 +5,8 @@ jQuery('.synafiacode input').live("keyup", function (e) {
         data.erp_code = $(this).val();
         data.id = $(this).attr("id");
         $.post("/product/addRelation", data, function (result) {
+            var table = dt_tables["ctrlgettabs"];
+            table.fnFilter();
             if (result.returnurl) {
                 location.href = result.returnurl;
             }
