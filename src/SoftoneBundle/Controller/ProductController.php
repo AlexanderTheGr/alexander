@@ -129,10 +129,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         );
     }
 
-    function updateSisxetiseis($sisxetisi) {
+    function updateSisxetiseis($sisx) {
         $sisxetiseis = $this->getDoctrine()
                 ->getRepository('SoftoneBundle:Sisxetiseis')
-                ->findBy(array('product' => $sisxetisi->getProduct()));
+                ->findBy(array('product' => $sisx->getProduct()));
         foreach($sisxetiseis as $sisxetis) {
             $sisxetisi = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Sisxetiseis')
@@ -150,7 +150,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
         $sisxetiseis = $this->getDoctrine()
                 ->getRepository('SoftoneBundle:Sisxetiseis')
-                ->findBy(array('sisxetisi' => $sisxetisi->getProduct()));
+                ->findBy(array('sisxetisi' => $sisx->getProduct()));
         foreach($sisxetiseis as $sisxetis) {
             $sisxetisi = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Sisxetiseis')
