@@ -96,32 +96,96 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->findOneBy(array('erpCode' => $request->request->get("erp_code")));
-        
-        $idArr = explode(":",$request->request->get("id"));
-        $id = (int)$idArr[3];
-        
+
+        $idArr = explode(":", $request->request->get("id"));
+        $id = (int) $idArr[3];
+
         $asd[] = $id;
         $asd[] = $product->getId();
         $json = json_encode($asd);
-        if ($id > 0 AND count($product)>0) {
-            
+        if ($id > 0 AND count($product) > 0) {
+
             $sisxetisi = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Sisxetiseis')
-                    ->findOneBy(array('product' => $id,'sisxetisi'=>$product->getId())); 
+                    ->findOneBy(array('product' => $id, 'sisxetisi' => $product->getId()));
             if (count($sisxetisi) == 0) {
                 $sisxetisi = new Sisxetiseis();
                 $sisxetisi->setProduct($id);
                 $sisxetisi->setSisxetisi($product->getId());
                 @$this->flushpersist($sisxetisi);
-                
+
                 $sisxetisi = new Sisxetiseis();
                 $sisxetisi->setProduct($product->getId());
                 $sisxetisi->setSisxetisi($id);
-                @$this->flushpersist($sisxetisi);                
+                @$this->flushpersist($sisxetisi);
+
+                $sisxetiseis = $this->getDoctrine()
+                        ->getRepository('SoftoneBundle:Sisxetiseis')
+                        ->findBy(array('product' => $id));
+                foreach ($sisxetiseis as $sisxet) {
+
+                    $sisxetisi = new Sisxetiseis();
+                    $sisxetisi->setProduct($id);
+                    $sisxetisi->setSisxetisi($sisxet->getId());
+                    @$this->flushpersist($sisxetisi);
+
+                    $sisxetisi = new Sisxetiseis();
+                    $sisxetisi->setProduct($sisxet->getId());
+                    $sisxetisi->setSisxetisi($id);
+                    @$this->flushpersist($sisxetisi);
+                }
+
+                $sisxetiseis = $this->getDoctrine()
+                        ->getRepository('SoftoneBundle:Sisxetiseis')
+                        ->findBy(array('sisxetisi' => $id));
+                foreach ($sisxetiseis as $sisxet) {
+
+                    $sisxetisi = new Sisxetiseis();
+                    $sisxetisi->setProduct($id);
+                    $sisxetisi->setSisxetisi($sisxet->getId());
+                    @$this->flushpersist($sisxetisi);
+
+                    $sisxetisi = new Sisxetiseis();
+                    $sisxetisi->setProduct($sisxet->getId());
+                    $sisxetisi->setSisxetisi($id);
+                    @$this->flushpersist($sisxetisi);
+                }
+
+                
+                $sisxetiseis = $this->getDoctrine()
+                        ->getRepository('SoftoneBundle:Sisxetiseis')
+                        ->findBy(array('product' => $product->getId()));
+                foreach ($sisxetiseis as $sisxet) {
+
+                    $sisxetisi = new Sisxetiseis();
+                    $sisxetisi->setProduct($product->getId());
+                    $sisxetisi->setSisxetisi($sisxet->getId());
+                    @$this->flushpersist($sisxetisi);
+
+                    $sisxetisi = new Sisxetiseis();
+                    $sisxetisi->setProduct($sisxet->getId());
+                    $sisxetisi->setSisxetisi($product->getId());
+                    @$this->flushpersist($sisxetisi);
+                }
+
+                $sisxetiseis = $this->getDoctrine()
+                        ->getRepository('SoftoneBundle:Sisxetiseis')
+                        ->findBy(array('sisxetisi' => $product->getId()));
+                foreach ($sisxetiseis as $sisxet) {
+
+                    $sisxetisi = new Sisxetiseis();
+                    $sisxetisi->setProduct($product->getId());
+                    $sisxetisi->setSisxetisi($sisxet->getId());
+                    @$this->flushpersist($sisxetisi);
+
+                    $sisxetisi = new Sisxetiseis();
+                    $sisxetisi->setProduct($sisxet->getId());
+                    $sisxetisi->setSisxetisi($product->getId());
+                    @$this->flushpersist($sisxetisi);
+                }
             }
-            
         }
-        
+
         //$json = json_encode($product);
         //print_r($product);
         return new Response(
