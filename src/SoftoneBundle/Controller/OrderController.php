@@ -344,7 +344,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $this->createWhere();
                     $sql = 'SELECT  po.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where ' . $tecdoc_article;
+                               ' . str_replace("p.","po.",$this->where);
                 }
                 //echo  $sql;
                 $this->prefix = "p";
