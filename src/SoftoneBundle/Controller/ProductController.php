@@ -24,18 +24,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function indexAction() {
 
-        $products = $this->getDoctrine()
-                ->getRepository($this->repository)
-                ->findBy(array('tecdocArticleId' => 0));
-
-        foreach ($products as $product) {
-            echo $product->getId();
-            $p = $this->getDoctrine()
-                ->getRepository($this->repository)
-                ->find($product->getId());            
-            $p->updatetecdoc();
-
-        }
+ 
 
         return $this->render('SoftoneBundle:Product:index.html.twig', array(
                     'pagename' => 'Customers',

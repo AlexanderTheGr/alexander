@@ -1740,7 +1740,7 @@ class Product extends Entity {
         
         $out = json_decode(curl_exec($ch));
         
-        print_r($fields);
+       // print_r($fields);
         
         //echo $out;
         
@@ -1779,7 +1779,7 @@ class Product extends Entity {
           }
          * 
          */
-        print_r($out);
+        //print_r($out);
 
         try {
             //$webserviceProduct = WebserviceProduct::model()->findByAttributes(array('product' =>  $this->id,"webservice"=>$this->webservice));
