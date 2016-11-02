@@ -30,7 +30,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         foreach ($products as $product) {
             echo $product->getId();
-            $product->updatetecdoc();
+            $p = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->find($product->getId());            
+            $p->updatetecdoc();
 
         }
 
