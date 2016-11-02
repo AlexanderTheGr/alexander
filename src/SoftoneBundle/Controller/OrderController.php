@@ -361,10 +361,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
 
                 if (count((array) $articleIds)) {
-                    $tecdoc_article = 'p.tecdocArticleId in (' . implode(",", $articleIds) . ')';
+                    $tecdoc_article = 'p.tecdocArticleId in (' . implode(",", $articleIds) . ') OR ';
+                    $tecdoc_article2 = " OR p.id in  (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
                     $sql = 'SELECT  ' . $this->select . ', p.reference
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where ' . $tecdoc_article . '
+                                where ' . $tecdoc_article . $tecdoc_article2 . ' 
                                 ORDER BY ' . $this->orderBy;
                 } else {
                     $sql = 'SELECT  ' . $this->select . ', p.reference
