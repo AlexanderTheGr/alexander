@@ -332,11 +332,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     }
                 }
 
-
+                print_r($articleIds);
                 if (count((array) $articleIds))
                     $tecdoc_article = 'OR p.tecdocArticleId in (' . implode(",", $articleIds) . ')';
-
-
 
                 $this->prefix = "po";
                 $this->createWhere();
