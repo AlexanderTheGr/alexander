@@ -463,7 +463,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $json = array();
 
                 $json[] = "";
-                $json[] = "<span  car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span></a><BR><a class='create_product' ref='" . $v->articleId . "' style='font-size:10px; color:rose' href='#'>Create Product</a>";
+                $json[] = "<span  car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span></a><BR><a class='create_product' data-ref='" . $v->articleId . "' style='font-size:10px; color:rose' href='#'>Create Product</a>";
                 $json[] = "<span  car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span>";
                 $json[] = "<span  car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->genericArticleName . "</span>";
                 $json[] = "<span  car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->brandName . "</span>";
