@@ -26,7 +26,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $products = $this->getDoctrine()
                 ->getRepository($this->repository)
-                ->findAll();
+                ->findBy(array('tecdocArticleId' => 0));
 
         foreach ($products as $product) {
             echo $product->getId();
