@@ -24,6 +24,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function indexAction() {
 
+        $products = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->findBy(array('tecdocArticleId' => 0));
+        foreach ($products as $product) {
+            $product->updatetecdoc();
+        }
+
         return $this->render('SoftoneBundle:Product:index.html.twig', array(
                     'pagename' => 'Customers',
                     'url' => '/product/getdatatable',
@@ -115,11 +122,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 @$this->flushpersist($sisxetisi);
                 $this->updateSisxetiseis($sisxetisi);
             }
-            
+
             $sisxetisi = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Sisxetiseis')
-                    ->findOneBy(array('sisxetisi' => $id, 'product' => $product->getId()));      
-            
+                    ->findOneBy(array('sisxetisi' => $id, 'product' => $product->getId()));
+
             if (count($sisxetisi) == 0) {
                 $sisxetisi = new Sisxetiseis();
                 $sisxetisi->setProduct($product->getId());
@@ -146,7 +153,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $sisxetisi = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:Sisxetiseis')
                         ->findOneBy(array('product' => $sisx->getSisxetisi(), 'sisxetisi' => $sisxetis->getProduct()));
-                
+
                 if (count($sisxetisi) == 0) {
                     $sisxetisi = new Sisxetiseis();
                     $sisxetisi->setProduct($sisx->getSisxetisi());
@@ -157,10 +164,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     } catch (Exception $e) {
                         
                     }
-                }    
+                }
                 $sisxetisi = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:Sisxetiseis')
-                        ->findOneBy(array('sisxetisi' => $sisx->getSisxetisi(), 'product' => $sisxetis->getProduct()));                
+                        ->findOneBy(array('sisxetisi' => $sisx->getSisxetisi(), 'product' => $sisxetis->getProduct()));
                 if (count($sisxetisi) == 0) {
                     $sisxetisi = new Sisxetiseis();
                     $sisxetisi->setProduct($sisxetis->getProduct());
