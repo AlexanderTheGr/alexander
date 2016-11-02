@@ -26,9 +26,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $products = $this->getDoctrine()
                 ->getRepository($this->repository)
-                ->findBy(array('tecdocArticleId' => 0));
+                ->findBy(array('tecdocArticleId' => NULL));
         foreach ($products as $product) {
             $product->updatetecdoc();
+
         }
 
         return $this->render('SoftoneBundle:Product:index.html.twig', array(
