@@ -1736,15 +1736,15 @@ class Product extends Entity {
         curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         
-        print_r(curl_exec($ch));
+
         
         $out = json_decode(curl_exec($ch));
         
+        print_r($fields);
         
+        //echo $out;
         
-        echo $out;
-        
-        echo 'sssssssssss';
+        //echo 'sssssssssss';
         /*
           } else {
 
