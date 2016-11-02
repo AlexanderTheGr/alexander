@@ -334,13 +334,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                 //print_r($articleIds);
                 if (count((array) $articleIds))
-                    $tecdoc_article = 'OR po.tecdocArticleId in (' . implode(",", $articleIds) . ')';
+                    $tecdoc_article = 'po.tecdocArticleId in (' . implode(",", $articleIds) . ')';
 
                 $this->prefix = "po";
                 $this->createWhere();
                 $sql = 'SELECT  po.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                ' . str_replace("p.", "po.",$this->where) . ' ' . $tecdoc_article;
+                                ' . $tecdoc_article;
 
                 echo  $sql;
                 $this->prefix = "p";
