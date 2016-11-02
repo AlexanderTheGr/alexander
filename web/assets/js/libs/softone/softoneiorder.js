@@ -11,7 +11,7 @@ jQuery('#productfreesearch').live("keyup", function (e) {
         jQuery(".brand-select").trigger("chosen:updated")
         jQuery(".brand_model-select").trigger("chosen:updated");
         jQuery(".brand_model_type-select").trigger("chosen:updated");
-        
+
     }
 });
 
@@ -192,7 +192,7 @@ function asdf(obj, filter, freesearch) {
     var table = dt_tables["ctrlgetoffcanvases"];
     table.fnFilter(jQuery('#productfreesearch').val());
     var table2 = dt_tables["ctrlgetoffcanvases2"];
-    table2.fnFilter('');       
+    table2.fnFilter('');
     setTimeout(function () {
         jQuery(".SoftoneBundleProductQty").val(1);
     }, 1000)
@@ -255,6 +255,14 @@ jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .SoftoneBundleProductEdi').live("
     }
 });
 
+jQuery(".create_product").live('click', function () {
+    var ref = jQuery(this).attr("data-ref");
+    var data = {};
+    data.ref= ref;
+    $.post("/product/createProduct", data, function (result) {
+
+    })
+})
 
 jQuery(".edibutton").live('click', function () {
     var edi = jQuery(this).attr("data-id")
@@ -300,6 +308,6 @@ jQuery(".alexander tr").live('mouseout', function () {
     jQuery('.orderitemstable').hide();
 });
 
-jQuery(".offcanvas-tools .md-close").live("click",function(){
+jQuery(".offcanvas-tools .md-close").live("click", function () {
     $(".offcanvas-search").click();
 })

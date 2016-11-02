@@ -24,7 +24,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function indexAction() {
 
- 
+
 
         return $this->render('SoftoneBundle:Product:index.html.twig', array(
                     'pagename' => 'Customers',
@@ -34,6 +34,16 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     'app' => $this->generateRandomString(),
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
+    }
+
+    /**
+     * @Route("/product/createProduct")
+     */
+    public function createProductAction(Request $request) {
+        $json = json_encode(array("ok"));
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
     }
 
     /**
