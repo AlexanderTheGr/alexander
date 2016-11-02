@@ -1705,6 +1705,7 @@ class Product extends Entity {
     }
 
     function updatetecdoc() {
+        echo 'sssssssssss';
         //$data = array("service" => "login", 'username' => 'dev', 'password' => 'dev', 'appId' => '2000');
         if ($this->getTecdocSupplierId() == null)
             return;
