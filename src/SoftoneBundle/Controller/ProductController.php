@@ -46,7 +46,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository($this->repository)
                 ->find($id);
 
-
+        $product->updatetecdoc();
         //$product->toSoftone();
         //exit;
         $content = $this->gettabs($id);
