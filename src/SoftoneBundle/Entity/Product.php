@@ -1768,7 +1768,7 @@ class Product extends Entity {
           }
          * 
          */
-        //print_r($out);
+        print_r($out);
 
         try {
             //$webserviceProduct = WebserviceProduct::model()->findByAttributes(array('product' =>  $this->id,"webservice"=>$this->webservice));
