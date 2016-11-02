@@ -1711,8 +1711,6 @@ class Product extends Entity {
             return;
         
         
-        echo 'sssssssssss';
-        
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
@@ -1738,6 +1736,8 @@ class Product extends Entity {
         curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         $out = json_decode(curl_exec($ch));
+                
+        echo 'sssssssssss';
         /*
           } else {
 
