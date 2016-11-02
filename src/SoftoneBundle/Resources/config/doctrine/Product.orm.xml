@@ -14,6 +14,7 @@
             <index name="supplier_code" columns="supplier_code"/>
             <index name="tecdoc_article_id" columns="tecdoc_article_id"/>
             <index name="item_name" columns="item_name"/>
+            <index name="tecdoc_code" columns="tecdoc_code"/>
               
         </indexes>
 
