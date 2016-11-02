@@ -333,19 +333,22 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 }
 
                 //print_r($articleIds);
-                if (count((array) $articleIds))
+                if (count((array) $articleIds)) {
                     $tecdoc_article = 'po.tecdocArticleId in (' . implode(",", $articleIds) . ')';
-
-                $this->prefix = "po";
-                $this->createWhere();
-                $sql = 'SELECT  po.id
+                    $sql = 'SELECT  po.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                ' . $tecdoc_article;
-
-                echo  $sql;
+                                where ' . $tecdoc_article;
+                } else {
+                    $this->prefix = "po";
+                    $this->createWhere();
+                    $sql = 'SELECT  po.id
+                                FROM ' . $this->repository . ' ' . $this->prefix . '
+                                where ' . $tecdoc_article;
+                }
+                //echo  $sql;
                 $this->prefix = "p";
-                $this->q_or[] = $this->prefix . ".id in  (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (".$sql."))";
-                
+                $this->q_or[] = $this->prefix . ".id in  (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
+
                 $this->createWhere();
 
                 $this->createOrderBy($fields, $dt_order);
