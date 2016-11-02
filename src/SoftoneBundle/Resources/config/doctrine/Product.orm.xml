@@ -7,7 +7,14 @@
             <index name="reference" columns="reference"/>
             <index name="erp_code" columns="erp_code"/>
             <index name="item_code" columns="item_code"/>  
-            <index name="edi_id" columns="edi_id"/>    
+            <index name="edi_id" columns="edi_id"/>  
+           
+            
+            
+            <index name="supplier_code" columns="supplier_code"/>
+            <index name="tecdoc_article_id" columns="tecdoc_article_id"/>
+            <index name="item_name" columns="item_name"/>
+              
         </indexes>
 
         <id name="id" type="integer" column="id">
