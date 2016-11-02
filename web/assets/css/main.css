@@ -109,3 +109,6 @@ table.dataTable tbody tr {
 .orderitemstable table{
     width: 100%;
 }
+.dataTable input {
+   width: 70px;
+}
