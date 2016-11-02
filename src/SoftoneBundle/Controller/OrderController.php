@@ -340,7 +340,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
                                 where ' . $tecdoc_article;
                 } else {
-                    
+
                     $this->createWhere();
                     $sql = 'SELECT  po.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
@@ -357,16 +357,23 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $select = count($s) > 0 ? implode(",", $s) : $this->prefix . ".*";
 
                 $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
-                $tecdoc_article = '';
+                //$tecdoc_article = '';
 
 
-
-                $sql = 'SELECT  ' . $this->select . ', p.reference
+                if (count((array) $articleIds)) {
+                    $tecdoc_article = 'p.tecdocArticleId in (' . implode(",", $articleIds) . ')';
+                    $sql = 'SELECT  ' . $this->select . ', p.reference
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                ' . $this->where . ' ' . $tecdoc_article . '
+                                where ' . $tecdoc_article . '
                                 ORDER BY ' . $this->orderBy;
+                } else {
+                    $sql = 'SELECT  ' . $this->select . ', p.reference
+                                FROM ' . $this->repository . ' ' . $this->prefix . '
+                                ' . $this->where . '
+                                ORDER BY ' . $this->orderBy;
+                }
 
-                //echo $sql;
+                echo $sql;
                 //exit;
 
 
