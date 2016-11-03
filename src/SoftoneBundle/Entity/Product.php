@@ -33,7 +33,9 @@ class Product extends Entity {
 
     public function setRepositories() {
         $this->repositories['tecdocSupplierId'] = 'SoftoneBundle:TecdocSupplier';
+        $this->repositories['tecdocSupplierId'] = 'SoftoneBundle:SoftoneSupplier';
         $this->types['tecdocSupplierId'] = 'object';
+        $this->types['supplierId'] = 'object';
         //$this->tecdocSupplierId = new \SoftoneBundle\Entity\TecdocSupplier;
     }
 
@@ -43,11 +45,13 @@ class Product extends Entity {
 
     public function getRepositories($repo) {
         $this->repositories['tecdocSupplierId'] = 'SoftoneBundle:TecdocSupplier';
+        $this->repositories['supplierId'] = 'SoftoneBundle:SoftoneSupplier';
         return $this->repositories[$repo];
     }
 
     public function gettype($field) {
         $this->types['tecdocSupplierId'] = 'object';
+        $this->types['supplierId'] = 'object';
         if (@$this->types[$field] != '') {
             return @$this->types[$field];
         }
