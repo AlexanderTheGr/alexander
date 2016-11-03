@@ -56,10 +56,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         
         if (@$SoftoneSupplier->id == 0) {
             $TecdocSupplier = $em->getRepository("SoftoneBundle:TecdocSupplier")
-                    ->findOneBy(array('supplier' => $asd["brandName"]));
+                    ->findOneBy(array('supplier' => $asd->brandName));
             if (@$TecdocSupplier->id == 0) {
                 $SoftoneSupplier = new \SoftoneBundle\Entity\SoftoneSupplier;
-                $SoftoneSupplier->setTitle($this->brand);
+                $SoftoneSupplier->setTitle($asd->brandName);
                 $SoftoneSupplier->setCode(' ');
                 $em->persist($SoftoneSupplier);
                 $em->flush();
