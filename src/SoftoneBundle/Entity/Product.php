@@ -2206,4 +2206,33 @@ class Product extends Entity {
         return $this->tecdocSupplierId;
     }
 
+    /**
+     * @var \SoftoneBundle\Entity\SoftoneSupplier
+     */
+    private $supplierId;
+
+
+    /**
+     * Set supplierId
+     *
+     * @param \SoftoneBundle\Entity\SoftoneSupplier $supplierId
+     *
+     * @return Product
+     */
+    public function setSupplierId(\SoftoneBundle\Entity\SoftoneSupplier $supplierId = null)
+    {
+        $this->supplierId = $supplierId;
+
+        return $this;
+    }
+
+    /**
+     * Get supplierId
+     *
+     * @return \SoftoneBundle\Entity\SoftoneSupplier
+     */
+    public function getSupplierId()
+    {
+        return $this->supplierId;
+    }
 }
