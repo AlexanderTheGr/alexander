@@ -41,16 +41,53 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function createProductAction(Request $request) {
         $json = json_encode(array("ok"));
-       
-        
+
+
         $asd = unserialize($this->getArticlesSearchByIds($request->request->get("ref")));
         $asd = $asd[0];
         $json = json_encode($asd);
-        
+
+
+
+
+        $SoftoneSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")
+                ->findOneBy(array('title' => $asd["brandName"]));
+        echo $asd["brandName"];
+        /*
+        if (@$SoftoneSupplier->id == 0) {
+            $TecdocSupplier = $em->getRepository("SoftoneBundle:TecdocSupplier")
+                    ->findOneBy(array('supplier' => $asd["brandName"]));
+            if (@$TecdocSupplier->id == 0) {
+                $SoftoneSupplier = new \SoftoneBundle\Entity\SoftoneSupplier;
+                $SoftoneSupplier->setTitle($this->brand);
+                $SoftoneSupplier->setCode(' ');
+                $em->persist($SoftoneSupplier);
+                $em->flush();
+                $SoftoneSupplier->setCode("S" . $SoftoneSupplier->getId());
+                $em->persist($SoftoneSupplier);
+                $em->flush();
+                $SoftoneSupplier->toSoftone();
+            } else {
+                $SoftoneSupplier = new \SoftoneBundle\Entity\SoftoneSupplier;
+                $SoftoneSupplier->setTitle($TecdocSupplier->getSupplier());
+                $SoftoneSupplier->setCode("T" . $TecdocSupplier->id);
+                $em->persist($SoftoneSupplier);
+                $em->flush();
+                $SoftoneSupplier->toSoftone();
+            }
+        } else {
+            
+        }
+         * 
+         */
+
+
+
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+
     public function getArticlesSearchByIds($search) {
         //if (file_exists(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term")) {
         //$data = file_get_contents(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term");
