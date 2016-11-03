@@ -333,8 +333,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
 
 
-        $fields["itemPricew"] = array("label" => "Price");
-        $fields["itemPricer"] = array("label" => "Price");
+        $fields["itemPricew"] = array("label" => "Wholesale Price");
+        $fields["itemPricer"] = array("label" => "Retail Price");
 
         $forms = $this->getFormLyFields($entity, $fields);
 
