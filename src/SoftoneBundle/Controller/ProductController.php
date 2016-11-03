@@ -81,7 +81,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
 
         $erpCode = $this->clearCode($asd->articleNo) . "-" . $SoftoneSupplier->getCode();
+        echo $erpCode;
+        exit;
         $product = $em->getRepository("SoftoneBundle:Product")->find(array('erpCode' => $erpCode));
+        
         if (@$product->id > 0) {
             echo $product->id;
             exit;
