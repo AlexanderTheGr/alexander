@@ -258,9 +258,11 @@ jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .SoftoneBundleProductEdi').live("
 jQuery(".create_product").live('click', function () {
     var ref = jQuery(this).attr("data-ref");
     var data = {};
-    data.ref= ref;
+    data.ref = ref;
     $.post("/product/createProduct", data, function (result) {
-
+        if (result.returnurl) {
+            location.href = result.returnurl;
+        }
     })
 })
 
