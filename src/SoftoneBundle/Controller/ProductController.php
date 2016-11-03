@@ -49,7 +49,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
 
 
-
+        $em = $this->getDoctrine();
         $SoftoneSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")
                 ->findOneBy(array('title' => $asd->brandName));
         echo $asd->brandName." ".@(int)$SoftoneSupplier->id;
