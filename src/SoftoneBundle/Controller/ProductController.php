@@ -80,13 +80,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->findOneBy(array('supplier' => $asd->brandName));
 
         $erpCode = $this->clearCode($asd->articleNo) . "-" . $SoftoneSupplier->getCode();
-        echo $erpCode;
-        
+
         $product = $em->getRepository("SoftoneBundle:Product")->findOneBy(array('erpCode' => $erpCode));
-        
+        $json = array("error"=>1);
         if (@$product->id > 0) {
-            echo $product->id;
-            exit;
+            $json = array("error"=>0,"id"=>$product->id);
+            return new Response(
+                    $json, 200, array('Content-Type' => 'application/json')
+            );
         }
 
         $dt = new \DateTime("now");
@@ -116,10 +117,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $product->updatetecdoc();
         $product->toSoftone();
-        
-        echo $product->id;
-        exit;
-        
+
+        $json = array("error"=>0,"id"=>$product->id);
+
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
