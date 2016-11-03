@@ -582,5 +582,14 @@ class Main extends Controller {
         $this->flushpersist($setting);
         return $setting->getValue();
     }
-
+    function clearCode($code) {
+        $code = str_replace(" ", "", $code);
+        $code = str_replace(".", "", $code);
+        $code = str_replace("-", "", $code);
+        $code = str_replace("/", "", $code);
+        $code = str_replace(")", "", $code);
+        $code = str_replace("(", "", $code);
+        $code = strtoupper($code);
+        return $code;
+    }
 }

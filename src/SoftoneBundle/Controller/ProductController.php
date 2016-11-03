@@ -52,8 +52,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $em = $this->getDoctrine();
         $SoftoneSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")
                 ->findOneBy(array('title' => $asd->brandName));
-        echo $asd->brandName." ".@(int)$SoftoneSupplier->id;
-        
+        echo $asd->brandName . " " . @(int) $SoftoneSupplier->id;
+
         if (@$SoftoneSupplier->id == 0) {
             $TecdocSupplier = $em->getRepository("SoftoneBundle:TecdocSupplier")
                     ->findOneBy(array('supplier' => $asd->brandName));
@@ -76,9 +76,50 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             
         }
 
+        $TecdocSupplier = $em->getRepository("SoftoneBundle:TecdocSupplier")
+                ->find($asd->brandNo);
 
 
+        $erpCode = $this->clearCode($asd->articleNo) . "-" . $SoftoneSupplier->getCode();
+        $product = $em->getRepository("SoftoneBundle:Product")->find(array('erpCode' => erpCode));
+        if (@$product->id > 0) {
+            echo $product->id;
+            exit;
+        }
 
+        $dt = new \DateTime("now");
+        $product = new \SoftoneBundle\Entity\Product;
+        $product->setSupplierCode($asd->articleNo);
+        $product->setTitle($asd->genericArticleName);
+        $product->setTecdocCode($asd->articleNo);
+
+
+        $product->setItemMtrmark($asd->brandNo);
+        $product->setTecdocCode($asd->articleNo);
+        $product->setItemName($asd->genericArticleName);
+        $product->setTecdocArticleId($asd->articleId);
+
+        //$product->setItemCode($this->partno);
+        $product->setItemApvcode($asd->articleNo);
+        $product->setErpSupplier($asd->brand);
+        $product->setItemMtrmanfctr($SoftoneSupplier->getId());
+        $product->setErpCode($erpCode);
+        $product->setItemCode($product->getErpCode());
+
+        $product->setItemV5($dt);
+        $product->setTs($dt);
+        $product->setItemInsdate($dt);
+        $product->setItemUpddate($dt);
+        $product->setCreated($dt);
+        $product->setModified($dt);
+        @$this->flushpersist($product);
+
+        $product->updatetecdoc();
+        $product->toSoftone();
+        
+        echo $product->id;
+        exit;
+        
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );

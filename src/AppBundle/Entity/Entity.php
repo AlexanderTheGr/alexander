@@ -79,4 +79,5 @@ class Entity {
         $this->flushpersist($setting);
         return $setting->getValue();
     }
+    
 }
