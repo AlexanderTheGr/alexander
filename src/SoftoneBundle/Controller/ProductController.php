@@ -41,6 +41,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function createProductAction(Request $request) {
         $json = json_encode(array("ok"));
+       
+        
+        $asd = unserialize($this->getArticlesSearchByIds($request->request->get("ref")));
+        $asd = $asd[0];
+        $json = json_encode($asd);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
