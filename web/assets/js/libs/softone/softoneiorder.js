@@ -261,7 +261,7 @@ jQuery(".create_product").live('click', function () {
     data.ref = ref;
     $.post("/product/createProduct", data, function (result) {
         if (result.returnurl) {
-            location.href = result.returnurl;
+            var win = window.open(result.returnurl);
         }
     })
 })
