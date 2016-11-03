@@ -327,9 +327,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $entity->updatetecdoc();
         $fields["title"] = array("label" => "Title");
         $fields["erpCode"] = array("label" => "Erp Code");
+        
         $fields["tecdocCode"] = array("label" => "Tecdoc Code");
-
         $fields["tecdocSupplierId"] = array("label" => "Tecdoc Supplier", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:TecdocSupplier', 'name' => 'supplier', 'value' => 'id'));
+                
+        $fields["supplierCode"] = array("label" => "Supplier Code");
         $fields["supplierId"] = array("label" => "Tecdoc Supplier", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id'));
         
         
