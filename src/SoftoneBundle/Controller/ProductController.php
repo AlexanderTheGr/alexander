@@ -51,7 +51,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
 
         $SoftoneSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")
-                ->findOneBy(array('title' => $asd["brandName"]));
+                ->findOneBy(array('title' => $asd->brandName));
         echo $asd["brandName"];
         /*
         if (@$SoftoneSupplier->id == 0) {
