@@ -440,15 +440,15 @@ class Main extends Controller {
                     ->findOneBy(array($attr => $entity->getField($attr)));
             if (count($ent)) {
                 $this->error[$this->repository][$attr] = 1;
+                $entity = $ent;
             }
         }
         if (!count($this->error[$this->repository])) {
             $em->persist($entity);
             $em->flush();
-            return $entity;
         }
 
-        return $ent;
+        return $entity;
     }
 
     function flushremove($entity) {
