@@ -224,7 +224,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $product->updatetecdoc();
         $product->toSoftone();
 
-        $json = json_encode(array("ok"));
+        $json = json_encode(array("error" => 0, "id" => (int) $product->id, 'returnurl' => '/product/view/' . (int) $product->id));
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
