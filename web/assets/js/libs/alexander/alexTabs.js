@@ -45,11 +45,12 @@ var dt_tables = [];
                                 if (response.returnurl) {
                                     location.href = response.returnurl;
                                 }
-                                if (response.error && response.unique) {
+                                if (response.unique) {
                                     angular.forEach(vm.tabs, function (tab) {
                                         angular.forEach(tab.form.fields, function (field, index) {
                                             //vm.model[field.id] = field.value();
-                                            field.error = 1;
+                                            //field.error = 1;
+                                            alert(field.id);
                                         })
                                     });
                                 }
