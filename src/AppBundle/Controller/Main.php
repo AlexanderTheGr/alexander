@@ -432,6 +432,7 @@ class Main extends Controller {
     }
 
     function flushpersist($entity) {
+        
         $em = $this->getDoctrine()->getManager();
         //$this->error[$this->repository] = array();
         foreach ($entity->uniques as $attr) {
