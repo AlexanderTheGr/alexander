@@ -433,16 +433,15 @@ class Main extends Controller {
 
     function flushpersist($entity) {
         $em = $this->getDoctrine()->getManager();
-        
         foreach($entity->uniques as $attr) {
             $ent = $this->getDoctrine()
                         ->getRepository($this->repository)
                         ->findOneBy(array($attr=>$entity->getField($attr)));
             if (count($ent)) {
+                $this->error[$this->repository][$attr] = 1;
                 return $ent;
             }
         }
-        
         $em->persist($entity);
         $em->flush();
         return $entity;
