@@ -51,7 +51,7 @@ var dt_tables = [];
                                             //vm.model[field.id] = field.value();
                                             //field.error = 1;
                                             field.formControl.$setValidity('server', false);
-                                            field.formControl.$setMessage('server');
+                                            field.formControl.$error.server = 'sddd';
                                             //alert(field.class);
                                         })
                                     });
