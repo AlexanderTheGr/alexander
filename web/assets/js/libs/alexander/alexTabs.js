@@ -51,6 +51,7 @@ var dt_tables = [];
                                             //vm.model[field.id] = field.value();
                                             //field.error = 1;
                                             field.formControl.$setValidity('server', false);
+                                            field.formControl.$setMessage('server');
                                             //alert(field.class);
                                         })
                                     });
