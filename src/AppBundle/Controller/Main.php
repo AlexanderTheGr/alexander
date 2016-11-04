@@ -445,9 +445,10 @@ class Main extends Controller {
         if (!count($this->error[$this->repository])) {
             $em->persist($entity);
             $em->flush();
+            return $entity;
         }
 
-        return $entity;
+        return $ent;
     }
 
     function flushremove($entity) {
