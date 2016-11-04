@@ -486,7 +486,7 @@ class Main extends Controller {
             @$options["type"] = $options["type"] ? $options["type"] : "input";
             $options["required"] = 0;
             if ($options["type"] == 'select') {
-                @$options["required"] = $options["required"] ? $options["required"] : true;
+                //@$options["required"] = $options["required"] ? $options["required"] : true;
                 $datasource = $options["datasource"];
                 $results = $em->getRepository($datasource["repository"])->findAll();
                 $seloptions = array();
