@@ -47,11 +47,11 @@ class Main extends Controller {
 
     public function collection($repository) {
         $em = $this->getDoctrine()->getManager();
-        
+
         $query = $em->createQuery(
                 'SELECT  ' . $this->select . '
                                 FROM ' . $repository . ' ' . $this->prefix . '
-                                ' . $this->where 
+                                ' . $this->where
         );
         //exit;
         return $query->getResult();
@@ -113,8 +113,8 @@ class Main extends Controller {
 
             $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
 
- 
-            
+
+
             $query = $em->createQuery(
                             'SELECT  ' . $this->select . '
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
@@ -124,7 +124,7 @@ class Main extends Controller {
                     ->setMaxResults($request->request->get("length"))
                     ->setFirstResult($request->request->get("start"));
             $results = $query->getResult();
-            
+
             //echo count($results);
         }
         $data["fields"] = $this->fields;
@@ -175,8 +175,8 @@ class Main extends Controller {
                 $jsonarr = array_merge($jsonarr, $jsonarrnoref);
             }
         }
-        
-        
+
+
         $data["data"] = $jsonarr;
         $data["recordsTotal"] = $recordsTotal;
         $data["recordsFiltered"] = $recordsFiltered;
@@ -231,7 +231,7 @@ class Main extends Controller {
     function addField($field = array()) {
 
         $bundle = explode(":", $this->repository);
-        if (@$field["type"] == "select" AND 1==2) {
+        if (@$field["type"] == "select" AND 1 == 2) {
             $field["content"] = '<input class="style-primary-bright form-control search_init" type="radio" />';
         } elseif (@$field["index"]) {
             $field_order = explode(":", $field["index"]);
@@ -261,7 +261,7 @@ class Main extends Controller {
                 $field["content"] = '<input class="style-primary-bright form-control search_init" type="text" />';
             }
         }
-        
+
         $this->fields[] = $field;
         //print_r($this->fields);
         //echo "<BR>";
@@ -383,19 +383,19 @@ class Main extends Controller {
     }
 
     function save() {
-        
+
         $data = $this->formLybase64();
         $dt = new \DateTime("now");
         $entities = array();
         foreach ($data as $key => $val) {
-            echo $key;
+
             $df = explode(":", $key);
             if (!@$entities[$df[0] . ":" . $df[1]]) {
                 $entities[$df[0] . ":" . $df[1]] = $this->getDoctrine()
                         ->getRepository($df[0] . ":" . $df[1])
                         ->find($df[3]);
             }
-            if ($df[3] == 0) {
+            if ((int)$df[3] == 0) {
 
                 $entities[$df[0] . ":" . $df[1]] = $this->newentity[$df[0] . ":" . $df[1]];
             }
@@ -487,10 +487,10 @@ class Main extends Controller {
 
             @$options["type"] = $options["type"] ? $options["type"] : "input";
             //$options["required"] = 0;
-            
+
             if (@$options["required"] == "") {
                 $options["required"] = false;
-            }            
+            }
             if ($options["type"] == 'select') {
                 //@$options["required"] = $options["required"] ? $options["required"] : true;
                 $datasource = $options["datasource"];
@@ -501,29 +501,29 @@ class Main extends Controller {
                 }
                 $defaultValue = $entity->getField($field) ? $entity->getField($field)->getId() : NULL;
                 /*
-                if (@$options["required"] == '') {
-                    $options["required"] = 1;
-                } else {
-                    $options["required"] = 0;
-                }
+                  if (@$options["required"] == '') {
+                  $options["required"] = 1;
+                  } else {
+                  $options["required"] = 0;
+                  }
                  * 
                  */
-                
+
                 @$forms["fields"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'defaultValue' => $defaultValue, "type" => "select", "templateOptions" => array("type" => '', 'options' => $seloptions, 'defaultOptions' => array("value" => $defaultValue), "label" => $options["label"], "required" => $options["required"]));
             } else {
 
                 //echo "A".@$options["required"]."<BR>";
                 /*
-                if (@$options["required"] == '') {
-                    $options["required"] = 1;
-                } else {
-                    $options["required"] = 0;
-                }
+                  if (@$options["required"] == '') {
+                  $options["required"] = 1;
+                  } else {
+                  $options["required"] = 0;
+                  }
                  * 
                  */
                 //@$options["required"] = $options["required"] != '' ? $options["required"] > 0 ? true : false : true;
                 //echo @$options["required"]." ".$options["className"]."<BR>";
-                @$forms["fields"][] = array("key" => $field, "className" => (string)$options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field), "type" => "input", "templateOptions" => array("type" => '', 'class' => '', "label" => $options["label"], "required" => $options["required"]));
+                @$forms["fields"][] = array("key" => $field, "className" => (string) $options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field), "type" => "input", "templateOptions" => array("type" => '', 'class' => '', "label" => $options["label"], "required" => $options["required"]));
             }
         }
         return $forms;
@@ -602,6 +602,7 @@ class Main extends Controller {
         $this->flushpersist($setting);
         return $setting->getValue();
     }
+
     function clearCode($code) {
         $code = str_replace(" ", "", $code);
         $code = str_replace(".", "", $code);
@@ -612,4 +613,5 @@ class Main extends Controller {
         $code = strtoupper($code);
         return $code;
     }
+
 }
