@@ -344,8 +344,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 
         $fields["supplierCode"] = array("label" => "Supplier Code");
         $fields["supplierId"] = array("label" => "Supplier", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id'));
-        
-        
+                
         $fields["itemPricew"] = array("label" => "Wholesale Price");
         $fields["itemPricer"] = array("label" => "Retail Price");
 
@@ -355,7 +354,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository('SoftoneBundle:Product')
                 ->find($id);
         $entity2->setReference("");
-        $fields2["reference"] = array("label" => "Erp Code", "className" => "synafiacode");
+        $fields2["reference"] = array("label" => "Erp Code", "required"=>false, "className" => "synafiacode");
         $forms2 = $this->getFormLyFields($entity2, $fields2);
 
         $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
