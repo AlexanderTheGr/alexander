@@ -440,7 +440,7 @@ class Main extends Controller {
                     ->getRepository($this->repository)
                     ->findOneBy(array($attr => $entity->getField($attr)));
             if (count($ent)) {
-                $this->error[$this->repository][$attr] = 1;
+                $this->error[$this->repository][] = $attr;
                 $entity = $ent;
             }
         }
