@@ -439,7 +439,6 @@ class Main extends Controller {
                         ->findOneBy(array($attr=>$entity->getField($attr)));
             if (count($ent)) {
                 $this->error[$this->repository][$attr] = 1;
-                return $ent;
             }
         }
         $em->persist($entity);
