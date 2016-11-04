@@ -438,7 +438,9 @@ class Main extends Controller {
             $ent = $this->getDoctrine()
                         ->getRepository($this->repository)
                         ->findOneBy(array($attr=>$entity->getField($attr)));
-            if (count($ent)) echo $ent->getField($attr);
+            if (count($ent)) {
+                return $ent;
+            }
         }
         
         $em->persist($entity);
