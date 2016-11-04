@@ -197,8 +197,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/product/save")
      */
     public function savection() {
-        $this->save();
+        $entities = $this->save();
+        
+        print_r($entities);
+        
         $json = json_encode(array("ok"));
+        
         //$entity->updatetecdoc();
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
