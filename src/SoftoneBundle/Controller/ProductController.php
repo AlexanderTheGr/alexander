@@ -342,7 +342,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $fields["tecdocCode"] = array("label" => "Tecdoc Code", "required"=>true);
         $fields["tecdocSupplierId"] = array("label" => "Tecdoc Supplier", "required"=>true, 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:TecdocSupplier', 'name' => 'supplier', 'value' => 'id'));
                 
-        $fields["supplierCode"] = array("label" => "Supplier Code");
+        $fields["supplierCode"] = array("label" => "Supplier Code", "required"=>true);
         $fields["supplierId"] = array("label" => "Supplier", 'type' => "select", "required"=>true, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id'));
                 
         $fields["itemPricew"] = array("label" => "Wholesale Price", "required"=>true);
