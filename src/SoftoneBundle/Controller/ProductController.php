@@ -52,7 +52,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $em = $this->getDoctrine();
         $SoftoneSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")
                 ->findOneBy(array('title' => $asd->brandName));
-        
+
         //echo $asd->brandName . " " . @(int) $SoftoneSupplier->id;
 
         if (@$SoftoneSupplier->id == 0) {
@@ -83,9 +83,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $erpCode = $this->clearCode($asd->articleNo) . "-" . $SoftoneSupplier->getCode();
 
         $product = $em->getRepository("SoftoneBundle:Product")->findOneBy(array('erpCode' => $erpCode));
-        $json = array("error"=>1);
+        $json = array("error" => 1);
         if (@$product->id > 0) {
-            $json = json_encode(array("error"=>0,"id"=>(int)$product->id,'returnurl'=>'/product/view/'.(int)$product->id));
+            $json = json_encode(array("error" => 0, "id" => (int) $product->id, 'returnurl' => '/product/view/' . (int) $product->id));
             return new Response(
                     $json, 200, array('Content-Type' => 'application/json')
             );
@@ -119,7 +119,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $product->updatetecdoc();
         $product->toSoftone();
 
-        $json = json_encode(array("error"=>0,"id"=>(int)$product->id,'returnurl'=>'/product/view/'.(int)$product->id));
+        $json = json_encode(array("error" => 0, "id" => (int) $product->id, 'returnurl' => '/product/view/' . (int) $product->id));
 
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
@@ -198,18 +198,24 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function savection() {
         $entities = $this->save();
-        
+
 
         $product = $this->getDoctrine()
-            ->getRepository($this->repository)
-            ->find($entities[$this->repository]);
-        
-        $erpCode = $this->clearCode($product->getSupplierCode())."-".$product->getSupplierId()->getCode();
+                ->getRepository($this->repository)
+                ->find($entities[$this->repository]);
+
+        $erpCode = $this->clearCode($product->getSupplierCode()) . "-" . $product->getSupplierId()->getCode();
         $product->setErpCode($erpCode);
+        
         $product->setItemCode($product->getErpCode());
+        $product->setItemMtrmanfctr($product->getTecdocSupplierId()->getId());
+        $product->setItemMtrmark($product->getSupplierId()->getId());
+        $product->setItemApvcode($product->getTecdocCode());
+        
         @$this->flushpersist($product);
         $product->updatetecdoc();
         $product->toSoftone();
+
         $json = json_encode(array("ok"));
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
@@ -336,17 +342,17 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $entity = new Product;
         }
         $entity->updatetecdoc();
-        $fields["title"] = array("label" => "Title", "required"=>true);
-        $fields["erpCode"] = array("label" => "Erp Code", "required"=>true);
-        
-        $fields["tecdocCode"] = array("label" => "Tecdoc Code", "required"=>true);
-        $fields["tecdocSupplierId"] = array("label" => "Tecdoc Supplier", "required"=>true, 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:TecdocSupplier', 'name' => 'supplier', 'value' => 'id'));
-                
-        $fields["supplierCode"] = array("label" => "Supplier Code", "required"=>true);
-        $fields["supplierId"] = array("label" => "Supplier", 'type' => "select", "required"=>true, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id'));
-                
-        $fields["itemPricew"] = array("label" => "Wholesale Price", "required"=>true);
-        $fields["itemPricer"] = array("label" => "Retail Price", "required"=>true);
+        $fields["title"] = array("label" => "Title", "required" => true);
+        $fields["erpCode"] = array("label" => "Erp Code", "required" => true);
+
+        $fields["tecdocCode"] = array("label" => "Tecdoc Code", "required" => true);
+        $fields["tecdocSupplierId"] = array("label" => "Tecdoc Supplier", "required" => true, 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:TecdocSupplier', 'name' => 'supplier', 'value' => 'id'));
+
+        $fields["supplierCode"] = array("label" => "Supplier Code", "required" => true);
+        $fields["supplierId"] = array("label" => "Supplier", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id'));
+
+        $fields["itemPricew"] = array("label" => "Wholesale Price", "required" => true);
+        $fields["itemPricer"] = array("label" => "Retail Price", "required" => true);
 
         $forms = $this->getFormLyFields($entity, $fields);
 
