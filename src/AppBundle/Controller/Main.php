@@ -387,6 +387,7 @@ class Main extends Controller {
         $dt = new \DateTime("now");
         $entities = array();
         foreach ($data as $key => $val) {
+            echo $key;
             $df = explode(":", $key);
             if (!@$entities[$df[0] . ":" . $df[1]]) {
                 $entities[$df[0] . ":" . $df[1]] = $this->getDoctrine()
