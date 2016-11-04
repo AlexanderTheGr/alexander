@@ -116,7 +116,7 @@
             </options>
         </field>           
         <field name="itemPricer" type="decimal" column="item_pricer" precision="10" scale="2" nullable="true"/>
-        <field name="itemPricew" type="decimal" column="item_pricew" precision="10" scale="0" nullable="true"/>
+        <field name="itemPricew" type="decimal" column="item_pricew" precision="10" scale="2" nullable="true"/>
         
         <field name="itemPricew01" type="decimal" column="item_pricew01" precision="10" scale="2" nullable="true"/>
         <field name="itemPricew02" type="decimal" column="item_pricew02" precision="10" scale="2" nullable="true"/>
