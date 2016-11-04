@@ -45,13 +45,21 @@ var dt_tables = [];
                                 if (response.returnurl) {
                                     location.href = response.returnurl;
                                 }
+                                if (response.error && response.unique) {
+                                    angular.forEach(vm.tabs, function (tab) {
+                                        angular.forEach(tab.form.fields, function (field, index) {
+                                            //vm.model[field.id] = field.value();
+                                            field.error = 1;
+                                        })
+                                    });
+                                }
                             })
                 }
 
                 setTimeout(function () {
                     forEach(vm.tabs)
                     forEach(vm.offcanvases)
-                   
+
                 }, 30)
                 function invokeOnAllFormOptions(fn) {
                     angular.forEach(vm.tabs, function (tab) {
@@ -71,8 +79,8 @@ var dt_tables = [];
             angular.forEach(p, function (r) {
                 if (r.content != "") {
                     jQuery("#" + r.index).html(html_entity_decode(r.content))
-                    
-                }  
+
+                }
                 angular.forEach(r.datatables, function (datatable) {
                     //$("."+datatable.ctrl).alexDataTable(datatable.app, datatable.ctrl, datatable.url, datatable.view)
                     $("." + datatable.ctrl).show();
@@ -81,7 +89,7 @@ var dt_tables = [];
                         "processing": true,
                         "serverSide": true,
                         //"initComplete": initComplete,
-                        "drawCallback": function() {
+                        "drawCallback": function () {
                             eval(datatable.drawCallback);
                         },
                         //"rowCallback": rowCallback,
