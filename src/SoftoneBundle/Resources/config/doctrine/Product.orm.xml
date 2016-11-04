@@ -21,6 +21,7 @@
             <unique-constraint name="u_item_code" columns="item_code"/>
             <unique-constraint name="u_erp_code" columns="erp_code"/>
         </unique-constraints>
+        
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
         </id>
