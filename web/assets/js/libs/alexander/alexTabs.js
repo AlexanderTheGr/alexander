@@ -45,7 +45,7 @@ var dt_tables = [];
                                 if (response.returnurl) {
                                     location.href = response.returnurl;
                                 }
-                                if (response.unique) {
+                                //if (response.unique) {
                                     angular.forEach(vm.tabs, function (tab) {
                                         angular.forEach(tab.form.fields, function (field, index) {
                                             //vm.model[field.id] = field.value();
@@ -53,7 +53,7 @@ var dt_tables = [];
                                             alert(field.id);
                                         })
                                     });
-                                }
+                                //}
                             })
                 }
 
