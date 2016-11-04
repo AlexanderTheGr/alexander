@@ -50,7 +50,8 @@ var dt_tables = [];
                                         angular.forEach(tab.form.fields, function (field, index) {
                                             //vm.model[field.id] = field.value();
                                             //field.error = 1;
-                                            alert(field.class);
+                                            field.formControl.$setValidity('server', false);
+                                            //alert(field.class);
                                         })
                                     });
                                 //}
