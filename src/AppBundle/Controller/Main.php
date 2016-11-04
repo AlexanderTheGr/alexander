@@ -446,7 +446,7 @@ class Main extends Controller {
     }
 
     function getDFormFields($entity, $fields, $id = '') {
-
+        echo 1;
         $forms["type"] = 'div';
         foreach ($fields as $field => $options) {
             $formsint = array();
@@ -477,6 +477,7 @@ class Main extends Controller {
     }
 
     function getFormLyFields($entity, $fields, $id = '') {
+        echo 2;
         $forms["model"] = array();
         $forms["id"] = $id;
         $em = $this->getDoctrine()->getManager();
