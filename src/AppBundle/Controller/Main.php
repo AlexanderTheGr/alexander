@@ -414,7 +414,7 @@ class Main extends Controller {
         }
         foreach ($entities as $key => $entity) {
             $entity->setModified($dt);
-            $this->flushpersist($entity);
+            $entity = $this->flushpersist($entity);
             $out[$key] = $entity->getId();
             $this->newentity[$key] = $entity;
         }
@@ -439,7 +439,7 @@ class Main extends Controller {
                         ->getRepository($this->repository)
                         ->findOneBy(array($attr=>$entity->getField($attr)));
             if (count($ent)) {
-                echo $ent->id;
+                return $ent;
             }
         }
         
