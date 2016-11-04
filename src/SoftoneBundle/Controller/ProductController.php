@@ -207,7 +207,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $erpCode = $this->clearCode($product->getSupplierCode())."-".$product->getSupplierId()->getCode();
         $product->setErpCode($erpCode);
         $product->setItemCode($product->getErpCode());
-        $product->save();
+        @$this->flushpersist($product);
         $product->updatetecdoc();
         $product->toSoftone();
         $json = json_encode(array("ok"));
