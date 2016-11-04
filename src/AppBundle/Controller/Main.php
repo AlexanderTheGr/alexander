@@ -494,7 +494,7 @@ class Main extends Controller {
                     $seloptions[] = array("name" => $data->getField($datasource['name']) . "(" . $data->getField($datasource['value']) . ")", "value" => $data->getField($datasource['value']));
                 }
                 $defaultValue = $entity->getField($field) ? $entity->getField($field)->getId() : NULL;
-                @$forms["fields"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'defaultValue' => $defaultValue, "type" => "select", "templateOptions" => array("type" => '', 'options' => $seloptions, 'defaultOptions' => array("value" => $defaultValue), "label" => $options["label"], "required" => $options["required"]));
+                @$forms["fields"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'defaultValue' => $defaultValue, "type" => "select", "templateOptions" => array("type" => '', 'options' => $seloptions, 'defaultOptions' => array("value" => $defaultValue), "label" => $options["label"], "required" => 0/*$options["required"]*/));
             } else {
 
                 //echo "A".@$options["required"]."<BR>";
@@ -505,7 +505,7 @@ class Main extends Controller {
                     $options["required"] = false;
                 }
                 //@$options["required"] = $options["required"] != '' ? $options["required"] > 0 ? true : false : true;
-                @$forms["fields"][] = array("key" => $field, "className" => (string)$options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field), "type" => "input", "templateOptions" => array("type" => '', 'class' => '', "label" => $options["label"], "required" => $options["required"]));
+                @$forms["fields"][] = array("key" => $field, "className" => (string)$options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field), "type" => "input", "templateOptions" => array("type" => '', 'class' => '', "label" => $options["label"], "required" => 0/*$options["required"]*/));
             }
         }
         return $forms;
