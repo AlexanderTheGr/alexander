@@ -336,17 +336,17 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $entity = new Product;
         }
         $entity->updatetecdoc();
-        $fields["title"] = array("label" => "Title");
-        $fields["erpCode"] = array("label" => "Erp Code");
+        $fields["title"] = array("label" => "Title", "required"=>true);
+        $fields["erpCode"] = array("label" => "Erp Code", "required"=>true);
         
-        $fields["tecdocCode"] = array("label" => "Tecdoc Code");
-        $fields["tecdocSupplierId"] = array("label" => "Tecdoc Supplier", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:TecdocSupplier', 'name' => 'supplier', 'value' => 'id'));
+        $fields["tecdocCode"] = array("label" => "Tecdoc Code", "required"=>true);
+        $fields["tecdocSupplierId"] = array("label" => "Tecdoc Supplier", "required"=>true, 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:TecdocSupplier', 'name' => 'supplier', 'value' => 'id'));
                 
         $fields["supplierCode"] = array("label" => "Supplier Code");
-        $fields["supplierId"] = array("label" => "Supplier", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id'));
+        $fields["supplierId"] = array("label" => "Supplier", 'type' => "select", "required"=>true, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id'));
                 
-        $fields["itemPricew"] = array("label" => "Wholesale Price");
-        $fields["itemPricer"] = array("label" => "Retail Price");
+        $fields["itemPricew"] = array("label" => "Wholesale Price", "required"=>true);
+        $fields["itemPricer"] = array("label" => "Retail Price", "required"=>true);
 
         $forms = $this->getFormLyFields($entity, $fields);
 
@@ -354,7 +354,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository('SoftoneBundle:Product')
                 ->find($id);
         $entity2->setReference("");
-        $fields2["reference"] = array("label" => "Erp Code", "required"=>0, "className" => "synafiacode");
+        $fields2["reference"] = array("label" => "Erp Code", "className" => "synafiacode");
         $forms2 = $this->getFormLyFields($entity2, $fields2);
 
         $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
