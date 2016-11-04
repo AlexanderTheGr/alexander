@@ -203,6 +203,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $product = $this->getDoctrine()
             ->getRepository($this->repository)
             ->find($entities[$this->repository]);
+        
+        $erpCode = $this->clearCode($product->getSupplierCode())."-".$product->getSupplierId()->getCode();
+        $product->setErpCode($erpCode);
+        $product->setItemCode($product->getErpCode());
+        $product->save();
         $product->updatetecdoc();
         $product->toSoftone();
         $json = json_encode(array("ok"));
