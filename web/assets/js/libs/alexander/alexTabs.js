@@ -52,7 +52,7 @@ var dt_tables = [];
                                         //field.error = 1;
                                         angular.forEach(response.unique, function (unique) {
                                             if (field.id == unique) {
-                                                field.formControl.$setValidity('server', true);
+                                                field.formControl.$setValidity('server', false);
                                             }
                                         })
                                         //alert(field.class);
@@ -65,12 +65,12 @@ var dt_tables = [];
                 setTimeout(function () {
                     forEach(vm.tabs)
                     forEach(vm.offcanvases)
-
                 }, 30)
                 function invokeOnAllFormOptions(fn) {
                     angular.forEach(vm.tabs, function (tab) {
                         angular.forEach(tab.form.fields, function (field, index) {
                             //vm.model[field.id] = field.value();
+                            field.formControl.$setValidity('server', true);
                             vm.model[$base64.encode(unescape(encodeURIComponent(field.id)))] = $base64.encode(unescape(encodeURIComponent(field.value())));
                         })
                         if (tab.form.options && tab.form.options[fn]) {
