@@ -170,7 +170,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //$product->toSoftone();
         //exit;
         $content = $this->gettabs($id);
-        
+
         //$content = $this->getoffcanvases($id);
         $content = $this->content();
         return $this->render('SoftoneBundle:Product:view.html.twig', array(
@@ -197,8 +197,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     /**
-    * @Route("/product/save")
-    */
+     * @Route("/product/save")
+     */
     public function savection() {
         $entities = $this->save();
 
@@ -209,12 +209,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $erpCode = $this->clearCode($product->getSupplierCode()) . "-" . $product->getSupplierId()->getCode();
         $product->setErpCode($erpCode);
-        
+
         $product->setItemCode($product->getErpCode());
         $product->setItemMtrmanfctr($product->getTecdocSupplierId()->getId());
         $product->setItemMtrmark($product->getSupplierId()->getId());
         $product->setItemApvcode($product->getTecdocCode());
-        
+
         @$this->flushpersist($product);
         $product->updatetecdoc();
         $product->toSoftone();
@@ -359,30 +359,31 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $forms = $this->getFormLyFields($entity, $fields);
 
-        $entity2 = $this->getDoctrine()
-                ->getRepository('SoftoneBundle:Product')
-                ->find($id);
-        $entity2->setReference("");
-        $fields2["reference"] = array("label" => "Erp Code", "className" => "synafiacode");
-        $forms2 = $this->getFormLyFields($entity2, $fields2);
+        if ($id > 0 AND count($entity) > 0) {
+            $entity2 = $this->getDoctrine()
+                    ->getRepository('SoftoneBundle:Product')
+                    ->find($id);
+            $entity2->setReference("");
+            $fields2["reference"] = array("label" => "Erp Code", "className" => "synafiacode");
+            $forms2 = $this->getFormLyFields($entity2, $fields2);
 
-        $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
-        $dtparams[] = array("name" => "Title", "index" => 'title');
-        $dtparams[] = array("name" => "Code", "index" => 'erpCode');
-        $dtparams[] = array("name" => "Price", "index" => 'itemPricew01');
-
-        $params['dtparams'] = $dtparams;
-        $params['id'] = $dtparams;
-        $params['url'] = '/product/getrelation/' . $id;
-        $params['key'] = 'gettabs_' . $id;
-        $params["ctrl"] = 'ctrlgettabs';
-        $params["app"] = 'appgettabs';
-        $datatables[] = $this->contentDatatable($params);
-
+            $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
+            $dtparams[] = array("name" => "Title", "index" => 'title');
+            $dtparams[] = array("name" => "Code", "index" => 'erpCode');
+            $dtparams[] = array("name" => "Price", "index" => 'itemPricew01');
+            $params['dtparams'] = $dtparams;
+            $params['id'] = $dtparams;
+            $params['url'] = '/product/getrelation/' . $id;
+            $params['key'] = 'gettabs_' . $id;
+            $params["ctrl"] = 'ctrlgettabs';
+            $params["app"] = 'appgettabs';
+            $datatables[] = $this->contentDatatable($params);
+        }
 
 
         $tabs[] = array("title" => "General", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
-        $tabs[] = array("title" => "Retaltions", "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
+        if ($id > 0 AND count($entity) > 0)
+            $tabs[] = array("title" => "Retaltions", "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
 
         foreach ($tabs as $tab) {
             $this->addTab($tab);
