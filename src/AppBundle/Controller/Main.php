@@ -439,7 +439,7 @@ class Main extends Controller {
                         ->getRepository($this->repository)
                         ->findOneBy(array($attr=>$entity->getField($attr)));
             if (count($ent)) {
-                return $ent;
+                $entity = $ent;
             }
         }
         
