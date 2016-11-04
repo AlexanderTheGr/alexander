@@ -395,7 +395,7 @@ class Main extends Controller {
                         ->getRepository($df[0] . ":" . $df[1])
                         ->find($df[3]);
             }
-            if ((int)$df[3] == 0) {
+            if ((int) $df[3] == 0) {
                 $entities[$df[0] . ":" . $df[1]] = $this->newentity[$df[0] . ":" . $df[1]];
             }
 
@@ -433,16 +433,20 @@ class Main extends Controller {
 
     function flushpersist($entity) {
         $em = $this->getDoctrine()->getManager();
-        foreach($entity->uniques as $attr) {
+        $this->error[$this->repository] = array();
+        foreach ($entity->uniques as $attr) {
             $ent = $this->getDoctrine()
-                        ->getRepository($this->repository)
-                        ->findOneBy(array($attr=>$entity->getField($attr)));
+                    ->getRepository($this->repository)
+                    ->findOneBy(array($attr => $entity->getField($attr)));
             if (count($ent)) {
                 $this->error[$this->repository][$attr] = 1;
             }
         }
-        $em->persist($entity);
-        $em->flush();
+        if (!count($this->error[$this->repository])) {
+            $em->persist($entity);
+            $em->flush();
+        }
+
         return $entity;
     }
 
