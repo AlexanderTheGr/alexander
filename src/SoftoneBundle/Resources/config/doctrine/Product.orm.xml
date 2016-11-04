@@ -17,7 +17,10 @@
             <index name="tecdoc_code" columns="tecdoc_code"/>
               
         </indexes>
-
+        <unique-constraints>
+            <unique-constraint name="item_code" columns="item_code"/>
+            <unique-constraint name="erp_code" columns="erp_code"/>
+        </unique-constraints>
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
         </id>
@@ -106,7 +109,7 @@
                 <option name="fixed"/>
             </options>
         </field>
-         <field name="itemMtrmark" type="integer" column="item_mtrmark" nullable="true">
+        <field name="itemMtrmark" type="integer" column="item_mtrmark" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
@@ -222,7 +225,9 @@
             target-entity="TecdocSupplier"
             inversed-by="TecdocSuppliers"
             join-column="tecdoc_supplier_id">
-            <cascade><cascade-remove /></cascade>
+            <cascade>
+                <cascade-remove />
+            </cascade>
             <join-column name="tecdoc_supplier_id" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>            
         </many-to-one> 
          
@@ -231,7 +236,9 @@
             target-entity="SoftoneSupplier"
             inversed-by="SoftoneSuppliers"
             join-column="supplier_id">
-            <cascade><cascade-remove /></cascade>
+            <cascade>
+                <cascade-remove />
+            </cascade>
             <join-column name="supplier_id" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>            
         </many-to-one>          
 
