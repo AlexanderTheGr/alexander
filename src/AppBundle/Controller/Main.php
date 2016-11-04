@@ -483,6 +483,7 @@ class Main extends Controller {
         foreach ($fields as $field => $options) {
 
             @$options["type"] = $options["type"] ? $options["type"] : "input";
+            $options["required"] = false;
             if ($options["type"] == 'select') {
                 @$options["required"] = $options["required"] ? $options["required"] : true;
                 $datasource = $options["datasource"];
