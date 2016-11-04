@@ -52,7 +52,7 @@ var dt_tables = [];
                                         //field.error = 1;
                                         angular.forEach(response.unique, function (unique) {
                                             if (field.id == unique) {
-                                                field.formControl.$setValidity('server', false);
+                                                field.formControl.$setValidity('server', true);
                                             }
                                         })
                                         //alert(field.class);
