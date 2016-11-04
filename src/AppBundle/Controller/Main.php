@@ -396,9 +396,13 @@ class Main extends Controller {
                         ->find($df[3]);
             }
             if ((int)$df[3] == 0) {
+                $entity = new $df[1];
+                $this->newentity[$df[0] . ":" . $df[1]] = $entity;
+                $this->initialazeNewEntity($entity);
+                @$this->newentity[$df[0] . ":" . $df[1]]->setField("status", 1);
                 $entities[$df[0] . ":" . $df[1]] = $this->newentity[$df[0] . ":" . $df[1]];
             }
-            echo $df[0] . ":" . $df[1];
+
             $type = $entities[$df[0] . ":" . $df[1]]->gettype($df[2]);
             if ($type == 'object') {
                 $obj = $entities[$df[0] . ":" . $df[1]]->getField($df[2]);
