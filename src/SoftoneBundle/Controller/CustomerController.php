@@ -128,11 +128,11 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         }
         
 
-        $fields["customerCode"] = array("label" => "Customer Code");
-        $fields["customerName"] = array("label" => "Customer Name");
-        $fields["customerAfm"] = array("label" => "Customer Afm");
-        $fields["customerAddress"] = array("label" => "Customer Address");
-        $fields["customerCity"] = array("label" => "Customer City");
+        $fields["customerCode"] = array("label" => "Customer Code", "required" => true);
+        $fields["customerName"] = array("label" => "Customer Name", "required" => true);
+        $fields["customerAfm"] = array("label" => "Customer Afm", "required" => true);
+        $fields["customerAddress"] = array("label" => "Customer Address", "required" => true);
+        $fields["customerCity"] = array("label" => "Customer City", "required" => true);
 
         $forms = $this->getFormLyFields($entity, $fields);
         $this->addTab(array("title" => "General1", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));

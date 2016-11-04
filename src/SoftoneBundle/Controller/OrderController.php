@@ -140,8 +140,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $entity->setField("fincode", str_pad($fincode, 7, "0", STR_PAD_LEFT));
             $fincode++;
             $this->setSetting("SoftoneBundle:Order:fincode", $fincode);
-            $fields["customerName"] = array("label" => "Customer Name", 'class' => 'asdfg');
-            $fields["fincode"] = array("label" => "Code", 'class' => 'asdfg');
+            $fields["customerName"] = array("label" => "Customer Name", "required" => true, 'className' => 'asdfg');
+            $fields["fincode"] = array("label" => "Code", "required" => true, 'className' => 'asdfg');
         } else {
             if ($entity->getFincode() == '') {
                 $fincode = (int) $this->getSetting("SoftoneBundle:Order:fincode");
@@ -149,10 +149,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $fincode++;
                 $this->setSetting("SoftoneBundle:Order:fincode", $fincode);
             }
-            $fields["fincode"] = array("label" => "Code", 'class' => 'asdfg');
-            $fields["customerName"] = array("label" => "Customer Name", 'class' => 'asdfg');
-            $fields["route"] = array("label" => "Route", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Route', 'name' => 'route', 'value' => 'id'));
-            $fields["vat"] = array("label" => "Vat", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Vat', 'name' => 'vat', 'value' => 'id'));
+            $fields["fincode"] = array("label" => "Code", 'className' => 'asdfg', "required" => true);
+            $fields["customerName"] = array("label" => "Customer Name", "required" => true, 'className' => 'asdfg');
+            $fields["route"] = array("label" => "Route", "required" => true, 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Route', 'name' => 'route', 'value' => 'id'));
+            $fields["vat"] = array("label" => "Vat", "required" => true, 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Vat', 'name' => 'vat', 'value' => 'id'));
         }
 
         $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");

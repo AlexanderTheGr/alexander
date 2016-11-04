@@ -164,10 +164,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository($this->repository)
                 ->find($id);
 
-        $product->updatetecdoc();
+        if ($id > 0 AND count($product) > 0) {
+            $product->updatetecdoc();
+        }
         //$product->toSoftone();
         //exit;
         $content = $this->gettabs($id);
+        
         //$content = $this->getoffcanvases($id);
         $content = $this->content();
         return $this->render('SoftoneBundle:Product:view.html.twig', array(
@@ -194,8 +197,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     /**
-     * @Route("/product/save")
-     */
+    * @Route("/product/save")
+    */
     public function savection() {
         $entities = $this->save();
 
