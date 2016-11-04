@@ -200,9 +200,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/product/save")
      */
     public function savection() {
+        
+        $product = new Product;
+        $this->newentity[$this->repository] = $product;
+        $this->initialazeNewEntity($product);
+        @$this->newentity[$this->repository]->setField("status", 1);
+        
+        
         $entities = $this->save();
-
-
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($entities[$this->repository]);
