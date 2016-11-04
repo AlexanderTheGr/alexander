@@ -485,7 +485,7 @@ class Main extends Controller {
 
             @$options["type"] = $options["type"] ? $options["type"] : "input";
             //$options["required"] = 0;
-            echo @$options["required"]." ".$options["className"]."<BR>";
+            
             if (@$options["required"] == '') {
                 $options["required"] = 1;
             }            
@@ -506,7 +506,7 @@ class Main extends Controller {
                 }
                  * 
                  */
-                
+                echo @$options["required"]." ".$options["className"]."<BR>";
                 @$forms["fields"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'defaultValue' => $defaultValue, "type" => "select", "templateOptions" => array("type" => '', 'options' => $seloptions, 'defaultOptions' => array("value" => $defaultValue), "label" => $options["label"], "required" => $options["required"]));
             } else {
 
