@@ -432,11 +432,11 @@ class Main extends Controller {
     }
 
     function flushpersist($entity) {
-
-
         $em = $this->getDoctrine()->getManager();
+        
+        print_r($entity->uniques);
+        
         $em->persist($entity);
-        $em->merge($entity);
         $em->flush();
         return $entity;
     }

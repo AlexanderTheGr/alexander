@@ -16,6 +16,7 @@ use SoftoneBundle\Entity\TecdocSupplier as TecdocSupplier;
 class Product extends Entity {
 
     var $repositories = array();
+    var $uniques = array();
 
     public function __construct() {
         $this->setRepositories();
@@ -36,6 +37,9 @@ class Product extends Entity {
         $this->repositories['tecdocSupplierId'] = 'SoftoneBundle:SoftoneSupplier';
         $this->types['tecdocSupplierId'] = 'object';
         $this->types['supplierId'] = 'object';
+        
+        $this->uniques = array("erpCode","itemCode");
+        
         //$this->tecdocSupplierId = new \SoftoneBundle\Entity\TecdocSupplier;
     }
 

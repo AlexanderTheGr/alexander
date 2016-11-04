@@ -206,8 +206,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $this->initialazeNewEntity($product);
         @$this->newentity[$this->repository]->setField("status", 1);
         
-        
         $entities = $this->save();
+        
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($entities[$this->repository]);

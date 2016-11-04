@@ -14,6 +14,7 @@ class Entity {
 
     private $types = array();
     private $repositories = array();
+    var $uniques = array();
 
     public function getField($field) {
         return $this->$field;
