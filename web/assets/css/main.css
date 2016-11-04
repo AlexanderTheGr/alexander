@@ -75,6 +75,10 @@
     opacity: 0.5;
     margin-top: -4px;
 }
+.form-group div {
+    width:100%;
+    flaot:left;
+}
 table.dataTable tbody tr {
     background-color: transparent;
     cursor: pointer;
