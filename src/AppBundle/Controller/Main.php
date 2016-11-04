@@ -485,6 +485,7 @@ class Main extends Controller {
 
             @$options["type"] = $options["type"] ? $options["type"] : "input";
             //$options["required"] = 0;
+            echo @$options["required"]."<BR>";
             if (@$options["required"] == '') {
                 $options["required"] = 1;
             }            
