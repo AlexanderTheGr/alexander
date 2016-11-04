@@ -46,15 +46,18 @@ var dt_tables = [];
                                     location.href = response.returnurl;
                                 }
                                 //if (response.unique) {
-                                    angular.forEach(vm.tabs, function (tab) {
-                                        angular.forEach(tab.form.fields, function (field, index) {
-                                            //vm.model[field.id] = field.value();
-                                            //field.error = 1;
-                                            field.formControl.$setValidity('server', false);
-                                            field.formControl.$error.server = 'sddd';
-                                            //alert(field.class);
+                                angular.forEach(vm.tabs, function (tab) {
+                                    angular.forEach(tab.form.fields, function (field, index) {
+                                        //vm.model[field.id] = field.value();
+                                        //field.error = 1;
+                                        angular.forEach(response.unique, function (unique) {
+                                            if (field.id == unique) {
+                                                field.formControl.$setValidity('server', false);
+                                            }
                                         })
-                                    });
+                                        //alert(field.class);
+                                    })
+                                });
                                 //}
                             })
                 }
