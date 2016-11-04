@@ -199,11 +199,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     public function savection() {
         $entities = $this->save();
         
-        print_r($entities);
-        
+
+        $product = $this->getDoctrine()
+            ->getRepository($this->repository)
+            ->find($entities[$this->repository]);
+        $product->updatetecdoc();
+        $product->toSoftone();
         $json = json_encode(array("ok"));
-        
-        //$entity->updatetecdoc();
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
