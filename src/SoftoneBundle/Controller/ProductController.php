@@ -354,7 +354,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository('SoftoneBundle:Product')
                 ->find($id);
         $entity2->setReference("");
-        $fields2["reference"] = array("label" => "Erp Code", "required"=>"0", "className" => "synafiacode");
+        $fields2["reference"] = array("label" => "Erp Code", "required"=>0, "className" => "synafiacode");
         $forms2 = $this->getFormLyFields($entity2, $fields2);
 
         $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
