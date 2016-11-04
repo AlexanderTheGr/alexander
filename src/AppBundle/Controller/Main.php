@@ -487,7 +487,7 @@ class Main extends Controller {
             //$options["required"] = 0;
             
             if (@$options["required"] == "") {
-                $options["required"] = 0;
+                $options["required"] = false;
             }            
             if ($options["type"] == 'select') {
                 //@$options["required"] = $options["required"] ? $options["required"] : true;
@@ -507,7 +507,7 @@ class Main extends Controller {
                  * 
                  */
                 
-                @$forms["fields"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'defaultValue' => $defaultValue, "type" => "select", "templateOptions" => array("type" => '', 'options' => $seloptions, 'defaultOptions' => array("value" => $defaultValue), "label" => $options["label"], "required" => (int)$options["required"]));
+                @$forms["fields"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'defaultValue' => $defaultValue, "type" => "select", "templateOptions" => array("type" => '', 'options' => $seloptions, 'defaultOptions' => array("value" => $defaultValue), "label" => $options["label"], "required" => $options["required"]));
             } else {
 
                 //echo "A".@$options["required"]."<BR>";
@@ -521,7 +521,7 @@ class Main extends Controller {
                  */
                 //@$options["required"] = $options["required"] != '' ? $options["required"] > 0 ? true : false : true;
                 //echo @$options["required"]." ".$options["className"]."<BR>";
-                @$forms["fields"][] = array("key" => $field, "className" => (string)$options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field), "type" => "input", "templateOptions" => array("type" => '', 'class' => '', "label" => $options["label"], "required" => (int)$options["required"]));
+                @$forms["fields"][] = array("key" => $field, "className" => (string)$options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field), "type" => "input", "templateOptions" => array("type" => '', 'class' => '', "label" => $options["label"], "required" => $options["required"]));
             }
         }
         return $forms;
