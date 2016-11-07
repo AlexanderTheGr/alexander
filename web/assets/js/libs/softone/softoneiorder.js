@@ -2,7 +2,7 @@ var b = false;
 var orderid = 0;
 jQuery('#productfreesearch').live("keyup", function (e) {
     if (e.keyCode == 13) {
-        var search = "productfreesearch:"+jQuery('#productitem').val();
+        var search = "productfreesearch:"+jQuery('#productfreesearch').val();
         asdf(this,search);
         var t = $(this).val();
         jQuery('#productfreesearch').val("");
