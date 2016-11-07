@@ -338,7 +338,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $likearr[] = "o.dataIndex like '%" . $d . "%'";
                 }
                 $like = implode(" AND ", $likearr);
-                $sqlFreesearch = "Select o.id from SoftoneBundle:ProductFreesearch where " . $like . "";
+                $sqlFreesearch = "Select o.id from SoftoneBundle:ProductFreesearch o where " . $like . "";
 
                 
 
