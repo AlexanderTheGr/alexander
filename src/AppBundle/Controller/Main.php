@@ -500,7 +500,10 @@ class Main extends Controller {
             @$options["type"] = $options["type"] ? $options["type"] : "input";
             //$options["required"] = 0;
 
-            if (@$options["required"] == "") {
+            if (@$options["className"] == "") {
+                $options["className"] = 'col-md-12';
+            }
+            if (@$options["required"] == "") {    
                 $options["required"] = false;
             }
             if ($options["type"] == 'select') {
