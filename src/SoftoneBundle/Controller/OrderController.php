@@ -382,7 +382,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 where p.id in ('.$sqlFreesearch.')';
                 }
 
-
+                echo $sql;
+                //exit;
 
 
                 $query = $em->createQuery(
