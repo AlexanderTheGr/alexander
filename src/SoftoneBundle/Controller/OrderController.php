@@ -333,7 +333,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 */
 
 
-                $garr = explode(" ", $dt_search["search"]["value"]);
+                $garr = explode(" ", $dt_search["value"]);
                 foreach ($garr as $d) {
                     $likearr[] = "o.dataIndex like '%" . $d . "%'";
                 }
