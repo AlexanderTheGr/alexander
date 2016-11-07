@@ -368,8 +368,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         
         $fields["itemPricew"] = array("label" => "Wholesale Price","className"=>"col-md-3","required" => true);
         $fields["itemPricer"] = array("label" => "Retail Price","className"=>"col-md-3", "required" => true);
+        
         $fields["itemMarkupw"] = array("label" => "Wholesale Markup","className"=>"col-md-3","required" => true);
-        $fields["itemMarkupw"] = array("label" => "Retail Markup","className"=>"col-md-3", "required" => true);
+        $fields["itemMarkupr"] = array("label" => "Retail Markup","className"=>"col-md-3", "required" => true);
         
         $forms = $this->getFormLyFields($entity, $fields);
 
