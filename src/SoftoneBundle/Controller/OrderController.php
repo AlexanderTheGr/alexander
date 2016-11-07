@@ -153,7 +153,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $fields["fincode"] = array("label" => "Code", 'className' => 'asdfg', "required" => true);
             $fields["customerName"] = array("label" => "Customer Name", "required" => true, 'className' => 'asdfg');
             $fields["route"] = array("label" => "Route", "required" => true, 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Route', 'name' => 'route', 'value' => 'id'));
-            $fields["vat"] = array("label" => "Vat", "required" => true, 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Vat', 'name' => 'vat', 'value' => 'id'));
+            //$fields["vat"] = array("label" => "Vat", "required" => true, 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Vat', 'name' => 'vat', 'value' => 'id'));
         }
 
         $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
