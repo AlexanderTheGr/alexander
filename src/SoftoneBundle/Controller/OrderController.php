@@ -340,7 +340,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $like = implode(" AND ", $likearr);
                 $sqlFreesearch = "Select o.id from SoftoneBundle:ProductFreesearch where " . $like . " limit 0,50";
 
-
+                
 
                 //print_r($articleIds);
                 $this->prefix = "po";
@@ -383,8 +383,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 ORDER BY ' . $this->orderBy;
                 }
 
-                //echo $sql;
-                //exit;
+                echo $sql;
+                exit;
 
 
                 $query = $em->createQuery(
