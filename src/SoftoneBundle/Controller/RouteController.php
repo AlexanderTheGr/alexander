@@ -56,7 +56,7 @@ class RouteController extends \SoftoneBundle\Controller\SoftoneController  {
     public function saveAction() {
         $entity = new \SoftoneBundle\Entity\Route;
         $this->initialazeNewEntity($entity);
-        $this->newentity[$this->repository]->setField("status", 1);
+        //$this->newentity[$this->repository]->setField("status", 1);
         $out = $this->save();
         $jsonarr = array();
         if ($this->newentity[$this->repository]->getId()) {
