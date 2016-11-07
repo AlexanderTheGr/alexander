@@ -332,14 +332,20 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 }
                 
 
-
-                $garr = explode(" ", $dt_search["value"]);
-                foreach ($garr as $d) {
-                    $likearr[] = "o.dataIndex like '%" . $d . "%'";
+                $search = $dt_search["value"];   
+               
+                $search = explode(":", $dt_search["value"]);
+                
+                if ($search[0] == 'productfreesearch') {
+                    $garr = explode(" ", $search[1]);
+                    foreach ($garr as $d) {
+                        $likearr[] = "o.dataIndex like '%" . $d . "%'";
+                    }
+                    $like = implode(" AND ", $likearr);
+                    $sqlearch = "Select o.id from SoftoneBundle:ProductFreesearch o where " . $like . "";
+                } else {
+                    $sqlearch = "Select o.id from SoftoneBundle:ProductSearch o where itemCode='" . $search[1] . "' OR itemCode1='" . $search[1]. "' OR itemCode2='" . $search[1] . "'";
                 }
-                $like = implode(" AND ", $likearr);
-                $sqlFreesearch = "Select o.id from SoftoneBundle:ProductFreesearch o where " . $like . "";
-
                 
 
                 //print_r($articleIds);
@@ -379,7 +385,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 } else {
                     $sql = 'SELECT  ' . $this->select . ', p.reference
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where ' . $this->prefix .'.id in ('.$sqlFreesearch.') 
+                                where ' . $this->prefix .'.id in ('.$sqlearch.') 
                                 ORDER BY ' . $this->orderBy;
                 }
 
