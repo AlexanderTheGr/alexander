@@ -389,7 +389,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 ORDER BY ' . $this->orderBy;
                 }
 
-                echo $sql;
+                //echo $sql;
                 //exit;
 
 
