@@ -2329,6 +2329,8 @@ class Product extends Entity {
         $dataindex = addslashes(implode("|", $data_index));
         $sql = "replace softone_product_freesearch set id = '" . $this->id . "', data_index='" . $dataindex . "'";
         $em->getConnection()->exec($sql);
+        $sql = "replace softone_product_search set id = '" . $this->id . "',item_code='" . $this->itemCode . "',item_code1='" . $this->itemCode1 . "',item_code2='" . $this->supplierCode . "'";
+        $em->getConnection()->exec($sql);        
     }
 
 }
