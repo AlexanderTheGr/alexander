@@ -438,7 +438,7 @@ class Main extends Controller {
         $em = $this->getDoctrine()->getManager();
         //$this->error[$this->repository] = array();
         $asd = $entity;
-        foreach ($entity->uniques as $attr) {
+        foreach ((array)$entity->uniques as $attr) {
             $ent = $this->getDoctrine()
                     ->getRepository($this->repository)
                     ->findOneBy(array($attr => $entity->getField($attr)));
