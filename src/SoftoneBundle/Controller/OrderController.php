@@ -58,7 +58,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function saveAction() {
         $entity = new Order;
-        echo $this->repository;
+        $this->newentity[$this->repository] = $entity;
         $this->initialazeNewEntity($entity);
         $this->newentity[$this->repository]->setField("status", 1);
         //$this->newentity[$this->repository]->setField("route", 0);
