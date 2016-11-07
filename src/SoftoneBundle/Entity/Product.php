@@ -2243,4 +2243,33 @@ class Product extends Entity {
     {
         return $this->supplierId;
     }
+    /**
+     * @var string
+     */
+    private $itemMarkupr;
+
+
+    /**
+     * Set itemMarkupr
+     *
+     * @param string $itemMarkupr
+     *
+     * @return Product
+     */
+    public function setItemMarkupr($itemMarkupr)
+    {
+        $this->itemMarkupr = $itemMarkupr;
+
+        return $this;
+    }
+
+    /**
+     * Get itemMarkupr
+     *
+     * @return string
+     */
+    public function getItemMarkupr()
+    {
+        return $this->itemMarkupr;
+    }
 }
