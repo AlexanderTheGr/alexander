@@ -888,8 +888,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $data = json_decode($this->datatable());
         $total = 0;
         foreach ($data->data as $item) {
-            $of = "7";
-            ;
+            $of = "8";
             $total += $item->$of;
         }
         $json[0] = "";
@@ -898,9 +897,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $json[3] = "";
         $json[4] = "";
         $json[5] = "";
-        $json[5] = "aas";
-        $json[6] = "Total";
-        $json[7] = $total;
+        $json[6] = "";
+        $json[7] = "Total";
+        $json[8] = $total;
 
         $data->data[] = $json;
         return json_encode($data);
