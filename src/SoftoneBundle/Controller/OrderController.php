@@ -157,6 +157,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
         $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
         $dtparams[] = array("name" => "Product", "index" => 'product:title');
+        $dtparams[] = array("name" => "Erp Code", "index" => 'product:erpCode');
         $dtparams[] = array("name" => "Rafi", "index" => 'product:rafi1');
         $dtparams[] = array("name" => "Supplier", "index" => 'product:erpSupplier');
         $dtparams[] = array("name" => "Qty", "input" => "text", "index" => 'qty');
@@ -213,9 +214,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $params["app"] = 'appgetoffcanvases';
         $params["drawCallback"] = 'fororder(' . $id . ')';
         $datatables[] = $this->contentDatatable($params);
-
-
-
 
 
         $dtparams = array();
