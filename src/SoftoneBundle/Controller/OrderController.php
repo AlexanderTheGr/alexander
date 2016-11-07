@@ -338,7 +338,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $likearr[] = "o.dataIndex like '%" . $d . "%'";
                 }
                 $like = implode(" AND ", $likearr);
-                $sqlFreesearch = "Select o.id from SoftoneBundle:ProductFreesearch where " . $like . " limit 0,50";
+                $sqlFreesearch = "Select o.id from SoftoneBundle:ProductFreesearch where " . $like . "";
 
                 
 
@@ -379,12 +379,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 } else {
                     $sql = 'SELECT  ' . $this->select . ', p.reference
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where p.id in ('.$sqlFreesearch.') 
-                                ORDER BY ' . $this->orderBy;
+                                where p.id in ('.$sqlFreesearch.')';
                 }
 
-                echo $sql;
-                exit;
+
 
 
                 $query = $em->createQuery(
