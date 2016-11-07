@@ -117,6 +117,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         @$this->flushpersist($product);
 
         $product->updatetecdoc();
+        $product->setProductFreesearch();
         $product->toSoftone();
 
         $json = json_encode(array("error" => 0, "id" => (int) $product->id, 'returnurl' => '/product/view/' . (int) $product->id));
@@ -166,6 +167,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         if ($id > 0 AND count($product) > 0) {
             $product->updatetecdoc();
+            $product->setProductFreesearch();
         }
         //$product->toSoftone();
         //exit;
