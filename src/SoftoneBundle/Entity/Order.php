@@ -20,6 +20,7 @@ class Order extends Entity {
     
     private $types = array();
     var $repositories = array();
+    var $uniques = array();
 
     public function __construct() {
         $this->repositories['route'] = 'SoftoneBundle:Route';
