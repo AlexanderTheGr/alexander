@@ -2,9 +2,11 @@ var b = false;
 var orderid = 0;
 jQuery('#productfreesearch').live("keyup", function (e) {
     if (e.keyCode == 13) {
-        asdf(this);
+        var search = "productfreesearch:"+jQuery('#productitem').val();
+        asdf(this,search);
         var t = $(this).val();
         jQuery('#productfreesearch').val("");
+        jQuery('#productitem').val("");
         jQuery(".brand-select").val(0);
         jQuery(".brand-select").change();
         $(this).val(t);
@@ -14,6 +16,23 @@ jQuery('#productfreesearch').live("keyup", function (e) {
 
     }
 });
+jQuery('#productitem').live("keyup", function (e) {
+    if (e.keyCode == 13) {
+        var search = "productitem:"+jQuery('#productitem').val();
+        asdf(this,search);
+        var t = $(this).val();
+        jQuery('#productfreesearch').val("");
+        jQuery('#productitem').val("");
+        jQuery(".brand-select").val(0);
+        jQuery(".brand-select").change();
+        $(this).val(t);
+        jQuery(".brand-select").trigger("chosen:updated")
+        jQuery(".brand_model-select").trigger("chosen:updated");
+        jQuery(".brand_model_type-select").trigger("chosen:updated");
+
+    }
+});
+
 
 toastr.options = {
     "closeButton": false,
@@ -166,7 +185,7 @@ jQuery(".SoftoneBundleProductQty").live('keyup', function (e) {
         })
     }
 })
-function asdf(obj, filter, freesearch) {
+function asdf(obj, search) {
 
     var data = {}
     var title = 'Αναζήτηση για "' + $(obj).val() + '"';
@@ -190,7 +209,7 @@ function asdf(obj, filter, freesearch) {
 
 
     var table = dt_tables["ctrlgetoffcanvases"];
-    table.fnFilter(jQuery('#productfreesearch').val());
+    table.fnFilter(search);
     var table2 = dt_tables["ctrlgetoffcanvases2"];
     table2.fnFilter('');
     setTimeout(function () {
