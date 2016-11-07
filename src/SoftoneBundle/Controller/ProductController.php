@@ -359,13 +359,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $entity->updatetecdoc();
         $fields["title"] = array("label" => "Title", "required" => true, "className"=>"col-md-6 col-sm-6");
         $fields["erpCode"] = array("label" => "Erp Code", "required" => true, "className"=>"col-md-6 col-sm-6");
-
-        $fields["tecdocCode"] = array("label" => "Tecdoc Code", "required" => true,"className"=>"col-md-6");
+        
         $fields["tecdocSupplierId"] = array("label" => "Tecdoc Supplier", "required" => true,"className"=>"col-md-6", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:TecdocSupplier', 'name' => 'supplier', 'value' => 'id'));
-
-        $fields["supplierCode"] = array("label" => "Supplier Code","className"=>"col-md-6", "required" => true);
+        $fields["tecdocCode"] = array("label" => "Tecdoc Code", "required" => true,"className"=>"col-md-6");
+        
         $fields["supplierId"] = array("label" => "Supplier","className"=>"col-md-6", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id'));
-
+        $fields["supplierCode"] = array("label" => "Supplier Code","className"=>"col-md-6", "required" => true);
+        
         $fields["itemPricew"] = array("label" => "Wholesale Price","className"=>"col-md-6","required" => true);
         $fields["itemPricer"] = array("label" => "Retail Price","className"=>"col-md-6", "required" => true);
 
