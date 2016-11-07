@@ -301,7 +301,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                 $softone = new Softone();
                 $recordsTotal = $em->getRepository($this->repository)->recordsTotal();
-                /*
+                
                 foreach ($this->fields as $index => $field) {
                     if (@$field["index"]) {
                         $fields[] = $field["index"];
@@ -330,7 +330,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         }
                     }
                 }
-                */
+                
 
 
                 $garr = explode(" ", $dt_search["value"]);
@@ -391,7 +391,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 $sql
                         )
                         ->setMaxResults($request->request->get("length"))
-                        ->setFirstResult($request->request->get("start"));
+                        ->setFirstResult($request->request->get("start"))
+                        ;
 
                 /*
                   echo 'SELECT  ' . $this->select . ', p.reference
