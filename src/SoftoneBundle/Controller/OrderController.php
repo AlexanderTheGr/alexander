@@ -468,9 +468,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $json[] = "";
                 $json[] = "";
                 $json[] = "";
-                $json[] = "";    
-                $jsonarr[] = $json;
                 
+                $jsonarr[] = $json;
             }
             // print_r($p);
         }
