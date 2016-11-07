@@ -207,7 +207,6 @@ class Main extends Controller {
     function createOrderBy($fields, $dt_order) {
         $bundle = explode(":", $this->repository);
         $field_order = explode(":", $fields[$dt_order[0]["column"]]);
-        $this->orderBy = $this->prefix . '.id';
         if (count($field_order) > 1) {
             $em = $this->getDoctrine()->getManager();
             $query = $em->createQuery(
@@ -223,10 +222,12 @@ class Main extends Controller {
                 $fei = implode(",", $d);
             }
             $this->orderBy = "FIELD(" . $this->prefix . "." . $field_order[0] . "," . $fei . ")" . " " . $dt_order[0]["dir"] . ' '; //$this->prefix . '.' . $field_order[0] . ' ' . $dt_order[0]["dir"] . ' ';
-        } else {
+        } elseif ($field_order[0]) {
             $this->orderBy = $this->prefix . '.' . $field_order[0] . ' ' . $dt_order[0]["dir"] . ' ';
+        } else {
+            $this->orderBy = $this->prefix . '.id';
         }
-        return $this->orderBy = $this->orderBy ? $this->orderBy : $this->prefix . '.id';
+        return $this->orderBy;
     }
 
     function addField($field = array()) {
