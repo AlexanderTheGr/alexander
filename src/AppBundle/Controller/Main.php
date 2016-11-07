@@ -405,6 +405,8 @@ class Main extends Controller {
             if ($type == 'object') {
                 $obj = $entities[$df[0] . ":" . $df[1]]->getField($df[2]);
                 $repository = $entities[$df[0] . ":" . $df[1]]->getRepositories($df[2]);
+                
+                echo $repository."\n";
                 $entity = $this->getDoctrine()
                         ->getRepository($repository)
                         ->find($val);
