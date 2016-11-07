@@ -432,7 +432,7 @@ class Main extends Controller {
     }
 
     function flushpersist($entity) {
-        
+
         $em = $this->getDoctrine()->getManager();
         //$this->error[$this->repository] = array();
         $asd = $entity;
@@ -441,7 +441,7 @@ class Main extends Controller {
                     ->getRepository($this->repository)
                     ->findOneBy(array($attr => $entity->getField($attr)));
             if (count($ent)) {
-                $this->error[$this->repository][] = $this->repository.":".$attr.":".@$asd->id;
+                $this->error[$this->repository][] = $this->repository . ":" . $attr . ":" . @$asd->id;
                 $entity = $ent;
             }
         }
@@ -467,6 +467,9 @@ class Main extends Controller {
             $formsint["type"] = 'div';
             $formsint["class"] = 'form-group';
             @$options["type"] = $options["type"] ? $options["type"] : "input";
+            if (@$options["className"] == "") {
+                $options["className"] = 'col-md-12';
+            }
             if ($options["type"] == 'select') {
                 @$options["required"] = $options["required"] ? $options["required"] : true;
                 $datasource = $options["datasource"];
@@ -503,7 +506,7 @@ class Main extends Controller {
             if (@$options["className"] == "") {
                 $options["className"] = 'col-md-12';
             }
-            if (@$options["required"] == "") {    
+            if (@$options["required"] == "") {
                 $options["required"] = false;
             }
             if ($options["type"] == 'select') {
@@ -523,6 +526,7 @@ class Main extends Controller {
                   }
                  * 
                  */
+
 
                 @$forms["fields"][] = array("key" => $field, "className" => (string) $options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'defaultValue' => $defaultValue, "type" => "select", "templateOptions" => array("type" => '', 'options' => $seloptions, 'defaultOptions' => array("value" => $defaultValue), "label" => $options["label"], "required" => $options["required"]));
             } else {
