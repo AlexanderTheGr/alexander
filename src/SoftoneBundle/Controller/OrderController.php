@@ -379,7 +379,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 } else {
                     $sql = 'SELECT  ' . $this->select . ', p.reference
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where p.id in ('.$sqlFreesearch.') 
+                                where ' . $this->prefix .'.id in ('.$sqlFreesearch.') 
                                 ORDER BY ' . $this->orderBy;
                 }
 
