@@ -37,9 +37,9 @@ class Product extends Entity {
         $this->repositories['tecdocSupplierId'] = 'SoftoneBundle:SoftoneSupplier';
         $this->types['tecdocSupplierId'] = 'object';
         $this->types['supplierId'] = 'object';
-        
-        $this->uniques = array("erpCode","itemCode");
-        
+
+        $this->uniques = array("erpCode", "itemCode");
+
         //$this->tecdocSupplierId = new \SoftoneBundle\Entity\TecdocSupplier;
     }
 
@@ -1713,12 +1713,12 @@ class Product extends Entity {
     }
 
     function updatetecdoc() {
-        
+
         //$data = array("service" => "login", 'username' => 'dev', 'password' => 'dev', 'appId' => '2000');
         if ($this->getTecdocSupplierId() == null)
             return;
-        
-        
+
+
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
@@ -1743,15 +1743,13 @@ class Product extends Entity {
         curl_setopt($ch, CURLOPT_POST, count($fields));
         curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        
 
-        
+
+
         $out = json_decode(curl_exec($ch));
-        
-       // print_r($fields);
-        
+
+        // print_r($fields);
         //echo $out;
-        
         //echo 'sssssssssss';
         /*
           } else {
@@ -2219,7 +2217,6 @@ class Product extends Entity {
      */
     private $supplierId;
 
-
     /**
      * Set supplierId
      *
@@ -2227,8 +2224,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setSupplierId(\SoftoneBundle\Entity\SoftoneSupplier $supplierId = null)
-    {
+    public function setSupplierId(\SoftoneBundle\Entity\SoftoneSupplier $supplierId = null) {
         $this->supplierId = $supplierId;
 
         return $this;
@@ -2239,15 +2235,14 @@ class Product extends Entity {
      *
      * @return \SoftoneBundle\Entity\SoftoneSupplier
      */
-    public function getSupplierId()
-    {
+    public function getSupplierId() {
         return $this->supplierId;
     }
+
     /**
      * @var string
      */
     private $itemMarkupr;
-
 
     /**
      * Set itemMarkupr
@@ -2256,8 +2251,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setItemMarkupr($itemMarkupr)
-    {
+    public function setItemMarkupr($itemMarkupr) {
         $this->itemMarkupr = $itemMarkupr;
 
         return $this;
@@ -2268,8 +2262,73 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getItemMarkupr()
-    {
+    public function getItemMarkupr() {
         return $this->itemMarkupr;
     }
+
+    function setProductFreesearch() {
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $dataindexarr = array();
+
+        $dataindexarr[] = $this->itemCode;
+        $dataindexarr[] = $this->itemApvcode;
+        $dataindexarr[] = $this->itemCode1;
+        $dataindexarr[] = $this->itemCode2;
+
+
+        $dataindexarr[] = $this->title;
+        $dataindexarr[] = $this->itemName;
+        $dataindexarr[] = $this->itemName1;
+
+        $dataindexarr[] = strtolower($this->greeklish($this->title));
+        $dataindexarr[] = strtolower($this->greeklish($this->itemName));
+        $dataindexarr[] = strtolower($this->greeklish($this->itemName1));
+        $dataindexarr[] = strtolower($this->greeklish($this->erpSupplier));
+
+        //$article_id = $this->_webserviceProducts_[11632]->article_id;
+        /*
+          if (@$article_id > 0) {
+          $efarmoges = unserialize($this->efarmoges($article_id));
+          //print_r($efarmoges);
+          $dataindexarr[] = $this->_webserviceProducts_[11632]->article_name;
+          $dataindexarr[] = strtolower($this->greeklish($this->_webserviceProducts_[11632]->article_name));
+
+          foreach ($efarmoges as $efarmogi) {
+          //$sql = "replace autoparts_tecdoc_product_linking_model_type set link_id = '" . $v->articleLinkId . "', product='" . $model->getId() . "', model_type = '" . $v->linkingTargetId . "'";
+          //$write->query($sql);
+          $brandmodeltype = BrandModelType::model()->findByPk($efarmogi);
+          $brandmodel = $brandmodeltype->_brandModel_;
+          $brand = $brandmodel->_brand_;
+
+          $yearfrom = (int) substr($brandmodel->year_from, 0, 4);
+          $yearto = (int) substr($brandmodel->year_to, 0, 4);
+          //echo $yearfrom." - ".$yearto."<BR>";
+          $engines = explode("|", $brandmodeltype->engine);
+          foreach ($engines as $engine) {
+          $dataindexarr[] = $engine;
+          }
+          if ($yearto) {
+          for ($year = $yearfrom; $year <= $yearto; $year++) {
+          $dataindexarr[] = $year;
+          //echo $year;
+          }
+          } else {
+          $dataindexarr[] = $yearfrom;
+          }
+          $dataindexarr[] = $brand->brand;
+          $dataindexarr[] = $brandmodel->brand_model;
+          $dataindexarr[] = $brandmodeltype->brand_model_type;
+          }
+          }
+         */
+        $data_index = array_filter(array_unique($dataindexarr));
+        $dataindex = addslashes(implode("|", $data_index));
+        $sql = "replace product_freesearch set id = '" . $this->id . "', data_index='" . $dataindex . "'";
+        $em->getConnection()->exec($sql);
+    }
+
 }
