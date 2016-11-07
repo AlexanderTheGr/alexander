@@ -25,7 +25,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     public function indexAction() {
 
         
-        $products = $this->getDoctrine()->getRepository("SoftoneBundle:Products")
+        $products = $this->getDoctrine()->getRepository("SoftoneBundle:Product")
                 ->findAll();
         foreach ($products as $product) {
             $product->setProductFreesearch();
