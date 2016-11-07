@@ -28,6 +28,10 @@ var dt_tables = [];
                     return $sce.trustAsHtml($scope.snippet);
                 };
 
+                if ($scope.clicked) {
+                    alert('ssss');
+                }
+
                 vm.onSubmit = onSubmit;
                 vm.resetAllForms = invokeOnAllFormOptions.bind(null, 'resetModel');
                 vm.model = {};
