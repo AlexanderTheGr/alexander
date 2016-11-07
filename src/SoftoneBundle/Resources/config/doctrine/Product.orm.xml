@@ -115,6 +115,13 @@
                 <option name="unsigned"/>
             </options>
         </field>           
+        
+        
+        <field name="itemMarkupw" type="decimal" column="item_markupw" precision="10" scale="2" nullable="true"/>
+        <field name="itemMarkupr" type="decimal" column="item_markupr" precision="10" scale="2" nullable="true"/>
+ 
+        
+        
         <field name="itemPricer" type="decimal" column="item_pricer" precision="10" scale="2" nullable="true"/>
         <field name="itemPricew" type="decimal" column="item_pricew" precision="10" scale="2" nullable="true"/>
         
