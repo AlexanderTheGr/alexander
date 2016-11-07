@@ -301,6 +301,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                 $softone = new Softone();
                 $recordsTotal = $em->getRepository($this->repository)->recordsTotal();
+                /*
                 foreach ($this->fields as $index => $field) {
                     if (@$field["index"]) {
                         $fields[] = $field["index"];
@@ -329,6 +330,17 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         }
                     }
                 }
+                */
+
+
+                $garr = explode(" ", $dt_columns[$index]["search"]["value"]);
+                foreach ($garr as $d) {
+                    $likearr[] = "o.data_index like '%" . $d . "%'";
+                }
+                $like = implode(" AND ", $likearr);
+                $sqlFreesearch = "Select o.id from SoftoneBundle:Freesearch where " . $like . " limit 0,50";
+
+
 
                 //print_r($articleIds);
                 $this->prefix = "po";
@@ -342,7 +354,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $this->createWhere();
                     $sql = 'SELECT  po.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                               ' . str_replace("p.","po.",$this->where);
+                               ' . str_replace("p.", "po.", $this->where);
                 }
                 //echo  $sql;
                 $this->prefix = "p";
@@ -367,7 +379,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 } else {
                     $sql = 'SELECT  ' . $this->select . ', p.reference
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                ' . $this->where . '
+                                where p.id in ('.$sqlFreesearch.') 
                                 ORDER BY ' . $this->orderBy;
                 }
 
@@ -468,7 +480,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $json[] = "";
                 $json[] = "";
                 $json[] = "";
-                
+
                 $jsonarr[] = $json;
             }
             // print_r($p);
