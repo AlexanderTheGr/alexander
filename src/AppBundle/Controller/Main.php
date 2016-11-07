@@ -492,6 +492,7 @@ class Main extends Controller {
 
         return $forms;
     }
+    
 
     function getFormLyFields($entity, $fields, $id = '') {
 
