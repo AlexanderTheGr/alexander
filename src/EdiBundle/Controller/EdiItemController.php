@@ -318,7 +318,7 @@ class EdiItemController extends Main {
                 }
             }
 
-            
+
             $this->createOrderBy($fields, $dt_order);
             $this->createSelect($s);
             $select = count($s) > 0 ? implode(",", $s) : $this->prefix . ".*";
@@ -331,11 +331,15 @@ class EdiItemController extends Main {
                 $edi = $dt_columns[1]["search"]["value"];
                 $partno = $dt_columns[4]["search"]["value"];
                 //$edi = $em->getRepository("EdiBundle:Edi")->find(1);
-                $this->where = " where " . $this->prefix . ".Edi = ".$edi." AND ( p.partno = '".$partno."' OR " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . "))";
+                if ($partno != '') {
+                    $this->where = " where " . $this->prefix . ".Edi = " . $edi . " AND ( p.partno = '" . $partno . "' OR " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . "))";
+                } else {
+                    $this->where = " where " . $this->prefix . ".Edi = " . $edi . " AND (" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . "))";
+                }
             } else {
                 $this->createWhere();
             }
-            
+
             //echo $this->where."\n\n";
             $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
 
