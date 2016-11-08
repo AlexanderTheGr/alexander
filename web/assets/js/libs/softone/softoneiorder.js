@@ -4,7 +4,7 @@ var productsearch = ''
 jQuery('#productfreesearch').live("keyup", function (e) {
     if (e.keyCode == 13) {
         productsearch = "productfreesearch:"+jQuery('#productfreesearch').val();
-        asdf(this,search);
+        asdf(this,productsearch);
         var t = $(this).val();
         jQuery('#productfreesearch').val("");
         jQuery('#productitem').val("");
@@ -20,7 +20,7 @@ jQuery('#productfreesearch').live("keyup", function (e) {
 jQuery('#productitem').live("keyup", function (e) {
     if (e.keyCode == 13) {
         productsearch = "productitem:"+jQuery('#productitem').val();
-        asdf(this,search);
+        asdf(this,productsearch);
         var t = $(this).val();
         jQuery('#productfreesearch').val("");
         jQuery('#productitem').val("");
