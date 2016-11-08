@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use EdiBundle\Entity\EdiItem;
+use EdiBundle\Entity\Edi;
 use AppBundle\Controller\Main as Main;
 
 class EdiItemController extends Main {
