@@ -575,7 +575,57 @@ class EdiItemController extends Main {
           }
          */
     }
+    public function getArticlesSearchByIds($search) {
+        //if (file_exists(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term")) {
+        //$data = file_get_contents(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term");
+        //return $data;
+        //} else {
+        $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
+        $fields = array(
+            'action' => 'getSearchByIds',
+            'search' => $search
+        );
+        $fields_string = '';
+        foreach ($fields as $key => $value) {
+            $fields_string .= $key . '=' . $value . '&';
+        }
+        rtrim($fields_string, '&');
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, count($fields));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $data = curl_exec($ch);
+        //file_put_contents(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term", $data);
+        return $data;
+        //}
+    }
 
+    public function getArticlesSearch($search) {
+        // if (file_exists(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term")) {
+        //    $data = file_get_contents(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term");
+        //   return $data;
+        //} else {
+        //ADBRP002
+        $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
+        $fields = array(
+            'action' => 'getSearch',
+            'search' => $search
+        );
+        $fields_string = '';
+        foreach ($fields as $key => $value) {
+            $fields_string .= $key . '=' . $value . '&';
+        }
+        rtrim($fields_string, '&');
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, count($fields));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $data = curl_exec($ch);
+        return $data;
+        //}
+    }
     /**
      * @Route("/edi/ediitem/install")
      */
