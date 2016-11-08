@@ -317,7 +317,7 @@ class EdiItemController extends Main {
                 }
             }
 
-            $this->createWhere();
+            
             $this->createOrderBy($fields, $dt_order);
             $this->createSelect($s);
             $select = count($s) > 0 ? implode(",", $s) : $this->prefix . ".*";
@@ -325,14 +325,14 @@ class EdiItemController extends Main {
 
             //$articles["articleIds"][] = 2556734;
             //print_r($articles["articleIds"]);
-            if (count($articles["articleIds"])) {
-                // $this->where .= " AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articles["articleIds"])) . ")";
-                //$this->where .= " AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articles["articleIds"])) . ")";
-            }
+
             if (count($articleIds)) {
-                // $this->where .= " AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articles["articleIds"])) . ")";
-                $this->where .= " OR " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ")";
+                $edi = $dt_columns[1]["search"]["value"];
+                $this->where .= " edi = '".$edi."' AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ")";
+            } else {
+                $this->createWhere();
             }
+            
             //echo $this->where."\n\n";
             $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
 
