@@ -328,7 +328,7 @@ class EdiItemController extends Main {
 
             if (count($articleIds)) {
                 $edi = $dt_columns[1]["search"]["value"];
-                $this->where = " edi = '".$edi."' AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ")";
+                $this->where = " p.edi = '".$edi."' AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ")";
             } else {
                 $this->createWhere();
             }
