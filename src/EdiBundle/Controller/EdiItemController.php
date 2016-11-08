@@ -331,7 +331,7 @@ class EdiItemController extends Main {
                 $edi = $dt_columns[1]["search"]["value"];
                 
                 //$edi = $em->getRepository("EdiBundle:Edi")->find(1);
-                $this->where = " where " . $this->prefix . ".Edi = ".$edi." AND (" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . "))";
+                $this->where = " where " . $this->prefix . ".Edi = '".$edi."' AND (" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . "))";
             } else {
                 $this->createWhere();
             }
