@@ -289,8 +289,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $fields = array();
             $jsonarr = array();
 
-            $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($dt_search["value"])));
-            @$articleIds2 = unserialize(base64_decode($dt_search["value"]));
+            
+            $search = $dt_search["value"];   
+            $search = explode(":", $dt_search["value"]);            
+            
+            $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
+            @$articleIds2 = unserialize(base64_decode($search[1]));
 
 
 
@@ -331,11 +335,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         }
                     }
                 }
-                
-
-                $search = $dt_search["value"];   
-               
-                $search = explode(":", $dt_search["value"]);
                 
                 if ($search[0] == 'productfreesearch') {
                     $garr = explode(" ", $search[1]);
