@@ -333,7 +333,7 @@ class EdiItemController extends Main {
                 // $this->where .= " AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articles["articleIds"])) . ")";
                 $this->where .= " OR " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ")";
             }
-            echo $this->where."\n\n";
+            //echo $this->where."\n\n";
             $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
 
             $query = $em->createQuery(
