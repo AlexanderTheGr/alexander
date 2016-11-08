@@ -329,7 +329,7 @@ class EdiItemController extends Main {
 
             if (count($articleIds)) {
                 //$edi = $dt_columns[1]["search"]["value"];
-                $edi = $em->getRepository("SoftoneEdi:Edi")->find($dt_columns[1]["search"]["value"]);
+                $edi = $em->getRepository("EdiBundle:Edi")->find($dt_columns[1]["search"]["value"]);
                 $this->where = " where p.edi = '".$edi."' AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ")";
             } else {
                 $this->createWhere();
