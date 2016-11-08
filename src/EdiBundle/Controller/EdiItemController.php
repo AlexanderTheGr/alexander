@@ -280,7 +280,9 @@ class EdiItemController extends Main {
             $search = explode(":", $dt_columns[4]["search"]["value"]);
             
             $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));            
-                        
+            
+            
+            
             
             //print_r(base64_decode($dt_search["value"]));
             $dt_search["value"] = '';
@@ -323,11 +325,14 @@ class EdiItemController extends Main {
 
             //$articles["articleIds"][] = 2556734;
             //print_r($articles["articleIds"]);
+            if (count($articles["articleIds"])) {
+               // $this->where .= " AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articles["articleIds"])) . ")";
+                $this->where .= " AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articles["articleIds"])) . ")";
+            }
             if (count($articleIds)) {
                // $this->where .= " AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articles["articleIds"])) . ")";
                 $this->where .= " AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ")";
             }
-
             //echo $this->where."\n\n";
             $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
 
