@@ -276,7 +276,11 @@ class EdiItemController extends Main {
             $dt_search = $request->request->get("search");
             $articles = unserialize(base64_decode($dt_search["value"]));
             $dt_columns = $request->request->get("columns");
-            $search = $request->request->get("terms");
+            
+            $search = base64_decode($request->request->get("value"));
+            
+            print_r($search);
+            
             $search = explode(":", $dt_columns[4]["search"]["value"]);
             
             $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));            
@@ -287,7 +291,6 @@ class EdiItemController extends Main {
             //print_r(base64_decode($dt_search["value"]));
             $dt_search["value"] = '';
 
-            $dt_columns = $request->request->get("columns");
             $recordsTotal = $em->getRepository($this->repository)->recordsTotal();
             $fields = array();
             foreach ($this->fields as $index => $field) {
