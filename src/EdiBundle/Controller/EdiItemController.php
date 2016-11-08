@@ -168,13 +168,13 @@ class EdiItemController extends Main {
         $search = explode(":", $dt_search["value"]);
 
         $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
-        
+
         $query = $em->createQuery(
                 "SELECT  distinct(e.id) as eid, e.name as edi
                     FROM " . $this->repository . " p, EdiBundle:Edi e
                     where 
                         e.id = p.Edi AND
-                        p.partno LIKE '%" . $search[1] . "%' OR p.tecdocArticleId in (".implode(",", $articleIds).") "
+                        p.partno LIKE '%" . $search[1] . "%' OR p.tecdocArticleId in (" . implode(",", $articleIds) . ") "
         );
         $results = $query->getResult();
         $html .= '<button type="button" class="edibutton btn btn-raised ink-reaction" data-id="0">Invetory</button>';
@@ -276,18 +276,15 @@ class EdiItemController extends Main {
             $dt_search = $request->request->get("search");
             $articles = unserialize(base64_decode($dt_search["value"]));
             $dt_columns = $request->request->get("columns");
-            
-            $search = base64_decode($request->request->get("value"));
-            
-            print_r($search);
-            
+
+
             $search = explode(":", $dt_columns[4]["search"]["value"]);
-            
-            $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));            
-            
-            
-            
-            
+
+            $articleIds = count($articles) ? $articles : (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
+            $articleIds[] = 1;
+
+
+
             //print_r(base64_decode($dt_search["value"]));
             $dt_search["value"] = '';
 
@@ -329,11 +326,11 @@ class EdiItemController extends Main {
             //$articles["articleIds"][] = 2556734;
             //print_r($articles["articleIds"]);
             if (count($articles["articleIds"])) {
-               // $this->where .= " AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articles["articleIds"])) . ")";
+                // $this->where .= " AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articles["articleIds"])) . ")";
                 $this->where .= " AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articles["articleIds"])) . ")";
             }
             if (count($articleIds)) {
-               // $this->where .= " AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articles["articleIds"])) . ")";
+                // $this->where .= " AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articles["articleIds"])) . ")";
                 $this->where .= " OR " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ")";
             }
             //echo $this->where."\n\n";
@@ -582,6 +579,7 @@ class EdiItemController extends Main {
           }
          */
     }
+
     public function getArticlesSearchByIds($search) {
         //if (file_exists(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term")) {
         //$data = file_get_contents(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term");
@@ -633,6 +631,7 @@ class EdiItemController extends Main {
         return $data;
         //}
     }
+
     /**
      * @Route("/edi/ediitem/install")
      */
