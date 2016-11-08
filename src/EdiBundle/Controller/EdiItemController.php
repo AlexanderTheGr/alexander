@@ -275,9 +275,9 @@ class EdiItemController extends Main {
             $dt_order = $request->request->get("order");
             $dt_search = $request->request->get("search");
             $articles = unserialize(base64_decode($dt_search["value"]));
-
+            $dt_columns = $request->request->get("columns");
             $search = $request->request->get("terms");
-            $search = explode(":", $dt_search["value"]);
+            $search = explode(":", $dt_columns[4]["value"]);
 
             $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));            
             
