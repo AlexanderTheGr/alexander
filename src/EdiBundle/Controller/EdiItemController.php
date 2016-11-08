@@ -280,7 +280,7 @@ class EdiItemController extends Main {
 
             $search = explode(":", $dt_columns[4]["search"]["value"]);
 
-            $articleIds = count($articles) ? $articles : (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
+            $articleIds = count($articles["articleIds"]) ? $articles["articleIds"] : (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
             $articleIds[] = 1;
 
 
@@ -327,7 +327,7 @@ class EdiItemController extends Main {
             //print_r($articles["articleIds"]);
             if (count($articles["articleIds"])) {
                 // $this->where .= " AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articles["articleIds"])) . ")";
-                $this->where .= " AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articles["articleIds"])) . ")";
+                //$this->where .= " AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articles["articleIds"])) . ")";
             }
             if (count($articleIds)) {
                 // $this->where .= " AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articles["articleIds"])) . ")";
