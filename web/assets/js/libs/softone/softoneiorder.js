@@ -1,8 +1,9 @@
 var b = false;
 var orderid = 0;
+var productsearch = ''
 jQuery('#productfreesearch').live("keyup", function (e) {
     if (e.keyCode == 13) {
-        var search = "productfreesearch:"+jQuery('#productfreesearch').val();
+        productsearch = "productfreesearch:"+jQuery('#productfreesearch').val();
         asdf(this,search);
         var t = $(this).val();
         jQuery('#productfreesearch').val("");
@@ -18,7 +19,7 @@ jQuery('#productfreesearch').live("keyup", function (e) {
 });
 jQuery('#productitem').live("keyup", function (e) {
     if (e.keyCode == 13) {
-        var search = "productitem:"+jQuery('#productitem').val();
+        productsearch = "productitem:"+jQuery('#productitem').val();
         asdf(this,search);
         var t = $(this).val();
         jQuery('#productfreesearch').val("");
@@ -292,8 +293,8 @@ jQuery(".edibutton").live('click', function () {
         jQuery("#DataTables_Table_1_wrapper").show();
     } else {
         var table = dt_tables["ctrlgetoffcanvases2"];
-        table.fnFilter(edi, 1, jQuery('#productfreesearch').val(), true, false);
-        table.fnFilter(jQuery('#productfreesearch').val(), 4, true, false);
+        table.fnFilter(edi, 1, productsearch, true, false);
+        table.fnFilter(productsearch, 4, true, false);
         //table.fnFilter('aaaa', 14, true, false);
         //var articleIds = 'asas';
         jQuery("#DataTables_Table_1_wrapper").hide();
