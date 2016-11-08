@@ -164,14 +164,15 @@ class EdiItemController extends Main {
         $em = $this->getDoctrine()->getManager();
 
 
-
+        $search =$request->request->get("terms");
+        $search = explode(":", $dt_search["value"]);
 
         $query = $em->createQuery(
                 "SELECT  distinct(e.id) as eid, e.name as edi
                     FROM " . $this->repository . " p, EdiBundle:Edi e
                     where 
                         e.id = p.Edi AND
-                        p.partno LIKE '%" . $request->request->get("terms") . "%'"
+                        p.partno LIKE '%" . $search[1] . "%'"
         );
         $results = $query->getResult();
         $html .= '<button type="button" class="edibutton btn btn-raised ink-reaction" data-id="0">Invetory</button>';
@@ -241,16 +242,15 @@ class EdiItemController extends Main {
                         e.id = p.Edi"
         );
         $results = $query->getResult();
-        echo count( $results);
-        $i=0;
-        foreach($results as $result) {
+        echo count($results);
+        $i = 0;
+        foreach ($results as $result) {
             $ediediitem = $em->getRepository($this->repository)->find($result["id"]);
             $ediediitem->updatetecdoc();
             echo ".";
             //if ($i++ > 100) exit;
         }
         exit;
-         
     }
 
     public function ediitemdatatable($funct = false) {
@@ -312,7 +312,7 @@ class EdiItemController extends Main {
             $this->createSelect($s);
             $select = count($s) > 0 ? implode(",", $s) : $this->prefix . ".*";
 
-            
+
             //$articles["articleIds"][] = 2556734;
             //print_r($articles["articleIds"]);
             if (count($articles["articleIds"])) {
@@ -321,7 +321,7 @@ class EdiItemController extends Main {
 
             //echo $this->where."\n\n";
             $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
-            
+
             $query = $em->createQuery(
                             'SELECT  ' . $this->select . '
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
@@ -488,12 +488,12 @@ class EdiItemController extends Main {
             } else {
                 @$jsonarr[$key]['DT_RowClass'] .= $eltrekaavailability[$entity->getItemcode()] > 0 ? ' text-success ' : ' text-danger ';
                 /*
-                $response = $elteka->getPartPrice(array('CustomerNo' => $this->CustomerNo, "EltrekkaRef" => $entity->getItemcode()));
-                $xml = $response->GetPartPriceResult->any;
-                $xml = simplexml_load_string($xml);
-                $price = (float) $xml->Item->PriceOnPolicy;
-                */
-                
+                  $response = $elteka->getPartPrice(array('CustomerNo' => $this->CustomerNo, "EltrekkaRef" => $entity->getItemcode()));
+                  $xml = $response->GetPartPriceResult->any;
+                  $xml = simplexml_load_string($xml);
+                  $price = (float) $xml->Item->PriceOnPolicy;
+                 */
+
                 //echo "---".$xml->Item->WholePrice."\n";
                 //@$jsonarr[$key]['6'] = number_format($price, 2, '.', '');
                 /*
