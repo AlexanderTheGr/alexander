@@ -294,7 +294,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $search = explode(":", $dt_search["value"]);            
             
             $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
-            @$articleIds2 = unserialize(base64_decode($search[1]));
+            
+            if ($search[1]) {
+                @$articleIds2 = unserialize(base64_decode($search[1]));
+            } else {
+                @$articleIds2 = unserialize(base64_decode($search[0]));
+            }
 
 
 
