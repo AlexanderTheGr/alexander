@@ -328,12 +328,12 @@ class EdiItemController extends Main {
 
             if (count($articleIds)) {
                 $edi = $dt_columns[1]["search"]["value"];
-                $this->where .= " edi = '".$edi."' AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ")";
+                $this->where = " edi = '".$edi."' AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ")";
             } else {
                 $this->createWhere();
             }
             
-            //echo $this->where."\n\n";
+            echo $this->where."\n\n";
             $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
 
             $query = $em->createQuery(
