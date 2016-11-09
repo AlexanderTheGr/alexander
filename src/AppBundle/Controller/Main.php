@@ -629,7 +629,7 @@ class Main extends Controller {
 
 
     
-    public function articleAttributes($article_id, $car_id) {
+    public function articleAttributes($article_id, $car_id=0) {
         $url = "http://service5.fastwebltd.com/";
         $fields = array(
             'action' => 'articleAttributes',
