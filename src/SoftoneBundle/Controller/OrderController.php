@@ -464,6 +464,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 if ($result["reference"]) {
                     $jsonarr[(int) $result["reference"]] = $json;
                 } else {
+                    $json[5] = str_replace("value='---'", "value='" . $obj->itemPricew . "'", $json[5]);
+                    $json[6] = str_replace("value='---'", "value='" . $obj->itemPricew . "'", $json[6]);                    
                     $jsonarrnoref[$result["id"]] = $json;
                 }
             }
