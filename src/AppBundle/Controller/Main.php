@@ -626,15 +626,92 @@ class Main extends Controller {
         return $setting->getValue();
     }
 
-    function clearCode($code) {
-        $code = str_replace(" ", "", $code);
-        $code = str_replace(".", "", $code);
-        $code = str_replace("-", "", $code);
-        $code = str_replace("/", "", $code);
-        $code = str_replace(")", "", $code);
-        $code = str_replace("(", "", $code);
-        $code = strtoupper($code);
-        return $code;
+
+
+    
+    public function articleAttributes($article_id, $car_id) {
+        $url = "http://service5.fastwebltd.com/";
+        $fields = array(
+            'action' => 'articleAttributes',
+            'tecdoc_article_id' => $article_id,
+            'linkingTargetId' => $car_id
+        );
+
+        foreach ($fields as $key => $value) {
+            $fields_string .= $key . '=' . $value . '&';
+        }
+        rtrim($fields_string, '&');
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, count($fields));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $data = curl_exec($ch);
+
+        return $data;
     }
 
+
+    public function getArticlesSearch($search) {
+        $url = "http://service5.fastwebltd.com/";
+        $fields = array(
+            'action' => 'getSearch',
+            'search' => $search
+        );
+
+        foreach ($fields as $key => $value) {
+            $fields_string .= $key . '=' . $value . '&';
+        }
+        rtrim($fields_string, '&');
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, count($fields));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $data = curl_exec($ch);
+
+        return $data;
+    }
+
+    public function efarmoges($article_id) {
+        $url = "http://service5.fastwebltd.com/";
+        $fields = array(
+            'action' => 'efarmoges',
+            'tecdoc_article_id' => $article_id
+        );
+
+        foreach ($fields as $key => $value) {
+            $fields_string .= $key . '=' . $value . '&';
+        }
+        rtrim($fields_string, '&');
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, count($fields));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $data = curl_exec($ch);
+        return $data;
+    }
+
+    public function originals($article_id) {
+        $url = "http://service5.fastwebltd.com/";
+        $fields = array(
+            'action' => 'originals',
+            'tecdoc_article_id' => $article_id
+        );
+
+        foreach ($fields as $key => $value) {
+            $fields_string .= $key . '=' . $value . '&';
+        }
+        rtrim($fields_string, '&');
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, count($fields));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $data = curl_exec($ch);
+
+        return $data;
+    }    
+    
 }
