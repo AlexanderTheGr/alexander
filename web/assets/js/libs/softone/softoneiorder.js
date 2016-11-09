@@ -3,8 +3,8 @@ var orderid = 0;
 var productsearch = ''
 jQuery('#productfreesearch').live("keyup", function (e) {
     if (e.keyCode == 13) {
-        productsearch = "productfreesearch:" + jQuery('#productfreesearch').val();
-        asdf(this, productsearch);
+        productsearch = "productfreesearch:"+jQuery('#productfreesearch').val();
+        asdf(this,productsearch);
         var t = $(this).val();
         jQuery('#productfreesearch').val("");
         jQuery('#productitem').val("");
@@ -19,8 +19,8 @@ jQuery('#productfreesearch').live("keyup", function (e) {
 });
 jQuery('#productitem').live("keyup", function (e) {
     if (e.keyCode == 13) {
-        productsearch = "productitem:" + jQuery('#productitem').val();
-        asdf(this, productsearch);
+        productsearch = "productitem:"+jQuery('#productitem').val();
+        asdf(this,productsearch);
         var t = $(this).val();
         jQuery('#productfreesearch').val("");
         jQuery('#productitem').val("");
@@ -290,16 +290,18 @@ jQuery(".product_info").live('click', function () {
     var data = {};
     data.ref = ref;
     var $dialog = {};
-    $dialog.order = $("<div style='z-index:100000' class='card'></div>")
+    $dialog.productInfo = $("<div style='z-index:100000' class='card'></div>")
             .dialog({
                 autoOpen: false,
                 resizable: false,
                 draggable: false,
                 width: "auto",
                 modal: true
-            });
-    $dialog.order.dialog( "open" );
-    $dialog.order.css('zIndex',999900);        
+            });  
+    $.post("/product/productInfo", data, function (result) {
+        $dialog.productInfo.html(result);
+        $dialog.productInfo.dialog( "open" );
+    })
 })
 
 
