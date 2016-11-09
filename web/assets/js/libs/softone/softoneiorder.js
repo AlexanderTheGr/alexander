@@ -295,7 +295,7 @@ jQuery(".product_info").live('click', function () {
                 autoOpen: false,
                 resizable: false,
                 draggable: false,
-                width: "auto",
+                width: 500,
                 modal: true
             });  
     $.post("/product/productInfo", data, function (result) {
