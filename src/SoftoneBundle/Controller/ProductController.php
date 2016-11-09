@@ -494,7 +494,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
-                    'content' => assd,
+                    'content' => $this->efarmoges($request->request->get("ref")),
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }   
