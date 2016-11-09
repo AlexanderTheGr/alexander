@@ -2,26 +2,22 @@
 
 
 
-<div id="tabs">
+<div id="productInfoTabs">
   <ul>
-    <li><a href="#tabs-1">Nunc tincidunt</a></li>
-    <li><a href="#tabs-2">Proin dolor</a></li>
-    <li><a href="#tabs-3">Aenean lacinia</a></li>
+    <li><a href="#productInfoTabs-1">Nunc tincidunt</a></li>
+    <li><a href="#productInfoTabs-2">Proin dolor</a></li>
+    <li><a href="#productInfoTabs-3">Aenean lacinia</a></li>
   </ul>
-  <div id="tabs-1">
+  <div id="productInfoTabs-1">
     <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
   </div>
-  <div id="tabs-2">
+  <div id="productInfoTabs-2">
     {{ content.articleAttributes | raw }}
   </div>
-  <div id="tabs-3">
+  <div id="productInfoTabs-3">
    {{ content.originals | raw }}
   </div>
 </div>
-<script>
-  $( function() {
-    $( "#tabs" ).tabs();
-  } );
-</script>
+
 {% endblock %}
 
