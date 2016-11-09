@@ -486,6 +486,19 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //$content = $this->getoffcanvases($id);
         $content = $this->content();       
 
+        
+        $article_id = $request->request->get("ref");
+        $out["originals"] = $this->originals($article_id);
+        $out["articleAttributes"] = $this->articleAttributes($article_id, 0);
+        $asd = unserialize($this->getArticlesSearchByIds($article_id));
+        $out["articlesSearch"] = unserialize($this->getArticlesSearch($asd[0]->articleNo));
+
+        $out["articlesSearch"] = unserialize($this->getArticlesSearchByIds(implode(",", (array) $out["articlesSearch"])));
+
+        //print_r( $out["articlesSearch"]);
+
+        $out["efarmoges"] = unserialize($this->efarmoges($article_id));        
+        
         //$content = 'sss';
         return $this->render('SoftoneBundle:Product:productInfo.html.twig', array(
                     'pagename' => 's',
