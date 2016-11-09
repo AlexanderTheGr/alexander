@@ -290,7 +290,7 @@ jQuery(".product_info").live('click', function () {
     var data = {};
     data.ref = ref;
     var $dialog = {};
-    $dialog.order = $("<div class='card'></div>")
+    $dialog.order = $("<div style='z-index:100000' class='card'></div>")
             .dialog({
                 autoOpen: false,
                 resizable: false,
