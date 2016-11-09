@@ -166,6 +166,7 @@ class EdiItemController extends Main {
 
 
         $search = $request->request->get("terms");
+        $dt_search = $request->request->get("search");
         $search = explode(":", $dt_search["value"]);
 
         $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
