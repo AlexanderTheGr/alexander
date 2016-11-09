@@ -289,12 +289,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $fields = array();
             $jsonarr = array();
 
-            
-            $search = $dt_search["value"];   
-            $search = explode(":", $dt_search["value"]);            
-            
+
+            $search = $dt_search["value"];
+            $search = explode(":", $dt_search["value"]);
+
             $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
-            
+
             if ($search[1]) {
                 @$articleIds2 = unserialize(base64_decode($search[1]));
             } else {
@@ -311,7 +311,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                 $softone = new Softone();
                 $recordsTotal = $em->getRepository($this->repository)->recordsTotal();
-                
+
                 foreach ($this->fields as $index => $field) {
                     if (@$field["index"]) {
                         $fields[] = $field["index"];
@@ -340,7 +340,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         }
                     }
                 }
-                
+
                 if ($search[0] == 'productfreesearch') {
                     $garr = explode(" ", $search[1]);
                     foreach ($garr as $d) {
@@ -349,9 +349,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $like = implode(" AND ", $likearr);
                     $sqlearch = "Select o.id from SoftoneBundle:ProductFreesearch o where " . $like . "";
                 } else {
-                    $sqlearch = "Select o.id from SoftoneBundle:ProductSearch o where o.itemCode='" . $search[1] . "' OR o.itemCode1='" . $search[1]. "' OR o.itemCode2='" . $search[1] . "'";
+                    $sqlearch = "Select o.id from SoftoneBundle:ProductSearch o where o.itemCode='" . $search[1] . "' OR o.itemCode1='" . $search[1] . "' OR o.itemCode2='" . $search[1] . "'";
                 }
-                
+
 
                 //print_r($articleIds);
                 $this->prefix = "po";
@@ -390,7 +390,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 } else {
                     $sql = 'SELECT  ' . $this->select . ', p.reference
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where ' . $this->prefix .'.id in ('.$sqlearch.') 
+                                where ' . $this->prefix . '.id in (' . $sqlearch . ') 
                                 ORDER BY ' . $this->orderBy;
                 }
 
@@ -403,7 +403,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         )
                         ->setMaxResults($request->request->get("length"))
                         ->setFirstResult($request->request->get("start"))
-                        ;
+                ;
 
                 /*
                   echo 'SELECT  ' . $this->select . ', p.reference
@@ -464,8 +464,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 if ($result["reference"]) {
                     $jsonarr[(int) $result["reference"]] = $json;
                 } else {
-                    $json[5] = str_replace("value='---'", "value='" . $obj->itemPricew . "'", $json[5]);
-                    $json[6] = str_replace("value='---'", "value='" . $obj->itemPricew . "'", $json[6]);                    
+                    $json[5] = str_replace("value='---'", "value='" . $obj->getField("itemPricew") . "'", $json[5]);
+                    $json[6] = str_replace("value='---'", "value='" . $obj->getField("itemPricew") . "'", $json[6]);
                     $jsonarrnoref[$result["id"]] = $json;
                 }
             }
