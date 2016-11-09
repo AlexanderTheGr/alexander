@@ -178,11 +178,11 @@ class EdiItemController extends Main {
                         e.id = p.Edi AND
                         (p.partno LIKE '%" . $search[1] . "%' OR p.tecdocArticleId in (" . implode(",", $articleIds) . ")) "
         );
-        echo "(p.partno LIKE '%" . $search[1] . "%' OR p.tecdocArticleId in (" . implode(",", $articleIds) . ")) ";
+        //echo "(p.partno LIKE '%" . $search[1] . "%' OR p.tecdocArticleId in (" . implode(",", $articleIds) . ")) ";
         $results = $query->getResult();
         $html .= '<button type="button" class="edibutton btn btn-raised ink-reaction" data-id="0">Invetory</button>';
         $edi = array();
-        print_r($results);
+        //print_r($results);
         foreach ($results as $data) {
             $edi[$data['eid']] = $data;
         }
