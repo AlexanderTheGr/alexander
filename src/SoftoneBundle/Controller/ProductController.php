@@ -481,7 +481,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     public function productInfo(Request $request) {
 
         $buttons = array();
-       
+        $content = $this->gettabs($id);
+
+        //$content = $this->getoffcanvases($id);
+        $content = $this->content();       
         
         $content = 'sss';
         return $this->render('SoftoneBundle:Product:productInfo.html.twig', array(
