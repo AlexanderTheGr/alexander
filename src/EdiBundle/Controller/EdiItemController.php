@@ -172,6 +172,9 @@ class EdiItemController extends Main {
         
         $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search)));
         @$articleIds2 = unserialize(base64_decode($search));
+        
+        print_r(@$articleIds2);
+        
         $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
         $articleIds[] = 1;
         $query = $em->createQuery(
