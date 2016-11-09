@@ -486,7 +486,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //$content = $this->getoffcanvases($id);
         $content = $this->content();       
         
-        $content = 'sss';
+        //$content = 'sss';
         return $this->render('SoftoneBundle:Product:productInfo.html.twig', array(
                     'pagename' => 's',
                     'order' => $id,
