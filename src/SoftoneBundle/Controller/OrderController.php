@@ -464,7 +464,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 if ($result["reference"]) {
                     $jsonarr[(int) $result["reference"]] = $json;
                 } else {
-                    $jsonarrnoref[$result["id"]] = $json;
+                    //$jsonarrnoref[$result["id"]] = $json;
                 }
             }
 
