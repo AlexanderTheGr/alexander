@@ -482,9 +482,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $buttons = array();
        
-        $content =  $this->addOffCanvas(array('id' => 'asdf', "content" => 'teteteet', "index" => $this->generateRandomString()));
-
-        $content = $this->content();
+        
+        $content = 'sss';
         return $this->render('SoftoneBundle:Product:view.html.twig', array(
                     'pagename' => 's',
                     'order' => $id,
