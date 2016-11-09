@@ -484,7 +484,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
        
         
         $content = 'sss';
-        return $this->render('SoftoneBundle:Product:view.html.twig', array(
+        return $this->render('SoftoneBundle:Product:productInfo.html.twig', array(
                     'pagename' => 's',
                     'order' => $id,
                     'url' => '/order/save',
