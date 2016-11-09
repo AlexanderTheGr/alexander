@@ -3,8 +3,8 @@ var orderid = 0;
 var productsearch = ''
 jQuery('#productfreesearch').live("keyup", function (e) {
     if (e.keyCode == 13) {
-        productsearch = "productfreesearch:"+jQuery('#productfreesearch').val();
-        asdf(this,productsearch);
+        productsearch = "productfreesearch:" + jQuery('#productfreesearch').val();
+        asdf(this, productsearch);
         var t = $(this).val();
         jQuery('#productfreesearch').val("");
         jQuery('#productitem').val("");
@@ -19,8 +19,8 @@ jQuery('#productfreesearch').live("keyup", function (e) {
 });
 jQuery('#productitem').live("keyup", function (e) {
     if (e.keyCode == 13) {
-        productsearch = "productitem:"+jQuery('#productitem').val();
-        asdf(this,productsearch);
+        productsearch = "productitem:" + jQuery('#productitem').val();
+        asdf(this, productsearch);
         var t = $(this).val();
         jQuery('#productfreesearch').val("");
         jQuery('#productitem').val("");
@@ -289,9 +289,15 @@ jQuery(".product_info").live('click', function () {
     var ref = jQuery(this).attr("data-ref");
     var data = {};
     data.ref = ref;
-    $.post("/product/productInfo", data, function (result) {
-        
-    })
+    $dialog.order = $("<div class='card'></div>")
+            .dialog({
+                autoOpen: false,
+                resizable: false,
+                draggable: false,
+                width: "auto",
+                modal: true
+            });
+    $dialog.order.dialog( "open" );        
 })
 
 
