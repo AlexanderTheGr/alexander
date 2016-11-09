@@ -172,7 +172,7 @@ class EdiItemController extends Main {
         $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
         $articleIds[] = 1;
         $query = $em->createQuery(
-                "SELECT  distinct(e.id) as eid, e.name as edi
+                "SELECT  distinct(e.id) as eid, e.name as edi, p.id as pid
                     FROM " . $this->repository . " p, EdiBundle:Edi e
                     where 
                         e.id = p.Edi AND
