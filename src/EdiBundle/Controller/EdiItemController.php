@@ -187,8 +187,7 @@ class EdiItemController extends Main {
                     "SELECT  distinct(e.id) as eid, e.name as edi
                     FROM " . $this->repository . " p, EdiBundle:Edi e
                     where 
-                        e.id = p.Edi AND
-                        (p.tecdocArticleId in (" . implode(",", $articleIds) . ")) "
+                        e.id = p.Edi AND p.tecdocArticleId in (" . implode(",", $articleIds) . ")"
             );
         }
 
