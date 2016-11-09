@@ -287,7 +287,7 @@ jQuery(".create_product").live('click', function () {
 })
 
 jQuery(".edibutton").live('click', function () {
-    productsearch = '';
+    //productsearch = '';
     var edi = jQuery(this).attr("data-id")
     if (edi == 0) {
         jQuery("#DataTables_Table_2_wrapper").hide();
