@@ -169,12 +169,17 @@ class EdiItemController extends Main {
         $dt_search = $request->request->get("search");
         $search = explode(":", $request->request->get("value"));
 
-        
-        $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search)));
-        @$articleIds2 = unserialize(base64_decode($search));
-        
-        print_r(@$articleIds2);
-        
+
+        if ($search[1]) {
+            $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
+            @$articleIds2 = unserialize(base64_decode($search[1]));
+        } else {
+            $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[0])));
+            @$articleIds2 = unserialize(base64_decode($search[0]));
+        }
+
+
+
         $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
         $articleIds[] = 1;
         $query = $em->createQuery(
@@ -327,7 +332,7 @@ class EdiItemController extends Main {
                 }
             }
 
-            
+
             $this->createOrderBy($fields, $dt_order);
             $this->createSelect($s);
             $select = count($s) > 0 ? implode(",", $s) : $this->prefix . ".*";
@@ -338,13 +343,13 @@ class EdiItemController extends Main {
             $this->createWhere();
             if (count($articleIds)) {
                 $edi = $dt_columns[1]["search"]["value"];
-                
+
                 //$edi = $em->getRepository("EdiBundle:Edi")->find(1);
-                $this->where = " where " . $this->prefix . ".Edi = '".$edi."' AND (" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . "))";
+                $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND (" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . "))";
             } else {
                 $this->createWhere();
             }
-            
+
             //echo $this->where."\n\n";
             $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
 
