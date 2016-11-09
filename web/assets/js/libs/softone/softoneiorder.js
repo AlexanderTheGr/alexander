@@ -289,6 +289,7 @@ jQuery(".product_info").live('click', function () {
     var ref = jQuery(this).attr("data-ref");
     var data = {};
     data.ref = ref;
+    var $dialog = {};
     $dialog.order = $("<div class='card'></div>")
             .dialog({
                 autoOpen: false,
