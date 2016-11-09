@@ -173,22 +173,30 @@ class EdiItemController extends Main {
         if ($search[1]) {
             $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
             @$articleIds2 = unserialize(base64_decode($search[1]));
+            $query = $em->createQuery(
+                    "SELECT  distinct(e.id) as eid, e.name as edi
+                    FROM " . $this->repository . " p, EdiBundle:Edi e
+                    where 
+                        e.id = p.Edi AND
+                        (p.partno LIKE '%" . $search[1] . "%' OR p.tecdocArticleId in (" . implode(",", $articleIds) . ")) "
+            );
         } else {
             $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[0])));
             @$articleIds2 = unserialize(base64_decode($search[0]));
+            $query = $em->createQuery(
+                    "SELECT  distinct(e.id) as eid, e.name as edi
+                    FROM " . $this->repository . " p, EdiBundle:Edi e
+                    where 
+                        e.id = p.Edi AND
+                        (p.tecdocArticleId in (" . implode(",", $articleIds) . ")) "
+            );
         }
 
 
 
         $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
         $articleIds[] = 1;
-        $query = $em->createQuery(
-                "SELECT  distinct(e.id) as eid, e.name as edi
-                    FROM " . $this->repository . " p, EdiBundle:Edi e
-                    where 
-                        e.id = p.Edi AND
-                        (p.partno LIKE '%" . $search[1] . "%' OR p.tecdocArticleId in (" . implode(",", $articleIds) . ")) "
-        );
+
         //echo "(p.partno LIKE '%" . $search[1] . "%' OR p.tecdocArticleId in (" . implode(",", $articleIds) . ")) ";
         $results = $query->getResult();
         $html .= '<button type="button" class="edibutton btn btn-raised ink-reaction" data-id="0">Invetory</button>';
