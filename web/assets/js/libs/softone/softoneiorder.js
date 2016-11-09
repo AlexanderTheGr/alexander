@@ -285,6 +285,17 @@ jQuery(".create_product").live('click', function () {
         }
     })
 })
+jQuery(".product_info").live('click', function () {
+    var ref = jQuery(this).attr("data-ref");
+    var data = {};
+    data.ref = ref;
+    $.post("/product/productInfo", data, function (result) {
+        
+    })
+})
+
+
+
 
 jQuery(".edibutton").live('click', function () {
     //productsearch = '';
