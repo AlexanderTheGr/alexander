@@ -172,12 +172,13 @@ class EdiItemController extends Main {
         $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
         $articleIds[] = 1;
         $query = $em->createQuery(
-                "SELECT  distinct(e.id) as eid, e.name as edi, p.id as pid
+                "SELECT  distinct(e.id) as eid, e.name as edi
                     FROM " . $this->repository . " p, EdiBundle:Edi e
                     where 
                         e.id = p.Edi AND
                         (p.partno LIKE '%" . $search[1] . "%' OR p.tecdocArticleId in (" . implode(",", $articleIds) . ")) "
         );
+        echo $query;
         $results = $query->getResult();
         $html .= '<button type="button" class="edibutton btn btn-raised ink-reaction" data-id="0">Invetory</button>';
         $edi = array();
