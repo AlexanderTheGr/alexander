@@ -471,6 +471,31 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+    
+    
+     /**
+     * 
+     * 
+     * @Route("/product/productInfo")
+     */
+    public function productInfo(Request $request) {
+
+        $buttons = array();
+       
+        $content =  $this->addOffCanvas(array('id' => 'asdf', "content" => 'teteteet', "index" => $this->generateRandomString()));
+
+        $content = $this->content();
+        return $this->render('SoftoneBundle:Product:view.html.twig', array(
+                    'pagename' => 's',
+                    'order' => $id,
+                    'url' => '/order/save',
+                    'buttons' => $buttons,
+                    'ctrl' => $this->generateRandomString(),
+                    'app' => $this->generateRandomString(),
+                    'content' => $content,
+                    'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
+        ));
+    }   
 
     /**
      * @Route("/product/fororderajaxjson")
