@@ -169,7 +169,9 @@ class EdiItemController extends Main {
         $dt_search = $request->request->get("search");
         $search = explode(":", $request->request->get("value"));
 
-        $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
+        
+        
+        $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring( $request->request->get("value"))));
         $articleIds[] = 1;
         $query = $em->createQuery(
                 "SELECT  distinct(e.id) as eid, e.name as edi
