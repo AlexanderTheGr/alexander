@@ -301,6 +301,8 @@ jQuery(".product_info").live('click', function () {
     $.post("/product/productInfo", data, function (result) {
         $dialog.productInfo.html(result);
         $dialog.productInfo.dialog( "open" );
+        $( "#productInfoTabs" ).tabs();
+
     })
 })
 
