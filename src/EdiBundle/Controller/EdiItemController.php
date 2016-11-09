@@ -170,8 +170,9 @@ class EdiItemController extends Main {
         $search = explode(":", $request->request->get("value"));
 
         
-        
-        $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring( $request->request->get("value"))));
+        $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search)));
+        @$articleIds2 = unserialize(base64_decode($search));
+        $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
         $articleIds[] = 1;
         $query = $em->createQuery(
                 "SELECT  distinct(e.id) as eid, e.name as edi
