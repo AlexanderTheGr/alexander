@@ -116,3 +116,4 @@ table.dataTable tbody tr {
 .dataTable input {
    width: 70px;
 }
+.ui-dialog { z-index: 100000 !important ;}
