@@ -502,7 +502,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             '<li>'.$m->getBrandModel().'</li>';
         }
         $egarmoges = '</ul>';
-        $out["efarmoges"] = unserialize($this->efarmoges($article_id));        
+        $out["efarmoges"] = $egarmoges;        
         
         //$content = 'sss';
         return $this->render('SoftoneBundle:Product:productInfo.html.twig', array(
