@@ -298,7 +298,8 @@ jQuery(".product_info").live('click', function () {
                 width: "auto",
                 modal: true
             });
-    $dialog.order.dialog( "open" ).css('zIndex',999900);        
+    $dialog.order.dialog( "open" );
+    $dialog.order.css('zIndex',999900);        
 })
 
 
