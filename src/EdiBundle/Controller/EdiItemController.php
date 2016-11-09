@@ -176,7 +176,7 @@ class EdiItemController extends Main {
                     FROM " . $this->repository . " p, EdiBundle:Edi e
                     where 
                         e.id = p.Edi AND
-                        p.partno LIKE '%" . $search[1] . "%' OR p.tecdocArticleId in (" . implode(",", $articleIds) . ") "
+                        (p.partno LIKE '%" . $search[1] . "%' OR p.tecdocArticleId in (" . implode(",", $articleIds) . ")) "
         );
         $results = $query->getResult();
         $html .= '<button type="button" class="edibutton btn btn-raised ink-reaction" data-id="0">Invetory</button>';
