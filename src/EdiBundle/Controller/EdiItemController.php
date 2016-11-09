@@ -181,6 +181,7 @@ class EdiItemController extends Main {
         $results = $query->getResult();
         $html .= '<button type="button" class="edibutton btn btn-raised ink-reaction" data-id="0">Invetory</button>';
         $edi = array();
+        print_r($data);
         foreach ($results as $data) {
             $edi[$data['eid']] = $data;
         }
