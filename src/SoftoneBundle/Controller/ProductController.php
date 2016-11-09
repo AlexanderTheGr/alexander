@@ -485,7 +485,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         //$content = $this->getoffcanvases($id);
         $content = $this->content();       
-        
+
         //$content = 'sss';
         return $this->render('SoftoneBundle:Product:productInfo.html.twig', array(
                     'pagename' => 's',
@@ -494,7 +494,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
-                    'content' => $this->originals($request->request->get("ref")),
+                    'content' => $html_entity_decode($this->originals($request->request->get("ref"))),
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }   
