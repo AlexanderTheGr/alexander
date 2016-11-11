@@ -10,6 +10,7 @@ use AppBundle\Controller\Main as Main;
 use SoftoneBundle\Entity\Order as Order;
 use SoftoneBundle\Entity\Orderitem as Orderitem;
 use SoftoneBundle\Entity\Softone as Softone;
+use AppBundle\Entity\Tecdoc as Tecdoc;
 
 class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
