@@ -478,21 +478,21 @@ class EdiItem extends Entity {
             $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($postparams);
             $tectdoccode = $postparams["tecdoc_code"];
             if (count($articleDirectSearchAllNumbers->data->array) == 0) {
-                $articleId = $tecdoc->getCorrectArtcleNr($tectdoccode, $postparams["tecdoc_supplier_id"]);
+                $articleId = $tecdoc->getCorrectArtcleNr($tectdoccode, $postparams["brandno"]);
                 if ($article != $tectdoccode) {
                     $params = array(
                         "articleNumber" => $articleId,
-                        "brandno" => $postparams["tecdoc_supplier_id"]
+                        "brandno" => $postparams["brandno"]
                     );
                     $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($params);
                 }
             }
             if (count($articleDirectSearchAllNumbers->data->array) == 0) {
-                $articleId = $tecdoc->getCorrectArtcleNr2(strtolower($tectdoccode), $postparams["tecdoc_supplier_id"]);
+                $articleId = $tecdoc->getCorrectArtcleNr2(strtolower($tectdoccode), $postparams["brandno"]);
                 if ($article != strtolower($tectdoccode)) {
                     $params = array(
                         "articleNumber" => $articleId,
-                        "brandno" => $postparams["tecdoc_supplier_id"]
+                        "brandno" => $postparams["brandno"]
                     );
                     $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($params);
                 }
