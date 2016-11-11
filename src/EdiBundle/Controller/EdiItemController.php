@@ -267,7 +267,7 @@ class EdiItemController extends Main {
                 "SELECT  p.id
                     FROM " . $this->repository . " p, EdiBundle:Edi e
                     where 
-                        e.id = p.Edi AND p.tecdocArticleId IS NULL AND p.dlnr > 0 AND p.id > 9478 order by p.id"
+                        e.id = p.Edi AND p.tecdocArticleId IS NULL AND p.dlnr > 0 AND p.id > 18900 order by p.id"
         );
         $results = $query->getResult();
         echo count($results);
@@ -282,7 +282,7 @@ class EdiItemController extends Main {
             }
             
             unset($ediediitem);
-            if ($i++ > 2000) exit;
+            if ($i++ > 3000) exit;
         }
         exit;
     }
