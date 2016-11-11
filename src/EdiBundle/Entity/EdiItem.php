@@ -499,6 +499,7 @@ class EdiItem extends Entity {
                 }
             }
             $out = $articleDirectSearchAllNumbers->data->array[0];
+            print_r($out);
         }
         try {
             //$em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
