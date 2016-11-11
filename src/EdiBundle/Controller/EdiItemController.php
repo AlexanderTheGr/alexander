@@ -271,6 +271,7 @@ class EdiItemController extends Main {
         $results = $query->getResult();
         echo count($results);
         $i = 0;
+        
         foreach ($results as $result) {
             $ediediitem = $em->getRepository($this->repository)->find($result["id"]);
             $ediediitem->updatetecdoc();
