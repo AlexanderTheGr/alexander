@@ -515,6 +515,7 @@ class EdiItem extends Entity {
             //$em->execute();
             if (@$out->articleId) {
                 //echo $out->articleId."<BR>";
+                echo $this->id."<BR>";
                 $this->setTecdocArticleId($out->articleId);
                 $this->setTecdocArticleName($out->articleName);
                 //$this->setTecdocGenericArticleId($out->articleName);
