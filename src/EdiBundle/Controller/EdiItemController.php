@@ -282,7 +282,7 @@ class EdiItemController extends Main {
             }
             
             unset($ediediitem);
-            //if ($i++ > 1000) exit;
+            if ($i++ > 2000) exit;
         }
         exit;
     }
