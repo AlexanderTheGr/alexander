@@ -450,7 +450,7 @@ class EdiItem extends Entity {
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         //$data_string = json_encode($data);
-        if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\web') {
+        //if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\web') {
             $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
             @$fields = array(
                 'action' => 'updateTecdoc',
@@ -468,7 +468,8 @@ class EdiItem extends Entity {
             curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
             $out = json_decode(curl_exec($ch));
-            
+             print_r($out);
+        /*    
         } else {
             
             $postparams = array(
@@ -501,6 +502,8 @@ class EdiItem extends Entity {
             $out = $articleDirectSearchAllNumbers->data->array[0];
             print_r($out);
         }
+         * 
+         */
         try {
             //$em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
             //$webserviceProduct = WebserviceProduct::model()->findByAttributes(array('product' =>  $this->id,"webservice"=>$this->webservice));
