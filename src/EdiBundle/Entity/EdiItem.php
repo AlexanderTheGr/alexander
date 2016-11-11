@@ -503,7 +503,7 @@ class EdiItem extends Entity {
                 }
             }
             $out = $articleDirectSearchAllNumbers->data->array[0];
-            print_r($out);
+            //print_r($out);
         }
         
         try {
@@ -513,6 +513,7 @@ class EdiItem extends Entity {
             //$em->createQuery($sql)->getResult();
             //$em->execute();
             if (@$out->articleId) {
+                echo $out->articleId."<BR>";
                 $this->setTecdocArticleId($out->articleId);
                 $this->setTecdocArticleName($out->articleName);
                 //$this->setTecdocGenericArticleId($out->articleName);
