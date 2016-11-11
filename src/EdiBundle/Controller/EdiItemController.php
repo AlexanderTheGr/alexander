@@ -266,7 +266,7 @@ class EdiItemController extends Main {
                 "SELECT  p.id
                     FROM " . $this->repository . " p, EdiBundle:Edi e
                     where 
-                        e.id = p.Edi"
+                        e.id = p.Edi AND p.tecdocArticleId = 0"
         );
         $results = $query->getResult();
         echo count($results);
