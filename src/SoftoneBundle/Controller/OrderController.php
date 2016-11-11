@@ -690,6 +690,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             foreach ($articles->data->array as $v) {
                 $articleIds[] = $v->articleId;
             }
+            print_r($articleIds);
             return serialize($articleIds);
         }
     }
