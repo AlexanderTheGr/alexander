@@ -470,6 +470,7 @@ class EdiItem extends Entity {
             $out = json_decode(curl_exec($ch));
             
         } else {
+            
             $postparams = array(
                 "articleNumber" => $this->artNr,
                 "brandno" => $this->dlnr
