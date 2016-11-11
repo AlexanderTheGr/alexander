@@ -277,9 +277,7 @@ class EdiItemController extends Main {
             $ediediitem = $em->getRepository($this->repository)->find($result["id"]);
             $ediediitem->tecdoc = $tecdoc;
             $ediediitem->updatetecdoc();
-            if ($i++ % 20 == 0) {
-                echo ".";
-            }
+
             
             unset($ediediitem);
             if ($i++ > 3000) exit;
