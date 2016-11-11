@@ -661,24 +661,33 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //   return $data;
         //} else {
         //ADBRP002
-        $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
-        $fields = array(
-            'action' => 'getSearch',
-            'search' => $search
-        );
-        $fields_string = '';
-        foreach ($fields as $key => $value) {
-            $fields_string .= $key . '=' . $value . '&';
+        if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\webb') {
+            $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
+            $fields = array(
+                'action' => 'getSearch',
+                'search' => $search
+            );
+            $fields_string = '';
+            foreach ($fields as $key => $value) {
+                $fields_string .= $key . '=' . $value . '&';
+            }
+            rtrim($fields_string, '&');
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, count($fields));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            $data = curl_exec($ch);
+            return $data;
+            //}
+        } else {
+            $tecdoc = new Tecdoc();
+            $articles = $this->getArticlesSearch($search);
+            foreach ($articles->data->array as $v) {
+                $articleIds[] = $v->articleId;
+            }
+            echo serialize($articleIds);
         }
-        rtrim($fields_string, '&');
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, count($fields));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        $data = curl_exec($ch);
-        return $data;
-        //}
     }
 
     function getTabContentSearch($order) {
