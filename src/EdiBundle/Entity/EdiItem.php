@@ -476,7 +476,7 @@ class EdiItem extends Entity {
             );
             $tecdoc = new Tecdoc();
             $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($postparams);
-            $tectdoccode = $postparams["tecdoc_code"];
+            $tectdoccode = $postparams[$this->artNr];
             if (count($articleDirectSearchAllNumbers->data->array) == 0) {
                 $articleId = $tecdoc->getCorrectArtcleNr($tectdoccode, $postparams["brandno"]);
                 if ($article != $tectdoccode) {
