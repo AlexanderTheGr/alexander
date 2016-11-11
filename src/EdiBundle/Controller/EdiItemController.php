@@ -271,9 +271,10 @@ class EdiItemController extends Main {
         $results = $query->getResult();
         echo count($results);
         $i = 0;
-        
+        $tecdoc = new Tecdoc();
         foreach ($results as $result) {
             $ediediitem = $em->getRepository($this->repository)->find($result["id"]);
+            $this->tecdoc = $tecdoc;
             $ediediitem->updatetecdoc();
             echo ".";
             //if ($i++ > 1000) exit;
