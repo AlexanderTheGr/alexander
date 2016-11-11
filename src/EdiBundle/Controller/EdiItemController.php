@@ -267,7 +267,7 @@ class EdiItemController extends Main {
                 "SELECT  p.id
                     FROM " . $this->repository . " p, EdiBundle:Edi e
                     where 
-                        e.id = p.Edi AND p.tecdocArticleId IS NULL AND p.dlnr > 0 AND p.id order by id"
+                        e.id = p.Edi AND p.tecdocArticleId IS NULL AND p.dlnr > 0 AND p.id > 0 order by id"
         );
         $results = $query->getResult();
         echo count($results);
