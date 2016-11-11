@@ -267,7 +267,7 @@ class EdiItemController extends Main {
                 "SELECT  p.id
                     FROM " . $this->repository . " p, EdiBundle:Edi e
                     where 
-                        e.id = p.Edi AND p.tecdocArticleId IS NULL AND p.dlnr > 0 AND p.id > 109802 order by p.id"
+                        e.id = p.Edi AND p.tecdocArticleId IS NULL AND p.dlnr > 0 order by p.id"
         );
         $results = $query->getResult();
         echo count($results);
@@ -277,10 +277,8 @@ class EdiItemController extends Main {
             $ediediitem = $em->getRepository($this->repository)->find($result["id"]);
             $ediediitem->tecdoc = $tecdoc;
             $ediediitem->updatetecdoc();
-
-            
-            unset($ediediitem);
-            if ($i++ > 3000) exit;
+            //unset($ediediitem);
+            //if ($i++ > 3000) exit;
         }
         exit;
     }
