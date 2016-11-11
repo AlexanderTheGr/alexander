@@ -663,6 +663,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //} else {
         //ADBRP002
         if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\webb') {
+            /*
             $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
             $fields = array(
                 'action' => 'getSearch',
@@ -681,10 +682,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $data = curl_exec($ch);
             return $data;
             //}
+             * 
+             */
         } else {
             echo $search;
             $tecdoc = new Tecdoc();
-            $articles = $tecdoc->getArticlesSearch($search);
+            $articles = $tecdoc->getArticlesSearch(array('search'=>$search));
             foreach ($articles->data->array as $v) {
                 $articleIds[] = $v->articleId;
             }
