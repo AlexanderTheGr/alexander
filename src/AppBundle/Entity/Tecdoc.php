@@ -11,7 +11,7 @@ namespace AppBundle\Entity;
 use AppBundle\Entity\Entity;
 
 if (file_exists("/home2/partsbox/Tecdoc.php")) {
-    require_once "/home2/partsbox/Tecdoc4.php";
+    require_once "/home2/partsbox/Tecdoc.php";
 }
 class Tecdoc extends Entity {
 
