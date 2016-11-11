@@ -513,7 +513,7 @@ class EdiItem extends Entity {
             //$em->createQuery($sql)->getResult();
             //$em->execute();
             if (@$out->articleId) {
-                echo $out->articleId."<BR>";
+                //echo $out->articleId."<BR>";
                 $this->setTecdocArticleId($out->articleId);
                 $this->setTecdocArticleName($out->articleName);
                 //$this->setTecdocGenericArticleId($out->articleName);
