@@ -685,7 +685,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
              * 
              */
         } else {
-            echo $search;
             $tecdoc = new Tecdoc();
             $articles = $tecdoc->getArticlesSearch(array('search'=>$search));
             foreach ($articles->data->array as $v) {
