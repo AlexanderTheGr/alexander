@@ -278,6 +278,7 @@ class EdiItemController extends Main {
             $ediediitem->tecdoc = $tecdoc;
             $ediediitem->updatetecdoc();
             echo ".";
+            unset($ediediitem);
             //if ($i++ > 1000) exit;
         }
         exit;
