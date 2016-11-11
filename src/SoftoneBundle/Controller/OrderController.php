@@ -664,6 +664,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //ADBRP002
         //if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\webb') {
             
+        
             $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
             $fields = array(
                 'action' => 'getSearch',
