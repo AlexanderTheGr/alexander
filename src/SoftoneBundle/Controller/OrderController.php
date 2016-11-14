@@ -662,8 +662,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //   return $data;
         //} else {
         //ADBRP002
-        //if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\webb') {
-            
+        if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\webb') {
+            /*
             $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
             $fields = array(
                 'action' => 'getSearch',
@@ -682,9 +682,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $data = curl_exec($ch);
             return $data;
             //}
-          
+             * 
+             */
         
-        /*    
+            
         } else {
             $tecdoc = new Tecdoc();
             $articles = $tecdoc->getArticlesSearch(array('search'=>$search));
@@ -695,8 +696,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             }
             return serialize($articleIds);
         }
-         * 
-         */
     }
 
     function getTabContentSearch($order) {
