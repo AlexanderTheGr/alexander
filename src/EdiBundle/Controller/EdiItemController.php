@@ -642,24 +642,34 @@ class EdiItemController extends Main {
         //   return $data;
         //} else {
         //ADBRP002
-        $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
-        $fields = array(
-            'action' => 'getSearch',
-            'search' => $search
-        );
-        $fields_string = '';
-        foreach ($fields as $key => $value) {
-            $fields_string .= $key . '=' . $value . '&';
-        }
-        rtrim($fields_string, '&');
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, count($fields));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        $data = curl_exec($ch);
-        return $data;
+        /*
+          $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
+          $fields = array(
+          'action' => 'getSearch',
+          'search' => $search
+          );
+          $fields_string = '';
+          foreach ($fields as $key => $value) {
+          $fields_string .= $key . '=' . $value . '&';
+          }
+          rtrim($fields_string, '&');
+          $ch = curl_init();
+          curl_setopt($ch, CURLOPT_URL, $url);
+          curl_setopt($ch, CURLOPT_POST, count($fields));
+          curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+          $data = curl_exec($ch);
+          return $data;
+         */
         //}
+        $tecdoc = new Tecdoc();
+        $articles = $tecdoc->getArticlesSearch(array('search' => $this->clearstring($search)));
+        //print_r($articles);
+        //echo $search;
+        foreach ($articles->data->array as $v) {
+            $articleIds[] = $v->articleId;
+        }
+        return serialize($articleIds);
     }
 
     /**
