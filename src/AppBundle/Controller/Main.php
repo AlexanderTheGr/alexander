@@ -190,7 +190,7 @@ class Main extends Controller {
     function clearstring2($string) {
         return addslashes(str_replace(array("'"), "", trim($string)));
     }
-    private function clearstring($search) {
+    function clearstring($search) {
         $search = str_replace(" ", "", trim($search));
         $search = str_replace(".", "", $search);
         $search = str_replace("-", "", $search);
