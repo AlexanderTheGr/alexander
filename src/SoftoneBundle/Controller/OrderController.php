@@ -667,8 +667,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
             
             $url = "http://service5.fastwebltd.com/partsbox.php";
-            
-            echo $url;
+
             
             $fields = array(
                 'action' => 'getSearch',
