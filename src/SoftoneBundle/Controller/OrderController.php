@@ -668,6 +668,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             
             $url = "http://service5.fastwebltd.com/partsbox.php";
             
+            echo $url;
+            
             $fields = array(
                 'action' => 'getSearch',
                 'search' => $search
