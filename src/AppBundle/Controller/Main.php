@@ -187,10 +187,17 @@ class Main extends Controller {
         return $value ? "YES" : "NO";
     }
 
-    function clearstring($string) {
+    function clearstring2($string) {
         return addslashes(str_replace(array("'"), "", trim($string)));
     }
-
+    private function clearstring($search) {
+        $search = str_replace(" ", "", trim($search));
+        $search = str_replace(".", "", $search);
+        $search = str_replace("-", "", $search);
+        $search = str_replace("/", "", $search);
+        $search = strtoupper($search);
+        return $search;
+    }
     function createSelect($s = array()) {
         foreach ($s as $v => $f) {
             //$s[$v] = "IDENTITY(".$f.")";
