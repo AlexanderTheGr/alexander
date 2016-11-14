@@ -688,7 +688,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             
         } else {
             $tecdoc = new Tecdoc();
-            $articles = $tecdoc->getArticlesSearch(array('search'=>$search));
+            $articles = $tecdoc->getArticlesSearch(array('search'=>$this->clearstring($search)));
             //print_r($articles);
             //echo $search;
             foreach ($articles->data->array as $v) {
