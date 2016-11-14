@@ -11,8 +11,12 @@ namespace AppBundle\Entity;
 use AppBundle\Entity\Entity;
 
 if (file_exists("/home2/partsbox/Tecdoc.php")) {
-    require_once "/home2/partsbox/Tecdoc.php";
+    //require_once "/home2/partsbox/Tecdoc.php";
 }
+if (file_exists("/tecdoc3/php/Tecdoc3.php")) {
+    require "/tecdoc3/php/Tecdoc4.php";
+}
+
 class Tecdoc extends Entity {
 
     public $soap;
