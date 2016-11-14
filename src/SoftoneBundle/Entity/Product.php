@@ -1727,64 +1727,63 @@ class Product extends Entity {
 
         //$data_string = json_encode($data);
         $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
-        //if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\webb') {
-        $fields = array(
-            'action' => 'updateTecdoc',
-            'tecdoc_code' => $this->tecdocCode,
-            'tecdoc_supplier_id' => $this->getTecdocSupplierId()->getId(),
-        );
-        $fields_string = '';
-        foreach ($fields as $key => $value) {
-            @$fields_string .= $key . '=' . $value . '&';
+        if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\webb') {
+            $fields = array(
+                'action' => 'updateTecdoc',
+                'tecdoc_code' => $this->tecdocCode,
+                'tecdoc_supplier_id' => $this->getTecdocSupplierId()->getId(),
+            );
+            $fields_string = '';
+            foreach ($fields as $key => $value) {
+                @$fields_string .= $key . '=' . $value . '&';
+            }
+            rtrim($fields_string, '&');
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, count($fields));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+
+
+            $out = json_decode(curl_exec($ch));
+
+            // print_r($fields);
+            //echo $out;
+            //echo 'sssssssssss';
+        } else {
+
+            $postparams = array(
+                "articleNumber" => $this->tecdocCode,
+                "brandno" => $this->getTecdocSupplierId()->getId()
+            );
+            $tecdoc = new Tecdoc();
+
+            $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($postparams);
+            $tectdoccode = $this->tecdocCode;
+            if (count($articleDirectSearchAllNumbers->data->array) == 0) {
+                $articleId = $tecdoc->getCorrectArtcleNr($tectdoccode, $postparams["brandno"]);
+                if ($article != $tectdoccode) {
+                    $params = array(
+                        "articleNumber" => $articleId,
+                        "brandno" => $postparams["brandno"]
+                    );
+                    $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($params);
+                }
+            }
+            if (count($articleDirectSearchAllNumbers->data->array) == 0) {
+                $articleId = $tecdoc->getCorrectArtcleNr2(strtolower($tectdoccode), $postparams["brandno"]);
+                if ($article != strtolower($tectdoccode)) {
+                    $params = array(
+                        "articleNumber" => $articleId,
+                        "brandno" => $postparams["brandno"]
+                    );
+                    $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($params);
+                }
+            }
+            $out = $articleDirectSearchAllNumbers->data->array[0];
         }
-        rtrim($fields_string, '&');
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, count($fields));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 
-
-
-        $out = json_decode(curl_exec($ch));
-
-        // print_r($fields);
-        //echo $out;
-        //echo 'sssssssssss';
-        /*
-          } else {
-
-          $postparams = array(
-          "articleNumber" => $this->tecdocCode,
-          "brandno" => $this->getTecdocSupplierId()->getId()
-          );
-          $tecdoc = new Tecdoc();
-          $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($params);
-          $tectdoccode = $postparams["tecdoc_code"];
-          if (count($articleDirectSearchAllNumbers->data->array) == 0) {
-          $articleId = $tecdoc->getCorrectArtcleNr($tectdoccode, $postparams["tecdoc_supplier_id"]);
-          if ($article != $tectdoccode) {
-          $params = array(
-          "articleNumber" => $articleId,
-          "brandno" => $postparams["tecdoc_supplier_id"]
-          );
-          $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($params);
-          }
-          }
-          if (count($articleDirectSearchAllNumbers->data->array) == 0) {
-          $articleId = $tecdoc->getCorrectArtcleNr2(strtolower($tectdoccode), $postparams["tecdoc_supplier_id"]);
-          if ($article != strtolower($tectdoccode)) {
-          $params = array(
-          "articleNumber" => $articleId,
-          "brandno" => $postparams["tecdoc_supplier_id"]
-          );
-          $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($params);
-          }
-          }
-          $out = $articleDirectSearchAllNumbers->data->array[0];
-          }
-         * 
-         */
         //print_r($out);
 
         try {
@@ -2330,7 +2329,7 @@ class Product extends Entity {
         $sql = "replace softone_product_freesearch set id = '" . $this->id . "', data_index='" . $dataindex . "'";
         $em->getConnection()->exec($sql);
         $sql = "replace softone_product_search set id = '" . $this->id . "',item_code='" . $this->itemCode . "',item_code1='" . $this->itemCode1 . "',item_code2='" . $this->supplierCode . "'";
-        $em->getConnection()->exec($sql);        
+        $em->getConnection()->exec($sql);
     }
 
 }
