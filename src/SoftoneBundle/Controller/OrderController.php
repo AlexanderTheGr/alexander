@@ -826,6 +826,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         
         //print_r($tecdocArticleIds);
         $tecdocEdiArticleIds = array();
+        
         if (count($articleIds)) {
             $query = $em->createQuery(
                     "SELECT  p.tecdocArticleId
