@@ -813,23 +813,27 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $em = $this->getDoctrine()->getManager();
 
         //print_r($tecdocArticleIds);
-
+        $articleIds = array();
         foreach ($data as $key => $dt) {
-            $tecdocEdiArticleIds = array();
-            if (count($dt->articleIds)) {
-                $query = $em->createQuery(
-                        "SELECT  p.id
+            foreach ($dt->articleIds as $articleId) {
+                $articleIds[] = $articleId;
+            }
+        }
+        $tecdocEdiArticleIds = array();
+        if (count($articleIds)) {
+            $query = $em->createQuery(
+                    "SELECT  p.id
                         FROM 'EdiBundle:EdiItem' p, EdiBundle:Edi e
                         where 
-                            e.id = p.Edi AND p.tecdocArticleId in (" . implode(",", $dt->articleIds) . ")"
-                );
-                $products = $query->getResult();
-                
-                foreach ($products as $product) {
-                    $tecdocEdiArticleIds[] = $product["tecdocArticleId"];
-                }
-            }
+                            e.id = p.Edi AND p.tecdocArticleId in (" . implode(",", $articleIds) . ")"
+            );
+            $products = $query->getResult();
 
+            foreach ($products as $product) {
+                $tecdocEdiArticleIds[] = $product["tecdocArticleId"];
+            }
+        }
+        foreach ($data as $key => $dt) {
             $matched = array_intersect(@(array) $dt->articleIds, $tecdocArticleIds);
             $edimatched = array_intersect(@(array) $dt->articleIds, $tecdocEdiArticleIds);
             $dt->matched = array();
