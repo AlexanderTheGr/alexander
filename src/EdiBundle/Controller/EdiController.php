@@ -90,7 +90,7 @@ class EdiController extends Main {
         //return;
         $apiToken = $entity["token"];
         echo $apiToken . "<BR>";
-        //return;
+        return;
         $file = "/home2/partsbox/".$apiToken . '.csv';
         $fiestr = gzdecode(file_get_contents($this->getEdiPartMasterFile($entity["token"])));
         file_put_contents($file, $fiestr);
@@ -143,7 +143,7 @@ class EdiController extends Main {
     }
 
     public function getEltrekaPartMaster($entity) {
-        //return;
+        return;
         set_time_limit(100000);
         $eltrekaedi = new Eltrekaedi();
         $file = $eltrekaedi->getPartMasterFile();
