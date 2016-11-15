@@ -187,7 +187,7 @@ class EdiController extends Main {
                 @$ediedi_id = (int) $ediediitem->id;
                 echo $attributes["partno"] . " " . $ediedi_id . "<BR>";
                 if (@$ediedi_id == 0) {
-                    $sql = "replace replace.edi_item set "
+                    $sql = "replace partsbox_db.edi_item set "
                             . "id = '" . $ediedi_id . "', "
                             . "edi='" . $entity["id"] . "', "
                             . "itemcode='" . $attributes["partno"] . "', "
