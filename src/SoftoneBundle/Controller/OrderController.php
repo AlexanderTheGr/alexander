@@ -815,7 +815,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //print_r($tecdocArticleIds);
 
         foreach ($data as $key => $dt) {
-
+            $tecdocEdiArticleIds = array();
             if (count($dt->articleIds)) {
                 $query = $em->createQuery(
                         "SELECT  p.id
@@ -824,7 +824,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                             e.id = p.Edi AND p.tecdocArticleId in (" . implode(",", $dt->articleIds) . ")"
                 );
                 $products = $query->getResult();
-                $tecdocEdiArticleIds = array();
+                
                 foreach ($products as $product) {
                     $tecdocEdiArticleIds[] = $product["tecdocArticleId"];
                 }
