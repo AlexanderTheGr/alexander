@@ -91,6 +91,7 @@ class EdiController extends Main {
         $apiToken = $entity["token"];
         echo $apiToken . "<BR>";
         //return;
+        $tecdoc = new Tecdoc();
         $file = "/home2/partsbox/".$apiToken . '.csv';
         $fiestr = gzdecode(file_get_contents($this->getEdiPartMasterFile($entity["token"])));
         file_put_contents($file, $fiestr);
@@ -137,6 +138,7 @@ class EdiController extends Main {
                             ->getRepository('EdiBundle:EdiItem')
                             ->findOneBy(array("itemCode" => $attributes["itemcode"], "Edi" => $ediedi));
                 }
+                $ediediitem->tecdoc = $tecdoc;
                 $ediediitem->updatetecdoc();
                 //if ($i++ > 60) return;
             }
