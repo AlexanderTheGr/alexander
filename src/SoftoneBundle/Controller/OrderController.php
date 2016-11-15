@@ -808,14 +808,34 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ($products as $product) {
             $tecdocArticleIds[] = $product->getTecdocArticleId();
         }
+        
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+                "SELECT  p.id
+                    FROM " . $this->repository . " p, EdiBundle:Edi e
+                    where 
+                        e.id = p.Edi AND p.tecdocArticleId > 0 AND p.dlnr > 0 order by p.id"
+        );                
+        $products = $query->getResult();
+        $tecdocEdiArticleIds = array();
+        foreach ($products as $product) {
+            $tecdocEdiArticleIds[] = $product->getTecdocArticleId();
+        }
         //print_r($tecdocArticleIds);
         
         foreach ($data as $key => $dt) {
             $matched = array_intersect(@(array) $dt->articleIds, $tecdocArticleIds);
+            $edimatched = array_intersect(@(array) $dt->articleIds, $tecdocEdiArticleIds);
             $dt->matched = array();
             $dt->matched = base64_encode(serialize($matched));
             $dt->matched_count = count($matched);
+            
+            $dt->edimatched = array();
+            $dt->edimatched = base64_encode(serialize($edimatched));
+            $dt->edimatched_count = count($edimatched);            
+
             $all["matched"] = (array) $matched;
+            $all["edimatched"] = (array) $edimatched;
             $all["articleIds"] = @(array) $dt->articleIds;
             $dt->all = base64_encode(serialize($all));
             //$data[$key] = $dt;
