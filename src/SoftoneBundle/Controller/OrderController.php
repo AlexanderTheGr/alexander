@@ -791,7 +791,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
           $data = curl_exec($ch);
           $data = unserialize($data);
          */
-
+        $em = $this->getDoctrine()->getManager();
         $tecdoc = new Tecdoc();
         $params["linkingTargetId"] = $request->request->get("car");
         $data = $tecdoc->linkedChildNodesAllLinkingTargetTree($params);
@@ -829,7 +829,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             }
         }
         
-        $em = $this->getDoctrine()->getManager();
+        
         //print_r($tecdocArticleIds);
         $tecdocEdiArticleIds = array();
         if (count($articleIds)) {
