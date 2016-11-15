@@ -481,7 +481,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $articleIds = array_unique((array) $articleIds);
             $de = array_diff((array) $articleIds, (array) $f);
             //print_r($de);
-            $out = unserialize($this->getArticlesSearchByIds(implode(",", (array) $de)));
+            $out = $this->getArticlesSearchByIds(implode(",", (array) $de));
             $p = array();
             foreach ($out as $v) {
                 $p[$v->articleId] = $v;
@@ -635,6 +635,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //$data = file_get_contents(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term");
         //return $data;
         //} else {
+        /*
         $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
         $fields = array(
             'action' => 'getSearchByIds',
@@ -652,6 +653,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         $data = curl_exec($ch);
         //file_put_contents(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term", $data);
+        */
+        $tecdoc = new Tecdoc();
+        $data = $this->getArticlesSearchByIds($params);	
+        
         return $data;
         //}
     }
@@ -666,7 +671,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             /*
             $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
             
-            $url = "http://service5.fastwebltd.com/partsbox.php";
 
             
             $fields = array(
