@@ -816,7 +816,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 "SELECT  p.id
                     FROM 'EdiBundle:EdiItem' p, EdiBundle:Edi e
                     where 
-                        e.id = p.Edi AND p.tecdocArticleId > 0 AND p.dlnr > 0 order by p.id"
+                        e.id = p.Edi AND p.tecdocArticleId in (".  implode(",", $tecdocArticleIds).") AND p.dlnr > 0 order by p.id"
         );                
         $products = $query->getResult();
         $tecdocEdiArticleIds = array();
