@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use EdiBundle\Entity\Edi as Edi;
 use EdiBundle\Entity\Eltrekaedi;
+use AppBundle\Entity\Tecdoc as Tecdoc;
 use AppBundle\Controller\Main as Main;
 
 class EdiController extends Main {
