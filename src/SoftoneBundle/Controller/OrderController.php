@@ -795,7 +795,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $tecdoc = new Tecdoc();
         $params["linkingTargetId"] = $request->request->get("car");
         $data = $tecdoc->linkedChildNodesAllLinkingTargetTree($params);
-
+        $articleIds = array();
+        foreach ($data as $key => $dt) {
+            foreach ((array)$dt->articleIds as $articleId) {
+                $articleIds[] = $articleId;
+            }
+        }
 
         //print_r($data);
         $repository = $this->getDoctrine()->getRepository('SoftoneBundle:Product');
@@ -809,26 +814,32 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ($products as $product) {
             $tecdocArticleIds[] = $product->getTecdocArticleId();
         }
+        
+        $tecdocArticleIds = array();
+        if (count($articleIds)) {
+            $query = $em->createQuery(
+                    "SELECT  p.tecdocArticleId
+                        FROM 'SoftoneBundle:Product' p
+                        where p.tecdocArticleId in (" . implode(",", $articleIds) . ")"
+            );
+            $products = $query->getResult();
 
-        $em = $this->getDoctrine()->getManager();
-
-        //print_r($tecdocArticleIds);
-        $articleIds = array();
-        foreach ($data as $key => $dt) {
-            foreach ((array)$dt->articleIds as $articleId) {
-                $articleIds[] = $articleId;
+            foreach ($products as $product) {
+                $tecdocArticleIds[] = $product["tecdocArticleId"];
             }
         }
+        
+        $em = $this->getDoctrine()->getManager();
+        //print_r($tecdocArticleIds);
         $tecdocEdiArticleIds = array();
         if (count($articleIds)) {
             $query = $em->createQuery(
-                    "SELECT  p.id
+                    "SELECT  p.tecdocArticleId
                         FROM 'EdiBundle:EdiItem' p, EdiBundle:Edi e
                         where 
                             e.id = p.Edi AND p.tecdocArticleId in (" . implode(",", $articleIds) . ")"
             );
             $products = $query->getResult();
-
             foreach ($products as $product) {
                 $tecdocEdiArticleIds[] = $product["tecdocArticleId"];
             }
