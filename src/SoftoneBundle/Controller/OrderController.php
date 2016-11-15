@@ -655,7 +655,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //file_put_contents(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term", $data);
         */
         $tecdoc = new Tecdoc();
-        $data = $this->getArticlesSearchByIds($params);	
+        $data = $tecdoc->getArticlesSearchByIds($params);	
         
         return $data;
         //}
