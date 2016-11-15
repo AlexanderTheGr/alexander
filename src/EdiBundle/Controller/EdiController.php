@@ -216,7 +216,7 @@ class EdiController extends Main {
                 }
                 @$eltrekaedi_id = (int) $eltrekaedi->id;
                 //if ($eltrekaedi_id == 0) {
-                $sql = "replace replace.eltrekaedi set id = '" . $eltrekaedi_id . "', ediitem = '" . $ediedi_id . "', " . implode(",", $q);
+                $sql = "replace partsbox_db.eltrekaedi set id = '" . $eltrekaedi_id . "', ediitem = '" . $ediedi_id . "', " . implode(",", $q);
                 $em->getConnection()->exec($sql);
                 //}
                 //if ($i++ > 30) return;
