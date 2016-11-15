@@ -11,7 +11,8 @@ use SoftoneBundle\Entity\Order as Order;
 use SoftoneBundle\Entity\Orderitem as Orderitem;
 use SoftoneBundle\Entity\Softone as Softone;
 use AppBundle\Entity\Tecdoc as Tecdoc;
-
+use EdiBundle\Entity\EdiItem;
+use EdiBundle\Entity\Edi;
 
 class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
