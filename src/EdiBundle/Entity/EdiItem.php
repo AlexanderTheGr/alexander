@@ -614,6 +614,8 @@ class EdiItem extends Entity {
                     $edis = unserialize($product->getEdis());
                 }
                 $edis[] = $this->id;
+                $edis[] = $product->getEdiId();
+                $edis = array_filter(array_unique($edis));
                 $product->setEdis(serialize($edis));
                 $em->persist($product);
                 $em->flush();
