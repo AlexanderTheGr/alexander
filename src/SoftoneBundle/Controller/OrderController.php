@@ -821,7 +821,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $products = $query->getResult();
         $tecdocEdiArticleIds = array();
         foreach ($products as $product) {
-            $tecdocEdiArticleIds[] = $product->getTecdocArticleId();
+            $tecdocEdiArticleIds[] = $product["tecdocArticleId"];
         }
         //print_r($tecdocArticleIds);
         
