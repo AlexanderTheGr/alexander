@@ -138,8 +138,8 @@ class EdiController extends Main {
                     $ediediitem = $this->getDoctrine()
                             ->getRepository('EdiBundle:EdiItem')
                             ->findOneBy(array("itemCode" => $attributes["itemcode"], "Edi" => $ediedi));
-                    $ediediitem->tecdoc = $tecdoc;
-                    $ediediitem->updatetecdoc();
+                    //$ediediitem->tecdoc = $tecdoc;
+                    //$ediediitem->updatetecdoc();
                 }
 
                 //if ($i++ > 60) return;
