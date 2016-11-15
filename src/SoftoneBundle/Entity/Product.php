@@ -2332,4 +2332,33 @@ class Product extends Entity {
         $em->getConnection()->exec($sql);
     }
 
+    /**
+     * @var string
+     */
+    private $edis;
+
+
+    /**
+     * Set edis
+     *
+     * @param string $edis
+     *
+     * @return Product
+     */
+    public function setEdis($edis)
+    {
+        $this->edis = $edis;
+
+        return $this;
+    }
+
+    /**
+     * Get edis
+     *
+     * @return string
+     */
+    public function getEdis()
+    {
+        return $this->edis;
+    }
 }
