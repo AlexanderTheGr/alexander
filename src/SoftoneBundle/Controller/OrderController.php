@@ -798,7 +798,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ($products as $product) {
             $tecdocArticleIds[] = $product->getTecdocArticleId();
         }
-        //print_r($tecdocArticleIds);
+        print_r($tecdocArticleIds);
 
         foreach ($data as $key => $dt) {
             $matched = array_intersect(@(array) $dt->articleIds, $tecdocArticleIds);
