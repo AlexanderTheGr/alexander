@@ -615,6 +615,7 @@ class EdiItemController extends Main {
         //$data = file_get_contents(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term");
         //return $data;
         //} else {
+        /*
         $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
         $fields = array(
             'action' => 'getSearchByIds',
@@ -632,7 +633,15 @@ class EdiItemController extends Main {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         $data = curl_exec($ch);
         //file_put_contents(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term", $data);
-        return $data;
+        */
+        $params = array(
+            'search' => $search
+        );        
+        $tecdoc = new Tecdoc();
+        $data = $tecdoc->getArticlesSearchByIds($params);	
+        return $data->data->array;          
+        
+        //return $data;
         //}
     }
 
