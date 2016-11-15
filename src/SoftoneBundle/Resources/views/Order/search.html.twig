@@ -143,7 +143,6 @@
             data.order = '{{order}}';
             jQuery(".subcategories").html("");
             jQuery(".categories").html("");
-            alert("ss");
             if (data.car > 0) {
                 jQuery.post("/order/getcategories", data, function (json) {
                     var nodes = [];
