@@ -137,7 +137,7 @@ class EdiController extends Main {
                             ->findOneBy(array("itemCode" => $attributes["itemcode"], "Edi" => $ediedi));
                 }
                 $ediediitem->updatetecdoc();
-                if ($i++ > 60) exit;
+                if ($i++ > 60) return;
             }
         }
     }
