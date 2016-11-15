@@ -764,7 +764,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     function getcategories(Request $request) {
 
 
-        /*
+        
         $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
         $fields = array(
             'action' => 'getcarcategories',
@@ -782,13 +782,15 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         $data = curl_exec($ch);
         $data = unserialize($data);
-        */
+        
+        print_r($data);
+        /*
         $tecdoc = new Tecdoc();
         $params["linkingTargetId"] = $request->request->get("car");
         $data = $tecdoc->linkedChildNodesAllLinkingTargetTreeIds($params);
         
         
-        print_r($data);
+        
         $repository = $this->getDoctrine()->getRepository('SoftoneBundle:Product');
         $query = $repository->createQueryBuilder('p')
                 ->where('p.tecdocArticleId > :tecdocArticleId')
@@ -801,7 +803,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $tecdocArticleIds[] = $product->getTecdocArticleId();
         }
         print_r($tecdocArticleIds);
-        
+        */
         foreach ($data as $key => $dt) {
             $matched = array_intersect(@(array) $dt->articleIds, $tecdocArticleIds);
             $dt->matched = array();
