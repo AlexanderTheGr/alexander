@@ -136,6 +136,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //$data = file_get_contents(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term");
         //return $data;
         //} else {
+        /*
         $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
         $fields = array(
             'action' => 'getSearchByIds',
@@ -152,8 +153,15 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         $data = curl_exec($ch);
+        */
         //file_put_contents(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term", $data);
-        return $data;
+        $params = array(
+            'search' => $search
+        );        
+        $tecdoc = new Tecdoc();
+        $data = $tecdoc->getArticlesSearchByIds($params);	
+        return $data->data->array;        
+        //return $data;
         //}
     }
 
