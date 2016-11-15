@@ -13,6 +13,7 @@ use SoftoneBundle\Entity\Softone as Softone;
 class EdiItem extends Entity {
 
     var $tecdoc;
+
     public function getField($field) {
         return $this->$field;
     }
@@ -451,62 +452,63 @@ class EdiItem extends Entity {
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         //$data_string = json_encode($data);
-        if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\web') {
-            $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
-            @$fields = array(
-                'action' => 'updateTecdoc',
-                'tecdoc_code' => $this->artNr,
-                'tecdoc_supplier_id' => $this->dlnr,
-            );
-            
-            //print_r($fields);
-            
-            $fields_string = '';
-            foreach ($fields as $key => $value) {
-                @$fields_string .= $key . '=' . $value . '&';
+        /*
+          if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\web') {
+          $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
+          @$fields = array(
+          'action' => 'updateTecdoc',
+          'tecdoc_code' => $this->artNr,
+          'tecdoc_supplier_id' => $this->dlnr,
+          );
+
+          //print_r($fields);
+
+          $fields_string = '';
+          foreach ($fields as $key => $value) {
+          @$fields_string .= $key . '=' . $value . '&';
+          }
+          rtrim($fields_string, '&');
+          $ch = curl_init();
+          curl_setopt($ch, CURLOPT_URL, $url);
+          curl_setopt($ch, CURLOPT_POST, count($fields));
+          curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+          $out = json_decode(curl_exec($ch));
+          print_r($out);
+
+          } else {
+         */
+        $postparams = array(
+            "articleNumber" => $this->artNr,
+            "brandno" => $this->dlnr
+        );
+        $tecdoc = $this->tecdoc; //new Tecdoc();
+        $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($postparams);
+        $tectdoccode = $this->artNr;
+        if (count($articleDirectSearchAllNumbers->data->array) == 0) {
+            $articleId = $tecdoc->getCorrectArtcleNr($tectdoccode, $postparams["brandno"]);
+            if ($article != $tectdoccode) {
+                $params = array(
+                    "articleNumber" => $articleId,
+                    "brandno" => $postparams["brandno"]
+                );
+                $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($params);
             }
-            rtrim($fields_string, '&');
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_POST, count($fields));
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-            $out = json_decode(curl_exec($ch));
-             print_r($out);
-            
-        } else {
-            
-            $postparams = array(
-                "articleNumber" => $this->artNr,
-                "brandno" => $this->dlnr
-            );
-            $tecdoc = $this->tecdoc; //new Tecdoc();
-            $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($postparams);
-            $tectdoccode = $this->artNr;
-            if (count($articleDirectSearchAllNumbers->data->array) == 0) {
-                $articleId = $tecdoc->getCorrectArtcleNr($tectdoccode, $postparams["brandno"]);
-                if ($article != $tectdoccode) {
-                    $params = array(
-                        "articleNumber" => $articleId,
-                        "brandno" => $postparams["brandno"]
-                    );
-                    $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($params);
-                }
-            }
-            if (count($articleDirectSearchAllNumbers->data->array) == 0) {
-                $articleId = $tecdoc->getCorrectArtcleNr2(strtolower($tectdoccode), $postparams["brandno"]);
-                if ($article != strtolower($tectdoccode)) {
-                    $params = array(
-                        "articleNumber" => $articleId,
-                        "brandno" => $postparams["brandno"]
-                    );
-                    $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($params);
-                }
-            }
-            $out = $articleDirectSearchAllNumbers->data->array[0];
-            //print_r($out);
         }
-        
+        if (count($articleDirectSearchAllNumbers->data->array) == 0) {
+            $articleId = $tecdoc->getCorrectArtcleNr2(strtolower($tectdoccode), $postparams["brandno"]);
+            if ($article != strtolower($tectdoccode)) {
+                $params = array(
+                    "articleNumber" => $articleId,
+                    "brandno" => $postparams["brandno"]
+                );
+                $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($params);
+            }
+        }
+        $out = $articleDirectSearchAllNumbers->data->array[0];
+        //print_r($out);
+        // }
+
         try {
             //$em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
             //$webserviceProduct = WebserviceProduct::model()->findByAttributes(array('product' =>  $this->id,"webservice"=>$this->webservice));
@@ -515,7 +517,7 @@ class EdiItem extends Entity {
             //$em->execute();
             if (@$out->articleId) {
                 //echo $out->articleId."<BR>";
-                echo $this->id."<BR>";
+                echo $this->id . "<BR>";
                 $this->setTecdocArticleId($out->articleId);
                 $this->setTecdocArticleName($out->articleName);
                 //$this->setTecdocGenericArticleId($out->articleName);
