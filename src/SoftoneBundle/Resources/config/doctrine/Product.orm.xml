@@ -54,7 +54,13 @@
                 <option name="unsigned"/>
             </options>
         </field>        
-        
+
+        <field name="edis" type="text" column="title" length="65535" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>         
+                        
         <field name="title" type="text" column="title" length="65535" nullable="true">
             <options>
                 <option name="fixed"/>
