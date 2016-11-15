@@ -639,29 +639,29 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //return $data;
         //} else {
         /*
-        $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
-        $fields = array(
-            'action' => 'getSearchByIds',
-            'search' => $search
-        );
-        $fields_string = '';
-        foreach ($fields as $key => $value) {
-            $fields_string .= $key . '=' . $value . '&';
-        }
-        rtrim($fields_string, '&');
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, count($fields));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        $data = curl_exec($ch);
-        //file_put_contents(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term", $data);
-        */
+          $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
+          $fields = array(
+          'action' => 'getSearchByIds',
+          'search' => $search
+          );
+          $fields_string = '';
+          foreach ($fields as $key => $value) {
+          $fields_string .= $key . '=' . $value . '&';
+          }
+          rtrim($fields_string, '&');
+          $ch = curl_init();
+          curl_setopt($ch, CURLOPT_URL, $url);
+          curl_setopt($ch, CURLOPT_POST, count($fields));
+          curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+          $data = curl_exec($ch);
+          //file_put_contents(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term", $data);
+         */
         $params = array(
             'search' => $search
-        );        
+        );
         $tecdoc = new Tecdoc();
-        $data = $tecdoc->getArticlesSearchByIds($params);	
+        $data = $tecdoc->getArticlesSearchByIds($params);
         return $data->data->array;
         //}
     }
@@ -673,42 +673,41 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //} else {
         //ADBRP002
         //if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\webb') {
-            /*
-            $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
-            
+        /*
+          $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
 
-            
-            $fields = array(
-                'action' => 'getSearch',
-                'search' => $search
-            );
-            $fields_string = '';
-            foreach ($fields as $key => $value) {
-                $fields_string .= $key . '=' . $value . '&';
-            }
-            rtrim($fields_string, '&');
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_POST, count($fields));
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-            $data = curl_exec($ch);
-            return $data;
-            //}
-             */
-        
-         
+
+
+          $fields = array(
+          'action' => 'getSearch',
+          'search' => $search
+          );
+          $fields_string = '';
+          foreach ($fields as $key => $value) {
+          $fields_string .= $key . '=' . $value . '&';
+          }
+          rtrim($fields_string, '&');
+          $ch = curl_init();
+          curl_setopt($ch, CURLOPT_URL, $url);
+          curl_setopt($ch, CURLOPT_POST, count($fields));
+          curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+          $data = curl_exec($ch);
+          return $data;
+          //}
+         */
+
+
         //} else {
-            $tecdoc = new Tecdoc();
-            $articles = $tecdoc->getArticlesSearch(array('search'=>$this->clearstring($search)));
-            //print_r($articles);
-            //echo $search;
-            foreach ($articles->data->array as $v) {
-                $articleIds[] = $v->articleId;
-            }
-            return serialize($articleIds);
+        $tecdoc = new Tecdoc();
+        $articles = $tecdoc->getArticlesSearch(array('search' => $this->clearstring($search)));
+        //print_r($articles);
+        //echo $search;
+        foreach ($articles->data->array as $v) {
+            $articleIds[] = $v->articleId;
+        }
+        return serialize($articleIds);
         //}
-
     }
 
     function getTabContentSearch($order) {
@@ -774,67 +773,72 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
 
         /*
-        $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
-        $fields = array(
-            'action' => 'getcarcategories',
-            'linkingTargetId' => $request->request->get("car")
-        );
-        $fields_string = "";
-        foreach ($fields as $key => $value) {
-            $fields_string .= $key . '=' . $value . '&';
-        }
-        rtrim($fields_string, '&');
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, count($fields));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        $data = curl_exec($ch);
-        $data = unserialize($data);
-        */
-        
+          $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
+          $fields = array(
+          'action' => 'getcarcategories',
+          'linkingTargetId' => $request->request->get("car")
+          );
+          $fields_string = "";
+          foreach ($fields as $key => $value) {
+          $fields_string .= $key . '=' . $value . '&';
+          }
+          rtrim($fields_string, '&');
+          $ch = curl_init();
+          curl_setopt($ch, CURLOPT_URL, $url);
+          curl_setopt($ch, CURLOPT_POST, count($fields));
+          curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+          $data = curl_exec($ch);
+          $data = unserialize($data);
+         */
+
         $tecdoc = new Tecdoc();
         $params["linkingTargetId"] = $request->request->get("car");
         $data = $tecdoc->linkedChildNodesAllLinkingTargetTree($params);
-        
-        
+
+
         //print_r($data);
         $repository = $this->getDoctrine()->getRepository('SoftoneBundle:Product');
         $query = $repository->createQueryBuilder('p')
                 ->where('p.tecdocArticleId > :tecdocArticleId')
                 ->setParameter('tecdocArticleId', '0')
                 ->getQuery();
-        
+
         $products = $query->getResult();
         $tecdocArticleIds = array();
         foreach ($products as $product) {
             $tecdocArticleIds[] = $product->getTecdocArticleId();
         }
-        
+
         $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery(
-                "SELECT  p.id
-                    FROM 'EdiBundle:EdiItem' p, EdiBundle:Edi e
-                    where 
-                        e.id = p.Edi AND p.tecdocArticleId in (".  implode(",", $tecdocArticleIds).") AND p.dlnr > 0 order by p.id"
-        );                
-        $products = $query->getResult();
-        $tecdocEdiArticleIds = array();
-        foreach ($products as $product) {
-            $tecdocEdiArticleIds[] = $product["tecdocArticleId"];
-        }
+
         //print_r($tecdocArticleIds);
-        
+
         foreach ($data as $key => $dt) {
+
+            if (count($dt->articleIds)) {
+                $query = $em->createQuery(
+                        "SELECT  p.id
+                        FROM 'EdiBundle:EdiItem' p, EdiBundle:Edi e
+                        where 
+                            e.id = p.Edi AND p.tecdocArticleId in (" . implode(",", $dt->articleIds) . ")"
+                );
+                $products = $query->getResult();
+                $tecdocEdiArticleIds = array();
+                foreach ($products as $product) {
+                    $tecdocEdiArticleIds[] = $product["tecdocArticleId"];
+                }
+            }
+
             $matched = array_intersect(@(array) $dt->articleIds, $tecdocArticleIds);
             $edimatched = array_intersect(@(array) $dt->articleIds, $tecdocEdiArticleIds);
             $dt->matched = array();
             $dt->matched = base64_encode(serialize($matched));
             $dt->matched_count = count($matched);
-            
+
             $dt->edimatched = array();
             $dt->edimatched = base64_encode(serialize($edimatched));
-            $dt->edimatched_count = count($edimatched);            
+            $dt->edimatched_count = count($edimatched);
 
             $all["matched"] = (array) $matched;
             $all["edimatched"] = (array) $edimatched;
