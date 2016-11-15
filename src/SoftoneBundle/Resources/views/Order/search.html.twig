@@ -171,7 +171,7 @@
                             html += '<ul class="list">';
                             if (nodes[optionHtml.assemblyGroupNodeId]) {
                                 jQuery.each(nodes[optionHtml.assemblyGroupNodeId], function (o, node) {
-                                    html += '<li class="subcategoriesli" data-all="'+node.all+'" style="cursor:pointer">' + node.assemblyGroupName + ' ('+node.matched_count+') (<span style="font-size:10px; color:blue">'+node.articles_count+'</span>)</li>';
+                                    html += '<li class="subcategoriesli" data-all="'+node.all+'" style="cursor:pointer">' + node.assemblyGroupName + ' ('+node.edimatched_count+') ('+node.matched_count+') (<span style="font-size:10px; color:blue">'+node.articles_count+'</span>)</li>';
                                 });
                             }
                             html += '<ul>';
