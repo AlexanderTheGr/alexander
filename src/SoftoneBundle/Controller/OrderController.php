@@ -656,7 +656,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         */
         $tecdoc = new Tecdoc();
         $data = $tecdoc->getArticlesSearchByIds($params);	
-        
+        print_r($data);
         return $data;
         //}
     }
