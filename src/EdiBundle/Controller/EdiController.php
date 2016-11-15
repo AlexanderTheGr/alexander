@@ -78,7 +78,7 @@ class EdiController extends Main {
         $collection = $this->collection($this->repository);
         $i = 0;
         foreach ($collection as $entity) {
-            if ($i++ <= 1) continue;
+            //if ($i++ <= 1) continue;
             $func = $entity["func"];
             $this->$func($entity);
         }
