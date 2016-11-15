@@ -193,7 +193,7 @@ class EdiController extends Main {
                             . "artnr='" . $attributes["tecdocpartno"] . "', "
                             . "retailprice='" . $attributes["retailprice"] . "'";
                     $em->getConnection()->exec($sql);
-                    //echo $sql."<BR>";
+                    echo $sql."<BR>";
                     $ediediitem = $this->getDoctrine()
                             ->getRepository('EdiBundle:EdiItem')
                             ->findOneBy(array("itemCode" => $attributes["partno"], "Edi" => $ediedi));
