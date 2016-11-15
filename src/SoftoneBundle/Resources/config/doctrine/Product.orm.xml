@@ -55,7 +55,7 @@
             </options>
         </field>        
 
-        <field name="edis" type="text" column="title" length="65535" nullable="true">
+        <field name="edis" type="text" column="edis" length="65535" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
