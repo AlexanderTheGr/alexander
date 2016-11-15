@@ -814,7 +814,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery(
                 "SELECT  p.id
-                    FROM 'EdiBundle:Ediitem' p, EdiBundle:Edi e
+                    FROM 'EdiBundle:EdiItem' p, EdiBundle:Edi e
                     where 
                         e.id = p.Edi AND p.tecdocArticleId > 0 AND p.dlnr > 0 order by p.id"
         );                
