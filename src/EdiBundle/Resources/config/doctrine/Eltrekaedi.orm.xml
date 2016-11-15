@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="EdiBundle\Entity\Eltrekaedi" repository-class="EdiBundle\Entity\EltrekaediRepository" table="eltrekaedi">
+  <entity name="EdiBundle\Entity\Eltrekaedi" repository-class="EdiBundle\Entity\EltrekaediRepository" table="partsbox_db.eltrekaedi">
     <unique-constraints>
       <unique-constraint name="partsno" columns="partno"/>
       <index-constraint name="product" columns="product"/>
