@@ -787,6 +787,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $params["linkingTargetId"] = $request->request->get("car");
         $data = $tecdoc->linkedChildNodesAllLinkingTargetTreeIds($params);
         
+        
+        print_r($data);
         $repository = $this->getDoctrine()->getRepository('SoftoneBundle:Product');
         $query = $repository->createQueryBuilder('p')
                 ->where('p.tecdocArticleId > :tecdocArticleId')
@@ -799,7 +801,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $tecdocArticleIds[] = $product->getTecdocArticleId();
         }
         print_r($tecdocArticleIds);
-
+        
         foreach ($data as $key => $dt) {
             $matched = array_intersect(@(array) $dt->articleIds, $tecdocArticleIds);
             $dt->matched = array();
