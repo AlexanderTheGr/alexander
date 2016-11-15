@@ -139,6 +139,96 @@ class Tecdoc extends Entity {
         }
     }
 
+    function linkedChildNodesAllLinkingTargetTreeIds($params = array(), $lvl = 0) {
+
+        $linkedChildNodesAllLinkingTarget = $this->getLinkedChildNodesAllLinkingTarget($params);
+        $lvl++;
+        if (!$params["linkingTargetId"]) {
+            $params["linkingTargetId"] = 1;
+        }
+
+        //echo serialize($linkedChildNodesAllLinkingTarget->data->array);
+
+        foreach ($linkedChildNodesAllLinkingTarget->data->array as $v) {
+            $hasChilds = $v->hasChilds;
+            if ($v->articles_count == 0 AND $v->parentNodeId > 0) {
+                //echo $v->assemblyGroupName."<BR>";
+                continue;
+            }
+
+
+            if ($v->parentNodeId > 0) {
+                $params = array(
+                    "sort" => 2,
+                    'assemblyGroupNodeId' => $v->assemblyGroupNodeId,
+                    "linkingTargetId" => $params["linkingTargetId"],
+                );
+                $articles = $this->getArticleIds($params);
+                $articleIds = array();
+                foreach ($articles->data->array as $vl) {
+                    if (!in_array($vl->articleId, $articleIds))
+                        $articleIds[] = $vl->articleId;
+                }
+                $v->articleIds = $articleIds;
+            }
+            $this->c[$v->assemblyGroupNodeId] = $v;
+
+            if (!in_array($v->assemblyGroupNodeId, (array) $this->cids))
+                $this->cids[] = $v->assemblyGroupNodeId;
+
+
+            if ($hasChilds) {
+                $params["parentNodeId"] = $v->assemblyGroupNodeId;
+                $this->linkedChildNodesAllLinkingTargetTree($params, $lvl);
+            }
+        }
+        return array_unique($this->cids);
+        //echo serialize($this->c);
+    }
+
+    function linkedChildNodesAllLinkingTargetTree($params = array(), $lvl = 0) {
+
+        $linkedChildNodesAllLinkingTarget = $this->getLinkedChildNodesAllLinkingTarget($params);
+        $lvl++;
+        if (!$params["linkingTargetId"]) {
+            $params["linkingTargetId"] = 1;
+        }
+
+        //echo serialize($linkedChildNodesAllLinkingTarget->data->array);
+
+        foreach ($linkedChildNodesAllLinkingTarget->data->array as $v) {
+            $hasChilds = $v->hasChilds;
+            if ($v->articles_count == 0 AND $v->parentNodeId > 0) {
+                //echo $v->assemblyGroupName."<BR>";
+                continue;
+            }
+
+
+            if ($v->parentNodeId > 0) {
+                $params = array(
+                    "sort" => 2,
+                    'assemblyGroupNodeId' => $v->assemblyGroupNodeId,
+                    "linkingTargetId" => $params["linkingTargetId"],
+                );
+                $articles = $this->getArticleIds($params);
+                $articleIds = array();
+                foreach ($articles->data->array as $vl) {
+                    if (!in_array($vl->articleId, $articleIds))
+                        $articleIds[] = $vl->articleId;
+                }
+                $v->articleIds = $articleIds;
+            }
+            $this->c[$v->assemblyGroupNodeId] = $v;
+
+            if ($hasChilds) {
+                $params["parentNodeId"] = $v->assemblyGroupNodeId;
+                $this->linkedChildNodesAllLinkingTargetTree($params, $lvl);
+            }
+        }
+        return $this->c;
+        //echo serialize($this->c);
+    }
+
     public function getArticleIds($params) {
 
         //$this->articleIdsParams["brandNo"] = array(43);
@@ -369,14 +459,16 @@ class Tecdoc extends Entity {
         );
         return $this->package($this->tecdoc->getArticleImages($params["articleId"]));
     }
+
     public function getArticlesSearchByIds($params) {
-	
+
         if ($this->useSOAP) {
             return $this->soap->getArticleIds3($params);
         } else {
             return $this->package($this->tecdoc->getArticlesSearchByIds($params["search"]));
         }
     }
+
     public function getOriginals($params) {
         $params = array(
             "country" => $this->country,
