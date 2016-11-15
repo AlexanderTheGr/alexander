@@ -802,7 +802,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             }
         }
 
-        print_r($articleIds);
+
         
         $tecdocArticleIds = array();
         if (count($articleIds)) {
@@ -819,7 +819,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         }
         
         
-        //print_r($tecdocArticleIds);
+        print_r($tecdocArticleIds);
         $tecdocEdiArticleIds = array();
         if (count($articleIds)) {
             $query = $em->createQuery(
