@@ -597,6 +597,32 @@ class EdiItem extends Entity {
             return;
         }
 
+        $erpCode = $this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode();
+        $product = $em->getRepository("SoftoneBundle:Product")->findOneBy(array("erpCode" => $erpCode));
+        if ($this->getProduct() > 0) {
+            if (!$product->getEdiId()) {
+                $product->setEdi($this->getEdi()->getId());
+                $product->setEdiId($this->id);
+                $em->persist($product);
+                $em->flush();
+                $product->toSoftone();
+                return;
+            } else {
+                if (!$product->getEdis()) {
+                    $edis = array();
+                } else {
+                    $edis = unserialize($product->getEdis());
+                }
+                $edis[] = $this->id;
+                $product->setEdis(serialize($edis));
+                $em->persist($product);
+                $em->flush();
+                $product->toSoftone();
+                return;
+            }
+            return;
+        }
+
         $dt = new \DateTime("now");
         $product = new \SoftoneBundle\Entity\Product;
         $product->setSupplierCode($this->partno);
@@ -613,7 +639,7 @@ class EdiItem extends Entity {
         $product->setItemApvcode($this->artNr);
         $product->setErpSupplier($this->brand);
         $product->setItemMtrmanfctr($SoftoneSupplier->getId());
-        $product->setErpCode($this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode());
+        $product->setErpCode($erpCode);
         $product->setItemCode($product->getErpCode());
         $product->setEdi($this->getEdi()->getId());
         $product->setEdiId($this->id);
