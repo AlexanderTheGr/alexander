@@ -802,18 +802,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             }
         }
 
-        //print_r($data);
-        $repository = $this->getDoctrine()->getRepository('SoftoneBundle:Product');
-        $query = $repository->createQueryBuilder('p')
-                ->where('p.tecdocArticleId > :tecdocArticleId')
-                ->setParameter('tecdocArticleId', '0')
-                ->getQuery();
-
-        $products = $query->getResult();
-        $tecdocArticleIds = array();
-        foreach ($products as $product) {
-            $tecdocArticleIds[] = $product->getTecdocArticleId();
-        }
+        print_r($articleIds);
         
         $tecdocArticleIds = array();
         if (count($articleIds)) {
