@@ -130,7 +130,7 @@ class EdiController extends Main {
                 }
                 @$ediedi_id = (int) $ediediitem->id;
                 if (@$ediedi_id == 0) {
-                    $sql = "replace edi_item set id = '" . $ediedi_id . "', edi='" . $entity["id"] . "', " . implode(",", $q);
+                    $sql = "replace partsbox_db.edi_item set id = '" . $ediedi_id . "', edi='" . $entity["id"] . "', " . implode(",", $q);
                     echo $sql."<BR>";
                     $em->getConnection()->exec($sql);
                     $ediediitem = $this->getDoctrine()
@@ -183,7 +183,7 @@ class EdiController extends Main {
                 @$ediedi_id = (int) $ediediitem->id;
                 echo $attributes["partno"] . " " . $ediedi_id . "<BR>";
                 if (@$ediedi_id == 0) {
-                    $sql = "replace edi_item set "
+                    $sql = "replace replace.edi_item set "
                             . "id = '" . $ediedi_id . "', "
                             . "edi='" . $entity["id"] . "', "
                             . "itemcode='" . $attributes["partno"] . "', "
@@ -212,7 +212,7 @@ class EdiController extends Main {
                 }
                 @$eltrekaedi_id = (int) $eltrekaedi->id;
                 //if ($eltrekaedi_id == 0) {
-                $sql = "replace eltrekaedi set id = '" . $eltrekaedi_id . "', ediitem = '" . $ediedi_id . "', " . implode(",", $q);
+                $sql = "replace replace.eltrekaedi set id = '" . $eltrekaedi_id . "', ediitem = '" . $ediedi_id . "', " . implode(",", $q);
                 $em->getConnection()->exec($sql);
                 //}
                 //if ($i++ > 30) return;
