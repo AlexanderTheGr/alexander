@@ -815,7 +815,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //print_r($tecdocArticleIds);
         $articleIds = array();
         foreach ($data as $key => $dt) {
-            foreach ($dt->articleIds as $articleId) {
+            foreach ((array)$dt->articleIds as $articleId) {
                 $articleIds[] = $articleId;
             }
         }
