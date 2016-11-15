@@ -93,12 +93,12 @@ class EdiController extends Main {
         echo $apiToken . "<BR>";
         //return;
         $tecdoc = new Tecdoc();
-        $file = "/home2/partsbox/".$apiToken . '.csv';
+        $file = "/home2/partsbox/" . $apiToken . '.csv';
         $fiestr = gzdecode(file_get_contents($this->getEdiPartMasterFile($entity["token"])));
         file_put_contents($file, $fiestr);
         set_time_limit(100000);
         ini_set('memory_limit', '4096M');
-        
+
         //return;
         $em = $this->getDoctrine()->getManager();
         if ((($handle = fopen($file, "r")) !== FALSE)) {
@@ -125,7 +125,7 @@ class EdiController extends Main {
                 $ediediitem = $this->getDoctrine()
                         ->getRepository('EdiBundle:EdiItem')
                         ->findOneBy(array("itemCode" => $attributes["itemcode"], "Edi" => $ediedi));
-                echo @$ediediitem->id . "<BR>";
+                //echo @$ediediitem->id . "<BR>";
                 $q = array();
                 foreach ($attributes as $field => $val) {
                     $q[] = "`" . $field . "` = '" . addslashes($val) . "'";
@@ -133,14 +133,15 @@ class EdiController extends Main {
                 @$ediedi_id = (int) $ediediitem->id;
                 if (@$ediedi_id == 0) {
                     $sql = "replace partsbox_db.edi_item set id = '" . $ediedi_id . "', edi='" . $entity["id"] . "', " . implode(",", $q);
-                    echo $sql."<BR>";
+                    echo $sql . "<BR>";
                     $em->getConnection()->exec($sql);
                     $ediediitem = $this->getDoctrine()
                             ->getRepository('EdiBundle:EdiItem')
                             ->findOneBy(array("itemCode" => $attributes["itemcode"], "Edi" => $ediedi));
+                    $ediediitem->tecdoc = $tecdoc;
+                    $ediediitem->updatetecdoc();
                 }
-                $ediediitem->tecdoc = $tecdoc;
-                $ediediitem->updatetecdoc();
+
                 //if ($i++ > 60) return;
             }
         }
@@ -197,7 +198,7 @@ class EdiController extends Main {
                             . "artnr='" . $attributes["tecdocpartno"] . "', "
                             . "retailprice='" . $attributes["retailprice"] . "'";
                     $em->getConnection()->exec($sql);
-                    echo $sql."<BR>";
+                    echo $sql . "<BR>";
                     $ediediitem = $this->getDoctrine()
                             ->getRepository('EdiBundle:EdiItem')
                             ->findOneBy(array("itemCode" => $attributes["partno"], "Edi" => $ediedi));
