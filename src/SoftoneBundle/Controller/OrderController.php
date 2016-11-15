@@ -812,7 +812,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         where p.tecdocArticleId in (" . implode(",", $articleIds) . ")"
             );
             $products = $query->getResult();
-
+            print_r($products);
             foreach ($products as $product) {
                 $tecdocArticleIds[] = $product["tecdocArticleId"];
             }
