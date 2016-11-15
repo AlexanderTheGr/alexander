@@ -167,12 +167,12 @@
 
                     jQuery.each(json, function (i, optionHtml) {
                         if (optionHtml.parentNodeId == 0) {
-                            html += '<h3 class="style-info">' + optionHtml.assemblyGroupName + ' (<span style="color:orange">'+edimatched_count[optionHtml.assemblyGroupNodeId]+'</span>) ('+matched_count[optionHtml.assemblyGroupNodeId]+') (<span style="color:blue">'+articles_count[optionHtml.assemblyGroupNodeId]+'</span>)</h3>';
+                            html += '<h3 class="style-info">' + optionHtml.assemblyGroupName + ' (<span style="color:red">'+edimatched_count[optionHtml.assemblyGroupNodeId]+'</span>) ('+matched_count[optionHtml.assemblyGroupNodeId]+') (<span style="color:blue">'+articles_count[optionHtml.assemblyGroupNodeId]+'</span>)</h3>';
                             html += '<div class="subcategoriesul" data-id="' + optionHtml.assemblyGroupNodeId + '">';
                             html += '<ul class="list">';
                             if (nodes[optionHtml.assemblyGroupNodeId]) {
                                 jQuery.each(nodes[optionHtml.assemblyGroupNodeId], function (o, node) {
-                                    html += '<li class="subcategoriesli" data-all="'+node.all+'" style="cursor:pointer">' + node.assemblyGroupName + ' (<span style="color:orange">'+node.edimatched_count+'</span>) ('+node.matched_count+') (<span style="color:blue">'+node.articles_count+'</span>)</li>';
+                                    html += '<li class="subcategoriesli" data-all="'+node.all+'" style="cursor:pointer">' + node.assemblyGroupName + ' (<span style="color:red">'+node.edimatched_count+'</span>) ('+node.matched_count+') (<span style="color:blue">'+node.articles_count+'</span>)</li>';
                                 });
                             }
                             html += '<ul>';
