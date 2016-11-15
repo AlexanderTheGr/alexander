@@ -482,7 +482,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $de = array_diff((array) $articleIds, (array) $f);
             //print_r($de);
             $out = $this->getArticlesSearchByIds(implode(",", (array) $de));
-            print_r($out);
+            //print_r($out);
             $p = array();
             foreach ($out as $v) {
                 $p[$v->articleId] = $v;
@@ -660,7 +660,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         );        
         $tecdoc = new Tecdoc();
         $data = $tecdoc->getArticlesSearchByIds($params);	
-        return $data;
+        return $data->data->array;
         //}
     }
 
