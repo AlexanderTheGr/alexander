@@ -131,6 +131,7 @@ class EdiController extends Main {
                 @$ediedi_id = (int) $ediediitem->id;
                 if (@$ediedi_id == 0) {
                     $sql = "replace edi_item set id = '" . $ediedi_id . "', edi='" . $entity["id"] . "', " . implode(",", $q);
+                    echo $sql."<BR>";
                     $em->getConnection()->exec($sql);
                     $ediediitem = $this->getDoctrine()
                             ->getRepository('EdiBundle:EdiItem')
