@@ -279,7 +279,7 @@ class EdiItemController extends Main {
             $ediediitem->updatetecdoc();
             unset($ediediitem);
             //echo $result["id"]."<BR>";
-            if ($i++ > 3000) exit;
+            //if ($i++ > 3000) exit;
         }
         exit;
     }
