@@ -525,6 +525,12 @@ class EdiItem extends Entity {
                 //$this->setTecdocGenericArticleId($out->articleName);
                 $em->persist($this);
                 $em->flush();
+            } else {
+                $this->setTecdocArticleId(-1);
+                //$this->setTecdocGenericArticleId($out->articleName);
+                $em->persist($this);
+                $em->flush();
+                
             }
         } catch (Exception $e) {
             echo $e->getMessage();
