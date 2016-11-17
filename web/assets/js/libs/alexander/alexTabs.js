@@ -1,4 +1,5 @@
 var dt_tables = [];
+$("#loader").hide();
 (function ($) {
     $.fn.alexTabs = function (app, ctrl, url, content, custom) {
         var alexander = this;
