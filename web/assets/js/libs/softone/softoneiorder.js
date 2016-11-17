@@ -3,6 +3,7 @@ var orderid = 0;
 var productsearch = ''
 jQuery('#productfreesearch').live("keyup", function (e) {
     if (e.keyCode == 13) {
+        $("#loaderer").show();
         productsearch = "productfreesearch:" + jQuery('#productfreesearch').val();
         asdf(this, productsearch);
         var t = $(this).val();
@@ -19,6 +20,7 @@ jQuery('#productfreesearch').live("keyup", function (e) {
 });
 jQuery('#productitem').live("keyup", function (e) {
     if (e.keyCode == 13) {
+        $("#loaderer").show();
         productsearch = "productitem:" + jQuery('#productitem').val();
         asdf(this, productsearch);
         var t = $(this).val();
