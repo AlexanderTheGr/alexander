@@ -103,6 +103,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $product->setTecdocCode($asd->articleNo);
         $product->setItemMtrmark($TecdocSupplier->getId());
         $product->setTecdocSupplierId($TecdocSupplier);
+        $product->setSupplierId($SoftoneSupplier);
         $product->setItemName($asd->genericArticleName);
         $product->setTecdocArticleId($asd->articleId);
 
