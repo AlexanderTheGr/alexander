@@ -144,7 +144,9 @@
             jQuery(".subcategories").html("");
             jQuery(".categories").html("");
             if (data.car > 0) {
+                $("#loader").show();
                 jQuery.post("/order/getcategories", data, function (json) {
+                    $("#loader").hide();
                     var nodes = [];
                     var articles_count = [];
                     var matched_count = [];
