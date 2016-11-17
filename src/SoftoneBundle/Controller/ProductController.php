@@ -502,7 +502,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //$asd = unserialize($this->getArticlesSearchByIds($article_id));
         $out["articlesSearch"] = unserialize($this->getArticlesSearch($asd[0]->articleNo));
 
-        $out["articlesSearch"] = unserialize($this->getArticlesSearchByIds(implode(",", (array) $out["articlesSearch"])));
+        //$out["articlesSearch"] = unserialize($this->getArticlesSearchByIds(implode(",", (array) $out["articlesSearch"])));
 
         //print_r( $out["articlesSearch"]);
         $egarmoges = '<ul>';
