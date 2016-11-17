@@ -50,14 +50,14 @@
     line-height: 30px;
 }
 .chosen-container-active.chosen-with-drop .chosen-single {
-  border: 0px solid #aaa;
-  -moz-border-radius-bottomright: 0;
-  border-bottom-right-radius: 0;
-  -moz-border-radius-bottomleft: 0;
-  border-bottom-left-radius: 0;
-  background: #ddefc9;
-  /* background-image: linear-gradient(#eeeeee 20%, #ffffff 80%); */
-  box-shadow: 0 1px 0 #fff inset;
+    border: 0px solid #aaa;
+    -moz-border-radius-bottomright: 0;
+    border-bottom-right-radius: 0;
+    -moz-border-radius-bottomleft: 0;
+    border-bottom-left-radius: 0;
+    background: #ddefc9;
+    /* background-image: linear-gradient(#eeeeee 20%, #ffffff 80%); */
+    box-shadow: 0 1px 0 #fff inset;
 }
 .chosen-container-single .chosen-single div {
     position: absolute;
@@ -114,6 +114,59 @@ table.dataTable tbody tr {
     width: 100%;
 }
 .dataTable input {
-   width: 70px;
+    width: 70px;
 }
 .ui-dialog { z-index: 100000 !important ;}
+
+
+
+#loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    width: 150px;
+    height: 150px;
+    margin: -75px 0 0 -75px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Add animation to "page content" */
+.animate-bottom {
+    position: relative;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: 1s;
+    animation-name: animatebottom;
+    animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+    from { bottom:-100px; opacity:0 }
+    to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom {
+    from{ bottom:-100px; opacity:0 }
+    to{ bottom:0; opacity:1 }
+}
+
+#myDiv {
+    display: none;
+    text-align: center;
+}
