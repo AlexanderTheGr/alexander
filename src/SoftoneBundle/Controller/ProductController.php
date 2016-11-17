@@ -11,6 +11,7 @@ use SoftoneBundle\Entity\Softone as Softone;
 use SoftoneBundle\Entity\Product as Product;
 use SoftoneBundle\Entity\Sisxetiseis as Sisxetiseis;
 use SoftoneBundle\Entity\Pcategory as Pcategory;
+use AppBundle\Entity\Tecdoc as Tecdoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class ProductController extends \SoftoneBundle\Controller\SoftoneController {
