@@ -499,7 +499,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $article_id = $request->request->get("ref");
         $out["originals"] = $this->originals($article_id);
         $out["articleAttributes"] = $this->articleAttributes($article_id, 0);
-        $asd = unserialize($this->getArticlesSearchByIds($article_id));
+        //$asd = unserialize($this->getArticlesSearchByIds($article_id));
         $out["articlesSearch"] = unserialize($this->getArticlesSearch($asd[0]->articleNo));
 
         $out["articlesSearch"] = unserialize($this->getArticlesSearchByIds(implode(",", (array) $out["articlesSearch"])));
