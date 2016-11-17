@@ -68,7 +68,7 @@
             });
         }
         function drawCallback(settings) {
-
+            alert('a')
         }
         function rowCallback(nRow, aData, iDataIndex) {
 
