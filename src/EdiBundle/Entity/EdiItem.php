@@ -644,6 +644,7 @@ class EdiItem extends Entity {
 
         $product->setItemMtrmark($this->dlnr);
         $product->setTecdocSupplierId($TecdocSupplier);
+        $product->setSupplierId($SoftoneSupplier);
         $product->setTecdocCode($this->artNr);
         $product->setItemName($this->description);
         $product->setTecdocArticleId($this->tecdocArticleId);
