@@ -90,8 +90,9 @@ setTimeout(function () {
 jQuery(".savesoftone").live('click', function (e) {
     var data = {}
     data.id = jQuery(this).attr('data-id');
-
+    $("#loader").show();
     $.post("/order/saveSoftone", data, function (result) {
+        $("#loader").hide();
         var json = angular.fromJson(result);
         if (json.error) {
             toastr.error(json.error, "Error");
@@ -104,8 +105,9 @@ jQuery(".savesoftone").live('click', function (e) {
 jQuery(".EdiSendOrder").live('click', function (e) {
     var data = {}
     data.id = jQuery(this).attr('data-id');
-
+    $("#loader").show();
     $.post("order/sendorder/", data, function (result) {
+        $("#loader").hide();
         var json = angular.fromJson(result);
         if (json.ErrorCode) {
             toastr.error(json.ErrorDescription, "Error");
@@ -120,7 +122,9 @@ jQuery(".SoftoneBundleOrderitemQty").live('keyup', function (e) {
         var data = {}
         data.id = jQuery(this).attr('data-id');
         data.qty = jQuery(this).val();
+        $("#loader").show();
         $.post("/order/editorderitem/", data, function (result) {
+            $("#loader").hide();
             var json = angular.fromJson(result);
             if (json.error) {
                 toastr.error(json.message, "Error");
@@ -138,7 +142,9 @@ jQuery(".SoftoneBundleOrderitemDisc1prc").live('keyup', function (e) {
         var data = {}
         data.id = jQuery(this).attr('data-id');
         data.discount = jQuery(this).val();
+        $("#loader").show();
         $.post("/order/editorderitem/", data, function (result) {
+            $("#loader").hide();
             var json = angular.fromJson(result);
             if (json.error) {
                 toastr.error(json.message, "Error");
@@ -155,7 +161,9 @@ jQuery(".SoftoneBundleOrderitemPrice").live('keyup', function (e) {
         var data = {}
         data.id = jQuery(this).attr('data-id');
         data.price = jQuery(this).val();
+        $("#loader").show();
         $.post("/order/editorderitem/", data, function (result) {
+            $("#loader").hide();
             var json = angular.fromJson(result);
             if (json.error) {
                 toastr.error(json.message, "Error");
@@ -175,7 +183,9 @@ jQuery(".SoftoneBundleProductQty").live('keyup', function (e) {
         data.item = jQuery(this).attr('data-id');
         data.price = jQuery("#SoftoneBundleProductItemPricew01_" + data.item).val();
         data.qty = jQuery(this).val();
+        $("#loader").show();
         $.post("/order/addorderitem/", data, function (result) {
+            $("#loader").hide();
             var json = angular.fromJson(result);
             if (json.error) {
                 toastr.error(json.message, "Error");
@@ -204,7 +214,9 @@ function asdf(obj, search) {
     jQuery("#DataTables_Table_2_wrapper").hide();
     jQuery("#DataTables_Table_1_wrapper").show();
     data.value = $("#DataTables_Table_1_filter input").val();
+    $("#loader").show();
     $.post("/edi/ediitem/getorderedis", data, function (result) {
+        $("#loader").hide();
         $("#extracanvascontent").html(result.html);
     })
 
@@ -248,7 +260,9 @@ function fororder(order) {
         $(".offcanvas-search").click();
         var data = {}
         data.value = $("#DataTables_Table_1_filter input").val();
+        $("#loader").show();
         $.post("/edi/ediitem/getorderedis", data, function (result) {
+            $("#loader").hide();
             $("#extracanvascontent").html(result.html);
         })
         jQuery("#DataTables_Table_2_wrapper").hide();
@@ -269,8 +283,9 @@ jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .SoftoneBundleProductEdi').live("
             data.id = jQuery(this).attr('data-id');
         }
         data.qty = jQuery(this).val();
+        $("#loader").show();
         $.post("/edi/order/addorderitem/", data, function (result) {
-
+            $("#loader").hide();
         })
     }
 });
@@ -279,7 +294,9 @@ jQuery(".create_product").live('click', function () {
     var ref = jQuery(this).attr("data-ref");
     var data = {};
     data.ref = ref;
+    $("#loader").show();
     $.post("/product/createProduct", data, function (result) {
+        $("#loader").hide();
         if (result.returnurl) {
             var win = window.open(result.returnurl);
         }
