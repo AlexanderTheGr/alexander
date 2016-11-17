@@ -4,7 +4,9 @@ jQuery('.synafiacode input').live("keyup", function (e) {
         var data = {};
         data.erp_code = $(this).val();
         data.id = $(this).attr("id");
+        $("#loader").show();
         $.post("/product/addRelation", data, function (result) {
+            $("#loader").hide();
             var table = dt_tables["ctrlgettabs"];
             table.fnFilter();
             jQuery('.synafiacode input').val('')
