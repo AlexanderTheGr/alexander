@@ -85,7 +85,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $TecdocSupplier = $em->getRepository("SoftoneBundle:TecdocSupplier")
                 ->findOneBy(array('supplier' => $asd->brandName));
 
-        $erpCode = $this->clearCode($asd->articleNo) . "-" . $SoftoneSupplier->getCode();
+        $erpCode = $this->clearstring($asd->articleNo) . "-" . $SoftoneSupplier->getCode();
 
         $product = $em->getRepository("SoftoneBundle:Product")->findOneBy(array('erpCode' => $erpCode));
         $json = array("error" => 1);
