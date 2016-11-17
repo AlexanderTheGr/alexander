@@ -216,9 +216,9 @@ function asdf(obj, search) {
     jQuery("#DataTables_Table_2_wrapper").hide();
     jQuery("#DataTables_Table_1_wrapper").show();
     data.value = $("#DataTables_Table_1_filter input").val();
-    $("#loaderer").show();
+    //$("#loaderer").show();
     $.post("/edi/ediitem/getorderedis", data, function (result) {
-        $("#loaderer").hide();
+        //$("#loaderer").hide();
         $("#extracanvascontent").html(result.html);
     })
 
