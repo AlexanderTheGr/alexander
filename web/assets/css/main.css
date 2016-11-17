@@ -170,3 +170,8 @@ table.dataTable tbody tr {
     display: none;
     text-align: center;
 }
+.modal {
+    color: #333531;
+    background: #111111;
+    opacity: 0.5;
+}
