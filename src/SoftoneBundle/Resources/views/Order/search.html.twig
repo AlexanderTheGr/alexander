@@ -192,6 +192,7 @@
             data.car = jQuery(".brand_model_type-select").val();
             data.order = '{{order}}';
             data.all = jQuery(this).attr('data-all');
+            $("#loader").show();
             asdf2(data);
         });
 
