@@ -557,7 +557,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $out = $softone->calculate((array) $dataOut, $object, "", "", $locateinfo);
         //print_r($out);
         //exit;
-        foreach ($out->data->ITELINES as $item) {
+        foreach ((array)$out->data->ITELINES as $item) {
             $jsonarr[$item->MTRL][5] = str_replace("value='---'", "value='" . $item->LINEVAL . "'", $jsonarr[$item->MTRL][5]);
             $jsonarr[$item->MTRL][6] = str_replace("value='---'", "value='" . $item->LINEVAL . "'", $jsonarr[$item->MTRL][6]);
         }
