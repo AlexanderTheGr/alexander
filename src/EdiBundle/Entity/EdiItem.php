@@ -552,7 +552,11 @@ class EdiItem extends Entity {
                 //$this->setTecdocGenericArticleId($out->articleName);
                 $cats = $tecdoc->getTreeForArticle($out->articleId);
                 //print_r((array)$cats);
-                //$categories = array();
+                $categories2 = array();
+  
+                foreach($cats as $cat) {
+                    $categories2[] = $cat->tree_id;
+                }
                 
                 $categories = $this->checkForUniqueCategory($out, $cats,$tecdoc);
                 /*
@@ -564,6 +568,7 @@ class EdiItem extends Entity {
                 
                 
                 print_r($categories);
+                print_r($categories2);
                 
                 
                 $this->setCats($categories);
