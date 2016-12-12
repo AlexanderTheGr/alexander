@@ -44,6 +44,11 @@
                 <option name="fixed"/>
             </options>
         </field> 
+        <field name="cars" type="string" column="cars" length="65535" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>         
         <field name="dlnr" type="integer" column="dlnr" length="11" nullable="false">
             <options>
                 <option name="fixed"/>
