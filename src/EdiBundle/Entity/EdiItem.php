@@ -569,7 +569,7 @@ class EdiItem extends Entity {
                     $categories = $categories2;
                 }
                 
-                //print_r($categories);
+                print_r($categories);
                 //print_r($categories2);
                 
                 
