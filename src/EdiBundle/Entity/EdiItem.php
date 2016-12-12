@@ -42,6 +42,11 @@ class EdiItem extends Entity {
      * @var string
      */
     private $description;
+    
+    /**
+     * @var string
+     */
+    private $cats;    
 
     /**
      * @var integer
@@ -170,7 +175,16 @@ class EdiItem extends Entity {
     public function getDescription() {
         return $this->description;
     }
-
+    
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getCats() {
+        return $this->cats;
+    }
+    
     /**
      * Set dlnr
      *
