@@ -554,7 +554,7 @@ class EdiItem extends Entity {
                 //print_r((array)$cats);
                 //$categories = array();
                 
-                $categories = $this->checkForUniqueCategory($article, $cats);
+                $categories = $this->checkForUniqueCategory($article, $cats,$tecdoc);
                 /*
                 foreach($cats as $cat) {
                     $categories[] = $cat->tree_id;
@@ -587,9 +587,9 @@ class EdiItem extends Entity {
     }
 
     
-    function checkForUniqueCategory($article, $cats) {
+    function checkForUniqueCategory($article, $cats,$tecdoc) {
 
-        $articleLinkedAllLinkingTarget = $this->getArticleLinkedAllLinkingTarget($params);
+        $articleLinkedAllLinkingTarget = $tecdoc->getArticleLinkedAllLinkingTarget($params);
 		
         foreach ($articleLinkedAllLinkingTarget->data->array as $v) {
             $linkingTargetId = $v->linkingTargetId;
@@ -604,7 +604,7 @@ class EdiItem extends Entity {
                 "assemblyGroupNodeId" => (int) $c->tree_id,
                 "linkingTargetId" => (int) $linkingTargetId,
             );
-            $articles = $this->getArticleIds($params);
+            $articles = $tecdoc->getArticleIds($params);
             $getArticleIds = array();
             foreach ($articles->data->array as $v) {
                 $getArticleIds[] = $v->articleId;
