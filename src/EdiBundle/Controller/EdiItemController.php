@@ -275,7 +275,7 @@ class EdiItemController extends Main {
                 "SELECT  p.id
                     FROM " . $this->repository . " p, EdiBundle:Edi e
                     where 
-                        e.id = p.Edi AND p.dlnr > 0 order by p.id desc"
+                        e.id = p.Edi AND p.dlnr > 0 order by p.id asc"
         );
         
         $results = $query->getResult();
@@ -285,7 +285,7 @@ class EdiItemController extends Main {
         foreach ($results as $result) {
             $ediediitem = $em->getRepository($this->repository)->find($result["id"]);
             $ediediitem->tecdoc = $tecdoc;
-            $ediediitem->updatetecdoc();
+            $ediediitem->updatetecdoc(true);
             unset($ediediitem);
             //echo $result["id"]."<BR>";
             if ($i++ > 300) exit;
