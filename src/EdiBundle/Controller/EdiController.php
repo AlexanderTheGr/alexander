@@ -122,6 +122,7 @@ class EdiController extends Main {
                         $attributes[$attrs[$key]] = trim(addslashes($val));
                 }
 
+                 echo ($i++)."-".$attributes["itemcode"];
                 //if ($key == 'similardlnr' OR $key = 'similarartnr' ) continue;
                   
                 if ((int)$attributes['dlnr'] == 0) $attributes['dlnr'] = $attributes['similardlnr'];
