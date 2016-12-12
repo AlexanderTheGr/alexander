@@ -583,7 +583,7 @@ class EdiItem extends Entity {
                 //print_r((array)$cats);
                 
                 $params = array(
-                    "articleId" => $article->articleId
+                    "articleId" => $out->articleId
                 );
                 $articleLinkedAllLinkingTarget = $tecdoc->getArticleLinkedAllLinkingTarget($params);
                 $cars = array();
