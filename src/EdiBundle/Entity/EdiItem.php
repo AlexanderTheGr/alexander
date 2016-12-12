@@ -185,7 +185,7 @@ class EdiItem extends Entity {
      * @return EdiItem
      */
     public function setCats($cats) {
-        $this->cats = $cats;
+        $this->cats = serialize($cats);
         return $this;
     }
     
@@ -195,7 +195,7 @@ class EdiItem extends Entity {
      * @return string
      */
     public function getCats() {
-        return $this->cats;
+        return unserialize($this->cats);
     }
     
     /**
@@ -557,6 +557,8 @@ class EdiItem extends Entity {
                     $categories[] = $cat->tree_id;
                 }
                 print_r($categories);
+                
+                $this->setCats($categories);
                 
                 $em->persist($this);
                 $em->flush();
