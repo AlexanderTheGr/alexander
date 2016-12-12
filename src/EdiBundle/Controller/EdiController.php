@@ -116,7 +116,7 @@ class EdiController extends Main {
             $i = 0;
             while ($data = fgetcsv($handle, 1000, "\t")) {
                 //if ($i++ == 0) continue;
-                echo ($i++)."-";
+
                 foreach ($data as $key => $val) {
                     //if ($attrs[$key])
                         $attributes[$attrs[$key]] = trim(addslashes($val));
