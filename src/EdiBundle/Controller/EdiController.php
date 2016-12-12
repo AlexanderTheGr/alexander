@@ -107,6 +107,8 @@ class EdiController extends Main {
             $data = fgetcsv($handle, 100000, "\t");
             //print_r($data);
             foreach ($data as $key => $attr) {
+                //similardlnr, similarartnr
+                //if ($key == 'similardlnr' OR $key = 'similarartnr' ) continue;
                 $attrs[$key] = strtolower($attr);
             }
             print_r($attrs);
@@ -114,9 +116,18 @@ class EdiController extends Main {
             while ($data = fgetcsv($handle, 1000, "\t")) {
                 //if ($i++ == 0) continue;
                 foreach ($data as $key => $val) {
-                    $attributes[$attrs[$key]] = trim(addslashes($val));
+                    //if ($attrs[$key])
+                        $attributes[$attrs[$key]] = trim(addslashes($val));
                 }
 
+                //if ($key == 'similardlnr' OR $key = 'similarartnr' ) continue;
+                  
+                if ((int)$attributes['dlnr'] == 0) $attributes['dlnr'] = $attributes['similardlnr'];
+                if ($attributes['artnr'] == '') $attributes['dlnr'] = $attributes['similarartnr'];
+                    
+                unset($attributes['similardlnr']);
+                unset($attributes['similarartnr']);
+                
                 if (@!$ediedis[$entity["id"]]) {
                     $ediedi = $this->getDoctrine()
                             ->getRepository('EdiBundle:Edi')
