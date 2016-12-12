@@ -565,10 +565,12 @@ class EdiItem extends Entity {
                 }
                  * 
                  */
+                if (count($categories) == 0) {
+                    $categories = $categories2;
+                }
                 
-                
-                print_r($categories);
-                print_r($categories2);
+                //print_r($categories);
+                //print_r($categories2);
                 
                 
                 $this->setCats($categories);
