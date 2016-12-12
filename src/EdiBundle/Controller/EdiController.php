@@ -106,6 +106,7 @@ class EdiController extends Main {
         if ((($handle = fopen($file, "r")) !== FALSE)) {
             $data = fgetcsv($handle, 100000, "\t");
             //print_r($data);
+            echo ($i++)."-";
             foreach ($data as $key => $attr) {
                 //similardlnr, similarartnr
                 //if ($key == 'similardlnr' OR $key = 'similarartnr' ) continue;
@@ -138,7 +139,7 @@ class EdiController extends Main {
                 $ediediitem = $this->getDoctrine()
                         ->getRepository('EdiBundle:EdiItem')
                         ->findOneBy(array("itemCode" => $attributes["itemcode"], "Edi" => $ediedi));
-                echo ($i++)."-".@$ediediitem->id . "<BR>";
+                echo @$ediediitem->id . "<BR>";
                 $q = array();
                 foreach ($attributes as $field => $val) {
                     $q[] = "`" . $field . "` = '" . addslashes($val) . "'";
