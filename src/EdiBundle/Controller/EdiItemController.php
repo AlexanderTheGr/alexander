@@ -360,12 +360,12 @@ class EdiItemController extends Main {
                 $edi = $dt_columns[1]["search"]["value"];
 
                 //$edi = $em->getRepository("EdiBundle:Edi")->find(1);
-                $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND (" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . "))";
+                $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND ((" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ") OR itemcode = '".$search."'))";
             } else {
                 $this->createWhere();
             }
 
-            echo $this->where."\n\n";
+            //echo $this->where."\n\n";
             $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
 
             $query = $em->createQuery(
