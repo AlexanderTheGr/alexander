@@ -75,7 +75,7 @@ class EdiController extends Main {
      * @Route("/edi/edi/getPartMaster")
      */
     public function getPartMasterAction() {
-        $this->createSelect(array($this->prefix . ".token", $this->prefix . ".func", $this->prefix . ".id"));
+        $this->createSelect(array($this->prefix . ".id",$this->prefix . ".token", $this->prefix . ".func", $this->prefix . ".id"));
         $collection = $this->collection($this->repository);
         $i = 0;
         foreach ($collection as $entity) {
