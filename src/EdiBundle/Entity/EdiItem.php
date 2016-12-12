@@ -176,8 +176,21 @@ class EdiItem extends Entity {
         return $this->description;
     }
     
+    
     /**
-     * Get description
+     * Set cats
+     *
+     * @param string $cats
+     *
+     * @return EdiItem
+     */
+    public function setCats($cats) {
+        $this->cats = $cats;
+        return $this;
+    }
+    
+    /**
+     * Get cats
      *
      * @return string
      */
