@@ -1711,6 +1711,69 @@ class Product extends Entity {
     public function getEdiId() {
         return $this->ediId;
     }
+    
+    
+    
+    /**
+     * @var string
+     */
+    private $cats;    
+    
+    /**
+     * @var string
+     */
+    private $cars; 
+    
+    
+    /**
+     * Get cats
+     *
+     * @return string
+     */
+    public function getCats() {
+        return unserialize($this->cats);
+    }
+    
+    
+    
+    /**
+     * Set cats
+     *
+     * @param string $cars
+     *
+     * @return EdiItem
+     */
+    public function setCars($cars) {
+        $this->cars = serialize($cars);
+        return $this;
+    }
+    
+    /**
+     * Get cars
+     *
+     * @return string
+     */
+    public function getCars() {
+        return unserialize($this->cars);
+    }    
+    
+    
+    /**
+     * Set dlnr
+     *
+     * @param integer $dlnr
+     *
+     * @return EdiItem
+     */
+    public function setDlnr($dlnr) {
+        $this->dlnr = $dlnr;
+
+        return $this;
+    }    
+    
+    
+    
+    
 
     function updatetecdoc() {
 
