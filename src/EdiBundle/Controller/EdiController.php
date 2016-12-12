@@ -80,7 +80,7 @@ class EdiController extends Main {
         $i = 0;
         foreach ($collection as $entity) {
             //if ($i++ <= 1) continue;
-            if ($entity["id"] == 5) {
+            if ($entity["id"] == 2) {
                 $func = $entity["func"];
                 $this->$func($entity);
             }
