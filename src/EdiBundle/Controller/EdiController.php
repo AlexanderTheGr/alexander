@@ -138,7 +138,7 @@ class EdiController extends Main {
                 $ediediitem = $this->getDoctrine()
                         ->getRepository('EdiBundle:EdiItem')
                         ->findOneBy(array("itemCode" => $attributes["itemcode"], "Edi" => $ediedi));
-                echo @$ediediitem->id . "<BR>";
+                echo ($i++)."-".@$ediediitem->id . "<BR>";
                 $q = array();
                 foreach ($attributes as $field => $val) {
                     $q[] = "`" . $field . "` = '" . addslashes($val) . "'";
