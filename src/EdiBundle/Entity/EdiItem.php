@@ -47,7 +47,12 @@ class EdiItem extends Entity {
      * @var string
      */
     private $cats;    
-
+    
+    /**
+     * @var string
+     */
+    private $cars; 
+    
     /**
      * @var integer
      */
@@ -197,6 +202,30 @@ class EdiItem extends Entity {
     public function getCats() {
         return unserialize($this->cats);
     }
+    
+    
+    
+    /**
+     * Set cats
+     *
+     * @param string $cars
+     *
+     * @return EdiItem
+     */
+    public function setCars($cars) {
+        $this->cars = serialize($cars);
+        return $this;
+    }
+    
+    /**
+     * Get cars
+     *
+     * @return string
+     */
+    public function getCars() {
+        return unserialize($this->cars);
+    }    
+    
     
     /**
      * Set dlnr
