@@ -603,7 +603,7 @@ class EdiItem extends Entity {
                     $categories = $categories2;
                 }     
                 print_r($categories);
-                print_r($cars);
+                //print_r($cars);
                 $this->setCats($categories); 
                 $this->setCars($cars); 
                 $em->persist($this);
