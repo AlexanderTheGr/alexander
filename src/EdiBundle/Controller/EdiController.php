@@ -90,7 +90,7 @@ class EdiController extends Main {
 
     public function getEdiPartMaster($entity) {
         //echo $this->getPartMaster();
-        return;
+        //return;
         $apiToken = $entity["token"];
         echo $apiToken . "<BR>";
         //return;
