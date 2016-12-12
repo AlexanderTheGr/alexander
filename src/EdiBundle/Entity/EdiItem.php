@@ -552,11 +552,19 @@ class EdiItem extends Entity {
                 //$this->setTecdocGenericArticleId($out->articleName);
                 $cats = $tecdoc->getTreeForArticle($out->articleId);
                 //print_r((array)$cats);
-                $categories = array();
+                //$categories = array();
+                
+                $categories = $this->checkForUniqueCategory($article, $cats);
+                /*
                 foreach($cats as $cat) {
                     $categories[] = $cat->tree_id;
                 }
+                 * 
+                 */
+                
+                
                 print_r($categories);
+                
                 
                 $this->setCats($categories);
                 
@@ -578,6 +586,38 @@ class EdiItem extends Entity {
         //echo $result;
     }
 
+    
+    function checkForUniqueCategory($article, $cats) {
+
+        $articleLinkedAllLinkingTarget = $this->getArticleLinkedAllLinkingTarget($params);
+		
+        foreach ($articleLinkedAllLinkingTarget->data->array as $v) {
+            $linkingTargetId = $v->linkingTargetId;
+            break;
+        }
+
+
+	$categories = array();	
+        foreach ($cats as $c) {
+
+            $params = array(
+                "assemblyGroupNodeId" => (int) $c->tree_id,
+                "linkingTargetId" => (int) $linkingTargetId,
+            );
+            $articles = $this->getArticleIds($params);
+            $getArticleIds = array();
+            foreach ($articles->data->array as $v) {
+                $getArticleIds[] = $v->articleId;
+            }
+            if (in_array($article->tecdoc_article_id, $getArticleIds)) {
+                $categories[] = $c->tree_id;
+            }
+        }
+        return $categories;
+    }
+    
+    
+    
     public function toErp() {
 
 
