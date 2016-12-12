@@ -762,6 +762,10 @@ class EdiItem extends Entity {
         $product->setItemCode($product->getErpCode());
         $product->setEdi($this->getEdi()->getId());
         $product->setEdiId($this->id);
+        
+        
+        $product->setCars($this->getCars());
+        $product->setCats($this->setCats());
 
 
         $product->setItemV5($dt);
