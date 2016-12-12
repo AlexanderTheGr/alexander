@@ -588,7 +588,9 @@ class EdiItem extends Entity {
 
     
     function checkForUniqueCategory($article, $cats,$tecdoc) {
-
+        $params = array(
+            "articleId" => $article->articleId
+        );
         $articleLinkedAllLinkingTarget = $tecdoc->getArticleLinkedAllLinkingTarget($params);
 		
         foreach ($articleLinkedAllLinkingTarget->data->array as $v) {
