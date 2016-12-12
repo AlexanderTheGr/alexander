@@ -554,7 +554,7 @@ class EdiItem extends Entity {
                 //print_r((array)$cats);
                 //$categories = array();
                 
-                $categories = $this->checkForUniqueCategory($article, $cats,$tecdoc);
+                $categories = $this->checkForUniqueCategory($out, $cats,$tecdoc);
                 /*
                 foreach($cats as $cat) {
                     $categories[] = $cat->tree_id;
@@ -609,7 +609,7 @@ class EdiItem extends Entity {
             foreach ($articles->data->array as $v) {
                 $getArticleIds[] = $v->articleId;
             }
-            if (in_array($article->tecdoc_article_id, $getArticleIds)) {
+            if (in_array($article->articleId, $getArticleIds)) {
                 $categories[] = $c->tree_id;
             }
         }
