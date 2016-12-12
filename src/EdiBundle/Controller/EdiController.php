@@ -114,7 +114,7 @@ class EdiController extends Main {
             }
             print_r($attrs);
             $i = 0;
-            while ($data = fgetcsv($handle, 1000, "\t")) {
+            while ($data = fgetcsv($handle, 1000, "\t","|")) {
                 //if ($i++ == 0) continue;
 
                 foreach ($data as $key => $val) {
