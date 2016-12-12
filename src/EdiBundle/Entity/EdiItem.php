@@ -524,7 +524,12 @@ class EdiItem extends Entity {
                 $this->setTecdocArticleName($out->articleName);
                 //$this->setTecdocGenericArticleId($out->articleName);
                 $cats = $tecdoc->getTreeForArticle($out->articleId);
-                print_r((array)$cats);
+                //print_r((array)$cats);
+                $categories = array();
+                foreach($cats as $cat) {
+                    $categories[] = $cat->tree_id;
+                }
+                print_r($categories);
                 
                 $em->persist($this);
                 $em->flush();
