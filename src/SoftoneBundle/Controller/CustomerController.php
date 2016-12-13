@@ -152,7 +152,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
                 ->addField(array("name" => "Name", "index" => 'customerName', 'search' => 'text'))
                 ->addField(array("name" => "ΑΦΜ", "index" => 'customerAfm', 'search' => 'text'))
                 ->addField(array("name" => "Address", "index" => 'customerAddress', 'search' => 'text'))
-                ->addField(array("name" => "Group", "index" => 'customergroup:customergroup'));
+                ->addField(array("name" => "Group", "index" => 'customergroup:title'));
         $json = $this->datatable();
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
