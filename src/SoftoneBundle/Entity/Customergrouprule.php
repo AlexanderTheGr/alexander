@@ -128,4 +128,33 @@ class Customergrouprule
     {
         return $this->group;
     }
+    /**
+     * @var string
+     */
+    private $rule;
+
+
+    /**
+     * Set rule
+     *
+     * @param string $rule
+     *
+     * @return Customergrouprule
+     */
+    public function setRule($rule)
+    {
+        $this->rule = $rule;
+
+        return $this;
+    }
+
+    /**
+     * Get rule
+     *
+     * @return string
+     */
+    public function getRule()
+    {
+        return $this->rule;
+    }
 }
