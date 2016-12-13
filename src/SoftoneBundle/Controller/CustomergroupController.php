@@ -16,7 +16,7 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
      */
     public function indexAction() {
 
-        return $this->render('customergroup/index.html.twig', array(
+        return $this->render('SoftoneBundle:Customergroup:index.html.twig', array(
                     'pagename' => 'Customergroups',
                     'url' => '/customergroup/getdatatable',
                     'view' => '/customergroup/view',
@@ -31,7 +31,7 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
      */
     public function viewAction($id) {
 
-        return $this->render('customergroup/view.html.twig', array(
+        return $this->render('SoftoneBundle:Customergroup:view.html.twig', array(
                     'pagename' => 'Customergroup',
                     'url' => '/customergroup/save',
                     'ctrl' => $this->generateRandomString(),
