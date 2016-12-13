@@ -54,7 +54,12 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
     /**
      * @Route("/customergroup/save")
      */
-    public function savection() {
+    public function saveAction() {
+        $entity = new Customergroup;
+
+        //$this->repository = "SoftoneBundle:Customer";
+        $this->newentity[$this->repository] = $entity;
+        $this->initialazeNewEntity($entity);        
         $this->save();
         $json = json_encode(array("ok"));
         return new Response(
