@@ -1726,6 +1726,18 @@ class Product extends Entity {
     
     
     /**
+     * Set cats
+     *
+     * @param string $cats
+     *
+     * @return EdiItem
+     */
+    public function setCats($cats) {
+        $this->cars = serialize($cats);
+        return $this;
+    }
+    
+    /**
      * Get cats
      *
      * @return string
@@ -1737,7 +1749,7 @@ class Product extends Entity {
     
     
     /**
-     * Set cats
+     * Set cars
      *
      * @param string $cars
      *
