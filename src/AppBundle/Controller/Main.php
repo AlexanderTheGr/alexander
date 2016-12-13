@@ -407,7 +407,7 @@ class Main extends Controller {
             if ((int) $df[3] == 0) {
                 $entities[$df[0] . ":" . $df[1]] = $this->newentity[$df[0] . ":" . $df[1]];
             }
-            echo $df[0] . ":" . $df[1];    
+
             $type = $entities[$df[0] . ":" . $df[1]]->gettype($df[2]);
             if ($type == 'object') {
                 $obj = $entities[$df[0] . ":" . $df[1]]->getField($df[2]);
