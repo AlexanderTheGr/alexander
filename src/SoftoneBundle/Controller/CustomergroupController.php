@@ -69,6 +69,11 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
                 ->getRepository($this->repository)
                 ->find($id);
 
+        if ($id == 0 AND @ $entity->id == 0) {
+            $entity = new Customerrule;
+            $this->newentity[$this->repository] = $entity;
+        }
+        
         $fields["title"] = array("label" => "Title");
         $fields["basePrice"] = array("label" => "Price");
 
