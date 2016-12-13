@@ -1997,6 +1997,7 @@ class Product extends Entity {
         $fields[] = "item_vat";
         $fields[] = "item_mtrmanfctr";
         $fields[] = "item_mtrplace";
+        $fields[] = "item_apvcode";
         $fields[] = "item_isactive";
 
         //$fields[] = "item_mtrsup";
@@ -2019,8 +2020,8 @@ class Product extends Entity {
             $filters = $object . ".CODE=" . $this->itemCode . "&" . $object . ".CODE_TO=" . $this->itemCode;
             $datas = $softone->retrieveData($object, "partsbox", $filters);
             
-            print_r($datas);
-            echo "-------";
+
+
             foreach ($datas as $data) {
                 $data = (array) $data;
                 $zoominfo = $data["zoominfo"];
