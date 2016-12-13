@@ -1728,7 +1728,7 @@ class Product extends Entity {
     /**
      * Set cats
      *
-     * @param string $cats
+     * @param string $cars
      *
      * @return EdiItem
      */
@@ -1749,7 +1749,7 @@ class Product extends Entity {
     
     
     /**
-     * Set cars
+     * Set cats
      *
      * @param string $cars
      *
