@@ -765,7 +765,7 @@ class EdiItem extends Entity {
         
         
         $product->setCars($this->getCars());
-        $product->setCats($this->setCats());
+        $product->setCats($this->getCats());
 
 
         $product->setItemV5($dt);
