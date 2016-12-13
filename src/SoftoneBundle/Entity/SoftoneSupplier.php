@@ -101,12 +101,6 @@ class SoftoneSupplier extends Entity {
     
     function toSoftone() {
         $softone = new Softone();
-        $params["fSQL"] = "SELECT * FROM MTRMANFCTR";
-        $datas = $softone->createSql($params);
-        print_r($datas);
-        echo "[[".count($datas)."]]";
-        
-        
         $params["fSQL"] = "SELECT * FROM MTRMANFCTR where MTRMANFCTR = ".$this->id;
         $datas = $softone->createSql($params); 
         //print_r($datas);
