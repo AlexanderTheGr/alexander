@@ -14,5 +14,21 @@
         <option name="fixed"/>
       </options>
     </field>
+    
+    <field name="ts" type="datetime" column="ts" nullable="true">
+        <options>
+
+        </options>
+    </field>
+
+    <field name="actioneer" type="integer" column="actioneer" nullable="true">
+        <options>
+            <option name="unsigned"/>
+        </options>
+    </field>
+
+    <field name="created" type="datetime" column="created" nullable="true"/>
+    <field name="modified" type="datetime" column="modified" nullable="true"/>    
+    
   </entity>
 </doctrine-mapping>
