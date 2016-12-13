@@ -780,7 +780,7 @@ class EdiItem extends Entity {
         $product->toSoftone();
         $this->updatetecdoc();
 
-        //$this->setProduct($product->getId());
+        $this->setProduct($product->getId());
         $em->persist($this);
         $em->flush();
 
