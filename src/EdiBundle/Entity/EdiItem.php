@@ -694,7 +694,7 @@ class EdiItem extends Entity {
 
         $TecdocSupplier = $em->getRepository("SoftoneBundle:TecdocSupplier")
                 ->find($this->dlnr);
-
+        $TecdocSupplier->toSoftone(); 
         $erpCode = $this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode();
         $product = $em->getRepository("SoftoneBundle:Product")->findOneBy(array("erpCode" => $erpCode));
         
@@ -712,7 +712,7 @@ class EdiItem extends Entity {
             $em->flush();
             if ($TecdocSupplier) {
                 $product->setTecdocSupplierId($TecdocSupplier);
-                $TecdocSupplier->toSoftone(); 
+                
             }
             $product->toSoftone();
             echo $this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode();
