@@ -122,7 +122,7 @@ class EdiController extends Main {
                         $attributes[$attrs[$key]] = trim(addslashes($val));
                 }
 
-                 echo ($i++)."-[".$attributes["itemcode"]."]-";
+                echo ($i++)."<BR>";
                 //if ($key == 'similardlnr' OR $key = 'similarartnr' ) continue;
                   
                 if ((int)$attributes['dlnr'] == 0) $attributes['dlnr'] = $attributes['similardlnr'];
@@ -141,7 +141,7 @@ class EdiController extends Main {
                 $ediediitem = $this->getDoctrine()
                         ->getRepository('EdiBundle:EdiItem')
                         ->findOneBy(array("itemCode" => $attributes["itemcode"], "Edi" => $ediedi));
-                echo @$ediediitem->id . "<BR>";
+                //echo @$ediediitem->id . "<BR>";
                 $q = array();
                 foreach ($attributes as $field => $val) {
                     $q[] = "`" . $field . "` = '" . addslashes($val) . "'";
