@@ -2018,6 +2018,9 @@ class Product extends Entity {
         } else {
             $filters = $object . ".CODE=" . $this->itemCode . "&" . $object . ".CODE_TO=" . $this->itemCode;
             $datas = $softone->retrieveData($object, "partsbox", $filters);
+            
+            print_r($datas);
+            echo "-------";
             foreach ($datas as $data) {
                 $data = (array) $data;
                 $zoominfo = $data["zoominfo"];
