@@ -105,7 +105,7 @@ class SoftoneSupplier extends Entity {
         $datas = $softone->createSql($params); 
         if (@count($datas->data)) return;
         $params["fSQL"] = 'Insert INTO MTRMANFCTR (MTRMANFCTR,NAME,CODE,COMPANY) VALUES ('.$this->id.',\''.$this->title.'\', \''.$this->code.'\',1000)';
-        //print_r($softone->createSql($params));       
+        print_r($softone->createSql($params));       
     }
 
 }
