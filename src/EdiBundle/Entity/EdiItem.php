@@ -695,9 +695,12 @@ class EdiItem extends Entity {
         $TecdocSupplier = $em->getRepository("SoftoneBundle:TecdocSupplier")
                 ->find($this->dlnr);
 
-        if ($this->getProduct() > 0) {
+        $erpCode = $this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode();
+        $product = $em->getRepository("SoftoneBundle:Product")->findOneBy(array("erpCode" => $erpCode));
+        
+        if (@$product->id > 0) {
 
-            $product = $em->getRepository("SoftoneBundle:Product")->find($this->getProduct());
+            //$product = $em->getRepository("SoftoneBundle:Product")->find($this->getProduct());
             //if ($product->getReference() == 0) {
             $product->setItemMtrmanfctr($SoftoneSupplier->getId());
             $product->setErpCode($this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode());
@@ -713,8 +716,7 @@ class EdiItem extends Entity {
             return;
         }
 
-        $erpCode = $this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode();
-        $product = $em->getRepository("SoftoneBundle:Product")->findOneBy(array("erpCode" => $erpCode));
+        /*
         if ($this->getProduct() > 0) {
             if (!$product->getEdiId()) {
                 $product->setEdi($this->getEdi()->getId());
@@ -740,6 +742,8 @@ class EdiItem extends Entity {
             }
             return;
         }
+         * 
+         */
 
         $dt = new \DateTime("now");
         $product = new \SoftoneBundle\Entity\Product;
