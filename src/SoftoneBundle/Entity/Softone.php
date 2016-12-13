@@ -46,6 +46,9 @@ class Softone extends Entity {
             'appId' => $this->appId);
 
         $data = $this->doRequest($params);
+        
+         print_r($data);
+        
         $this->loginClientID = $data->clientID;
         $_SESSION["logindata"] = $data;
         return $data;
@@ -72,7 +75,6 @@ class Softone extends Entity {
                 //"USERID": $data->objs->BRANCH,		
         );
         $data = $this->doRequest($params);
-        print_r($data);
         $this->authenticateClientID = $data->clientID;
         $_SESSION["authenticatedata"] = $data;
 
