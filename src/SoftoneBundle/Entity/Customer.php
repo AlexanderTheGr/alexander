@@ -32,9 +32,15 @@ class Customer extends Entity {
     }
 
     public function setRepositories() {
+        $this->repositories['customergroup'] = 'SoftoneBundle:Customergroup';
+        //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:SoftoneSupplier';
+        $this->types['customergroup'] = 'object';
+        //$this->types['supplierId'] = 'object';
+        
         //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:TecdocSupplier';
-        $this->types['tecdocSupplierId'] = 'object';
+        //$this->types['tecdocSupplierId'] = 'object';
         //$this->tecdocSupplierId = new \SoftoneBundle\Entity\TecdocSupplier;
+        
     }
 
     public function getRepository() {
@@ -42,7 +48,7 @@ class Customer extends Entity {
     }
 
     public function getRepositories($repo) {
-        //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:TecdocSupplier';
+        $this->repositories['customergroup'] = 'SoftoneBundle:Customergroup';
         return $this->repositories[$repo];
     }
 
