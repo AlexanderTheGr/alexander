@@ -689,7 +689,7 @@ class EdiItem extends Entity {
                 $SoftoneSupplier->toSoftone();
             }
         } else {
-            
+            $SoftoneSupplier->toSoftone();
         }
 
         $TecdocSupplier = $em->getRepository("SoftoneBundle:TecdocSupplier")
