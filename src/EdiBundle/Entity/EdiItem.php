@@ -712,7 +712,7 @@ class EdiItem extends Entity {
             $em->flush();
             if ($TecdocSupplier) {
                 $product->setTecdocSupplierId($TecdocSupplier);
-                //$TecdocSupplier->toSoftone(); 
+                $TecdocSupplier->toSoftone(); 
             }
             $product->toSoftone();
             echo $this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode();
