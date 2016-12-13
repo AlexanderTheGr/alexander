@@ -253,7 +253,7 @@ class Softone extends Entity {
             "KEY" => $key,
             "data" => $data
         );
-        //echo json_encode($params);
+        echo json_encode($params);
         return $this->doRequest($params);
     }
 
