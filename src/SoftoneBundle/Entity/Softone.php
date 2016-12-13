@@ -72,6 +72,7 @@ class Softone extends Entity {
                 //"USERID": $data->objs->BRANCH,		
         );
         $data = $this->doRequest($params);
+        print_r($data);
         $this->authenticateClientID = $data->clientID;
         $_SESSION["authenticatedata"] = $data;
 
