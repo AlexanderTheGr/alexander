@@ -1083,4 +1083,33 @@ class Customer extends Entity {
         }
     }
 
+    /**
+     * @var \SoftoneBundle\Entity\Customergroup
+     */
+    private $customergroup;
+
+
+    /**
+     * Set customergroup
+     *
+     * @param \SoftoneBundle\Entity\Customergroup $customergroup
+     *
+     * @return Customer
+     */
+    public function setCustomergroup(\SoftoneBundle\Entity\Customergroup $customergroup = null)
+    {
+        $this->customergroup = $customergroup;
+
+        return $this;
+    }
+
+    /**
+     * Get customergroup
+     *
+     * @return \SoftoneBundle\Entity\Customergroup
+     */
+    public function getCustomergroup()
+    {
+        return $this->customergroup;
+    }
 }
