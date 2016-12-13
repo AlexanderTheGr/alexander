@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Controller\Main as Main;
 
-use SoftoneBundle\Entity\Customerrule as Customerrule;
+use SoftoneBundle\Entity\Customergroup as Customergroup;
 
 class CustomergroupController extends \SoftoneBundle\Controller\SoftoneController  {
 
@@ -72,7 +72,7 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
                 ->find($id);
 
         if ($id == 0 AND @ $entity->id == 0) {
-            $entity = new Customerrule;
+            $entity = new Customergroup;
             $this->newentity[$this->repository] = $entity;
         }
         
