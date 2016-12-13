@@ -30,28 +30,22 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
      * @Route("/customergroup/view/{id}")
      */
     public function viewAction($id) {
+
         $buttons = array();
-
-
-        $product = $this->getDoctrine()
-                ->getRepository($this->repository)
-                ->find($id);
-
-        //$product->toSoftone();
-        //exit;
         $content = $this->gettabs($id);
+        $content = $this->content();
 
-        //$content = $this->getoffcanvases($id);
-        //$content = $this->content();
-        
-        return $this->render('SoftoneBundle:Customergroup:view.html.twig', array(
-                    'pagename' => 'Customergroup',
-                    'url' => '/customergroup/save',
+
+        return $this->render('SoftoneBundle:Product:view.html.twig', array(
+                    'pagename' => 's',
+                    'url' => '/customer/save',
+                    'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
-                    'tabs' => $this->gettabs($id),
+                    'content' => $content,
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
+        
     }
 
     /**
