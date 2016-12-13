@@ -30,7 +30,20 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
      * @Route("/customergroup/view/{id}")
      */
     public function viewAction($id) {
+        $buttons = array();
 
+
+        $product = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->find($id);
+
+        //$product->toSoftone();
+        //exit;
+        $content = $this->gettabs($id);
+
+        //$content = $this->getoffcanvases($id);
+        //$content = $this->content();
+        
         return $this->render('SoftoneBundle:Customergroup:view.html.twig', array(
                     'pagename' => 'Customergroup',
                     'url' => '/customergroup/save',
