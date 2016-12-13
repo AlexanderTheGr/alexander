@@ -695,7 +695,7 @@ class EdiItem extends Entity {
         
         $TecdocSuppliers = $em->getRepository("SoftoneBundle:TecdocSupplier")
                 ->findAll();
-        foreach($TecdocSuppliers as $TecdocSuppliers) {
+        foreach($TecdocSuppliers as $TecdocSupplier) {
             echo $TecdocSupplier->id;
         }
         
