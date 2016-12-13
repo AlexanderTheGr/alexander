@@ -12,6 +12,7 @@ use SoftoneBundle\Entity\Customergroup as Customergroup;
 class CustomergroupController extends \SoftoneBundle\Controller\SoftoneController  {
 
     var $repository = 'SoftoneBundle:Customergroup';
+    var $newentity = array();
 
     /**
      * @Route("/customergroup/customergroup")
