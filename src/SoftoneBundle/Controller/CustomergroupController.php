@@ -41,7 +41,7 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
 
         return $this->render('SoftoneBundle:Product:view.html.twig', array(
                     'pagename' => 's',
-                    'url' => '/customer/save',
+                    'url' => '/customergroup/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
