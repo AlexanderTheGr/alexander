@@ -140,7 +140,17 @@
         <field name="created" type="datetime" column="created" nullable="true"/>
         <field name="modified" type="datetime" column="modified" nullable="true"/>
 
-        
+        <many-to-one
+            field="customergroup"
+            target-entity="Customergroup"
+            inversed-by="Customergroups"
+            join-column="customergroup">
+            <cascade>
+                <cascade-remove />
+            </cascade>
+            <join-column name="customergroup" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>            
+        </many-to-one>     
+                
         <many-to-one
             field="route"
             target-entity="Route"
@@ -148,6 +158,7 @@
             join-column="route">
             <join-column name="route" referenced-column-name="id" />
         </many-to-one>
+        
         <one-to-many field="addresses" target-entity="Customeraddress" mapped-by="Customer" />
     </entity>
 </doctrine-mapping>
