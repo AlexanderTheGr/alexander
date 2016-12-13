@@ -9,7 +9,7 @@
       <generator strategy="IDENTITY"/>
     </id>
     <field name="val" type="decimal" column="val" precision="10" scale="2" nullable="false"/>
-    <field name="supplier" type="string" column="supplier" length="255" nullable="false">
+    <field name="supplier" type="string" column="supplier" length="255" nullable="true">
       <options>
         <option name="fixed"/>
       </options>
