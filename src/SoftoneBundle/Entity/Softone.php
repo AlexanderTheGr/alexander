@@ -44,6 +44,7 @@ class Softone extends Entity {
             'username' => $this->username,
             'password' => $this->password,
             'appId' => $this->appId);
+        print_r($params);
         $data = $this->doRequest($params);
         $this->loginClientID = $data->clientID;
         $_SESSION["logindata"] = $data;
