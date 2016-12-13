@@ -1,5 +1,6 @@
 <?php
 namespace SoftoneBundle\Entity;
+
 use AppBundle\Entity\Repository;
 
 /**
