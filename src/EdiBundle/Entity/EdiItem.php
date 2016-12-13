@@ -692,9 +692,19 @@ class EdiItem extends Entity {
             $SoftoneSupplier->toSoftone();
         }
 
+        
+        $TecdocSuppliers = $em->getRepository("SoftoneBundle:TecdocSupplier")
+                ->findAll();
+        foreach($TecdocSuppliers as $TecdocSuppliers) {
+            echo $TecdocSupplier->id;
+        }
+        
         $TecdocSupplier = $em->getRepository("SoftoneBundle:TecdocSupplier")
                 ->find($this->dlnr);
         $TecdocSupplier->toSoftone(); 
+        
+        
+        
         $erpCode = $this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode();
         $product = $em->getRepository("SoftoneBundle:Product")->findOneBy(array("erpCode" => $erpCode));
         
