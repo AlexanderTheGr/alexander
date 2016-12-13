@@ -53,7 +53,7 @@ class Customer extends Entity {
     }
 
     public function gettype($field) {
-        $this->types['tecdocSupplierId'] = 'object';
+        $this->types['customergroup'] = 'object';
         if (@$this->types[$field] != '') {
             return @$this->types[$field];
         }
