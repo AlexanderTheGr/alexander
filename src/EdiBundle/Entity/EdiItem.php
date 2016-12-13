@@ -602,7 +602,7 @@ class EdiItem extends Entity {
                 if (count($categories) == 0) {
                     $categories = $categories2;
                 }     
-                print_r($categories);
+                //print_r($categories);
                 //print_r($cars);
                 $this->setCats($categories); 
                 $this->setCars($cars); 
@@ -692,12 +692,12 @@ class EdiItem extends Entity {
             $SoftoneSupplier->toSoftone();
         }
 
-        
+        /*
         $TecdocSuppliers = $em->getRepository("SoftoneBundle:TecdocSupplier")->findAll();
         foreach($TecdocSuppliers as $TecdocSupplier) {
             $TecdocSupplier->toSoftone();
         }
-        
+        */
         $TecdocSupplier = $em->getRepository("SoftoneBundle:TecdocSupplier")
                 ->find($this->dlnr);
         $TecdocSupplier->toSoftone(); 
