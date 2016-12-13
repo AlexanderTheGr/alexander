@@ -705,6 +705,9 @@ class EdiItem extends Entity {
             $product->setItemMtrmanfctr($SoftoneSupplier->getId());
             $product->setErpCode($this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode());
             $product->setItemCode($product->getErpCode());
+            
+            
+            
             $em->persist($product);
             $em->flush();
             if ($TecdocSupplier) {
@@ -745,8 +748,10 @@ class EdiItem extends Entity {
          * 
          */
 
+        
         $dt = new \DateTime("now");
         $product = new \SoftoneBundle\Entity\Product;
+        
         $product->setSupplierCode($this->partno);
         $product->setTitle($this->description);
         $product->setTecdocCode($this->artNr);
