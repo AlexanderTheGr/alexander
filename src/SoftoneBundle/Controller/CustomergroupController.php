@@ -62,8 +62,8 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
                 ->getRepository($this->repository)
                 ->find($id);
 
-        $fields["customergroupCode"] = array("label" => "Code");
-        $fields["customergroupName"] = array("label" => "Name");
+        $fields["title"] = array("label" => "Title");
+        $fields["price"] = array("label" => "Price");
 
         $forms = $this->getFormLyFields($entity, $fields);
 
@@ -79,8 +79,8 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
         $this->repository = 'SoftoneBundle:Customergroup';
 
         $this->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
-                ->addField(array("name" => "Code", "index" => 'customergroupCode'))
-                ->addField(array("name" => "Name", "index" => 'customergroupName'));
+                ->addField(array("name" => "Title", "index" => 'title'))
+                ->addField(array("name" => "Price", "index" => 'price'));
         $json = $this->datatable();
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
