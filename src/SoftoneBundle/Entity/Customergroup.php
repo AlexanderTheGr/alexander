@@ -155,4 +155,120 @@ class Customergroup  extends  Entity {
     {
         return $this->id;
     }
+    /**
+     * @var \DateTime
+     */
+    private $ts;
+
+    /**
+     * @var integer
+     */
+    private $actioneer;
+
+    /**
+     * @var \DateTime
+     */
+    private $created;
+
+    /**
+     * @var \DateTime
+     */
+    private $modified;
+
+
+    /**
+     * Set ts
+     *
+     * @param \DateTime $ts
+     *
+     * @return Customergroup
+     */
+    public function setTs($ts)
+    {
+        $this->ts = $ts;
+
+        return $this;
+    }
+
+    /**
+     * Get ts
+     *
+     * @return \DateTime
+     */
+    public function getTs()
+    {
+        return $this->ts;
+    }
+
+    /**
+     * Set actioneer
+     *
+     * @param integer $actioneer
+     *
+     * @return Customergroup
+     */
+    public function setActioneer($actioneer)
+    {
+        $this->actioneer = $actioneer;
+
+        return $this;
+    }
+
+    /**
+     * Get actioneer
+     *
+     * @return integer
+     */
+    public function getActioneer()
+    {
+        return $this->actioneer;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     *
+     * @return Customergroup
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set modified
+     *
+     * @param \DateTime $modified
+     *
+     * @return Customergroup
+     */
+    public function setModified($modified)
+    {
+        $this->modified = $modified;
+
+        return $this;
+    }
+
+    /**
+     * Get modified
+     *
+     * @return \DateTime
+     */
+    public function getModified()
+    {
+        return $this->modified;
+    }
 }
