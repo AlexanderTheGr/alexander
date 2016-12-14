@@ -6,15 +6,15 @@
 
 {% endblock %}
 {% block javascripts %}
-        <script>
+   <script>
         setTimeout(function(){
             $(document).ready(function () {
-                $('#builder-basic').queryBuilder({
+                $("#builder-basic").queryBuilder({
                     filters: [
                         {
-                            id: 'name',
-                            label: 'Name',
-                            type: 'string'
+                            id: "name",
+                            label: "Name",
+                            type: "string"
                         }
                     ]
                 })
