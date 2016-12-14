@@ -6,7 +6,6 @@
     
 {% endblock %}
 {% block javascripts %}
-    {{supplierjson}}
     <script>
         $(document).ready(function () {
             var rules_basic = {
@@ -49,7 +48,7 @@
                         type: 'integer',
                         input: 'select',
                         values: {
-                            1: 'Books',
+                            10: {1:'Books'},
                             2: 'Movies',
                             3: 'Music',
                             4: 'Tools',
