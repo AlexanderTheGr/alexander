@@ -23,3 +23,17 @@ var $elem = jQuery(".synafiacode input").autocomplete({
         var data = {}
     }
 })
+
+setTimeout(function(){
+    $(document).ready(function () {
+        $("#builder-basic").queryBuilder({
+            filters: [
+                {
+                    id: "name",
+                    label: "Name",
+                    type: "string"
+                }
+            ]
+        })
+    })                        
+},100)
