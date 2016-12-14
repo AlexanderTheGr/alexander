@@ -97,9 +97,7 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
 
     function getRules($entity) {
         $total = 0;
-        foreach ($entity->getItems() as $item) {
-            @$total += $item->getLineval();
-        }
+
         $response = $this->get('twig')->render('SoftoneBundle:Customergroup:rules.html.twig', array('total' => $total));
         return str_replace("\n", "", htmlentities($response));
     }    
