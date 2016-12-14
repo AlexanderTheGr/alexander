@@ -132,7 +132,7 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
             $this->addField($param);
         }
         $this->repository = 'SoftoneBundle:Customergrouprule';
-        //$this->q_and[] = $this->prefix . ".id in  (Select k.sisxetisi FROM SoftoneBundle:Sisxetiseis k where k.product = '" . $id . "')";
+        $this->q_and[] = $this->prefix . ".group = '".$id."'";
         $json = $this->datatable();
 
         $datatable = json_decode($json);
