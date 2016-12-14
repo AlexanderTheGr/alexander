@@ -3,7 +3,7 @@
 
     <div id="builder-basic"></div>
 
-    
+
 {% endblock %}
 {% block javascripts %}
     <script>
@@ -27,7 +27,6 @@
                             }]
                     }]
             };
-
             $('#builder-basic').queryBuilder({
                 plugins: ['bt-tooltip-errors'],
                 filters: [{
@@ -40,8 +39,33 @@
                         type: 'integer',
                         input: 'select',
                         plugin: 'selectize',
-                        values: {{supplierjson | raw}},
-                        operators: ['equal', 'not_equal', 'in', 'not_in', 'is_null', 'is_not_null']
+                        plugin_config: {
+                            valueField: 'id',
+                            labelField: 'name',
+                            searchField: 'name',
+                            sortField: 'name',
+                            create: true,
+                            maxItems: 1,
+                            plugins: ['remove_button'],
+                            onInitialize: function () {
+                                var that = this;
+                                if (localStorage.demoData === undefined) {
+                                    $.getJSON(baseurl + '/assets/demo-data.json', function (data) {
+                                        localStorage.demoData = JSON.stringify(data);
+                                        data.forEach(function (item) {
+                                            that.addOption(item);
+                                        });
+                                    });
+                                }
+                                else {
+                                    JSON.parse(localStorage.demoData).forEach(function (item) {
+                                        that.addOption(item);
+                                    });
+                                }
+                            }
+                        },
+                        values:{{supplierjson | raw}},
+                                operators: ['equal', 'not_equal', 'in', 'not_in', 'is_null', 'is_not_null']
                     },
                     {
                         id: 'category',
@@ -49,7 +73,7 @@
                         type: 'integer',
                         input: 'select',
                         values: {
-                            10: {1:'Books'},
+                            10: {1: 'Books'},
                             2: 'Movies',
                             3: 'Music',
                             4: 'Tools',
@@ -87,18 +111,14 @@
                     }],
                 rules: rules_basic
             });
-
             $('#btn-reset').on('click', function () {
                 $('#builder-basic').queryBuilder('reset');
             });
-
             $('#btn-set').on('click', function () {
                 $('#builder-basic').queryBuilder('setRules', rules_basic);
             });
-
             $('#btn-get').on('click', function () {
                 var result = $('#builder-basic').queryBuilder('getRules');
-
                 if (!$.isEmptyObject(result)) {
                     alert(JSON.stringify(result, null, 2));
                 }
