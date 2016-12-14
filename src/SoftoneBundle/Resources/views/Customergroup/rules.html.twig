@@ -1,9 +1,5 @@
 {% block body %}
-
-
     <div id="builder-basic"></div>
-
-    
 {% endblock %}
 {% block javascripts %}
     <script>
@@ -27,6 +23,7 @@
                             }]
                     }]
             };
+            
 
             $('#builder-basic').queryBuilder({
                 plugins: ['bt-tooltip-errors'],
@@ -48,13 +45,14 @@
                         type: 'integer',
                         input: 'select',
                         values: {
-                            1: {'Books'},
+                            1: 'Books',
                             2: 'Movies',
                             3: 'Music',
                             4: 'Tools',
                             5: 'Goodies',
                             6: 'Clothes'
                         },
+                        
                         operators: ['equal', 'not_equal', 'in', 'not_in', 'is_null', 'is_not_null']
                     }, {
                         id: 'in_stock',
