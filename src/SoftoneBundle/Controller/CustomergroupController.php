@@ -87,9 +87,37 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
 
         $forms = $this->getFormLyFields($entity, $fields);
 
-        $this->addTab(array("title" => "General", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
-        $this->addTab(array("title" => "Rules", "content" => $this->getRules($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         
+        if ($id > 0 AND count($entity) > 0) {
+            $entity2 = $this->getDoctrine()
+                    ->getRepository('SoftoneBundle:Customergrouprule')
+                    ->find($id);
+            $entity2->setReference("");
+            $fields2["reference"] = array("label" => "Erp Code", "className" => "synafiacode col-md-12");
+            $forms2 = $this->getFormLyFields($entity2, $fields2);
+
+            $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
+            $dtparams[] = array("name" => "Val", "index" => 'val');
+
+            $params['dtparams'] = $dtparams;
+            $params['id'] = $dtparams;
+            $params['url'] = '/customergroup/getrules/' . $id;
+            $params['key'] = 'gettabs_' . $id;
+            $params["ctrl"] = 'ctrlgettabs';
+            $params["app"] = 'appgettabs';
+            $datatables[] = $this->contentDatatable($params);
+        }        
+        
+        
+        
+        $this->addTab(array("title" => "General", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
+        //$this->addTab(array("title" => "Rules", "content" => $this->getRules($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
+        if ($id > 0 AND count($entity) > 0) {
+            $tabs[] = array("title" => "Rules", "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
+        }
+        foreach ($tabs as $tab) {
+            $this->addTab($tab);
+        }        
         
         $json = $this->tabs();
         return $json;
