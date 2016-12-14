@@ -5,20 +5,3 @@
 
 
 {% endblock %}
-{% block javascripts %}
-   <script>
-        setTimeout(function(){
-            $(document).ready(function () {
-                $("#builder-basic").queryBuilder({
-                    filters: [
-                        {
-                            id: "name",
-                            label: "Name",
-                            type: "string"
-                        }
-                    ]
-                })
-            })                        
-        },100)
-    </script>    
-{% endblock %}
