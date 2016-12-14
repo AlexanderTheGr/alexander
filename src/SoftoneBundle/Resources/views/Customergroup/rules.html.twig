@@ -1,28 +1,11 @@
 {% block body %}
+    <button class="btn btn-primary parse-json" data-target="basic">Get rules</button>
     <div id="builder-basic"></div>
 {% endblock %}
 {% block javascripts %}
     <script>
         $(document).ready(function () {
-            var rules_basic = {
-                condition: 'AND',
-                rules: [{
-                        id: 'price',
-                        operator: 'less',
-                        value: 10.25
-                    }, {
-                        condition: 'OR',
-                        rules: [{
-                                id: 'category',
-                                operator: 'equal',
-                                value: 2
-                            }, {
-                                id: 'category',
-                                operator: 'equal',
-                                value: 5
-                            }]
-                    }]
-            };
+            var rules_basic = {};
             
 
             $('#builder-basic').queryBuilder({
