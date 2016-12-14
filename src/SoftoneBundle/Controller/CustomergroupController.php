@@ -122,7 +122,37 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
         $json = $this->tabs();
         return $json;
     }
+    /**
+     * @Route("/customergroup/getrules/{id}")
+     */
+    public function getRulesAction($id) {
+        $session = new Session();
+        foreach ($session->get('params_gettabs_' . $id) as $param) {
+            $this->addField($param);
+        }
+        $this->repository = 'SoftoneBundle:Product';
+        $this->q_and[] = $this->prefix . ".id in  (Select k.sisxetisi FROM SoftoneBundle:Sisxetiseis k where k.product = '" . $id . "')";
+        $json = $this->datatable();
 
+        $datatable = json_decode($json);
+        $datatable->data = (array) $datatable->data;
+        foreach ($datatable->data as $key => $table) {
+            $table = (array) $table;
+            $table1 = array();
+            foreach ($table as $f => $val) {
+                $table1[$f] = $val;
+            }
+            $datatable->data[$key] = $table1;
+        }
+        $json = json_encode($datatable);
+
+
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+    }
+
+    
     function getRules($entity) {
         $total = 0;
 
