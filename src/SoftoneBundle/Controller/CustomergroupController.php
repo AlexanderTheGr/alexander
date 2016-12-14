@@ -89,12 +89,12 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
 
         
         if ($id > 0 AND count($entity) > 0) {
-            $entity2 = $this->getDoctrine()
-                    ->getRepository('SoftoneBundle:Customergrouprule')
-                    ->find($id);
+            //$entity2 = $this->getDoctrine()
+            //        ->getRepository('SoftoneBundle:Customergrouprule')
+             //       ->find($id);
 
-            $fields2["reference"] = array("label" => "Erp Code", "className" => "synafiacode col-md-12");
-            $forms2 = $this->getFormLyFields($entity2, $fields2);
+            //$fields2["reference"] = array("label" => "Erp Code", "className" => "synafiacode col-md-12");
+            //$forms2 = $this->getFormLyFields($entity2, $fields2);
 
             $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
             $dtparams[] = array("name" => "Val", "index" => 'val');
