@@ -92,7 +92,7 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
             $entity2 = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Customergrouprule')
                     ->find($id);
-            $entity2->setReference("");
+
             $fields2["reference"] = array("label" => "Erp Code", "className" => "synafiacode col-md-12");
             $forms2 = $this->getFormLyFields($entity2, $fields2);
 
