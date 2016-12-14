@@ -1,16 +1,19 @@
 {% block body %}
 
     
-<div id="builder"></div>
+<div id="builder-basic"></div>
 
 <script>
 
-
 $(document).ready(function(){
-    $('#builder').queryBuilder({
-        filters: [{id:1}] // You need to implement this
-    });
-  })
+    $('#builder-basic').queryBuilder({
+        filters: {
+        id: 'name',
+        label: 'Name',
+        type: 'string'
+      }})
+})
+
 </script>    
     
 {% endblock %}
