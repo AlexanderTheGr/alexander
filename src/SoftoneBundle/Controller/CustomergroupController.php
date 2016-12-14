@@ -99,7 +99,7 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
         $total = 0;
 
         
-        $suppliers = $this->getRepository("SoftoneBundle:SoftoneSupplier")->findAll();
+        $suppliers = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")->findAll();
         $supplierArr = array();
         foreach($suppliers as $supplier) {
             $supplierArr[$supplier->getId()] = $supplier->getTitle();            
