@@ -5,7 +5,14 @@
 {% block javascripts %}
     <script>
         $(document).ready(function () {
-            var rules_basic = {};
+            var rules_basic = {
+                condition: 'AND',
+                rules: [{
+                        id: 'price',
+                        operator: 'less',
+                        value: 10.25
+                    }]
+            };
             
 
             $('#builder-basic').queryBuilder({
