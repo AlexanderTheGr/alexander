@@ -112,7 +112,7 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
             $categoriesArr[$category->getCategory()->getId()] = $category->getName();            
         }
         $categoryjson = json_encode($categoriesArr);
-        
+        echo $categoryjson;
         
         $response = $this->get('twig')->render('SoftoneBundle:Customergroup:rules.html.twig', array('supplierjson' => $supplierjson));
         return str_replace("\n", "", htmlentities($response));
