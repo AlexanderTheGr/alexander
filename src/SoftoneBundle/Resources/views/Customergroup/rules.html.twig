@@ -39,6 +39,7 @@
                         label: 'Supplier',
                         type: 'integer',
                         input: 'select',
+                        plugin: 'selectize',
                         values: {{supplierjson | raw}},
                         operators: ['equal', 'not_equal', 'in', 'not_in', 'is_null', 'is_not_null']
                     },
