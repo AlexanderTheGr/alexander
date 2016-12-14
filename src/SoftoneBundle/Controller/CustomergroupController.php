@@ -131,8 +131,8 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
         foreach ($session->get('params_gettabs_' . $id) as $param) {
             $this->addField($param);
         }
-        $this->repository = 'SoftoneBundle:Product';
-        $this->q_and[] = $this->prefix . ".id in  (Select k.sisxetisi FROM SoftoneBundle:Sisxetiseis k where k.product = '" . $id . "')";
+        $this->repository = 'SoftoneBundle:Customergrouprule';
+        //$this->q_and[] = $this->prefix . ".id in  (Select k.sisxetisi FROM SoftoneBundle:Sisxetiseis k where k.product = '" . $id . "')";
         $json = $this->datatable();
 
         $datatable = json_decode($json);
