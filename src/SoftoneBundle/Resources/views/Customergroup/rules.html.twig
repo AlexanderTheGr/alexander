@@ -3,7 +3,10 @@
 
     <div id="builder-basic"></div>
 
-    <script>
+
+{% endblock %}
+{% block javascripts %}
+        <script>
         setTimeout(function(){
             $(document).ready(function () {
                 $('#builder-basic').queryBuilder({
@@ -18,5 +21,4 @@
             })                        
         },100)
     </script>    
-
 {% endblock %}
