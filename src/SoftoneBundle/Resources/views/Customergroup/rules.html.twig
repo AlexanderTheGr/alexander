@@ -4,19 +4,19 @@
     <div id="builder-basic"></div>
 
     <script>
-
-        $(document).ready(function () {
-            $('#builder-basic').queryBuilder({
-                filters: [
-                    {
-                        id: 'name',
-                        label: 'Name',
-                        type: 'string'
-                    }
-                ]
-            })
-        })
-
+        setTimeout(function(){
+            $(document).ready(function () {
+                $('#builder-basic').queryBuilder({
+                    filters: [
+                        {
+                            id: 'name',
+                            label: 'Name',
+                            type: 'string'
+                        }
+                    ]
+                })
+            })                        
+        },100)
     </script>    
 
 {% endblock %}
