@@ -88,6 +88,9 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
         $forms = $this->getFormLyFields($entity, $fields);
 
         $this->addTab(array("title" => "General", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
+        $this->addTab(array("title" => "General", "content" => 'hhh', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
+        
+        
         $json = $this->tabs();
         return $json;
     }
