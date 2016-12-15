@@ -103,8 +103,12 @@ class CustomergroupController extends Main{
         $id = $request->request->get("id");
         $rule = $request->request->get("rule");
         $val = $request->request->get("val");
-        
-        $customergrouprule = $this->getDoctrine()->getRepository('SoftoneBundle:Customergrouprule')->find($id);       
+        if ($id == 0) {
+            $customergrouprule = new Customergroup;
+            $this->initialazeNewEntity($entity);
+        } else {   
+            $customergrouprule = $this->getDoctrine()->getRepository('SoftoneBundle:Customergrouprule')->find($id); 
+        }
         $customergrouprule->setRule(json_encode($rule));
         $customergrouprule->setVal($val);
         $this->flushpersist($customergrouprule);
