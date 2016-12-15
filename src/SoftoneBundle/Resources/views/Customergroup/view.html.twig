@@ -108,7 +108,7 @@
             //alert(JSON.stringify(result, null, 2));
             var data = {};
             data.id = ref;
-            data.val = $("#val").value();
+            data.val = $("#val").val();
             data.rule = result;
             $("#loaderer").show();
             $.post("/customergroup/saverule", data, function (result) {
