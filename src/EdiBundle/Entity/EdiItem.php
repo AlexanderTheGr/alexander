@@ -626,6 +626,7 @@ class EdiItem extends Entity {
 
     
     function checkForUniqueCategory($article, $cats,$tecdoc,$linkingTargetId) {
+        if ($cats <= 2) return array();
 	$categories = array();	
         foreach ($cats as $c) {
 
