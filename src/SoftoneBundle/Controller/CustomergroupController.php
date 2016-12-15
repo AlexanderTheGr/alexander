@@ -61,6 +61,7 @@ class CustomergroupController extends Main{
         }
         $categoryjson = json_encode($categoriesArr);
 
+        
 
 
         $grouprules = $this->getDoctrine()
