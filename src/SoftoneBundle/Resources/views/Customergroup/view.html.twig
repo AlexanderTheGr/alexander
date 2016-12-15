@@ -16,9 +16,8 @@
     var rules_basics = [];
     var discounts = [];
     {% for key,rule in rules %}
-        alert("{{rule.val}}");
         rules_basics[{{ key }}] = {{rule.rule | raw}};
-        discounts[{{ key }}] = "{{rule.val | raw}}";
+        discounts[{{ key }}] = "{{rule.val}}";
     {% endfor %}    
     $dialog.customergrouprule = $("<div style='z-index:100000' class='card'></div>")
             .dialog({
@@ -30,6 +29,7 @@
     });
     var ref=0;
     $(".dt_row_customergrouprule").live("click",function(){
+        ref= $(this).attr("data-ref");
         $dialog.customergrouprule.html('\
 <button id="btn-get" class="btn btn-primary parse-json" data-target="basic">Save Rule</button>\n\
 \n\
@@ -37,7 +37,7 @@
 <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:'+ref+'" class="control-label">Discount</label><input value="'+discounts[ref]+'" class="form-control" id="discount" name="SoftoneBundle:Customergroup:id:'+ref+'" formly-custom-validation="" type=""></div></div>\n\
 <div id="builder-basic"></div>\n\
 ');
-        ref= $(this).attr("data-ref");
+        
         $dialog.customergrouprule.dialog("open");
 
             var rules_basic = rules_basics[ref];
