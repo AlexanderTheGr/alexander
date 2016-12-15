@@ -70,7 +70,8 @@
                     type: 'integer',
                     input: 'select',
                     values: {{supplierjson | raw}},
-                    operators: ['equal', 'not_equal', 'in', 'not_in', 'is_null', 'is_not_null']
+                    /*operators: ['equal', 'not_equal', 'in', 'not_in', 'is_null', 'is_not_null']*/
+                    operators: ['equal', 'not_equal']
                 },
                 {
                     id: 'category',
@@ -79,7 +80,7 @@
                     input: 'select',
                     values: {{categoryjson | raw}},
 
-                    operators: ['equal', 'not_equal', 'in', 'not_in', 'is_null', 'is_not_null']
+                    operators: ['equal', 'not_equal']
                 }, {
                     id: 'in_stock',
                     label: 'In stock',
@@ -97,15 +98,6 @@
                     validation: {
                         min: 0,
                         step: 0.01
-                    }
-                }, {
-                    id: 'id',
-                    label: 'Identifier',
-                    type: 'string',
-                    placeholder: '____-____-____',
-                    operators: ['equal', 'not_equal'],
-                    validation: {
-                        format: /^.{4}-.{4}-.{4}$/
                     }
                 }],
             rules: rules_basic
