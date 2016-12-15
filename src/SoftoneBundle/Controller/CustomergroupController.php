@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Controller\Main as Main;
 use SoftoneBundle\Entity\Customergroup as Customergroup;
 
-class CustomergroupController extends \SoftoneBundle\Controller\SoftoneController {
+class CustomergroupController extends Main{
 
     var $repository = 'SoftoneBundle:Customergroup';
     var $newentity = array();
@@ -105,8 +105,8 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
         $customergrouprule = $this->getDoctrine()->getRepository('SoftoneBundle:Customergrouprule')->find($id);       
         $customergrouprule->setRule(json_encode($rule));
         $customergrouprule->setVal($val);
-        $this->getDoctrine()->persist($customergrouprule);
-        $this->getDoctrine()->flush();
+        $this->flushpersist($customergrouprule);
+
         
         exit;
     }
