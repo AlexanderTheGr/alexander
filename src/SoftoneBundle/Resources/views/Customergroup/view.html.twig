@@ -24,16 +24,17 @@
                 draggable: false,
                 width: "60%",
                 modal: true
-    });    
+    });
+    var ref=0;
     $(".dt_row_customergrouprule").live("click",function(){
         $dialog.customergrouprule.html('\
-<button id="btn-get" class="btn btn-primary parse-json" data-target="basic">Get rules</button>\n\
+<button id="btn-get" class="btn btn-primary parse-json" data-target="basic">Save Rule</button>\n\
 \n\
 \n\
 <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:'+ref+'" class="control-label">Discount</label><input class="form-control" id="SoftoneBundle:Customergroup:id:'+ref+'" name="SoftoneBundle:Customergroup:id:'+ref+'" formly-custom-validation="" type=""></div></div>\n\
 <div id="builder-basic"></div>\n\
 ');
-        var ref= $(this).attr("data-ref");
+        ref= $(this).attr("data-ref");
         $dialog.customergrouprule.dialog("open");
 
             var rules_basic = rules_basics[ref];
@@ -104,7 +105,15 @@
         var result = $('#builder-basic').queryBuilder('getRules');
 
         if (!$.isEmptyObject(result)) {
-            alert(JSON.stringify(result, null, 2));
+            //alert(JSON.stringify(result, null, 2));
+            var data = {};
+            data.id = ref;
+            data.rule = JSON.stringify(result, null, 2);
+            $("#loaderer").show();
+            $.post("/customergour/saverule", data, function (result) {
+                $("#loaderer").hide();
+                
+            })
         }
     });         
 </script>
