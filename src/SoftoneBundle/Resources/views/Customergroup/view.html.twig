@@ -6,9 +6,14 @@
 {% endblock %}
 {% block javascripts %}
 <!--script src="{{  asset('assets/js/libs/softone/softoneiorder.js') }}"></script-->
- 
+    
 <script>
     $(".{{ctrl}}").alexTabs("{{app}}", "{{ctrl}}", "{{url}}","{{content|json_encode()}}");
 </script>
 
+<script>
+    $(".dt_row_customergrouprule").click(function(){
+        alert("SSS");
+    })
+</script>
 {% endblock %}
