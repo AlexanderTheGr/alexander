@@ -118,7 +118,7 @@
             $dialog.customergrouprule.dialog("close");
             $.post("/customergroup/saverule", data, function (result) {
                 $("#loaderer").hide();
-                var table = dt_tables["{{ctrl}}"];
+                var table = dt_tables["ctrlgettabs"];
                 table.fnFilter();
             })
         }
