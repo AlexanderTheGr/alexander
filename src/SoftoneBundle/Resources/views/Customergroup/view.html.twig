@@ -14,9 +14,9 @@
 
 <script>
     var $dialog = {};
-    var rules_basic = [];
+    var rules_basics = [];
     {% for key,rule in rules %}
-        rules_basic[{{ key }}] = {{rule | raw}};
+        rules_basics[{{ key }}] = {{rule | raw}};
     {% endfor %}    
     $dialog.customergrouprule = $("<div style='z-index:100000' class='card'></div>")
             .dialog({
@@ -32,18 +32,9 @@
 <div id="builder-basic"></div>');
         var ref= $(this).attr("data-ref");
         $dialog.customergrouprule.dialog("open");
-        
-        
-            var rules_basic = {
-                condition: 'AND',
-                rules: [{
-                        id: 'price',
-                        operator: 'less',
-                        value: 10.25
-                    }]
-            };
-            
-            alert({{rules[1] | raw}})
+
+            var rules_basic = rules_basics[ref];
+         
             $('#builder-basic').queryBuilder({
                 plugins: ['bt-tooltip-errors'],
                 filters: [{
