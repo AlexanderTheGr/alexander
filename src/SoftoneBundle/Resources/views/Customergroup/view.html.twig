@@ -16,7 +16,14 @@
     var $dialog = {};
     var rules_basics = [];
     var discounts = [];
-    rules_basics[0] = [{}];
+    rules_basics[0] = {
+  condition: 'AND',
+  rules: [{
+    id: 'price',
+    operator: 'less',
+    value: 0
+  }]
+};
     discounts[0] = 0;
     {% for key,rule in rules %}
         rules_basics[{{ key }}] = {{rule.rule | raw}};
