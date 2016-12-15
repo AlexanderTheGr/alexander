@@ -115,9 +115,11 @@
             data.val = $("#discount").val();
             data.rule = result;
             $("#loaderer").show();
+            $dialog.customergrouprule.dialog("close");
             $.post("/customergroup/saverule", data, function (result) {
                 $("#loaderer").hide();
-                
+                var table = dt_tables["{{ctrl}}"];
+                table.fnFilter();
             })
         }
     });         
