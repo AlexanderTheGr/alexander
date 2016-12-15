@@ -113,6 +113,7 @@
             discounts[ref] = $("#discount").val();
             var data = {};
             data.id = ref;
+            data.group = '{{group}}';
             data.val = $("#discount").val();
             data.rule = result;
             $("#loaderer").show();
