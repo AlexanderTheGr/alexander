@@ -14,6 +14,7 @@
 <script>
     var $dialog = {};
     var rules_basics = [];
+    var discounts = [];
     {% for key,rule in rules %}
         rules_basics[{{ key }}] = {{rule.rule | raw}};
         discounts[{{ key }}] = {{rule.val | raw}};
