@@ -22,7 +22,9 @@
                 modal: true
     });    
     $(".dt_row_customergrouprule").live("click",function(){
-        $dialog.customergrouprule.html('<div id="builder-basic"></div>');
+        $dialog.customergrouprule.html('\
+<button id="btn-get" class="btn btn-primary parse-json" data-target="basic">Get rules</button>\n\
+<div id="builder-basic"></div>');
         $dialog.customergrouprule.dialog("open");
         
         
@@ -89,15 +91,15 @@
                 rules: rules_basic
             });
 
-            $('#btn-reset').on('click', function () {
+            $('#btn-reset').live('click', function () {
                 $('#builder-basic').queryBuilder('reset');
             });
 
-            $('#btn-set').on('click', function () {
+            $('#btn-set').live('click', function () {
                 $('#builder-basic').queryBuilder('setRules', rules_basic);
             });
 
-            $('#btn-get').on('click', function () {
+            $('#btn-get').live('click', function () {
                 var result = $('#builder-basic').queryBuilder('getRules');
 
                 if (!$.isEmptyObject(result)) {
