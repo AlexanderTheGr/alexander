@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Controller\Main as Main;
 use SoftoneBundle\Entity\Customergroup as Customergroup;
+use SoftoneBundle\Entity\Customergrouprule as Customergrouprule;
 
 class CustomergroupController extends Main{
 
