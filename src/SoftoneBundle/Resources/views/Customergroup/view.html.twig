@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<button style='float:right' id="btn-get-new" class="btn btn-primary parse-json" data-target="basic">New Rule</button>    
+<button style='float:right' data-ref='0' id="btn-get-new" class="btn btn-primary parse-json" data-target="basic">New Rule</button>    
 {{ render(controller('SoftoneBundle:Customergroup:content', { 'ctrl': ctrl,'app':app,'url':url,'content':content }) ) }}
 {% endblock %}
 {% block stylesheets %}
@@ -16,6 +16,8 @@
     var $dialog = {};
     var rules_basics = [];
     var discounts = [];
+    rules_basics[0] = {};
+    discounts[0] = 0;
     {% for key,rule in rules %}
         rules_basics[{{ key }}] = {{rule.rule | raw}};
         discounts[{{ key }}] = "{{rule.val}}";
@@ -30,73 +32,11 @@
     });
     var ref=0;
     $(".dt_row_customergrouprule").live("click",function(){
-        ref= $(this).attr("data-ref");
-        $dialog.customergrouprule.html('\
-<button id="btn-get" class="btn btn-primary parse-json" data-target="basic">Save Rule</button>\n\
-\n\
-\n\
-<div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:'+ref+'" class="control-label">Discount</label><input value="'+discounts[ref]+'" class="form-control" id="discount" name="SoftoneBundle:Customergroup:id:'+ref+'" formly-custom-validation="" type=""></div></div>\n\
-<div id="builder-basic"></div>\n\
-');
-        
-        $dialog.customergrouprule.dialog("open");
-
-            var rules_basic = rules_basics[ref];
-         
-            $('#builder-basic').queryBuilder({
-                plugins: ['bt-tooltip-errors'],
-                filters: [{
-                        id: 'name',
-                        label: 'Name',
-                        type: 'string'
-                    }, {
-                        id: 'supplier',
-                        label: 'Supplier',
-                        type: 'integer',
-                        input: 'select',
-                        values: {{supplierjson | raw}},
-                        operators: ['equal', 'not_equal', 'in', 'not_in', 'is_null', 'is_not_null']
-                    },
-                    {
-                        id: 'category',
-                        label: 'Category',
-                        type: 'integer',
-                        input: 'select',
-                        values: {{categoryjson | raw}},
-                        
-                        operators: ['equal', 'not_equal', 'in', 'not_in', 'is_null', 'is_not_null']
-                    }, {
-                        id: 'in_stock',
-                        label: 'In stock',
-                        type: 'integer',
-                        input: 'radio',
-                        values: {
-                            1: 'Yes',
-                            0: 'No'
-                        },
-                        operators: ['equal']
-                    }, {
-                        id: 'price',
-                        label: 'Price',
-                        type: 'double',
-                        validation: {
-                            min: 0,
-                            step: 0.01
-                        }
-                    }, {
-                        id: 'id',
-                        label: 'Identifier',
-                        type: 'string',
-                        placeholder: '____-____-____',
-                        operators: ['equal', 'not_equal'],
-                        validation: {
-                            format: /^.{4}-.{4}-.{4}$/
-                        }
-                    }],
-                rules: rules_basic
-            });   
-        
+        rule(this);
     })
+    $("#btn-get-new").live("click",function(){
+        rule(this);
+    })    
     $('#btn-reset').live('click', function () {
         $('#builder-basic').queryBuilder('reset');
     });
@@ -104,6 +44,65 @@
     $('#btn-set').live('click', function () {
         $('#builder-basic').queryBuilder('setRules', rules_basic);
     });
+
+    function rule(obj) {
+        ref = $(obj).attr("data-ref");
+        $dialog.customergrouprule.html('<button id="btn-get" class="btn btn-primary parse-json" data-target="basic">Save Rule</button><div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:'+ref+'" class="control-label">Discount</label><input value="'+discounts[ref]+'" class="form-control" id="discount" name="SoftoneBundle:Customergroup:id:'+ref+'" formly-custom-validation="" type=""></div></div><div id="builder-basic"></div>');
+        $dialog.customergrouprule.dialog("open");
+        var rules_basic = rules_basics[ref];
+        $('#builder-basic').queryBuilder({
+            plugins: ['bt-tooltip-errors'],
+            filters: [{
+                    id: 'name',
+                    label: 'Name',
+                    type: 'string'
+                }, {
+                    id: 'supplier',
+                    label: 'Supplier',
+                    type: 'integer',
+                    input: 'select',
+                    values: {{supplierjson | raw}},
+                    operators: ['equal', 'not_equal', 'in', 'not_in', 'is_null', 'is_not_null']
+                },
+                {
+                    id: 'category',
+                    label: 'Category',
+                    type: 'integer',
+                    input: 'select',
+                    values: {{categoryjson | raw}},
+
+                    operators: ['equal', 'not_equal', 'in', 'not_in', 'is_null', 'is_not_null']
+                }, {
+                    id: 'in_stock',
+                    label: 'In stock',
+                    type: 'integer',
+                    input: 'radio',
+                    values: {
+                        1: 'Yes',
+                        0: 'No'
+                    },
+                    operators: ['equal']
+                }, {
+                    id: 'price',
+                    label: 'Price',
+                    type: 'double',
+                    validation: {
+                        min: 0,
+                        step: 0.01
+                    }
+                }, {
+                    id: 'id',
+                    label: 'Identifier',
+                    type: 'string',
+                    placeholder: '____-____-____',
+                    operators: ['equal', 'not_equal'],
+                    validation: {
+                        format: /^.{4}-.{4}-.{4}$/
+                    }
+                }],
+            rules: rules_basic
+        }); 
+    }
 
     $('#btn-get').live('click', function () {
         var result = $('#builder-basic').queryBuilder('getRules');
