@@ -93,7 +93,9 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
-    
+    /**
+     * @Route("/customergroup/saverule")
+     */    
     function saveruleAction() {
         exit;
     }
