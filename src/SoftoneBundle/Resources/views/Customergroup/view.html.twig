@@ -16,9 +16,9 @@
     var rules_basics = [];
     var discounts = [];
     {% for key,rule in rules %}
-        alert(rule.val);
+        alert("{{rule.val}}");
         rules_basics[{{ key }}] = {{rule.rule | raw}};
-        discounts[{{ key }}] = {{rule.val | raw}};
+        discounts[{{ key }}] = "{{rule.val | raw}}";
     {% endfor %}    
     $dialog.customergrouprule = $("<div style='z-index:100000' class='card'></div>")
             .dialog({
