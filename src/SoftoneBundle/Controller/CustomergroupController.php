@@ -60,7 +60,8 @@ class CustomergroupController extends Main{
                         ->getRepository('SoftoneBundle:Customergrouprule')->findBy( array("group"=>$entity));
         foreach ($grouprules as $grouprule) {
             if ($grouprule->getGroup()->getId() == $id)
-            $rules[$grouprule->getId()] = $grouprule->getRule();
+            $rules[$grouprule->getId()]["rule"] = $grouprule->getRule();
+            $rules[$grouprule->getId()]["val"] = $grouprule->getVal();
         }
 
 
