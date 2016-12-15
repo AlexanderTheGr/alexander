@@ -28,7 +28,11 @@
     $(".dt_row_customergrouprule").live("click",function(){
         $dialog.customergrouprule.html('\
 <button id="btn-get" class="btn btn-primary parse-json" data-target="basic">Get rules</button>\n\
-<div id="builder-basic"></div>');
+\n\
+\n\
+<div id="builder-basic"></div>\n\
+<div class="form-group ng-scope"><div><input class="form-control" id="SoftoneBundle:Product:reference:163" name="SoftoneBundle:Product:reference:163" formly-custom-validation="" type=""><label for="SoftoneBundle:Product:reference:163" class="control-label"></label></div></div>\n\
+');
         var ref= $(this).attr("data-ref");
         $dialog.customergrouprule.dialog("open");
 
