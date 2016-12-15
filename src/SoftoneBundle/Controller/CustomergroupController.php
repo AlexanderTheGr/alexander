@@ -40,7 +40,7 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
         $content = $this->content();
 
 
-        return $this->render('SoftoneBundle:Product:view.html.twig', array(
+        return $this->render('SoftoneBundle:Customergroup:view.html.twig', array(
                     'pagename' => 's',
                     'url' => '/customergroup/save',
                     'buttons' => $buttons,
@@ -155,7 +155,7 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
     }
 
     
-    function getRules($entity) {
+    function getRuleAction() {
         $total = 0;
 
         
