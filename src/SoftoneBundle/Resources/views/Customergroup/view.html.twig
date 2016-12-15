@@ -18,7 +18,11 @@
     var discounts = [];
     rules_basics[0] = {
         condition: 'AND',
-        rules: [{}]
+        rules: [{
+            id: 'price',
+            operator: 'equal',
+            value: 0
+        }]
     };
     discounts[0] = 0;
     {% for key,rule in rules %}
