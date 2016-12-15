@@ -96,7 +96,14 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
     /**
      * @Route("/customergroup/saverule")
      */    
-    function saveruleAction() {
+    function saveruleAction(Request $request) {
+        
+        $id = $request->request->get("id");
+        $rule = $request->request->get("rule");
+        $val = $request->request->get("val");
+        
+        $customergrouprule = $this->getDoctrine()->getRepository('SoftoneBundle:Customergrouprule')->find($id);
+        
         exit;
     }
 
