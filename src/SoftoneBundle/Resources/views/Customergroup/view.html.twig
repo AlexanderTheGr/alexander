@@ -111,7 +111,7 @@
             data.val = $("#SoftoneBundle:Customergroup:id:"+ref).val();
             data.rule = result;
             $("#loaderer").show();
-            $.post("/customergour/saverule", data, function (result) {
+            $.post("/customergroup/saverule", data, function (result) {
                 $("#loaderer").hide();
                 
             })
