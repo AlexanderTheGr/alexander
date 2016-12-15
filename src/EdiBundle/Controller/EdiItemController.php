@@ -268,7 +268,7 @@ class EdiItemController extends Main {
                 "SELECT  p.id
                     FROM " . $this->repository . " p, EdiBundle:Edi e
                     where 
-                        e.id = p.Edi AND p.tecdocArticleId IS NULL AND p.dlnr > 0"
+                        e.id = p.Edi AND p.tecdocArticleId IS NULL AND p.dlnr > 0  order by p.id asc"
         );
         /*
         $query = $em->createQuery(
