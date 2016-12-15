@@ -54,7 +54,7 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
 
 
 
-        $rules = $this->getDoctrine()
+        $grouprules = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:Customergrouprule')->findAll();
         foreach ($grouprules as $grouprule) {
             $rules[$grouprule->id] = $grouprule->rule;
