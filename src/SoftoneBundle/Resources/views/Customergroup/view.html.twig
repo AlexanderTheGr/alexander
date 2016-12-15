@@ -108,7 +108,7 @@
             //alert(JSON.stringify(result, null, 2));
             var data = {};
             data.id = ref;
-            data.rule = JSON.stringify(result, null, 2);
+            data.rule = result;
             $("#loaderer").show();
             $.post("/customergour/saverule", data, function (result) {
                 $("#loaderer").hide();
