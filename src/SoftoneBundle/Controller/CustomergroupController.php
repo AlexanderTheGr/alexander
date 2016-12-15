@@ -132,7 +132,8 @@ class CustomergroupController extends Main{
     function deleteruleAction(Request $request) {
         $id = $request->request->get("id");
         $customergrouprule = $this->getDoctrine()->getRepository('SoftoneBundle:Customergrouprule')->find($id); 
-        $customergrouprule->delete();
+        //$customergrouprule->delete();
+        $this->flushremove($customergrouprule);
         exit;
     }    
 
