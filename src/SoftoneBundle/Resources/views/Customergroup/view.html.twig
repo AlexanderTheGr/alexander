@@ -16,7 +16,7 @@
     var $dialog = {};
     var rules_basic = [];
     {% for key,rule in rules %}
-        rules_basic[{{ key }}] = {{rule}};
+        rules_basic[{{ key }}] = {{rule | raw}};
     {% endfor %}    
     $dialog.customergrouprule = $("<div style='z-index:100000' class='card'></div>")
             .dialog({
