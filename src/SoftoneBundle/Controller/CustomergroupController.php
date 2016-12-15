@@ -126,6 +126,15 @@ class CustomergroupController extends Main{
         
         exit;
     }
+    /**
+     * @Route("/customergroup/deleterule")
+     */    
+    function deleteruleAction(Request $request) {
+        $id = $request->request->get("id");
+        $customergrouprule = $this->getDoctrine()->getRepository('SoftoneBundle:Customergrouprule')->find($id); 
+        $customergrouprule->delete();
+        exit;
+    }    
 
     /**
      * @Route("/customergroup/gettab")
