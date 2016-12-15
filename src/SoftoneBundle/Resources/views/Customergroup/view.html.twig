@@ -109,6 +109,7 @@
 
         if (!$.isEmptyObject(result)) {
             //alert(JSON.stringify(result, null, 2));
+            rules_basics[ref] = result;
             var data = {};
             data.id = ref;
             data.val = $("#discount").val();
