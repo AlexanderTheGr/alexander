@@ -16,7 +16,7 @@
     var $dialog = {};
     var rules_basics = [];
     var discounts = [];
-    rules_basics[0] = {
+    rules_basics_new = {
         condition: 'AND',
         rules: [{
             id: 'price',
@@ -24,6 +24,7 @@
             value: 0
         }]
     };
+    rules_basics[0] = rules_basics_new;
     discounts[0] = 0;
     {% for key,rule in rules %}
         rules_basics[{{ key }}] = {{rule.rule | raw}};
@@ -128,6 +129,12 @@
             $dialog.customergrouprule.dialog("close");
             $.post("/customergroup/saverule", data, function (result) {
                 $("#loaderer").hide();
+                if (ref == 0) {
+                    rules_basics[result.id] = rules_basics[ref];
+                    discounts[result.id] = rules_basics[ref];
+                    discounts[0] = 0;
+                    rules_basics[0] = rules_basics_new;
+                }
                 var table = dt_tables["ctrlgettabs"];
                 table.fnFilter();
             })
