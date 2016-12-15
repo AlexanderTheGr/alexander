@@ -48,10 +48,16 @@ class CustomergroupController extends Main{
         }
         $supplierjson = json_encode($supplierArr);
 
-        $categories = $this->getDoctrine()->getRepository("SoftoneBundle:CategoryLang")->findAll();
+        $categories = $this->getDoctrine()->getRepository("SoftoneBundle:Category")->findBy(array("parent"=>0));
         $categoriesArr = array();
         foreach ($categories as $category) {
-            $categoriesArr[$category->getCategory()->getId()] = $category->getName();
+            $CategoryLang = $this->getDoctrine()->getRepository("SoftoneBundle:CategoryLang")->findOneBy(array("category"=>$category));
+            $categoriesArr[$category->getId()] = $CategoryLang->getName();
+            $categories2 = $this->getDoctrine()->getRepository("SoftoneBundle:Category")->findBy(array("parent"=>$category->getId()));
+            foreach ($categories2 as $category2) {
+                $CategoryLang = $this->getDoctrine()->getRepository("SoftoneBundle:CategoryLang")->findOneBy(array("category"=>$category));
+                $categoriesArr[$category->getId()] = "--".$CategoryLang->getName();                
+            }
         }
         $categoryjson = json_encode($categoriesArr);
 
