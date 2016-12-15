@@ -16,6 +16,7 @@
     var rules_basics = [];
     var discounts = [];
     {% for key,rule in rules %}
+        alert(rule.val);
         rules_basics[{{ key }}] = {{rule.rule | raw}};
         discounts[{{ key }}] = {{rule.val | raw}};
     {% endfor %}    
