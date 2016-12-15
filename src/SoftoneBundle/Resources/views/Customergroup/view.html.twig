@@ -25,6 +25,7 @@
         $dialog.customergrouprule.html('\
 <button id="btn-get" class="btn btn-primary parse-json" data-target="basic">Get rules</button>\n\
 <div id="builder-basic"></div>');
+        var ref= $(this).attr("data-ref");
         $dialog.customergrouprule.dialog("open");
         
         
@@ -37,7 +38,7 @@
                     }]
             };
             
-
+            alert({{rules[1] | raw}})
             $('#builder-basic').queryBuilder({
                 plugins: ['bt-tooltip-errors'],
                 filters: [{
@@ -89,24 +90,23 @@
                         }
                     }],
                 rules: rules_basic
-            });
-
-            $('#btn-reset').live('click', function () {
-                $('#builder-basic').queryBuilder('reset');
-            });
-
-            $('#btn-set').live('click', function () {
-                $('#builder-basic').queryBuilder('setRules', rules_basic);
-            });
-
-            $('#btn-get').live('click', function () {
-                var result = $('#builder-basic').queryBuilder('getRules');
-
-                if (!$.isEmptyObject(result)) {
-                    alert(JSON.stringify(result, null, 2));
-                }
-            });        
+            });   
         
     })
+    $('#btn-reset').live('click', function () {
+        $('#builder-basic').queryBuilder('reset');
+    });
+
+    $('#btn-set').live('click', function () {
+        $('#builder-basic').queryBuilder('setRules', rules_basic);
+    });
+
+    $('#btn-get').live('click', function () {
+        var result = $('#builder-basic').queryBuilder('getRules');
+
+        if (!$.isEmptyObject(result)) {
+            alert(JSON.stringify(result, null, 2));
+        }
+    });         
 </script>
 {% endblock %}
