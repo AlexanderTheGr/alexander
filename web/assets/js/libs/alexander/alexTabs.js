@@ -105,7 +105,7 @@ $("#loaderer").hide();
                         },
                         //"rowCallback": rowCallback,
                         "createdRow": function createdRow(nRow, aData, iDataIndex) {
-                            $(nRow).attr('ref', aData[0]);
+                            $(nRow).attr('data-ref', aData[0]);
                         },
                         "ajax": {
                             "method": "post",
