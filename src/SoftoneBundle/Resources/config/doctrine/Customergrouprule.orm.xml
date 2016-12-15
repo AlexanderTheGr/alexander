@@ -21,7 +21,7 @@
       </options>
     </field>
 
-    <many-to-one field="`group`" target-entity="Customergroup" fetch="LAZY">
+    <many-to-one field="group" target-entity="Customergroup" fetch="LAZY">
       <join-columns>
         <join-column name="group" referenced-column-name="id"/>
       </join-columns>
