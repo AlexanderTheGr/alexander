@@ -119,7 +119,7 @@ class CustomergroupController extends Main{
         $customergrouprule->setVal($val);
         $this->flushpersist($customergrouprule);
 
-        $json = json_encode(array($customergrouprule->getId()));
+        $json = json_encode(array("id"=>$customergrouprule->getId()));
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
