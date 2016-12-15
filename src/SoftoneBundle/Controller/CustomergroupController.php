@@ -73,6 +73,7 @@ class CustomergroupController extends Main{
                     'app' => $this->generateRandomString(),
                     'content' => $content,
                     'rules' => $rules,
+                    'group' => $id,
                     'supplierjson' => $supplierjson,
                     "categoryjson" => $categoryjson,
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
