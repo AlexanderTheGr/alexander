@@ -104,8 +104,9 @@ $("#loaderer").hide();
                             eval(datatable.drawCallback);
                         },
                         //"rowCallback": rowCallback,
-                        //"createdRow": createdRow,
-
+                        "createdRow": function createdRow(nRow, aData, iDataIndex) {
+                            $(nRow).attr('ref', aData[0]);
+                        },
                         "ajax": {
                             "method": "post",
                             "url": datatable.url,
