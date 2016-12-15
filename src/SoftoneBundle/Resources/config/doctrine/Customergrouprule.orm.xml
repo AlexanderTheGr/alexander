@@ -23,7 +23,7 @@
 
     <many-to-one field="group" target-entity="Customergroup" fetch="LAZY">
       <join-columns>
-        <join-column name="group" referenced-column-name="id"/>
+        <join-column name="`group`" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
   </entity>
