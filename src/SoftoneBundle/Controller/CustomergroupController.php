@@ -69,7 +69,7 @@ class CustomergroupController extends Main{
                     'pagename' => 's',
                     'url' => '/customergroup/save',
                     'buttons' => $buttons,
-                    'ctrl' => "ctrlgettabs",
+                    'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'content' => $content,
                     'rules' => $rules,
