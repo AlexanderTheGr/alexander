@@ -37,7 +37,9 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
         $buttons = array();
         $content = $this->gettabs($id);
         $content = $this->content();
-
+        $entity = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->find($id);
         $suppliers = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")->findAll();
         $supplierArr = array();
         foreach ($suppliers as $supplier) {
@@ -55,7 +57,7 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
 
 
         $grouprules = $this->getDoctrine()
-                        ->getRepository('SoftoneBundle:Customergrouprule')->findAll();
+                        ->getRepository('SoftoneBundle:Customergrouprule')->findBy(array("group"=>$entity));
         foreach ($grouprules as $grouprule) {
             $rules[$grouprule->getId()] = $grouprule->getRule();
         }
