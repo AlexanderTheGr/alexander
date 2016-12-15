@@ -7,10 +7,9 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Controller\Main as Main;
-
 use SoftoneBundle\Entity\Customergroup as Customergroup;
 
-class CustomergroupController extends \SoftoneBundle\Controller\SoftoneController  {
+class CustomergroupController extends \SoftoneBundle\Controller\SoftoneController {
 
     var $repository = 'SoftoneBundle:Customergroup';
     var $newentity = array();
@@ -41,18 +40,27 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
 
         $suppliers = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")->findAll();
         $supplierArr = array();
-        foreach($suppliers as $supplier) {
-            $supplierArr[$supplier->getId()] = $supplier->getTitle();            
+        foreach ($suppliers as $supplier) {
+            $supplierArr[$supplier->getId()] = $supplier->getTitle();
         }
         $supplierjson = json_encode($supplierArr);
-        
+
         $categories = $this->getDoctrine()->getRepository("SoftoneBundle:CategoryLang")->findAll();
         $categoriesArr = array();
-        foreach($categories as $category) {
-            $categoriesArr[$category->getCategory()->getId()] = $category->getName();            
+        foreach ($categories as $category) {
+            $categoriesArr[$category->getCategory()->getId()] = $category->getName();
         }
         $categoryjson = json_encode($categoriesArr);
-        
+
+
+
+        $rules = $this->getDoctrine()
+                        ->getRepository('SoftoneBundle:Customergrouprule')->findAll();
+        foreach ($grouprules as $grouprule) {
+            $rules[$grouprule->id] = $grouprule->rule;
+        }
+
+
         return $this->render('SoftoneBundle:Customergroup:view.html.twig', array(
                     'pagename' => 's',
                     'url' => '/customergroup/save',
@@ -60,11 +68,11 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'content' => $content,
+                    'rules' => $rules,
                     'supplierjson' => $supplierjson,
-                    "categoryjson"=>$categoryjson,
+                    "categoryjson" => $categoryjson,
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
-        
     }
 
     /**
@@ -75,7 +83,7 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
 
         //$this->repository = "SoftoneBundle:Customer";
         $this->newentity[$this->repository] = $entity;
-        $this->initialazeNewEntity($entity);        
+        $this->initialazeNewEntity($entity);
         $this->save();
         $json = json_encode(array("ok"));
         return new Response(
@@ -97,18 +105,17 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
             $entity = new Customergroup;
             $this->newentity[$this->repository] = $entity;
         }
-        
+
         $fields["title"] = array("label" => "Title");
         $fields["basePrice"] = array("label" => "Price");
 
         $forms = $this->getFormLyFields($entity, $fields);
 
-        
+
         if ($id > 0 AND count($entity) > 0) {
             //$entity2 = $this->getDoctrine()
             //        ->getRepository('SoftoneBundle:Customergrouprule')
-             //       ->find($id);
-
+            //       ->find($id);
             //$fields2["reference"] = array("label" => "Erp Code", "className" => "synafiacode col-md-12");
             //$forms2 = $this->getFormLyFields($entity2, $fields2);
 
@@ -123,10 +130,10 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
             $params["ctrl"] = 'ctrlgettabs';
             $params["app"] = 'appgettabs';
             $datatables[] = $this->contentDatatable($params);
-        }        
-        
-        
-        
+        }
+
+
+
         $this->addTab(array("title" => "General", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         //$this->addTab(array("title" => "Rules", "content" => $this->getRules($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         if ($id > 0 AND count($entity) > 0) {
@@ -134,11 +141,12 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
         }
         foreach ($tabs as $tab) {
             $this->addTab($tab);
-        }        
-        
+        }
+
         $json = $this->tabs();
         return $json;
     }
+
     /**
      * @Route("/customergroup/getrules/{id}")
      */
@@ -148,7 +156,7 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
             $this->addField($param);
         }
         $this->repository = 'SoftoneBundle:Customergrouprule';
-        $this->q_and[] = $this->prefix . ".group = '".$id."'";
+        $this->q_and[] = $this->prefix . ".group = '" . $id . "'";
         $json = $this->datatable();
 
         $datatable = json_decode($json);
@@ -169,29 +177,29 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
         );
     }
 
-    
     function getRuleAction() {
         $total = 0;
 
-        
+
         $suppliers = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")->findAll();
         $supplierArr = array();
-        foreach($suppliers as $supplier) {
-            $supplierArr[$supplier->getId()] = $supplier->getTitle();            
+        foreach ($suppliers as $supplier) {
+            $supplierArr[$supplier->getId()] = $supplier->getTitle();
         }
         $supplierjson = json_encode($supplierArr);
-        
+
         $categories = $this->getDoctrine()->getRepository("SoftoneBundle:CategoryLang")->findAll();
         $categoriesArr = array();
-        foreach($categories as $category) {
-            $categoriesArr[$category->getCategory()->getId()] = $category->getName();            
+        foreach ($categories as $category) {
+            $categoriesArr[$category->getCategory()->getId()] = $category->getName();
         }
         $categoryjson = json_encode($categoriesArr);
 
-        
-        $response = $this->get('twig')->render('SoftoneBundle:Customergroup:rules.html.twig', array('supplierjson' => $supplierjson,"categoryjson"=>$categoryjson));
+
+        $response = $this->get('twig')->render('SoftoneBundle:Customergroup:rules.html.twig', array('supplierjson' => $supplierjson, "categoryjson" => $categoryjson));
         return str_replace("\n", "", htmlentities($response));
-    }    
+    }
+
     /**
      * @Route("/customergroup/getdatatable")
      */
