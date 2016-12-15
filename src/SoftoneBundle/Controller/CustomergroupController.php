@@ -39,7 +39,20 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
         $content = $this->gettabs($id);
         $content = $this->content();
 
-
+        $suppliers = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")->findAll();
+        $supplierArr = array();
+        foreach($suppliers as $supplier) {
+            $supplierArr[$supplier->getId()] = $supplier->getTitle();            
+        }
+        $supplierjson = json_encode($supplierArr);
+        
+        $categories = $this->getDoctrine()->getRepository("SoftoneBundle:CategoryLang")->findAll();
+        $categoriesArr = array();
+        foreach($categories as $category) {
+            $categoriesArr[$category->getCategory()->getId()] = $category->getName();            
+        }
+        $categoryjson = json_encode($categoriesArr);
+        
         return $this->render('SoftoneBundle:Customergroup:view.html.twig', array(
                     'pagename' => 's',
                     'url' => '/customergroup/save',
@@ -47,6 +60,8 @@ class CustomergroupController extends \SoftoneBundle\Controller\SoftoneControlle
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'content' => $content,
+                    'supplierjson' => $supplierjson,
+                    "categoryjson"=>$categoryjson,
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
         
