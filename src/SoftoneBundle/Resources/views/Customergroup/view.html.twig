@@ -12,8 +12,18 @@
 </script>
 
 <script>
+    var $dialog = {};
+    $dialog.customergrouprule = $("<div style='z-index:100000' class='card'></div>")
+            .dialog({
+                autoOpen: false,
+                resizable: false,
+                draggable: false,
+                width: 500,
+                modal: true
+    });    
     $(".dt_row_customergrouprule").live("click",function(){
-        alert("SSS");
+        $dialog.customergrouprule.html("ASSS");
+        $dialog.customergrouprule.dialog("open");
     })
 </script>
 {% endblock %}
