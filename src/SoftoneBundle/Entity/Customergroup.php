@@ -292,7 +292,12 @@ class Customergroup extends Entity {
         return $this->customergrouprules;
     }
     public function loadCustomergrouprules() {
-        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        //if ($this->reference)
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');        
         $grouprules = $em->getRepository('SoftoneBundle:Customergrouprule')->findBy( array("group"=>$this));
         foreach ($grouprules as $grouprule) {
             $this->addCustomergrouprule($grouprule);
