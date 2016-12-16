@@ -304,6 +304,7 @@ class Customergroup extends Entity {
         $grouprules = $em->getRepository('SoftoneBundle:Customergrouprule')->findBy( array("group"=>$this));
         foreach ((array)$grouprules as $grouprule) {
             $this->rules[] = $grouprule;
+            
         }
   
         return $this;
