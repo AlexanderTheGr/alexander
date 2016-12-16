@@ -158,15 +158,19 @@ class Customergrouprule
     }
     
     function validateRule($product) {
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');          
         $cats = $product->getCats();
-        print_r($cats);
         $rule = json_decode($this->rule,true);
-        $categories = $this->getDoctrine()->getRepository("SoftoneBundle:Category")->findById($cats);
+        $categories = $em->getRepository("SoftoneBundle:Category")->findById($cats);
         $categoriesArr = array();
         $catsEp = array();
         foreach ($categories as $category) {
             $catsEp[] = $category->getSortCode();
-            $pcategory = $this->getDoctrine()->getRepository("SoftoneBundle:Category")->find($categories->getParent());
+            $pcategory = $em->getRepository("SoftoneBundle:Category")->find($categories->getParent());
             $catsEp[] = $pcategory->getSortCode();
         }
         print_r($catsEp);
