@@ -824,6 +824,7 @@ class EdiItem extends Entity {
         $supplier = str_replace("KAYABA", "KYB", $supplier);
         $supplier = str_replace("KM", "KM Germany", $supplier);
         $supplier = str_replace("LUK", "LuK", $supplier);
+        $supplier = str_replace("FEBI BILSTEIN BILSTEIN", "FEBI BILSTEIN", $supplier);
         $supplier = str_replace("COOPERSCOOPERSCOOPERSCOOPERSFIAAM FILTERS FILTERS FILTERS FILTERS", "COOPERSFIAAM FILTERS", $supplier);
         $supplier = str_replace("COOPERSCOOPERSCOOPERSFIAAM FILTERS FILTERS FILTERS", "COOPERSFIAAM FILTERS", $supplier);
         $supplier = str_replace("COOPERSCOOPERSFIAAM FILTERS FILTERS", "COOPERSFIAAM FILTERS", $supplier);
