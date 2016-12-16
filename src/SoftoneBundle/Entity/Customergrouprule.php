@@ -195,6 +195,19 @@ class Customergrouprule {
                         }
                     }
                 }
+                if ($rl["id"] == "supplier") {
+                    if ($rl["operator"] == "equal") {
+                        if ($rl["value"] == $supplier) {
+                            return true;
+                        }
+                    }
+                    if ($rl["operator"] == "not_equal") {
+                        if ($rl["value"] != $supplier) {
+                            return true;
+                        }
+                    }
+                }                
+                
             } elseif ($rule["condition"] == "AND") {
                 if ($rl["id"] == "category") {
                     if ($rl["operator"] == "equal") {
@@ -208,6 +221,20 @@ class Customergrouprule {
                         }
                     }
                 }
+                if ($rl["id"] == "supplier") {
+                    if ($rl["operator"] == "equal") {
+                        if ($rl["value"] == $supplier) {
+                            return false;
+                        }
+                    }
+                    if ($rl["operator"] == "not_equal") {
+                        if ($rl["value"] != $supplier) {
+                            return false;
+                        }
+                    }
+                }                   
+                
+                
             }
         }
     }
