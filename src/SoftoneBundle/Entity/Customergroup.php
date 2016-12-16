@@ -291,6 +291,8 @@ class Customergroup extends Entity {
     public function getCustomergrouprules() {
         return $this->customergrouprules;
     }
+    
+    private $rules = array();
     public function loadCustomergrouprules() {
         //if ($this->reference)
         global $kernel;
@@ -301,10 +303,14 @@ class Customergroup extends Entity {
         $grouprules = $em->getRepository('SoftoneBundle:Customergrouprule')->findBy( array("group"=>$this));
         
         foreach ((array)$grouprules as $grouprule) {
-            $this->addCustomergrouprule($grouprule);
-            echo $grouprule->getId()."<BR>";
+            //$this->addCustomergrouprule($grouprule);
+            //echo $grouprule->getId()."<BR>";
+            $this->rules[] = $grouprule;
         }
   
         return $this;
+    }
+    public function getRules() {
+        return $this->rules;
     }
 }
