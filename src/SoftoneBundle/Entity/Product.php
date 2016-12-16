@@ -1733,7 +1733,7 @@ class Product extends Entity {
      * @return EdiItem
      */
     public function setCats($cats) {
-        $this->cars = serialize($cats);
+        $this->cats = serialize($cats);
         return $this;
     }
     
