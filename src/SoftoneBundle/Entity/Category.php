@@ -27,6 +27,14 @@ class Category
     protected $weight;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="sortcode", type="integer", nullable=false)
+     */
+    protected $sortcode;    
+    
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="ts", type="datetime", nullable=false)
@@ -104,6 +112,27 @@ class Category
     }
 
     /**
+     * Get sortcode
+     *
+     * @return integer
+     */
+    public function getSortcode() {
+        return $this->sortcode;
+    }
+
+    /**
+     * Set weight
+     *
+     * @param integer $sortcode
+     *
+     * @return Category
+     */
+    public function setSortcode($sortcode) {
+        $this->sortcode = $sortcode;
+        return $this;
+    }
+
+    /**
      * Get weight
      *
      * @return integer
@@ -112,7 +141,7 @@ class Category
     {
         return $this->weight;
     }
-
+    
     /**
      * Set ts
      *
