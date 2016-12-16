@@ -2440,7 +2440,7 @@ class Product extends Entity {
         return $this->edis;
     }
     
-    function getGroupedPrice() {
-        
+    function getGroupedPrice(\SoftoneBundle\Entity\Customer $customer) {
+        $customer->getGroup();
     }
 }
