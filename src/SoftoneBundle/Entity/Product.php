@@ -2432,7 +2432,7 @@ class Product extends Entity {
         $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
         $sortorder = 0;
         foreach ($rules as $rule) {
-            if ($rule->validateRule($this) AND $sortorder < $rule->getSortorder() ) {
+            if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder() ) {
                 $sortorder = $rule->getSortorder();
                 $disount = $rule->getVal();
             }
