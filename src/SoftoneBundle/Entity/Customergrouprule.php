@@ -165,9 +165,10 @@ class Customergrouprule
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');          
         $cats = $product->getCats();
         $rule = json_decode($this->rule,true);
-        $categories = $em->getRepository("SoftoneBundle:Category")->findById($cats);
+        $categories = $em->getRepository("SoftoneBundle:Category")->findById();
         $categoriesArr = array();
         $catsEp = array();
+        print_r($cats);
         foreach ($categories as $category) {
             $catsEp[] = $category->getSortCode();
             $pcategory = $em->getRepository("SoftoneBundle:Category")->find($category->getParent());
