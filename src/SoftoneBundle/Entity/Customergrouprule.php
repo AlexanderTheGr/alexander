@@ -167,14 +167,14 @@ class Customergrouprule {
         //print_r($catsEp);
         $supplier = $product->getSupplierId()->getId();
         echo $supplier;
-        echo $this->rulesLoop($rule, $catsEp,$supplier) ? "true" : "false";
+        echo $this->rulesLoop($rule, $catsEp, $supplier) ? "true" : "false";
     }
 
-    function rulesLoop($rule, $catsEp,$supplier) {
+    function rulesLoop($rule, $catsEp, $supplier) {
         foreach ($rule["rules"] as $rl) {
 
             if (count($rl["rules"])) {
-                $out = $this->rulesLoop($rl, $catsEp,$supplier);
+                $out = $this->rulesLoop($rl, $catsEp, $supplier);
                 if ($rule["condition"] == "OR" AND $out == true) {
                     return true;
                 }
@@ -207,7 +207,7 @@ class Customergrouprule {
                             return true;
                         }
                     }
-                }                
+                }
             } elseif ($rule["condition"] == "AND") {
                 $out = true;
                 if ($rl["id"] == "category") {
@@ -233,9 +233,37 @@ class Customergrouprule {
                             return false;
                         }
                     }
-                }                   
+                }
             }
         }
         return $out;
     }
+
+    /**
+     * @var integer
+     */
+    private $sortorder;
+
+    /**
+     * Set sortorder
+     *
+     * @param integer $sortorder
+     *
+     * @return Customergrouprule
+     */
+    public function setSortorder($sortorder) {
+        $this->sortorder = $sortorder;
+
+        return $this;
+    }
+
+    /**
+     * Get sortorder
+     *
+     * @return integer
+     */
+    public function getSortorder() {
+        return $this->sortorder;
+    }
+
 }
