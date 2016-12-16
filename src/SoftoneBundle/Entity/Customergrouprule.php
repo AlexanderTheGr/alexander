@@ -183,6 +183,7 @@ class Customergrouprule {
                 }
             }
             if ($rule["condition"] == "OR") {
+                $out = false;
                 if ($rl["id"] == "category") {
                     if ($rl["operator"] == "equal") {
                         if (in_array($rl["value"], $catsEp)) {
@@ -208,6 +209,7 @@ class Customergrouprule {
                     }
                 }                
             } elseif ($rule["condition"] == "AND") {
+                $out = true;
                 if ($rl["id"] == "category") {
                     if ($rl["operator"] == "equal") {
                         if (!in_array($rl["value"], $catsEp)) {
@@ -234,5 +236,6 @@ class Customergrouprule {
                 }                   
             }
         }
+        return $out;
     }
 }
