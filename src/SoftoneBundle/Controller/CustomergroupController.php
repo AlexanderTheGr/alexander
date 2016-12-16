@@ -83,7 +83,7 @@ class CustomergroupController extends Main{
                 $rules[$grouprule->getId()]["rule"] = $grouprule->getRule();
                 $rules[$grouprule->getId()]["val"] = $grouprule->getVal();
                 
-                print_r(json_decode($grouprule->getRule()));
+                //print_r(json_decode($grouprule))
                 
             }
         }
