@@ -372,8 +372,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         if ($id == 0 AND @ $entity->id == 0) {
             $entity = new Product;
         }
-        
-        $entity->getGroupedPrice();
+        $customer = $this->getDoctrine()->getRepository('SoftoneBundle:Customer')->find($id);
+        $entity->getGroupedPrice($customer);
         $entity->updatetecdoc();
         
         $fields["title"] = array("label" => "Title", "required" => true, "className"=>"col-md-6 col-sm-6");
