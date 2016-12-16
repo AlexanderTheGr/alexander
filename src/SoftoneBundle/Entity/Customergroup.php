@@ -18,7 +18,7 @@ class Customergroup  extends  Entity {
     var $repositories = array();
 
     public function __construct() {
-        $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->customergrouprules = new \Doctrine\Common\Collections\ArrayCollection();
         $this->setRepositories();
     }
 
@@ -270,5 +270,44 @@ class Customergroup  extends  Entity {
     public function getModified()
     {
         return $this->modified;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $customergrouprules;
+
+
+    /**
+     * Add customergrouprule
+     *
+     * @param \SoftoneBundle\Entity\Customergrouprule $customergrouprule
+     *
+     * @return Customergroup
+     */
+    public function addCustomergrouprule(\SoftoneBundle\Entity\Customergrouprule $customergrouprule)
+    {
+        $this->customergrouprules[] = $customergrouprule;
+
+        return $this;
+    }
+
+    /**
+     * Remove customergrouprule
+     *
+     * @param \SoftoneBundle\Entity\Customergrouprule $customergrouprule
+     */
+    public function removeCustomergrouprule(\SoftoneBundle\Entity\Customergrouprule $customergrouprule)
+    {
+        $this->customergrouprules->removeElement($customergrouprule);
+    }
+
+    /**
+     * Get customergrouprules
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCustomergrouprules()
+    {
+        return $this->customergrouprules;
     }
 }
