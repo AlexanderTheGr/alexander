@@ -6,15 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Entity;
 use SoftoneBundle\Entity\Softone as Softone;
 
-
-
 /**
  * Customergroup
  *
  * @ORM\Table(name="customergroup")
  * @ORM\Entity
  */
-class Customergroup  extends  Entity {
+class Customergroup extends Entity {
+
     var $repositories = array();
 
     public function __construct() {
@@ -73,6 +72,7 @@ class Customergroup  extends  Entity {
         }
         return $b;
     }
+
     /**
      * @var string
      *
@@ -96,8 +96,6 @@ class Customergroup  extends  Entity {
      */
     protected $id;
 
-
-
     /**
      * Set title
      *
@@ -105,8 +103,7 @@ class Customergroup  extends  Entity {
      *
      * @return Customergroup
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
 
         return $this;
@@ -117,8 +114,7 @@ class Customergroup  extends  Entity {
      *
      * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -129,8 +125,7 @@ class Customergroup  extends  Entity {
      *
      * @return Customergroup
      */
-    public function setBasePrice($basePrice)
-    {
+    public function setBasePrice($basePrice) {
         $this->basePrice = $basePrice;
 
         return $this;
@@ -141,8 +136,7 @@ class Customergroup  extends  Entity {
      *
      * @return string
      */
-    public function getBasePrice()
-    {
+    public function getBasePrice() {
         return $this->basePrice;
     }
 
@@ -151,10 +145,10 @@ class Customergroup  extends  Entity {
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
+
     /**
      * @var \DateTime
      */
@@ -175,7 +169,6 @@ class Customergroup  extends  Entity {
      */
     private $modified;
 
-
     /**
      * Set ts
      *
@@ -183,8 +176,7 @@ class Customergroup  extends  Entity {
      *
      * @return Customergroup
      */
-    public function setTs($ts)
-    {
+    public function setTs($ts) {
         $this->ts = $ts;
 
         return $this;
@@ -195,8 +187,7 @@ class Customergroup  extends  Entity {
      *
      * @return \DateTime
      */
-    public function getTs()
-    {
+    public function getTs() {
         return $this->ts;
     }
 
@@ -207,8 +198,7 @@ class Customergroup  extends  Entity {
      *
      * @return Customergroup
      */
-    public function setActioneer($actioneer)
-    {
+    public function setActioneer($actioneer) {
         $this->actioneer = $actioneer;
 
         return $this;
@@ -219,8 +209,7 @@ class Customergroup  extends  Entity {
      *
      * @return integer
      */
-    public function getActioneer()
-    {
+    public function getActioneer() {
         return $this->actioneer;
     }
 
@@ -231,8 +220,7 @@ class Customergroup  extends  Entity {
      *
      * @return Customergroup
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -243,8 +231,7 @@ class Customergroup  extends  Entity {
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -255,8 +242,7 @@ class Customergroup  extends  Entity {
      *
      * @return Customergroup
      */
-    public function setModified($modified)
-    {
+    public function setModified($modified) {
         $this->modified = $modified;
 
         return $this;
@@ -267,15 +253,14 @@ class Customergroup  extends  Entity {
      *
      * @return \DateTime
      */
-    public function getModified()
-    {
+    public function getModified() {
         return $this->modified;
     }
+
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $customergrouprules;
-
 
     /**
      * Add customergrouprule
@@ -284,8 +269,7 @@ class Customergroup  extends  Entity {
      *
      * @return Customergroup
      */
-    public function addCustomergrouprule(\SoftoneBundle\Entity\Customergrouprule $customergrouprule)
-    {
+    public function addCustomergrouprule(\SoftoneBundle\Entity\Customergrouprule $customergrouprule) {
         $this->customergrouprules[] = $customergrouprule;
 
         return $this;
@@ -296,8 +280,7 @@ class Customergroup  extends  Entity {
      *
      * @param \SoftoneBundle\Entity\Customergrouprule $customergrouprule
      */
-    public function removeCustomergrouprule(\SoftoneBundle\Entity\Customergrouprule $customergrouprule)
-    {
+    public function removeCustomergrouprule(\SoftoneBundle\Entity\Customergrouprule $customergrouprule) {
         $this->customergrouprules->removeElement($customergrouprule);
     }
 
@@ -306,8 +289,8 @@ class Customergroup  extends  Entity {
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCustomergrouprules()
-    {
+    public function getCustomergrouprules() {
         return $this->customergrouprules;
     }
+
 }
