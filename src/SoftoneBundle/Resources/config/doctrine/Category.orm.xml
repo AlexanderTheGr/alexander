@@ -17,6 +17,11 @@
         <option name="unsigned"/>
       </options>
     </field>
+    <field name="sortcode" type="integer" column="sortcode" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>    
     <field name="ts" type="datetime" column="ts" nullable="false">
       <options>
         
