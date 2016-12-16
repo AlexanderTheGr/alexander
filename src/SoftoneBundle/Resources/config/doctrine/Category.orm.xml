@@ -3,6 +3,7 @@
   <entity name="SoftoneBundle\Entity\Category" table="partsbox_db.category">
     <indexes>
       <index name="parent" columns="parent"/>
+      <index name="sortcode" columns="sortcode"/>
     </indexes>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
