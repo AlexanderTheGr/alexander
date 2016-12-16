@@ -47,7 +47,7 @@ class CustomergroupController extends Main{
                 ->getRepository($this->repository)
                 ->find($id);
         
-        $rules = $entity->getCustomergrouprules();
+        $rules = $entity->loadCustomergrouprules()->getCustomergrouprules();
         foreach($rules as $rule) {
             echo $rule->getId();
         }
