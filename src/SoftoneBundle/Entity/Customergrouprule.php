@@ -173,17 +173,45 @@ class Customergrouprule
             $pcategory = $em->getRepository("SoftoneBundle:Category")->find($category->getParent());
             $catsEp[] = $pcategory->getSortCode();
         }
-        print_r($catsEp);
-        $this->rulesLoop($rule,$catsEp);
+        //print_r($catsEp);
+        echo $this->rulesLoop($rule,$catsEp) ? "true" : "false";
     }
     function rulesLoop($rule,$catsEp) {
         foreach ($rule["rules"] as $rl ) {
-            if ($rl["rule"]) {
-                $this->rulesLoop($rule,$catsEp);
+            if (count($rl["rules"])) {
+                $out = $this->rulesLoop($rule,$catsEp);
+                if ($rule["condition"] == "OR" AND $out == true) {
+                     return true;
+                }
+                if ($rule["condition"] == "AND" AND $out == false) {
+                     return false;
+                }
             }
-            if ($rl["id"] == "category") {
-                if ($rl["operator"] == "equal") {
-                    
+            if ($rule["condition"] == "OR") {
+                if ($rl["id"] == "category") {
+                    if ($rl["operator"] == "equal") {
+                        if (in_array($rl["operator"], $catsEp)) {
+                            return true;
+                        }
+                    }
+                    if ($rl["operator"] == "not_equal") {
+                        if (!in_array($rl["operator"], $catsEp)) {
+                            return true;
+                        }
+                    }                
+                }
+            } elseif ($rule["condition"] == "AND") {
+                if ($rl["id"] == "category") {
+                    if ($rl["operator"] == "equal") {
+                        if (!in_array($rl["operator"], $catsEp)) {
+                            return false;
+                        }
+                    }
+                    if ($rl["operator"] == "not_equal") {
+                        if (in_array($rl["operator"], $catsEp)) {
+                            return false;
+                        }
+                    }                
                 }
             }
         }
