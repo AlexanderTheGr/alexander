@@ -2444,6 +2444,7 @@ class Product extends Entity {
         $rules = $customer->getCustomergroup()->getRules();
         //$cats = $this->getCars();
         foreach ($rules as $rule) {
+            echo "sss";
             $rule->validateRule($this);
         }
     }
