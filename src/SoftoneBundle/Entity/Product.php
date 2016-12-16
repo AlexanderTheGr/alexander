@@ -2428,12 +2428,16 @@ class Product extends Entity {
         return $this->edis;
     }
 
-    function getGroupedPrice(\SoftoneBundle\Entity\Customer $customer) {
+    function getGroupedDiscount(\SoftoneBundle\Entity\Customer $customer) {
         $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
-        //$cats = $this->getCars();
+        $sortorder = 0;
         foreach ($rules as $rule) {
-            $rule->validateRule($this);
+            if ($rule->validateRule($this) AND $sortorder < $rule->getSortorder() ) {
+                $sortorder = $rule->getSortorder();
+                $disount = $rule->getVal();
+            }
         }
+        return $disount;
     }
 
 }
