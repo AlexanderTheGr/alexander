@@ -372,7 +372,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         if ($id == 0 AND @ $entity->id == 0) {
             $entity = new Product;
         }
-        $customer = $this->getDoctrine()->getRepository('SoftoneBundle:Customer')->find($id);
+        $customer = $this->getDoctrine()->getRepository('SoftoneBundle:Customer')->find(1);
         $entity->getGroupedPrice($customer);
         $entity->updatetecdoc();
         
