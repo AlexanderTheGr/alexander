@@ -2443,6 +2443,7 @@ class Product extends Entity {
     function getGroupedPrice(\SoftoneBundle\Entity\Customer $customer) {
         $rules = $customer->getCustomergroup()->getRules();
         //$cats = $this->getCars();
+        echo "sss";
         foreach ($rules as $rule) {
             echo "sss";
             $rule->validateRule($this);
