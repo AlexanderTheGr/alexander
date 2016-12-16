@@ -373,7 +373,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $entity = new Product;
         }
         $customer = $this->getDoctrine()->getRepository('SoftoneBundle:Customer')->find(1);
-        $entity->getGroupedPrice($customer);
+        $entity->getGroupedDiscount($customer);
         $entity->updatetecdoc();
         
         $fields["title"] = array("label" => "Title", "required" => true, "className"=>"col-md-6 col-sm-6");
