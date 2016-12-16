@@ -372,7 +372,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         if ($id == 0 AND @ $entity->id == 0) {
             $entity = new Product;
         }
+        
+        $entity->getGroupedPrice();
         $entity->updatetecdoc();
+        
         $fields["title"] = array("label" => "Title", "required" => true, "className"=>"col-md-6 col-sm-6");
         $fields["erpCode"] = array("label" => "Erp Code", "required" => true, "className"=>"col-md-6 col-sm-6");
         
