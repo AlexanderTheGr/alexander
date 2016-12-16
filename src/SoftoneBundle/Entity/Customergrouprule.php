@@ -164,15 +164,17 @@ class Customergrouprule {
             $pcategory = $em->getRepository("SoftoneBundle:Category")->find($category->getParent());
             $catsEp[] = $pcategory->getSortCode();
         }
-        print_r($catsEp);
+        //print_r($catsEp);
+        $supplier = $product->getSupplierId()->getId();
+        echo $supplier;
         echo $this->rulesLoop($rule, $catsEp) ? "true" : "false";
     }
 
-    function rulesLoop($rule, $catsEp) {
+    function rulesLoop($rule, $catsEp,$supplier) {
         foreach ($rule["rules"] as $rl) {
 
             if (count($rl["rules"])) {
-                $out = $this->rulesLoop($rl, $catsEp);
+                $out = $this->rulesLoop($rl, $catsEp,$supplier);
                 if ($rule["condition"] == "OR" AND $out == true) {
                     return true;
                 }
