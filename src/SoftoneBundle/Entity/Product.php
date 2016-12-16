@@ -2441,6 +2441,6 @@ class Product extends Entity {
     }
     
     function getGroupedPrice(\SoftoneBundle\Entity\Customer $customer) {
-        $customer->getGroup();
+        $customer->getGroup()->getCustomergrouprules();
     }
 }
