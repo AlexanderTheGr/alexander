@@ -159,6 +159,7 @@ class Customergrouprule
     
     function validateRule($product) {
         $cats = $product->getCats();
+        print_r($cats);
         $rule = json_decode($this->rule,true);
         $categories = $this->getDoctrine()->getRepository("SoftoneBundle:Category")->findById($cats);
         $categoriesArr = array();
