@@ -715,7 +715,8 @@ class EdiItem extends Entity {
             $product->setItemMtrmanfctr($SoftoneSupplier->getId());
             $product->setErpCode($this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode());
             $product->setItemCode($product->getErpCode());
-            
+            $product->setCars($this->getCars());
+            $product->setCats($this->getCats());            
             
             
             $em->persist($product);
