@@ -1711,20 +1711,17 @@ class Product extends Entity {
     public function getEdiId() {
         return $this->ediId;
     }
-    
-    
-    
+
     /**
      * @var string
      */
-    private $cats;    
-    
+    private $cats;
+
     /**
      * @var string
      */
-    private $cars; 
-    
-    
+    private $cars;
+
     /**
      * Set cats
      *
@@ -1736,7 +1733,7 @@ class Product extends Entity {
         $this->cats = serialize($cats);
         return $this;
     }
-    
+
     /**
      * Get cats
      *
@@ -1745,9 +1742,7 @@ class Product extends Entity {
     public function getCats() {
         return unserialize($this->cats);
     }
-    
-    
-    
+
     /**
      * Set cats
      *
@@ -1759,7 +1754,7 @@ class Product extends Entity {
         $this->cars = serialize($cars);
         return $this;
     }
-    
+
     /**
      * Get cars
      *
@@ -1767,9 +1762,8 @@ class Product extends Entity {
      */
     public function getCars() {
         return unserialize($this->cars);
-    }    
-    
-    
+    }
+
     /**
      * Set dlnr
      *
@@ -1781,11 +1775,7 @@ class Product extends Entity {
         $this->dlnr = $dlnr;
 
         return $this;
-    }    
-    
-    
-    
-    
+    }
 
     function updatetecdoc() {
 
@@ -2019,7 +2009,7 @@ class Product extends Entity {
         } else {
             $filters = $object . ".CODE=" . $this->itemCode . "&" . $object . ".CODE_TO=" . $this->itemCode;
             $datas = $softone->retrieveData($object, "partsbox", $filters);
-            
+
 
 
             foreach ($datas as $data) {
@@ -2416,7 +2406,6 @@ class Product extends Entity {
      */
     private $edis;
 
-
     /**
      * Set edis
      *
@@ -2424,8 +2413,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setEdis($edis)
-    {
+    public function setEdis($edis) {
         $this->edis = $edis;
 
         return $this;
@@ -2439,14 +2427,13 @@ class Product extends Entity {
     public function getEdis() {
         return $this->edis;
     }
-    
+
     function getGroupedPrice(\SoftoneBundle\Entity\Customer $customer) {
         $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
         //$cats = $this->getCars();
-        echo "sss";
         foreach ($rules as $rule) {
-            echo "sss";
             $rule->validateRule($this);
         }
     }
+
 }
