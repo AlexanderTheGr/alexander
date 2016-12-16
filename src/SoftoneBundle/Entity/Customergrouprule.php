@@ -195,12 +195,12 @@ class Customergrouprule
             if ($rule["condition"] == "OR") {
                 if ($rl["id"] == "category") {
                     if ($rl["operator"] == "equal") {
-                        if (in_array($rl["operator"], $catsEp)) {
+                        if (in_array($rl["value"], $catsEp)) {
                             return true;
                         }
                     }
                     if ($rl["operator"] == "not_equal") {
-                        if (!in_array($rl["operator"], $catsEp)) {
+                        if (!in_array($rl["value"], $catsEp)) {
                             return true;
                         }
                     }                
@@ -208,12 +208,12 @@ class Customergrouprule
             } elseif ($rule["condition"] == "AND") {
                 if ($rl["id"] == "category") {
                     if ($rl["operator"] == "equal") {
-                        if (!in_array($rl["operator"], $catsEp)) {
+                        if (!in_array($rl["value"], $catsEp)) {
                             return false;
                         }
                     }
                     if ($rl["operator"] == "not_equal") {
-                        if (in_array($rl["operator"], $catsEp)) {
+                        if (in_array($rl["value"], $catsEp)) {
                             return false;
                         }
                     }                
