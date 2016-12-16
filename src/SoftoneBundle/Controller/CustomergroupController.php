@@ -76,7 +76,7 @@ class CustomergroupController extends Main{
         
 
 
-        $grouprules = $rules = $entity->loadCustomergrouprules()->getRules();
+        $grouprules = $entity->loadCustomergrouprules()->getRules();
         $rules = array();
         foreach ($grouprules as $grouprule) {
             if ($grouprule->getGroup()->getId() == $id)
