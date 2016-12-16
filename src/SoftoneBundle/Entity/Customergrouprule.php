@@ -207,7 +207,6 @@ class Customergrouprule {
                         }
                     }
                 }                
-                
             } elseif ($rule["condition"] == "AND") {
                 if ($rl["id"] == "category") {
                     if ($rl["operator"] == "equal") {
@@ -233,8 +232,6 @@ class Customergrouprule {
                         }
                     }
                 }                   
-                
-                
             }
         }
     }
