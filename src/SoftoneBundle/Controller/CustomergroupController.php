@@ -79,9 +79,13 @@ class CustomergroupController extends Main{
         $grouprules = $entity->loadCustomergrouprules()->getRules();
         $rules = array();
         foreach ($grouprules as $grouprule) {
-            if ($grouprule->getGroup()->getId() == $id)
-            $rules[$grouprule->getId()]["rule"] = $grouprule->getRule();
-            $rules[$grouprule->getId()]["val"] = $grouprule->getVal();
+            if ($grouprule->getGroup()->getId() == $id) {
+                $rules[$grouprule->getId()]["rule"] = $grouprule->getRule();
+                $rules[$grouprule->getId()]["val"] = $grouprule->getVal();
+                
+                print_r(json_decode($grouprule->getRule()));
+                
+            }
         }
 
 
