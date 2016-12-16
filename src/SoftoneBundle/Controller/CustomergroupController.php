@@ -35,6 +35,11 @@ class CustomergroupController extends Main{
      */
     public function viewAction($id) {
 
+        
+        
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        echo $user->getId();
+        
         $buttons = array();
         $content = $this->gettabs($id);
         $content = $this->content();
