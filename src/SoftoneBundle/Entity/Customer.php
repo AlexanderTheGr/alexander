@@ -1118,4 +1118,5 @@ class Customer extends Entity {
     {
         return $this->customergroup;
     }
+    
 }
