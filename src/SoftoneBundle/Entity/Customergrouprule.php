@@ -153,8 +153,33 @@ class Customergrouprule
      *
      * @return string
      */
-    public function getRule()
-    {
+    public function getRule() {
         return $this->rule;
+    }
+    
+    function validateRule($product) {
+        $cats = $product->getCats();
+        $rule = json_decode($this->rule,true);
+        $categories = $this->getDoctrine()->getRepository("SoftoneBundle:Category")->findById($cats);
+        $categoriesArr = array();
+        $catsEp = array();
+        foreach ($categories as $category) {
+            $catsEp[] = $category->getSortCode();
+            $pcategory = $this->getDoctrine()->getRepository("SoftoneBundle:Category")->find($categories->getParent());
+            $catsEp[] = $pcategory->getSortCode();
+        }
+        $this->rulesLoop($rule,$catsEp);
+    }
+    function rulesLoop($rule,$catsEp) {
+        foreach ($rule["rules"] as $rl ) {
+            if ($rl["rule"]) {
+                $this->rulesLoop($rule,$catsEp);
+            }
+            if ($rl["id"] == "category") {
+                if ($rl["operator"] == "equal") {
+                    
+                }
+            }
+        }
     }
 }
