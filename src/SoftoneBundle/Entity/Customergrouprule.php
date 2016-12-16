@@ -178,6 +178,7 @@ class Customergrouprule
     }
     function rulesLoop($rule,$catsEp) {
         foreach ($rule["rules"] as $rl ) {
+            /*
             if (count($rl["rules"])) {
                 $out = $this->rulesLoop($rule,$catsEp);
                 if ($rule["condition"] == "OR" AND $out == true) {
@@ -187,6 +188,9 @@ class Customergrouprule
                      return false;
                 }
             }
+             * 
+             */
+            
             if ($rule["condition"] == "OR") {
                 if ($rl["id"] == "category") {
                     if ($rl["operator"] == "equal") {
