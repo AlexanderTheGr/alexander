@@ -190,6 +190,7 @@ class Customergrouprule
             }
 
             
+            
             if ($rule["condition"] == "OR") {
                 if ($rl["id"] == "category") {
                     if ($rl["operator"] == "equal") {
