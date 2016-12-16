@@ -167,7 +167,7 @@ class Customergrouprule {
         //print_r($catsEp);
         $supplier = $product->getSupplierId()->getId();
         echo $supplier;
-        echo $this->rulesLoop($rule, $catsEp) ? "true" : "false";
+        echo $this->rulesLoop($rule, $catsEp,$supplier) ? "true" : "false";
     }
 
     function rulesLoop($rule, $catsEp,$supplier) {
