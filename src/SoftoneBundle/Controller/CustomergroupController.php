@@ -49,7 +49,8 @@ class CustomergroupController extends Main{
         
         $rules = $entity->loadCustomergrouprules()->getCustomergrouprules();
         foreach((array)$rules as $rule) {
-            echo $rule->getId();
+            print_r($rule);
+            //echo $rule->getId();
         }
         $suppliers = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")->findAll();
         $supplierArr = array();
