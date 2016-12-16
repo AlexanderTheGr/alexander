@@ -38,7 +38,7 @@ class CustomergroupController extends Main{
         
         
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        echo $user->getId();
+        echo $user->getCroup()->getId();
         
         $buttons = array();
         $content = $this->gettabs($id);
