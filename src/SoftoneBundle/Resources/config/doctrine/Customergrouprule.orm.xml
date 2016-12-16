@@ -2,8 +2,7 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
     <entity name="SoftoneBundle\Entity\Customergrouprule" repository-class="SoftoneBundle\Entity\CustomergroupruleRepository" table="softone_customergrouprule">
         <indexes>
-            <index name="group" columns="group"/>
-            <index name="group_2" columns="group"/>
+            <index name="group" columns="customergroup"/>
         </indexes>
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
