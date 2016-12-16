@@ -2436,8 +2436,11 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getEdis()
-    {
+    public function getEdis() {
         return $this->edis;
+    }
+    
+    function getGroupedPrice() {
+        
     }
 }
