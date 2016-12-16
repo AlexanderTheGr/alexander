@@ -17,7 +17,7 @@ class Customergroup extends Entity {
     var $repositories = array();
 
     public function __construct() {
-        $this->customergrouprules = new \Doctrine\Common\Collections\ArrayCollection();
+        //$this->customergrouprules = new \Doctrine\Common\Collections\ArrayCollection();
         $this->setRepositories();
     }
 
@@ -301,7 +301,7 @@ class Customergroup extends Entity {
         $grouprules = $em->getRepository('SoftoneBundle:Customergrouprule')->findBy( array("group"=>$this));
         
         foreach ((array)$grouprules as $grouprule) {
-            //$this->addCustomergrouprule($grouprule);
+            $this->addCustomergrouprule($grouprule);
             echo $grouprule->getId()."<BR>";
         }
   
