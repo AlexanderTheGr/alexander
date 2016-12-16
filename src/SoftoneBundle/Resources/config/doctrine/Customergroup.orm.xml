@@ -29,6 +29,7 @@
 
     <field name="created" type="datetime" column="created" nullable="true"/>
     <field name="modified" type="datetime" column="modified" nullable="true"/>    
-    
+   
+    <one-to-many field="customergrouprules" target-entity="Customergrouprule" mapped-by="Customergroup" /> 
   </entity>
 </doctrine-mapping>
