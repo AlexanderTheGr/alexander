@@ -222,12 +222,12 @@ class Customergrouprule {
                 }
                 if ($rl["id"] == "supplier") {
                     if ($rl["operator"] == "equal") {
-                        if ($rl["value"] == $supplier) {
+                        if ($rl["value"] != $supplier) {
                             return false;
                         }
                     }
                     if ($rl["operator"] == "not_equal") {
-                        if ($rl["value"] != $supplier) {
+                        if ($rl["value"] == $supplier) {
                             return false;
                         }
                     }
