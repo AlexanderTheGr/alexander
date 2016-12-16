@@ -170,7 +170,7 @@ class Customergrouprule
         $catsEp = array();
         foreach ($categories as $category) {
             $catsEp[] = $category->getSortCode();
-            $pcategory = $em->getRepository("SoftoneBundle:Category")->find($categories->getParent());
+            $pcategory = $em->getRepository("SoftoneBundle:Category")->find($category->getParent());
             $catsEp[] = $pcategory->getSortCode();
         }
         print_r($catsEp);
