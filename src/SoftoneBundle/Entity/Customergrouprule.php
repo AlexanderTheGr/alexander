@@ -174,7 +174,7 @@ class Customergrouprule
             $pcategory = $em->getRepository("SoftoneBundle:Category")->find($category->getParent());
             $catsEp[] = $pcategory->getSortCode();
         }
-        //print_r($catsEp);
+        print_r($catsEp);
         echo $this->rulesLoop($rule,$catsEp) ? "true" : "false";
     }
     function rulesLoop($rule,$catsEp) {
