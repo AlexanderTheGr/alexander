@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="customergrouprule", indexes={@ORM\Index(name="group", columns={"group"}), @ORM\Index(name="group_2", columns={"group"})})
  * @ORM\Entity
  */
-class Customergrouprule
-{
+class Customergrouprule {
+
     /**
      * @var string
      *
@@ -45,8 +45,6 @@ class Customergrouprule
      */
     protected $group;
 
-
-
     /**
      * Set val
      *
@@ -54,8 +52,7 @@ class Customergrouprule
      *
      * @return Customergrouprule
      */
-    public function setVal($val)
-    {
+    public function setVal($val) {
         $this->val = $val;
 
         return $this;
@@ -66,8 +63,7 @@ class Customergrouprule
      *
      * @return string
      */
-    public function getVal()
-    {
+    public function getVal() {
         return $this->val;
     }
 
@@ -78,8 +74,7 @@ class Customergrouprule
      *
      * @return Customergrouprule
      */
-    public function setSupplier($supplier)
-    {
+    public function setSupplier($supplier) {
         $this->supplier = $supplier;
 
         return $this;
@@ -90,8 +85,7 @@ class Customergrouprule
      *
      * @return string
      */
-    public function getSupplier()
-    {
+    public function getSupplier() {
         return $this->supplier;
     }
 
@@ -100,8 +94,7 @@ class Customergrouprule
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -112,8 +105,7 @@ class Customergrouprule
      *
      * @return Customergrouprule
      */
-    public function setGroup(\SoftoneBundle\Entity\Customergroup $group = null)
-    {
+    public function setGroup(\SoftoneBundle\Entity\Customergroup $group = null) {
         $this->group = $group;
 
         return $this;
@@ -124,15 +116,14 @@ class Customergrouprule
      *
      * @return \SoftoneBundle\Entity\Customergroup
      */
-    public function getGroup()
-    {
+    public function getGroup() {
         return $this->group;
     }
+
     /**
      * @var string
      */
     private $rule;
-
 
     /**
      * Set rule
@@ -141,8 +132,7 @@ class Customergrouprule
      *
      * @return Customergrouprule
      */
-    public function setRule($rule)
-    {
+    public function setRule($rule) {
         $this->rule = $rule;
 
         return $this;
@@ -156,15 +146,15 @@ class Customergrouprule
     public function getRule() {
         return $this->rule;
     }
-    
+
     function validateRule($product) {
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
         }
-        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');          
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         $cats = $product->getCats();
-        $rule = json_decode($this->rule,true);
+        $rule = json_decode($this->rule, true);
         $categories = $em->getRepository("SoftoneBundle:Category")->findById($cats);
         $categoriesArr = array();
         $catsEp = array();
@@ -175,23 +165,21 @@ class Customergrouprule
             $catsEp[] = $pcategory->getSortCode();
         }
         print_r($catsEp);
-        echo $this->rulesLoop($rule,$catsEp) ? "true" : "false";
+        echo $this->rulesLoop($rule, $catsEp) ? "true" : "false";
     }
-    function rulesLoop($rule,$catsEp) {
-        foreach ($rule["rules"] as $rl ) {
-            
+
+    function rulesLoop($rule, $catsEp) {
+        foreach ($rule["rules"] as $rl) {
+
             if (count($rl["rules"])) {
-                $out = $this->rulesLoop($rl,$catsEp);
+                $out = $this->rulesLoop($rl, $catsEp);
                 if ($rule["condition"] == "OR" AND $out == true) {
-                     return true;
+                    return true;
                 }
                 if ($rule["condition"] == "AND" AND $out == false) {
-                     return false;
+                    return false;
                 }
             }
-
-            
-            
             if ($rule["condition"] == "OR") {
                 if ($rl["id"] == "category") {
                     if ($rl["operator"] == "equal") {
@@ -203,7 +191,7 @@ class Customergrouprule
                         if (!in_array($rl["value"], $catsEp)) {
                             return true;
                         }
-                    }                
+                    }
                 }
             } elseif ($rule["condition"] == "AND") {
                 if ($rl["id"] == "category") {
@@ -216,7 +204,7 @@ class Customergrouprule
                         if (in_array($rl["value"], $catsEp)) {
                             return false;
                         }
-                    }                
+                    }
                 }
             }
         }
