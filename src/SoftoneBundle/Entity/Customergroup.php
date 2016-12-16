@@ -299,9 +299,12 @@ class Customergroup extends Entity {
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');        
         $grouprules = $em->getRepository('SoftoneBundle:Customergrouprule')->findBy( array("group"=>$this));
+        /*
         foreach ((array)$grouprules as $grouprule) {
-            $this->addCustomergrouprule($grouprule);
+            //$this->addCustomergrouprule($grouprule);
         }
+         * 
+         */
         return $this;
     }
 }
