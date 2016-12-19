@@ -2435,9 +2435,10 @@ class Product extends Entity {
             if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder() ) {
                 $sortorder = $rule->getSortorder();
                 $disount = $rule->getVal();
+                $price = $rule->getPrice();
             }
         }
-        return $disount;
+        return $disount > 0 ? $disount : $price;
     }
 
 }
