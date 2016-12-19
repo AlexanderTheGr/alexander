@@ -10,7 +10,7 @@ use AppBundle\Controller\Main as Main;
 use SoftoneBundle\Entity\Customergroup as Customergroup;
 use SoftoneBundle\Entity\Customergrouprule as Customergrouprule;
 
-class CustomergroupController extends Main{
+class CustomergroupController extends Main {
 
     var $repository = 'SoftoneBundle:Customergroup';
     var $newentity = array();
@@ -35,19 +35,19 @@ class CustomergroupController extends Main{
      */
     public function viewAction($id) {
 
-        
-        
+
+
         //$user = $this->get('security.token_storage')->getToken()->getUser();
         //echo $user->getCroup()->getId();
-        
+
         $buttons = array();
         $content = $this->gettabs($id);
         $content = $this->content();
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($id);
-        
-        
+
+
 
         $suppliers = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")->findAll();
         $supplierArr = array();
@@ -56,24 +56,24 @@ class CustomergroupController extends Main{
         }
         $supplierjson = json_encode($supplierArr);
 
-        $categories = $this->getDoctrine()->getRepository("SoftoneBundle:Category")->findBy(array("parent"=>0));
+        $categories = $this->getDoctrine()->getRepository("SoftoneBundle:Category")->findBy(array("parent" => 0));
         $categoriesArr = array();
         foreach ($categories as $category) {
-            $CategoryLang = $this->getDoctrine()->getRepository("SoftoneBundle:CategoryLang")->findOneBy(array("category"=>$category));
+            $CategoryLang = $this->getDoctrine()->getRepository("SoftoneBundle:CategoryLang")->findOneBy(array("category" => $category));
             //$category->setSortcode($category->getId()."00000");
             //$this->flushpersist($category);
             $categoriesArr[$category->getSortcode()] = $CategoryLang->getName();
-            $categories2 = $this->getDoctrine()->getRepository("SoftoneBundle:Category")->findBy(array("parent"=>$category->getId()));
+            $categories2 = $this->getDoctrine()->getRepository("SoftoneBundle:Category")->findBy(array("parent" => $category->getId()));
             foreach ($categories2 as $category2) {
-                $CategoryLang = $this->getDoctrine()->getRepository("SoftoneBundle:CategoryLang")->findOneBy(array("category"=>$category2));
-                $categoriesArr[$category2->getSortcode()] = "--".$CategoryLang->getName(); 
+                $CategoryLang = $this->getDoctrine()->getRepository("SoftoneBundle:CategoryLang")->findOneBy(array("category" => $category2));
+                $categoriesArr[$category2->getSortcode()] = "--" . $CategoryLang->getName();
                 //$category2->setSortcode($category->getId().$category2->getId());
                 //$this->flushpersist($category2);
             }
         }
         $categoryjson = json_encode($categoriesArr);
 
-        
+
 
 
         $grouprules = $entity->loadCustomergrouprules()->getRules();
@@ -83,10 +83,6 @@ class CustomergroupController extends Main{
                 $rules[$grouprule->getId()]["rule"] = $grouprule->getRule();
                 $rules[$grouprule->getId()]["val"] = $grouprule->getVal();
                 $rules[$grouprule->getId()]["sortorder"] = $grouprule->getSortorder();
-                
-                
-                //print_r(json_decode($grouprule))
-                
             }
         }
 
@@ -121,11 +117,12 @@ class CustomergroupController extends Main{
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+
     /**
      * @Route("/customergroup/saverule")
-     */    
+     */
     function saveruleAction(Request $request) {
-        
+
         $id = $request->request->get("id");
         $rule = $request->request->get("rule");
         $val = $request->request->get("val");
@@ -134,33 +131,34 @@ class CustomergroupController extends Main{
             $customergrouprule = new Customergrouprule;
             $this->initialazeNewEntity($entity);
             $customergroup = $this->getDoctrine()
-                ->getRepository($this->repository)
-                ->find($group);
+                    ->getRepository($this->repository)
+                    ->find($group);
             $customergrouprule->setGroup($customergroup);
-        } else {   
-            $customergrouprule = $this->getDoctrine()->getRepository('SoftoneBundle:Customergrouprule')->find($id); 
+        } else {
+            $customergrouprule = $this->getDoctrine()->getRepository('SoftoneBundle:Customergrouprule')->find($id);
         }
         $customergrouprule->setRule(json_encode($rule));
         $customergrouprule->setVal($val);
         $this->flushpersist($customergrouprule);
 
-        $json = json_encode(array("id"=>$customergrouprule->getId()));
+        $json = json_encode(array("id" => $customergrouprule->getId()));
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
-        
+
         exit;
     }
+
     /**
      * @Route("/customergroup/deleterule")
-     */    
+     */
     function deleteruleAction(Request $request) {
         $id = $request->request->get("id");
-        $customergrouprule = $this->getDoctrine()->getRepository('SoftoneBundle:Customergrouprule')->find($id); 
+        $customergrouprule = $this->getDoctrine()->getRepository('SoftoneBundle:Customergrouprule')->find($id);
         //$customergrouprule->delete();
         $this->flushremove($customergrouprule);
         exit;
-    }    
+    }
 
     /**
      * @Route("/customergroup/gettab")
