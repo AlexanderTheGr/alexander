@@ -134,9 +134,12 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $fields["customerAddress"] = array("label" => "Customer Address", "required" => true);
         $fields["customerCity"] = array("label" => "Customer City", "required" => true);
         $fields["customergroup"] = array("label" => "Group","className"=>"col-md-6", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:Customergroup', 'name' => 'title', 'value' => 'id'));
+       
+        $priceField[] = array("value"=>"item_pricer","name"=>"Λιανική");
+        $priceField[] = array("value"=>"item_pricew","name"=>"Χονδρική");
         
-        
-        
+        $fields["priceField"] = array("label" => "Group","className"=>"col-md-6", 'type' => "select", "required" => true, 'dataarray' => $priceField);
+
         $forms = $this->getFormLyFields($entity, $fields);
         $this->addTab(array("title" => "General1", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         $json = $this->tabs();
