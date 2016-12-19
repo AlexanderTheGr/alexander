@@ -46,7 +46,9 @@ class CustomergroupController extends Main {
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($id);
-
+        if ($id == 0 AND @ $entity->id == 0) {
+            $entity = new Customergroup;
+        }
 
 
         $suppliers = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")->findAll();
