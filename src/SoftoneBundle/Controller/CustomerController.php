@@ -135,17 +135,17 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $fields["customerCity"] = array("label" => "Customer City", "required" => true);
         $fields["customergroup"] = array("label" => "Group","className"=>"col-md-6", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:Customergroup', 'name' => 'title', 'value' => 'id'));
        
-        $priceField[] = array("value"=>"item_pricer","name"=>"Λιανική");
-        $priceField[] = array("value"=>"item_pricew","name"=>"Χονδρική");
+        $priceField[] = array("value"=>"itemPricer","name"=>"Λιανική");
+        $priceField[] = array("value"=>"itemPricew","name"=>"Χονδρική");
         
-        $priceField[] = array("value"=>"item_pricer01","name"=>"Λιανική 1");
-        $priceField[] = array("value"=>"item_pricew01","name"=>"Χονδρική 1");
+        $priceField[] = array("value"=>"itemPricer01","name"=>"Λιανική 1");
+        $priceField[] = array("value"=>"itemPricew01","name"=>"Χονδρική 1");
 
-        $priceField[] = array("value"=>"item_pricer02","name"=>"Λιανική 2");
-        $priceField[] = array("value"=>"item_pricew02","name"=>"Χονδρική 2");        
+        $priceField[] = array("value"=>"itemPricer02","name"=>"Λιανική 2");
+        $priceField[] = array("value"=>"itemPricew02","name"=>"Χονδρική 2");        
         
-        $priceField[] = array("value"=>"item_pricer03","name"=>"Λιανική 3");
-        $priceField[] = array("value"=>"item_pricew03","name"=>"Χονδρική 3");
+        $priceField[] = array("value"=>"itemPricer03","name"=>"Λιανική 3");
+        $priceField[] = array("value"=>"itemPricew03","name"=>"Χονδρική 3");
         
         
         $fields["priceField"] = array("label" => "Group","className"=>"col-md-6", 'type' => "select", "required" => true, 'dataarray' => $priceField);
