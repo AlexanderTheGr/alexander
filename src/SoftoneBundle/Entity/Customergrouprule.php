@@ -167,14 +167,14 @@ class Customergrouprule {
         //print_r($catsEp);
         $supplier = $product->getSupplierId()->getId();
         //echo $this->rulesLoop($rule, $catsEp, $supplier) ? "true" : "false";
-        return $this->rulesLoop($rule, $catsEp, $supplier);
+        return $this->rulesLoop($rule, $catsEp, $supplier, $product->getErpCode());
     }
 
-    function rulesLoop($rule, $catsEp, $supplier) {
+    function rulesLoop($rule, $catsEp, $supplier, $code) {
         foreach ($rule["rules"] as $rl) {
 
             if (count($rl["rules"])) {
-                $out = $this->rulesLoop($rl, $catsEp, $supplier);
+                $out = $this->rulesLoop($rl, $catsEp, $supplier, $code);
                 if ($rule["condition"] == "OR" AND $out == true) {
                     return true;
                 }
@@ -208,6 +208,19 @@ class Customergrouprule {
                         }
                     }
                 }
+
+                if ($rl["id"] == "code") {
+                    if ($rl["operator"] == "equal") {
+                        if ($rl["value"] == $code) {
+                            return true;
+                        }
+                    }
+                    if ($rl["operator"] == "not_equal") {
+                        if ($rl["value"] != $code) {
+                            return true;
+                        }
+                    }
+                }
             } elseif ($rule["condition"] == "AND") {
                 $out = true;
                 if ($rl["id"] == "category") {
@@ -230,6 +243,18 @@ class Customergrouprule {
                     }
                     if ($rl["operator"] == "not_equal") {
                         if ($rl["value"] == $supplier) {
+                            return false;
+                        }
+                    }
+                }
+                if ($rl["id"] == "code") {
+                    if ($rl["operator"] == "equal") {
+                        if ($rl["value"] != $code) {
+                            return false;
+                        }
+                    }
+                    if ($rl["operator"] == "not_equal") {
+                        if ($rl["value"] == $code) {
                             return false;
                         }
                     }
