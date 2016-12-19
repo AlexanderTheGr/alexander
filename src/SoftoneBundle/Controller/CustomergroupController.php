@@ -145,6 +145,16 @@ class CustomergroupController extends Main {
         $customergrouprule->setPrice($price);
         $this->flushpersist($customergrouprule);
 
+        $grouprules = $entity->loadCustomergrouprules()->getRules();
+        $rules = array();
+        $i=0;
+        foreach ($grouprules as $grouprule) {
+            $grouprule->setSortorder($i++);
+            $this->flushpersist($grouprule);
+        }        
+        
+        
+        
         $json = json_encode(array("id" => $customergrouprule->getId()));
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
