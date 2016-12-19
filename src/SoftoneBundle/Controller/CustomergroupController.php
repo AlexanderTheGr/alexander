@@ -82,6 +82,8 @@ class CustomergroupController extends Main{
             if ($grouprule->getGroup()->getId() == $id) {
                 $rules[$grouprule->getId()]["rule"] = $grouprule->getRule();
                 $rules[$grouprule->getId()]["val"] = $grouprule->getVal();
+                $rules[$grouprule->getId()]["sortorder"] = $grouprule->getSortorder();
+                
                 
                 //print_r(json_decode($grouprule))
                 
