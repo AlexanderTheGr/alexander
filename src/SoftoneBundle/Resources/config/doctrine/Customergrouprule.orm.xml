@@ -10,7 +10,7 @@
         
         <field name="val" type="decimal" column="val" precision="10" scale="2" nullable="false"/>
         
-        <field name="price" type="decimal" column="val" precision="10" scale="2" nullable="false"/>
+        <field name="price" type="decimal" column="price" precision="10" scale="2" nullable="false"/>
         
         <field name="title" type="string" column="title" length="255" nullable="true">
             <options>
