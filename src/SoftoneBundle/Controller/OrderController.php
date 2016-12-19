@@ -275,7 +275,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $recordsFiltered = 0;
         //$this->q_or = array();
         //$this->q_and = array();
-
+        $order = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Order")
+                ->find($id);
+        $customer = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Customer")
+                ->find($order->getCustomer());
+        
         $s = array();
         $f = array();
         $jsonarr = array();
@@ -464,16 +470,23 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 }
                 $json["DT_RowClass"] = "dt_row_" . strtolower($r[1]);
                 $json["DT_RowId"] = 'dt_id_' . strtolower($r[1]) . '_' . $result["id"];
-                if ($result["reference"]) {
-                    $jsonarr[(int) $result["reference"]] = $json;
-                } else {
-                    $json[5] = str_replace("value='---'", "value='" . $obj->getField("itemPricew") . "'", $json[5]);
-                    $json[6] = str_replace("value='---'", "value='1'", $json[6]);
-                    $jsonarrnoref[$result["id"]] = $json;
-                }
+                /*
+                  if ($result["reference"]) {
+                  $jsonarr[(int) $result["reference"]] = $json;
+                  } else {
+
+                  $json[5] = str_replace("value='---'", "value='" . $obj->getField("itemPricew") . "'", $json[5]);
+                  $json[6] = str_replace("value='---'", "value='1'", $json[6]);
+                  $jsonarrnoref[$result["id"]] = $json;
+                  }
+                 * 
+                 */
+                $json[5] = str_replace("value='---'", "value='" . $obj->getGroupedDiscount($customer) . "'", $json[5]);
+                $json[6] = str_replace("value='---'", "value='1'", $json[6]);
+                $jsonarrnoref[$result["id"]] = $json;
             }
 
-            $jsonarr = $this->softoneCalculate($jsonarr, $id);
+            //$jsonarr = $this->softoneCalculate($jsonarr, $id);
             //echo count($jsonarr);
             $jsonarr = array_merge($jsonarr, $jsonarrnoref);
 
@@ -557,7 +570,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $out = $softone->calculate((array) $dataOut, $object, "", "", $locateinfo);
         //print_r($out);
         //exit;
-        foreach ((array)$out->data->ITELINES as $item) {
+        foreach ((array) $out->data->ITELINES as $item) {
             $jsonarr[$item->MTRL][5] = str_replace("value='---'", "value='" . $item->LINEVAL . "'", $jsonarr[$item->MTRL][5]);
             $jsonarr[$item->MTRL][6] = str_replace("value='---'", "value='" . $item->LINEVAL . "'", $jsonarr[$item->MTRL][6]);
         }
@@ -797,13 +810,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $data = $tecdoc->linkedChildNodesAllLinkingTargetTree($params);
         $articleIds = array();
         foreach ($data as $key => $dt) {
-            foreach ((array)$dt->articleIds as $articleId) {
+            foreach ((array) $dt->articleIds as $articleId) {
                 $articleIds[] = $articleId;
             }
         }
 
 
-        
+
         $tecdocArticleIds = array();
         if (count($articleIds)) {
             $query = $em->createQuery(
@@ -812,21 +825,21 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         where p.tecdocArticleId in (" . implode(",", $articleIds) . ")"
             );
             /*
-            echo "SELECT  p.tecdocArticleId
-                        FROM 'SoftoneBundle:Product' p
-                        where p.tecdocArticleId in (" . implode(",", $articleIds) . ")";
-            */
+              echo "SELECT  p.tecdocArticleId
+              FROM 'SoftoneBundle:Product' p
+              where p.tecdocArticleId in (" . implode(",", $articleIds) . ")";
+             */
             $products = $query->getResult();
             //print_r($products);
             foreach ($products as $product) {
                 $tecdocArticleIds[] = $product["tecdocArticleId"];
             }
         }
-        
-        
+
+
         //print_r($tecdocArticleIds);
         $tecdocEdiArticleIds = array();
-        
+
         if (count($articleIds)) {
             $query = $em->createQuery(
                     "SELECT  p.tecdocArticleId
