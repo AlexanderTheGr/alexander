@@ -190,6 +190,7 @@ class Main extends Controller {
     function clearstring2($string) {
         return addslashes(str_replace(array("'"), "", trim($string)));
     }
+
     function clearstring($search) {
         $search = str_replace(" ", "", trim($search));
         $search = str_replace(".", "", $search);
@@ -198,6 +199,7 @@ class Main extends Controller {
         $search = strtoupper($search);
         return $search;
     }
+
     function createSelect($s = array()) {
         foreach ($s as $v => $f) {
             //$s[$v] = "IDENTITY(".$f.")";
@@ -412,7 +414,7 @@ class Main extends Controller {
             if ($type == 'object') {
                 $obj = $entities[$df[0] . ":" . $df[1]]->getField($df[2]);
                 $repository = $entities[$df[0] . ":" . $df[1]]->getRepositories($df[2]);
-                
+
                 //echo $repository."\n";
                 $entity = $this->getDoctrine()
                         ->getRepository($repository)
@@ -447,7 +449,7 @@ class Main extends Controller {
         $em = $this->getDoctrine()->getManager();
         //$this->error[$this->repository] = array();
         $asd = $entity;
-        foreach ((array)$entity->uniques as $attr) {
+        foreach ((array) $entity->uniques as $attr) {
             $ent = $this->getDoctrine()
                     ->getRepository($this->repository)
                     ->findOneBy(array($attr => $entity->getField($attr)));
@@ -483,12 +485,22 @@ class Main extends Controller {
             }
             if ($options["type"] == 'select') {
                 @$options["required"] = $options["required"] ? $options["required"] : true;
-                $datasource = $options["datasource"];
-                $results = $em->getRepository($datasource["repository"])->findAll();
-                $seloptions = array();
-                foreach (@(array) $results as $data) {
-                    $seloptions[] = array("name" => $data->getField($datasource['name']) . "(" . $data->getField($datasource['value']) . ")", "value" => $data->getField($datasource['value']));
+
+                if ($options["datasource"]) {
+                    $datasource = $options["datasource"];
+                    $results = $em->getRepository($datasource["repository"])->findAll();
+                    $seloptions = array();
+                    foreach (@(array) $results as $data) {
+                        $seloptions[] = array("name" => $data->getField($datasource['name']) . "(" . $data->getField($datasource['value']) . ")", "value" => $data->getField($datasource['value']));
+                    }
                 }
+                if ($options["dataarray"]) {
+                    $seloptions = array();
+                    foreach (@(array) $options["dataarray"] as $data) {
+                        $seloptions[] = array("name" => $data ["name"]. "(" . $data ["value"] . ")", "value" => $data ["value"]);
+                    }
+                }
+
 
                 //$forms["html"][] = array("id" => $this->repository, "id" => $this->repository . ":" . $field . ":" . $entity->getId());
                 //$forms["html"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'defaultValue' => $entity->getField($field)->getId(), "type" => "select", "templateOptions" => array("type" => '', 'options' => $seloptions, 'defaultOptions' => array("value" => $entity->getField($field)->getId()), "label" => $options["label"], "required" => $options["required"]));
@@ -633,10 +645,7 @@ class Main extends Controller {
         return $setting->getValue();
     }
 
-
-
-    
-    public function articleAttributes($article_id, $car_id=0) {
+    public function articleAttributes($article_id, $car_id = 0) {
         $url = "http://service5.fastwebltd.com/";
         $fields = array(
             'action' => 'articleAttributes',
@@ -657,7 +666,6 @@ class Main extends Controller {
 
         return $data;
     }
-
 
     public function getArticlesSearch($search) {
         $url = "http://service5.fastwebltd.com/";
@@ -719,6 +727,6 @@ class Main extends Controller {
         $data = curl_exec($ch);
 
         return $data;
-    }    
-    
+    }
+
 }
