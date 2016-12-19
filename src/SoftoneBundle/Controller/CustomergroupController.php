@@ -88,7 +88,7 @@ class CustomergroupController extends Main {
 
 
         return $this->render('SoftoneBundle:Customergroup:view.html.twig', array(
-                    'pagename' => $entity->getName(),
+                    'pagename' => $entity->getTitle(),
                     'url' => '/customergroup/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
