@@ -29,7 +29,7 @@
     rules_basics[0] = rules_basics_new;
     discounts[0] = 0;
     sortorders[0] = 0;
-    titles[0] = 0;
+    titles[0] = "";
     {% for key,rule in rules %}
         rules_basics[{{ key }}] = {{rule.rule | raw}};
         discounts[{{ key }}] = "{{rule.val}}";
