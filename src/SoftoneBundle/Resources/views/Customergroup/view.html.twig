@@ -16,6 +16,7 @@
     var $dialog = {};
     var rules_basics = [];
     var discounts = [];
+    var prices = [];
     var sortorders = [];
     var titles = [];
     rules_basics_new = {
@@ -28,6 +29,7 @@
     };
     rules_basics[0] = rules_basics_new;
     discounts[0] = 0;
+    prices[0] = 0;
     sortorders[0] = 0;
     titles[0] = "";
     {% for key,rule in rules %}
@@ -35,6 +37,7 @@
         discounts[{{ key }}] = "{{rule.val}}";
         sortorders[{{ key }}] = "{{rule.sortorder}}";
         titles[{{ key }}] = "{{rule.title}}";
+        prices[{{ key }}] = "{{rule.price}}";
     {% endfor %}    
     $dialog.customergrouprule = $("<div style='z-index:100000' class='card'></div>")
             .dialog({
@@ -63,7 +66,7 @@
         ref = $(obj).attr("data-ref");
         $dialog.customergrouprule.dialog({title:titles[ref]});        
         //$dialog.customergrouprule.title(titles[ref]);
-        $dialog.customergrouprule.html('<button id="btn-get" class="btn btn-primary parse-json" data-target="basic">Save Rule</button> <button id="btn-delete" class="btn btn-danger parse-json" data-target="basic">Delete Rule</button> <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:'+ref+'" class="control-label">Title</label><input value="'+titles[ref]+'" class="form-control" id="title" name="SoftoneBundle:Customergroup:id:'+ref+'" formly-custom-validation="" type=""></div></div>   <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:'+ref+'" class="control-label">Discount</label><input value="'+discounts[ref]+'" class="form-control" id="discount" name="SoftoneBundle:Customergroup:id:'+ref+'" formly-custom-validation="" type=""></div></div>  <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:'+ref+'" class="control-label">Sortorder</label><input value="'+sortorders[ref]+'" class="form-control" id="sortorder" name="SoftoneBundle:Customergroup:id:'+ref+'" formly-custom-validation="" type=""></div></div>  <div id="builder-basic"></div>');
+        $dialog.customergrouprule.html('<button id="btn-get" class="btn btn-primary parse-json" data-target="basic">Save Rule</button> <button id="btn-delete" class="btn btn-danger parse-json" data-target="basic">Delete Rule</button> <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:'+ref+'" class="control-label">Title</label><input value="'+titles[ref]+'" class="form-control" id="title" name="SoftoneBundle:Customergroup:id:'+ref+'" formly-custom-validation="" type=""></div></div>   <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:'+ref+'" class="control-label">Discount</label><input value="'+discounts[ref]+'" class="form-control" id="discount" name="SoftoneBundle:Customergroup:id:'+ref+'" formly-custom-validation="" type=""></div></div>  <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:'+ref+'" class="control-label">Price</label><input value="'+prices[ref]+'" class="form-control" id="price" name="SoftoneBundle:Customergroup:id:'+ref+'" formly-custom-validation="" type=""></div></div>   <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:'+ref+'" class="control-label">Sortorder</label><input value="'+sortorders[ref]+'" class="form-control" id="sortorder" name="SoftoneBundle:Customergroup:id:'+ref+'" formly-custom-validation="" type=""></div></div>  <div id="builder-basic"></div>');
         var rules_basic = rules_basics[ref];
         $('#builder-basic').queryBuilder({
             plugins: ['bt-tooltip-errors'],
@@ -132,12 +135,13 @@
             discounts[ref] = $("#discount").val();
             titles[ref] = $("#title").val();
             sortorders[ref] = $("#sortorder").val();
-            
+            prices[ref] = $("#price").val();
             var data = {};
             data.id = ref;
             data.group = '{{group}}';
             data.title = $("#title").val();
             data.val = $("#discount").val();
+            data.price = $("#price").val();
             data.sortorder = $("#sortorder").val();
             data.rule = result;
             $("#loaderer").show();
