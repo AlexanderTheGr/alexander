@@ -145,13 +145,16 @@ class CustomergroupController extends Main {
         $customergrouprule->setPrice($price);
         $this->flushpersist($customergrouprule);
 
-
+        /*
         $grouprules = $this->getDoctrine()->getRepository('SoftoneBundle:Customergrouprule')->findBy(array("group"=>$customergroup));
         $i=0;
         foreach ((array)$grouprules as $grouprule) {
+            echo $i++;
             $grouprule->setSortorder($i++);
             $this->flushpersist($grouprule);       
-        }        
+        }
+         * 
+         */       
 
         $json = json_encode(array("id" => $customergrouprule->getId()));
         return new Response(
