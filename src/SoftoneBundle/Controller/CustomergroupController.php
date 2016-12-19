@@ -72,10 +72,6 @@ class CustomergroupController extends Main {
             }
         }
         $categoryjson = json_encode($categoriesArr);
-
-
-
-
         $grouprules = $entity->loadCustomergrouprules()->getRules();
         $rules = array();
         foreach ($grouprules as $grouprule) {
@@ -85,8 +81,6 @@ class CustomergroupController extends Main {
                 $rules[$grouprule->getId()]["sortorder"] = $grouprule->getSortorder();
             }
         }
-
-
         return $this->render('SoftoneBundle:Customergroup:view.html.twig', array(
                     'pagename' => "Ομάδες Πελατών: ".$entity->getTitle(),
                     'url' => '/customergroup/save',
