@@ -125,6 +125,7 @@ class CustomergroupController extends Main {
         $val = $request->request->get("val");
         $sortorder = $request->request->get("sortorder");
         $title = $request->request->get("title");
+        $price = $request->request->get("price");
         $group = $request->request->get("group");
         if ($id == 0) {
             $customergrouprule = new Customergrouprule;
@@ -140,6 +141,7 @@ class CustomergroupController extends Main {
         $customergrouprule->setVal($val);
         $customergrouprule->setSortorder($sortorder);
         $customergrouprule->setTitle($title);
+        $customergrouprule->setPrice($price);
         $this->flushpersist($customergrouprule);
 
         $json = json_encode(array("id" => $customergrouprule->getId()));
