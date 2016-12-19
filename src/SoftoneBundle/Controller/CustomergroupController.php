@@ -194,7 +194,8 @@ class CustomergroupController extends Main {
 
             $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
             $dtparams[] = array("name" => "Title", "index" => 'title');
-            $dtparams[] = array("name" => "Val", "index" => 'val');
+            $dtparams[] = array("name" => "Discount", "index" => 'val');
+            $dtparams[] = array("name" => "Price", "index" => 'price');
             $dtparams[] = array("name" => "Order", "index" => 'sortorder');
 
             $params['dtparams'] = $dtparams;
