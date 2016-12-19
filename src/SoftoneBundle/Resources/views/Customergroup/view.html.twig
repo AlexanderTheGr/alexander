@@ -122,10 +122,10 @@
             table.fnFilter();
         })
     })
-    $("#price").change(function(){
+    $("#price").live("change",function(){
         $("#discount").val("0.00")
     })
-    $("#discount").change(function(){
+    $("#discount").live("change",function(){
         $("#price").val("0.00")
     })
     $('#btn-get').live('click', function () {
