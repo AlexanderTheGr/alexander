@@ -190,6 +190,7 @@ class CustomergroupController extends Main {
             //$forms2 = $this->getFormLyFields($entity2, $fields2);
 
             $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
+            $dtparams[] = array("name" => "Title", "index" => 'title');
             $dtparams[] = array("name" => "Val", "index" => 'val');
             $dtparams[] = array("name" => "Order", "index" => 'sortorder');
 
