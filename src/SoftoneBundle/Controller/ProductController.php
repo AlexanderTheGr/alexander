@@ -190,7 +190,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //$content = $this->getoffcanvases($id);
         $content = $this->content();
         return $this->render('SoftoneBundle:Product:view.html.twig', array(
-                    'pagename' => 's',
+                    'pagename' => $product->getTitle()." ".$product->getErpCode(),
                     'url' => '/product/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
