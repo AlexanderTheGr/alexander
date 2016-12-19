@@ -320,4 +320,33 @@ class Customergrouprule {
     {
         return $this->title;
     }
+    /**
+     * @var string
+     */
+    private $price;
+
+
+    /**
+     * Set price
+     *
+     * @param string $price
+     *
+     * @return Customergrouprule
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return string
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
 }
