@@ -82,6 +82,7 @@ class CustomergroupController extends Main {
                 $rules[$grouprule->getId()]["val"] = $grouprule->getVal();
                 $rules[$grouprule->getId()]["sortorder"] = $grouprule->getSortorder();
                 $rules[$grouprule->getId()]["title"] = $grouprule->getTitle();
+                $rules[$grouprule->getId()]["price"] = $grouprule->getPrice();
             }
         }
         return $this->render('SoftoneBundle:Customergroup:view.html.twig', array(
