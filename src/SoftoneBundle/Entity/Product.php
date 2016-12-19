@@ -2438,7 +2438,9 @@ class Product extends Entity {
                 $price = $rule->getPrice();
             }
         }
-        return $disount > 0 ? $disount : $price;
+        $pricefield = $customer->gePriceField();
+        $disountedPrice = $this->getField($pricefield) * (1 - $disount/100 );
+        return $disount > 0 ? $disountedPrice : $price;
     }
 
 }
