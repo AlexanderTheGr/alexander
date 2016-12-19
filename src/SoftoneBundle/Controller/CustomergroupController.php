@@ -204,7 +204,7 @@ class CustomergroupController extends Main {
         if ($id > 0 AND count($entity) > 0) {
             $tabs[] = array("title" => "Rules", "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
         }
-        foreach ($tabs as $tab) {
+        foreach ((array)$tabs as $tab) {
             $this->addTab($tab);
         }
 
