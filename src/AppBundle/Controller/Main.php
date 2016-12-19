@@ -497,7 +497,7 @@ class Main extends Controller {
                 if ($options["dataarray"]) {
                     $seloptions = array();
                     foreach (@(array) $options["dataarray"] as $data) {
-                        $seloptions[] = array("name" => $data ["name"]. "(" . $data ["value"] . ")", "value" => $data ["value"]);
+                        $seloptions[] = array("name" => $data ["name"]. " (" . $data ["value"] . ")", "value" => $data ["value"]);
                     }
                 }
 
@@ -546,7 +546,7 @@ class Main extends Controller {
                 if ($options["dataarray"]) {
                     $seloptions = array();
                     foreach (@(array) $options["dataarray"] as $data) {
-                        $seloptions[] = array("name" => $data ["name"]. "(" . $data ["value"] . ")", "value" => $data ["value"]);
+                        $seloptions[] = array("name" => $data ["name"]. " (" . $data ["value"] . ")", "value" => $data ["value"]);
                     }
                     $defaultValue = $entity->getField($field) ? $entity->getField($field) : NULL;
                 }                
