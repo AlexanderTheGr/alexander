@@ -122,7 +122,12 @@
             table.fnFilter();
         })
     })
-
+    $("#price").click(function(){
+        $("#discount").val("0.00")
+    })
+    $("#discount").click(function(){
+        $("#price").val("0.00")
+    })
     $('#btn-get').live('click', function () {
         var result = $('#builder-basic').queryBuilder('getRules');
 
