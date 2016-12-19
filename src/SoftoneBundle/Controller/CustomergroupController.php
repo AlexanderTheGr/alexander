@@ -145,8 +145,7 @@ class CustomergroupController extends Main {
         $customergrouprule->setPrice($price);
         $this->flushpersist($customergrouprule);
 
-        $grouprules = $entity->loadCustomergrouprules()->getRules();
-        $rules = array();
+        $grouprules = $customergroup->loadCustomergrouprules()->getRules();
         $i=0;
         foreach ($grouprules as $grouprule) {
             $grouprule->setSortorder($i++);
