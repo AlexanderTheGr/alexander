@@ -146,10 +146,9 @@ class CustomergroupController extends Main {
         $this->flushpersist($customergrouprule);
 
 
-        $grouprules = $this->getDoctrine()->getRepository('SoftoneBundle:Customergrouprule')->findBy(array("group"=>$customergroup),array('sortorder' => 'ASC'));
+        $grouprules = $this->getDoctrine()->getRepository('SoftoneBundle:Customergrouprule')->findBy(array("group"=>$customergroup));
         $i=0;
         foreach ((array)$grouprules as $grouprule) {
-            echo ".";
             $grouprule->setSortorder($i++);
             $this->flushpersist($grouprule);       
         }        
