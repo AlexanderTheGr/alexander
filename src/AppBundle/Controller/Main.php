@@ -534,13 +534,21 @@ class Main extends Controller {
             }
             if ($options["type"] == 'select') {
                 //@$options["required"] = $options["required"] ? $options["required"] : true;
-                $datasource = $options["datasource"];
-                $results = $em->getRepository($datasource["repository"])->findAll();
-                $seloptions = array();
-                foreach (@(array) $results as $data) {
-                    $seloptions[] = array("name" => $data->getField($datasource['name']) . "(" . $data->getField($datasource['value']) . ")", "value" => $data->getField($datasource['value']));
+                if ($options["datasource"]) {
+                    $datasource = $options["datasource"];
+                    $results = $em->getRepository($datasource["repository"])->findAll();
+                    $seloptions = array();
+                    foreach (@(array) $results as $data) {
+                        $seloptions[] = array("name" => $data->getField($datasource['name']) . "(" . $data->getField($datasource['value']) . ")", "value" => $data->getField($datasource['value']));
+                    }
+                    $defaultValue = $entity->getField($field) ? $entity->getField($field)->getId() : NULL;
                 }
-                $defaultValue = $entity->getField($field) ? $entity->getField($field)->getId() : NULL;
+                if ($options["dataarray"]) {
+                    $seloptions = array();
+                    foreach (@(array) $options["dataarray"] as $data) {
+                        $seloptions[] = array("name" => $data ["name"]. "(" . $data ["value"] . ")", "value" => $data ["value"]);
+                    }
+                }                
                 /*
                   if (@$options["required"] == '') {
                   $options["required"] = 1;
