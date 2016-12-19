@@ -138,6 +138,16 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $priceField[] = array("value"=>"item_pricer","name"=>"Λιανική");
         $priceField[] = array("value"=>"item_pricew","name"=>"Χονδρική");
         
+        $priceField[] = array("value"=>"item_pricer01","name"=>"Λιανική 1");
+        $priceField[] = array("value"=>"item_pricew01","name"=>"Χονδρική 1");
+
+        $priceField[] = array("value"=>"item_pricer02","name"=>"Λιανική 2");
+        $priceField[] = array("value"=>"item_pricew02","name"=>"Χονδρική 2");        
+        
+        $priceField[] = array("value"=>"item_pricer03","name"=>"Λιανική 3");
+        $priceField[] = array("value"=>"item_pricew03","name"=>"Χονδρική 3");
+        
+        
         $fields["priceField"] = array("label" => "Group","className"=>"col-md-6", 'type' => "select", "required" => true, 'dataarray' => $priceField);
 
         $forms = $this->getFormLyFields($entity, $fields);
