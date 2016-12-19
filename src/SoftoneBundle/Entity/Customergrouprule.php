@@ -291,4 +291,33 @@ class Customergrouprule {
         return $this->sortorder;
     }
 
+    /**
+     * @var string
+     */
+    private $title;
+
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Customergrouprule
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
 }
