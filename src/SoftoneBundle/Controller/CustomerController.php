@@ -148,7 +148,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $priceField[] = array("value"=>"itemPricew03","name"=>"Χονδρική 3");
         
         
-        $fields["priceField"] = array("label" => "Group","className"=>"col-md-6", 'type' => "select", "required" => true, 'dataarray' => $priceField);
+        $fields["priceField"] = array("label" => "Κατάλογος","className"=>"col-md-6", 'type' => "select", "required" => true, 'dataarray' => $priceField);
 
         $forms = $this->getFormLyFields($entity, $fields);
         $this->addTab(array("title" => "General1", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
