@@ -32,7 +32,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
         
         return $this->render('SoftoneBundle:Product:index.html.twig', array(
-                    'pagename' => 'Customers',
+                    'pagename' => 'Είδη',
                     'url' => '/product/getdatatable',
                     'view' => '/product/view',
                     'ctrl' => $this->generateRandomString(),
