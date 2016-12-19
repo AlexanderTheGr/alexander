@@ -2434,13 +2434,14 @@ class Product extends Entity {
         foreach ($rules as $rule) {
             if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder() ) {
                 $sortorder = $rule->getSortorder();
-                $disount = $rule->getVal();
+                $discount = $rule->getVal();
                 $price = $rule->getPrice();
             }
         }
         $pricefield = $customer->getPriceField();
-        $disountedPrice = $this->getField($pricefield) * (1 - $disount/100 );
-        return $disount > 0 ? $disountedPrice : $price;
+        echo $pricefield;
+        $discountedPrice = $this->getField($pricefield) * (1 - $discount/100 );
+        return $discount > 0 ? $discountedPrice : $price;
     }
 
 }
