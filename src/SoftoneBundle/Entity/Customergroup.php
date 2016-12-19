@@ -301,7 +301,7 @@ class Customergroup extends Entity {
             $kernel = $kernel->getKernel();
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');        
-        $grouprules = $em->getRepository('SoftoneBundle:Customergrouprule')->findBy( array("group"=>$this));
+        $grouprules = $em->getRepository('SoftoneBundle:Customergrouprule')->findBy(array("group"=>$this),array('sortorder' => 'ASC'));
         foreach ((array)$grouprules as $grouprule) {
             $this->rules[] = $grouprule;
             
