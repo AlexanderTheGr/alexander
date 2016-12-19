@@ -2439,7 +2439,7 @@ class Product extends Entity {
             }
         }
         $pricefield = $customer->getPriceField();
-  
+        echo $this->$pricefield;
         $discountedPrice = $this->$pricefield * (1 - $discount/100 );
         return $discount > 0 ? $discountedPrice : $price;
     }
