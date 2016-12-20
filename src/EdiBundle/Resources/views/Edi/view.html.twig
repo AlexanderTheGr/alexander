@@ -32,7 +32,7 @@
     discounts[0] = 0;
     prices[0] = 0;
     sortorders[0] = 0;
-    titles[0] = "";
+    titles[0] = "New Rule";
     {% for key,rule in rules %}
         rules_basics[{{ key }}] = {{rule.rule | raw}};
         discounts[{{ key }}] = "{{rule.val}}";
