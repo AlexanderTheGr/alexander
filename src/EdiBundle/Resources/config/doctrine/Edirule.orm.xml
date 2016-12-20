@@ -17,6 +17,13 @@
                 <option name="fixed"/>
             </options>
         </field>
+        
+        <field name="price_field" type="string" column="price_field" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>        
+        
     
         <field name="sortorder" type="integer" column="sortorder" nullable="true">
             <options>
