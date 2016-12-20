@@ -88,7 +88,7 @@ class EdiController extends Main {
         
         return $this->render('EdiBundle:Edi:view.html.twig', array(
                     'pagename' => "Edi: ".$entity->getName(),
-                    'url' => '/customergroup/save',
+                    'url' => '/edi/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
@@ -194,6 +194,67 @@ class EdiController extends Main {
         );
     }    
 
+    
+    
+    /**
+     * @Route("/edi/edi/saverule")
+     */
+    function saveruleAction(Request $request) {
+
+        $id = $request->request->get("id");
+        $rule = $request->request->get("rule");
+        $val = $request->request->get("val");
+        $sortorder = $request->request->get("sortorder");
+        $title = $request->request->get("title");
+        $price = $request->request->get("price");
+        $group = $request->request->get("group");
+        if ($id == 0) {
+            $edirule = new Edirule;
+            $this->initialazeNewEntity($entity);
+            $edi = $this->getDoctrine()
+                    ->getRepository($this->repository)
+                    ->find($group);
+            $edirule->setGroup($edi);
+        } else {
+            $edirule = $this->getDoctrine()->getRepository('EdiBundle:Edirule')->find($id);
+        }
+        $edirule->setRule(json_encode($rule));
+        $edirule->setVal($val);
+        $edirule->setSortorder($sortorder);
+        $edirule->setTitle($title);
+        $edirule->setPrice($price);
+        $this->flushpersist($edirule);
+
+        /*
+        $grouprules = $this->getDoctrine()->getRepository('SoftoneBundle:Customergrouprule')->findBy(array("group"=>$edi));
+        $i=0;
+        foreach ((array)$grouprules as $grouprule) {
+            echo $i++;
+            $grouprule->setSortorder($i++);
+            $this->flushpersist($grouprule);       
+        }
+         * 
+         */       
+
+        $json = json_encode(array("id" => $edirule->getId()));
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+
+        exit;
+    }
+
+    /**
+     * @Route("/edi/edi/deleterule")
+     */
+    function deleteruleAction(Request $request) {
+        $id = $request->request->get("id");
+        $edirule = $this->getDoctrine()->getRepository('EdiBundle:Edirule')->find($id);
+        //$edirule->delete();
+        $this->flushremove($edirule);
+        exit;
+    }    
+    
     
     /**
      * @Route("/edi/edi/save")
