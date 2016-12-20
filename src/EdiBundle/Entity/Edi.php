@@ -289,8 +289,8 @@ class Edi extends Entity {
 
     public function loadEdirules($pricefield = false) {
         //if ($this->reference)
-        if (count($this->rules) > 0)
-            return $this;
+        //if (count($this->rules) > 0)
+        //    return $this;
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
