@@ -153,7 +153,7 @@
             data.val = $("#markup").val();
             data.price = $("#price").val();
             data.sortorder = $("#sortorder").val();
-            data.price_field = $("#price_field").val();
+            data.price_field = $("#price_field").filter(":selected").val();
             data.rule = result;
             $("#loaderer").show();
             $dialog.edirule.dialog("close");
