@@ -83,6 +83,7 @@ class EdiController extends Main {
                 $rules[$edirule->getId()]["sortorder"] = $edirule->getSortorder();
                 $rules[$edirule->getId()]["title"] = $edirule->getTitle();
                 $rules[$edirule->getId()]["price"] = $edirule->getPrice();
+                $rules[$edirule->getId()]["price_field"] = $edirule->getPriceField();
             //}
         }
         
