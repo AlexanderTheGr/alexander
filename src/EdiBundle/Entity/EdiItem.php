@@ -718,8 +718,8 @@ class EdiItem extends Entity {
             $product->setCars($this->getCars());
             $product->setCats($this->getCats());            
             
-            $product->setItemPricer($this->getEdiMarkup("itemPricer"));
-            $product->setItemPricew($this->getEdiMarkup("itemPricew"));
+            $product->setItemPricer((double)$this->getEdiMarkup("itemPricer"));
+            $product->setItemPricew((double)$this->getEdiMarkup("itemPricew"));
             
             $em->persist($product);
             $em->flush();
@@ -789,8 +789,8 @@ class EdiItem extends Entity {
         $product->setCars($this->getCars());
         $product->setCats($this->getCats());
         
-        $product->setItemPricer($this->getEdiMarkup("itemPricer"));
-        $product->setItemPricew($this->getEdiMarkup("itemPricew"));
+        $product->setItemPricer((double)$this->getEdiMarkup("itemPricer"));
+        $product->setItemPricew((double)$this->getEdiMarkup("itemPricew"));
         
 
         $product->setItemV5($dt);
