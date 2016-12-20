@@ -207,14 +207,14 @@ class EdiController extends Main {
         $sortorder = $request->request->get("sortorder");
         $title = $request->request->get("title");
         $price = $request->request->get("price");
-        $group = $request->request->get("group");
+        $edi = $request->request->get("edi");
         if ($id == 0) {
             $edirule = new Edirule;
             $this->initialazeNewEntity($entity);
-            $edi = $this->getDoctrine()
+            $ediobj = $this->getDoctrine()
                     ->getRepository($this->repository)
-                    ->find($group);
-            $edirule->setGroup($edi);
+                    ->find($edi);
+            $edirule->setGroup($ediobj);
         } else {
             $edirule = $this->getDoctrine()->getRepository('EdiBundle:Edirule')->find($id);
         }
