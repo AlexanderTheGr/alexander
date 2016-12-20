@@ -300,8 +300,9 @@ class Edi extends Entity {
         foreach ((array)$edirules as $edirule) {
             //echo $edirule->getId();
             if ($pricefield AND $edirule->getPriceField() == $pricefield)
-            $this->rules[] = $edirule;
-            
+                $this->rules[] = $edirule;
+            else 
+                $this->rules[] = $edirule;
         }
   
         return $this;
