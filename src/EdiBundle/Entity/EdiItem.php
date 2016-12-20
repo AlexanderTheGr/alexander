@@ -1035,7 +1035,11 @@ class EdiItem extends Entity {
         //$session->set('SoapClient', $this->SoapClient);
         return $this->SoapClient;
     }
+    
     function getEdiMarkup($pricefield=false) {
+        
+        echo $pricefield;
+        
         $rules = $this->getEdi()->loadEdirules()->getRules($pricefield);
         $sortorder = 0;
         foreach ($rules as $rule) {
