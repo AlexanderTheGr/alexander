@@ -277,4 +277,35 @@ class Edi extends Entity {
     {
         return $this->func;
     }
+    
+    /**
+     * Get customeredirules
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEdirules() {
+        return $this->edirules;
+    }
+    
+    private $rules = array();
+    public function loadEdirules() {
+        //if ($this->reference)
+        if (count($this->rules) > 0) return $this;
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');        
+        $grouprules = $em->getRepository('EdiBundle:Edirule')->findBy(array("edi"=>$this),array('sortorder' => 'ASC'));
+        foreach ((array)$grouprules as $grouprule) {
+            $this->rules[] = $edirule;
+            
+        }
+  
+        return $this;
+    }
+    public function getRules() {
+        return $this->rules;
+    }    
+    
 }
