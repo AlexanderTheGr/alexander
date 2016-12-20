@@ -291,6 +291,7 @@ class Edi extends Entity {
         //if ($this->reference)
         //if (count($this->rules) > 0)
         //    return $this;
+        $this->rules = array();
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
