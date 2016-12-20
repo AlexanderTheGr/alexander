@@ -70,6 +70,7 @@
         ref = $(obj).attr("data-ref");
         $dialog.edirule.dialog({title:titles[ref]});        
         //$dialog.edirule.title(titles[ref]);
+        $("#price_field").val(price_fields[ref]);
         $dialog.edirule.html('<button id="btn-get" class="btn btn-primary parse-json" data-target="basic">Save Rule</button> <button id="btn-delete" class="btn btn-danger parse-json" data-target="basic">Delete Rule</button> <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:'+ref+'" class="control-label">Title</label><input value="'+titles[ref]+'" class="form-control" id="title" name="SoftoneBundle:Customergroup:id:'+ref+'" formly-custom-validation="" type=""></div></div>  <div class="form-group"><div><label for="SoftoneBundle:Customer:priceField:'+ref+'" class="control-label" ng-if="to.label">Κατάλογος</label><select id="price_field" class="form-control" id="EdiBundle:Edirule:priceField:'+ref+'" name="EdiBundle:Edirule:priceField:'+ref+'" formly-custom-validation="" required="true" type=""><option value="itemPricer" label="Λιανική (itemPricer)">Λιανική (itemPricer)</option><option value="itemPricew" label="Χονδρική (itemPricew)">Χονδρική (itemPricew)</option><option value="itemPricer01" label="Λιανική 1 (itemPricer01)">Λιανική 1 (itemPricer01)</option><option value="itemPricew01" label="Χονδρική 1 (itemPricew01)">Χονδρική 1 (itemPricew01)</option><option value="itemPricer02" label="Λιανική 2 (itemPricer02)">Λιανική 2 (itemPricer02)</option><option value="itemPricew02" label="Χονδρική 2 (itemPricew02)">Χονδρική 2 (itemPricew02)</option><option value="itemPricer03" label="Λιανική 3 (itemPricer03)">Λιανική 3 (itemPricer03)</option><option value="itemPricew03" label="Χονδρική 3 (itemPricew03)">Χονδρική 3 (itemPricew03)</option></select></div></div>   <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:'+ref+'" class="control-label">Markup</label><input value="'+markups[ref]+'" class="form-control" id="markup" name="SoftoneBundle:Customergroup:id:'+ref+'" formly-custom-validation="" type=""></div></div>  <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:'+ref+'" class="control-label">Price</label><input value="'+prices[ref]+'" class="form-control" id="price" name="SoftoneBundle:Customergroup:id:'+ref+'" formly-custom-validation="" type=""></div></div>   <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:'+ref+'" class="control-label">Sortorder</label><input value="'+sortorders[ref]+'" class="form-control" id="sortorder" name="SoftoneBundle:Customergroup:id:'+ref+'" formly-custom-validation="" type=""></div></div>  <div id="builder-basic"></div>');
         var rules_basic = rules_basics[ref];
         $('#builder-basic').queryBuilder({
@@ -132,6 +133,7 @@
     $("#markup").live("change",function(){
         $("#price").val("0.00")
     })
+    
     $('#btn-get').live('click', function () {
         var result = $('#builder-basic').queryBuilder('getRules');
 
@@ -140,7 +142,7 @@
             
             rules_basics[ref] = result;
             //alert($("#price_field").val());
-            //$("#price_field").val(price_fields[ref]);
+            //
             markups[ref] = $("#markup").val();
             titles[ref] = $("#title").val();
             sortorders[ref] = $("#sortorder").val();
