@@ -19,6 +19,7 @@
     var markups = [];
     var prices = [];
     var sortorders = [];
+    var price_fields = [];
     var titles = [];
     rules_basics_new = {
         condition: 'AND',
@@ -32,6 +33,7 @@
     markups[0] = 0;
     prices[0] = 0;
     sortorders[0] = 0;
+    price_fields[] = 0; 
     titles[0] = "New Rule";
     {% for key,rule in rules %}
         rules_basics[{{ key }}] = {{rule.rule | raw}};
@@ -39,6 +41,7 @@
         sortorders[{{ key }}] = "{{rule.sortorder}}";
         titles[{{ key }}] = "{{rule.title}}";
         prices[{{ key }}] = "{{rule.price}}";
+        price_fields[{{ key }}] = "{{rule.price_field}}";
     {% endfor %}    
     $dialog.edirule = $("<div style='z-index:100000' class='card'></div>")
             .dialog({
