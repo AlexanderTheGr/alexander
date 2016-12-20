@@ -209,6 +209,7 @@ class EdiController extends Main {
         $title = $request->request->get("title");
         $price = $request->request->get("price");
         $edi = $request->request->get("edi");
+        $priceField = $request->request->get("price_field");
         if ($id == 0) {
             $edirule = new Edirule;
             $this->initialazeNewEntity($entity);
@@ -224,6 +225,7 @@ class EdiController extends Main {
         $edirule->setSortorder($sortorder);
         $edirule->setTitle($title);
         $edirule->setPrice($price);
+        $edirule->setPriceField($priceField);
         $this->flushpersist($edirule);
 
         /*
