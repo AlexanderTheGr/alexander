@@ -214,7 +214,7 @@ class EdiController extends Main {
             $ediobj = $this->getDoctrine()
                     ->getRepository($this->repository)
                     ->find($edi);
-            $edirule->setGroup($ediobj);
+            $edirule->setEdi($ediobj);
         } else {
             $edirule = $this->getDoctrine()->getRepository('EdiBundle:Edirule')->find($id);
         }
