@@ -204,7 +204,7 @@ class Edirule {
             $catsEp[] = $pcategory->getSortCode();
         }
         //print_r($catsEp);
-        $supplier = $ediitem->getSupplierId()->getId();
+        //$supplier = $ediitem->getSupplierId()->getId();
         //echo $this->rulesLoop($rule, $catsEp, $supplier) ? "true" : "false";
         return $this->rulesLoop($rule, $catsEp, $supplier, $ediitem->getItemCode());
     }
