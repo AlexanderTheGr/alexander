@@ -33,7 +33,7 @@
     markups[0] = 0;
     prices[0] = 0;
     sortorders[0] = 0;
-    price_fields[0] = ""; 
+    price_fields[0] = "itemPricer"; 
     titles[0] = "New Rule";
     {% for key,rule in rules %}
         rules_basics[{{ key }}] = {{rule.rule | raw}};
