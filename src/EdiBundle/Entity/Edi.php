@@ -296,8 +296,8 @@ class Edi extends Entity {
             $kernel = $kernel->getKernel();
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');        
-        $grouprules = $em->getRepository('EdiBundle:Edirule')->findBy(array("edi"=>$this),array('sortorder' => 'ASC'));
-        foreach ((array)$grouprules as $grouprule) {
+        $edirules = $em->getRepository('EdiBundle:Edirule')->findBy(array("edi"=>$this),array('sortorder' => 'ASC'));
+        foreach ((array)$edirules as $edirule) {
             $this->rules[] = $edirule;
             
         }
