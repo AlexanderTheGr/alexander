@@ -306,6 +306,7 @@ class Edi extends Entity {
             $edirules = $em->getRepository('EdiBundle:Edirule')->findBy(array("edi" => $this), array('sortorder' => 'ASC'));
 
         foreach ((array) $edirules as $edirule) {
+            echo ".\n";
             $this->rules[] = $edirule;
         }
 
