@@ -24,6 +24,7 @@ class EdiOrder extends Entity {
      * @var integer
      */
     private $reference = '0';
+    
 
     /**
      * @var \DateTime
