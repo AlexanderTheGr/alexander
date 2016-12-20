@@ -72,7 +72,7 @@ class EdiController extends Main {
             }
         }
         $categoryjson = json_encode($categoriesArr);
-        $edirules = $entity->loadCustomeredirules()->getRules();
+        $edirules = $entity->loadEdirules()->getRules();
         $rules = array();
         foreach ($edirules as $edirule) {
             if ($edirule->getGroup()->getId() == $id) {
@@ -84,8 +84,8 @@ class EdiController extends Main {
             }
         }
         
-        return $this->render('SoftoneBundle:Customergroup:view.html.twig', array(
-                    'pagename' => "Ομάδες Πελατών: ".$entity->getTitle(),
+        return $this->render('EdiBundle:Edi:view.html.twig', array(
+                    'pagename' => "Edi: ".$entity->getTitle(),
                     'url' => '/customergroup/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
