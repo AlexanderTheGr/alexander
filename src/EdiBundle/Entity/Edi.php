@@ -307,9 +307,9 @@ class Edi extends Entity {
         echo count($edirules);    
         foreach ((array) $edirules as $edirule) {
             
-            $pricefield." ".$edirule->getPricefield()."\n";
+            $pricefield." ".$edirule->getPriceField()."\n";
             
-            if ($pricefield == $edirule->getPricefield()) {
+            if ($pricefield == $edirule->getPriceField()) {
                 $this->rules[] = $edirule;
             }
         }
