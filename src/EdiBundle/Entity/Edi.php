@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Entity;
 use SoftoneBundle\Entity\Softone as Softone;
 
-
 /**
  * Edi
  */
@@ -17,7 +16,7 @@ class Edi extends Entity {
         //$this->types['tecdocSupplierId'] = 'object';
         //$this->tecdocSupplierId = new \SoftoneBundle\Entity\SoftoneSupplier;
     }
-    
+
     public function getField($field) {
         return $this->$field;
     }
@@ -26,14 +25,16 @@ class Edi extends Entity {
         $this->$field = $val;
         return $val;
     }
-    
+
     public function getRepository() {
         return $this->repository;
     }
+
     public function getRepositories($repo) {
         //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:SoftoneSupplier';
-        return  $this->repositories[$repo];
+        return $this->repositories[$repo];
     }
+
     public function gettype($field) {
         //$this->types['tecdocSupplierId'] = 'object';
         if (@$this->types[$field] != '') {
@@ -43,8 +44,8 @@ class Edi extends Entity {
             return gettype($this->$field);
         }
         return 'string';
-    }   
-           
+    }
+
     /**
      * @var string
      */
@@ -253,7 +254,6 @@ class Edi extends Entity {
      */
     private $func;
 
-
     /**
      * Set func
      *
@@ -261,8 +261,7 @@ class Edi extends Entity {
      *
      * @return Edi
      */
-    public function setFunc($func)
-    {
+    public function setFunc($func) {
         $this->func = $func;
 
         return $this;
@@ -273,11 +272,10 @@ class Edi extends Entity {
      *
      * @return string
      */
-    public function getFunc()
-    {
+    public function getFunc() {
         return $this->func;
     }
-    
+
     /**
      * Get customeredirules
      *
@@ -286,29 +284,38 @@ class Edi extends Entity {
     public function getEdirules() {
         return $this->edirules;
     }
-    
+
     private $rules = array();
+
     public function loadEdirules($pricefield = false) {
         //if ($this->reference)
-        if (count($this->rules) > 0) return $this;
+        if (count($this->rules) > 0)
+            return $this;
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
         }
-        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');        
-        $edirules = $em->getRepository('EdiBundle:Edirule')->findBy(array("edi"=>$this),array('sortorder' => 'ASC'));
-        foreach ((array)$edirules as $edirule) {
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+
+        if ($pricefield)
+            $edirules = $em->getRepository('EdiBundle:Edirule')->findBy(array("edi" => $this, 'pricefield' => $pricefield), array('sortorder' => 'ASC'));
+        else
+            $edirules = $em->getRepository('EdiBundle:Edirule')->findBy(array("edi" => $this), array('sortorder' => 'ASC'));
+
+
+        foreach ((array) $edirules as $edirule) {
             //echo $edirule->getId();
-            if ($pricefield AND $edirule->getPriceField() == $pricefield)
-                $this->rules[] = $edirule;
-            else 
-                $this->rules[] = $edirule;
+            //if ($pricefield AND $edirule->getPriceField() == $pricefield)
+            $this->rules[] = $edirule;
+            //if ($pricefield)
+            //     $this->rules[] = $edirule;
         }
-  
+
         return $this;
     }
+
     public function getRules() {
         return $this->rules;
-    }    
-    
+    }
+
 }
