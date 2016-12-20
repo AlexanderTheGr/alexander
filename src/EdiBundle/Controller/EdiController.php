@@ -38,17 +38,63 @@ class EdiController extends Main {
      * @Route("/edi/edi/view/{id}")
      */
     public function viewAction($id) {
+        
         $buttons = array();
-        $Edi = $this->getDoctrine()
-                ->getRepository('EdiBundle:Edi')
+        $content = $this->gettabs($id);
+        $content = $this->content();
+        $entity = $this->getDoctrine()
+                ->getRepository($this->repository)
                 ->find($id);
-        return $this->render('EdiBundle:Edi:view.html.twig', array(
-                    'pagename' => 'Edis',
-                    'url' => '/edi/edi/save',
+        if ($id == 0 AND @ $entity->id == 0) {
+            $entity = new Customergroup;
+        }
+        
+        $suppliers = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")->findAll();
+        $supplierArr = array();
+        foreach ($suppliers as $supplier) {
+            $supplierArr[$supplier->getId()] = $supplier->getTitle();
+        }
+        $supplierjson = json_encode($supplierArr);
+
+        $categories = $this->getDoctrine()->getRepository("SoftoneBundle:Category")->findBy(array("parent" => 0));
+        $categoriesArr = array();
+        foreach ($categories as $category) {
+            $CategoryLang = $this->getDoctrine()->getRepository("SoftoneBundle:CategoryLang")->findOneBy(array("category" => $category));
+            //$category->setSortcode($category->getId()."00000");
+            //$this->flushpersist($category);
+            $categoriesArr[$category->getSortcode()] = $CategoryLang->getName();
+            $categories2 = $this->getDoctrine()->getRepository("SoftoneBundle:Category")->findBy(array("parent" => $category->getId()));
+            foreach ($categories2 as $category2) {
+                $CategoryLang = $this->getDoctrine()->getRepository("SoftoneBundle:CategoryLang")->findOneBy(array("category" => $category2));
+                $categoriesArr[$category2->getSortcode()] = "--" . $CategoryLang->getName();
+                //$category2->setSortcode($category->getId().$category2->getId());
+                //$this->flushpersist($category2);
+            }
+        }
+        $categoryjson = json_encode($categoriesArr);
+        $edirules = $entity->loadCustomeredirules()->getRules();
+        $rules = array();
+        foreach ($edirules as $edirule) {
+            if ($edirule->getGroup()->getId() == $id) {
+                $rules[$edirule->getId()]["rule"] = $edirule->getRule();
+                $rules[$edirule->getId()]["val"] = $edirule->getVal();
+                $rules[$edirule->getId()]["sortorder"] = $edirule->getSortorder();
+                $rules[$edirule->getId()]["title"] = $edirule->getTitle();
+                $rules[$edirule->getId()]["price"] = $edirule->getPrice();
+            }
+        }
+        
+        return $this->render('SoftoneBundle:Customergroup:view.html.twig', array(
+                    'pagename' => "Ομάδες Πελατών: ".$entity->getTitle(),
+                    'url' => '/customergroup/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
-                    'content' => $this->gettabs($id),
+                    'content' => $content,
+                    'rules' => $rules,
+                    'edi' => $id,
+                    'supplierjson' => $supplierjson,
+                    "categoryjson" => $categoryjson,
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
