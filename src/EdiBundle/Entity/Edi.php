@@ -296,19 +296,13 @@ class Edi extends Entity {
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
         }
-        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
-
-
-        $a = $pricefield; 
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager'); 
         if ($pricefield)
             $edirules = $em->getRepository('EdiBundle:Edirule')->findBy(array("edi" => $this, 'price_field' => $pricefield), array('sortorder' => 'ASC'));
         else
             $edirules = $em->getRepository('EdiBundle:Edirule')->findBy(array("edi" => $this), array('sortorder' => 'ASC'));
         //echo count($edirules);    
         foreach ((array) $edirules as $edirule) {
-            
-            echo "(".$pricefield.") - ".$edirule->getPriceField()."\n";
-            
             if ($pricefield == $edirule->getPriceField()) {
                 $this->rules[] = $edirule;
             }
