@@ -288,7 +288,7 @@ class Edi extends Entity {
     }
     
     private $rules = array();
-    public function loadEdirules() {
+    public function loadEdirules($pricefield = false) {
         //if ($this->reference)
         if (count($this->rules) > 0) return $this;
         global $kernel;
@@ -299,6 +299,7 @@ class Edi extends Entity {
         $edirules = $em->getRepository('EdiBundle:Edirule')->findBy(array("edi"=>$this),array('sortorder' => 'ASC'));
         foreach ((array)$edirules as $edirule) {
             //echo $edirule->getId();
+            if ($pricefield AND $edirule->getPriceField() == $pricefield)
             $this->rules[] = $edirule;
             
         }
