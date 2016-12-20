@@ -133,7 +133,7 @@ class EdiController extends Main {
 
             $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
             $dtparams[] = array("name" => "Title", "index" => 'title');
-            $dtparams[] = array("name" => "Discount", "index" => 'val');
+            $dtparams[] = array("name" => "Markup", "index" => 'val');
             $dtparams[] = array("name" => "Price", "index" => 'price');
             $dtparams[] = array("name" => "Order", "index" => 'sortorder');
 
