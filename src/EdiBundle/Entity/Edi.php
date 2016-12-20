@@ -299,7 +299,7 @@ class Edi extends Entity {
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         echo $pricefield."\n";
-        
+        $a = $pricefield; 
         //if ($pricefield)
         //$edirules = $em->getRepository('EdiBundle:Edirule')->findBy(array("edi" => $this, 'price_field' => $pricefield), array('sortorder' => 'ASC'));
         //else
@@ -307,7 +307,7 @@ class Edi extends Entity {
         //echo count($edirules);    
         foreach ((array) $edirules as $edirule) {
             
-            echo "(".$pricefield.") - ".$edirule->getPriceField()."\n";
+            echo "(".$a.") - ".$edirule->getPriceField()."\n";
             
             if ($pricefield == $edirule->getPriceField()) {
                 $this->rules[] = $edirule;
