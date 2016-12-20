@@ -300,10 +300,10 @@ class Edi extends Entity {
 
         echo $pricefield."\n";
         
-        if ($pricefield)
+        //if ($pricefield)
             $edirules = $em->getRepository('EdiBundle:Edirule')->findBy(array("edi" => $this, 'pricefield' => $pricefield), array('sortorder' => 'ASC'));
-        else
-            $edirules = $em->getRepository('EdiBundle:Edirule')->findBy(array("edi" => $this), array('sortorder' => 'ASC'));
+        //else
+        //    $edirules = $em->getRepository('EdiBundle:Edirule')->findBy(array("edi" => $this), array('sortorder' => 'ASC'));
 
         foreach ((array) $edirules as $edirule) {
             echo ".\n";
