@@ -40,7 +40,7 @@
         titles[{{ key }}] = "{{rule.title}}";
         prices[{{ key }}] = "{{rule.price}}";
     {% endfor %}    
-    $dialog.customergrouprule = $("<div style='z-index:100000' class='card'></div>")
+    $dialog.edirule = $("<div style='z-index:100000' class='card'></div>")
             .dialog({
                 autoOpen: false,
                 resizable: false,
@@ -49,7 +49,7 @@
                 modal: true
     });
     var ref=0;
-    $(".dt_row_customergrouprule").live("click",function(){
+    $(".dt_row_edirule").live("click",function(){
         rule(this);
     })
     $("#btn-get-new").live("click",function(){
@@ -65,9 +65,9 @@
 
     function rule(obj) {
         ref = $(obj).attr("data-ref");
-        $dialog.customergrouprule.dialog({title:titles[ref]});        
-        //$dialog.customergrouprule.title(titles[ref]);
-        $dialog.customergrouprule.html('<button id="btn-get" class="btn btn-primary parse-json" data-target="basic">Save Rule</button> <button id="btn-delete" class="btn btn-danger parse-json" data-target="basic">Delete Rule</button> <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:'+ref+'" class="control-label">Title</label><input value="'+titles[ref]+'" class="form-control" id="title" name="SoftoneBundle:Customergroup:id:'+ref+'" formly-custom-validation="" type=""></div></div>   <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:'+ref+'" class="control-label">Discount</label><input value="'+discounts[ref]+'" class="form-control" id="discount" name="SoftoneBundle:Customergroup:id:'+ref+'" formly-custom-validation="" type=""></div></div>  <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:'+ref+'" class="control-label">Price</label><input value="'+prices[ref]+'" class="form-control" id="price" name="SoftoneBundle:Customergroup:id:'+ref+'" formly-custom-validation="" type=""></div></div>   <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:'+ref+'" class="control-label">Sortorder</label><input value="'+sortorders[ref]+'" class="form-control" id="sortorder" name="SoftoneBundle:Customergroup:id:'+ref+'" formly-custom-validation="" type=""></div></div>  <div id="builder-basic"></div>');
+        $dialog.edirule.dialog({title:titles[ref]});        
+        //$dialog.edirule.title(titles[ref]);
+        $dialog.edirule.html('<button id="btn-get" class="btn btn-primary parse-json" data-target="basic">Save Rule</button> <button id="btn-delete" class="btn btn-danger parse-json" data-target="basic">Delete Rule</button> <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:'+ref+'" class="control-label">Title</label><input value="'+titles[ref]+'" class="form-control" id="title" name="SoftoneBundle:Customergroup:id:'+ref+'" formly-custom-validation="" type=""></div></div>   <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:'+ref+'" class="control-label">Discount</label><input value="'+discounts[ref]+'" class="form-control" id="discount" name="SoftoneBundle:Customergroup:id:'+ref+'" formly-custom-validation="" type=""></div></div>  <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:'+ref+'" class="control-label">Price</label><input value="'+prices[ref]+'" class="form-control" id="price" name="SoftoneBundle:Customergroup:id:'+ref+'" formly-custom-validation="" type=""></div></div>   <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:'+ref+'" class="control-label">Sortorder</label><input value="'+sortorders[ref]+'" class="form-control" id="sortorder" name="SoftoneBundle:Customergroup:id:'+ref+'" formly-custom-validation="" type=""></div></div>  <div id="builder-basic"></div>');
         var rules_basic = rules_basics[ref];
         $('#builder-basic').queryBuilder({
             plugins: ['bt-tooltip-errors'],
@@ -109,15 +109,15 @@
                 }],
             rules: rules_basic
         });
-        $dialog.customergrouprule.dialog("open");
+        $dialog.edirule.dialog("open");
     }
 
     $('#btn-delete').live('click', function () {
         var data = {};
         data.id = ref;
         $("#loaderer").show();
-        $dialog.customergrouprule.dialog("close");        
-        $.post("/customergroup/deleterule", data, function (result) {
+        $dialog.edirule.dialog("close");        
+        $.post("/edi/edi/deleterule", data, function (result) {
             $("#loaderer").hide();
             var table = dt_tables["ctrlgettabs"];
             table.fnFilter();
@@ -144,15 +144,15 @@
             prices[ref] = $("#price").val();
             var data = {};
             data.id = ref;
-            data.group = '{{group}}';
+            data.edi = '{{edi}}';
             data.title = $("#title").val();
             data.val = $("#discount").val();
             data.price = $("#price").val();
             data.sortorder = $("#sortorder").val();
             data.rule = result;
             $("#loaderer").show();
-            $dialog.customergrouprule.dialog("close");
-            $.post("/customergroup/saverule", data, function (result) {
+            $dialog.edirule.dialog("close");
+            $.post("/edi/edi/saverule", data, function (result) {
                 $("#loaderer").hide();
                 if (ref == 0) {
                     rules_basics[result.id] = rules_basics[ref];
