@@ -128,7 +128,6 @@ class CustomergroupController extends Main {
         $title = $request->request->get("title");
         $price = $request->request->get("price");
         $group = $request->request->get("group");
-        $priceField = $request->request->get("price_field");
         if ($id == 0) {
             $customergrouprule = new Customergrouprule;
             $this->initialazeNewEntity($entity);
@@ -144,7 +143,6 @@ class CustomergroupController extends Main {
         $customergrouprule->setSortorder($sortorder);
         $customergrouprule->setTitle($title);
         $customergrouprule->setPrice($price);
-        $customergrouprule->setPriceField($priceField);
         $this->flushpersist($customergrouprule);
 
         /*
