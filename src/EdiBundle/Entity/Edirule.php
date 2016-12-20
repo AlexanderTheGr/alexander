@@ -40,7 +40,7 @@ class Edirule {
     /**
      * @var \EdiBundle\Entity\Edi
      */
-    private $group;
+    private $edi;
 
     /**
      * Set val
@@ -164,12 +164,12 @@ class Edirule {
     /**
      * Set group
      *
-     * @param \EdiBundle\Entity\Edi $group
+     * @param \EdiBundle\Entity\Edi $edi
      *
      * @return Edirule
      */
-    public function setGroup(\EdiBundle\Entity\Edi $group = null) {
-        $this->group = $group;
+    public function setEdi(\EdiBundle\Entity\Edi $edi = null) {
+        $this->edi = $edi;
 
         return $this;
     }
@@ -179,7 +179,7 @@ class Edirule {
      *
      * @return \EdiBundle\Entity\Edi
      */
-    public function getGroup() {
+    public function getEdi() {
         return $this->group;
     }
 
