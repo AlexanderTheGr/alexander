@@ -1041,6 +1041,7 @@ class EdiItem extends Entity {
         
         $rules = $this->getEdi()->loadEdirules($pricefield)->getRules();
         $sortorder = 0;
+        $markup = 0;
         foreach ($rules as $rule) {
             if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder() ) {
                 $sortorder = $rule->getSortorder();
