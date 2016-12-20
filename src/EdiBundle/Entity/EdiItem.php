@@ -1030,5 +1030,18 @@ class EdiItem extends Entity {
         //$session->set('SoapClient', $this->SoapClient);
         return $this->SoapClient;
     }
-
+    function getEdiMarkup(\EdiBundle\Entity\Edi $edi) {
+        $rules = $edi->loadEdirules()->getRules();
+        $sortorder = 0;
+        foreach ($rules as $rule) {
+            if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder() ) {
+                $sortorder = $rule->getSortorder();
+                $markup = $rule->getVal();
+                $price = $rule->getPrice();
+            }
+        }
+        $pricefield = $customer->getPriceField();
+        $markupedPrice = $this->$pricefield * (1 - $markup/100 );
+        return $markup > 0 ? $markupedPrice : $price;
+    }
 }
