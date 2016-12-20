@@ -725,7 +725,6 @@ class EdiItem extends Entity {
             $em->flush();
             if ($TecdocSupplier) {
                 $product->setTecdocSupplierId($TecdocSupplier);
-                
             }
             $product->toSoftone();
             echo $this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode();
@@ -1049,6 +1048,7 @@ class EdiItem extends Entity {
                 $price = $rule->getPrice();
             }
         }
+        $markup = $markup == 0 ? 100 : 0; 
         $markupedPrice = $this->retailprice * (1 + $markup/100 );
         return $price > 0 ? $price : $markupedPrice;
     }
