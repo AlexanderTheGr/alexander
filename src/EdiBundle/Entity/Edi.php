@@ -298,6 +298,8 @@ class Edi extends Entity {
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
 
+        echo $pricefield."\n";
+        
         if ($pricefield)
             $edirules = $em->getRepository('EdiBundle:Edirule')->findBy(array("edi" => $this, 'pricefield' => $pricefield), array('sortorder' => 'ASC'));
         else
