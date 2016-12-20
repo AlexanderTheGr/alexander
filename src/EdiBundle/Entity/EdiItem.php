@@ -1036,11 +1036,10 @@ class EdiItem extends Entity {
         return $this->SoapClient;
     }
     function getEdiMarkup($pricefield=false) {
-        $rules = $this->getEdi()->loadEdirules()->getRules();
+        $rules = $this->getEdi()->loadEdirules()->getRules($pricefield);
         $sortorder = 0;
         foreach ($rules as $rule) {
-            echo ".....";
-            $pricefield = $rule->getPriceField();
+
             if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder() ) {
                 $sortorder = $rule->getSortorder();
                 $markup = $rule->getVal();
