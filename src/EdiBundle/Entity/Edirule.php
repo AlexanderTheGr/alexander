@@ -303,4 +303,33 @@ class Edirule {
         return $out;
     }    
     
+    /**
+     * @var string
+     */
+    private $price_field;
+
+
+    /**
+     * Set priceField
+     *
+     * @param string $priceField
+     *
+     * @return Edirule
+     */
+    public function setPriceField($priceField)
+    {
+        $this->price_field = $priceField;
+
+        return $this;
+    }
+
+    /**
+     * Get priceField
+     *
+     * @return string
+     */
+    public function getPriceField()
+    {
+        return $this->price_field;
+    }
 }
