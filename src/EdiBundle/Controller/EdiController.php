@@ -77,7 +77,7 @@ class EdiController extends Main {
         $edirules = $entity->loadEdirules()->getRules();
         $rules = array();
         foreach ($edirules as $edirule) {
-            if ($edirule->getGroup()->getId() == $id) {
+            if ($edirule->getEdi()->getId() == $id) {
                 $rules[$edirule->getId()]["rule"] = $edirule->getRule();
                 $rules[$edirule->getId()]["val"] = $edirule->getVal();
                 $rules[$edirule->getId()]["sortorder"] = $edirule->getSortorder();
