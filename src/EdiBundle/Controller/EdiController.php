@@ -100,6 +100,100 @@ class EdiController extends Main {
     }
 
     /**
+     * @Route("/edi/edi/gettab")
+     */
+    public function gettabs($id) {
+
+
+        $entity = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->find($id);
+
+        if ($id == 0 AND @ $entity->id == 0) {
+            $entity = new Edi;
+            $this->newentity[$this->repository] = $entity;
+        }
+
+        $buttons = array();
+        $buttons[] = array("label" => 'Get PartMaster', 'position' => 'right', 'class' => 'btn-success');
+
+        $fields["name"] = array("label" => "Name");
+        $fields["token"] = array("label" => "Token");
+        $fields["func"] = array("label" => "Func");
+
+        $forms = $this->getFormLyFields($entity, $fields);
+
+
+        if ($id > 0 AND count($entity) > 0) {
+            //$entity2 = $this->getDoctrine()
+            //        ->getRepository('SoftoneBundle:Customergrouprule')
+            //       ->find($id);
+            //$fields2["reference"] = array("label" => "Erp Code", "className" => "synafiacode col-md-12");
+            //$forms2 = $this->getFormLyFields($entity2, $fields2);
+
+            $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
+            $dtparams[] = array("name" => "Title", "index" => 'title');
+            $dtparams[] = array("name" => "Discount", "index" => 'val');
+            $dtparams[] = array("name" => "Price", "index" => 'price');
+            $dtparams[] = array("name" => "Order", "index" => 'sortorder');
+
+            $params['dtparams'] = $dtparams;
+            $params['id'] = $dtparams;
+            $params['url'] = '/edi/edi/getrules/' . $id;
+            $params['view'] = '/edi/edi/getrule/' . $id;
+            $params['key'] = 'gettabs_' . $id;
+            $params["ctrl"] = 'ctrlgettabs';
+            $params["app"] = 'appgettabs';
+            $datatables[] = $this->contentDatatable($params);
+        }
+
+
+
+        $this->addTab(array("title" => "General", 'buttons' => $buttons, "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
+        //$this->addTab(array("title" => "Rules", "content" => $this->getRules($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
+        if ($id > 0 AND count($entity) > 0) {
+            $tabs[] = array("title" => "Rules", "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
+        }
+        foreach ((array)$tabs as $tab) {
+            $this->addTab($tab);
+        }
+
+        $json = $this->tabs();
+         
+    }
+   
+    /**
+     * @Route("/edi/edi/getrules/{id}")
+     */
+    public function getRulesAction($id) {
+        $session = new Session();
+        foreach ($session->get('params_gettabs_' . $id) as $param) {
+            $this->addField($param);
+        }
+        $this->repository = 'EdiBundle:Edirule';
+        $this->q_and[] = $this->prefix . ".edi = '" . $id . "'";
+        $json = $this->datatable();
+
+        $datatable = json_decode($json);
+        $datatable->data = (array) $datatable->data;
+        foreach ($datatable->data as $key => $table) {
+            $table = (array) $table;
+            $table1 = array();
+            foreach ($table as $f => $val) {
+                $table1[$f] = $val;
+            }
+            $datatable->data[$key] = $table1;
+        }
+        $json = json_encode($datatable);
+
+
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+    }    
+
+    
+    /**
      * @Route("/edi/edi/save")
      */
     public function savection() {
@@ -287,32 +381,7 @@ class EdiController extends Main {
         }
     }
 
-    /**
-     * @Route("/edi/edi/gettab")
-     */
-    public function gettabs($id) {
 
-
-
-        $entity = $this->getDoctrine()
-                ->getRepository($this->repository)
-                ->find($id);
-        if ($id == 0 AND @ $entity->id == 0) {
-            $entity = new Edi;
-        }
-
-        $buttons = array();
-        $buttons[] = array("label" => 'Get PartMaster', 'position' => 'right', 'class' => 'btn-success');
-
-        $fields["name"] = array("label" => "Name");
-        $fields["token"] = array("label" => "Token");
-        $fields["func"] = array("label" => "Func");
-        //$fields["supplierdescr"] = array("label" => "Supplier");
-        $forms = $this->getFormLyFields($entity, $fields);
-        $this->addTab(array("title" => "General", 'buttons' => $buttons, "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
-        $json = $this->tabs();
-        return $json;
-    }
 
     /**
      * @Route("/edi/edi/getdatatable")
