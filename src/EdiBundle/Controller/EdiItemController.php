@@ -546,6 +546,7 @@ class EdiItemController extends Main {
                 $datas[$entity->getEdi()->getId()][$k]['Items'][] = $Items[$entity->getEdi()->getId()][$k];
 
                 $ands[$entity->getPartno()] = $key;
+                $entities[$entity->getPartno()] = $entity;
             } else {
                 @$jsonarr[$key]['DT_RowClass'] .= $eltrekaavailability[$entity->getItemcode()] > 0 ? ' text-success ' : ' text-danger ';
                 /*
@@ -598,7 +599,13 @@ class EdiItemController extends Main {
                             $Item->UnitPrice;
                             //echo $Item->ItemCode."\n";
                             if (@$jsonarr[$ands[$Item->ItemCode]]) {
+                                
                                 @$jsonarr[$ands[$Item->ItemCode]]['6'] = number_format($Item->UnitPrice, 2, '.', '');
+                                
+                                $entity = $entities[$Item->ItemCode];
+                                $entity->setRetailprice(number_format($Item->UnitPrice, 2, '.', ''));
+                                $this->flushpersist($entity);
+                                
                                 if ($Item->Availability == 'green') {
                                     @$jsonarr[$ands[$Item->ItemCode]]['DT_RowClass'] .= ' text-success ';
                                 }
