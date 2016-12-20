@@ -77,13 +77,13 @@ class EdiController extends Main {
         $edirules = $entity->loadEdirules()->getRules();
         $rules = array();
         foreach ($edirules as $edirule) {
-            if ($edirule->getEdi()->getId() == $id) {
+            //if ($edirule->getEdi()->getId() == $id) {
                 $rules[$edirule->getId()]["rule"] = $edirule->getRule();
                 $rules[$edirule->getId()]["val"] = $edirule->getVal();
                 $rules[$edirule->getId()]["sortorder"] = $edirule->getSortorder();
                 $rules[$edirule->getId()]["title"] = $edirule->getTitle();
                 $rules[$edirule->getId()]["price"] = $edirule->getPrice();
-            }
+            //}
         }
         
         return $this->render('EdiBundle:Edi:view.html.twig', array(
