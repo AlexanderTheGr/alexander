@@ -10,6 +10,7 @@ use EdiBundle\Entity\Edi as Edi;
 use EdiBundle\Entity\Eltrekaedi;
 use AppBundle\Entity\Tecdoc as Tecdoc;
 use AppBundle\Controller\Main as Main;
+use EdiBundle\Entity\Edirule as Edirule;
 
 class EdiController extends Main {
 
