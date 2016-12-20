@@ -452,4 +452,14 @@ class EdiOrder extends Entity {
         return $this->SoapClient;
     }
 
+
+    /**
+     * Get ediOrderItem
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEdiOrderItem()
+    {
+        return $this->EdiOrderItem;
+    }
 }
