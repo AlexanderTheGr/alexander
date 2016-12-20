@@ -718,6 +718,8 @@ class EdiItem extends Entity {
             $product->setCars($this->getCars());
             $product->setCats($this->getCats());            
             
+            $product->setItemPricer($this->getEdiMarkup("itemPricer"));
+            $product->setItemPricew($this->getEdiMarkup("itemPricew"));
             
             $em->persist($product);
             $em->flush();
@@ -786,7 +788,10 @@ class EdiItem extends Entity {
         
         $product->setCars($this->getCars());
         $product->setCats($this->getCats());
-
+        
+        $product->setItemPricer($this->getEdiMarkup("itemPricer"));
+        $product->setItemPricew($this->getEdiMarkup("itemPricew"));
+        
 
         $product->setItemV5($dt);
         $product->setTs($dt);
@@ -1030,8 +1035,8 @@ class EdiItem extends Entity {
         //$session->set('SoapClient', $this->SoapClient);
         return $this->SoapClient;
     }
-    function getEdiMarkup(\EdiBundle\Entity\Edi $edi,$pricefield=false) {
-        $rules = $edi->loadEdirules()->getRules($pricefield);
+    function getEdiMarkup($pricefield=false) {
+        $rules = $this->getEdi()->loadEdirules()->getRules($pricefield);
         $sortorder = 0;
         foreach ($rules as $rule) {
             $pricefield = $rule->getPriceField();
