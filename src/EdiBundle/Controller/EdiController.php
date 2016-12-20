@@ -85,7 +85,7 @@ class EdiController extends Main {
         }
         
         return $this->render('EdiBundle:Edi:view.html.twig', array(
-                    'pagename' => "Edi: ".$entity->getTitle(),
+                    'pagename' => "Edi: ".$entity->getName(),
                     'url' => '/customergroup/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
