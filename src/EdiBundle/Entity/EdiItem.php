@@ -1040,7 +1040,7 @@ class EdiItem extends Entity {
                 $price = $rule->getPrice();
             }
         }
-        $pricefield = $customer->getPriceField();
+        $pricefield = 0;//$customer->getPriceField();
         $markupedPrice = $this->$pricefield * (1 - $markup/100 );
         return $markup > 0 ? $markupedPrice : $price;
     }
