@@ -66,7 +66,7 @@ class EdiOrderController extends Main {
 
 
         return $this->render('EdiBundle:Edi:orderview.html.twig', array(
-                    'pagename' => 'EDI O: '.$EdiOrder->getRemarks(),
+                    'pagename' => 'EDI O: ' . $EdiOrder->getRemarks(),
                     'url' => '/edi/edi/order/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
@@ -183,13 +183,14 @@ class EdiOrderController extends Main {
         } elseif ($request->request->get("product") > 0) {
             $Ediitem = $this->getDoctrine()
                     ->getRepository('EdiBundle:EdiItem')
-                    ->findOneBy(array("product"=>$request->request->get("product")));
+                    ->findOneBy(array("product" => $request->request->get("product")));
         } else {
             return;
         }
-        
-        if (@$Ediitem->id == 0) return;
-        
+
+        if (@$Ediitem->id == 0)
+            return;
+
         if ($request->request->get("order") > 0) {
             $EdiOrder = $this->getDoctrine()
                     ->getRepository('EdiBundle:EdiOrder')
@@ -286,21 +287,20 @@ class EdiOrderController extends Main {
         if ($request->request->get("qty")) {
             $EdiOrderItem->setQty($request->request->get("qty"));
             /*
-            $availability = $EdiOrderItem->getEdi()->getQtyAvailability($request->request->get("qty"));
-            $Available = (array) $availability["Header"];
-            $store = $Available["SUGGESTED_STORE"];
-            if ($availability["Header"]["Available"] == 'N') {
-                $json = json_encode(array("error" => true, "message" => $Available["Available"]));
-                return new Response(
-                        $json, 200, array('Content-Type' => 'application/json')
-                );
-            }
+              $availability = $EdiOrderItem->getEdi()->getQtyAvailability($request->request->get("qty"));
+              $Available = (array) $availability["Header"];
+              $store = $Available["SUGGESTED_STORE"];
+              if ($availability["Header"]["Available"] == 'N') {
+              $json = json_encode(array("error" => true, "message" => $Available["Available"]));
+              return new Response(
+              $json, 200, array('Content-Type' => 'application/json')
+              );
+              }
              * 
              */
             //$price = $Available["PriceOnPolicy"];
             //$EdiOrderItem->setPrice($price);
-           // $EdiOrderItem->setField("store", $store);
-            
+            // $EdiOrderItem->setField("store", $store);
         } else if ($request->request->get("price"))
             $EdiOrderItem->setPrice($request->request->get("price"));
         else if ($request->request->get("discount"))
@@ -397,7 +397,7 @@ class EdiOrderController extends Main {
         if ($EdiOrder->getReference() == 0) {
             $order = @$EdiOrder->sendOrder();
             //if ($order->OrderId)
-            $EdiOrder->setReference((int)$order->OrderId);
+            $EdiOrder->setReference((int) $order->OrderId);
             $this->flushpersist($EdiOrder);
         }
 
@@ -420,24 +420,39 @@ class EdiOrderController extends Main {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+
     /**
      * @Route("/edi/edi/order/ediiteminfo")
-    */
+     */
     public function ediiteminfoAction(Request $request) {
 
         $EdiOrderItem = $this->getDoctrine()
                 ->getRepository('EdiBundle:EdiOrderItem')
                 ->find($request->request->get("id"));
         $item = $EdiOrderItem->getEdiItem();
-        
+
         if ($item->getTecdocArticleId() > 0) {
-            $data["id"] = $item->getTecdocArticleId();
+            $params["tecdoc_article_id"] = $item->getTecdocArticleId();
+
+            $docs = $this->getArticleImages(array("articleId" => $params["tecdoc_article_id"]));
+
+            foreach ($docs->data->array as $image) {
+                $docfile = "tmp/" . $image->folder . "-" . $image->file . ".jpg";
+                $this->convertImageToJpg($image->path, $docfile);
+                $attr = ($o == true) ? array('image', 'small_image', 'thumbnail') : array();
+                $o = false;
+                if (file_exists($docfile)) {
+                    echo "http://service5.fastwebltd.com/" . $docfile;
+                }
+                break;
+            }
         }
-        
+
         $json = json_encode($data);
-        
+
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+
 }
