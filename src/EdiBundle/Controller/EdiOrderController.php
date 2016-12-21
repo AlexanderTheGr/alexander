@@ -431,7 +431,7 @@ class EdiOrderController extends Main {
         $item = $EdiOrderItem->getEdiItem();
         
         if ($item->getTecdocArticleId() > 0) {
-            $data["id"] = $this->getTecdocArticleId();
+            $data["id"] = $item->getTecdocArticleId();
         }
         
         $json = json_encode($data);
