@@ -12,6 +12,11 @@
 <script>
     $(".{{ctrl}}").alexTabs("{{app}}", "{{ctrl}}", "{{url}}","{{content|json_encode()}}");
 </script>
-
+<script>
+    $(".dt_row_ediorderitem").live("change",function(){
+        alert($(this).attr("data-ref"));
+        
+    })
+</script>
 
 {% endblock %}
