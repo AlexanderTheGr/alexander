@@ -430,7 +430,7 @@ class EdiOrderController extends Main {
                 ->find($request->request->get("id"));
         $item = $EdiOrderItem->getEdiItem();
         
-        if ($this->getTecdocArticleId() > 0) {
+        if ($item->getTecdocArticleId() > 0) {
             $data["id"] = $this->getTecdocArticleId();
         }
         
