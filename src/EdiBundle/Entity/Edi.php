@@ -297,15 +297,16 @@ class Edi extends Entity {
             $kernel = $kernel->getKernel();
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager'); 
-        if ($pricefield)
+        if ($pricefield) {
             $edirules = $em->getRepository('EdiBundle:Edirule')->findBy(array("edi" => $this, 'price_field' => $pricefield), array('sortorder' => 'ASC'));
-        else
+        } else {
             $edirules = $em->getRepository('EdiBundle:Edirule')->findBy(array("edi" => $this), array('sortorder' => 'ASC'));
+        }
         //echo count($edirules);    
         foreach ((array) $edirules as $edirule) {
-            if ($pricefield == $edirule->getPriceField()) {
+            //if ($pricefield == $edirule->getPriceField()) {
                 $this->rules[] = $edirule;
-            }
+            //}
         }
 
         return $this;
