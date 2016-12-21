@@ -27,7 +27,7 @@
             var data = {}
             data.id = $(this).attr("data-ref");
             $.post("/edi/edi/order/ediiteminfo", data, function (result) {
-                $dialog.edirule.html(result.id);
+                $dialog.edirule.html(result.img);
                 $dialog.edirule.dialog("open");
             })
         })
