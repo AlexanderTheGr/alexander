@@ -59,7 +59,6 @@ class EdiOrderController extends Main {
             $buttons[] = array("label" => 'Send Order', 'position' => 'right', 'attr' => 'data-id=' . $id, 'class' => 'btn-success EdiSendOrder');
         }
 
-
         $content = $this->gettabs($id);
         $content = $this->getoffcanvases($id);
 
@@ -67,7 +66,7 @@ class EdiOrderController extends Main {
 
 
         return $this->render('EdiBundle:Edi:orderview.html.twig', array(
-                    'pagename' => 'EDI Order: '.$EdiOrder->getRemarks(),
+                    'pagename' => 'EDI O: '.$EdiOrder->getRemarks(),
                     'url' => '/edi/edi/order/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
