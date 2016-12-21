@@ -444,9 +444,10 @@ class EdiOrderController extends Main {
                 $attr = ($o == true) ? array('image', 'small_image', 'thumbnail') : array();
                 $o = false;
                 if (file_exists($docfile)) {
-                    echo $docfile;
+                    //echo $docfile;
+                    $data["img"] = "<img src='".$docfile."' />";
                 }
-                $data["img"] = "<img src='".$docfile."' />";
+                
                 break;
             }
         }
