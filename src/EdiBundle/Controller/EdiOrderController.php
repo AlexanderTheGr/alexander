@@ -118,7 +118,7 @@ class EdiOrderController extends Main {
         $tabforms = $this->getFormLyFields($entity, $tabfields);
 
         $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
-        $dtparams[] = array("name" => "Code", "index" => 'EdiItem:partno');
+        $dtparams[] = array("name" => "Code", "index" => 'EdiItem:itemCode');
         $dtparams[] = array("name" => "Product", "index" => 'EdiItem:description');
         //$dtparams[] = array("name" => "Store", "index" => 'store');
 
