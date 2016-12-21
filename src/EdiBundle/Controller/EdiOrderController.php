@@ -445,7 +445,7 @@ class EdiOrderController extends Main {
                 $o = false;
                 if (file_exists($docfile)) {
                     //echo $docfile;
-                    $data["img"] = "<img src='".$docfile."' />";
+                    $data["img"] = "<img src='/".$docfile."' />";
                 }
                 
                 break;
