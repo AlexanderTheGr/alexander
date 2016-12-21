@@ -73,6 +73,10 @@ class EdiOrderController extends Main {
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'content' => $content,
+                    'rules' => array(),
+                    'edi' => $id,
+                    'supplierjson' => "",
+                    "categoryjson" => "",
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
