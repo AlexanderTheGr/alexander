@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use EdiBundle\Entity\EdiOrder as EdiOrder;
 use EdiBundle\Entity\EdiOrderItem as EdiOrderItem;
 use AppBundle\Controller\Main as Main;
+use AppBundle\Entity\Tecdoc as Tecdoc;
 
 class EdiOrderController extends Main {
 
@@ -430,11 +431,11 @@ class EdiOrderController extends Main {
                 ->getRepository('EdiBundle:EdiOrderItem')
                 ->find($request->request->get("id"));
         $item = $EdiOrderItem->getEdiItem();
-
+        $tecdoc = new Tecdoc();
         if ($item->getTecdocArticleId() > 0) {
             $params["tecdoc_article_id"] = $item->getTecdocArticleId();
 
-            $docs = $this->getArticleImages(array("articleId" => $params["tecdoc_article_id"]));
+            $docs = $tecdoc->getArticleImages(array("articleId" => $params["tecdoc_article_id"]));
 
             foreach ($docs->data->array as $image) {
                 $docfile = "tmp/" . $image->folder . "-" . $image->file . ".jpg";
