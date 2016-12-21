@@ -442,7 +442,7 @@ class EdiOrderController extends Main {
                 $attr = ($o == true) ? array('image', 'small_image', 'thumbnail') : array();
                 $o = false;
                 if (file_exists($docfile)) {
-                    echo "http://service5.fastwebltd.com/" . $docfile;
+                    echo $docfile;
                 }
                 break;
             }
