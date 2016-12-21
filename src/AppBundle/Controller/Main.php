@@ -737,5 +737,18 @@ class Main extends Controller {
 
         return $data;
     }
-
+    function convertImageToJpg($image, $docfile) {
+        try {
+            if (file_exists($image)) {
+                $image = new Imagick($image);
+                $canvas = new Imagick();
+                $canvas->newImage($image->getImageWidth(), $image->getImageHeight(), new ImagickPixel("white"));
+                $canvas->setImageFormat("jpeg");
+                $canvas->compositeImage($image, imagick::COMPOSITE_OVER, 0, 0);
+                $canvas->writeImage($docfile);
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
 }
