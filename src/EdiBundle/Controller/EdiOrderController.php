@@ -420,5 +420,24 @@ class EdiOrderController extends Main {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+    /**
+     * @Route("/edi/edi/order/ediiteminfo")
+    */
+    public function ediiteminfoAction(Request $request) {
 
+        $EdiOrderItem = $this->getDoctrine()
+                ->getRepository('EdiBundle:EdiOrderItem')
+                ->find($request->request->get("id"));
+        $item = $EdiOrderItem->getEdiItem();
+        
+        if ($this->getTecdocArticleId() > 0) {
+            $data["id"] = $this->getTecdocArticleId();
+        }
+        
+        $json = json_encode($data);
+        
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+    }
 }
