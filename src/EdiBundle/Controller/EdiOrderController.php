@@ -436,9 +436,10 @@ class EdiOrderController extends Main {
             $params["tecdoc_article_id"] = $item->getTecdocArticleId();
 
             $docs = $tecdoc->getArticleImages(array("articleId" => $params["tecdoc_article_id"]));
-
+            @mkdir("assets/tmp/");
             foreach ($docs->data->array as $image) {
-                $docfile = "tmp/" . $image->folder . "-" . $image->file . ".jpg";
+                
+                $docfile = "assets/tmp/" . $image->folder . "-" . $image->file . ".jpg";
                 $this->convertImageToJpg($image->path, $docfile);
                 $attr = ($o == true) ? array('image', 'small_image', 'thumbnail') : array();
                 $o = false;
