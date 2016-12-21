@@ -13,9 +13,16 @@
     $(".{{ctrl}}").alexTabs("{{app}}", "{{ctrl}}", "{{url}}","{{content|json_encode()}}");
 </script>
 <script>
+    $dialog.edirule = $("<div style='z-index:100000' class='card'></div>")
+            .dialog({
+                autoOpen: false,
+                resizable: false,
+                draggable: false,
+                width: "60%",
+                modal: true    
     $(".dt_row_ediorderitem").live("click",function(){
-        alert($(this).attr("data-ref"));
-        
+        $dialog.edirule.html($(this).attr("data-ref"));
+        $dialog.edirule.dialog("open");
     })
 </script>
 
