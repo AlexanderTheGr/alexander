@@ -67,7 +67,7 @@ class EdiOrderController extends Main {
 
 
         return $this->render('EdiBundle:Edi:orderview.html.twig', array(
-                    'pagename' => 'EDI: '.$EdiOrder->getRemarks(),
+                    'pagename' => 'EDI Order: '.$EdiOrder->getRemarks(),
                     'url' => '/edi/edi/order/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
