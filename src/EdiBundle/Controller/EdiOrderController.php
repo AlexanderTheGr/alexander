@@ -66,7 +66,7 @@ class EdiOrderController extends Main {
         $content = $this->content();
 
 
-        return $this->render('EdiBundle:Edi:view.html.twig', array(
+        return $this->render('EdiBundle:Edi:orderview.html.twig', array(
                     'pagename' => 'Edis',
                     'url' => '/edi/edi/order/save',
                     'buttons' => $buttons,
@@ -74,9 +74,6 @@ class EdiOrderController extends Main {
                     'app' => $this->generateRandomString(),
                     'content' => $content,
                     'rules' => array(),
-                    'edi' => $id,
-                    'supplierjson' => "",
-                    "categoryjson" => "",
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
