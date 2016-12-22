@@ -470,8 +470,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 $ref = $obj->getField('reference'); //$result[$field["reference"]];
                                 $f[] = $obj->getField('tecdocArticleId');
                                 //$articleIds[] = $obj->getField('tecdocArticleId');
-                                $value = $field["index"] == 'qty' ? 1 : '---';
-                                $value = $field["index"] == 'edi' ? 1 : '---';
+                                $value = $field["index"] == 'qty' ? 1 : 1;
+                                $value = $field["index"] == 'edi' ? 1 : 1;
                                 $json[] = "<input data-id='" . $result["id"] . "' data-rep='" . $this->repository . "' data-ref='" . $ref . "' id='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "_" . $result["id"] . "' data-id='" . $result["id"] . "' class='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "' type='" . $field["input"] . "' value='$value'>";
                             } else {
                                 $json[] = $val;
