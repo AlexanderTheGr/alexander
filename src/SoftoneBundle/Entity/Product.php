@@ -2475,7 +2475,7 @@ class Product extends Entity {
 
         $out = '<a target="_blank" title="'.$this->erpSupplier.'" class="" car="" ref="'.$this->id.'" href="#">'.$this->erpSupplier.'</a>
         <br>
-        <span class="text-sm text-info">'.$this->setTecdocSupplierId()->getSupplier().'</span>';
+        <span class="text-sm text-info">'.$this->getTecdocSupplierId()->getSupplier().'</span>';
 
         return $out ;
     }        
