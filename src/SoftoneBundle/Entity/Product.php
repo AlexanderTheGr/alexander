@@ -2475,7 +2475,7 @@ class Product extends Entity {
     function getArticleAttributes() {
 
         $tecdoc = new Tecdoc();
-        
+
         $attributs = $tecdoc->getAssignedArticlesByIds(
                 array(
                     "articleId" => $this->tecdocArticleId,
@@ -2499,6 +2499,10 @@ class Product extends Entity {
         }
         $descrption .= "</ul>";
         return $descrption;
+    }
+
+    function getApothiki() {
+        return '1 / <span class="text-lg text-bold text-accent-dark">1</span>'.$this->itemMtrplace;
     }
 
 }
