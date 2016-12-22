@@ -1067,7 +1067,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository("SoftoneBundle:Orderitem")
                 ->findOneBy(array("order"=>$order,"product"=>$product));           
         
-        if ($orderItem->id == 0) {
+        if (@$orderItem->id == 0) {
             $orderItem = new Orderitem;
             $orderItem->setOrder($order);
             $orderItem->setProduct($product);
