@@ -2454,7 +2454,7 @@ class Product extends Entity {
     
         
  
-    public function geForOrderCode(){
+    public function getForOrderCode(){
         
 
         $out = '<a title="'.$this->title.'" class="product_info" car="" ref="'.$this->id.'" href="#">'.$this->erpCode.'</a>
@@ -2464,16 +2464,25 @@ class Product extends Entity {
         return $out ;
     }
 
-    public function geForOrderTitle(){
+    public function getForOrderTitle(){
         
 
-        $out = '<a target="_blank" title="'.$this->title.'" class="product_info" car="" ref="'.$this->id.'" href="/product/view/'.$this->id.'">'.$this->title.'</a>
+        $out = '<a target="_blank" title="'.$this->title.'" class="" car="" ref="'.$this->id.'" href="/product/view/'.$this->id.'">'.$this->title.'</a>
         <br>
         <span class="text-sm text-info">'.$this->tecdocArticleName.'</span>';
 
         return $out ;
-    }    
+    }  
     
+    public function getForOrderSupplier(){
+        
+
+        $out = '<a target="_blank" title="'.$this->erpSupplier.'" class="" car="" ref="'.$this->id.'" href="#">'.$this->erpSupplier.'</a>
+        <br>
+        <span class="text-sm text-info">'.$this->setTecdocSupplierId()->getSupplier().'</span>';
+
+        return $out ;
+    }        
     
     
 }
