@@ -2482,7 +2482,7 @@ class Product extends Entity {
                     "linkingTargetId" => ""
         ));
         $arr = array();
-        $descrption .= "<ul class='product_attributes' style='max-height: 100px;'>";
+        $descrption .= "<ul class='product_attributes' style='max-height: 100px; overflow: hidden;'>";
         $attributes = array();
         foreach ($attributs->data->array[0]->articleAttributes->array as $attribute) {
             if (!$attributes[$attribute->attrId]) {
