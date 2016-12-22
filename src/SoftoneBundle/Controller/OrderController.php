@@ -222,7 +222,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $dtparams[] = array("name" => "QTY", "index" => 'qty', "input" => 'text', 'search' => 'text');
         $dtparams[] = array("name" => "EDI", "index" => 'edi', "input" => 'text', 'search' => 'text');
         
-        $dtparams[] = array("name" => "", "function" => 'getTick', 'search' => 'text');
+        $dtparams[] = array("name" => "-", "function" => 'getTick', 'search' => 'text');
         
         //$dtparams[] = array("name" => "ID", "function" => 'getTest', "active" => "active");
         $params['dtparams'] = $dtparams;
