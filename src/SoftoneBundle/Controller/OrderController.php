@@ -291,7 +291,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($order->getCustomer());
-        
+        $priceField = $customer->getPriceField();
         $s = array();
         $f = array();
         $jsonarr = array();
@@ -491,7 +491,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                   }
                  * 
                  */
-                $json[5] = str_replace("value='---'", "value='" . $obj->getGroupedDiscount($customer) . "'", $json[5]);
+                $json[5] = str_replace($obj->$priceField, $obj->getGroupedDiscount($customer), $json[5]);
                 //$json[6] = str_replace("value='---'", "value='1'", $json[6]);
                 $jsonarrnoref[$result["id"]] = $json;
             }
