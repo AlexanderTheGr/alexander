@@ -209,7 +209,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $dtparams[] = array("name" => "Price", "index" => 'itemPricew01', "input" => 'text', 'search' => 'text');
         $dtparams[] = array("name" => "QTY", "index" => 'qty', "input" => 'text', 'search' => 'text');
         $dtparams[] = array("name" => "EDI", "index" => 'edi', "input" => 'text', 'search' => 'text');
-        //$dtparams[] = array("name" => "ID", "function" => 'getAvailability', "active" => "active");
+        $dtparams[] = array("name" => "ID", "function" => 'getTest', "active" => "active");
         $params['dtparams'] = $dtparams;
         $params['id'] = $dtparams;
         $params['key'] = 'getoffcanvases_' . $id;
@@ -223,7 +223,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $dtparams = array();
         $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
         $dtparams[] = array("name" => "Edi", "index" => 'Edi:name', 'search' => 'select', 'type' => 'select');
-        $dtparams[] = array("name" => "Item Code", "index" => 'test', 'search' => 'text');
+        $dtparams[] = array("name" => "Item Code", "index" => 'itemCode', 'search' => 'text');
         $dtparams[] = array("name" => "Brand", "index" => 'brand', 'search' => 'text');
         $dtparams[] = array("name" => "Part No", "index" => 'partno', 'search' => 'text');
         $dtparams[] = array("name" => "Description", "index" => 'description', 'search' => 'text');
