@@ -200,6 +200,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
     protected function getoffcanvases($id) {
 
+        $order = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Order")
+                ->find($id);
+        $customer = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Customer")
+                ->find($order->getCustomer());
+        $priceField = $customer->getPriceField();
         $dtparams = array();
         $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
         $dtparams[] = array("name" => "Κωδικός", "function" => 'getForOrderCode', 'search' => 'text');
@@ -208,7 +215,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $dtparams[] = array("name" => "Supplier", "function" => 'getForOrderSupplier', 'search' => 'text');
         $dtparams[] = array("name" => "Χαρακτ.", "function" => 'getArticleAttributes', 'search' => 'text');
         
-        $dtparams[] = array("name" => "Price", "index" => 'itemPricew', 'search' => 'text');
+        $dtparams[] = array("name" => "Price", "index" => $priceField, 'search' => 'text');
         
         $dtparams[] = array("name" => "QTY", "index" => 'qty', "input" => 'text', 'search' => 'text');
         $dtparams[] = array("name" => "EDI", "index" => 'edi', "input" => 'text', 'search' => 'text');
