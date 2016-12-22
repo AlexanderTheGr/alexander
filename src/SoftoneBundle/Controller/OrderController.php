@@ -1060,10 +1060,21 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
           $json, 200, array('Content-Type' => 'application/json')
           );
          * 
+         * 
          */
-        $orderItem = new Orderitem;
-        $orderItem->setOrder($order);
-        $orderItem->setProduct($product);
+        
+        $orderItem = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Orderitem")
+                ->findOneBy(array("order"=>$order,"product"=>$product));           
+        
+        if ($orderItem->id == 0) {
+            $orderItem = new Orderitem;
+            $orderItem->setOrder($order);
+            $orderItem->setProduct($product);
+        } else {
+            $qty = $orderItem->getQty();
+        }
+        
 
         if (!$product->reference) {
             $product = $this->saveProductSoftone($product);
