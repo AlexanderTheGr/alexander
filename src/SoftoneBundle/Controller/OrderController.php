@@ -482,7 +482,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $json[] = $obj->$func($order);
                     }
                 }
-                $json["DT_RowClass"] = "dt_row_" . strtolower($r[1]);
+                $apothema = 1;
+                $colorcss = $apothema > 0 ? "instock" : "outofstock";  
+                $json["DT_RowClass"] = $colorcss." dt_row_" . strtolower($r[1]);
                 $json["DT_RowId"] = 'dt_id_' . strtolower($r[1]) . '_' . $result["id"];
                 /*
                   if ($result["reference"]) {
