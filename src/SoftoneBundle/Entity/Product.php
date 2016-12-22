@@ -2419,9 +2419,6 @@ class Product extends Entity {
         return $this;
     }
 
-    
-
-
     /**
      * Get edis
      *
@@ -2435,50 +2432,73 @@ class Product extends Entity {
         $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
         $sortorder = 0;
         foreach ($rules as $rule) {
-            if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder() ) {
+            if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
                 $sortorder = $rule->getSortorder();
                 $discount = $rule->getVal();
                 $price = $rule->getPrice();
             }
         }
         $pricefield = $customer->getPriceField();
-        $discountedPrice = $this->$pricefield * (1 - $discount/100 );
+        $discountedPrice = $this->$pricefield * (1 - $discount / 100 );
         return $discount > 0 ? $discountedPrice : $price;
     }
 
-    
-    
-    
+    public function getForOrderCode() {
 
- 
-    public function getForOrderCode(){
-
-        $out = '<a title="'.$this->title.'" class="product_info" car="" ref="'.$this->id.'" href="#">'.$this->erpCode.'</a>
+        $out = '<a title="' . $this->title . '" class="product_info" car="" ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
         <br>
-        <span class="text-sm text-info">'.$this->erpCode.'</span>';
+        <span class="text-sm text-info">' . $this->erpCode . '</span>';
 
-        return $out ;
+        return $out;
     }
 
-    public function getForOrderTitle(){
-        
+    public function getForOrderTitle() {
 
-        $out = '<a target="_blank" title="'.$this->title.'" class="" car="" ref="'.$this->id.'" href="/product/view/'.$this->id.'">'.$this->title.'</a>
+
+        $out = '<a target="_blank" title="' . $this->title . '" class="" car="" ref="' . $this->id . '" href="/product/view/' . $this->id . '">' . $this->title . '</a>
         <br>
-        <span class="text-sm text-info">'.$this->tecdocArticleName.'</span>';
+        <span class="text-sm text-info">' . $this->tecdocArticleName . '</span>';
 
-        return $out ;
-    }  
-    
-    public function getForOrderSupplier(){
-        
+        return $out;
+    }
 
-        $out = '<a target="_blank" title="'.$this->erpSupplier.'" class="" car="" ref="'.$this->id.'" href="#">'.$this->erpSupplier.'</a>
+    public function getForOrderSupplier() {
+
+
+        $out = '<a target="_blank" title="' . $this->erpSupplier . '" class="" car="" ref="' . $this->id . '" href="#">' . $this->erpSupplier . '</a>
         <br>
-        <span class="text-sm text-info">'.$this->getTecdocSupplierId()->getSupplier().'</span>';
+        <span class="text-sm text-info">' . $this->getTecdocSupplierId()->getSupplier() . '</span>';
 
-        return $out ;
-    }        
-    
-    
+        return $out;
+    }
+
+    function getArticleAttributes() {
+
+        $tecdoc = new Tecdoc();
+        
+        $attributs = $tecdoc->getAssignedArticlesByIds(
+                array(
+                    "articleId" => $this->tecdocArticleId,
+                    "linkingTargetId" => ""
+        ));
+        $arr = array();
+        $descrption .= "<ul class='product_attributes'>";
+        $attributes = array();
+        foreach ($attributs->data->array[0]->articleAttributes->array as $attribute) {
+            if (!$attributes[$attribute->attrId]) {
+                $attributes[$attribute->attrId][] = trim(str_replace("[" . $attribute->attrUnit . "]", "", $attribute->attrName)) . ": " . $attribute->attrValue . $attribute->attrUnit;
+            } else {
+                $attributes[$attribute->attrId][] = $attribute->attrValue . $attribute->attrUnit;
+            }
+        }
+        foreach ($attributes as $attrId => $attribute) {
+            //if (!in_array($attribute->attrId, $arr)) {
+            $arr[$attrId] = $attribute->attrId;
+            $descrption .= "<li class='attr_" . $attrId . "'>" . implode(" / ", $attribute) . "</li>";
+            //}
+        }
+        $descrption .= "</ul>";
+        return $descrption;
+    }
+
 }
