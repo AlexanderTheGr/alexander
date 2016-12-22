@@ -2506,5 +2506,8 @@ class Product extends Entity {
     function getApothiki() {
         return '1 / <span class="text-lg text-bold text-accent-dark">1</span> ('.$this->itemMtrplace.")";
     }
+    function getTick() {
+        echo '<img width="20" style="width:20px; max-width:20px; display:none" class="tick_'.$this->id.'" src="/assets/img/tick.png">';
+    }
 
 }
