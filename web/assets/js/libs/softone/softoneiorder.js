@@ -194,7 +194,7 @@ jQuery(".SoftoneBundleProductQty").live('keyup', function (e) {
                 toastr.error(json.message, "Error");
             }
             var table = dt_tables["ctrlgettabs"];
-            $(".offcanvas-search").click();
+            //$(".offcanvas-search").click();
             table.fnFilter();
         })
     }
