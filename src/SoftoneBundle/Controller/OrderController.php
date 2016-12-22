@@ -1070,7 +1070,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         if (!$product->reference) {
             $product = $this->saveProductSoftone($product);
         }
-        $price = $product->getGroupedDiscount($order->getCustomer());
+        $customer = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Customer")
+                ->find($order->getCustomer());        
+        $price = $product->getGroupedDiscount($customer);
 
         $orderItem->setField("qty", $request->request->get("qty"));
         $orderItem->setField("price", $price);
