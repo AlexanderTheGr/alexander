@@ -2420,12 +2420,6 @@ class Product extends Entity {
     }
 
     
-    
-    var $test = 'assss';
-    public function getTest(){
-        $this->test = "aasas";
-        return $this->test ;
-    }
 
 
     /**
@@ -2452,4 +2446,26 @@ class Product extends Entity {
         return $discount > 0 ? $discountedPrice : $price;
     }
 
+    
+    
+    
+    
+    
+    
+        
+ 
+    public function geForOrderCode(){
+        
+
+        $out = '<a title="'.$this->itemName.'" class="product_info" car="" ref="'.$this->id.'" href="#">'.$this->erpCode.'</a>
+        <br>
+        <span class="text-sm text-info">'.$this->erpCode.'</span>';
+
+        return $out ;
+    }
+
+    
+    
+    
+    
 }
