@@ -208,7 +208,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $dtparams[] = array("name" => "Supplier", "function" => 'getForOrderSupplier', 'search' => 'text');
         $dtparams[] = array("name" => "Χαρακτ.", "function" => 'getArticleAttributes', 'search' => 'text');
         
-        $dtparams[] = array("name" => "Price", "index" => 'itemPricew01', "input" => 'text', 'search' => 'text');
+        $dtparams[] = array("name" => "Price", "index" => 'itemPricew01', 'search' => 'text');
         $dtparams[] = array("name" => "QTY", "index" => 'qty', "input" => 'text', 'search' => 'text');
         $dtparams[] = array("name" => "EDI", "index" => 'edi', "input" => 'text', 'search' => 'text');
         //$dtparams[] = array("name" => "ID", "function" => 'getTest', "active" => "active");
@@ -484,7 +484,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                  * 
                  */
                 $json[5] = str_replace("value='---'", "value='" . $obj->getGroupedDiscount($customer) . "'", $json[5]);
-                $json[6] = str_replace("value='---'", "value='1'", $json[6]);
+                //$json[6] = str_replace("value='---'", "value='1'", $json[6]);
                 $jsonarrnoref[$result["id"]] = $json;
             }
 
