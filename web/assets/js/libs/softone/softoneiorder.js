@@ -187,6 +187,7 @@ jQuery(".SoftoneBundleProductQty").live('keyup', function (e) {
         data.qty = jQuery(this).val();
         $("#loaderer").show();
         $.post("/order/addorderitem/", data, function (result) {
+            $(".tick_"+data.item).show();
             $("#loaderer").hide();
             var json = angular.fromJson(result);
             if (json.error) {
