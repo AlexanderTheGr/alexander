@@ -521,9 +521,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                // $json[] = "";
                 $json[] = "<span  car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span></a><BR><a class='create_product' data-ref='" . $v->articleId . "' style='font-size:10px; color:rose' href='#'>Create Product</a>";
-                $json[] = "<span car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span>";
+                //$json[] = "<span car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span>";
                 $json[] = "<span car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->genericArticleName . "</span>";
                 $json[] = "<span  car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->brandName . "</span>";
+                $json[] = $this->getArticleAttributes($v->articleId);
                 $json[] = "";
                 $json[] = "";
                 $json[] = "";
@@ -540,7 +541,36 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $data["recordsFiltered"] = $recordsFiltered;
         return json_encode($data);
     }
+    
+    function getArticleAttributes($articleId) {
 
+        $tecdoc = new Tecdoc();
+
+        $attributs = $tecdoc->getAssignedArticlesByIds(
+                array(
+                    "articleId" => $articleId,
+                    "linkingTargetId" => ""
+        ));
+        $arr = array();
+        $descrption .= "<ul class='product_attributes' style='max-height: 100px; overflow: hidden;'>";
+        $attributes = array();
+        foreach ($attributs->data->array[0]->articleAttributes->array as $attribute) {
+            if (!$attributes[$attribute->attrId]) {
+                $attributes[$attribute->attrId][] = trim(str_replace("[" . $attribute->attrUnit . "]", "", $attribute->attrName)) . ": " . $attribute->attrValue . $attribute->attrUnit;
+            } else {
+                $attributes[$attribute->attrId][] = $attribute->attrValue . $attribute->attrUnit;
+            }
+        }
+        foreach ($attributes as $attrId => $attribute) {
+            //if (!in_array($attribute->attrId, $arr)) {
+            $arr[$attrId] = $attribute->attrId;
+            $descrption .= "<li class='attr_" . $attrId . "'>" . implode(" / ", $attribute) . "</li>";
+            //}
+        }
+        $descrption .= "</ul>";
+        return $descrption;
+    }
+    
     public function softoneCalculate($jsonarr, $id) {
         if ((int) $id == 0)
             exit;
