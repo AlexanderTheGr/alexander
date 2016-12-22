@@ -181,3 +181,9 @@ table.dataTable tbody tr {
 .outofstock  {
     color:red;
 }
+
+.offcanvas-body table.dataTable thead .sorting:before, 
+.offcanvas-body table.dataTable thead .sorting_asc_disabled:before, 
+.offcanvas-body table.dataTable thead .sorting_desc_disabled:before {
+    color: #bfbfbf;
+}
