@@ -2457,14 +2457,22 @@ class Product extends Entity {
     public function geForOrderCode(){
         
 
-        $out = '<a title="'.$this->itemName.'" class="product_info" car="" ref="'.$this->id.'" href="#">'.$this->erpCode.'</a>
+        $out = '<a title="'.$this->title.'" class="product_info" car="" ref="'.$this->id.'" href="#">'.$this->erpCode.'</a>
         <br>
         <span class="text-sm text-info">'.$this->erpCode.'</span>';
 
         return $out ;
     }
 
-    
+    public function geForOrderTitle(){
+        
+
+        $out = '<a title="'.$this->title.'" class="product_info" car="" ref="'.$this->id.'" href="/product/view/'.$this->id.'">'.$this->title.'</a>
+        <br>
+        <span class="text-sm text-info">'.$this->tecdoc_article_name.'</span>';
+
+        return $out ;
+    }    
     
     
     
