@@ -182,8 +182,15 @@ table.dataTable tbody tr {
     color:red;
 }
 
-.offcanvas-body table.dataTable thead .sorting:before, 
-.offcanvas-body table.dataTable thead .sorting_asc_disabled:before, 
-.offcanvas-body table.dataTable thead .sorting_desc_disabled:before {
-    color: #bfbfbf;
+
+
+
+.offcanvas-body  table.dataTable thead .sorting, 
+.offcanvas-body  table.dataTable thead .sorting_asc, 
+.offcanvas-body  table.dataTable thead .sorting_asc_disabled, 
+.offcanvas-body  table.dataTable thead .sorting_desc, 
+.offcanvas-body  table.dataTable thead .sorting_desc_disabled {
+    position: relative;
+    cursor: pointer;
+    display: none;
 }
