@@ -2419,6 +2419,15 @@ class Product extends Entity {
         return $this;
     }
 
+    
+    
+    var $test = 'assss';
+    public function getTest(){
+        $this->test = "aasas";
+        return $test;
+    }
+
+
     /**
      * Get edis
      *
