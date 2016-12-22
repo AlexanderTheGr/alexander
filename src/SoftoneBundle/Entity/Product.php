@@ -2424,7 +2424,7 @@ class Product extends Entity {
     var $test = 'assss';
     public function getTest(){
         $this->test = "aasas";
-        return $test;
+        return $this->test ;
     }
 
 
