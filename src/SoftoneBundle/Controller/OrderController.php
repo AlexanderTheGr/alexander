@@ -201,7 +201,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     protected function getoffcanvases($id) {
 
         $dtparams = array();
-        $dtparams[] = array("name" => "ID", "index" => 'id', "input" => 'checkbox', "active" => "active");
+        $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
         $dtparams[] = array("name" => "Erp Code", "index" => 'erpCode', 'search' => 'text');
         $dtparams[] = array("name" => "TecDoc Code", "index" => 'tecdocCode', 'search' => 'text');
         $dtparams[] = array("name" => "Title", "index" => 'title', 'search' => 'text');
