@@ -2467,9 +2467,9 @@ class Product extends Entity {
     public function geForOrderTitle(){
         
 
-        $out = '<a title="'.$this->title.'" class="product_info" car="" ref="'.$this->id.'" href="/product/view/'.$this->id.'">'.$this->title.'</a>
+        $out = '<a target="_blank" title="'.$this->title.'" class="product_info" car="" ref="'.$this->id.'" href="/product/view/'.$this->id.'">'.$this->title.'</a>
         <br>
-        <span class="text-sm text-info">'.$this->tecdoc_article_name.'</span>';
+        <span class="text-sm text-info">'.$this->tecdocArticleName.'</span>';
 
         return $out ;
     }    
