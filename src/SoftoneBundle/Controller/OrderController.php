@@ -479,7 +479,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     } elseif (@$field["function"]) {
                         $func = $field["function"];
                         $obj = $em->getRepository($this->repository)->find($result["id"]);
-                        $json[] = $obj->$func(count($results));
+                        $json[] = $obj->$func($order);
                     }
                 }
                 $json["DT_RowClass"] = "dt_row_" . strtolower($r[1]);
