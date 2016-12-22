@@ -55,7 +55,7 @@ class Orderitem {
     /**
      * @var integer
      */
-    protected $id;
+    var $id;
 
     /**
      * @var \SoftoneBundle\Entity\Product
