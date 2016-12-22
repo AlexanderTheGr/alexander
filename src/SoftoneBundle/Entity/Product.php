@@ -2441,7 +2441,7 @@ class Product extends Entity {
         $pricefield = $customer->getPriceField();
         $discountedPrice = $this->$pricefield * (1 - $discount / 100 );
         $finalprice = $discount > 0 ? $discountedPrice : $price;
-        
+
         return number_format($finalprice, 2, '.', '');
     }
 
@@ -2504,10 +2504,23 @@ class Product extends Entity {
     }
 
     function getApothiki() {
-        return '1 / <span class="text-lg text-bold text-accent-dark">1</span> ('.$this->itemMtrplace.")";
+        return '1 / <span class="text-lg text-bold text-accent-dark">1</span> (' . $this->itemMtrplace . ")";
     }
+
     function getTick($order) {
-        return '<img width="20" style="width:20px; max-width:20px; display:none" class="tick_'.$this->id.'" src="/assets/img/tick.png">';
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $orderItem = $em->getRepository("SoftoneBundle:Orderitem")
+                ->findOneBy(array("order" => $order, "product" => $this));
+
+        //if (@$orderItem->id == 0) {
+            $display = @$orderItem->id == 0 ?  "display:none" : "display:block";
+        //}
+        
+        return '<img width="20" style="width:20px; max-width:20px; '.$display.'" class="tick_' . $this->id . '" src="/assets/img/tick.png">';
     }
 
 }
