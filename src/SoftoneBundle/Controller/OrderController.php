@@ -208,7 +208,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->find($order->getCustomer());
         $priceField = $customer->getPriceField();
         $dtparams = array();
-        $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
+        //$dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
         $dtparams[] = array("name" => "Κωδικός", "function" => 'getForOrderCode', 'search' => 'text');
         $dtparams[] = array("name" => "Είδος", "function" => 'getForOrderTitle', 'search' => 'text');
         
@@ -406,12 +406,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 if (count((array) $articleIds)) {
                     $tecdoc_article = 'p.tecdocArticleId in (' . implode(",", $articleIds) . ') OR ';
                     $tecdoc_article2 = " p.id in  (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
-                    $sql = 'SELECT  ' . $this->select . ', p.reference
+                    $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
                                 where ' . $tecdoc_article . $tecdoc_article2 . ' 
                                 ORDER BY ' . $this->orderBy;
                 } else {
-                    $sql = 'SELECT  ' . $this->select . ', p.reference
+                    $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
                                 where ' . $this->prefix . '.id in (' . $sqlearch . ') 
                                 ORDER BY ' . $this->orderBy;
