@@ -451,8 +451,12 @@ class EdiOrderController extends Main {
                 break;
             }
             $params["articleId"] = $item->getTecdocArticleId();
-            $data["img"] = $tecdoc->getOriginals($params);
-            
+            $originals = $tecdoc->getOriginals($params);
+            $data["img"] = "<ul>";
+            foreach ($originals->data->array as $v) {
+                    $data["img"] .= "<li><b>".$v->brand."</b>: ".$v->original."</li>";
+            }
+            $data["img"] .= "</ul>";            
         }
 
         $json = json_encode($data);
