@@ -43,9 +43,13 @@
 {% endblock %}
 {% block javascripts %}
     <script src="{{  asset('assets/js/libs/softone/softoneiorder.js') }}"></script>
-
     <script>
     $(".{{ctrl}}").alexTabs("{{app}}", "{{ctrl}}", "{{url}}", "{{content|json_encode()}}");
     </script>
-
+    <script src="/assets/js/libs/flot/jquery.flot.min.js"></script>
+    <script src="/assets/js/libs/flot/jquery.flot.time.min.js"></script>
+    <script src="/assets/js/libs/flot/jquery.flot.resize.min.js"></script>
+    <script src="/assets/js/libs/flot/jquery.flot.orderBars.js"></script>
+    <script src="/assets/js/libs/flot/jquery.flot.pie.js"></script>
+    <script src="/assets/js/libs/flot/curvedLines.js"></script>
 {% endblock %}
