@@ -450,6 +450,9 @@ class EdiOrderController extends Main {
                 
                 break;
             }
+            $params["articleId"] = $item->getTecdocArticleId();
+            $data["img"] = $tecdoc->getOriginals($params);
+            
         }
 
         $json = json_encode($data);
