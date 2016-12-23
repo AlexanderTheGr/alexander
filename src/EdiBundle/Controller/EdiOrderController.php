@@ -438,25 +438,54 @@ class EdiOrderController extends Main {
             $docs = $tecdoc->getArticleImages(array("articleId" => $params["tecdoc_article_id"]));
             @mkdir("assets/tmp/");
             foreach ($docs->data->array as $image) {
-                
+
                 $docfile = "assets/tmp/" . $image->folder . "-" . $image->file . ".jpg";
                 $this->convertImageToJpg($image->path, $docfile);
                 $attr = ($o == true) ? array('image', 'small_image', 'thumbnail') : array();
                 $o = false;
                 if (file_exists($docfile)) {
                     //echo $docfile;
-                    $data["img"] = "<img src='/".$docfile."' />";
+                    $data["img"] = "<img src='/" . $docfile . "' />";
                 }
-                
+
                 break;
             }
+
             $params["articleId"] = $item->getTecdocArticleId();
             $originals = $tecdoc->getOriginals($params);
             $data["img"] = "<ul>";
             foreach ($originals->data->array as $v) {
-                    $data["img"] .= "<li><b>".$v->brand."</b>: ".$v->original."</li>";
+                $data["img"] .= "<li><b>" . $v->brand . "</b>: " . $v->original . "</li>";
             }
-            $data["img"] .= "</ul>";            
+            $data["orginal"] .= "</ul>";
+
+            
+            $attributs = $tecdoc->getAssignedArticlesByIds(
+                    array(
+                        "articleId" => $item->getTecdocArticleId(),
+                        "linkingTargetId" => ""
+            ));
+            $arr = array();
+            $descrption .= "<ul class='product_attributes'>";
+            $attributes = array();
+            foreach ($attributs->data->array[0]->articleAttributes->array as $attribute) {
+                if (!$attributes[$attribute->attrId]) {
+                    $attributes[$attribute->attrId][] = trim(str_replace("[" . $attribute->attrUnit . "]", "", $attribute->attrName)) . ": " . $attribute->attrValue . $attribute->attrUnit;
+                } else {
+                    $attributes[$attribute->attrId][] = $attribute->attrValue . $attribute->attrUnit;
+                }
+            }
+            foreach ($attributes as $attrId => $attribute) {
+                //if (!in_array($attribute->attrId, $arr)) {
+                $arr[$attrId] = $attribute->attrId;
+                $descrption .= "<li class='attr_" . $attrId . "'>" . implode(" / ", $attribute) . "</li>";
+                //}
+            }
+            $descrption .= "</ul>";
+            
+            $data["img"] = $descrption ;
+            
+            echo $descrption;
         }
 
         $json = json_encode($data);
