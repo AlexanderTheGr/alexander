@@ -471,10 +471,18 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     public function getCategories($id) {
         $entities = $this->getDoctrine()
                 ->getRepository('SoftoneBundle:Category')
-                ->findBy(array("parent"=>0));
+                ->findBy(array("parent" => 0));
         $html = '<ul>';
-        foreach($entities as $entity) {
-            $html .= "<li>".$entity->getName()."</li>";
+        foreach ($entities as $entity) {
+            $html .= "<li>" . $entity->getName();
+            
+            $html .= '<ul>';
+            foreach ($entities as $entity) {
+                $html .= "<li>" . $entity->getName() . "</li>";
+            }
+            $html .= '</ul>';
+            
+            $html .= '</li>';
         }
         $html .= '</ul>';
         return $html;
