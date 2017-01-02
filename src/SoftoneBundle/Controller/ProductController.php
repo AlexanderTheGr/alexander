@@ -326,7 +326,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             if (count($category) == 0) {
                 $category = new Productcategory();
                 $category->setProduct($product->getId());
-                $category->setCategory($id);
+                $category->setCategory($request->request->get("category"));
                 @$this->flushpersist($category);
             } else {
                 $this->flushremove($category);
