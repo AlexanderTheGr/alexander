@@ -42,6 +42,12 @@ jQuery('.parentcat input').live("keyup", function (e) {
 });
 
 
+jQuery('.parentcategoryli').live("click", function (e) {
+    jQuery('.categoryli').slideUp();
+    var ref = $(this).attr("data-ref");
+    jQuery('.categoryli_'+ref).slideToggle();
+})
+
 
 setTimeout(function () {
 
