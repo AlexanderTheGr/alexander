@@ -68,8 +68,8 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository($this->repository)
                 ->find($id);
 
-        $fields["categoryCode"] = array("label" => "Code");
-        $fields["categoryName"] = array("label" => "Name");
+        //$fields["categoryCode"] = array("label" => "Code");
+        $fields["name"] = array("label" => "Name");
 
         $forms = $this->getFormLyFields($entity, $fields);
 
