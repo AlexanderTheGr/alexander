@@ -64,7 +64,7 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
         $this->newentity[$this->repository]->setField("parent", 1);
         $this->newentity[$this->repository]->setField("weight", 0);
         $out = $this->save();
-        $json = json_encode(array("ok"));
+        $json = json_encode(array("ok","returnurl"=>"/category/view/".$out[$this->repository]->getId()));
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
