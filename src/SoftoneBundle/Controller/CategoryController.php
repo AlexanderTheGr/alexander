@@ -92,7 +92,7 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
         $this->initialazeNewEntity($entity);
         $this->flushpersist($entity);
         
-        $entity->setSortcode($entity->getParent() . $entity->getId());
+        $entity->setSortcode($entity->getParent() ."". $entity->getId());
         $this->flushpersist($entity);
 
 
