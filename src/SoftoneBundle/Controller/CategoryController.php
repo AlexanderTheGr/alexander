@@ -102,6 +102,10 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
                     ->getRepository('SoftoneBundle:Category')
                     ->find($id);
 
+            $entity2->setReference("");
+            $fields2["parent"] = array("label" => "Name", "className" => "parentcat col-md-12");
+            $forms2 = $this->getFormLyFields($entity2, $fields2);
+
             $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
             $dtparams[] = array("name" => "Name", "index" => 'name');
             //$dtparams[] = array("name" => "Weight", "index" => 'weight');
