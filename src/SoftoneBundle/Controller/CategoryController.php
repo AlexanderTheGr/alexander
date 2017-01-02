@@ -16,7 +16,7 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController  {
      */
     public function indexAction() {
 
-        return $this->render('category/index.html.twig', array(
+        return $this->render('SoftoneBundle:Category:index.html.twig', array(
                     'pagename' => 'Categorys',
                     'url' => '/category/getdatatable',
                     'view' => '/category/view',
@@ -31,7 +31,7 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController  {
      */
     public function viewAction($id) {
 
-        return $this->render('category/view.html.twig', array(
+        return $this->render('SoftoneBundle:Category:view.html.twig', array(
                     'pagename' => 'Category',
                     'url' => '/category/save',
                     'ctrl' => $this->generateRandomString(),
