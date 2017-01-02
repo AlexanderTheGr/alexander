@@ -317,6 +317,18 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository($this->repository)
                 ->find($request->request->get("product"));
 
+        $cats = $product->getCats();
+        foreach($cats as $cat) {
+            $category = $this->getDoctrine()
+                    ->getRepository('SoftoneBundle:Productcategory')
+                    ->findOneBy(array('category' => $cat, 'product' => $product->getId()));
+            if (count($category) == 0) {
+                $category = new Productcategory();
+                $category->setProduct($product->getId());
+                $category->setCategory($request->request->get("category"));
+                @$this->flushpersist($category);
+            }            
+        }
 
         $json = json_encode($asd);
         if (count($product) > 0) {
