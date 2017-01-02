@@ -200,3 +200,6 @@ table.dataTable tbody tr {
 .parentcategoryli {
     font-weight: bold;
 }
+.categoryli {
+    font-weight: normal;
+}
