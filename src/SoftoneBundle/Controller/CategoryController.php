@@ -126,7 +126,7 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
                 ->addField(array("name" => "Weight", "index" => 'weight'))
                 ;
 
-        $this->q_and[] = $this->prefix . ".parent = 0";
+        $this->q_and[] = "(".$this->prefix . ".parent = 0 OR ".$this->prefix . ".parent IS NULL)";
 
         $json = $this->datatable();
         return new Response(
