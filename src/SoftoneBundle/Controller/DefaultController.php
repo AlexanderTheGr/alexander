@@ -47,7 +47,7 @@ class DefaultController extends Controller {
         // return the output, don't use if you used NullOutput()
         $content = $output->fetch();
         //return new Response($content);   
-
+        echo 'ssss';
 
         return $this->render('default/index.html.twig', array(
                     'pagename'=>'',
