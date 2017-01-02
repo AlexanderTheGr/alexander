@@ -318,7 +318,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->find($request->request->get("product"));
 
         $cats = $product->getCats();
-        foreach($cats as $cat) {
+        foreach ($cats as $cat) {
             $category = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Productcategory')
                     ->findOneBy(array('category' => $cat, 'product' => $product->getId()));
@@ -327,7 +327,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $category->setProduct($product->getId());
                 $category->setCategory($cat);
                 @$this->flushpersist($category);
-            }            
+            }
         }
 
         $json = json_encode($asd);
@@ -344,7 +344,15 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $this->flushremove($category);
             }
         }
-
+        $categories = $this->getDoctrine()
+                ->getRepository('SoftoneBundle:Productcategory')
+                ->findBy(array('product' => $product->getId()));
+        $cats = array();
+        foreach($categories as $category) {
+            $cats[] = $category->getCategory();
+        }
+        $product->setCats($cats);
+        @$this->flushpersist($product);
         //$json = json_encode($product);
         //print_r($product);
         return new Response(
@@ -484,21 +492,21 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository('SoftoneBundle:Category')
                 ->findBy(array("parent" => 0));
         $html = "<ul class='productcategory'>";
-        
+
         $cats = $product->getCats();
-        
+
         foreach ($entities as $entity) {
-            $html .= "<li class='parentcategoryli' data-ref='".$entity->getId()."'><a data-ref='".$entity->getId()."' class='parentcategorylia'>" . $entity->getName()."</a>";
-            $html .= "<ul class='productcategory categoryli categoryli_".$entity->getId()."'>";
+            $html .= "<li class='parentcategoryli' data-ref='" . $entity->getId() . "'><a data-ref='" . $entity->getId() . "' class='parentcategorylia'>" . $entity->getName() . "</a>";
+            $html .= "<ul class='productcategory categoryli categoryli_" . $entity->getId() . "'>";
             $entities2 = $this->getDoctrine()
-                ->getRepository('SoftoneBundle:Category')
-                ->findBy(array("parent" => $entity->getId()));            
+                    ->getRepository('SoftoneBundle:Category')
+                    ->findBy(array("parent" => $entity->getId()));
             foreach ($entities2 as $entity2) {
-                $checked = in_array($entity2->getId(),$cats) ? 'checked' : '';
-                $html .= "<li class=''><input ".$checked." class='productcategorychk' data-product='" . $product->getId() . "' data-ref='" . $entity2->getId() . "' type='checkbox'/>" . $entity2->getName() . "</li>";
+                $checked = in_array($entity2->getId(), $cats) ? 'checked' : '';
+                $html .= "<li class=''><input " . $checked . " class='productcategorychk' data-product='" . $product->getId() . "' data-ref='" . $entity2->getId() . "' type='checkbox'/>" . $entity2->getName() . "</li>";
             }
             $html .= '</ul>';
-            
+
             $html .= '</li>';
         }
         $html .= '</ul>';
