@@ -194,3 +194,9 @@ table.dataTable tbody tr {
     cursor: pointer;
     display: none;
 }
+.productcategory {
+    list-style: none;
+}
+.parentcategoryli {
+    font-weight: bold;
+}
