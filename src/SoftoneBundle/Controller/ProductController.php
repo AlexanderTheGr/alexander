@@ -412,7 +412,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $entity = new Product;
         }
         $customer = $this->getDoctrine()->getRepository('SoftoneBundle:Customer')->find(1);
-        echo $entity->getGroupedDiscount($customer);
+        //echo $entity->getGroupedDiscount($customer);
         $entity->updatetecdoc();
 
         $fields["title"] = array("label" => "Title", "required" => true, "className" => "col-md-6 col-sm-6");
@@ -477,7 +477,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $cats = $product->getCats();
         
         foreach ($entities as $entity) {
-            $html .= "<li class='parentcategoryli'>" . $entity->getName();
+            $html .= "<li class='parentcategoryli' data-ref='".$entity->getId()."'>" . $entity->getName();
             $html .= "<ul class='productcategory categoryli categoryli_".$entity->getId()."'>";
             $entities2 = $this->getDoctrine()
                 ->getRepository('SoftoneBundle:Category')
