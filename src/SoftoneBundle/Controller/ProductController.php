@@ -478,13 +478,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         
         foreach ($entities as $entity) {
             $html .= "<li class='parentcategoryli'>" . $entity->getName();
-            $html .= "<ul class='productcategory'>";
+            $html .= "<ul class='productcategory categoryli_".$entity->getId()."'>";
             $entities2 = $this->getDoctrine()
                 ->getRepository('SoftoneBundle:Category')
                 ->findBy(array("parent" => $entity->getId()));            
             foreach ($entities2 as $entity2) {
                 $checked = in_array($entity2->getId(),$cats) ? 'checked' : '';
-                $html .= "<li class='categoryli categoryli_".$entity->getId()."'><input ".$checked." class='productcategorychk' data-ref='" . $entity2->getId() . "' type='checkbox'/>" . $entity2->getName() . "</li>";
+                $html .= "<li class='categoryli'><input ".$checked." class='productcategorychk' data-ref='" . $entity2->getId() . "' type='checkbox'/>" . $entity2->getName() . "</li>";
             }
             $html .= '</ul>';
             
