@@ -512,11 +512,23 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $cats = $product->getCats();
 
         foreach ($entities as $entity) {
-            $html .= "<li class='parentcategoryli' data-ref='" . $entity->getId() . "'><a data-ref='" . $entity->getId() . "' class='parentcategorylia'>" . $entity->getName() . "</a>";
-            $html .= "<ul class='productcategory categoryli categoryli_" . $entity->getId() . "'>";
+            $html .= "<li class='parentcategoryli' data-ref='" . $entity->getId() . "'>";
+            
+            
             $entities2 = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Category')
                     ->findBy(array("parent" => $entity->getId()));
+            $style = "";
+            foreach ($entities2 as $entity2) {
+                //$style = in_array($entity2->getId(), $cats) ? "style='color:red'" : '';
+                if ( in_array($entity2->getId(), $cats)) {
+                    $style = "style='color:red";
+                }
+            }
+            $html .= "<a ".$style." data-ref='" . $entity->getId() . "' class='parentcategorylia'>" . $entity->getName() . "</a>";
+            
+            $html .= "<ul class='productcategory categoryli categoryli_" . $entity->getId() . "'>";
+
             foreach ($entities2 as $entity2) {
                 $checked = in_array($entity2->getId(), $cats) ? 'checked' : '';
                 $style = in_array($entity2->getId(), $cats) ? "style='color:red'" : '';
