@@ -85,7 +85,7 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
     public function addParent(Request $request) {
         $entity = new Category;
         $this->newentity[$this->repository] = $entity;
-        $entity->setName($name);
+        $entity->setName($request->request->get("name"));
         $idArr = explode(":", $request->request->get("id"));
         $id = (int) $idArr[3];
         $entity->setParent($id);
