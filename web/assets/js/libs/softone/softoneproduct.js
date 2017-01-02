@@ -45,7 +45,23 @@ jQuery('.parentcat input').live("keyup", function (e) {
 jQuery('.parentcategoryli').live("click", function (e) {
     jQuery('.categoryli').slideUp();
     var ref = $(this).attr("data-ref");
-    jQuery('.categoryli_'+ref).slideToggle();
+    jQuery('.categoryli_' + ref).slideToggle();
+
+    var f = this;
+
+    if (ref == undefined) {
+        r = true;
+    }
+    if (r == false) {
+        if (jQuery(this).hasClass("level1")) {
+            if (cref != ref)
+                jQuery('.categoryli').slideUp();
+            jQuery('.categoryli_' + ref).slideToggle();
+            cref = ref;
+        }
+    }
+
+
 })
 
 
