@@ -102,7 +102,7 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
                     ->getRepository('SoftoneBundle:Category')
                     ->find($id);
 
-            $entity2->setReference("");
+            $entity2->setParent("");
             $fields2["parent"] = array("label" => "Name", "className" => "parentcat col-md-12");
             $forms2 = $this->getFormLyFields($entity2, $fields2);
 
