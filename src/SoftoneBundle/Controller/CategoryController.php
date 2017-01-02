@@ -18,7 +18,7 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
     public function indexAction() {
 
         return $this->render('SoftoneBundle:Category:index.html.twig', array(
-                    'pagename' => 'Categorys',
+                    'pagename' => 'Categories',
                     'url' => '/category/getdatatable',
                     'view' => '/category/view',
                     'ctrl' => $this->generateRandomString(),
@@ -32,13 +32,15 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function viewAction($id) {
 
-        
-        
+
+        $entity = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->find($id);
         $content = $this->gettabs($id);
         $content = $this->content();
-        
+
         return $this->render('SoftoneBundle:Category:view.html.twig', array(
-                    'pagename' => 'Category',
+                    'pagename' => 'Categories:' . $entity->getName(),
                     'url' => '/category/save',
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
@@ -76,11 +78,11 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
 
         $forms = $this->getFormLyFields($entity, $fields);
 
-        
+
         if ($id > 0 AND count($entity) > 0) {
             $entity2 = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Category')
-                    ->find($id);  
+                    ->find($id);
 
             $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
             $dtparams[] = array("name" => "Name", "index" => 'name');
@@ -91,8 +93,8 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
             $params["ctrl"] = 'ctrlgettabs';
             $params["app"] = 'appgettabs';
             $datatables[] = $this->contentDatatable($params);
-        }        
-        
+        }
+
         $this->addTab(array("title" => "General", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         if ($id > 0 AND count($entity) > 0) {
             $this->addTab(array("title" => "Categories", "datatables" => $datatables, "form" => '', "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
@@ -118,7 +120,7 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
-    
+
     /**
      * @Route("/category/getparent/{id}")
      */
@@ -129,11 +131,12 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
                 //->addField(array("name" => "Code", "index" => 'categoryCode'))
                 ->addField(array("name" => "Name", "index" => 'name'));
 
-        $this->q_and[] = $this->prefix . ".parent = '".$id."'";
+        $this->q_and[] = $this->prefix . ".parent = '" . $id . "'";
 
         $json = $this->datatable();
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+
 }
