@@ -121,12 +121,10 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
 
         $forms = $this->getFormLyFields($entity, $fields);
 
-
         if ($id > 0 AND count($entity) > 0 AND $entity->getParent() == 0) {
             $entity2 = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Category')
                     ->find($id);
-
             $entity2->setParent("");
             $fields2["parent"] = array("label" => "New Children", "className" => "parentcat col-md-12");
             $forms2 = $this->getFormLyFields($entity2, $fields2);
