@@ -24,6 +24,25 @@ var $elem = jQuery(".synafiacode input").autocomplete({
     }
 })
 
+jQuery('.parentcat input').live("keyup", function (e) {
+    if (e.keyCode == 13) {
+        //alert($(this).val());
+        var data = {};
+        data.name = $(this).val();
+        data.id = $(this).attr("id");
+        $("#loaderer").show();
+        $.post("/category/addParent", data, function (result) {
+            $("#loaderer").hide();
+            var table = dt_tables["ctrlgettabs"];
+            table.fnFilter();
+            jQuery('.synafiacode input').val('')
+        })
+
+    }
+});
+
+
+
 setTimeout(function () {
 
 }, 2000)
