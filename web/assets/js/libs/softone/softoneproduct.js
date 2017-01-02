@@ -35,7 +35,7 @@ jQuery('.parentcat input').live("keyup", function (e) {
             $("#loaderer").hide();
             var table = dt_tables["ctrlgettabs"];
             table.fnFilter();
-            jQuery('.synafiacode input').val('')
+            jQuery('.parentcat input').val('')
         })
 
     }
