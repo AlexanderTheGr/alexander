@@ -128,7 +128,7 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
                     ->find($id);
 
             $entity2->setParent("");
-            $fields2["parent"] = array("label" => "Name", "className" => "parentcat col-md-12");
+            $fields2["parent"] = array("label" => "New Children", "className" => "parentcat col-md-12");
             $forms2 = $this->getFormLyFields($entity2, $fields2);
 
             $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
