@@ -31,12 +31,17 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function viewAction($id) {
 
+        
+        
+        $content = $this->content();
+        
         return $this->render('SoftoneBundle:Category:view.html.twig', array(
                     'pagename' => 'Category',
                     'url' => '/category/save',
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
-                    'tabs' => $this->gettabs($id),
+                    //'tabs' => $this->gettabs($id),
+                    'content' => $content,
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
