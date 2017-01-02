@@ -457,7 +457,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $tabs[] = array("title" => "General", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
         if ($id > 0 AND count($entity) > 0) {
             $tabs[] = array("title" => "Retaltions", "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
-            $tabs[] = array("title" => "Categories", "datatables" => '', "form" => '', "content" => $this->getCategories($id), "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
+            $tabs[] = array("title" => "Categories", "datatables" => '', "form" => '', "content" => $this->getCategories($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
         }
 
         foreach ($tabs as $tab) {
@@ -468,17 +468,20 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         return $json;
     }
 
-    public function getCategories($id) {
+    public function getCategories($product) {
         $entities = $this->getDoctrine()
                 ->getRepository('SoftoneBundle:Category')
                 ->findBy(array("parent" => 0));
         $html = '<ul>';
+        
+        $cats = $product->getCats();
+        
         foreach ($entities as $entity) {
             $html .= "<li>" . $entity->getName();
-            
             $html .= '<ul>';
             foreach ($entities as $entity) {
-                $html .= "<li><input type='checkbox'/>" . $entity->getName() . "</li>";
+                $checked = in_array($entity->getId(),$cats) ? 'checked' : '';
+                $html .= "<li><input ".$checked." class='productcategory' data-ref='" . $entity->getId() . "' type='checkbox'/>" . $entity->getName() . "</li>";
             }
             $html .= '</ul>';
             
