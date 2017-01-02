@@ -28,7 +28,30 @@ class Category {
         $this->$field = $val;
         return $val;
     }
+    public function setRepositories() {
 
+        
+    }
+
+    public function getRepository() {
+        return $this->repository;
+    }
+
+    public function getRepositories($repo) {
+        $this->repositories['customergroup'] = 'SoftoneBundle:Customergroup';
+        return $this->repositories[$repo];
+    }
+
+    public function gettype($field) {
+        $this->types['customergroup'] = 'object';
+        if (@$this->types[$field] != '') {
+            return @$this->types[$field];
+        }
+        if (gettype($field) != NULL) {
+            return gettype($this->$field);
+        }
+        return 'string';
+    }
     /**
      * @var integer
      *
