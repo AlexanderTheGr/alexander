@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Controller\Main as Main;
 
-class CategoryController extends \SoftoneBundle\Controller\SoftoneController  {
+class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
 
     var $repository = 'SoftoneBundle:Category';
 
@@ -81,6 +81,9 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController  {
         $this->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
                 //->addField(array("name" => "Code", "index" => 'categoryCode'))
                 ->addField(array("name" => "Name", "index" => 'name'));
+
+        $this->q_and[] = $this->prefix . ".parent = 0";
+
         $json = $this->datatable();
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
