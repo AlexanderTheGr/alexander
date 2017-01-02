@@ -303,7 +303,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         );
     }
 
-    
     /**
      * @Route("/product/addCategory")
      */
@@ -436,7 +435,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $customer = $this->getDoctrine()->getRepository('SoftoneBundle:Customer')->find(1);
         //echo $entity->getGroupedDiscount($customer);
         
-        $cats = $product->getCats();
+        $cats = $entity->getCats();
         foreach ($cats as $cat) {
             $category = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Productcategory')
