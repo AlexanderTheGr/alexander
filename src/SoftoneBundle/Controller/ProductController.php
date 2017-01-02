@@ -442,7 +442,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     ->findOneBy(array('category' => $cat, 'product' => $entity->getId()));
             if (count($category) == 0) {
                 $category = new Productcategory();
-                $category->setProduct($product->getId());
+                $category->setProduct($entity->getId());
                 $category->setCategory($cat);
                 @$this->flushpersist($category);
             }
