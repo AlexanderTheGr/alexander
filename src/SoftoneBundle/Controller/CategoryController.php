@@ -38,7 +38,7 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
                 ->find($id);
         if ($id == 0 AND @ $entity->id == 0) {
             $entity = new Category;
-        }        
+        }
         $content = $this->gettabs($id);
         $content = $this->content();
 
@@ -53,7 +53,6 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
         ));
     }
 
-    
     /**
      * @Route("/category/save")
      */
@@ -64,7 +63,16 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
         $this->newentity[$this->repository]->setField("parent", 0);
         $this->newentity[$this->repository]->setField("weight", 0);
         $out = $this->save();
-        $json = json_encode(array("ok","returnurl"=>"/category/view/".$this->newentity[$this->repository]->getId()));
+        $entity = $this->newentity[$this->repository];
+        if ($entity->getSortcode() == 0) {
+            if ($entity->getParent() == 0)
+                $entity->setSortcode($entity->getId() * 10000);
+            else
+                $entity->setSortcode($entity->getId() . $entity->getParent());
+            $this->flushpersist($entity);
+        }
+
+        $json = json_encode(array("ok", "returnurl" => "/category/view/" . $entity->getId()));
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
@@ -123,10 +131,10 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
         $this->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
                 //->addField(array("name" => "Code", "index" => 'categoryCode'))
                 ->addField(array("name" => "Name", "index" => 'name'))
-                //->addField(array("name" => "Weight", "index" => 'weight'))
-                ;
+        //->addField(array("name" => "Weight", "index" => 'weight'))
+        ;
 
-        $this->q_and[] = "(".$this->prefix . ".parent = 0 OR ".$this->prefix . ".parent IS NULL)";
+        $this->q_and[] = "(" . $this->prefix . ".parent = 0 OR " . $this->prefix . ".parent IS NULL)";
 
         $json = $this->datatable();
         return new Response(
