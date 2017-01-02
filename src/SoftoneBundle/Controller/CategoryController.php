@@ -73,7 +73,25 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
 
         $forms = $this->getFormLyFields($entity, $fields);
 
+        
+        if ($id > 0 AND count($entity) > 0) {
+            $entity2 = $this->getDoctrine()
+                    ->getRepository('SoftoneBundle:Category')
+                    ->find($id);  
+
+            $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
+            $dtparams[] = array("name" => "Name", "index" => 'name');
+            $params['dtparams'] = $dtparams;
+            $params['id'] = $dtparams;
+            $params['url'] = '/category/getparent/' . $id;
+            $params['key'] = 'gettabs_' . $id;
+            $params["ctrl"] = 'ctrlgettabs';
+            $params["app"] = 'appgettabs';
+            $datatables[] = $this->contentDatatable($params);
+        }        
+        
         $this->addTab(array("title" => "General", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
+        $this->addTab(array("title" => "Categories", "datatables" => $datatables, "form" => '', "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         $json = $this->tabs();
         return $json;
     }
