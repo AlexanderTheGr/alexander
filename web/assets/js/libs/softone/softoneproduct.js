@@ -64,7 +64,18 @@ jQuery('.parentcategorylia').live("click", function (e) {
 
 
 })
-
+jQuery('.productcategorychk').live('click', function () {
+    var ref = $(this).attr("data-ref");
+    var data = {};
+    data.category = $(this).attr("data-ref");
+    data.product = $(this).attr("data-product");
+    $.post("/category/addParent", data, function (result) {
+        $("#loaderer").hide();
+        var table = dt_tables["ctrlgettabs"];
+        table.fnFilter();
+        jQuery('.parentcat input').val('')
+    })
+})
 
 setTimeout(function () {
 
