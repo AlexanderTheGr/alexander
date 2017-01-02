@@ -80,9 +80,7 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController  {
 
         $this->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
                 //->addField(array("name" => "Code", "index" => 'categoryCode'))
-                //->addField(array("name" => "Name", "index" => 'categoryName'))
-                
-                ;
+                ->addField(array("name" => "Name", "index" => 'categoryName'));
         $json = $this->datatable();
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
