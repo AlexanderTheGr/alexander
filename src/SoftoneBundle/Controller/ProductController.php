@@ -439,7 +439,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ($cats as $cat) {
             $category = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Productcategory')
-                    ->findOneBy(array('category' => $cat, 'product' => $product->getId()));
+                    ->findOneBy(array('category' => $cat, 'product' => $entity->getId()));
             if (count($category) == 0) {
                 $category = new Productcategory();
                 $category->setProduct($product->getId());
