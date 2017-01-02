@@ -13,7 +13,7 @@
                 <option name="unsigned"/>
             </options>
         </field>
-        <field name="weight" type="integer" column="weight" nullable="false">
+        <field name="weight" type="integer" column="weight" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
@@ -28,12 +28,12 @@
                 <option name="unsigned"/>
             </options>
         </field>    
-        <field name="ts" type="datetime" column="ts" nullable="false">
+        <field name="ts" type="datetime" column="ts" nullable="true">
             <options>
         
             </options>
         </field>
-        <field name="actioneer" type="integer" column="actioneer" nullable="false">
+        <field name="actioneer" type="integer" column="actioneer" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
