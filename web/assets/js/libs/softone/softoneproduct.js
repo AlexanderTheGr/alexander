@@ -56,8 +56,8 @@ jQuery('.parentcategorylia').live("click", function (e) {
     if (r == false) {
         if (jQuery(this).hasClass("parentcategorylia")) {
             if (cref != ref)
-                jQuery('.categoryli').slideUp();
-            jQuery('.categoryli_' + ref).slideToggle();
+                jQuery('.categoryul').slideUp();
+            jQuery('.categoryul_' + ref).slideToggle();
             cref = ref;
         }
     }
