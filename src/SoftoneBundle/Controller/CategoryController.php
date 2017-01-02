@@ -36,6 +36,9 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($id);
+        if ($id == 0 AND @ $entity->id == 0) {
+            $entity = new Category;
+        }        
         $content = $this->gettabs($id);
         $content = $this->content();
 
