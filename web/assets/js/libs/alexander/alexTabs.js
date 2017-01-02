@@ -121,7 +121,7 @@ $("#loaderer").hide();
                             dt_table.$('tr.selected').removeClass('selected');
                             $(this).addClass('selected');
                         }
-                        location.href = view + "/" + $(this).attr("data-ref");
+                        location.href = datatable.view + "/" + $(this).attr("data-ref");
                     });
                 })
             })
