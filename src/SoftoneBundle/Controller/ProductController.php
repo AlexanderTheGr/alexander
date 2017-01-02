@@ -478,7 +478,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             
             $html .= '<ul>';
             foreach ($entities as $entity) {
-                $html .= "<li>" . $entity->getName() . "</li>";
+                $html .= "<li><input type='checkbox'/>" . $entity->getName() . "</li>";
             }
             $html .= '</ul>';
             
