@@ -33,6 +33,7 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
 
         
         
+        $content = $this->gettabs($id);
         $content = $this->content();
         
         return $this->render('SoftoneBundle:Category:view.html.twig', array(
