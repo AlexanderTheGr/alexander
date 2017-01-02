@@ -12,6 +12,23 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Category {
 
+    var $repositories = array();
+    var $uniques = array();
+
+    public function __construct() {
+        $this->setRepositories();
+    }
+
+    public function getField($field) {
+
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
+
     /**
      * @var integer
      *
@@ -237,7 +254,6 @@ class Category {
      */
     private $name;
 
-
     /**
      * Set name
      *
@@ -245,8 +261,7 @@ class Category {
      *
      * @return Category
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -257,8 +272,8 @@ class Category {
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
+
 }
