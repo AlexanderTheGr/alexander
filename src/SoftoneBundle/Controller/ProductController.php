@@ -423,6 +423,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      * 
      */
 
+    
+    
     public function gettabs($id) {
         $entity = $this->getDoctrine()
                 ->getRepository('SoftoneBundle:Product')
@@ -432,6 +434,20 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
         $customer = $this->getDoctrine()->getRepository('SoftoneBundle:Customer')->find(1);
         //echo $entity->getGroupedDiscount($customer);
+        
+        $cats = $product->getCats();
+        foreach ($cats as $cat) {
+            $category = $this->getDoctrine()
+                    ->getRepository('SoftoneBundle:Productcategory')
+                    ->findOneBy(array('category' => $cat, 'product' => $product->getId()));
+            if (count($category) == 0) {
+                $category = new Productcategory();
+                $category->setProduct($product->getId());
+                $category->setCategory($cat);
+                @$this->flushpersist($category);
+            }
+        }
+        
         $entity->updatetecdoc();
 
         $fields["title"] = array("label" => "Title", "required" => true, "className" => "col-md-6 col-sm-6");
