@@ -113,5 +113,22 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+    
+    /**
+     * @Route("/category/getparent/{id}")
+     */
+    public function getparentAction($id) {
+        $this->repository = 'SoftoneBundle:Category';
 
+        $this->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
+                //->addField(array("name" => "Code", "index" => 'categoryCode'))
+                ->addField(array("name" => "Name", "index" => 'name'));
+
+        $this->q_and[] = $this->prefix . ".parent = '".$id."'";
+
+        $json = $this->datatable();
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+    }
 }
