@@ -352,7 +352,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $cats[] = $category->getCategory();
         }
         $product->setCats($cats);
-        @$this->flushpersist($product);
+        $this->flushpersist($product);
         //$json = json_encode($product);
         //print_r($product);
         return new Response(
