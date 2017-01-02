@@ -108,6 +108,7 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
             $params['dtparams'] = $dtparams;
             $params['id'] = $dtparams;
             $params['url'] = '/category/getparent/' . $id;
+            $params['view'] = '/category/view/';
             $params['key'] = 'gettabs_' . $id;
             $params["ctrl"] = 'ctrlgettabs';
             $params["app"] = 'appgettabs';
