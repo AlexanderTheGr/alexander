@@ -43,7 +43,7 @@ jQuery('.parentcat input').live("keyup", function (e) {
 
 var r = false;
 var cref = 0;
-jQuery('.parentcategoryli').live("click", function (e) {
+jQuery('.parentcategorylia').live("click", function (e) {
 
     var ref = $(this).attr("data-ref");
 
@@ -54,7 +54,7 @@ jQuery('.parentcategoryli').live("click", function (e) {
         r = true;
     }
     if (r == false) {
-        if (jQuery(this).hasClass("parentcategoryli")) {
+        if (jQuery(this).hasClass("parentcategorylia")) {
             if (cref != ref)
                 jQuery('.categoryli').slideUp();
             jQuery('.categoryli_' + ref).slideToggle();
