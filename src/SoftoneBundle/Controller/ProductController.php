@@ -484,7 +484,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->findBy(array("parent" => $entity->getId()));            
             foreach ($entities2 as $entity2) {
                 $checked = in_array($entity2->getId(),$cats) ? 'checked' : '';
-                $html .= "<li class=''><input ".$checked." class='productcategorychk' data-ref='" . $entity2->getId() . "' type='checkbox'/>" . $entity2->getName() . "</li>";
+                $html .= "<li class=''><input ".$checked." class='productcategorychk' data-product='" . $product->getId() . "' data-ref='" . $entity2->getId() . "' type='checkbox'/>" . $entity2->getName() . "</li>";
             }
             $html .= '</ul>';
             
