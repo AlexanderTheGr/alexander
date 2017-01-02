@@ -72,7 +72,7 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
             $this->flushpersist($entity);
         }
 
-        $json = json_encode(array("ok", "returnurl" => "/category/view/" . $entity->getId()));
+        $json = json_encode(array("ok"));
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
