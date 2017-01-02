@@ -17,7 +17,7 @@ class DefaultController extends Controller {
      */
     public function indexAction(Request $request) {
         // replace this example code with whatever you need
-
+        exit;
         set_time_limit(100000);
         ini_set('memory_limit', '128M');
 
