@@ -527,12 +527,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             }
             $html .= "<a ".$style." data-ref='" . $entity->getId() . "' class='parentcategorylia'>" . $entity->getName() . "</a>";
             
-            $html .= "<ul class='productcategory categoryli categoryul_" . $entity->getId() . "'>";
+            $html .= "<ul class='productcategory categoryul categoryul_" . $entity->getId() . "'>";
 
             foreach ($entities2 as $entity2) {
                 $checked = in_array($entity2->getId(), $cats) ? 'checked' : '';
                 $style = in_array($entity2->getId(), $cats) ? "style='color:red'" : '';
-                $html .= "<li ".$style." class='categoryli_" . $entity->getId() . "'><input " . $checked . " class='productcategorychk' data-product='" . $product->getId() . "' data-ref='" . $entity2->getId() . "' type='checkbox'/>" . $entity2->getName() . "</li>";
+                $html .= "<li ".$style." class='categoryli categoryli_" . $entity->getId() . "'><input " . $checked . " class='productcategorychk' data-product='" . $product->getId() . "' data-ref='" . $entity2->getId() . "' type='checkbox'/>" . $entity2->getName() . "</li>";
             }
             $html .= '</ul>';
 
