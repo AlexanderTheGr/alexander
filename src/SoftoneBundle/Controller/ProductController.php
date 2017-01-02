@@ -25,13 +25,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      * 
      */
     public function indexAction() {
-        
+
         $products = $this->getDoctrine()->getRepository("SoftoneBundle:Product")
                 ->findAll();
         foreach ($products as $product) {
             $product->setProductFreesearch();
         }
-        
+
         return $this->render('SoftoneBundle:Product:index.html.twig', array(
                     'pagename' => 'Είδη',
                     'url' => '/product/getdatatable',
@@ -140,30 +140,30 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //return $data;
         //} else {
         /*
-        $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
-        $fields = array(
-            'action' => 'getSearchByIds',
-            'search' => $search
-        );
-        $fields_string = '';
-        foreach ($fields as $key => $value) {
-            $fields_string .= $key . '=' . $value . '&';
-        }
-        rtrim($fields_string, '&');
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, count($fields));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        $data = curl_exec($ch);
-        */
+          $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
+          $fields = array(
+          'action' => 'getSearchByIds',
+          'search' => $search
+          );
+          $fields_string = '';
+          foreach ($fields as $key => $value) {
+          $fields_string .= $key . '=' . $value . '&';
+          }
+          rtrim($fields_string, '&');
+          $ch = curl_init();
+          curl_setopt($ch, CURLOPT_URL, $url);
+          curl_setopt($ch, CURLOPT_POST, count($fields));
+          curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+          $data = curl_exec($ch);
+         */
         //file_put_contents(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term", $data);
         $params = array(
             'search' => $search
-        );        
+        );
         $tecdoc = new Tecdoc();
-        $data = $tecdoc->getArticlesSearchByIds($params);	
-        return $data->data->array;        
+        $data = $tecdoc->getArticlesSearchByIds($params);
+        return $data->data->array;
         //return $data;
         //}
     }
@@ -191,7 +191,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //$content = $this->getoffcanvases($id);
         $content = $this->content();
         return $this->render('SoftoneBundle:Product:view.html.twig', array(
-                    'pagename' => $product->getTitle()." ".$product->getErpCode(),
+                    'pagename' => $product->getTitle() . " " . $product->getErpCode(),
                     'url' => '/product/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
@@ -217,15 +217,15 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/product/save")
      */
     public function savection() {
-        
+
         $product = new Product;
         $this->newentity[$this->repository] = $product;
         $this->initialazeNewEntity($product);
         @$this->newentity[$this->repository]->setField("status", 1);
         $this->error[$this->repository] = array();
-        
+
         $entities = $this->save();
-        
+
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($entities[$this->repository]);
@@ -245,10 +245,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //echo $product->id;
         if (count($this->error[$this->repository])) {
             $json = json_encode(array("error" => 1, "id" => (int) $product->id, 'unique' => $this->error[$this->repository]));
-        } else {        
+        } else {
             $json = json_encode(array("error" => 0, "id" => (int) $product->id, 'returnurl' => '/product/view/' . (int) $product->id));
         }
-        
+
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
@@ -302,18 +302,17 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
-    
-    
+
     /**
      * @Route("/product/addCategory")
      */
     public function addCategory(Request $request) {
 
         $json = json_encode(array("ok"));
-        
+
         $idArr = explode(":", $request->request->get("id"));
-        $id = (int) $idArr[3];        
-        
+        $id = (int) $idArr[3];
+
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($id);
@@ -340,7 +339,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
-    }    
+    }
 
     function updateSisxetiseis($sisx) {
         $sisxetiseis = $this->getDoctrine()
@@ -415,22 +414,22 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $customer = $this->getDoctrine()->getRepository('SoftoneBundle:Customer')->find(1);
         echo $entity->getGroupedDiscount($customer);
         $entity->updatetecdoc();
-        
-        $fields["title"] = array("label" => "Title", "required" => true, "className"=>"col-md-6 col-sm-6");
-        $fields["erpCode"] = array("label" => "Erp Code", "required" => true, "className"=>"col-md-6 col-sm-6");
-        
-        $fields["tecdocSupplierId"] = array("label" => "Tecdoc Supplier", "required" => true,"className"=>"col-md-6", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:TecdocSupplier', 'name' => 'supplier', 'value' => 'id'));
-        $fields["tecdocCode"] = array("label" => "Tecdoc Code", "required" => true,"className"=>"col-md-6");
-        
-        $fields["supplierId"] = array("label" => "Supplier","className"=>"col-md-6", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id'));
-        $fields["supplierCode"] = array("label" => "Supplier Code","className"=>"col-md-6", "required" => true);
-        
-        $fields["itemPricew"] = array("label" => "Wholesale Price","className"=>"col-md-3","required" => true);
-        $fields["itemPricer"] = array("label" => "Retail Price","className"=>"col-md-3", "required" => true);
-        
-        $fields["itemMarkupw"] = array("label" => "Wholesale Markup","className"=>"col-md-3","required" => true);
-        $fields["itemMarkupr"] = array("label" => "Retail Markup","className"=>"col-md-3", "required" => true);
-        
+
+        $fields["title"] = array("label" => "Title", "required" => true, "className" => "col-md-6 col-sm-6");
+        $fields["erpCode"] = array("label" => "Erp Code", "required" => true, "className" => "col-md-6 col-sm-6");
+
+        $fields["tecdocSupplierId"] = array("label" => "Tecdoc Supplier", "required" => true, "className" => "col-md-6", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:TecdocSupplier', 'name' => 'supplier', 'value' => 'id'));
+        $fields["tecdocCode"] = array("label" => "Tecdoc Code", "required" => true, "className" => "col-md-6");
+
+        $fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-6", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id'));
+        $fields["supplierCode"] = array("label" => "Supplier Code", "className" => "col-md-6", "required" => true);
+
+        $fields["itemPricew"] = array("label" => "Wholesale Price", "className" => "col-md-3", "required" => true);
+        $fields["itemPricer"] = array("label" => "Retail Price", "className" => "col-md-3", "required" => true);
+
+        $fields["itemMarkupw"] = array("label" => "Wholesale Markup", "className" => "col-md-3", "required" => true);
+        $fields["itemMarkupr"] = array("label" => "Retail Markup", "className" => "col-md-3", "required" => true);
+
         $forms = $this->getFormLyFields($entity, $fields);
 
         if ($id > 0 AND count($entity) > 0) {
@@ -458,15 +457,27 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $tabs[] = array("title" => "General", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
         if ($id > 0 AND count($entity) > 0) {
             $tabs[] = array("title" => "Retaltions", "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
-            $tabs[] = array("title" => "Categories", "datatables" => '', "form" => '', "content" => '444', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
-        }    
-            
+            $tabs[] = array("title" => "Categories", "datatables" => '', "form" => '', "content" => $this->getCategories($id), "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
+        }
+
         foreach ($tabs as $tab) {
             $this->addTab($tab);
         }
 
         $json = $this->tabs();
         return $json;
+    }
+
+    public function getCategories($id) {
+        $entities = $this->getDoctrine()
+                ->getRepository('SoftoneBundle:Category')
+                ->findBy(array("parent"=>0));
+        $html = '<ul>';
+        foreach($entities as $entity) {
+            $html .= "<li>".$entity->getName()."</li>";
+        }
+        $html .= '</ul>';
+        return $html;
     }
 
     /**
@@ -526,9 +537,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
-    
-    
-     /**
+
+    /**
      * 
      * 
      * @Route("/product/productInfo")
@@ -539,9 +549,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $content = $this->gettabs(1);
 
         //$content = $this->getoffcanvases($id);
-        $content = $this->content();       
+        $content = $this->content();
 
-        
+
         $article_id = $request->request->get("ref");
         $out["originals"] = $this->originals($article_id);
         $out["articleAttributes"] = $this->articleAttributes($article_id, 0);
@@ -549,16 +559,15 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $out["articlesSearch"] = unserialize($this->getArticlesSearch($asd[0]->articleNo));
 
         //$out["articlesSearch"] = unserialize($this->getArticlesSearchByIds(implode(",", (array) $out["articlesSearch"])));
-
         //print_r( $out["articlesSearch"]);
         $egarmoges = '<ul>';
-        foreach (unserialize($this->efarmoges($article_id))  as $efarmogi) {
+        foreach (unserialize($this->efarmoges($article_id)) as $efarmogi) {
             $m = $this->getDoctrine()->getRepository('SoftoneBundle:BrandModelType')->find($efarmogi);
-            $egarmoges .= '<li>'.$m->getBrandModel().'</li>';
+            $egarmoges .= '<li>' . $m->getBrandModel() . '</li>';
         }
         $egarmoges .= '</ul>';
-        $out["efarmoges"] = $egarmoges;        
-        
+        $out["efarmoges"] = $egarmoges;
+
         //$content = 'sss';
         return $this->render('SoftoneBundle:Product:productInfo.html.twig', array(
                     'pagename' => 's',
@@ -570,7 +579,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     'content' => $out,
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
-    }   
+    }
 
     /**
      * @Route("/product/fororderajaxjson")
