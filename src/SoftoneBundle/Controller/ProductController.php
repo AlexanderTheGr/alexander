@@ -477,7 +477,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $cats = $product->getCats();
         
         foreach ($entities as $entity) {
-            $html .= "<li class='parentcategoryli'>" . $entity->getName();
+            $html .= "<li>" . $entity->getName();
             $html .= '<ul class="productcategory">';
             $entities2 = $this->getDoctrine()
                 ->getRepository('SoftoneBundle:Category')
