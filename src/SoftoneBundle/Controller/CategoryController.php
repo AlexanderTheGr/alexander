@@ -84,6 +84,7 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
         }
         //$fields["categoryCode"] = array("label" => "Code");
         $fields["name"] = array("label" => "Name");
+        $fields["weight"] = array("label" => "Weight");
 
         $forms = $this->getFormLyFields($entity, $fields);
 
@@ -95,6 +96,7 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
 
             $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
             $dtparams[] = array("name" => "Name", "index" => 'name');
+            $dtparams[] = array("name" => "Weight", "index" => 'weight');
             $params['dtparams'] = $dtparams;
             $params['id'] = $dtparams;
             $params['url'] = '/category/getparent/' . $id;
