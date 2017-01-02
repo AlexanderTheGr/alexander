@@ -61,8 +61,8 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
         $entity = new Category;
         $this->newentity[$this->repository] = $entity;
         $this->initialazeNewEntity($entity);
-        //$this->newentity[$this->repository]->setField("status", 1);
-        //$this->newentity[$this->repository]->setField("route", 0);
+        $this->newentity[$this->repository]->setField("parent", 1);
+        $this->newentity[$this->repository]->setField("weight", 0);
         $out = $this->save();
         $json = json_encode(array("ok"));
         return new Response(
@@ -96,7 +96,7 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
 
             $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
             $dtparams[] = array("name" => "Name", "index" => 'name');
-            $dtparams[] = array("name" => "Weight", "index" => 'weight');
+            //$dtparams[] = array("name" => "Weight", "index" => 'weight');
             $params['dtparams'] = $dtparams;
             $params['id'] = $dtparams;
             $params['url'] = '/category/getparent/' . $id;
@@ -123,7 +123,7 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
         $this->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
                 //->addField(array("name" => "Code", "index" => 'categoryCode'))
                 ->addField(array("name" => "Name", "index" => 'name'))
-                ->addField(array("name" => "Weight", "index" => 'weight'))
+                //->addField(array("name" => "Weight", "index" => 'weight'))
                 ;
 
         $this->q_and[] = "(".$this->prefix . ".parent = 0 OR ".$this->prefix . ".parent IS NULL)";
