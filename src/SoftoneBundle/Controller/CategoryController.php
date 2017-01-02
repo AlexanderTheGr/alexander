@@ -70,10 +70,11 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
             else
                 $entity->setSortcode($entity->getId() . $entity->getParent());
             $this->flushpersist($entity);
-        }
 
-        $json = json_encode(array("ok"));
-        //$json = json_encode(array("ok", "returnurl" => "/category/view/" . $entity->getId()));
+            $json = json_encode(array("ok", "returnurl" => "/category/view/" . $entity->getId()));
+        } else {
+            $json = json_encode(array("ok"));
+        }
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
@@ -91,8 +92,8 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
         $entity->setParent($id);
         $this->initialazeNewEntity($entity);
         $this->flushpersist($entity);
-        
-        $entity->setSortcode($entity->getParent() ."". $entity->getId());
+
+        $entity->setSortcode($entity->getParent() . "" . $entity->getId());
         $this->flushpersist($entity);
 
 
