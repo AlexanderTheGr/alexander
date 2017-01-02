@@ -458,7 +458,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $tabs[] = array("title" => "General", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
         if ($id > 0 AND count($entity) > 0) {
             $tabs[] = array("title" => "Retaltions", "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
-            $tabs[] = array("title" => "Categories", "datatables" => '', "form" => '', "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
+            $tabs[] = array("title" => "Categories", "datatables" => '', "form" => '', "content" => '444', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
         }    
             
         foreach ($tabs as $tab) {
