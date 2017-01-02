@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="category", indexes={@ORM\Index(name="parent", columns={"parent"})})
  * @ORM\Entity
  */
-class Category
-{
+class Category {
+
     /**
      * @var integer
      *
@@ -31,8 +31,7 @@ class Category
      *
      * @ORM\Column(name="sortcode", type="integer", nullable=false)
      */
-    protected $sortcode;    
-    
+    protected $sortcode;
 
     /**
      * @var \DateTime
@@ -71,8 +70,6 @@ class Category
      */
     protected $id;
 
-
-
     /**
      * Set parent
      *
@@ -80,8 +77,7 @@ class Category
      *
      * @return Category
      */
-    public function setParent($parent)
-    {
+    public function setParent($parent) {
         $this->parent = $parent;
 
         return $this;
@@ -92,8 +88,7 @@ class Category
      *
      * @return integer
      */
-    public function getParent()
-    {
+    public function getParent() {
         return $this->parent;
     }
 
@@ -104,8 +99,7 @@ class Category
      *
      * @return Category
      */
-    public function setWeight($weight)
-    {
+    public function setWeight($weight) {
         $this->weight = $weight;
 
         return $this;
@@ -137,11 +131,10 @@ class Category
      *
      * @return integer
      */
-    public function getWeight()
-    {
+    public function getWeight() {
         return $this->weight;
     }
-    
+
     /**
      * Set ts
      *
@@ -149,8 +142,7 @@ class Category
      *
      * @return Category
      */
-    public function setTs($ts)
-    {
+    public function setTs($ts) {
         $this->ts = $ts;
 
         return $this;
@@ -161,8 +153,7 @@ class Category
      *
      * @return \DateTime
      */
-    public function getTs()
-    {
+    public function getTs() {
         return $this->ts;
     }
 
@@ -173,8 +164,7 @@ class Category
      *
      * @return Category
      */
-    public function setActioneer($actioneer)
-    {
+    public function setActioneer($actioneer) {
         $this->actioneer = $actioneer;
 
         return $this;
@@ -185,8 +175,7 @@ class Category
      *
      * @return integer
      */
-    public function getActioneer()
-    {
+    public function getActioneer() {
         return $this->actioneer;
     }
 
@@ -197,8 +186,7 @@ class Category
      *
      * @return Category
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -209,8 +197,7 @@ class Category
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -221,8 +208,7 @@ class Category
      *
      * @return Category
      */
-    public function setModified($modified)
-    {
+    public function setModified($modified) {
         $this->modified = $modified;
 
         return $this;
@@ -233,8 +219,7 @@ class Category
      *
      * @return \DateTime
      */
-    public function getModified()
-    {
+    public function getModified() {
         return $this->modified;
     }
 
@@ -243,8 +228,37 @@ class Category
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
+    }
+
+    /**
+     * @var string
+     */
+    private $name;
+
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Category
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }
