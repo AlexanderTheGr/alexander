@@ -94,7 +94,9 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
         }        
         
         $this->addTab(array("title" => "General", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
-        $this->addTab(array("title" => "Categories", "datatables" => $datatables, "form" => '', "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
+        if ($id > 0 AND count($entity) > 0) {
+            $this->addTab(array("title" => "Categories", "datatables" => $datatables, "form" => '', "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
+        }
         $json = $this->tabs();
         return $json;
     }
