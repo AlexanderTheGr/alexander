@@ -5,8 +5,8 @@ namespace SoftoneBundle\Entity;
 /**
  * Productcategory
  */
-class Productcategory
-{
+class Productcategory {
+
     /**
      * @var integer
      */
@@ -22,7 +22,6 @@ class Productcategory
      */
     private $id;
 
-
     /**
      * Set product
      *
@@ -30,8 +29,7 @@ class Productcategory
      *
      * @return Productcategory
      */
-    public function setProduct($product)
-    {
+    public function setProduct($product) {
         $this->product = $product;
 
         return $this;
@@ -42,8 +40,7 @@ class Productcategory
      *
      * @return integer
      */
-    public function getProduct()
-    {
+    public function getProduct() {
         return $this->product;
     }
 
@@ -54,8 +51,7 @@ class Productcategory
      *
      * @return Productcategory
      */
-    public function setCategory($category)
-    {
+    public function setCategory($category) {
         $this->category = $category;
 
         return $this;
@@ -66,8 +62,7 @@ class Productcategory
      *
      * @return integer
      */
-    public function getCategory()
-    {
+    public function getCategory() {
         return $this->category;
     }
 
@@ -76,9 +71,8 @@ class Productcategory
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
-}
 
+}
