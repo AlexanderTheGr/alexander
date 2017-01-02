@@ -57,7 +57,12 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/category/save")
      */
     public function savection() {
-        $this->save();
+        $entity = new Category;
+        $this->newentity[$this->repository] = $entity;
+        $this->initialazeNewEntity($entity);
+        //$this->newentity[$this->repository]->setField("status", 1);
+        //$this->newentity[$this->repository]->setField("route", 0);
+        $out = $this->save();
         $json = json_encode(array("ok"));
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
