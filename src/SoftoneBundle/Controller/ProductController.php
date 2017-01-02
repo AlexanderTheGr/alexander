@@ -10,6 +10,7 @@ use AppBundle\Controller\Main as Main;
 use SoftoneBundle\Entity\Softone as Softone;
 use SoftoneBundle\Entity\Product as Product;
 use SoftoneBundle\Entity\Sisxetiseis as Sisxetiseis;
+use SoftoneBundle\Entity\Productcategory as Productcategory;
 use SoftoneBundle\Entity\Pcategory as Pcategory;
 use AppBundle\Entity\Tecdoc as Tecdoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -301,6 +302,45 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+    
+    
+    /**
+     * @Route("/product/addCategory")
+     */
+    public function addCategory(Request $request) {
+
+        $json = json_encode(array("ok"));
+        
+        $idArr = explode(":", $request->request->get("id"));
+        $id = (int) $idArr[3];        
+        
+        $product = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->find($id);
+
+        $asd[] = $id;
+        $asd[] = $product->getId();
+        $json = json_encode($asd);
+        if ($id > 0 AND count($product) > 0) {
+
+            $category = $this->getDoctrine()
+                    ->getRepository('SoftoneBundle:Sisxetiseis')
+                    ->findOneBy(array('category' => $id, 'product' => $product->getId()));
+
+            if (count($category) == 0) {
+                $category = new Productcategory();
+                $category->setProduct($product->getId());
+                $category->setCategory($id);
+                @$this->flushpersist($category);
+            }
+        }
+
+        //$json = json_encode($product);
+        //print_r($product);
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+    }    
 
     function updateSisxetiseis($sisx) {
         $sisxetiseis = $this->getDoctrine()
@@ -416,9 +456,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
 
         $tabs[] = array("title" => "General", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
-        if ($id > 0 AND count($entity) > 0)
+        if ($id > 0 AND count($entity) > 0) {
             $tabs[] = array("title" => "Retaltions", "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
-
+            $tabs[] = array("title" => "Categories", "datatables" => '', "form" => '', "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
+        }    
+            
         foreach ($tabs as $tab) {
             $this->addTab($tab);
         }
