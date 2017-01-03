@@ -1897,6 +1897,8 @@ class Product extends Entity {
             echo $e->getMessage();
             exit;
         }
+        $tecdoc = null;
+        unset($tecdoc);
         //echo $result;
     }
     function checkForUniqueCategory($article, $cats,$tecdoc,$linkingTargetId) {
