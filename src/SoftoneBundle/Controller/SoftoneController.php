@@ -102,8 +102,8 @@ class SoftoneController extends  Main {
                     $entity->$func();
                 }                
             }
-           if (@$i++ > 100)
-                break;
+            //if (@$i++ > 100)
+            //    break;
         }
     }   
 
