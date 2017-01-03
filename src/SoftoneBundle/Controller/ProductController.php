@@ -695,6 +695,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ((array) $datas->data as $data) {
             
             $data = array($data[0]);
+            
             print_r($data);
 
                 /*
