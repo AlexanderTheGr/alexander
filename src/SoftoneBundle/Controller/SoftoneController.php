@@ -66,7 +66,7 @@ class SoftoneController extends  Main {
                 $entity->setModified($dt);
                 
             } else {
-                //continue;
+                continue;
                 //$entity->setRepositories();                
             }
             
