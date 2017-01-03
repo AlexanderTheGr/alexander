@@ -718,7 +718,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         ini_set('memory_limit', '2256M');
         echo $this->retrieveMtrcategory();
         echo $this->retrieveMtrmanfctr();
-        echo $this->retrieveMtrl();
+        //echo $this->retrieveMtrl();
 
         return new Response(
                 "", 200
