@@ -66,6 +66,7 @@ class SoftoneController extends  Main {
                 $entity->setModified($dt);
                 
             } else {
+                unset($entity);
                 continue;
                 //$entity->setRepositories();                
             }
@@ -104,6 +105,7 @@ class SoftoneController extends  Main {
                     $entity->$func();
                 }                
             }
+            unset($entity);
             //if (@$i++ > 1500)
             //    break;
         }
