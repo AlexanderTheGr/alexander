@@ -673,7 +673,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     function retrieveMtrl() {
         $params = unserialize($this->getSetting("SoftoneBundle:Product:retrieveMtrl"));
         if (count($params) > 0) {
-            $where = '';
+            $where = 'AND MTRL < 10000';
             $params["softone_object"] = "item";
             $params["repository"] = 'SoftoneBundle:Product';
             $params["softone_table"] = 'MTRL';
