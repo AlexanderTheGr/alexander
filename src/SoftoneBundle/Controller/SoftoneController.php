@@ -90,7 +90,7 @@ class SoftoneController extends Main {
             $entity->setReference($data[$params["softone_table"]]);
             $this->flushpersist($entity);
             $q = array();
-            /*
+            
             foreach ($data as $identifier => $val) {
                 $imporetedData[strtolower($params["softone_object"] . "_" . $identifier)] = addslashes($val);
                 $ad = strtolower($identifier);
@@ -104,11 +104,12 @@ class SoftoneController extends Main {
             if (@$entity_id > 0) {
                 $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity_id . "'";
                 $em->getConnection()->exec($sql);
+                echo $sql."<BR>";
                 foreach ($params["extrafunction"] as $field => $func) {
                     $entity->$func();
                 }
             }
-            */
+            
             unset($entity);
             //if (@$i++ > 1500)
             //    break;
