@@ -713,6 +713,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     
+    
     function retrieveProduct($params=array()) {
         $object = $params["object"];
         $em = $this->getDoctrine()->getManager();
