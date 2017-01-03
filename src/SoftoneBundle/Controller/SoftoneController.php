@@ -52,12 +52,14 @@ class SoftoneController extends  Main {
         foreach ((array)$datas->data as $data) {
             $data = (array) $data;
             print_r($data);
+            continue;
             $entity = $this->getDoctrine()
                     ->getRepository($params["repository"])
                     ->findOneBy(array("reference" => (int) $data[$params["softone_table"]]));
 
-            $dt = new \DateTime("now");
+            
             if (@$entity->id == 0) {
+                $dt = new \DateTime("now");
                 $entity = new $object();
                 $entity->setTs($dt);
                 $entity->setCreated($dt);
