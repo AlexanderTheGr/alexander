@@ -675,8 +675,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $datas = $softone->createSql($params);
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
-            $sql = "Replace softone_softone_supplier SET id = '" . $data["MTRMANFCTR"] . "', title = '" . $data["NAME"] . "', code = '" . $data["CODE"] . "'";
-            $this->getDoctrine()->getConnection()->exec($sql);
+            //$sql = "Replace softone_softone_supplier SET id = '" . $data["MTRMANFCTR"] . "', title = '" . $data["NAME"] . "', code = '" . $data["CODE"] . "'";
+            //$this->getDoctrine()->getConnection()->exec($sql);
         }
     }
 
