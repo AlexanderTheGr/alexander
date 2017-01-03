@@ -427,14 +427,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 //echo $sql;
                 //exit;
 
-                $sql = str_replace("p.*","",$sql);
+                $sql = str_replace("p.*,","",$sql);
                 $query = $em->createQuery(
                                 $sql
                         )
                         ->setMaxResults($request->request->get("length"))
                         ->setFirstResult($request->request->get("start"))
                 ;
-                echo $sql."<BR>";    
+               // echo $sql."<BR>";    
                 /*
                   echo 'SELECT  ' . $this->select . ', p.reference
                   FROM ' . $this->repository . ' ' . $this->prefix . '
