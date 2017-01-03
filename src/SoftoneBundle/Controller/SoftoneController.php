@@ -56,7 +56,7 @@ class SoftoneController extends  Main {
                     ->getRepository($params["repository"])
                     ->findOneBy(array("reference" => (int) $data[$params["softone_table"]]));
 
-            echo @$$entity->id."<BR>";
+            echo @$entity->id."<BR>";
             
             $dt = new \DateTime("now");
             if (@$entity->id == 0) {
