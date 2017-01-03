@@ -671,6 +671,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     function retrieveMtrmanfctr() {
+        /*
         $params = unserialize($this->getSetting("SoftoneBundle:Product:retrieveMtrcategory"));
         if (count($params) > 0) {
             $params["softone_object"] = 'mtrmanfctr';
@@ -686,6 +687,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
 
         $this->retrieve($params);
+         * 
+         */
+        $sql = "SELECT M.* FROM MTRMANFCTR M ";
+        $softone = new Softone();
+        $datas = $softone->createSql($params);
+        print_r($datas);       
     }    
     
     
@@ -723,7 +730,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     function retrieveSoftoneDataAction($params = array()) {
         set_time_limit(100000);
         ini_set('memory_limit', '2256M');
-        echo $this->retrieveMtrcategory();
+        //echo $this->retrieveMtrcategory();
         echo $this->retrieveMtrmanfctr();
         //echo $this->retrieveMtrl();
 
