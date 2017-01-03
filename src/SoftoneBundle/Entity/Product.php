@@ -1860,6 +1860,36 @@ class Product extends Entity {
                 $this->setTecdocArticleId($out->articleId);
                 $this->setTecdocArticleName($out->articleName);
                 //$this->setTecdocGenericArticleId($out->articleName);
+                
+                $cats = $tecdoc->getTreeForArticle($out->articleId);
+                $cats = $tecdoc->getTreeForArticle($out->articleId);
+                //print_r((array)$cats);
+                
+                $params = array(
+                    "articleId" => $out->articleId
+                );
+                $articleLinkedAllLinkingTarget = $tecdoc->getArticleLinkedAllLinkingTarget($params);
+                $cars = array();
+                $linkingTargetId = 0;
+                foreach ($articleLinkedAllLinkingTarget->data->array as $v) {
+                    if ($linkingTargetId == 0)
+                    $linkingTargetId = $v->linkingTargetId;
+                    $cars[] = $v->linkingTargetId;
+                    //break;
+                }
+                $categories2 = array();
+                foreach($cats as $cat) {
+                    $categories2[] = $cat->tree_id;
+                }
+                $categories = $this->checkForUniqueCategory($out, $cats,$tecdoc,$linkingTargetId);
+                if (count($categories) == 0) {
+                    $categories = $categories2;
+                }     
+                //print_r($categories);
+                //print_r($cars);
+                $this->setCats($categories); 
+                $this->setCars($cars);                
+                
                 $em->persist($this);
                 $em->flush();
             }
@@ -1869,7 +1899,26 @@ class Product extends Entity {
         }
         //echo $result;
     }
+    function checkForUniqueCategory($article, $cats,$tecdoc,$linkingTargetId) {
+        if ($cats <= 2) return array();
+	$categories = array();	
+        foreach ($cats as $c) {
 
+            $params = array(
+                "assemblyGroupNodeId" => (int) $c->tree_id,
+                "linkingTargetId" => (int) $linkingTargetId,
+            );
+            $articles = $tecdoc->getArticleIds($params);
+            $getArticleIds = array();
+            foreach ($articles->data->array as $v) {
+                $getArticleIds[] = $v->articleId;
+            }
+            if (in_array($article->articleId, $getArticleIds)) {
+                $categories[] = $c->tree_id;
+            }
+        }
+        return $categories;
+    }
     /**
      * @var integer
      */
