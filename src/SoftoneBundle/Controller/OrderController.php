@@ -208,9 +208,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $customer = $this->getDoctrine()
                     ->getRepository("SoftoneBundle:Customer")
                     ->find($order->getCustomer());
+            $priceField = $customer->getPriceField();
+        } else {
+            $priceField = "itemPricew";            
         }
         
-        $priceField = $customer->getPriceField();
+        
         $dtparams = array();
         //$dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
         $dtparams[] = array("name" => "Κωδικός", "function" => 'getForOrderCode', 'search' => 'text');
