@@ -203,9 +203,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $order = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Order")
                 ->find($id);
-        $customer = $this->getDoctrine()
-                ->getRepository("SoftoneBundle:Customer")
-                ->find($order->getCustomer());
+        
+        if ($id > 0) {
+            $customer = $this->getDoctrine()
+                    ->getRepository("SoftoneBundle:Customer")
+                    ->find($order->getCustomer());
+        }
+        
         $priceField = $customer->getPriceField();
         $dtparams = array();
         //$dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
