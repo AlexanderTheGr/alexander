@@ -90,6 +90,7 @@ class SoftoneController extends Main {
             $entity->setReference($data[$params["softone_table"]]);
             $this->flushpersist($entity);
             $q = array();
+            /*
             foreach ($data as $identifier => $val) {
                 $imporetedData[strtolower($params["softone_object"] . "_" . $identifier)] = addslashes($val);
                 $ad = strtolower($identifier);
@@ -107,6 +108,7 @@ class SoftoneController extends Main {
                     $entity->$func();
                 }
             }
+            */
             unset($entity);
             //if (@$i++ > 1500)
             //    break;
