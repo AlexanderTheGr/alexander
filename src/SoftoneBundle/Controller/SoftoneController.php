@@ -41,10 +41,10 @@ class SoftoneController extends  Main {
         $params["fSQL"] = 'SELECT ' . $selfields . ' FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
         //echo $params["fSQL"];
         //$params["fSQL"] = 'SELECT M.* FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
-        //echo $params["fSQL"];
+        echo $params["fSQL"];
         //return;
         $softone = new Softone();
-        $datas = $softone->createSql($params);
+        //$datas = $softone->createSql($params);
         print_r($datas);
         //return;
         foreach ((array)$datas->data as $data) {
