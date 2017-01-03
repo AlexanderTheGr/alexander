@@ -12,14 +12,14 @@ use SoftoneBundle\Entity\Pcategory as Pcategory;
 use SoftoneBundle\Entity\TecdocSupplier as TecdocSupplier;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-class SoftoneController extends Main {
+class SoftoneController extends  Main {
 
-    function retrieve($params = array()) {
+    function retrieve($params=array()) {
         $object = $params["object"];
         $em = $this->getDoctrine()->getManager();
         $fields = $em->getClassMetadata($params["object"])->getFieldNames();
         //print_r($fields);
-
+        
         $itemfield = array();
         $itemfield[] = "M." . $params["softone_table"];
         foreach ($fields as $field) {
@@ -49,16 +49,14 @@ class SoftoneController extends Main {
         $datas = $softone->createSql($params);
         //print_r($datas);
         //return;
-        foreach ((array) $datas->data as $data) {
+        foreach ((array)$datas->data as $data) {
             $data = (array) $data;
             //print_r($data);
             $entity = $this->getDoctrine()
                     ->getRepository($params["repository"])
                     ->findOneBy(array("reference" => (int) $data[$params["softone_table"]]));
 
-            echo @$entity->id . "<BR>";
-            if ($data[$params["softone_table"]] < 6909)
-                continue;
+            echo @$entity->id."<BR>";
             
             $dt = new \DateTime("now");
             if (@$entity->id == 0) {
@@ -66,12 +64,13 @@ class SoftoneController extends Main {
                 $entity->setTs($dt);
                 $entity->setCreated($dt);
                 $entity->setModified($dt);
+                
             } else {
                 unset($entity);
                 continue;
                 //$entity->setRepositories();                
             }
-
+            
             //@print_r($entity->repositories);
             foreach ($params["relation"] as $field => $extra) {
                 //echo $field." - ".@$data[$extra]."<BR>";
@@ -79,12 +78,12 @@ class SoftoneController extends Main {
                     $entity->setField($field, @$data[$extra]);
                 }
                 //echo @$entity->repositories[$field];
-                if (@$data[$extra] AND @ $entity->repositories[$field]) {
+                if (@$data[$extra] AND @$entity->repositories[$field]) {
                     $rel = $this->getDoctrine()->getRepository($entity->repositories[$field])->findOneById($data[$extra]);
                     $entity->setField($field, $rel);
-                }
+                }                
             }
-            echo $data[$params["softone_table"]] . "<BR>";
+            echo $data[$params["softone_table"]]."<BR>";
             $imporetedData = array();
             $entity->setReference($data[$params["softone_table"]]);
             $this->flushpersist($entity);
@@ -104,12 +103,11 @@ class SoftoneController extends Main {
                 $em->getConnection()->exec($sql);
                 foreach ($params["extrafunction"] as $field => $func) {
                     $entity->$func();
-                }
+                }                
             }
-            unset($entity);
             //if (@$i++ > 1500)
             //    break;
         }
-    }
+    }   
 
 }
