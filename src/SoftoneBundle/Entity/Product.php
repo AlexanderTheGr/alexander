@@ -2396,7 +2396,6 @@ class Product extends Entity {
         $dataindexarr[] = $this->itemCode1;
         $dataindexarr[] = $this->itemCode2;
 
-
         $dataindexarr[] = $this->title;
         $dataindexarr[] = $this->itemName;
         $dataindexarr[] = $this->itemName1;
