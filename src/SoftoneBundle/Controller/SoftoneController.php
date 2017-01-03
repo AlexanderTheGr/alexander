@@ -44,7 +44,7 @@ class SoftoneController extends  Main {
         echo $params["fSQL"];
         //return;
         $softone = new Softone();
-        //$datas = $softone->createSql($params);
+        $datas = $softone->createSql($params);
         print_r($datas);
         //return;
         foreach ((array)$datas->data as $data) {
