@@ -708,7 +708,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 //$this->flushpersist($SoftoneSupplier);
                  * 
                  */
-               $sql = "Replace softone_softone_supplier SET id = '".$data["MTRMANFCTR"]."', name = '".$data["NAME"]."', code = '".$data["CODE"]."'";
+               $sql = "Replace softone_softone_supplier SET id = '".$data["MTRMANFCTR"]."', title = '".$data["NAME"]."', code = '".$data["CODE"]."'";
                $this->getDoctrine()->getConnection()->exec($sql);
                echo $sql."<BR>";
             
