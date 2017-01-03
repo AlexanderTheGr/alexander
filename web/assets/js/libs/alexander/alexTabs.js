@@ -114,6 +114,7 @@ $("#loaderer").hide();
                     })
                     dt_tables[datatable.ctrl] = dt_table;
                     $("." + datatable.ctrl).find('tbody').on('click', 'tr', function () {
+                        /*
                         if ($(this).hasClass('selected')) {
                             $(this).removeClass('selected');
                         }
@@ -121,6 +122,7 @@ $("#loaderer").hide();
                             dt_table.$('tr.selected').removeClass('selected');
                             $(this).addClass('selected');
                         }
+                        */
                         //location.href = datatable.view + "/" + $(this).attr("data-ref");
                     });
                 })
