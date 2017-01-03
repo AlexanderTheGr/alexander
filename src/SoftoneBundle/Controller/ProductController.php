@@ -521,7 +521,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $style = "";
             foreach ($entities2 as $entity2) {
                 //$style = in_array($entity2->getId(), $cats) ? "style='color:red'" : '';
-                if ( in_array($entity2->getId(), $cats)) {
+                if ( in_array($entity2->getId(), (array)$cats)) {
                     $style = "style='color:red'";
                 }
             }
