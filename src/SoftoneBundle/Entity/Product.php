@@ -2488,7 +2488,8 @@ class Product extends Entity {
                 $price = $rule->getPrice();
             }
         }
-        $pricefield = $customer->getPriceField();
+
+        $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
         $discountedPrice = $this->$pricefield * (1 - $discount / 100 );
         $finalprice = $discount > 0 ? $discountedPrice : $price;
 
