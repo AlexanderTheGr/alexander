@@ -82,7 +82,7 @@ class SoftoneController extends  Main {
                     $entity->setField($field, $rel);
                 }                
             }
-
+            echo $data[$params["softone_table"]]."<BR>";
             $imporetedData = array();
             $entity->setReference($data[$params["softone_table"]]);
             $this->flushpersist($entity);
