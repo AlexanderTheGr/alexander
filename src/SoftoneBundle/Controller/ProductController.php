@@ -436,7 +436,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //echo $entity->getGroupedDiscount($customer);
         
         $cats = $entity->getCats();
-        foreach ($cats as $cat) {
+        foreach ((array)$cats as $cat) {
             $category = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Productcategory')
                     ->findOneBy(array('category' => $cat, 'product' => $entity->getId()));
