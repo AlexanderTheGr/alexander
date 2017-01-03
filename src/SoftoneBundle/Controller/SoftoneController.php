@@ -84,11 +84,13 @@ class SoftoneController extends  Main {
                 }                
             }
             echo $data[$params["softone_table"]]."<BR>";
+            /*
             $imporetedData = array();
             $entity->setReference($data[$params["softone_table"]]);
             
             $em->persist($entity);
             $em->flush();
+            */
             //$this->flushpersist($entity);
             $q = array();
             foreach ($data as $identifier => $val) {
@@ -106,7 +108,7 @@ class SoftoneController extends  Main {
                 echo $sql."<BR>";
                 $em->getConnection()->exec($sql);
                 foreach ($params["extrafunction"] as $field => $func) {
-                    //$entity->$func();
+                    $entity->$func();
                 }                
             }
             $entity = null;
