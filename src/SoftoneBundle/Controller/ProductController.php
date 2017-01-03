@@ -695,12 +695,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ((array) $datas->data as $data) {
             $data = array($data);
             $SoftoneSupplier = $this->getDoctrine()->getRepository('SoftoneBundle:SoftoneSupplier')->find($data["MTRMANFCTR"]);
-            if (!$SoftoneSupplier)
+            if (!$SoftoneSupplier) {
                 $SoftoneSupplier = new \SoftoneBundle\Entity\SoftoneSupplier;
-            $SoftoneSupplier->setId($data["MTRMANFCTR"]);
-            $SoftoneSupplier->setTitle($data["NAME"]);
-            $SoftoneSupplier->setCode($data["NAME"]);
-            $this->flushpersist($SoftoneSupplier);
+                $SoftoneSupplier->setId($data["MTRMANFCTR"]);
+                $SoftoneSupplier->setTitle($data["NAME"]);
+                $SoftoneSupplier->setCode($data["CODE"]);
+                $this->flushpersist($SoftoneSupplier);
+            }
+            
         }
         print_r($datas);
     }
