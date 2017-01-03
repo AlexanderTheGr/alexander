@@ -853,7 +853,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $i = 0;
         $tecdoc = new Tecdoc();
         foreach ($results as $result) {
-            if ($result["id"] > 0) {
+            if ($result["id"] > 13182) {
                 $ediediitem = $em->getRepository($this->repository)->find($result["id"]);
                 $ediediitem->tecdoc = $tecdoc;
                 $ediediitem->updatetecdoc();
