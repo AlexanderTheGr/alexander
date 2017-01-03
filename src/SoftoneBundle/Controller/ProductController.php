@@ -825,6 +825,47 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
     }     
     
+   
+    
+    /**
+     * @Route("/product/product/updatetecdoc")
+     */
+    public function getUpdateTecdocAction($funct = false) {
+        $em = $this->getDoctrine()->getManager();
+        
+        $query = $em->createQuery(
+                "SELECT  p.id
+                    FROM " . $this->repository . " p
+                    where p.tecdocSupplierId > 0 AND p.tecdocArticleId IS NULL order by p.id desc"
+        );
+        /*
+        $query = $em->createQuery(
+                "SELECT  p.id
+                    FROM " . $this->repository . " p, EdiBundle:Edi e
+                    where 
+                        e.id = p.Edi AND p.dlnr > 0 order by p.id asc"
+        );
+         * 
+         */
+        
+        $results = $query->getResult();
+        echo count($results);
+        $i = 0;
+        $tecdoc = new Tecdoc();
+        foreach ($results as $result) {
+            //if ($result["id"] > 356633) {
+                $ediediitem = $em->getRepository($this->repository)->find($result["id"]);
+                $ediediitem->tecdoc = $tecdoc;
+                $ediediitem->updatetecdoc();
+                unset($ediediitem);
+                echo $result["id"]."<BR>";
+                if ($i++ > 300) exit;
+            //}
+            
+            
+        }
+        exit;
+    }    
     
     /**
      * 
