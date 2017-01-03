@@ -65,7 +65,7 @@ class SoftoneController extends  Main {
             } else {
                 $entity->setRepositories();                
             }
-            continue;
+            //continue;
             @print_r($entity->repositories);
             foreach ($params["relation"] as $field => $extra) {
                 //echo $field." - ".@$data[$extra]."<BR>";
@@ -100,7 +100,7 @@ class SoftoneController extends  Main {
                     $entity->$func();
                 }                
             }
-           if (@$i++ > 500)
+           if (@$i++ > 100)
                 break;
         }
     }   
