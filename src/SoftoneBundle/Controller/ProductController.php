@@ -666,55 +666,18 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $params["extrafunction"] = array();
             $this->setSetting("SoftoneBundle:Product:retrieveMtrcategory", serialize($params));
         }
-
         $this->retrieve($params);
     }
 
     function retrieveMtrmanfctr() {
-        /*
-          $params = unserialize($this->getSetting("SoftoneBundle:Product:retrieveMtrcategory"));
-          if (count($params) > 0) {
-          $params["softone_object"] = 'mtrmanfctr';
-          $params["repository"] = 'SoftoneBundle:SoftoneSupplier';
-          $params["softone_table"] = 'MTRMANFCTR';
-          $params["table"] = 'softone_softone_supplier';
-          $params["object"] = 'SoftoneBundle\Entity\SoftoneSupplier';
-          $params["filter"] = '';
-          $params["relation"] = array();
-          $params["extra"] = array();
-          $params["extrafunction"] = array();
-          $this->setSetting("SoftoneBundle:Product:retrieveMtrcategory", serialize($params));
-          }
-
-          $this->retrieve($params);
-         * 
-         */
         $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M ";
         $softone = new Softone();
         $datas = $softone->createSql($params);
         foreach ((array) $datas->data as $data) {
-            
-            print_r($data);
-            
-            $data = (array)$data;
-            
-            //print_r($data);
-
-                /*
-                $SoftoneSupplier = new \SoftoneBundle\Entity\SoftoneSupplier;
-                $SoftoneSupplier->id = $data["MTRMANFCTR"];
-                $SoftoneSupplier->setTitle($data["NAME"]);
-                $SoftoneSupplier->setCode($data["CODE"]);
-                //$this->flushpersist($SoftoneSupplier);
-                 * 
-                 */
-               $sql = "Replace softone_softone_supplier SET id = '".$data["MTRMANFCTR"]."', title = '".$data["NAME"]."', code = '".$data["CODE"]."'";
-               $this->getDoctrine()->getConnection()->exec($sql);
-               echo $sql."<BR>";
-            
-            
+            $data = (array) $data;
+            $sql = "Replace softone_softone_supplier SET id = '" . $data["MTRMANFCTR"] . "', title = '" . $data["NAME"] . "', code = '" . $data["CODE"] . "'";
+            $this->getDoctrine()->getConnection()->exec($sql);
         }
-        print_r($datas);
     }
 
     function retrieveMtrl() {
@@ -742,6 +705,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $this->setSetting("SoftoneBundle:Product:retrieveMtrl", serialize($params));
         }
         $this->retrieve($params);
+        $sql = 'UPDATE  `softone_product` SET  `tecdoc_supplier_id` =  `item_mtrmark`, `supplier_id` =  `item_mtrmanfctr`';
+        $this->getDoctrine()->getConnection()->exec($sql);
     }
 
     /**
