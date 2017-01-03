@@ -215,6 +215,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         
         
         $dtparams = array();
+        
         $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
         $dtparams[] = array("name" => "Κωδικός", "function" => 'getForOrderCode', 'search' => 'text');
         $dtparams[] = array("name" => "Είδος", "function" => 'getForOrderTitle', 'search' => 'text');
