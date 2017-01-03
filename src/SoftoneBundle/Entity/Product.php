@@ -2526,7 +2526,7 @@ class Product extends Entity {
     }
 
     function getArticleAttributes() {
-        return "";
+        //return "";
         $tecdoc = new Tecdoc();
 
         $attributs = $tecdoc->getAssignedArticlesByIds(
