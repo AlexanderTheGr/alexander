@@ -693,6 +693,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $softone = new Softone();
         $datas = $softone->createSql($params);
         foreach ((array) $datas->data as $data) {
+            print_r($data);
             $data = array($data);
             //$SoftoneSupplier = $this->getDoctrine()->getRepository('SoftoneBundle:SoftoneSupplier')->find($data["MTRMANFCTR"]);
             $SoftoneSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")
