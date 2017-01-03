@@ -66,7 +66,6 @@ class SoftoneController extends  Main {
                 $entity->setModified($dt);
                 
             } else {
-                unset($entity);
                 continue;
                 //$entity->setRepositories();                
             }
@@ -97,7 +96,6 @@ class SoftoneController extends  Main {
                     //$entity->setField($baz, $val);
                 }
             }
-            echo @$entity_id->id."<BR>";
             @$entity_id = (int) $entity->id;
             if (@$entity_id > 0) {
                 $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity_id . "'";
