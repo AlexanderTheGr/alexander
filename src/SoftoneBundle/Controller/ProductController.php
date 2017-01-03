@@ -694,7 +694,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $datas = $softone->createSql($params);
         foreach ((array) $datas->data as $data) {
             
-            $data = array($data);
+            $data = array($data[0]);
             print_r($data);
 
                 /*
