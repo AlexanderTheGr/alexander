@@ -68,7 +68,7 @@ class CustomergroupController extends Main {
             $categories2 = $this->getDoctrine()->getRepository("SoftoneBundle:Category")->findBy(array("parent" => $category->getId()));
             foreach ($categories2 as $category2) {
                 //$CategoryLang = $this->getDoctrine()->getRepository("SoftoneBundle:CategoryLang")->findOneBy(array("category" => $category2));
-                $categoriesArr[$category2->getSortcode()] = "--" . $category->getName();
+                $categoriesArr[$category2->getSortcode()] = "--" . $category2->getName();
                 //$category2->setSortcode($category->getId().$category2->getId());
                 //$this->flushpersist($category2);
             }
