@@ -509,7 +509,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->findBy(array("parent" => 0));
         $html = "<ul class='productcategory'>";
 
-        $cats = $product->getCats();
+        $cats = (array)$product->getCats();
 
         foreach ($entities as $entity) {
             $html .= "<li class='parentcategoryli' data-ref='" . $entity->getId() . "'>";
@@ -530,7 +530,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $html .= "<ul class='productcategory categoryul categoryul_" . $entity->getId() . "'>";
 
             foreach ($entities2 as $entity2) {
-                $checked = in_array($entity2->getId(), $cats) ? 'checked' : '';
+                $checked = in_array($entity2->getId(), (array)$cats) ? 'checked' : '';
                 $style = in_array($entity2->getId(), $cats) ? "style='color:red'" : '';
                 $html .= "<li ".$style." class='categoryli categoryli_" . $entity->getId() . "'><input " . $checked . " class='productcategorychk' data-product='" . $product->getId() . "' data-ref='" . $entity2->getId() . "' type='checkbox'/>" . $entity2->getName() . "</li>";
             }
