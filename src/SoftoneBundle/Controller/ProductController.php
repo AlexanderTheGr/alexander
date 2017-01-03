@@ -689,7 +689,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $this->retrieve($params);
          * 
          */
-        $sql = "SELECT M.* FROM MTRMANFCTR M ";
+        $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M ";
         $softone = new Softone();
         $datas = $softone->createSql($params);
         print_r($datas);       
