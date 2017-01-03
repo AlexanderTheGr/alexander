@@ -348,7 +348,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository('SoftoneBundle:Productcategory')
                 ->findBy(array('product' => $product->getId()));
         $cats = array();
-        foreach($categories as $category) {
+        foreach ($categories as $category) {
             $cats[] = $category->getCategory();
         }
         $product->setCats($cats);
@@ -423,8 +423,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      * 
      */
 
-    
-    
+
+
     public function gettabs($id) {
         $entity = $this->getDoctrine()
                 ->getRepository('SoftoneBundle:Product')
@@ -434,9 +434,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
         $customer = $this->getDoctrine()->getRepository('SoftoneBundle:Customer')->find(1);
         //echo $entity->getGroupedDiscount($customer);
-        
+
         $cats = $entity->getCats();
-        foreach ((array)$cats as $cat) {
+        foreach ((array) $cats as $cat) {
             $category = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Productcategory')
                     ->findOneBy(array('category' => $cat, 'product' => $entity->getId()));
@@ -447,7 +447,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 @$this->flushpersist($category);
             }
         }
-        
+
         $entity->updatetecdoc();
 
         $fields["title"] = array("label" => "Title", "required" => true, "className" => "col-md-6 col-sm-6");
@@ -509,30 +509,30 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->findBy(array("parent" => 0));
         $html = "<ul class='productcategory'>";
 
-        $cats = (array)$product->getCats();
+        $cats = (array) $product->getCats();
 
         foreach ($entities as $entity) {
             $html .= "<li class='parentcategoryli' data-ref='" . $entity->getId() . "'>";
-            
-            
+
+
             $entities2 = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Category')
                     ->findBy(array("parent" => $entity->getId()));
             $style = "";
             foreach ($entities2 as $entity2) {
                 //$style = in_array($entity2->getId(), $cats) ? "style='color:red'" : '';
-                if ( in_array($entity2->getId(), (array)$cats)) {
+                if (in_array($entity2->getId(), (array) $cats)) {
                     $style = "style='color:red'";
                 }
             }
-            $html .= "<a ".$style." data-ref='" . $entity->getId() . "' class='parentcategorylia'>" . $entity->getName() . "</a>";
-            
+            $html .= "<a " . $style . " data-ref='" . $entity->getId() . "' class='parentcategorylia'>" . $entity->getName() . "</a>";
+
             $html .= "<ul class='productcategory categoryul categoryul_" . $entity->getId() . "'>";
 
             foreach ($entities2 as $entity2) {
-                $checked = in_array($entity2->getId(), (array)$cats) ? 'checked' : '';
+                $checked = in_array($entity2->getId(), (array) $cats) ? 'checked' : '';
                 $style = in_array($entity2->getId(), $cats) ? "style='color:red'" : '';
-                $html .= "<li ".$style." class='categoryli categoryli_" . $entity->getId() . "'><input " . $checked . " class='productcategorychk' data-product='" . $product->getId() . "' data-ref='" . $entity2->getId() . "' type='checkbox'/>" . $entity2->getName() . "</li>";
+                $html .= "<li " . $style . " class='categoryli categoryli_" . $entity->getId() . "'><input " . $checked . " class='productcategorychk' data-product='" . $product->getId() . "' data-ref='" . $entity2->getId() . "' type='checkbox'/>" . $entity2->getName() . "</li>";
             }
             $html .= '</ul>';
 
@@ -672,30 +672,38 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
     function retrieveMtrmanfctr() {
         /*
-        $params = unserialize($this->getSetting("SoftoneBundle:Product:retrieveMtrcategory"));
-        if (count($params) > 0) {
-            $params["softone_object"] = 'mtrmanfctr';
-            $params["repository"] = 'SoftoneBundle:SoftoneSupplier';
-            $params["softone_table"] = 'MTRMANFCTR';
-            $params["table"] = 'softone_softone_supplier';
-            $params["object"] = 'SoftoneBundle\Entity\SoftoneSupplier';
-            $params["filter"] = '';
-            $params["relation"] = array();
-            $params["extra"] = array();
-            $params["extrafunction"] = array();
-            $this->setSetting("SoftoneBundle:Product:retrieveMtrcategory", serialize($params));
-        }
+          $params = unserialize($this->getSetting("SoftoneBundle:Product:retrieveMtrcategory"));
+          if (count($params) > 0) {
+          $params["softone_object"] = 'mtrmanfctr';
+          $params["repository"] = 'SoftoneBundle:SoftoneSupplier';
+          $params["softone_table"] = 'MTRMANFCTR';
+          $params["table"] = 'softone_softone_supplier';
+          $params["object"] = 'SoftoneBundle\Entity\SoftoneSupplier';
+          $params["filter"] = '';
+          $params["relation"] = array();
+          $params["extra"] = array();
+          $params["extrafunction"] = array();
+          $this->setSetting("SoftoneBundle:Product:retrieveMtrcategory", serialize($params));
+          }
 
-        $this->retrieve($params);
+          $this->retrieve($params);
          * 
          */
         $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M ";
         $softone = new Softone();
         $datas = $softone->createSql($params);
-        print_r($datas);       
-    }    
-    
-    
+        foreach ((array) $datas->data as $data) {
+            $SoftoneSupplier = $this->getDoctrine()->getRepository('SoftoneBundle:Productcategory')->find($data["MTRMANFCTR"]);
+            if (!$SoftoneSupplier)
+                $SoftoneSupplier = new \SoftoneBundle\Entity\SoftoneSupplier;
+            $SoftoneSupplier->setId($data["MTRMANFCTR"]);
+            $SoftoneSupplier->setTitle($data["NAME"]);
+            $SoftoneSupplier->setCode($data["NAME"]);
+            $this->flushpersist($SoftoneSupplier);
+        }
+        print_r($datas);
+    }
+
     function retrieveMtrl() {
         $params = unserialize($this->getSetting("SoftoneBundle:Product:retrieveMtrl"));
         if (count($params) > 0) {
