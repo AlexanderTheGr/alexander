@@ -696,7 +696,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             
             print_r($data);
             
-            //$data = (array)$data[0];
+            $data = (array)$data;
             
             //print_r($data);
 
