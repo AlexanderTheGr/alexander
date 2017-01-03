@@ -45,9 +45,9 @@ class SoftoneController extends  Main {
         //return;
         $softone = new Softone();
         $datas = $softone->createSql($params);
-        //print_r($datas);
+        print_r($datas);
         //return;
-        foreach ($datas->data as $data) {
+        foreach ((array)$datas->data as $data) {
             $data = (array) $data;
             $entity = $this->getDoctrine()
                     ->getRepository($params["repository"])
