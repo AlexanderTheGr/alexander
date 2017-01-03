@@ -52,7 +52,7 @@ class SoftoneController extends  Main {
         foreach ((array)$datas->data as $data) {
             $data = (array) $data;
             print_r($data);
-            continue;
+            //continue;
             $entity = $this->getDoctrine()
                     ->getRepository($params["repository"])
                     ->findOneBy(array("reference" => (int) $data[$params["softone_table"]]));
