@@ -704,7 +704,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $params["relation"]["title"] = "NAME";
             $params["relation"]["tecdocCode"] = "APVCODE";
             $params["relation"]["tecdocSupplierId"] = "MTRMARK";
-            $params["extrafunction"][] = "updatetecdoc";
+            //$params["extrafunction"][] = "updatetecdoc";
             $this->setSetting("SoftoneBundle:Product:retrieveMtrl", serialize($params));
         }
         $this->retrieve($params);
