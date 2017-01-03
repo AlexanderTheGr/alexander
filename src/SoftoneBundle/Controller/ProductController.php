@@ -836,7 +836,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $query = $em->createQuery(
                 "SELECT  p.id
                     FROM " . $this->repository . " p
-                    where p.tecdocSupplierId > 0 AND p.tecdocArticleId IS NULL order by p.id desc"
+                    where p.tecdocSupplierId > 0 AND p.tecdocArticleId IS NULL order by p.id asc"
         );
         /*
         $query = $em->createQuery(
@@ -853,14 +853,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $i = 0;
         $tecdoc = new Tecdoc();
         foreach ($results as $result) {
-            //if ($result["id"] > 356633) {
+            if ($result["id"] > 356633) {
                 $ediediitem = $em->getRepository($this->repository)->find($result["id"]);
                 $ediediitem->tecdoc = $tecdoc;
                 $ediediitem->updatetecdoc();
                 unset($ediediitem);
                 echo $result["id"]."<BR>";
-                if ($i++ > 300) exit;
-            //}
+                if ($i++ > 3000) exit;
+            }
             
             
         }
