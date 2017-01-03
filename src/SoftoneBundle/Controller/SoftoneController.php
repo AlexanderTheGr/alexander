@@ -64,6 +64,8 @@ class SoftoneController extends  Main {
                 $entity->setTs($dt);
                 $entity->setCreated($dt);
                 $entity->setModified($dt);
+                echo "ssss<BR>";
+                
             } else {
                 $entity->setRepositories();                
             }
