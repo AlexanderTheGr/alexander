@@ -51,7 +51,7 @@ class SoftoneController extends  Main {
         //return;
         foreach ((array)$datas->data as $data) {
             $data = (array) $data;
-            print_r($data);
+            //print_r($data);
             $entity = $this->getDoctrine()
                     ->getRepository($params["repository"])
                     ->findOneBy(array("reference" => (int) $data[$params["softone_table"]]));
@@ -100,8 +100,8 @@ class SoftoneController extends  Main {
                     $entity->$func();
                 }                
             }
-            //if (@$i++ > 500)
-            //    break;
+            if (@$i++ > 200)
+                break;
         }
     }   
 
