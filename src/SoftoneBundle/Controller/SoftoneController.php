@@ -51,7 +51,7 @@ class SoftoneController extends  Main {
         //return;
         foreach ((array)$datas->data as $data) {
             $data = (array) $data;
-            print_r($data);
+            //print_r($data);
             //continue;
             $entity = $this->getDoctrine()
                     ->getRepository($params["repository"])
@@ -102,6 +102,7 @@ class SoftoneController extends  Main {
                     $entity->$func();
                 }                
             }
+            echo @$i++."<BR>";
             //if (@$i++ > 100)
             //    break;
         }
