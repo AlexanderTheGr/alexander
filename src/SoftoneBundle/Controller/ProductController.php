@@ -686,7 +686,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     function retrieveMtrl() {
         $params = unserialize($this->getSetting("SoftoneBundle:Product:retrieveMtrl"));
         if (count($params) > 0) {
-            $where = 'AND MTRL < 10000';
+            $where = 'AND MTRL > 10000 AND MTRL < 30000';
             $params["softone_object"] = "item";
             $params["repository"] = 'SoftoneBundle:Product';
             $params["softone_table"] = 'MTRL';
@@ -708,7 +708,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $this->setSetting("SoftoneBundle:Product:retrieveMtrl", serialize($params));
         }
         $this->retrieve($params);
-        $sql = 'UPDATE  `softone_product` SET  `tecdoc_supplier_id` =  `item_mtrmark`, `supplier_id` =  `item_mtrmanfctr`';
+        $sql = 'UPDATE  `softone_product` SET `supplier_code` =  `item_code2`, `title` =  `item_name`, `tecdoc_code` =  `item_apvcode`, `erp_code` =  `item_code`, `tecdoc_supplier_id` =  `item_mtrmark`, `supplier_id` =  `item_mtrmanfctr`';
         $this->getDoctrine()->getConnection()->exec($sql);
     }
 
