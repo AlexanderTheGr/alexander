@@ -56,6 +56,8 @@ class SoftoneController extends  Main {
                     ->getRepository($params["repository"])
                     ->findOneBy(array("reference" => (int) $data[$params["softone_table"]]));
 
+            echo @$$entity->id."<BR>";
+            
             $dt = new \DateTime("now");
             if (@$entity->id == 0) {
                 $entity = new $object();
@@ -66,7 +68,7 @@ class SoftoneController extends  Main {
                 $entity->setRepositories();                
             }
             
-            @print_r($entity->repositories);
+            //@print_r($entity->repositories);
             foreach ($params["relation"] as $field => $extra) {
                 //echo $field." - ".@$data[$extra]."<BR>";
                 if (@$data[$extra] AND in_array($field, $fields)) {
