@@ -693,13 +693,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $softone = new Softone();
         $datas = $softone->createSql($params);
         foreach ((array) $datas->data as $data) {
-            print_r($data);
-            $data = array($data);
-            //$SoftoneSupplier = $this->getDoctrine()->getRepository('SoftoneBundle:SoftoneSupplier')->find($data["MTRMANFCTR"]);
-            $SoftoneSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")
-                ->findOneBy(array('title' => $data["NAME"]));
             
-            if ($SoftoneSupplier->id == 0) {
+            $data = array($data);
+            print_r($data);
+
                 /*
                 $SoftoneSupplier = new \SoftoneBundle\Entity\SoftoneSupplier;
                 $SoftoneSupplier->id = $data["MTRMANFCTR"];
@@ -710,7 +707,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                  */
                $sql = "Replace softone_softone_supplier SET id = '".$data["MTRMANFCTR"]."', name = '".$data["NAME"]."', code = '".$data["CODE"]."'";
                echo $sql."<BR>";
-            }
+            
             
         }
         print_r($datas);
