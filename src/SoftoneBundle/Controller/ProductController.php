@@ -686,7 +686,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     function retrieveMtrl() {
         $params = unserialize($this->getSetting("SoftoneBundle:Product:retrieveMtrl"));
         if (count($params) > 0) {
-            $where = 'AND MTRL > 10000 AND MTRL < 30000';
+            $where = 'AND MTRL > 30000 AND MTRL < 50000';
             $params["softone_object"] = "item";
             $params["repository"] = 'SoftoneBundle:Product';
             $params["softone_table"] = 'MTRL';
@@ -758,7 +758,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     ->findOneBy(array("reference" => (int) $data[$params["softone_table"]]));
 
             echo @$entity->id."<BR>";
-            if ($data[$params["softone_table"]] < 7385) continue;
+            //if ($data[$params["softone_table"]] < 7385) continue;
             $dt = new \DateTime("now");
             if (@$entity->id == 0) {
                 $entity = new $object();
