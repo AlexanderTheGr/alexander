@@ -51,15 +51,13 @@ class SoftoneController extends  Main {
         //return;
         foreach ((array)$datas->data as $data) {
             $data = (array) $data;
-            //print_r($data);
-            //continue;
+            print_r($data);
             $entity = $this->getDoctrine()
                     ->getRepository($params["repository"])
                     ->findOneBy(array("reference" => (int) $data[$params["softone_table"]]));
 
-            
+            $dt = new \DateTime("now");
             if (@$entity->id == 0) {
-                $dt = new \DateTime("now");
                 $entity = new $object();
                 $entity->setTs($dt);
                 $entity->setCreated($dt);
@@ -67,7 +65,7 @@ class SoftoneController extends  Main {
             } else {
                 $entity->setRepositories();                
             }
-            //continue;
+            
             @print_r($entity->repositories);
             foreach ($params["relation"] as $field => $extra) {
                 //echo $field." - ".@$data[$extra]."<BR>";
@@ -102,8 +100,7 @@ class SoftoneController extends  Main {
                     $entity->$func();
                 }                
             }
-            echo @$i++."<BR>";
-            //if (@$i++ > 100)
+            //if (@$i++ > 500)
             //    break;
         }
     }   
