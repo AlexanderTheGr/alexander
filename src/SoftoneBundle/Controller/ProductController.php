@@ -699,11 +699,16 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->findOneBy(array('title' => $data["NAME"]));
             
             if ($SoftoneSupplier->id == 0) {
+                /*
                 $SoftoneSupplier = new \SoftoneBundle\Entity\SoftoneSupplier;
                 $SoftoneSupplier->id = $data["MTRMANFCTR"];
                 $SoftoneSupplier->setTitle($data["NAME"]);
                 $SoftoneSupplier->setCode($data["CODE"]);
-                $this->flushpersist($SoftoneSupplier);
+                //$this->flushpersist($SoftoneSupplier);
+                 * 
+                 */
+               $sql = "Replace softone_softone_supplier SET id = '".$data["MTRMANFCTR"]."', name = '".$data["NAME"]."', code = '".$data["CODE"]."'";
+               echo $sql."<BR>";
             }
             
         }
