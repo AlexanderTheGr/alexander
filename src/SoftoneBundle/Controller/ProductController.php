@@ -29,7 +29,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $products = $this->getDoctrine()->getRepository("SoftoneBundle:Product")
                 ->findAll();
         foreach ($products as $product) {
-            $product->setProductFreesearch();
+            //$product->setProductFreesearch();
         }
 
         return $this->render('SoftoneBundle:Product:index.html.twig', array(
