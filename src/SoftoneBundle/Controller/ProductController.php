@@ -670,6 +670,25 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $this->retrieve($params);
     }
 
+    function retrieveMtrmanfctr() {
+        $params = unserialize($this->getSetting("SoftoneBundle:Product:retrieveMtrcategory"));
+        if (count($params) > 0) {
+            $params["softone_object"] = 'mtrmanfctr';
+            $params["repository"] = 'SoftoneBundle:SoftoneSupplier';
+            $params["softone_table"] = 'MTRMANFCTR';
+            $params["table"] = 'softone_softone_supplier';
+            $params["object"] = 'SoftoneBundle\Entity\SoftoneSupplier';
+            $params["filter"] = '';
+            $params["relation"] = array();
+            $params["extra"] = array();
+            $params["extrafunction"] = array();
+            $this->setSetting("SoftoneBundle:Product:retrieveMtrcategory", serialize($params));
+        }
+
+        $this->retrieve($params);
+    }    
+    
+    
     function retrieveMtrl() {
         $params = unserialize($this->getSetting("SoftoneBundle:Product:retrieveMtrl"));
         if (count($params) > 0) {
@@ -705,7 +724,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         set_time_limit(100000);
         ini_set('memory_limit', '2256M');
         echo $this->retrieveMtrcategory();
-        echo $this->retrieveMtrl();
+        echo $this->retrieveMtrmanfctr();
+        //echo $this->retrieveMtrl();
 
         return new Response(
                 "", 200
