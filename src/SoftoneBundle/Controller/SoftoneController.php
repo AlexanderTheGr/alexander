@@ -99,9 +99,10 @@ class SoftoneController extends  Main {
             @$entity_id = (int) $entity->id;
             if (@$entity_id > 0) {
                 $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity_id . "'";
+                echo $sql;
                 $em->getConnection()->exec($sql);
                 foreach ($params["extrafunction"] as $field => $func) {
-                    $entity->$func();
+                    //$entity->$func();
                 }                
             }
             //if (@$i++ > 1500)
