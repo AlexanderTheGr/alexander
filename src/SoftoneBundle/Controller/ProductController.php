@@ -698,7 +698,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $SoftoneSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")
                 ->findOneBy(array('title' => $data["NAME"]));
             
-            if (!$SoftoneSupplier) {
+            if ($SoftoneSupplier->id == 0) {
                 $SoftoneSupplier = new \SoftoneBundle\Entity\SoftoneSupplier;
                 $SoftoneSupplier->setId($data["MTRMANFCTR"]);
                 $SoftoneSupplier->setTitle($data["NAME"]);
