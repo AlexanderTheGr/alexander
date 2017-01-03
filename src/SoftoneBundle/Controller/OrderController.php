@@ -213,7 +213,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $priceField = "itemPricew";            
         }
         
-        
+        $priceField = "itemPricew"; 
         $dtparams = array();
         
         $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
