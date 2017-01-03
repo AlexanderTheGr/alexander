@@ -49,6 +49,7 @@ class SoftoneController extends  Main {
         $datas = $softone->createSql($params);
         //print_r($datas);
         //return;
+        $em = $this->getDoctrine()->getManager();
         foreach ((array)$datas->data as $data) {
             $data = (array) $data;
             //print_r($data);
@@ -85,7 +86,10 @@ class SoftoneController extends  Main {
             echo $data[$params["softone_table"]]."<BR>";
             $imporetedData = array();
             $entity->setReference($data[$params["softone_table"]]);
-            $this->flushpersist($entity);
+            
+            $em->persist($entity);
+            $em->flush();
+            //$this->flushpersist($entity);
             $q = array();
             foreach ($data as $identifier => $val) {
                 $imporetedData[strtolower($params["softone_object"] . "_" . $identifier)] = addslashes($val);
