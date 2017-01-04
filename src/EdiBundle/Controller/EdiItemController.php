@@ -263,7 +263,7 @@ class EdiItemController extends Main {
      */
     public function getUpdateTecdocAction($funct = false) {
         $em = $this->getDoctrine()->getManager();
-        
+
         $query = $em->createQuery(
                 "SELECT  p.id
                     FROM " . $this->repository . " p, EdiBundle:Edi e
@@ -271,15 +271,15 @@ class EdiItemController extends Main {
                         e.id = p.Edi AND p.tecdocArticleId IS NULL AND p.dlnr > 0  order by p.id asc"
         );
         /*
-        $query = $em->createQuery(
-                "SELECT  p.id
-                    FROM " . $this->repository . " p, EdiBundle:Edi e
-                    where 
-                        e.id = p.Edi AND p.dlnr > 0 order by p.id asc"
-        );
+          $query = $em->createQuery(
+          "SELECT  p.id
+          FROM " . $this->repository . " p, EdiBundle:Edi e
+          where
+          e.id = p.Edi AND p.dlnr > 0 order by p.id asc"
+          );
          * 
          */
-        
+
         $results = $query->getResult();
         echo count($results);
         $i = 0;
@@ -293,12 +293,9 @@ class EdiItemController extends Main {
                 //echo $result["id"]."<BR>";
                 //if ($i++ > 300) exit;
             }
-            
-            
         }
         exit;
     }
-    
 
     public function ediitemdatatable($funct = false) {
         ini_set("memory_limit", "1256M");
@@ -375,7 +372,7 @@ class EdiItemController extends Main {
                 $edi = $dt_columns[1]["search"]["value"];
 
                 //$edi = $em->getRepository("EdiBundle:Edi")->find(1);
-                $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND ((" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '".$search[1]."' OR " . $this->prefix . ".itemCode = '".$search[1]."'))";
+                $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND ((" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
             } else {
                 $this->createWhere();
             }
@@ -549,12 +546,12 @@ class EdiItemController extends Main {
                 $entities[$entity->getPartno()] = $entity;
             } else {
                 @$jsonarr[$key]['DT_RowClass'] .= $eltrekaavailability[$entity->getItemcode()] > 0 ? ' text-success ' : ' text-danger ';
-                
-                  $response = $elteka->getPartPrice(array('CustomerNo' => $this->CustomerNo, "EltrekkaRef" => $entity->getItemcode()));
-                  $xml = $response->GetPartPriceResult->any;
-                  $xml = simplexml_load_string($xml);
-                  $price = (float) $xml->Item->PriceOnPolicy;
-                 
+
+                $response = $elteka->getPartPrice(array('CustomerNo' => $this->CustomerNo, "EltrekkaRef" => $entity->getItemcode()));
+                $xml = $response->GetPartPriceResult->any;
+                $xml = simplexml_load_string($xml);
+                $price = (float) $xml->Item->PriceOnPolicy;
+
 
                 //echo "---".$xml->Item->WholePrice."\n";
                 @$jsonarr[$key]['6'] = number_format($price, 2, '.', '');
@@ -599,13 +596,13 @@ class EdiItemController extends Main {
                             $Item->UnitPrice;
                             //echo $Item->ItemCode."\n";
                             if (@$jsonarr[$ands[$Item->ItemCode]]) {
-                                
+
                                 @$jsonarr[$ands[$Item->ItemCode]]['6'] = number_format($Item->UnitPrice, 2, '.', '');
-                                
+
                                 $entity = $entities[$Item->ItemCode];
                                 $entity->setRetailprice(number_format($Item->UnitPrice, 2, '.', ''));
                                 $this->flushpersist($entity);
-                                
+
                                 if ($Item->Availability == 'green') {
                                     @$jsonarr[$ands[$Item->ItemCode]]['DT_RowClass'] .= ' text-success ';
                                 }
@@ -640,31 +637,31 @@ class EdiItemController extends Main {
         //return $data;
         //} else {
         /*
-        $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
-        $fields = array(
-            'action' => 'getSearchByIds',
-            'search' => $search
-        );
-        $fields_string = '';
-        foreach ($fields as $key => $value) {
-            $fields_string .= $key . '=' . $value . '&';
-        }
-        rtrim($fields_string, '&');
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, count($fields));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        $data = curl_exec($ch);
-        //file_put_contents(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term", $data);
-        */
+          $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
+          $fields = array(
+          'action' => 'getSearchByIds',
+          'search' => $search
+          );
+          $fields_string = '';
+          foreach ($fields as $key => $value) {
+          $fields_string .= $key . '=' . $value . '&';
+          }
+          rtrim($fields_string, '&');
+          $ch = curl_init();
+          curl_setopt($ch, CURLOPT_URL, $url);
+          curl_setopt($ch, CURLOPT_POST, count($fields));
+          curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+          $data = curl_exec($ch);
+          //file_put_contents(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term", $data);
+         */
         $params = array(
             'search' => $search
-        );        
+        );
         $tecdoc = new Tecdoc();
-        $data = $tecdoc->getArticlesSearchByIds($params);	
-        return $data->data->array;          
-        
+        $data = $tecdoc->getArticlesSearchByIds($params);
+        return $data->data->array;
+
         //return $data;
         //}
     }
