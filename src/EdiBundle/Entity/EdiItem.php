@@ -538,9 +538,9 @@ class EdiItem extends Entity {
             "articleNumber" => $this->artNr,
             "brandno" => $this->dlnr
         );
-        echo ".";
+
         
-        $tecdoc = $this->tecdoc; //new Tecdoc();
+        $tecdoc = new Tecdoc();
         $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($postparams);
         $tectdoccode = $this->artNr;
         if (count($articleDirectSearchAllNumbers->data->array) == 0) {
@@ -1003,7 +1003,7 @@ class EdiItem extends Entity {
             $response = $elteka->getPartPrice(array('CustomerNo' => $this->CustomerNo, "EltrekkaRef" => $this->getItemcode()));
             $xml = $response->GetPartPriceResult->any;
             $xml = simplexml_load_string($xml);
-            print_r($xml);
+            //print_r($xml);
             
             return $xml->Item->PriceOnPolicy;
         }
