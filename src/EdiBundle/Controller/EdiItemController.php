@@ -375,7 +375,7 @@ class EdiItemController extends Main {
                 if ($search[1] ) {
                     $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND ((" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
                 } else {
-                    $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND ((" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ")";       
+                    $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND (" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ")";       
                 }
                 
             } else {
