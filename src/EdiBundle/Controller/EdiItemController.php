@@ -389,7 +389,7 @@ class EdiItemController extends Main {
                     ->setMaxResults($request->request->get("length"))
                     ->setFirstResult($request->request->get("start"));
             $results = $query->getResult();
-            if (count($results) > 1000) return;
+            //if (count($results) > 1000) return;
         }
         $data["fields"] = $this->fields;
         $jsonarr = array();
