@@ -155,8 +155,8 @@ class CustomergroupController extends Main {
         }
          * 
          */       
-
-        $json = json_encode(array("id" => $customergrouprule->getId()));
+        $jsonarr["returnurl"] = "/customergroup/view/" . $customergrouprule->getId();
+        $json = json_encode($jsonarr);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
