@@ -411,9 +411,9 @@ class EdiOrder extends Entity {
         $buffer = "";
         foreach ($this->getEdiOrderItems() as $ediitem) {
             $buffer .= "777";
-            $buffer .= str_pad($ediitem->getEdiItem()->getItemcode(), 20);
+            $buffer .= str_pad($ediitem->getEdiItem()->getPartno(), 20);
             $buffer .= str_pad($ediitem->getQty(), 5, "0", STR_PAD_LEFT);
-            $buffer .= str_pad($ediitem->getEdiItem()->getItemcode(), 20);
+            $buffer .= str_pad($ediitem->getEdiItem()->getPartno(), 20);
             /*
               $response = $elteka->getAvailability(
               array('CustomerNo' => $this->CustomerNo,
