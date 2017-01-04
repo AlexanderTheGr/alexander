@@ -21,9 +21,9 @@ class EdiOrder extends Entity {
     }
 
     /**
-     * @var integer
+     * @var string
      */
-    private $reference = '0';
+    private $reference = '';
 
     /**
      * @var \DateTime
@@ -98,7 +98,7 @@ class EdiOrder extends Entity {
     /**
      * Get reference
      *
-     * @return integer
+     * @return string
      */
     public function getReference() {
         return $this->reference;
@@ -404,7 +404,7 @@ class EdiOrder extends Entity {
             $result = $elteka->__soapCall("PlaceOrder",array($params));
             
             $xmlNode = new \SimpleXMLElement($result->PlaceOrderResult->any);
-            print_r($xmlNode);
+            //print_r($xmlNode);
             $xmlNode->EltrekkaOrder->OrderNo;
         }
         //print_r($jsonarr);        
