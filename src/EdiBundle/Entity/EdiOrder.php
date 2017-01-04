@@ -387,12 +387,18 @@ class EdiOrder extends Entity {
             //$xml = $response->GetCustomerShipToResult->any;
             //print_r($xml);
             //$xml = simplexml_load_string($xml);
-
+            $response = $elteka->getAvailability(
+                    array('CustomerNo' => $this->CustomerNo,
+                        "RequestedQty" => 1,
+                        "EltrekkaRef" => "MNC3188"));
+            $xml = $response->GetAvailabilityResult->any;
+            $xml = simplexml_load_string($xml);
+            print_r($xml);
 
             $PartTable = array();
             $params = array(
                 "CustomerNo" => $this->CustomerNo,
-                "StoreNo" => "2",
+                "StoreNo" => "10",
                 "PurchaseOrderNo" => "ELO-" . $this->getId(),
                 "PmtTermsCode" => 10,
                 "Make" => "",
