@@ -403,7 +403,7 @@ class EdiOrder extends Entity {
             );
             print_r($params);
             $result = $elteka->__soapCall("PlaceOrder",array($params));
-            
+            print_r($result);
             $xmlNode = new \SimpleXMLElement($result->PlaceOrderResult->any);
             print_r($xmlNode);
             echo $xmlNode->EltrekkaOrder->OrderNo;
