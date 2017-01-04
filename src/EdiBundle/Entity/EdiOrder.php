@@ -394,7 +394,7 @@ class EdiOrder extends Entity {
                 "SerialNo" => "",
                 "Model" => "",
                 "UserId" => "",
-                "UserEmail" => "",
+                "UserEmail" => "a.dimeas@gmail.com",
                 "ShipToCode" => "",
                 "ShipViaCode" => 2,
                 "PartCount" => count($this->getEdiOrderItems()),
