@@ -378,8 +378,9 @@ class EdiOrder extends Entity {
                     'content' => $data_string,
                 ),
             )));
-
-            return json_decode($result);
+            
+            $order =  json_decode($result);
+            return $order->OrderId;
         } else {
             $elteka = $this->eltekaAuth();
 
@@ -405,7 +406,7 @@ class EdiOrder extends Entity {
             
             $xmlNode = new \SimpleXMLElement($result->PlaceOrderResult->any);
             //print_r($xmlNode);
-            $xmlNode->EltrekkaOrder->OrderNo;
+            return $xmlNode->EltrekkaOrder->OrderNo;
         }
         //print_r($jsonarr);        
     }
