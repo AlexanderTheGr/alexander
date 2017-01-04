@@ -2518,7 +2518,7 @@ class Product extends Entity {
     public function getForOrderSupplier() {
 
 
-        $out = '<a target="_blank" title="' . $this->erpSupplier . '" class="" car="" ref="' . $this->id . '" href="#">' . $this->erpSupplier . '</a>
+        $out = '<a target="_blank" title="' . $this->getSupplierId()->getTitle() . '" class="" car="" ref="' . $this->id . '" href="#">' . $this->getSupplierId()->getTitle() . '</a>
         <br>
         <span class="text-sm text-info">' . $this->getTecdocSupplierId()->getSupplier() . '</span>';
 
