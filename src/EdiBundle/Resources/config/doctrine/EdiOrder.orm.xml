@@ -11,12 +11,13 @@
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
         </id>
-        <field name="reference" type="integer" column="reference" nullable="true">
+
+        <field name="reference" type="string" column="reference" length="255" nullable="false">
             <options>
-                <option name="unsigned"/>
-                <option name="default">0</option>
+                <option name="fixed"/>
             </options>
-        </field>
+        </field>      
+          
         <field name="insdate" type="datetime" column="insdate" nullable="true"/>
         <field name="remarks" type="text" column="remarks" length="65535" nullable="true">
             <options>
