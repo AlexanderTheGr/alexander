@@ -400,7 +400,7 @@ class EdiOrder extends Entity {
                 "Model" => "",
                 "UserId" => "",
                 "UserEmail" => "",
-               // "ShipToCode" => 2,
+                "ShipToCode" => 2,
                 "ShipViaCode" => 2,
                 "PartCount" => count($this->getEdiOrderItems()),
                 "PartTable" => $this->createPartBuffer($elteka)
