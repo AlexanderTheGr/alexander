@@ -392,7 +392,7 @@ class EdiOrder extends Entity {
             $PartTable = array();
             $params = array(
                 "CustomerNo" => $this->CustomerNo,
-                "StoreNo" => "10",
+                "StoreNo" => "1",
                 "PurchaseOrderNo" => "ELO-" . $this->getId(),
                 "PmtTermsCode" => 2,
                 "Make" => "",
@@ -400,7 +400,7 @@ class EdiOrder extends Entity {
                 "Model" => "",
                 "UserId" => "",
                 "UserEmail" => "",
-                "ShipToCode" => 2,
+                //"ShipToCode" => 2,
                 "ShipViaCode" => 2,
                 "PartCount" => count($this->getEdiOrderItems()),
                 "PartTable" => $this->createPartBuffer($elteka)
