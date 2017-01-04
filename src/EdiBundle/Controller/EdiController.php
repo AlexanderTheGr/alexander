@@ -143,7 +143,7 @@ class EdiController extends Main {
             $params['dtparams'] = $dtparams;
             $params['id'] = $dtparams;
             $params['url'] = '/edi/edi/getrules/' . $id;
-            $params['view'] = '/edi/edi/getrule/' . $id;
+            //$params['view'] = '/edi/edi/getrule/' . $id;
             $params['key'] = 'gettabs_' . $id;
             $params["ctrl"] = 'ctrlgettabs';
             $params["app"] = 'appgettabs';
