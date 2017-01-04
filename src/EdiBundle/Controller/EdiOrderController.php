@@ -262,7 +262,7 @@ class EdiOrderController extends Main {
         $EdiOrderItem->setEdiItem($Ediitem);
         $EdiOrderItem->setField("qty", $qty);
         $EdiOrderItem->setField("price", $price);
-        $EdiOrderItem->setField("fprice", $price * $qty);
+        $EdiOrderItem->setField("fprice", (float)$price * $qty);
         $EdiOrderItem->setField("discount", 0);
         $EdiOrderItem->setField("store", $store);
         $EdiOrderItem->setField("chk", 1);
