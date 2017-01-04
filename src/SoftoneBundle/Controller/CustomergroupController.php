@@ -110,6 +110,7 @@ class CustomergroupController extends Main {
         $this->newentity[$this->repository] = $entity;
         $this->initialazeNewEntity($entity);
         $this->save();
+        $entity = $this->newentity[$this->repository];
         $jsonarr["returnurl"] = "/customergroup/view/" . $entity->getId();
         $json = json_encode($jsonarr);
         //$json = json_encode(array("ok"));
