@@ -383,17 +383,6 @@ class EdiOrder extends Entity {
         } else {
             $elteka = $this->eltekaAuth();
 
-            //$response = $elteka->GetCustomerShipTo(array("CustomerNo" => $this->CustomerNo));
-            //$xml = $response->GetCustomerShipToResult->any;
-            //print_r($xml);
-            //$xml = simplexml_load_string($xml);
-            $response = $elteka->getAvailability(
-                    array('CustomerNo' => $this->CustomerNo,
-                        "RequestedQty" => 1,
-                        "EltrekkaRef" => "MNC3188"));
-            $xml = $response->GetAvailabilityResult->any;
-            $xml = simplexml_load_string($xml);
-            print_r($xml);
 
             $PartTable = array();
             $params = array(
@@ -412,7 +401,7 @@ class EdiOrder extends Entity {
                 "PartTable" => $this->createPartBuffer($elteka)
             );
             print_r($params);
-            $result = $elteka->PlaceOrder($params);
+            $result = $elteka->__soapCall("PlaceOrder",$params);
             print_r($result);
         }
 
