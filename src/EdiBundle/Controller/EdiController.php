@@ -61,14 +61,14 @@ class EdiController extends Main {
         $categories = $this->getDoctrine()->getRepository("SoftoneBundle:Category")->findBy(array("parent" => 0));
         $categoriesArr = array();
         foreach ($categories as $category) {
-            $CategoryLang = $this->getDoctrine()->getRepository("SoftoneBundle:CategoryLang")->findOneBy(array("category" => $category));
+            //$CategoryLang = $this->getDoctrine()->getRepository("SoftoneBundle:CategoryLang")->findOneBy(array("category" => $category));
             //$category->setSortcode($category->getId()."00000");
             //$this->flushpersist($category);
-            $categoriesArr[$category->getSortcode()] = $CategoryLang->getName();
+            $categoriesArr[$category->getSortcode()] = $category->getName();
             $categories2 = $this->getDoctrine()->getRepository("SoftoneBundle:Category")->findBy(array("parent" => $category->getId()));
             foreach ($categories2 as $category2) {
-                $CategoryLang = $this->getDoctrine()->getRepository("SoftoneBundle:CategoryLang")->findOneBy(array("category" => $category2));
-                $categoriesArr[$category2->getSortcode()] = "--" . $CategoryLang->getName();
+                //$CategoryLang = $this->getDoctrine()->getRepository("SoftoneBundle:CategoryLang")->findOneBy(array("category" => $category2));
+                $categoriesArr[$category2->getSortcode()] = "--" . $category2->getName();
                 //$category2->setSortcode($category->getId().$category2->getId());
                 //$this->flushpersist($category2);
             }
