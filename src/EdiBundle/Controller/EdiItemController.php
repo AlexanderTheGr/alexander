@@ -564,7 +564,7 @@ class EdiItemController extends Main {
                   @$jsonarr[$key]['6'] = number_format($price, 2, '.', '');
                   @$jsonarr[$key]['DT_RowClass'] .= $xml->Item->Header->Available == "Y" ? ' text-success ' : ' text-danger ';
                  */
-
+                /*
                 $response = $elteka->getAvailability(
                         array('CustomerNo' => $this->CustomerNo,
                             "RequestedQty" => 1,
@@ -573,6 +573,7 @@ class EdiItemController extends Main {
                 $xml = simplexml_load_string($xml);
                 @$jsonarr[$key]['6'] = number_format((float) $xml->Item->Header->PriceOnPolicy, 2, '.', '');
                 @$jsonarr[$key]['DT_RowClass'] .= $xml->Item->Header->Available == "Y" ? ' text-success ' : ' text-danger ';
+                */
             }
             //$jsonarr2[(int)$key] = $json;
             @$jsonarr[$key]['DT_RowClass'] .= ' text-danger ';
