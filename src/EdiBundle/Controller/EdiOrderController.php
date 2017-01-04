@@ -397,7 +397,7 @@ class EdiOrderController extends Main {
                 ->find($request->request->get("id"));
         if ($EdiOrder->getReference() == "") {
             $orderNo = @$EdiOrder->sendOrder();
-
+            echo $orderNo;
             $EdiOrder->setReference($orderNo);
             $this->flushpersist($EdiOrder);
         }
