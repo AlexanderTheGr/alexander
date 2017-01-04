@@ -384,9 +384,9 @@ class EdiOrder extends Entity {
         } else {
             $elteka = $this->eltekaAuth();
             
-            //$response = $elteka->GetCustomerShipTo(array("CustomerNo" => $this->CustomerNo));
-            //$xml = $response->GetCustomerShipToResult->any;
-            //print_r($xml);
+            $response = $elteka->GetCustomerShipTo(array("CustomerNo" => $this->CustomerNo));
+            $xml = $response->GetCustomerShipToResult->any;
+            print_r($xml);
             //$xml = simplexml_load_string($xml);
             
             $PartTable = array();
