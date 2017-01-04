@@ -406,8 +406,8 @@ class EdiOrder extends Entity {
                 "PartTable" => $this->createPartBuffer($elteka)
             );
             print_r($params);
-            //$result = $elteka->PlaceOrder($params);
-            //print_r($result);
+            $result = $elteka->PlaceOrder($params);
+            print_r($result);
         }
 
 
