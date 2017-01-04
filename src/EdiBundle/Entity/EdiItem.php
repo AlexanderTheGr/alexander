@@ -690,7 +690,7 @@ class EdiItem extends Entity {
                 $SoftoneSupplier->toSoftone();
             }
         } else {
-            $SoftoneSupplier->toSoftone();
+            //$SoftoneSupplier->toSoftone();
         }
 
         /*
