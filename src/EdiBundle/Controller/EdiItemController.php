@@ -555,6 +555,7 @@ class EdiItemController extends Main {
 
                 //echo "---".$xml->Item->WholePrice."\n";
                 @$jsonarr[$key]['6'] = number_format($price, 2, '.', '');
+                @$jsonarr[$key]['DT_RowClass'] .= $xml->Item->Header->Available == "Y" ? ' text-success ' : ' text-danger ';
                 /*
                   $response = $elteka->getAvailability(
                   array('CustomerNo' => $this->CustomerNo,
