@@ -401,11 +401,9 @@ class EdiOrder extends Entity {
                 "PartTable" => $this->createPartBuffer($elteka)
             );
             print_r($params);
-            $result = $elteka->__soapCall("PlaceOrder",$params);
+            $result = $elteka->__soapCall("PlaceOrder",array($params));
             print_r($result);
         }
-
-
         //print_r($jsonarr);        
     }
 
