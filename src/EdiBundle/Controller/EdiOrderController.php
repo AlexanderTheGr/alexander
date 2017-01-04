@@ -395,10 +395,11 @@ class EdiOrderController extends Main {
         $EdiOrder = $this->getDoctrine()
                 ->getRepository('EdiBundle:EdiOrder')
                 ->find($request->request->get("id"));
-        if ($EdiOrder->getReference() == 0) {
-            $order = @$EdiOrder->sendOrder();
+        if ($EdiOrder->getReference() == "") {
+            $orderNo = @$EdiOrder->sendOrder();
             //if ($order->OrderId)
-            $EdiOrder->setReference((int) $order->OrderId);
+            
+            $EdiOrder->setReference($order->OrderId);
             $this->flushpersist($EdiOrder);
         }
 
