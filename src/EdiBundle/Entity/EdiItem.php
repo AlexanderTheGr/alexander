@@ -538,9 +538,9 @@ class EdiItem extends Entity {
             "articleNumber" => $this->artNr,
             "brandno" => $this->dlnr
         );
-
+        echo ".";
         
-        $tecdoc = new Tecdoc();
+        $tecdoc = $this->tecdoc; //new Tecdoc();
         $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($postparams);
         $tectdoccode = $this->artNr;
         if (count($articleDirectSearchAllNumbers->data->array) == 0) {
