@@ -408,10 +408,10 @@ class EltrekaediOrder extends Entity {
         $this->SoapClient->__setSoapHeaders($header);
         return $this;
     }
-    public function placeOrder($params) {
+    public function placeOrder() {
+        exit;
         $this->auth();
         $items = $this->getEltrekaediOrderItem();
-        /*
         $params["CustomerNo"] = $this->CustomerNo;
         $params["PurchaseOrderNo"] = "100".$this->id;
         $params["StoreNo"] = 10;
@@ -424,10 +424,7 @@ class EltrekaediOrder extends Entity {
         $params["ShipViaCode"] = 1;
         $params["PartCount"] = count($items);
         $params["PartTable"] = $this->getPartBuffer($items);
-        */
         $out = $this->SoapClient->PlaceOrder($params);
-        echo $out;
-        return;
         $xmlNode = new \SimpleXMLElement($out->PlaceOrderResult->any);
         return (array)$xmlNode;
     }
