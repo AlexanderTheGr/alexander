@@ -581,6 +581,10 @@ class Eltrekaedi extends Entity {
         $this->Password = $this->getSetting("EdiBundle:Eltreka:Password");
         $this->CustomerNo = $this->getSetting("EdiBundle:Eltreka:CustomerNo");
 
+        $this->Username = "TESTUID";
+        $this->Password = "TESTPWD";
+        $this->CustomerNo = "999999L";        
+        
         if ($this->SoapClient) {
             return $this;
         }
