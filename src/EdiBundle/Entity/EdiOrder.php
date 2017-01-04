@@ -440,7 +440,7 @@ class EdiOrder extends Entity {
     }
 
     protected function eltekaAuth() {
-
+        echo 'ssssssss';
         $this->SoapUrl = $this->getSetting("EdiBundle:Eltreka:SoapUrl");
         $this->SoapNs = $this->getSetting("EdiBundle:Eltreka:SoapNs");
 
