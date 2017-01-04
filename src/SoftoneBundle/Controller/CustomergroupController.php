@@ -108,9 +108,9 @@ class CustomergroupController extends Main {
 
         //$this->repository = "SoftoneBundle:Customer";
         $this->newentity[$this->repository] = $entity;
-        $this->initialazeNewEntity($entity);
+        $this->initialazeNewEntity($enitty);
         $this->save();
-        $jsonarr["returnurl"] = "/customergroup/view/" . $customergrouprule->getId();
+        $jsonarr["returnurl"] = "/customergroup/view/" . $enitty->getId();
         $json = json_encode($jsonarr);
         //$json = json_encode(array("ok"));
         return new Response(
