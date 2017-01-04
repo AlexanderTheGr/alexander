@@ -384,11 +384,11 @@ class EdiOrder extends Entity {
         } else {
             $elteka = $this->eltekaAuth();
             
-            
             //$response = $elteka->GetCustomerShipTo(array("CustomerNo" => $this->CustomerNo));
             //$xml = $response->GetCustomerShipToResult->any;
             //print_r($xml);
             //$xml = simplexml_load_string($xml);
+            
             $PartTable = array();
             $params = array(
                 "CustomerNo" => $this->CustomerNo,
@@ -437,9 +437,15 @@ class EdiOrder extends Entity {
 
         $this->SoapUrl = $this->getSetting("EdiBundle:Eltreka:SoapUrl");
         $this->SoapNs = $this->getSetting("EdiBundle:Eltreka:SoapNs");
+        
+        
         $this->Username = $this->getSetting("EdiBundle:Eltreka:Username");
         $this->Password = $this->getSetting("EdiBundle:Eltreka:Password");
         $this->CustomerNo = $this->getSetting("EdiBundle:Eltreka:CustomerNo");
+        
+        $this->Username = "TESTUID";
+        $this->Password = "TESTPWD";
+        $this->CustomerNo = "999999L";
 
         if ($this->SoapClient) {
             return $this->SoapClient;
