@@ -2021,7 +2021,7 @@ class Product extends Entity {
         $softone = new Softone();
         //$fields = $softone->retrieveFields($object, $params["list"]);
 
-        echo $softone->appId;
+        //echo $softone->appId;
         $fields[] = "item_code";
         $fields[] = "item_name";
         $fields[] = "item_code1";
