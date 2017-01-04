@@ -440,18 +440,18 @@ class EdiOrder extends Entity {
     }
 
     protected function eltekaAuth() {
-        echo 'ssssssss';
         $this->SoapUrl = $this->getSetting("EdiBundle:Eltreka:SoapUrl");
         $this->SoapNs = $this->getSetting("EdiBundle:Eltreka:SoapNs");
-
-
-        $this->Username = $this->getSetting("EdiBundle:Eltreka:Username");
-        $this->Password = $this->getSetting("EdiBundle:Eltreka:Password");
-        $this->CustomerNo = $this->getSetting("EdiBundle:Eltreka:CustomerNo");
-
+        
         $this->Username = "TESTUID";
         $this->Password = "TESTPWD";
         $this->CustomerNo = "999999L";
+
+        //$this->Username = $this->getSetting("EdiBundle:Eltreka:Username");
+        //$this->Password = $this->getSetting("EdiBundle:Eltreka:Password");
+        //$this->CustomerNo = $this->getSetting("EdiBundle:Eltreka:CustomerNo");
+
+
 
         if ($this->SoapClient) {
             return $this->SoapClient;
