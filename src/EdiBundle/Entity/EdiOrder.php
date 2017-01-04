@@ -389,7 +389,7 @@ class EdiOrder extends Entity {
                 "CustomerNo" => $this->CustomerNo,
                 "StoreNo" => "10",
                 "PurchaseOrderNo" => "EL1-" . $this->getId(),
-                "PmtTermsCode" => 10,
+                "PmtTermsCode" => 2,
                 "Make" => "",
                 "SerialNo" => "",
                 "Model" => "",
@@ -405,6 +405,7 @@ class EdiOrder extends Entity {
             
             $xmlNode = new \SimpleXMLElement($result->PlaceOrderResult->any);
             print_r($xmlNode);
+            $xmlNode->EltrekkaOrder->OrderNo;
         }
         //print_r($jsonarr);        
     }
