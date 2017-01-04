@@ -110,7 +110,9 @@ class CustomergroupController extends Main {
         $this->newentity[$this->repository] = $entity;
         $this->initialazeNewEntity($entity);
         $this->save();
-        $json = json_encode(array("ok"));
+        $jsonarr["returnurl"] = "/customergroup/view/" . $customergrouprule->getId();
+        $json = json_encode($jsonarr);
+        //$json = json_encode(array("ok"));
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
@@ -155,8 +157,8 @@ class CustomergroupController extends Main {
         }
          * 
          */       
-        $jsonarr["returnurl"] = "/customergroup/view/" . $customergrouprule->getId();
-        $json = json_encode($jsonarr);
+
+        $json = json_encode(array("id" => $customergrouprule->getId()));
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
