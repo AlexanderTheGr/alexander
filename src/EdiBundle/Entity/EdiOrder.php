@@ -406,6 +406,7 @@ class EdiOrder extends Entity {
             
             $xmlNode = new \SimpleXMLElement($result->PlaceOrderResult->any);
             //print_r($xmlNode);
+            //echo $xmlNode->EltrekkaOrder->OrderNo;
             return $xmlNode->EltrekkaOrder->OrderNo;
         }
         //print_r($jsonarr);        
