@@ -427,6 +427,7 @@ class EdiOrder extends Entity {
     }
 
     protected function eltekaAuth() {
+        ini_set("soap.wsdl_cache_enabled", "0");
         $this->SoapUrl = $this->getSetting("EdiBundle:Eltreka:SoapUrl");
         $this->SoapNs = $this->getSetting("EdiBundle:Eltreka:SoapNs");
         
@@ -444,7 +445,7 @@ class EdiOrder extends Entity {
             return $this->SoapClient;
         }
 
-        $this->SoapClient = new \SoapClient($this->SoapUrl);
+        $this->SoapClient = new \SoapClient($this->SoapUrl, array('cache_wsdl' => WSDL_CACHE_NONE) );
         $headerbody = array('Username' => $this->Username, 'Password' => $this->Password);
         $header = new \SOAPHeader($this->SoapNs, 'AuthHeader', $headerbody);
         $this->SoapClient->__setSoapHeaders($header);
