@@ -24,7 +24,6 @@ class EdiOrder extends Entity {
      * @var integer
      */
     private $reference = '0';
-    
 
     /**
      * @var \DateTime
@@ -383,18 +382,19 @@ class EdiOrder extends Entity {
             return json_decode($result);
         } else {
             $elteka = $this->eltekaAuth();
-            
-            $response = $elteka->GetCustomerShipTo(array("CustomerNo" => $this->CustomerNo));
-            $xml = $response->GetCustomerShipToResult->any;
-            print_r($xml);
+
+            //$response = $elteka->GetCustomerShipTo(array("CustomerNo" => $this->CustomerNo));
+            //$xml = $response->GetCustomerShipToResult->any;
+            //print_r($xml);
             //$xml = simplexml_load_string($xml);
-            
+
+
             $PartTable = array();
             $params = array(
                 "CustomerNo" => $this->CustomerNo,
                 "StoreNo" => "2",
                 "PurchaseOrderNo" => "ELO-" . $this->getId(),
-                "PmtTermsCode" => 2,
+                "PmtTermsCode" => 10,
                 "Make" => "",
                 "SerialNo" => "",
                 "Model" => "",
@@ -422,11 +422,11 @@ class EdiOrder extends Entity {
             $buffer .= str_pad($ediitem->getQty(), 5, "0", STR_PAD_LEFT);
             $buffer .= str_pad($ediitem->getEdiItem()->getItemcode(), 20);
             /*
-            $response = $elteka->getAvailability(
-                    array('CustomerNo' => $this->CustomerNo,
-                        "RequestedQty" => 1,
-                        "EltrekkaRef" => $ediitem->getEdiItem()->getItemcode()));
-            //print_r($response);
+              $response = $elteka->getAvailability(
+              array('CustomerNo' => $this->CustomerNo,
+              "RequestedQty" => 1,
+              "EltrekkaRef" => $ediitem->getEdiItem()->getItemcode()));
+              //print_r($response);
              * 
              */
         }
@@ -437,12 +437,12 @@ class EdiOrder extends Entity {
 
         $this->SoapUrl = $this->getSetting("EdiBundle:Eltreka:SoapUrl");
         $this->SoapNs = $this->getSetting("EdiBundle:Eltreka:SoapNs");
-        
-        
+
+
         $this->Username = $this->getSetting("EdiBundle:Eltreka:Username");
         $this->Password = $this->getSetting("EdiBundle:Eltreka:Password");
         $this->CustomerNo = $this->getSetting("EdiBundle:Eltreka:CustomerNo");
-        
+
         $this->Username = "TESTUID";
         $this->Password = "TESTPWD";
         $this->CustomerNo = "999999L";
@@ -459,14 +459,13 @@ class EdiOrder extends Entity {
         return $this->SoapClient;
     }
 
-
     /**
      * Get ediOrderItem
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getEdiOrderItem()
-    {
+    public function getEdiOrderItem() {
         return $this->EdiOrderItem;
     }
+
 }
