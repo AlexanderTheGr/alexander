@@ -426,6 +426,8 @@ class EltrekaediOrder extends Entity {
         $params["PartTable"] = $this->getPartBuffer($items);
         */
         $out = $this->SoapClient->PlaceOrder($params);
+        echo $out;
+        return;
         $xmlNode = new \SimpleXMLElement($out->PlaceOrderResult->any);
         return (array)$xmlNode;
     }
