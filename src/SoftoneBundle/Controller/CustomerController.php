@@ -130,9 +130,9 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
         $fields["customerCode"] = array("label" => "Customer Code", "required" => true);
         $fields["customerName"] = array("label" => "Customer Name", "required" => true);
-        $fields["customerAfm"] = array("label" => "Customer Afm", "required" => true);
-        $fields["customerAddress"] = array("label" => "Customer Address", "required" => true);
-        $fields["customerCity"] = array("label" => "Customer City", "required" => true);
+        $fields["customerAfm"] = array("label" => "Customer Afm", "required" => false);
+        $fields["customerAddress"] = array("label" => "Customer Address", "required" => false);
+        $fields["customerCity"] = array("label" => "Customer City", "required" => false);
         $fields["customergroup"] = array("label" => "Group","className"=>"col-md-6", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:Customergroup', 'name' => 'title', 'value' => 'id'));
        
         $priceField[] = array("value"=>"itemPricer","name"=>"Λιανική");
