@@ -677,14 +677,14 @@ class EdiItem extends Entity {
                 $SoftoneSupplier->setCode(' ');
                 $em->persist($SoftoneSupplier);
                 $em->flush();
-                $SoftoneSupplier->setCode("S" . $SoftoneSupplier->getId());
+                $SoftoneSupplier->setCode("G" . $SoftoneSupplier->getId());
                 $em->persist($SoftoneSupplier);
                 $em->flush();
                 $SoftoneSupplier->toSoftone();
             } else {
                 $SoftoneSupplier = new \SoftoneBundle\Entity\SoftoneSupplier;
                 $SoftoneSupplier->setTitle($TecdocSupplier->getSupplier());
-                $SoftoneSupplier->setCode("T" . $TecdocSupplier->id);
+                $SoftoneSupplier->setCode($TecdocSupplier->id);
                 $em->persist($SoftoneSupplier);
                 $em->flush();
                 $SoftoneSupplier->toSoftone();
