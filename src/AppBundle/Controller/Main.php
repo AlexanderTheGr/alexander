@@ -549,7 +549,7 @@ class Main extends Controller {
                         $seloptions[] = array("name" => $data ["name"]. " (" . $data ["value"] . ")", "value" => $data ["value"]);
                     }
                     //echo $field."-->(".$entity->getField($field).")";
-                    $defaultValue = $entity->getField($field) != '' ? $entity->getField($field) : NULL;
+                    $defaultValue = $entity->getField($field) != '' ? (string)$entity->getField($field) : NULL;
                     //$defaultValue = "1";
                 }                
                 /*
