@@ -97,7 +97,7 @@ class SupplierController extends \SoftoneBundle\Controller\SoftoneController  {
         $params["table"] = 'softone_supplier';
         $params["object"] = 'SoftoneBundle\Entity\Supplier';
         $params["filter"] = '';
-        //$params["filter"] = 'WHERE M.SODTYPE=13 ' . $where;
+        $params["filter"] = 'WHERE M.SODTYPE=13 ' . $where;
         $params["relation"] = array();
         $params["extra"] = array();
         $params["extrafunction"] = array();
@@ -105,5 +105,8 @@ class SupplierController extends \SoftoneBundle\Controller\SoftoneController  {
 
         $params = unserialize($this->getSetting("SoftoneBundle:Supplier:retrieveSupplier"));
         $this->retrieve($params);
+        return new Response(
+                json_encode(array()), 200, array('Content-Type' => 'application/json')
+        );        
     }
 }
