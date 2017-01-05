@@ -2097,7 +2097,9 @@ class Product extends Entity {
         $objectArr2["REMARKS"] = $this->itemRemarks;
         $objectArr2["MTRMARK"] = $this->itemMtrmark;
         $objectArr2["MTRMANFCTR"] = $this->itemMtrmanfctr > 0 ? $this->itemMtrmanfctr : 1000;
+        
         @$objectArr2["MTRSUP"]["SUPPLIER"]["CODE"] = $itemMtrsup[$this->itemMtrsup];
+        
         $objectArr[0] = $objectArr2;
         
         
