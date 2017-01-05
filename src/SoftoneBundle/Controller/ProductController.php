@@ -250,8 +250,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $entity = $this->getDoctrine()
                 ->getRepository('SoftoneBundle:Product')
                 ->find((int)$product->getId());
-        echo "(".$entity->reference.")\n";
-        exit;
         
         //echo $product->id."\n";
         //echo $product->reference."\n";
