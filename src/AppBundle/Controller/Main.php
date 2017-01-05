@@ -422,6 +422,9 @@ class Main extends Controller {
 
                 $entities[$df[0] . ":" . $df[1]]->setField($df[2], $entity);
             } else {
+                
+                echo $df[2]."-->".$val;
+                
                 $entities[$df[0] . ":" . $df[1]]->setField($df[2], $val);
             }
         }
