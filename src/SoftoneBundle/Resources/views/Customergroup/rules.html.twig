@@ -67,7 +67,11 @@
                     }],
                 rules: rules_basic
             });
-
+            setTimeout(function(){
+                jQuery(".rule-value-container select").chosen({width: '100%'});
+            },100)
+            
+            
             $('#btn-reset').on('click', function () {
                 $('#builder-basic').queryBuilder('reset');
             });
