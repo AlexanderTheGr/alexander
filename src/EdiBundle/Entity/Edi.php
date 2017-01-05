@@ -322,4 +322,33 @@ class Edi extends Entity {
         return $this->rules;
     }
 
+    /**
+     * @var integer
+     */
+    private $itemMtrsup;
+
+
+    /**
+     * Set itemMtrsup
+     *
+     * @param integer $itemMtrsup
+     *
+     * @return Edi
+     */
+    public function setItemMtrsup($itemMtrsup)
+    {
+        $this->itemMtrsup = $itemMtrsup;
+
+        return $this;
+    }
+
+    /**
+     * Get itemMtrsup
+     *
+     * @return integer
+     */
+    public function getItemMtrsup()
+    {
+        return $this->itemMtrsup;
+    }
 }
