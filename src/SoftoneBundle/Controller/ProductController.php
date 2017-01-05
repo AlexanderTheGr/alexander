@@ -464,8 +464,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $entity->updatetecdoc();
 
-        $fields["itemIsactive"] = array("label" => "Ενεργό", 'type' => "select", "required" => false, 'datasource' => array("0" => 'Oxi', '1' => 'Ναι'), "className" => "col-md-12 col-sm-12");
-
+        $fields["itemIsactive"] = array("label" => "Ενεργό",'type' => "select", 'datasource' => array("0" => 'Oxi', '1' => 'Ναι'), "required" => false, "className" => "col-md-12 col-sm-12");
+        
         $fields["title"] = array("label" => "Περιγραφή", "required" => true, "className" => "col-md-6 col-sm-6");
         $fields["erpCode"] = array("label" => "Κωδικός Είδους", "required" => true, "className" => "col-md-3 col-sm-3");
         $fields["itemCode1"] = array("label" => "Barcode", "required" => true, "className" => "col-md-3 col-sm-3");
@@ -482,10 +482,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $fields["itemMarkupw"] = array("label" => "Markup Χοδρικής", "className" => "col-md-3", "required" => true);
         $fields["itemMarkupr"] = array("label" => "Markup Λιανικής", "className" => "col-md-3", "required" => true);
 
-
-        $fields["itemRemarks"] = array("label" => "Remarks", "required" => false, 'type' => "textarea", "className" => "col-md-6 col-sm-6");
-
-
+        
+        $fields["itemRemarks"] = array("label" => "Remarks", "required" => false,'type' => "textarea", "className" => "col-md-6 col-sm-6");
+        
+        
         $forms = $this->getFormLyFields($entity, $fields);
 
         if ($id > 0 AND count($entity) > 0) {
