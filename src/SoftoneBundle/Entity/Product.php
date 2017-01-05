@@ -17,7 +17,7 @@ class Product extends Entity {
 
     var $repositories = array();
     var $uniques = array();
-
+    var $qty;
     public function __construct() {
         $this->setRepositories();
     }
@@ -458,7 +458,7 @@ class Product extends Entity {
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     var $id;
-    var $qty;
+
     /**
      * Set reference
      *
@@ -466,8 +466,6 @@ class Product extends Entity {
      *
      * @return Product
      */
-    
-
     public function setReference($reference) {
         $this->reference = $reference;
 
@@ -1740,7 +1738,7 @@ class Product extends Entity {
      * @return string
      */
     public function getCats() {
-        return (array)unserialize($this->cats);
+        return (array) unserialize($this->cats);
     }
 
     /**
@@ -1860,11 +1858,11 @@ class Product extends Entity {
                 $this->setTecdocArticleId($out->articleId);
                 $this->setTecdocArticleName($out->articleName);
                 //$this->setTecdocGenericArticleId($out->articleName);
-                
+
                 $cats = $tecdoc->getTreeForArticle($out->articleId);
                 $cats = $tecdoc->getTreeForArticle($out->articleId);
                 //print_r((array)$cats);
-                
+
                 $params = array(
                     "articleId" => $out->articleId
                 );
@@ -1873,23 +1871,23 @@ class Product extends Entity {
                 $linkingTargetId = 0;
                 foreach ($articleLinkedAllLinkingTarget->data->array as $v) {
                     if ($linkingTargetId == 0)
-                    $linkingTargetId = $v->linkingTargetId;
+                        $linkingTargetId = $v->linkingTargetId;
                     $cars[] = $v->linkingTargetId;
                     //break;
                 }
                 $categories2 = array();
-                foreach($cats as $cat) {
+                foreach ($cats as $cat) {
                     $categories2[] = $cat->tree_id;
                 }
-                $categories = $this->checkForUniqueCategory($out, $cats,$tecdoc,$linkingTargetId);
+                $categories = $this->checkForUniqueCategory($out, $cats, $tecdoc, $linkingTargetId);
                 if (count($categories) == 0) {
                     $categories = $categories2;
-                }     
+                }
                 //print_r($categories);
                 //print_r($cars);
-                $this->setCats($categories); 
-                $this->setCars($cars);                
-                
+                $this->setCats($categories);
+                $this->setCars($cars);
+
                 $em->persist($this);
                 $em->flush();
             }
@@ -1901,9 +1899,11 @@ class Product extends Entity {
         unset($tecdoc);
         //echo $result;
     }
-    function checkForUniqueCategory($article, $cats,$tecdoc,$linkingTargetId) {
-        if ($cats <= 2) return array();
-	$categories = array();	
+
+    function checkForUniqueCategory($article, $cats, $tecdoc, $linkingTargetId) {
+        if ($cats <= 2)
+            return array();
+        $categories = array();
         foreach ($cats as $c) {
 
             $params = array(
@@ -1921,6 +1921,7 @@ class Product extends Entity {
         }
         return $categories;
     }
+
     /**
      * @var integer
      */
@@ -2020,7 +2021,6 @@ class Product extends Entity {
         $object = "ITEM";
         $softone = new Softone();
         //$fields = $softone->retrieveFields($object, $params["list"]);
-
         //echo $softone->appId;
         $fields[] = "item_code";
         $fields[] = "item_name";
@@ -2048,7 +2048,7 @@ class Product extends Entity {
         $fields[] = "item_mtrmark";
         $fields[] = "item_apvcode";
         $fields[] = "item_mtrplace";
-        
+
 
         $fields[] = "item_cccfxreltdcode";
         $fields[] = "item_cccfxrelbrand";
@@ -2571,17 +2571,16 @@ class Product extends Entity {
                 ->findOneBy(array("order" => $order, "product" => $this));
 
         //if (@$orderItem->id == 0) {
-            $display = @$orderItem->id == 0 ?  "display:none" : "display:block";
+        $display = @$orderItem->id == 0 ? "display:none" : "display:block";
         //}
-        
-        return '<img width="20" style="width:20px; max-width:20px; '.$display.'" class="tick_' . $this->id . '" src="/assets/img/tick.png">';
+
+        return '<img width="20" style="width:20px; max-width:20px; ' . $display . '" class="tick_' . $this->id . '" src="/assets/img/tick.png">';
     }
 
     /**
      * @var string
      */
     private $itemRemarks;
-
 
     /**
      * Set itemRemarks
@@ -2590,8 +2589,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setItemRemarks($itemRemarks)
-    {
+    public function setItemRemarks($itemRemarks) {
         $this->itemRemarks = $itemRemarks;
 
         return $this;
@@ -2602,8 +2600,8 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getItemRemarks()
-    {
+    public function getItemRemarks() {
         return $this->itemRemarks;
     }
+
 }
