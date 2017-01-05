@@ -2088,8 +2088,8 @@ class Product extends Entity {
         $objectArr2["CODE2"] = $this->supplierCode;
         $objectArr2["ISACTIVE"] = $this->itemIsactive;
         $objectArr2["REMARKS"] = $this->itemRemarks;
-        $objectArr2["MTRMARK"] = $this->itemMtrmark->getId();
-        $objectArr2["MTRMANFCTR"] = $this->itemMtrmanfctr->getId() > 0 ? $this->itemMtrmanfctr->getId() : 1000;
+        $objectArr2["MTRMARK"] = $this->itemMtrmark;
+        $objectArr2["MTRMANFCTR"] = $this->itemMtrmanfctr > 0 ? $this->itemMtrmanfctr->getId() : 1000;
         $objectArr[0] = $objectArr2;
         $dataOut[$object] = (array) $objectArr;
         //@$dataOut["ITEEXTRA"][0] = array("NUM02" => $this->item_mtrl_iteextra_num02);
