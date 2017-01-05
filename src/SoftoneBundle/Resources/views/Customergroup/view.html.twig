@@ -110,12 +110,14 @@
         });
         $dialog.customergrouprule.dialog("open");
         setTimeout(function(){ 
-            jQuery(".rule-value-container select").chosen({width: '100%'});
+            var w = jQuery(".rule-value-container select").width();
+            jQuery(".rule-value-container select").chosen({width: w});
         },10)        
     }
     $('.rule-filter-container').live('change', function () {
         setTimeout(function(){ 
-            jQuery(".rule-value-container select").chosen({width: '100%'});
+            var w = jQuery(".rule-value-container select").width();
+            jQuery(".rule-value-container select").chosen({width: w});
         },10)         
     })
     $('#btn-delete').live('click', function () {
