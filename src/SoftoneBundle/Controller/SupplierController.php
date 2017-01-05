@@ -86,5 +86,24 @@ class SupplierController extends \SoftoneBundle\Controller\SoftoneController  {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+    /**
+     * @Route("/supplier/retrieve")
+     */    
+    function retrieveSupplier() {
+        $where = '';
+        $params["softone_object"] = 'supplier';
+        $params["repository"] = 'SoftoneBundle:Supplier';
+        $params["softone_table"] = 'TRDR';
+        $params["table"] = 'softone_supplier';
+        $params["object"] = 'SoftoneBundle\Entity\Supplier';
+        $params["filter"] = '';
+        //$params["filter"] = 'WHERE M.SODTYPE=13 ' . $where;
+        $params["relation"] = array();
+        $params["extra"] = array();
+        $params["extrafunction"] = array();
+        $this->setSetting("SoftoneBundle:Supplier:retrieveSupplier", serialize($params));
 
+        $params = unserialize($this->getSetting("SoftoneBundle:Supplier:retrieveSupplier"));
+        $this->retrieve($params);
+    }
 }
