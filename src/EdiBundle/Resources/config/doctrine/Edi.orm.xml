@@ -28,6 +28,11 @@
                 <option name="unsigned"/>
             </options>
         </field>
+        <field name="itemMtrsup" type="integer" column="item_mtrsup" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>        
         <field name="actioneer" type="integer" column="actioneer" nullable="true">
             <options>
                 <option name="unsigned"/>
