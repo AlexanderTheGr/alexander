@@ -17,11 +17,6 @@
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="supplierTrdrSupfindataLbal" type="string" column="supplier_trdr_supfindata_lbal" length="255" nullable="false">
-            <options>
-                <option name="fixed"/>
-            </options>
-        </field>
         <field name="supplierName" type="string" column="supplier_name" length="255" nullable="false">
             <options>
                 <option name="fixed"/>
