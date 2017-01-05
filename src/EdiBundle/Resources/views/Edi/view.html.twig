@@ -114,9 +114,18 @@
             rules: rules_basic
         });
         $dialog.edirule.dialog("open");
+        setTimeout(function(){ 
+            var w = jQuery(".rule-value-container select").width();
+            jQuery(".rule-value-container select").chosen({width: "300px"});
+        },10)             
         $("#price_field").val(price_fields[ref]);
     }
-
+    $('.rule-filter-container').live('change', function () {
+        setTimeout(function(){ 
+            var w = jQuery(".rule-value-container select").width();
+            jQuery(".rule-value-container select").chosen({width: "300px"});
+        },10)         
+    })
     $('#btn-delete').live('click', function () {
         var data = {};
         data.id = ref;
