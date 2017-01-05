@@ -405,8 +405,8 @@ class Main extends Controller {
                 $entities[$df[0] . ":" . $df[1]] = $this->getDoctrine()
                         ->getRepository($df[0] . ":" . $df[1])
                         ->find($df[3]);
-                echo $df[0] . ":" . $df[1]." ".$df[3]."\n";
-
+                //echo $df[0] . ":" . $df[1]." ".$df[3]."\n";
+                echo "(".$entities[$df[0] . ":" . $df[1]]->reference.")";
             }
             if ((int) $df[3] == 0) {
                 $entities[$df[0] . ":" . $df[1]] = $this->newentity[$df[0] . ":" . $df[1]];
