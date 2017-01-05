@@ -131,6 +131,7 @@
             </options>
         </field>
         
+        
         <field name="itemMtrmark" type="integer" column="item_mtrmark" nullable="true">
             <options>
                 <option name="unsigned"/>
