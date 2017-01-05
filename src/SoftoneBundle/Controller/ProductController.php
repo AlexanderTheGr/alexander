@@ -249,7 +249,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->find($product->getId());    
         
         echo $product->id."\n";
-        echo $product->reference."\n";
+        echo $product->getReference()."\n";
         //$product = $this->newentity[$this->repository];
         $product->updatetecdoc();
         $product->toSoftone();
