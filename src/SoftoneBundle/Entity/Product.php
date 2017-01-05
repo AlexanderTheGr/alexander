@@ -119,7 +119,7 @@ class Product extends Entity {
      *
      * @ORM\Column(name="title", type="text", length=65535, nullable=false)
      */
-    protected $title;
+    var $title;
 
     /**
      * @var string
