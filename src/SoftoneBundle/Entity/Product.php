@@ -1740,7 +1740,7 @@ class Product extends Entity {
      * @return string
      */
     public function getCats() {
-        return unserialize($this->cats);
+        return (array)unserialize($this->cats);
     }
 
     /**
