@@ -467,6 +467,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $dataarray[] = array("value"=>"1","name"=>"Ναι");
         $suppliers = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Supplier')->findAll();
+        $itemMtrsup = array();
         foreach($suppliers as $supplier) {
             $itemMtrsup[$supplier->getId()] = $supplier->getSupplierName();
         }
