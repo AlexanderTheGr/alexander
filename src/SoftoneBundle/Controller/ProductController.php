@@ -455,6 +455,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         if ($id == 0 AND @ $entity->id == 0) {
             $entity = new Product;
         }
+        echo "(".$entity->reference.")";
         $customer = $this->getDoctrine()->getRepository('SoftoneBundle:Customer')->find(1);
         //echo $entity->getGroupedDiscount($customer);
 
