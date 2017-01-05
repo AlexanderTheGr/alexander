@@ -478,7 +478,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     ->getRepository('SoftoneBundle:Supplier')->findAll();
         $itemMtrsup = array();
         foreach($suppliers as $supplier) {
-            $itemMtrsup[] = array("value"=>(string)$supplier->getId(),"name"=>$supplier->getSupplierName());// $supplier->getSupplierName();
+            $itemMtrsup[] = array("value"=>(string)$supplier->getReference(),"name"=>$supplier->getSupplierName());// $supplier->getSupplierName();
         }
         
         $fields["itemIsactive"] = array("label" => "Ενεργό",'type' => "select", 'dataarray' => $dataarray, "required" => false, "className" => "col-md-12 col-sm-12");
