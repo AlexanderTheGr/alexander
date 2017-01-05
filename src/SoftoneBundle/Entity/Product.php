@@ -2575,4 +2575,33 @@ class Product extends Entity {
         return '<img width="20" style="width:20px; max-width:20px; '.$display.'" class="tick_' . $this->id . '" src="/assets/img/tick.png">';
     }
 
+    /**
+     * @var string
+     */
+    private $itemRemarks;
+
+
+    /**
+     * Set itemRemarks
+     *
+     * @param string $itemRemarks
+     *
+     * @return Product
+     */
+    public function setItemRemarks($itemRemarks)
+    {
+        $this->itemRemarks = $itemRemarks;
+
+        return $this;
+    }
+
+    /**
+     * Get itemRemarks
+     *
+     * @return string
+     */
+    public function getItemRemarks()
+    {
+        return $this->itemRemarks;
+    }
 }
