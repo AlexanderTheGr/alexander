@@ -2078,7 +2078,7 @@ class Product extends Entity {
         foreach ($fields as $field) {
             $field1 = strtoupper(str_replace(strtolower($object) . "_", "", $field));
             $field2 = lcfirst($this->createName($field));
-            //echo $field2 . "<BR>";
+            echo $field2 . "<BR>";
             @$objectArr2[$field1] = $this->$field2;
             //}
         }
@@ -2087,13 +2087,14 @@ class Product extends Entity {
         $objectArr2["CODE2"] = $this->supplierCode;
         $objectArr2["ISACTIVE"] = $this->itemIsactive;
         $objectArr2["REMARKS"] = $this->itemRemarks;
+        $objectArr2["MTRMARK"] = $this->itemMtrmark;
         $objectArr2["MTRMANFCTR"] = $this->itemMtrmanfctr > 0 ? $this->itemMtrmanfctr : 1000;
         $objectArr[0] = $objectArr2;
         $dataOut[$object] = (array) $objectArr;
         //@$dataOut["ITEEXTRA"][0] = array("NUM02" => $this->item_mtrl_iteextra_num02);
-        print_r(@$dataOut);
+        //print_r(@$dataOut);
         $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
-        print_r($out);
+        //print_r($out);
 
         if (@$out->id > 0) {
             $this->reference = $out->id;
