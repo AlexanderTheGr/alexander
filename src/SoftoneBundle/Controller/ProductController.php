@@ -241,13 +241,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $product->setItemMtrmanfctr($product->getSupplierId()->getId());
         $product->setItemApvcode($product->getTecdocCode());
 
+        $product->reference = 2350;
         @$this->flushpersist($product);
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($product->getId());    
         echo $product->id."\n";
         echo $product->reference."\n";
-        echo $product->title."\n";
         //$product = $this->newentity[$this->repository];
         $product->updatetecdoc();
         $product->toSoftone();
