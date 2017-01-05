@@ -479,6 +479,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $fields["itemMarkupw"] = array("label" => "Wholesale Markup", "className" => "col-md-3", "required" => true);
         $fields["itemMarkupr"] = array("label" => "Retail Markup", "className" => "col-md-3", "required" => true);
 
+        
+        $fields["itemRemarks"] = array("label" => "Title", "required" => true,'type' => "textarea", "className" => "col-md-6 col-sm-6");
+        
+        
         $forms = $this->getFormLyFields($entity, $fields);
 
         if ($id > 0 AND count($entity) > 0) {
