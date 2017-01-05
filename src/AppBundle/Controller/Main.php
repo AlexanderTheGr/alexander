@@ -406,7 +406,6 @@ class Main extends Controller {
                         ->getRepository($df[0] . ":" . $df[1])
                         ->find($df[3]);
                 //echo $df[0] . ":" . $df[1]." ".$df[3]."\n";
-                echo "(".$entities[$df[0] . ":" . $df[1]]->reference.")";
             }
             if ((int) $df[3] == 0) {
                 $entities[$df[0] . ":" . $df[1]] = $this->newentity[$df[0] . ":" . $df[1]];
@@ -417,7 +416,6 @@ class Main extends Controller {
                 $obj = $entities[$df[0] . ":" . $df[1]]->getField($df[2]);
                 $repository = $entities[$df[0] . ":" . $df[1]]->getRepositories($df[2]);
 
-                //echo $repository."\n";
                 $entity = $this->getDoctrine()
                         ->getRepository($repository)
                         ->find($val);
@@ -428,6 +426,7 @@ class Main extends Controller {
             }
         }
         foreach ($entities as $key => $entity) {
+            echo $entity->reference;
             $entity->setModified($dt);
             $entity = $this->flushpersist($entity);
             $out[$key] = $entity->getId();
