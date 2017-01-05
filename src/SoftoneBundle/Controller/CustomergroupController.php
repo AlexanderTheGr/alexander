@@ -215,7 +215,7 @@ class CustomergroupController extends Main {
             $params['dtparams'] = $dtparams;
             $params['id'] = $dtparams;
             $params['url'] = '/customergroup/getrules/' . $id;
-            $params['view'] = '/customergroup/getrule/' . $id;
+            //$params['view'] = '/customergroup/getrule/' . $id;
             $params['key'] = 'gettabs_' . $id;
             $params["ctrl"] = 'ctrlgettabs';
             $params["app"] = 'appgettabs';
