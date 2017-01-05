@@ -2085,6 +2085,12 @@ class Product extends Entity {
             @$objectArr2[$field1] = $this->$field2;
             //}
         }
+        $suppliers = $this->getDoctrine()
+                    ->getRepository('SoftoneBundle:Supplier')->findAll();
+        $itemMtrsup = array();
+        foreach($suppliers as $supplier) {
+            $itemMtrsup[$supplier->getId()] = $supplier->getSupplierName();// $supplier->getSupplierName();
+        }        
         $objectArr2["MTRUNIT1"] = 101;
         $objectArr2["VAT"] = 1310;
         $objectArr2["CODE2"] = $this->supplierCode;
@@ -2092,7 +2098,10 @@ class Product extends Entity {
         $objectArr2["REMARKS"] = $this->itemRemarks;
         $objectArr2["MTRMARK"] = $this->itemMtrmark;
         $objectArr2["MTRMANFCTR"] = $this->itemMtrmanfctr > 0 ? $this->itemMtrmanfctr : 1000;
+        $objectArr2["MTRSUP_SUPPLIER_CODE"] = $itemMtrsup[$this->itemMtrsup];
         $objectArr[0] = $objectArr2;
+        
+        
         $dataOut[$object] = (array) $objectArr;
         //@$dataOut["ITEEXTRA"][0] = array("NUM02" => $this->item_mtrl_iteextra_num02);
         print_r(@$dataOut);
