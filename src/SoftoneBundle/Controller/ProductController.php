@@ -506,6 +506,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         
         $fields["itemRemarks"] = array("label" => "Remarks", "required" => false,'type' => "textarea", "className" => "col-md-6 col-sm-6");
         
+        $fields["reference"] = array("label" => "Reference", "className" => "col-md-2", "required" => true);
         
         $forms = $this->getFormLyFields($entity, $fields);
 
