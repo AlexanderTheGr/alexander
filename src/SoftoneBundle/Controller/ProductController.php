@@ -464,6 +464,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $entity->updatetecdoc();
 
+        $fields["itemIsactive"] = array("label" => "Περιγραφή",'type' => "checkbox", "required" => true, "className" => "col-md-12 col-sm-12");
+        
         $fields["title"] = array("label" => "Περιγραφή", "required" => true, "className" => "col-md-6 col-sm-6");
         $fields["erpCode"] = array("label" => "Κωδικός Είδους", "required" => true, "className" => "col-md-3 col-sm-3");
         $fields["itemCode1"] = array("label" => "Barcode", "required" => true, "className" => "col-md-3 col-sm-3");
