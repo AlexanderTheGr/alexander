@@ -464,7 +464,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $entity->updatetecdoc();
 
-        $fields["itemIsactive"] = array("label" => "Περιγραφή",'type' => "checkbox", "required" => true, "className" => "col-md-12 col-sm-12");
+        $fields["itemIsactive"] = array("label" => "Ενεργό",'type' => "checkbox", "required" => false, "className" => "col-md-12 col-sm-12");
         
         $fields["title"] = array("label" => "Περιγραφή", "required" => true, "className" => "col-md-6 col-sm-6");
         $fields["erpCode"] = array("label" => "Κωδικός Είδους", "required" => true, "className" => "col-md-3 col-sm-3");
@@ -476,11 +476,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-6", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id'));
         $fields["supplierCode"] = array("label" => "Supplier Code", "className" => "col-md-6", "required" => true);
 
-        $fields["itemPricew"] = array("label" => "Wholesale Price", "className" => "col-md-3", "required" => true);
-        $fields["itemPricer"] = array("label" => "Retail Price", "className" => "col-md-3", "required" => true);
+        $fields["itemPricew"] = array("label" => "Τιμή Χοδρικής", "className" => "col-md-3", "required" => true);
+        $fields["itemPricer"] = array("label" => "Τιμή Λιανικής", "className" => "col-md-3", "required" => true);
 
-        $fields["itemMarkupw"] = array("label" => "Wholesale Markup", "className" => "col-md-3", "required" => true);
-        $fields["itemMarkupr"] = array("label" => "Retail Markup", "className" => "col-md-3", "required" => true);
+        $fields["itemMarkupw"] = array("label" => "Markup Χοδρικής", "className" => "col-md-3", "required" => true);
+        $fields["itemMarkupr"] = array("label" => "Markup Λιανικής", "className" => "col-md-3", "required" => true);
 
         
         $fields["itemRemarks"] = array("label" => "Remarks", "required" => false,'type' => "textarea", "className" => "col-md-6 col-sm-6");
