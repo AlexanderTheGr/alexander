@@ -550,7 +550,7 @@ class Main extends Controller {
                     }
                     //echo $field."-->(".$entity->getField($field).")";
                     $defaultValue = $entity->getField($field) != '' ? $entity->getField($field) : NULL;
-                    $defaultValue = "1";
+                    //$defaultValue = "1";
                 }                
                 /*
                   if (@$options["required"] == '') {
