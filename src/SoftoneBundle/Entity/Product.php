@@ -2032,7 +2032,7 @@ class Product extends Entity {
         $objectArr2 = array();
         if ($this->reference > 0) {
             $data = $softone->getData($object, $this->reference);
-            print_r($data);
+            //print_r($data);
             $objectArr = $data->data->$object;
             $objectArr2 = (array) $objectArr[0];
         } else {
