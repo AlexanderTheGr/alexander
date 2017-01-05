@@ -2088,7 +2088,7 @@ class Product extends Entity {
         $suppliers = $em->getRepository('SoftoneBundle:Supplier')->findAll();
         $itemMtrsup = array();
         foreach($suppliers as $supplier) {
-            $itemMtrsup[$supplier->getId()] = $supplier->getSupplierName();// $supplier->getSupplierName();
+            $itemMtrsup[$supplier->getId()] = $supplier->getSupplierCode();// $supplier->getSupplierName();
         }        
         $objectArr2["MTRUNIT1"] = 101;
         $objectArr2["VAT"] = 1310;
