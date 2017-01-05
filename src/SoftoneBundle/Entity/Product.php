@@ -2061,7 +2061,7 @@ class Product extends Entity {
         
         if ($this->reference > 0) {
             $data = $softone->getData($object, $this->reference);
-            print_r($data);
+            
             $objectArr = $data->data->$object;
             $objectArr2 = (array) $objectArr[0];
         } else {
@@ -2076,6 +2076,7 @@ class Product extends Entity {
                 break;
             }
             $data = $softone->getData($object, $this->reference);
+            print_r($data);
             $objectArr = $data->data->$object;
             $objectArr2 = (array) $objectArr[0];
         }
