@@ -2057,7 +2057,7 @@ class Product extends Entity {
         $objectArr = array();
         $objectArr2 = array();
         
-        echo $this->id."  ".$this->reference."<BR>";
+        //echo $this->id."  ".$this->reference."<BR>";
         
         if ($this->reference > 0) {
             $data = $softone->getData($object, $this->reference);
