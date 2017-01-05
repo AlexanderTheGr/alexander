@@ -331,8 +331,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository($this->repository)
                 ->find($request->request->get("product"));
 
-        $cats = $product->getCats();
-        foreach ($cats as $cat) {
+        $cats = (array)$product->getCats();
+        foreach ((array)$cats as $cat) {
             $category = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Productcategory')
                     ->findOneBy(array('category' => $cat, 'product' => $product->getId()));
