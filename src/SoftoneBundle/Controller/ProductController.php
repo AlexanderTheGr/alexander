@@ -242,7 +242,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $product->setItemApvcode($product->getTecdocCode());
 
         @$this->flushpersist($product);
-        echo $product->reference;
+        echo (int)$product->reference;
         
         //$product = $this->newentity[$this->repository];
         $product->updatetecdoc();
