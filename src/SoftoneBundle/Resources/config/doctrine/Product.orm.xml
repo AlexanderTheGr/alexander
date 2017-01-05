@@ -124,18 +124,26 @@
                 <option name="unsigned"/>
             </options>
         </field>
-        <field name="itemMtrmanfctr" type="string" column="item_mtrmanfctr" length="255" nullable="true">
+        
+        <field name="itemMtrmanfctr" type="integer" column="item_mtrmanfctr" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
+        
         <field name="itemMtrmark" type="integer" column="item_mtrmark" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
         </field>           
         
-        
+        <field name="itemRemarks" type="string" column="item_remarks" length="65025" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+
+                
         <field name="itemMarkupw" type="decimal" column="item_markupw" precision="10" scale="2" nullable="true"/>
         <field name="itemMarkupr" type="decimal" column="item_markupr" precision="10" scale="2" nullable="true"/>
  
