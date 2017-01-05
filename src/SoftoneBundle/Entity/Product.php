@@ -2079,7 +2079,7 @@ class Product extends Entity {
         foreach ($fields as $field) {
             $field1 = strtoupper(str_replace(strtolower($object) . "_", "", $field));
             $field2 = lcfirst($this->createName($field));
-            echo $field1." -> ".$field2 . "<BR>";
+            echo $field1." -> ".$field2 . "\n";
             @$objectArr2[$field1] = $this->$field2;
             //}
         }
