@@ -458,7 +458,7 @@ class Product extends Entity {
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     var $id;
-
+    var $qty;
     /**
      * Set reference
      *
@@ -466,7 +466,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    var $qty;
+    
 
     public function setReference($reference) {
         $this->reference = $reference;
@@ -2063,9 +2063,6 @@ class Product extends Entity {
         } else {
             $filters = $object . ".CODE=" . $this->itemCode . "&" . $object . ".CODE_TO=" . $this->itemCode;
             $datas = $softone->retrieveData($object, "partsbox", $filters);
-
-
-
             foreach ($datas as $data) {
                 $data = (array) $data;
                 $zoominfo = $data["zoominfo"];
