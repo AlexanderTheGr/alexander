@@ -119,10 +119,19 @@ class EdiController extends Main {
 
         $buttons = array();
         $buttons[] = array("label" => 'Get PartMaster', 'position' => 'right', 'class' => 'btn-success');
-
+        $suppliers = $this->getDoctrine()
+                    ->getRepository('SoftoneBundle:Supplier')->findAll();
+        $itemMtrsup = array();
+        foreach($suppliers as $supplier) {
+            $itemMtrsup[] = array("value"=>(string)$supplier->getReference(),"name"=>$supplier->getSupplierName());// $supplier->getSupplierName();
+        }
+        
+        
         $fields["name"] = array("label" => "Name");
         $fields["token"] = array("label" => "Token");
         $fields["func"] = array("label" => "Func");
+        $fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "required" => false, "className" => "col-md-2", 'type' => "select", 'dataarray' => $itemMtrsup);
+
 
         $forms = $this->getFormLyFields($entity, $fields);
 
