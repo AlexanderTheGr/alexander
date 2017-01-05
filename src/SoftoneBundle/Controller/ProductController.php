@@ -463,8 +463,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
 
         $entity->updatetecdoc();
-        $dataarray[] = array("value"=>0,"name"=>"Oxi");
-        $dataarray[] = array("value"=>1,"name"=>"Ναι");
+        $dataarray[] = array("value"=>"0","name"=>"Oxi");
+        $dataarray[] = array("value"=>"1","name"=>"Ναι");
         
         $fields["itemIsactive"] = array("label" => "Ενεργό",'type' => "select", 'dataarray' => $dataarray, "required" => false, "className" => "col-md-12 col-sm-12");
         
