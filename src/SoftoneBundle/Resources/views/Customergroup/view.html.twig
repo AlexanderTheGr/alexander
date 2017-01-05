@@ -111,13 +111,13 @@
         $dialog.customergrouprule.dialog("open");
         setTimeout(function(){ 
             var w = jQuery(".rule-value-container select").width();
-            jQuery(".rule-value-container select").chosen({width: w});
+            jQuery(".rule-value-container select").chosen({width: "300px"});
         },10)        
     }
     $('.rule-filter-container').live('change', function () {
         setTimeout(function(){ 
             var w = jQuery(".rule-value-container select").width();
-            jQuery(".rule-value-container select").chosen({width: w});
+            jQuery(".rule-value-container select").chosen({width: "300px"});
         },10)         
     })
     $('#btn-delete').live('click', function () {
