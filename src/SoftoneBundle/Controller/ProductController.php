@@ -483,6 +483,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         foreach($suppliers as $supplier) {
             $itemMtrsup[] = array("value"=>(string)$supplier->getReference(),"name"=>$supplier->getSupplierName());// $supplier->getSupplierName();
         }
+        
         $fields["reference"] = array("label" => "Ενεργό",'type' => "hidden", "required" => false, "className" => "col-md-12 col-sm-12");
         
         $fields["itemIsactive"] = array("label" => "Ενεργό",'type' => "select", 'dataarray' => $dataarray, "required" => false, "className" => "col-md-12 col-sm-12");
