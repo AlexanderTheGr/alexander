@@ -109,6 +109,9 @@
             rules: rules_basic
         });
         $dialog.customergrouprule.dialog("open");
+        setTimeout(function(){
+            jQuery(".rule-value-container select").chosen({width: '100%'});
+        },100)        
     }
 
     $('#btn-delete').live('click', function () {
