@@ -2086,6 +2086,7 @@ class Product extends Entity {
         $objectArr2["VAT"] = 1310;
         $objectArr2["CODE2"] = $this->supplierCode;
         $objectArr2["ISACTIVE"] = $this->itemIsactive;
+        $objectArr2["REMARKS"] = $this->itemRemarks;
         $objectArr2["MTRMANFCTR"] = $this->itemMtrmanfctr > 0 ? $this->itemMtrmanfctr : 1000;
         $objectArr[0] = $objectArr2;
         $dataOut[$object] = (array) $objectArr;
