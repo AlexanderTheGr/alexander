@@ -478,11 +478,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-6", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id'));
         $fields["supplierCode"] = array("label" => "Supplier Code", "className" => "col-md-6", "required" => true);
 
-        $fields["itemPricew"] = array("label" => "Τιμή Χοδρικής", "className" => "col-md-3", "required" => true);
-        $fields["itemPricer"] = array("label" => "Τιμή Λιανικής", "className" => "col-md-3", "required" => true);
+        $fields["itemMtrplace"] = array("label" => "Ράφι", "className" => "col-md-2", "required" => true);
+        $fields["itemPricer"] = array("label" => "Τιμή Λιανικής", "className" => "col-md-2", "required" => true);        
+        
+        $fields["itemPricew"] = array("label" => "Τιμή Χοδρικής", "className" => "col-md-2", "required" => true);
+        $fields["itemPricer"] = array("label" => "Τιμή Λιανικής", "className" => "col-md-2", "required" => true);
 
-        $fields["itemMarkupw"] = array("label" => "Markup Χοδρικής", "className" => "col-md-3", "required" => true);
-        $fields["itemMarkupr"] = array("label" => "Markup Λιανικής", "className" => "col-md-3", "required" => true);
+        $fields["itemMarkupw"] = array("label" => "Markup Χοδρικής", "className" => "col-md-2", "required" => true);
+        $fields["itemMarkupr"] = array("label" => "Markup Λιανικής", "className" => "col-md-2", "required" => true);
 
         
         $fields["itemRemarks"] = array("label" => "Remarks", "required" => false,'type' => "textarea", "className" => "col-md-6 col-sm-6");
