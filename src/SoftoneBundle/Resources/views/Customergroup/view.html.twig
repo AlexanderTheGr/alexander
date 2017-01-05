@@ -109,11 +109,15 @@
             rules: rules_basic
         });
         $dialog.customergrouprule.dialog("open");
-        setTimeout(function(){
+        setTimeout(function(){ 
             jQuery(".rule-value-container select").chosen({width: '100%'});
         },100)        
     }
-
+    $('.rule-operator-container').live('change', function () {
+        setTimeout(function(){ 
+            jQuery(".rule-value-container select").chosen({width: '100%'});
+        },10)         
+    })
     $('#btn-delete').live('click', function () {
         var data = {};
         data.id = ref;
