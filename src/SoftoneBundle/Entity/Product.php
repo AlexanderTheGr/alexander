@@ -65,12 +65,6 @@ class Product extends Entity {
         return 'string';
     }
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="reference", type="integer", nullable=false)
-     */
-    var $reference;
 
     /**
      * @var integer
@@ -459,27 +453,7 @@ class Product extends Entity {
      */
     var $id;
 
-    /**
-     * Set reference
-     *
-     * @param integer $reference
-     *
-     * @return Product
-     */
-    public function setReference($reference) {
-        $this->reference = $reference;
 
-        return $this;
-    }
-
-    /**
-     * Get reference
-     *
-     * @return integer
-     */
-    public function getReference() {
-        return $this->reference;
-    }
 
     /**
      * Set catalogue
@@ -2604,4 +2578,33 @@ class Product extends Entity {
         return $this->itemRemarks;
     }
 
+    /**
+     * @var integer
+     */
+    var $reference;
+
+
+    /**
+     * Set reference
+     *
+     * @param integer $reference
+     *
+     * @return Product
+     */
+    public function setReference($reference)
+    {
+        $this->reference = $reference;
+
+        return $this;
+    }
+
+    /**
+     * Get reference
+     *
+     * @return integer
+     */
+    public function getReference()
+    {
+        return $this->reference;
+    }
 }
