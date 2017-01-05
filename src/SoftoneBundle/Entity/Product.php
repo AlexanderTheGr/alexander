@@ -2056,17 +2056,15 @@ class Product extends Entity {
         //return;
         $objectArr = array();
         $objectArr2 = array();
-        
-        //echo $this->id."  ".$this->reference."<BR>";
-        
         if ($this->reference > 0) {
             $data = $softone->getData($object, $this->reference);
-            
             $objectArr = $data->data->$object;
             $objectArr2 = (array) $objectArr[0];
         } else {
             $filters = $object . ".CODE=" . $this->itemCode . "&" . $object . ".CODE_TO=" . $this->itemCode;
             $datas = $softone->retrieveData($object, "partsbox", $filters);
+
+
 
             foreach ($datas as $data) {
                 $data = (array) $data;
@@ -2076,7 +2074,6 @@ class Product extends Entity {
                 break;
             }
             $data = $softone->getData($object, $this->reference);
-            print_r($data);
             $objectArr = $data->data->$object;
             $objectArr2 = (array) $objectArr[0];
         }
@@ -2088,11 +2085,6 @@ class Product extends Entity {
             @$objectArr2[$field1] = $this->$field2;
             //}
         }
-        $suppliers = $em->getRepository('SoftoneBundle:Supplier')->findAll();
-        $itemMtrsup = array();
-        foreach($suppliers as $supplier) {
-            $itemMtrsup[$supplier->getId()] = $supplier->getSupplierCode();// $supplier->getSupplierName();
-        }        
         $objectArr2["MTRUNIT1"] = 101;
         $objectArr2["VAT"] = 1310;
         $objectArr2["CODE2"] = $this->supplierCode;
@@ -2100,17 +2092,12 @@ class Product extends Entity {
         $objectArr2["REMARKS"] = $this->itemRemarks;
         $objectArr2["MTRMARK"] = $this->itemMtrmark;
         $objectArr2["MTRMANFCTR"] = $this->itemMtrmanfctr > 0 ? $this->itemMtrmanfctr : 1000;
-
-        //@$objectArr2["MTRSUP"]["SUPPLIER"]["CODE"] = $itemMtrsup[$this->itemMtrsup];
-        
         $objectArr[0] = $objectArr2;
-        
-        
         $dataOut[$object] = (array) $objectArr;
         //@$dataOut["ITEEXTRA"][0] = array("NUM02" => $this->item_mtrl_iteextra_num02);
         //print_r(@$dataOut);
         $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
-        print_r($out);
+        //print_r($out);
 
         if (@$out->id > 0) {
             $this->reference = $out->id;
