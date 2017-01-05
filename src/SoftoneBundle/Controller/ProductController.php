@@ -241,7 +241,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $product->setItemMtrmanfctr($product->getSupplierId()->getId());
         $product->setItemApvcode($product->getTecdocCode());
 
-        $product->reference = 2350;
+        //$product->reference = 2350;
         @$this->flushpersist($product);
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
