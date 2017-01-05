@@ -399,13 +399,13 @@ class Main extends Controller {
         $dt = new \DateTime("now");
         $entities = array();
         foreach ($data as $key => $val) {
-            echo $key;
-            $df = explode(":", $key);
+            echo $key."\n";
+            //$df = explode(":", $key);
             if (!@$entities[$df[0] . ":" . $df[1]]) {
                 $entities[$df[0] . ":" . $df[1]] = $this->getDoctrine()
                         ->getRepository($df[0] . ":" . $df[1])
                         ->find($df[3]);
-                
+                echo $df[0] . ":" . $df[1]." ".$df[3]."\n";
 
             }
             if ((int) $df[3] == 0) {
