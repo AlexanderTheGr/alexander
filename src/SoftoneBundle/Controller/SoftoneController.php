@@ -58,7 +58,7 @@ class SoftoneController extends  Main {
                     ->findOneBy(array("reference" => (int) $data[$params["softone_table"]]));
 
             echo @$entity->id."<BR>";
-            if ($data[$params["softone_table"]] < 7385) continue;
+            //if ($data[$params["softone_table"]] < 7385) continue;
             $dt = new \DateTime("now");
             if (@$entity->id == 0) {
                 $entity = new $object();
