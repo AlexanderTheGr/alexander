@@ -42,8 +42,8 @@
 
 .chosen-container-single .chosen-single {
     border:0px;
-    background: #ddefc9;
-    border-color: #ddefc9;
+    border-bottom-color: rgba(12, 12, 12, 0.12);
+    background: transparent;
     color: #333531;    
     border-radius: 0px;
     height: 30px;
