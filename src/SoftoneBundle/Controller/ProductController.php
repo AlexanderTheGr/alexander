@@ -247,7 +247,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($product->getId());    
-        
+        $entity = $this->getDoctrine()
+                ->getRepository('SoftoneBundle:Product')
+                ->find($product->getId());
+        echo $entity->reference."\n";
         //echo $product->id."\n";
         //echo $product->reference."\n";
         //$product = $this->newentity[$this->repository];
@@ -455,7 +458,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         if ($id == 0 AND @ $entity->id == 0) {
             $entity = new Product;
         }
-        echo "(".$entity->reference.")";
         $customer = $this->getDoctrine()->getRepository('SoftoneBundle:Customer')->find(1);
         //echo $entity->getGroupedDiscount($customer);
 
@@ -507,7 +509,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         
         $fields["itemRemarks"] = array("label" => "Remarks", "required" => false,'type' => "textarea", "className" => "col-md-6 col-sm-6");
         
-        $fields["reference"] = array("label" => "Reference", "className" => "col-md-2", "required" => true);
         
         $forms = $this->getFormLyFields($entity, $fields);
 
