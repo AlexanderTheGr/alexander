@@ -2046,6 +2046,7 @@ class Product extends Entity {
         $fields[] = "item_markupw";
         $fields[] = "item_isactive";
         $fields[] = "item_mtrmark";
+        $fields[] = "item_apvcode";
 
         $fields[] = "item_cccfxreltdcode";
         $fields[] = "item_cccfxrelbrand";
