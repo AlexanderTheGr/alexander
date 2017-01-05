@@ -269,7 +269,7 @@ class EdiController extends Main {
     
     
     /**
-     * @Route("/edi/edi/save")
+     * @Route("/edi/save")
      */
     public function savection() {
         $entity = new Edi;
