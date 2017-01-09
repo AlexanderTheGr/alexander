@@ -513,7 +513,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                   }
                  * 
                  */
-                //$json[7] = $obj->getGroupedDiscount($customer);//str_replace($obj->$priceField, $obj->getGroupedDiscount($customer), $json[5]);
+                $json[7] = $obj->getGroupedDiscount($customer);//str_replace($obj->$priceField, $obj->getGroupedDiscount($customer), $json[5]);
                 //$json[6] = str_replace("value='---'", "value='1'", $json[6]);
                 $jsonarrnoref[$result["id"]] = $json;
             }
