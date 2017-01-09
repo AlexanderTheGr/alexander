@@ -514,6 +514,10 @@ class Main extends Controller {
 
                 //$forms["html"][] = array("id" => $this->repository, "id" => $this->repository . ":" . $field . ":" . $entity->getId());
                 //$forms["html"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'defaultValue' => $entity->getField($field)->getId(), "type" => "select", "templateOptions" => array("type" => '', 'options' => $seloptions, 'defaultOptions' => array("value" => $entity->getField($field)->getId()), "label" => $options["label"], "required" => $options["required"]));
+            } elseif ($type == 'datetime') {
+                //$val = new \DateTime($val);
+                //$entities[$df[0] . ":" . $df[1]]->setField($df[2], $val);
+                @$forms["fields"][] = array("key" => $field, "className" => (string) $options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field)->format('Y-m-d'), "type" => $options["type"], "templateOptions" => array("type" => '', 'class' => '', "label" => $options["label"], "required" => $options["required"]));
             } else {
                 $formsint["html"][] = array('class' => 'form-control', "value" => $entity->getField($field), "caption" => $options["label"], "name" => $this->repository . ":" . $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'type' => 'text');
 
