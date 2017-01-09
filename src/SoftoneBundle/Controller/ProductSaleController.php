@@ -31,12 +31,18 @@ class ProductSaleController extends \SoftoneBundle\Controller\SoftoneController 
      */
     public function viewAction($id) {
 
+        $buttons = array();
+        $content = $this->gettabs($id);
+        $content = $this->content();
+
+
         return $this->render('SoftoneBundle:ProductSale:view.html.twig', array(
-                    'pagename' => 'ProductSale',
-                    'url' => '/productsale/save',
+                    'pagename' => 's',
+                    'url' => '/customer/save',
+                    'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
-                    'tabs' => $this->gettabs($id),
+                    'content' => $content,
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
