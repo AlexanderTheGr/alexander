@@ -54,7 +54,7 @@ class CustomergroupController extends Main {
         $productsales = $this->getDoctrine()->getRepository("SoftoneBundle:ProductSale")->findAll();
         $productsaleArr = array();
         foreach ($productsales as $productsale) {
-            $supplierArr[$productsale->getId()] = $productsale->getTitle();
+            $productsaleArr[$productsale->getId()] = $productsale->getTitle();
         }
         $productsalejson = json_encode($productsaleArr);        
         
