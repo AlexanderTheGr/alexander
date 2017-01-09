@@ -421,6 +421,9 @@ class Main extends Controller {
                         ->find($val);
 
                 $entities[$df[0] . ":" . $df[1]]->setField($df[2], $entity);
+            } elseif ($type == 'datetime') {    
+                $val = new \DateTime($val);
+                $entities[$df[0] . ":" . $df[1]]->setField($df[2], $val);
             } else {
                 if ($df[2] != 'reference') {
                     $entities[$df[0] . ":" . $df[1]]->setField($df[2], $val);
