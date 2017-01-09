@@ -38,7 +38,7 @@ class ProductSaleController extends \SoftoneBundle\Controller\SoftoneController 
                 ->getRepository($this->repository)
                 ->find($id);
         if ($id == 0 AND @ $entity->id == 0) {
-            $entity = new Customergroup;
+            $entity = new ProductSale;
         }
 
 
