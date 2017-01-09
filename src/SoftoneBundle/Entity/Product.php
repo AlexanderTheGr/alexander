@@ -2491,7 +2491,7 @@ class Product extends Entity {
         $discountedPrice = $this->$pricefield * (1 - $discount / 100 );
         //$finalprice = $discount > 0 ? $discountedPrice : $price;
 
-        return number_format($price, 2, '.', '')." (".$discount."%)";
+        return number_format($price, 2, '.', '')." (".(float)$discount."%)";
     }    
     
     public function getForOrderCode() {
