@@ -241,16 +241,16 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $product->setItemMtrmanfctr($product->getSupplierId()->getId());
         $product->setItemApvcode($product->getTecdocCode());
 
-        
+
         //$product->reference = 2350;
         @$this->flushpersist($product);
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
-                ->find($product->getId());    
+                ->find($product->getId());
         $entity = $this->getDoctrine()
                 ->getRepository('SoftoneBundle:Product')
-                ->find((int)$product->getId());
-        
+                ->find((int) $product->getId());
+
         //echo $product->id."\n";
         //echo $product->reference."\n";
         //$product = $this->newentity[$this->repository];
@@ -343,8 +343,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository($this->repository)
                 ->find($request->request->get("product"));
 
-        $cats = (array)$product->getCats();
-        foreach ((array)$cats as $cat) {
+        $cats = (array) $product->getCats();
+        foreach ((array) $cats as $cat) {
             $category = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Productcategory')
                     ->findOneBy(array('category' => $cat, 'product' => $product->getId()));
@@ -475,21 +475,21 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
 
         $entity->updatetecdoc();
-        $dataarray[] = array("value"=>"0","name"=>"Oxi");
-        $dataarray[] = array("value"=>"1","name"=>"Ναι");
+        $dataarray[] = array("value" => "0", "name" => "Oxi");
+        $dataarray[] = array("value" => "1", "name" => "Ναι");
         $suppliers = $this->getDoctrine()
-                    ->getRepository('SoftoneBundle:Supplier')->findAll();
+                        ->getRepository('SoftoneBundle:Supplier')->findAll();
         $itemMtrsup = array();
-        foreach($suppliers as $supplier) {
-            $itemMtrsup[] = array("value"=>(string)$supplier->getReference(),"name"=>$supplier->getSupplierName());// $supplier->getSupplierName();
+        foreach ($suppliers as $supplier) {
+            $itemMtrsup[] = array("value" => (string) $supplier->getReference(), "name" => $supplier->getSupplierName()); // $supplier->getSupplierName();
         }
-        
+
         //$fields["reference"] = array("label" => "Ενεργό", "required" => false, "className" => "col-md-12 col-sm-12");
-        
-        $fields["itemIsactive"] = array("label" => "Ενεργό",'type' => "select", 'dataarray' => $dataarray, "required" => false, "className" => "col-md-6 col-sm-6");
-        
+
+        $fields["itemIsactive"] = array("label" => "Ενεργό", 'type' => "select", 'dataarray' => $dataarray, "required" => false, "className" => "col-md-6 col-sm-6");
+
         $fields["productSale"] = array("label" => "Προσφορά", "className" => "col-md-6", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:ProductSale', 'name' => 'title', 'value' => 'id'));
-        
+
         $fields["title"] = array("label" => "Περιγραφή", "required" => true, "className" => "col-md-6 col-sm-6");
         $fields["erpCode"] = array("label" => "Κωδικός Είδους", "required" => true, "className" => "col-md-3 col-sm-3");
         $fields["itemCode1"] = array("label" => "Barcode", "required" => true, "className" => "col-md-3 col-sm-3");
@@ -503,17 +503,17 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $fields["itemMtrplace"] = array("label" => "Ράφι", "className" => "col-md-2", "required" => false);
         //$fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "className" => "col-md-2", "required" => false);        
         $fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "required" => false, "className" => "col-md-2", 'type' => "select", 'dataarray' => $itemMtrsup);
-        
+
         $fields["itemPricew"] = array("label" => "Τιμή Χοδρικής", "className" => "col-md-2", "required" => true);
         $fields["itemPricer"] = array("label" => "Τιμή Λιανικής", "className" => "col-md-2", "required" => true);
 
         $fields["itemMarkupw"] = array("label" => "Markup Χοδρικής", "className" => "col-md-2", "required" => true);
         $fields["itemMarkupr"] = array("label" => "Markup Λιανικής", "className" => "col-md-2", "required" => true);
 
-        
-        $fields["itemRemarks"] = array("label" => "Remarks", "required" => false,'type' => "textarea", "className" => "col-md-6 col-sm-6");
-        
-        
+
+        $fields["itemRemarks"] = array("label" => "Remarks", "required" => false, 'type' => "textarea", "className" => "col-md-6 col-sm-6");
+
+
         $forms = $this->getFormLyFields($entity, $fields);
 
         if ($id > 0 AND count($entity) > 0) {
@@ -634,7 +634,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $fields[] = array("name" => "ID", "index" => 'id', "active" => "active");
             $fields[] = array("name" => "Title", "index" => 'title');
             $fields[] = array("name" => "Code", "index" => 'erpCode');
-            $fields[] = array("name" => "Price", "index" => 'itemPricew01');
+            $fields[] = array("name" => "Supplier", "index" => 'supplierId:title');
+            $fields[] = array("name" => "Λιανική", "index" => 'itemPricer');
+            $fields[] = array("name" => "Χονδρική", "index" => 'itemPricew');
             $this->setSetting("SoftoneBundle:Product:getdatatable", serialize($fields));
         }
 
