@@ -9,7 +9,10 @@
 <script>
     $(".{{ctrl}}").alexTabs("{{app}}", "{{ctrl}}", "{{url}}","{{content|json_encode()}}");
     
-    $(".datetime").datepicker();
+    setTimeout(function(){
+        $(".datetime").datepicker();
+    },1000)
+    
 </script>
 
 {% endblock %}
