@@ -2459,6 +2459,7 @@ class Product extends Entity {
     function getGroupedDiscount(\SoftoneBundle\Entity\Customer $customer) {
         $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
         $sortorder = 0;
+
         foreach ($rules as $rule) {
             if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
                 $sortorder = $rule->getSortorder();
@@ -2466,7 +2467,7 @@ class Product extends Entity {
                 $price = $rule->getPrice();
             }
         }
-
+        $price = $price > 0 ? $price : $this->$pricefield;
         $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
         $discountedPrice = $this->$pricefield * (1 - $discount / 100 );
         $finalprice = $discount > 0 ? $discountedPrice : $price;
