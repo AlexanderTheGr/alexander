@@ -225,11 +225,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $dtparams[] = array("name" => "Supplier", "function" => 'getForOrderSupplier', 'search' => 'text');
         $dtparams[] = array("name" => "Χαρακτ.", "function" => 'getArticleAttributes', 'search' => 'text');
         
-        $dtparams[] = array("name" => "Price", "index" => "itemPricer", 'search' => 'text');
-        $dtparams[] = array("name" => "Price", "index" => $priceField, 'search' => 'text');
+        $dtparams[] = array("name" => "Remarks", "index" => "itemRemarks", 'search' => 'text');
+        
+        $dtparams[] = array("name" => "Λιανική", "index" => "itemPricer", 'search' => 'text');
+        $dtparams[] = array("name" => "Τιμή Πελάτη", "index" => $priceField, 'search' => 'text');
         
         
-        $dtparams[] = array("name" => "Price", "index" => $priceField, 'search' => 'text');
+        $dtparams[] = array("name" => "Τελική Τιμη", "index" => $priceField, 'search' => 'text');
         $dtparams[] = array("name" => "Αποθηκη", "function" => 'getApothiki', 'search' => 'text');
         
         $dtparams[] = array("name" => "QTY", "index" => 'qty', "input" => 'text', 'search' => 'text');
@@ -513,7 +515,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                   }
                  * 
                  */
-                $json[7] = $obj->getGroupedDiscount($customer);//str_replace($obj->$priceField, $obj->getGroupedDiscount($customer), $json[5]);
+                $json[8] = $obj->getGroupedDiscount($customer);//str_replace($obj->$priceField, $obj->getGroupedDiscount($customer), $json[5]);
                 //$json[6] = str_replace("value='---'", "value='1'", $json[6]);
                 $jsonarrnoref[$result["id"]] = $json;
             }
@@ -541,6 +543,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $json[] = "<span car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->genericArticleName . "</span>";
                 $json[] = "<span  car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->brandName . "</span>";
                 $json[] = $this->getArticleAttributes($v->articleId);
+                $json[] = "";
                 $json[] = "";
                 $json[] = "";
                 $json[] = "";
