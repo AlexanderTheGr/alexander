@@ -40,7 +40,7 @@ class ProductSale extends Entity {
     private $title;
 
     /**
-     * @var \DateTime
+     * @var string
      */
     private $expired;
 
@@ -94,7 +94,7 @@ class ProductSale extends Entity {
     /**
      * Set expired
      *
-     * @param \DateTime $expired
+     * @return string
      *
      * @return ProductSale
      */
@@ -107,7 +107,7 @@ class ProductSale extends Entity {
     /**
      * Get expired
      *
-     * @return \DateTime
+     * @return string
      */
     public function getExpired() {
         return $this->expired;
