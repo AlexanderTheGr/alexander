@@ -62,7 +62,7 @@ class ProductSaleController extends \SoftoneBundle\Controller\SoftoneController 
 
         $jsonarr = array();
         //if ($this->newentity[$this->repository]->getId()) {
-            $jsonarr["returnurl"] = "/customer/view/" . $this->newentity[$this->repository]->getId();
+            $jsonarr["returnurl"] = "/productsale/view/" . $this->newentity[$this->repository]->getId();
         //}
         $json = json_encode($jsonarr);
         return new Response(
