@@ -10,7 +10,7 @@
     $(".{{ctrl}}").alexTabs("{{app}}", "{{ctrl}}", "{{url}}","{{content|json_encode()}}");
     
     setTimeout(function(){
-        $(".datetime input").datepicker();
+        $(".datetime input").datepicker({dateFormat:'Y-m-d'});
     },1000)
     
 </script>
