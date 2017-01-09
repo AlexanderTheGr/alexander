@@ -629,7 +629,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     public function getdatatableAction(Request $request) {
 
         $fields = array();
-        $fields = unserialize($this->getSetting("SoftoneBundle:Product:getdatatable"));
+        //$fields = unserialize($this->getSetting("SoftoneBundle:Product:getdatatable"));
         //if (count($fields) == 0 OR $this->getSetting("SoftoneBundle:Product:getdatatable") == '') {
             $fields[] = array("name" => "ID", "index" => 'id', "active" => "active");
             $fields[] = array("name" => "Title", "index" => 'title');
