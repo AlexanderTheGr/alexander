@@ -16,7 +16,7 @@ class ProductSaleController extends \SoftoneBundle\Controller\SoftoneController 
      */
     public function indexAction() {
 
-        return $this->render('productsale/index.html.twig', array(
+        return $this->render('SoftoneBundle:ProductSale:index.html.twig', array(
                     'pagename' => 'ProductSales',
                     'url' => '/productsale/getdatatable',
                     'view' => '/productsale/view',
@@ -31,7 +31,7 @@ class ProductSaleController extends \SoftoneBundle\Controller\SoftoneController 
      */
     public function viewAction($id) {
 
-        return $this->render('productsale/view.html.twig', array(
+        return $this->render('SoftoneBundle:ProductSale:view.html.twig', array(
                     'pagename' => 'ProductSale',
                     'url' => '/productsale/save',
                     'ctrl' => $this->generateRandomString(),
