@@ -517,7 +517,8 @@ class Main extends Controller {
             } elseif ($options["type"] == 'datetime') {
                 //$val = new \DateTime($val);
                 //$entities[$df[0] . ":" . $df[1]]->setField($df[2], $val);
-                @$forms["fields"][] = array("key" => $field, "className" => (string) $options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => 'sss', "type" => "input", "templateOptions" => array("type" => '', 'class' => '', "label" => $options["label"], "required" => $options["required"]));
+                $defaultValue = $entity->getId() > 0 ? $entity->getField($field)->format('Y-m-d') : '';
+                @$forms["fields"][] = array("key" => $field, "className" => (string) $options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $defaultValue, "type" => "input", "templateOptions" => array("type" => '', 'class' => '', "label" => $options["label"], "required" => $options["required"]));
             } else {
                 $formsint["html"][] = array('class' => 'form-control', "value" => $entity->getField($field), "caption" => $options["label"], "name" => $this->repository . ":" . $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'type' => 'text');
 
@@ -580,7 +581,8 @@ class Main extends Controller {
             } elseif ($options["type"] == 'datetime') {
                 //$val = new \DateTime($val);
                 //$entities[$df[0] . ":" . $df[1]]->setField($df[2], $val);
-                @$forms["fields"][] = array("key" => $field, "className" => (string) $options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field)->format('Y-m-d'), "type" => "input", "templateOptions" => array("type" => '', 'class' => '', "label" => $options["label"], "required" => $options["required"]));
+                $defaultValue = $entity->getId() > 0 ? $entity->getField($field)->format('Y-m-d') : '';
+                @$forms["fields"][] = array("key" => $field, "className" => (string) $options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $defaultValue, "type" => "input", "templateOptions" => array("type" => '', 'class' => '', "label" => $options["label"], "required" => $options["required"]));
             } else {
 
                 //echo "A".@$options["required"]."<BR>";
