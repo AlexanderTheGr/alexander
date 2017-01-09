@@ -25,7 +25,16 @@ class ProductSale extends Entity {
         $this->$field = $val;
         return $val;
     }
-
+    public function gettype($field) {
+        $this->types['customergroup'] = 'object';
+        if (@$this->types[$field] != '') {
+            return @$this->types[$field];
+        }
+        if (gettype($field) != NULL) {
+            return gettype($this->$field);
+        }
+        return 'string';
+    }
     /**
      * @var string
      */
