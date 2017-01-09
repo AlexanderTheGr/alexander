@@ -2456,7 +2456,7 @@ class Product extends Entity {
         return $this->edis;
     }
 
-    function getGroupedDiscount(\SoftoneBundle\Entity\Customer $customer) {
+    function getGroupedDiscount(\SoftoneBundle\Entity\Customer $customer,$vat = 1) {
         $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
         $sortorder = 0;
 
@@ -2472,10 +2472,10 @@ class Product extends Entity {
         $discountedPrice = $this->$pricefield * (1 - $discount / 100 );
         $finalprice = $discount > 0 ? $discountedPrice : $price;
 
-        return number_format($finalprice, 2, '.', '');
+        return number_format($finalprice*$vat, 2, '.', '');
     }
 
-    function getDiscount(\SoftoneBundle\Entity\Customer $customer) {
+    function getDiscount(\SoftoneBundle\Entity\Customer $customer,$vat = 1) {
         $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
         $sortorder = 0;
 
@@ -2491,7 +2491,7 @@ class Product extends Entity {
         $discountedPrice = $this->$pricefield * (1 - $discount / 100 );
         //$finalprice = $discount > 0 ? $discountedPrice : $price;
 
-        return number_format($price, 2, '.', '')." (".(float)$discount."%)";
+        return number_format($price*$vat, 2, '.', '')." (".(float)$discount."%)";
     }    
     
     public function getForOrderCode() {
