@@ -84,7 +84,9 @@ class ProductSaleController extends \SoftoneBundle\Controller\SoftoneController 
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($id);
-
+        if ($id == 0 AND @ $entity->id == 0) {
+            $entity = new ProductSale;
+        }
         
         $fields["title"] = array("label" => "Title");
         $fields["expired"] = array("label" => "Expired","type"=>'datetime', "className" => "col-md-12 col-sm-12 datetime");
