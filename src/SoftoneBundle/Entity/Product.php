@@ -59,6 +59,7 @@ class Product extends Entity {
     public function gettype($field) {
         $this->types['tecdocSupplierId'] = 'object';
         $this->types['supplierId'] = 'object';
+        $this->types['productSale'] = 'object';
         if (@$this->types[$field] != '') {
             return @$this->types[$field];
         }
