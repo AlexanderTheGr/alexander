@@ -2475,6 +2475,25 @@ class Product extends Entity {
         return number_format($finalprice, 2, '.', '');
     }
 
+    function getDiscount(\SoftoneBundle\Entity\Customer $customer) {
+        $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
+        $sortorder = 0;
+
+        foreach ($rules as $rule) {
+            if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
+                $sortorder = $rule->getSortorder();
+                $discount = $rule->getVal();
+                $price = $rule->getPrice();
+            }
+        }
+        $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
+        $price = $price > 0 ? $price : $this->$pricefield;
+        $discountedPrice = $this->$pricefield * (1 - $discount / 100 );
+        //$finalprice = $discount > 0 ? $discountedPrice : $price;
+
+        return number_format($price, 2, '.', '')." (".$discount."%)";
+    }    
+    
     public function getForOrderCode() {
 
         $out = '<a title="' . $this->title . '" class="product_info" car="" ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
