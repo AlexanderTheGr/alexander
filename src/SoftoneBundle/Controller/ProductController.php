@@ -486,7 +486,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         
         //$fields["reference"] = array("label" => "Ενεργό", "required" => false, "className" => "col-md-12 col-sm-12");
         
-        $fields["itemIsactive"] = array("label" => "Ενεργό",'type' => "select", 'dataarray' => $dataarray, "required" => false, "className" => "col-md-12 col-sm-12");
+        $fields["itemIsactive"] = array("label" => "Ενεργό",'type' => "select", 'dataarray' => $dataarray, "required" => false, "className" => "col-md-6 col-sm-6");
+        
+        $fields["productSale"] = array("label" => "Προσφορά", "className" => "col-md-6", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:ProductSale', 'name' => 'title', 'value' => 'id'));
         
         $fields["title"] = array("label" => "Περιγραφή", "required" => true, "className" => "col-md-6 col-sm-6");
         $fields["erpCode"] = array("label" => "Κωδικός Είδους", "required" => true, "className" => "col-md-3 col-sm-3");
