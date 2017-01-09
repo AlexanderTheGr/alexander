@@ -62,9 +62,11 @@ class ProductSaleController extends \SoftoneBundle\Controller\SoftoneController 
                 ->getRepository($this->repository)
                 ->find($id);
 
-        $fields["productsaleCode"] = array("label" => "Code");
-        $fields["productsaleName"] = array("label" => "Name");
-
+        
+        $fields["title"] = array("label" => "Title");
+        $fields["expited"] = array("label" => "Expited");
+        
+        
         $forms = $this->getFormLyFields($entity, $fields);
 
         $this->addTab(array("title" => "General", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
@@ -79,8 +81,9 @@ class ProductSaleController extends \SoftoneBundle\Controller\SoftoneController 
         $this->repository = 'SoftoneBundle:ProductSale';
 
         $this->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
-                ->addField(array("name" => "Code", "index" => 'productsaleCode'))
-                ->addField(array("name" => "Name", "index" => 'productsaleName'));
+                ->addField(array("name" => "Name", "index" => 'title'))
+                ->addField(array("name" => "Expired", "index" => 'expited'))
+                ;
         $json = $this->datatable();
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
