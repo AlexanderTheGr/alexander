@@ -31,7 +31,16 @@ class ProductSaleController extends \SoftoneBundle\Controller\SoftoneController 
      * @Route("/productsale/view/{id}")
      */
     public function viewAction($id) {
-
+        $buttons = array();
+        $content = $this->gettabs($id);
+        $content = $this->content();
+        $entity = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->find($id);
+        if ($id == 0 AND @ $entity->id == 0) {
+            $entity = new ProductSale;
+        }
+        
         $buttons = array();
         $content = $this->gettabs($id);
         $content = $this->content();
