@@ -92,9 +92,9 @@ class ProductSale extends Entity {
     }
 
     /**
-     * Set expired
+     * Set title
      *
-     * @return string
+     * @param string $expired
      *
      * @return ProductSale
      */
