@@ -421,7 +421,7 @@ class Main extends Controller {
                         ->find($val);
 
                 $entities[$df[0] . ":" . $df[1]]->setField($df[2], $entity);
-            } elseif ($type == 'datetime') {   
+            } elseif ($type == 'datetime') {
                 $val = new \DateTime($val);
                 $entities[$df[0] . ":" . $df[1]]->setField($df[2], $val);
             } else {
@@ -431,7 +431,7 @@ class Main extends Controller {
             }
         }
         foreach ($entities as $key => $entity) {
-           // echo "(".$entity->reference.")";
+            // echo "(".$entity->reference.")";
             $entity->setModified($dt);
             $entity = $this->flushpersist($entity);
             $out[$key] = $entity->getId();
@@ -489,6 +489,10 @@ class Main extends Controller {
             if (@$options["className"] == "") {
                 $options["className"] = 'col-md-12';
             }
+            if ($options["type"] == 'datetime') {
+                
+            }
+
             if ($options["type"] == 'select') {
                 @$options["required"] = $options["required"] ? $options["required"] : true;
 
@@ -503,7 +507,7 @@ class Main extends Controller {
                 if ($options["dataarray"]) {
                     $seloptions = array();
                     foreach (@(array) $options["dataarray"] as $data) {
-                        $seloptions[] = array("name" => $data ["name"]. " (" . $data ["value"] . ")", "value" => $data ["value"]);
+                        $seloptions[] = array("name" => $data ["name"] . " (" . $data ["value"] . ")", "value" => $data ["value"]);
                     }
                 }
 
@@ -552,12 +556,12 @@ class Main extends Controller {
                 if ($options["dataarray"]) {
                     $seloptions = array();
                     foreach (@(array) $options["dataarray"] as $data) {
-                        $seloptions[] = array("name" => $data ["name"]. " (" . $data ["value"] . ")", "value" => $data ["value"]);
+                        $seloptions[] = array("name" => $data ["name"] . " (" . $data ["value"] . ")", "value" => $data ["value"]);
                     }
                     //echo $field."-->(".$entity->getField($field).")";
-                    $defaultValue = $entity->getField($field) != '' ? (string)$entity->getField($field) : NULL;
+                    $defaultValue = $entity->getField($field) != '' ? (string) $entity->getField($field) : NULL;
                     //$defaultValue = "1";
-                }                
+                }
                 /*
                   if (@$options["required"] == '') {
                   $options["required"] = 1;
@@ -569,6 +573,10 @@ class Main extends Controller {
 
 
                 @$forms["fields"][] = array("key" => $field, "className" => (string) $options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'defaultValue' => $defaultValue, "type" => "select", "templateOptions" => array("type" => '', 'options' => $seloptions, 'defaultOptions' => array("value" => $defaultValue), "label" => $options["label"], "required" => $options["required"]));
+            } elseif ($type == 'datetime') {
+                //$val = new \DateTime($val);
+                //$entities[$df[0] . ":" . $df[1]]->setField($df[2], $val);
+                @$forms["fields"][] = array("key" => $field, "className" => (string) $options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field)->format('Y-m-d'), "type" => $options["type"], "templateOptions" => array("type" => '', 'class' => '', "label" => $options["label"], "required" => $options["required"]));
             } else {
 
                 //echo "A".@$options["required"]."<BR>";
@@ -745,6 +753,7 @@ class Main extends Controller {
 
         return $data;
     }
+
     function convertImageToJpg($image, $docfile) {
         try {
             if (file_exists($image)) {
@@ -759,4 +768,5 @@ class Main extends Controller {
             echo $e->getMessage();
         }
     }
+
 }
