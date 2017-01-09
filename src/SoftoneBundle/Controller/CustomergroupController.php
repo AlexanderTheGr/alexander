@@ -51,6 +51,13 @@ class CustomergroupController extends Main {
         }
 
 
+        $productsales = $this->getDoctrine()->getRepository("SoftoneBundle:ProductSale")->findAll();
+        $productsaleArr = array();
+        foreach ($productsales as $productsale) {
+            $supplierArr[$productsale->getId()] = $supplier->getTitle();
+        }
+        $productsalejson = json_encode($productsaleArr);        
+        
         $suppliers = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")->findAll();
         $supplierArr = array();
         foreach ($suppliers as $supplier) {
@@ -96,6 +103,7 @@ class CustomergroupController extends Main {
                     'group' => $id,
                     'supplierjson' => $supplierjson,
                     "categoryjson" => $categoryjson,
+                    "productsalejson" => $productsalejson,
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
