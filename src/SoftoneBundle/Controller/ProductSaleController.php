@@ -5,6 +5,7 @@ namespace SoftoneBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use SoftoneBundle\Entity\ProductSale as ProductSale;
 use AppBundle\Controller\Main as Main;
 
 class ProductSaleController extends \SoftoneBundle\Controller\SoftoneController  {
@@ -51,8 +52,19 @@ class ProductSaleController extends \SoftoneBundle\Controller\SoftoneController 
      * @Route("/productsale/save")
      */
     public function savection() {
-        $this->save();
-        $json = json_encode(array("ok"));
+        $entity = new ProductSale;
+
+        //$this->repository = "SoftoneBundle:Customer";
+        $this->newentity[$this->repository] = $entity;
+        $this->initialazeNewEntity($entity);
+
+        $out = $this->save();
+
+        $jsonarr = array();
+        //if ($this->newentity[$this->repository]->getId()) {
+            $jsonarr["returnurl"] = "/customer/view/" . $this->newentity[$this->repository]->getId();
+        //}
+        $json = json_encode($jsonarr);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
