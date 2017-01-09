@@ -300,7 +300,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     public function fororderitemsDatatable($id = false) {
         ini_set("memory_limit", "1256M");
         $request = Request::createFromGlobals();
-
+        $vat = 1.24;
         $recordsTotal = 0;
         $recordsFiltered = 0;
         //$this->q_or = array();
@@ -515,8 +515,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                   }
                  * 
                  */
-                $json[7] = $obj->getDiscount($customer);
-                $json[8] = $obj->getGroupedDiscount($customer);//str_replace($obj->$priceField, $obj->getGroupedDiscount($customer), $json[5]);
+                $json[6] = $json[7] * $vat;
+                $json[7] = $obj->getDiscount($customer,$vat);
+                $json[8] = $obj->getGroupedDiscount($customer,$vat);//str_replace($obj->$priceField, $obj->getGroupedDiscount($customer), $json[5]);
                 //$json[6] = str_replace("value='---'", "value='1'", $json[6]);
                 $jsonarrnoref[$result["id"]] = $json;
             }
