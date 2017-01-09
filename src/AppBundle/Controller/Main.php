@@ -579,7 +579,8 @@ class Main extends Controller {
                 @$forms["fields"][] = array("key" => $field, "className" => (string) $options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'defaultValue' => $defaultValue, "type" => "select", "templateOptions" => array("type" => '', 'options' => $seloptions, 'defaultOptions' => array("value" => $defaultValue), "label" => $options["label"], "required" => $options["required"]));
             } elseif ($type == 'datetime') {
                 //$val = new \DateTime($val);
-                //$entities[$df[0] . ":" . $df[1]]->setField($df[2], $val);
+                //$entities[$df[0] . 
+                //":" . $df[1]]->setField($df[2], $val);
                 echo 'ssssss';
                 @$forms["fields"][] = array("key" => $field, "className" => (string) $options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => 'ssss', "type" => "input", "templateOptions" => array("type" => '', 'class' => '', "label" => $options["label"], "required" => $options["required"]));
             } else {
