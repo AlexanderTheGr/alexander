@@ -514,10 +514,10 @@ class Main extends Controller {
 
                 //$forms["html"][] = array("id" => $this->repository, "id" => $this->repository . ":" . $field . ":" . $entity->getId());
                 //$forms["html"][] = array("key" => $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'defaultValue' => $entity->getField($field)->getId(), "type" => "select", "templateOptions" => array("type" => '', 'options' => $seloptions, 'defaultOptions' => array("value" => $entity->getField($field)->getId()), "label" => $options["label"], "required" => $options["required"]));
-            } elseif ($type == 'datetime') {
+            } elseif ($options["type"] == 'datetime') {
                 //$val = new \DateTime($val);
                 //$entities[$df[0] . ":" . $df[1]]->setField($df[2], $val);
-                //@$forms["fields"][] = array("key" => $field, "className" => (string) $options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => 'sss', "type" => "input", "templateOptions" => array("type" => '', 'class' => '', "label" => $options["label"], "required" => $options["required"]));
+                @$forms["fields"][] = array("key" => $field, "className" => (string) $options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => 'sss', "type" => "input", "templateOptions" => array("type" => '', 'class' => '', "label" => $options["label"], "required" => $options["required"]));
             } else {
                 $formsint["html"][] = array('class' => 'form-control', "value" => $entity->getField($field), "caption" => $options["label"], "name" => $this->repository . ":" . $field, "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'type' => 'text');
 
@@ -577,12 +577,10 @@ class Main extends Controller {
 
 
                 @$forms["fields"][] = array("key" => $field, "className" => (string) $options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'defaultValue' => $defaultValue, "type" => "select", "templateOptions" => array("type" => '', 'options' => $seloptions, 'defaultOptions' => array("value" => $defaultValue), "label" => $options["label"], "required" => $options["required"]));
-            } elseif ($type == 'datetime') {
+            } elseif ($options["type"] == 'datetime') {
                 //$val = new \DateTime($val);
-                //$entities[$df[0] . 
-                //":" . $df[1]]->setField($df[2], $val);
-                echo 'ssssss';
-                //@$forms["fields"][] = array("key" => $field, "className" => (string) $options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => 'ssss', "type" => "input", "templateOptions" => array("type" => '', 'class' => '', "label" => $options["label"], "required" => $options["required"]));
+                //$entities[$df[0] . ":" . $df[1]]->setField($df[2], $val);
+                @$forms["fields"][] = array("key" => $field, "className" => (string) $options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field)->format('Y-m-d'), "type" => "input", "templateOptions" => array("type" => '', 'class' => '', "label" => $options["label"], "required" => $options["required"]));
             } else {
 
                 //echo "A".@$options["required"]."<BR>";
