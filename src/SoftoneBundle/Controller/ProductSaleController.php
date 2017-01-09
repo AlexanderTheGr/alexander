@@ -41,6 +41,7 @@ class ProductSaleController extends \SoftoneBundle\Controller\SoftoneController 
             $entity = new ProductSale;
         }
         
+        
         $buttons = array();
         $content = $this->gettabs($id);
         $content = $this->content();
