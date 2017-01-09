@@ -630,7 +630,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $fields = array();
         $fields = unserialize($this->getSetting("SoftoneBundle:Product:getdatatable"));
-        if (count($fields) == 0 OR $this->getSetting("SoftoneBundle:Product:getdatatable") == '') {
+        //if (count($fields) == 0 OR $this->getSetting("SoftoneBundle:Product:getdatatable") == '') {
             $fields[] = array("name" => "ID", "index" => 'id', "active" => "active");
             $fields[] = array("name" => "Title", "index" => 'title');
             $fields[] = array("name" => "Code", "index" => 'erpCode');
@@ -638,7 +638,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $fields[] = array("name" => "Λιανική", "index" => 'itemPricer');
             $fields[] = array("name" => "Χονδρική", "index" => 'itemPricew');
             $this->setSetting("SoftoneBundle:Product:getdatatable", serialize($fields));
-        }
+        //}
 
 
         foreach ($fields as $field) {
