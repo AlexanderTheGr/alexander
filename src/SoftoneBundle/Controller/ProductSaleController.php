@@ -38,13 +38,8 @@ class ProductSaleController extends \SoftoneBundle\Controller\SoftoneController 
                 ->getRepository($this->repository)
                 ->find($id);
         if ($id == 0 AND @ $entity->id == 0) {
-            $entity = new ProductSale;
+            $entity = new Customergroup;
         }
-        
-        
-        $buttons = array();
-        $content = $this->gettabs($id);
-        $content = $this->content();
 
 
         return $this->render('SoftoneBundle:ProductSale:view.html.twig', array(
