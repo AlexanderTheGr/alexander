@@ -38,7 +38,7 @@ class ProductSaleController extends \SoftoneBundle\Controller\SoftoneController 
 
         return $this->render('SoftoneBundle:ProductSale:view.html.twig', array(
                     'pagename' => 's',
-                    'url' => '/customer/save',
+                    'url' => '/productsale/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
