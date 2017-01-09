@@ -575,8 +575,6 @@ class Main extends Controller {
                   }
                  * 
                  */
-
-
                 @$forms["fields"][] = array("key" => $field, "className" => (string) $options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), 'defaultValue' => $defaultValue, "type" => "select", "templateOptions" => array("type" => '', 'options' => $seloptions, 'defaultOptions' => array("value" => $defaultValue), "label" => $options["label"], "required" => $options["required"]));
             } elseif ($options["type"] == 'datetime') {
                 //$val = new \DateTime($val);
