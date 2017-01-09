@@ -582,7 +582,7 @@ class Main extends Controller {
                 //$entities[$df[0] . 
                 //":" . $df[1]]->setField($df[2], $val);
                 echo 'ssssss';
-                @$forms["fields"][] = array("key" => $field, "className" => (string) $options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => 'ssss', "type" => "input", "templateOptions" => array("type" => '', 'class' => '', "label" => $options["label"], "required" => $options["required"]));
+                //@$forms["fields"][] = array("key" => $field, "className" => (string) $options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => 'ssss', "type" => "input", "templateOptions" => array("type" => '', 'class' => '', "label" => $options["label"], "required" => $options["required"]));
             } else {
 
                 //echo "A".@$options["required"]."<BR>";
