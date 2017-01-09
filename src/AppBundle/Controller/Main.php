@@ -399,7 +399,7 @@ class Main extends Controller {
         $dt = new \DateTime("now");
         $entities = array();
         foreach ($data as $key => $val) {
-            echo $key."\n";
+            //echo $key."\n";
             $df = explode(":", $key);
             if (!@$entities[$df[0] . ":" . $df[1]]) {
                 $entities[$df[0] . ":" . $df[1]] = $this->getDoctrine()
@@ -422,9 +422,7 @@ class Main extends Controller {
 
                 $entities[$df[0] . ":" . $df[1]]->setField($df[2], $entity);
             } elseif ($type == 'datetime') {   
-                echo $val;
                 $val = new \DateTime($val);
-                
                 $entities[$df[0] . ":" . $df[1]]->setField($df[2], $val);
             } else {
                 if ($df[2] != 'reference') {
