@@ -26,6 +26,7 @@ class ProductSale extends Entity {
         return $val;
     }
     public function gettype($field) {
+        $this->types['expired'] = 'datetime';
         if (@$this->types[$field] != '') {
             return @$this->types[$field];
         }
@@ -40,7 +41,7 @@ class ProductSale extends Entity {
     private $title;
 
     /**
-     * @var string
+     * @var \DateTime
      */
     private $expired;
 
@@ -92,9 +93,9 @@ class ProductSale extends Entity {
     }
 
     /**
-     * Set title
+     * Set expired
      *
-     * @param string $expired
+     * @return string
      *
      * @return ProductSale
      */
@@ -107,7 +108,7 @@ class ProductSale extends Entity {
     /**
      * Get expired
      *
-     * @return string
+     * @return \DateTime
      */
     public function getExpired() {
         return $this->expired;
