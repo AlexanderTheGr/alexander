@@ -70,7 +70,7 @@ class ProductSaleController extends \SoftoneBundle\Controller\SoftoneController 
 
         
         $fields["title"] = array("label" => "Title");
-        $fields["expited"] = array("label" => "Expited",'className' => 'datetime');
+        $fields["expited"] = array("label" => "Expited",'className' => 'asdfg');
         
         
         $forms = $this->getFormLyFields($entity, $fields);
