@@ -256,9 +256,10 @@ class Main extends Controller {
                 $field["content"] .= '</select>';
             } elseif (count($field_order) > 1 AND @ $field["type"] == "select") {
                 $em = $this->getDoctrine()->getManager();
+                $object = @ $field["object"] ? $field["object"] : ucfirst($field_order[0]);
                 $query = $em->createQuery(
                         'SELECT  ' . $this->prefix . '.id, ' . $this->prefix . '.' . $field_order[1] . '
-                                FROM ' . $bundle[0] . ':' . ucfirst($field_order[0]) . ' ' . $this->prefix . '
+                                FROM ' . $bundle[0] . ':' . $object . ' ' . $this->prefix . '
                                 ORDER BY ' . $this->prefix . '.' . $field_order[1]
                 );
                 $results = $query->getResult();
