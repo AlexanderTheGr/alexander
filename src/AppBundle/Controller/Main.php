@@ -580,7 +580,7 @@ class Main extends Controller {
             } elseif ($type == 'datetime') {
                 //$val = new \DateTime($val);
                 //$entities[$df[0] . ":" . $df[1]]->setField($df[2], $val);
-                @$forms["fields"][] = array("key" => $field, "className" => (string) $options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field)->format('Y-m-d'), "type" => "input", "templateOptions" => array("type" => '', 'class' => '', "label" => $options["label"], "required" => $options["required"]));
+                @$forms["fields"][] = array("key" => $field, "className" => (string) $options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => 'ssss', "type" => "input", "templateOptions" => array("type" => '', 'class' => '', "label" => $options["label"], "required" => $options["required"]));
             } else {
 
                 //echo "A".@$options["required"]."<BR>";
