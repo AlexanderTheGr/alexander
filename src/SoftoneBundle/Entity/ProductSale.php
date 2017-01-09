@@ -21,6 +21,11 @@ class ProductSale extends Entity {
         return $this->$field;
     }
 
+    public function setRepositories() {
+        //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:TecdocSupplier';
+        $this->types['expired'] = 'datetime';
+        //$this->tecdocSupplierId = new \SoftoneBundle\Entity\TecdocSupplier;
+    }
     public function setField($field, $val) {
         $this->$field = $val;
         return $val;
