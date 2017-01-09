@@ -2628,4 +2628,33 @@ class Product extends Entity {
     {
         return $this->reference;
     }
+    /**
+     * @var \SoftoneBundle\Entity\ProductSale
+     */
+    private $productSale;
+
+
+    /**
+     * Set productSale
+     *
+     * @param \SoftoneBundle\Entity\ProductSale $productSale
+     *
+     * @return Product
+     */
+    public function setProductSale(\SoftoneBundle\Entity\ProductSale $productSale = null)
+    {
+        $this->productSale = $productSale;
+
+        return $this;
+    }
+
+    /**
+     * Get productSale
+     *
+     * @return \SoftoneBundle\Entity\ProductSale
+     */
+    public function getProductSale()
+    {
+        return $this->productSale;
+    }
 }
