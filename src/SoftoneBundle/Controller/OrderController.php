@@ -814,6 +814,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $repository = $this->getDoctrine()->getRepository('SoftoneBundle:BrandModel');
         $brandsmodels = $repository->findBy(array('brand' => $request->request->get("brand")), array('brandModel' => 'ASC'));
         $out = array();
+        $o["id"] = 0;
+        $o["name"] = "Select";
+        $out[] = $o;        
         foreach ($brandsmodels as $brandsmodel) {
             $o["id"] = $brandsmodel->getId();
             $o["name"] = $brandsmodel->getBrandModel();
@@ -831,8 +834,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
      */
     function getmodeltypes(Request $request) {
         $repository = $this->getDoctrine()->getRepository('SoftoneBundle:BrandModelType');
-        $brandsmodeltypes = $repository->findBy(array('brandModel' => $request->request->get("model")));
+        $brandsmodeltypes = $repository->findBy(array('brandModel' => $request->request->get("model")), array('brandModelType' => 'ASC'));
         $out = array();
+        $out = array();
+        $o["id"] = 0;
+        $o["name"] = "Select";
+        $out[] = $o;          
         foreach ($brandsmodeltypes as $brandsmodeltype) {
             $o["id"] = $brandsmodeltype->getId();
             if ($brandsmodeltype->getEngine() != "") {
