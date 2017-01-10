@@ -340,7 +340,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 @$articleIds2 = unserialize(base64_decode($search[0]));
             }
 
-
+            //$articleIds2["linkingTargetId"];
 
             $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
             //print_r($articleIds);
@@ -515,6 +515,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                   }
                  * 
                  */
+                $json[4] = $obj->getArticleAttributes($articleIds2["linkingTargetId"]);
                 $json[6] = number_format($json[7] * $vat, 2, '.', '');;
                 $json[7] = $obj->getDiscount($customer,$vat);
                 $json[8] = $obj->getGroupedDiscount($customer,$vat);//str_replace($obj->$priceField, $obj->getGroupedDiscount($customer), $json[5]);
@@ -544,7 +545,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 //$json[] = "<span car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span>";
                 $json[] = "<span car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->genericArticleName . "</span>";
                 $json[] = "<span  car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->brandName . "</span>";
-                $json[] = $this->getArticleAttributes($v->articleId);
+                $json[] = $this->getArticleAttributes($v->articleId,$articleIds2["linkingTargetId"]);
                 $json[] = "";
                 $json[] = "";
                 $json[] = "";
@@ -565,14 +566,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         return json_encode($data);
     }
     
-    function getArticleAttributes($articleId) {
+    function getArticleAttributes($articleId,$linkingTargetId='') {
 
         $tecdoc = new Tecdoc();
 
         $attributs = $tecdoc->getAssignedArticlesByIds(
                 array(
                     "articleId" => $articleId,
-                    "linkingTargetId" => ""
+                    "linkingTargetId" => $linkingTargetId
         ));
         $arr = array();
         $descrption .= "<ul class='product_attributes' style='max-height: 100px; overflow: hidden;'>";
@@ -943,6 +944,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $all["matched"] = (array) $matched;
             $all["edimatched"] = (array) $edimatched;
             $all["articleIds"] = @(array) $dt->articleIds;
+            $all["linkingTargetId"] = $params["linkingTargetId"];
             $dt->all = base64_encode(serialize($all));
             //$data[$key] = $dt;
         }
