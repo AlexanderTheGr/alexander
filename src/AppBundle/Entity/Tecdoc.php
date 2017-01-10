@@ -509,7 +509,7 @@ class Tecdoc extends Entity {
 
     function articleAttributesRow($params = array()) {
 
-        $attributs = $this->getAssignedArticlesByIds(array($params));
+        $attributs = $this->getAssignedArticlesByIds($params);
         $arr = array();
         //echo serialize($attributs->data->array[0]->articleAttributes->array);
         //return;
