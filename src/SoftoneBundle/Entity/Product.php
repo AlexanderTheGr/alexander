@@ -2555,7 +2555,36 @@ class Product extends Entity {
         $descrption .= "</ul>";
         return $linkingTargetId.$descrption;
     }
+    
+    function getArticleAttributes2($linkingTargetId) {
+        //return "";
+        $tecdoc = new Tecdoc();
 
+        $attributs = $tecdoc->getAssignedArticlesByIds(
+                array(
+                    "articleId" => $this->tecdocArticleId,
+                    "linkingTargetId" => (string)$linkingTargetId
+        ));
+        $arr = array();
+        $descrption .= "<ul class='product_attributes' style='max-height: 100px; overflow: hidden;'>";
+        $attributes = array();
+        foreach ($attributs->data->array[0]->articleAttributes->array as $attribute) {
+            if (!$attributes[$attribute->attrId]) {
+                $attributes[$attribute->attrId][] = trim(str_replace("[" . $attribute->attrUnit . "]", "", $attribute->attrName)) . ": " . $attribute->attrValue . $attribute->attrUnit;
+            } else {
+                $attributes[$attribute->attrId][] = $attribute->attrValue . $attribute->attrUnit;
+            }
+        }
+        foreach ($attributes as $attrId => $attribute) {
+            //if (!in_array($attribute->attrId, $arr)) {
+            $arr[$attrId] = $attribute->attrId;
+            $descrption .= "<li class='attr_" . $attrId . "'>" . implode(" / ", $attribute) . "</li>";
+            //}
+        }
+        $descrption .= "</ul>";
+        return $linkingTargetId.$descrption;
+    }
+    
     function getApothiki() {
         return '1 / <span class="text-lg text-bold text-accent-dark">1</span> (' . $this->itemMtrplace . ")";
     }
