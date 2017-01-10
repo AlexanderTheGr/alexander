@@ -682,8 +682,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //print_r( $out["articlesSearch"]);
         $egarmoges = '<ul>';
         foreach (unserialize($this->efarmoges($article_id)) as $efarmogi) {
-            $m = $this->getDoctrine()->getRepository('SoftoneBundle:BrandModelType')->find($efarmogi);
-            $egarmoges .= '<li>' . $m->getBrandModelType() . '</li>';
+            $brandModelType = $this->getDoctrine()->getRepository('SoftoneBundle:BrandModelType')->find($efarmogi);
+            $brandModel= $this->getDoctrine()->getRepository('SoftoneBundle:BrandModelType')->find($brandModelType->getBrandModel());
+            $brand= $this->getDoctrine()->getRepository('SoftoneBundle:BrandModelType')->find($brandModel->getBrand());
+            $egarmoges .= '<li>'.$brand->getBrand().' '.$brandModel->getBrandModel().' ' . $brandModelType->getBrandModelType() . '</li>';
         }
         $egarmoges .= '</ul>';
         $out["efarmoges"] = $egarmoges;
