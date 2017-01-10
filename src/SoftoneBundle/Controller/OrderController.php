@@ -815,7 +815,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $brandsmodels = $repository->findBy(array('brand' => $request->request->get("brand")), array('brandModel' => 'ASC'));
         $out = array();
         $o["id"] = 0;
-        $o["name"] = "Select An Option";
+        $o["name"] = "Select an Option";
         $out[] = $o;        
         foreach ($brandsmodels as $brandsmodel) {
             $o["id"] = $brandsmodel->getId();
@@ -838,7 +838,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $out = array();
         $out = array();
         $o["id"] = 0;
-        $o["name"] = "Select An Option";
+        $o["name"] = "Select an Option";
         $out[] = $o;          
         foreach ($brandsmodeltypes as $brandsmodeltype) {
             $o["id"] = $brandsmodeltype->getId();
