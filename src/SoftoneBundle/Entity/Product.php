@@ -2553,7 +2553,7 @@ class Product extends Entity {
             //}
         }
         $descrption .= "</ul>";
-        return $linkingTargetId.$descrption;
+        return $descrption;
     }
     
     function getArticleAttributes2($linkingTargetId) {
@@ -2582,7 +2582,7 @@ class Product extends Entity {
             //}
         }
         $descrption .= "</ul>";
-        return $linkingTargetId.$descrption;
+        return $descrption;
     }
     
     function getApothiki() {
