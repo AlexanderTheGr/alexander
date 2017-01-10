@@ -592,7 +592,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             //}
         }
         $descrption .= "</ul>";
-        return $linkingTargetId.$descrption;
+        return $descrption;
     }
     
     public function softoneCalculate($jsonarr, $id) {
