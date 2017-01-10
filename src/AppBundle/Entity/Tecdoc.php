@@ -484,8 +484,9 @@ class Tecdoc extends Entity {
 
     
     function getEfarmoges($params) {
-        print_r($params);
+
         $articleLinkedAllLinkingTarget = $this->getArticleLinkedAllLinkingTarget($params);
+        print_r($articleLinkedAllLinkingTarget);
         $out = array();
         foreach ($articleLinkedAllLinkingTarget->data->array as $v) {
             if ($kkk++ > 500)
