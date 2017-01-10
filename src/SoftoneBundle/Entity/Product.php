@@ -2527,14 +2527,14 @@ class Product extends Entity {
         return $out;
     }
 
-    function getArticleAttributes() {
+    function getArticleAttributes($linkingTargetId='') {
         //return "";
         $tecdoc = new Tecdoc();
 
         $attributs = $tecdoc->getAssignedArticlesByIds(
                 array(
                     "articleId" => $this->tecdocArticleId,
-                    "linkingTargetId" => ""
+                    "linkingTargetId" => $linkingTargetId
         ));
         $arr = array();
         $descrption .= "<ul class='product_attributes' style='max-height: 100px; overflow: hidden;'>";
@@ -2553,7 +2553,7 @@ class Product extends Entity {
             //}
         }
         $descrption .= "</ul>";
-        return $descrption;
+        return $linkingTargetId.$descrption;
     }
 
     function getApothiki() {
