@@ -318,6 +318,7 @@ jQuery(".product_info").live('click', function () {
     var ref = jQuery(this).attr("data-ref");
     var data = {};
     data.ref = ref;
+    data.car = jQuery(".brand_model_type-select").val();
 
     $.post("/product/productInfo", data, function (result) {
         $dialog.productInfo.html(result);
