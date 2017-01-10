@@ -139,7 +139,7 @@
         });
         jQuery(".gogo").click(function () {
             var data = {};
-            data.car = jQuery(".brand_model_type-select").val();
+            fof
             data.order = '{{order}}';
             jQuery(".subcategories").html("");
             jQuery(".categories").html("");
@@ -174,7 +174,7 @@
                             html += '<ul class="list">';
                             if (nodes[optionHtml.assemblyGroupNodeId]) {
                                 jQuery.each(nodes[optionHtml.assemblyGroupNodeId], function (o, node) {
-                                    html += '<li class="subcategoriesli" data-all="'+node.all+'" style="cursor:pointer">' + node.assemblyGroupName + ' (<span style="color:red">'+node.edimatched_count+'</span>) ('+node.matched_count+') (<span style="color:blue">'+node.articles_count+'</span>)</li>';
+                                    html += '<li class="subcategoriesli" data-car="'+jQuery(".brand_model_type-select").val()+'" data-all="'+node.all+'" style="cursor:pointer">' + node.assemblyGroupName + ' (<span style="color:red">'+node.edimatched_count+'</span>) ('+node.matched_count+') (<span style="color:blue">'+node.articles_count+'</span>)</li>';
                                 });
                             }
                             html += '<ul>';
