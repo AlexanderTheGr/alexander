@@ -2527,7 +2527,7 @@ class Product extends Entity {
         return $out;
     }
 
-    function getArticleAttributes($linkingTargetId='') {
+    function getArticleAttributes() {
         //return "";
         $tecdoc = new Tecdoc();
 
