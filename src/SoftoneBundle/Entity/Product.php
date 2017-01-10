@@ -2534,7 +2534,7 @@ class Product extends Entity {
         $attributs = $tecdoc->getAssignedArticlesByIds(
                 array(
                     "articleId" => $this->tecdocArticleId,
-                    "linkingTargetId" => $linkingTargetId
+                    "linkingTargetId" => (string)$linkingTargetId
         ));
         $arr = array();
         $descrption .= "<ul class='product_attributes' style='max-height: 100px; overflow: hidden;'>";
