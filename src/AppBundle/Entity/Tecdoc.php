@@ -482,6 +482,17 @@ class Tecdoc extends Entity {
         return $this->package($this->tecdoc->getOriginals($params["articleId"]));
     }
 
+    function getEfarmoges($params) {
+        $articleLinkedAllLinkingTarget = $this->getArticleLinkedAllLinkingTarget($params);
+        $out = array();
+        foreach ($articleLinkedAllLinkingTarget->data->array as $v) {
+            if ($kkk++ > 500)
+                break;
+            $out[] = $v->linkingTargetId;
+        }
+        echo serialize($out);
+    }
+
     /*
       public function getCorrectArtcleNr($article_nr, $supp_nr) {
       return $this->tecdoc->getCorrectArtcleNr($article_nr, $supp_nr);
