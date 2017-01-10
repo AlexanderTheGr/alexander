@@ -660,10 +660,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     public function productInfo(Request $request) {
 
         $buttons = array();
-        $content = $this->gettabs(1);
+        //$content = $this->gettabs(1);
 
         //$content = $this->getoffcanvases($id);
-        $content = $this->content();
+        //$content = $this->content();
 
 
         $article_id = $request->request->get("ref");
