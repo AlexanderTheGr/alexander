@@ -511,8 +511,8 @@ class Tecdoc extends Entity {
 
         $attributs = $this->getAssignedArticlesByIds(array($params));
         $arr = array();
-        echo serialize($attributs->data->array[0]->articleAttributes->array);
-        return;
+        //echo serialize($attributs->data->array[0]->articleAttributes->array);
+        //return;
 
         $descrption .= "<ul class='product_attributes'>";
         $attributes = array();
