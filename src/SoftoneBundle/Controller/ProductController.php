@@ -674,7 +674,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $params["articleId"] = $product->getTecdocArticleId();
         
         $out["originals"] = $tecdoc->originals($params);
-        $out["articleAttributes"] = "";//$tecdoc->articleAttributes($params, 0);
+        $out["articleAttributes"] = $tecdoc->articleAttributesRow($params, 0);
         //$asd = unserialize($this->getArticlesSearchByIds($article_id));
         //$out["articlesSearch"] = $tecdoc->getArticlesSearch($asd[0]->articleNo);
 
