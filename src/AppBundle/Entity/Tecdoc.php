@@ -491,7 +491,7 @@ class Tecdoc extends Entity {
                 break;
             $out[] = $v->linkingTargetId;
         }
-        echo serialize($out);
+        echo $out;
     }
 
     /*
