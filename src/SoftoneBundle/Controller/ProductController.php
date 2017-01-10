@@ -672,9 +672,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     ->find($request->request->get("ref"));
         
         $params["articleId"] = $product->getTecdocArticleId();
-        
+        $params["linkingTargetId"] = $request->request->get("car");
         $out["originals"] = $tecdoc->originals($params);
         $out["articleAttributes"] = $tecdoc->articleAttributesRow($params, 0);
+        
         //$asd = unserialize($this->getArticlesSearchByIds($article_id));
         //$out["articlesSearch"] = $tecdoc->getArticlesSearch($asd[0]->articleNo);
 
