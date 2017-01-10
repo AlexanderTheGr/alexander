@@ -205,3 +205,6 @@ table.dataTable tbody tr {
     font-weight: normal;
     display:none;
 }
+.productInfoTabs {
+    height:500px;    
+}
