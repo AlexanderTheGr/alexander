@@ -243,7 +243,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $params['dtparams'] = $dtparams;
         $params['id'] = $dtparams;
         $params['key'] = 'getoffcanvases_' . $id;
-        $params['url'] = '/order/getfororderitems/' . $id;
+        $params['url'] = '/order/getfororderitems/' . $id .'/1';
         $params["ctrl"] = 'ctrlgetoffcanvases';
         $params["app"] = 'appgetoffcanvases';
         $params["drawCallback"] = 'fororder(' . $id . ')';
@@ -282,9 +282,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     /**
-     * @Route("/order/getfororderitems/{id}")
+     * @Route("/order/getfororderitems/{id}/{car}")
      */
-    public function getfororderitemsAction($id) {
+    public function getfororderitemsAction($id,$car) {
         $session = new Session();
         foreach ($session->get('params_getoffcanvases_' . $id) as $param) {
             $this->addField($param);
