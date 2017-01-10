@@ -2500,7 +2500,7 @@ class Product extends Entity {
     
     public function getForOrderCode() {
 
-        $out = '<a title="' . $this->title . '" class="product_info" car="" ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
+        $out = '<a title="' . $this->title . '" class="product_info" car="" data-ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
         <br>
         <span class="text-sm text-info">' . $this->erpCode . '</span>';
 
