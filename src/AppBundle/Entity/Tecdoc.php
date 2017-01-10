@@ -491,10 +491,10 @@ class Tecdoc extends Entity {
             $html .= "<li><b>" . $v->brand . "</b>: " . $v->original . "</li>";
         }
         $html .= "</ul>";
-        echo $html;
+        return $html;
     }
 
-    function getEfarmoges($params) {
+    function efarmoges($params) {
 
         $articleLinkedAllLinkingTarget = $this->getArticleLinkedAllLinkingTarget($params);
         //print_r($articleLinkedAllLinkingTarget);
