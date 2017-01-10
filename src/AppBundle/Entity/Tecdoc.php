@@ -507,6 +507,32 @@ class Tecdoc extends Entity {
         return $out;
     }
 
+    function articleAttributesRow($params = array()) {
+
+        $attributs = $this->getAssignedArticlesByIds(array($params));
+        $arr = array();
+        echo serialize($attributs->data->array[0]->articleAttributes->array);
+        return;
+
+        $descrption .= "<ul class='product_attributes'>";
+        $attributes = array();
+        foreach ($attributs->data->array[0]->articleAttributes->array as $attribute) {
+            if (!$attributes[$attribute->attrId]) {
+                $attributes[$attribute->attrId][] = trim(str_replace("[" . $attribute->attrUnit . "]", "", $attribute->attrName)) . ": " . $attribute->attrValue . $attribute->attrUnit;
+            } else {
+                $attributes[$attribute->attrId][] = $attribute->attrValue . $attribute->attrUnit;
+            }
+        }
+        foreach ($attributes as $attrId => $attribute) {
+            //if (!in_array($attribute->attrId, $arr)) {
+            $arr[$attrId] = $attribute->attrId;
+            $descrption .= "<li class='attr_" . $attrId . "'>" . implode(" / ", $attribute) . "</li>";
+            //}
+        }
+        $descrption .= "</ul>";
+        return $descrption;
+    }
+
     /*
       public function getCorrectArtcleNr($article_nr, $supp_nr) {
       return $this->tecdoc->getCorrectArtcleNr($article_nr, $supp_nr);
