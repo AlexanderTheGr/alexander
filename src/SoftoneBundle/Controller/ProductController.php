@@ -665,7 +665,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //$content = $this->getoffcanvases($id);
         //$content = $this->content();
 
-
+        $tecdoc = new Tecdoc();
         $article_id = $request->request->get("ref");
         $product = $this->getDoctrine()
                     ->getRepository($this->repository)
@@ -673,15 +673,15 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         
         $article_id = $product->getTecdocArticleId();
         
-        $out["originals"] = $this->originals($article_id);
-        $out["articleAttributes"] = $this->articleAttributes($article_id, 0);
+        $out["originals"] = $tecdoc->originals($article_id);
+        $out["articleAttributes"] = $tecdoc->articleAttributes($article_id, 0);
         //$asd = unserialize($this->getArticlesSearchByIds($article_id));
-        $out["articlesSearch"] = unserialize($this->getArticlesSearch($asd[0]->articleNo));
+        $out["articlesSearch"] = unserialize($tecdoc->getArticlesSearch($asd[0]->articleNo));
 
         //$out["articlesSearch"] = unserialize($this->getArticlesSearchByIds(implode(",", (array) $out["articlesSearch"])));
         //print_r( $out["articlesSearch"]);
         $egarmoges = '<ul>';
-        foreach (unserialize($this->efarmoges($article_id)) as $efarmogi) {
+        foreach (unserialize($tecdoc->efarmoges($article_id)) as $efarmogi) {
             $brandModelType = $this->getDoctrine()->getRepository('SoftoneBundle:BrandModelType')->find($efarmogi);
             $brandModel= $this->getDoctrine()->getRepository('SoftoneBundle:BrandModel')->find($brandModelType->getBrandModel());
             $brand= $this->getDoctrine()->getRepository('SoftoneBundle:Brand')->find($brandModel->getBrand());
