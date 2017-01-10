@@ -681,7 +681,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //$out["articlesSearch"] = unserialize($this->getArticlesSearchByIds(implode(",", (array) $out["articlesSearch"])));
         //print_r( $out["articlesSearch"]);
         $egarmoges = '<ul>';
-        foreach ($tecdoc->getEfarmoges($params) as $efarmogi) {
+        foreach ($tecdoc->getArticleLinkedAllLinkingTarget($params) as $efarmogi) {
             $brandModelType = $this->getDoctrine()->getRepository('SoftoneBundle:BrandModelType')->find($efarmogi);
             $brandModel= $this->getDoctrine()->getRepository('SoftoneBundle:BrandModel')->find($brandModelType->getBrandModel());
             $brand= $this->getDoctrine()->getRepository('SoftoneBundle:Brand')->find($brandModel->getBrand());
