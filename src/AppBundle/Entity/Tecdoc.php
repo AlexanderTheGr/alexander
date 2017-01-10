@@ -482,6 +482,7 @@ class Tecdoc extends Entity {
         return $this->package($this->tecdoc->getOriginals($params["articleId"]));
     }
 
+    
     function getEfarmoges($params) {
         $articleLinkedAllLinkingTarget = $this->getArticleLinkedAllLinkingTarget($params);
         $out = array();
