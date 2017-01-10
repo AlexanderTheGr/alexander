@@ -667,6 +667,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
 
         $article_id = $request->request->get("ref");
+        $product = $this->getDoctrine()
+                    ->getRepository($this->repository)
+                    ->find($request->request->get("ref"));
+        
+        $article_id = $product->getTecdocArticleId();
+        
         $out["originals"] = $this->originals($article_id);
         $out["articleAttributes"] = $this->articleAttributes($article_id, 0);
         //$asd = unserialize($this->getArticlesSearchByIds($article_id));
