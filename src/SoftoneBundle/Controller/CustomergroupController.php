@@ -281,7 +281,9 @@ class CustomergroupController extends Main {
      */
     public function getCustomerRulesJsonAction($id) {
         $customer = $this->getDoctrine()->getRepository("SoftoneBundle:Customer")->find($id);
-        $rules = $this->getDoctrine()->getRepository("SoftoneBundle:Customergrouprule")->findBy(array("customergroup"=>$customer->getCustomergroup()));
+        
+        echo $customer->getCustomergroup()->getId();
+        //$rules = $this->getDoctrine()->getRepository("SoftoneBundle:Customergrouprule")->findBy(array("customergroup"=>$customer->getCustomergroup()));
         
         foreach($rules as $rule) {
             $as[] = $rule->id;
