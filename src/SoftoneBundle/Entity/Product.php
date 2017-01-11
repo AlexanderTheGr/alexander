@@ -1830,6 +1830,7 @@ class Product extends Entity {
             $out = $articleDirectSearchAllNumbers->data->array[0];
             
             print_r($out);
+            echo "<BR>";
         }
 
 
@@ -1843,10 +1844,11 @@ class Product extends Entity {
                 $this->setTecdocArticleId($out->articleId);
                 $this->setTecdocArticleName($out->articleName);
                 //$this->setTecdocGenericArticleId($out->articleName);
-
+                echo "4-----<BR>";
                 $cats = $tecdoc->getTreeForArticle($out->articleId);
-
+                echo "4-----<BR>";
                 print_r((array) $cats);
+                echo "<BR>";
 
                 $params = array(
                     "articleId" => $out->articleId
@@ -1855,7 +1857,7 @@ class Product extends Entity {
                 $cars = array();
                 $linkingTargetId = 0;
 
-
+                echo "6-----<BR>";
 
                 foreach ($articleLinkedAllLinkingTarget->data->array as $v) {
                     if ($linkingTargetId == 0)
@@ -1871,6 +1873,7 @@ class Product extends Entity {
                 if (count($categories) == 0) {
                     $categories = $categories2;
                 }
+                echo "7-----<BR>";
                 //print_r($categories);
                 //print_r($cars);
                 $this->setCats($categories);
@@ -1878,6 +1881,7 @@ class Product extends Entity {
 
                 $em->persist($this);
                 $em->flush();
+                echo "8-----<BR>";
             }
         } catch (Exception $e) {
             echo $e->getMessage();
