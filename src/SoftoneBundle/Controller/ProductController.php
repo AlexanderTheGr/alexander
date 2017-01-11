@@ -30,9 +30,22 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $products = $this->getDoctrine()->getRepository("SoftoneBundle:Product")
                 ->findAll();
         foreach ($products as $product) {
+            $product->updatetecdoc();
             $product->setProductFreesearch();
+            $cats = $entity->getCats();
+            foreach ((array) $cats as $cat) {
+                $category = $this->getDoctrine()
+                        ->getRepository('SoftoneBundle:Productcategory')
+                        ->findOneBy(array('category' => $cat, 'product' => $entity->getId()));
+                if (count($category) == 0) {
+                    $category = new Productcategory();
+                    $category->setProduct($entity->getId());
+                    $category->setCategory($cat);
+                    @$this->flushpersist($category);
+                }
+            }
+            if ($i++ > 100) exit;
         }
-
 
         return $this->render('SoftoneBundle:Product:index.html.twig', array(
                     'pagename' => 'Είδη',
