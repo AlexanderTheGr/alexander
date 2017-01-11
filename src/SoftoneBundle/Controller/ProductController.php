@@ -31,7 +31,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->findAll();
         foreach ($products as $product) {
             $product->updatetecdoc();
-            $product->setProductFreesearch();
+            //$product->setProductFreesearch();
             $cats = $product->getCats();
             $cats2 = array();
             foreach ((array) $cats as $cat) {
