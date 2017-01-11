@@ -53,7 +53,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 }
             }  
 
-            if ($i++ > 30) exit;
+            if ($i++ > 300) exit;
         }
 
         return $this->render('SoftoneBundle:Product:index.html.twig', array(
