@@ -26,14 +26,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function indexAction() {
 
-        /*
-          $products = $this->getDoctrine()->getRepository("SoftoneBundle:Product")
-          ->findAll();
-          foreach ($products as $product) {
-          //$product->setProductFreesearch();
-          }
-         * 
-         */
+
+        $products = $this->getDoctrine()->getRepository("SoftoneBundle:Product")
+                ->findAll();
+        foreach ($products as $product) {
+            $product->setProductFreesearch();
+        }
+
 
         return $this->render('SoftoneBundle:Product:index.html.twig', array(
                     'pagename' => 'Είδη',
@@ -631,14 +630,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $fields = array();
         //$fields = unserialize($this->getSetting("SoftoneBundle:Product:getdatatable"));
         //if (count($fields) == 0 OR $this->getSetting("SoftoneBundle:Product:getdatatable") == '') {
-            $fields[] = array("name" => "ID", "index" => 'id', "active" => "active");
-            $fields[] = array("name" => "Title", "index" => 'title');
-            $fields[] = array("name" => "Code", "index" => 'erpCode');
-            $fields[] = array("name" => "Supplier", "index" => 'supplierId:title','type'=>'select','object'=>'SoftoneSupplier');
-            $fields[] = array("name" => "Προσφορά", "index" => 'productSale:title','type'=>'select','object'=>'ProductSale');
-            $fields[] = array("name" => "Λιανική", "index" => 'itemPricer');
-            $fields[] = array("name" => "Χονδρική", "index" => 'itemPricew');
-            $this->setSetting("SoftoneBundle:Product:getdatatable", serialize($fields));
+        $fields[] = array("name" => "ID", "index" => 'id', "active" => "active");
+        $fields[] = array("name" => "Title", "index" => 'title');
+        $fields[] = array("name" => "Code", "index" => 'erpCode');
+        $fields[] = array("name" => "Supplier", "index" => 'supplierId:title', 'type' => 'select', 'object' => 'SoftoneSupplier');
+        $fields[] = array("name" => "Προσφορά", "index" => 'productSale:title', 'type' => 'select', 'object' => 'ProductSale');
+        $fields[] = array("name" => "Λιανική", "index" => 'itemPricer');
+        $fields[] = array("name" => "Χονδρική", "index" => 'itemPricew');
+        $this->setSetting("SoftoneBundle:Product:getdatatable", serialize($fields));
         //}
 
 
@@ -661,32 +660,30 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $buttons = array();
         //$content = $this->gettabs(1);
-
         //$content = $this->getoffcanvases($id);
         //$content = $this->content();
 
         $tecdoc = new Tecdoc();
         $article_id = $request->request->get("ref");
         $product = $this->getDoctrine()
-                    ->getRepository($this->repository)
-                    ->find($request->request->get("ref"));
-        
+                ->getRepository($this->repository)
+                ->find($request->request->get("ref"));
+
         $params["articleId"] = $product->getTecdocArticleId();
         $params["linkingTargetId"] = $request->request->get("car");
         $out["originals"] = $tecdoc->originals($params);
         $out["articleAttributes"] = $tecdoc->articleAttributesRow($params, 0);
-        
+
         //$asd = unserialize($this->getArticlesSearchByIds($article_id));
         //$out["articlesSearch"] = $tecdoc->getArticlesSearch($asd[0]->articleNo);
-
         //$out["articlesSearch"] = unserialize($this->getArticlesSearchByIds(implode(",", (array) $out["articlesSearch"])));
         //print_r( $out["articlesSearch"]);
         $egarmoges = '<ul>';
         foreach ($tecdoc->efarmoges($params) as $efarmogi) {
             $brandModelType = $this->getDoctrine()->getRepository('SoftoneBundle:BrandModelType')->find($efarmogi);
-            $brandModel= $this->getDoctrine()->getRepository('SoftoneBundle:BrandModel')->find($brandModelType->getBrandModel());
-            $brand= $this->getDoctrine()->getRepository('SoftoneBundle:Brand')->find($brandModel->getBrand());
-            $egarmoges .= '<li>'.$brand->getBrand().' '.$brandModel->getBrandModel().' ' . $brandModelType->getBrandModelType() . '</li>';
+            $brandModel = $this->getDoctrine()->getRepository('SoftoneBundle:BrandModel')->find($brandModelType->getBrandModel());
+            $brand = $this->getDoctrine()->getRepository('SoftoneBundle:Brand')->find($brandModel->getBrand());
+            $egarmoges .= '<li>' . $brand->getBrand() . ' ' . $brandModel->getBrandModel() . ' ' . $brandModelType->getBrandModelType() . '</li>';
         }
         $egarmoges .= '</ul>';
         $out["efarmoges"] = $egarmoges;
@@ -771,6 +768,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $this->retrieveProduct($params);
         $sql = 'UPDATE  `softone_product` SET `supplier_code` =  `item_code2`, `title` =  `item_name`, `tecdoc_code` =  `item_apvcode`, `erp_code` =  `item_code`, `tecdoc_supplier_id` =  `item_mtrmark`, `supplier_id` =  `item_mtrmanfctr`';
         $this->getDoctrine()->getConnection()->exec($sql);
+        $sql = 'update `softone_product` set product_sale = 1 where product_sale is null';
+        $this->getDoctrine()->getConnection()->exec($sql);
     }
 
     function retrieveProduct($params = array()) {
@@ -808,7 +807,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $datas = $softone->createSql($params);
         //print_r($datas);
         //return;
-        
+
         $em = $this->getDoctrine()->getManager();
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
