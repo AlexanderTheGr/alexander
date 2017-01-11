@@ -29,8 +29,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $products = $this->getDoctrine()->getRepository("SoftoneBundle:Product")
                 ->findAll();
+        $tecdoc = new Tecdoc();
         foreach ($products as $product) {
-            $product->updatetecdoc();
+            $product->updatetecdoc($tecdoc);
             /*
             $product->setProductFreesearch();
             $cats = $product->getCats();
