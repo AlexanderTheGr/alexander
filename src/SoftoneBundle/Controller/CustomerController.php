@@ -280,4 +280,19 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         exit;
     }
 
+    function getRules() {
+        $rules = $this->getCustomergroup()->loadCustomergrouprules()->getRules();
+        $sortorder = 0;
+
+        foreach ($rules as $rule) {
+            if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
+                $sortorder = $rule->getSortorder();
+                $discount = $rule->getVal();
+                $price = $rule->getPrice();
+            }
+        }
+
+    }    
+    
+    
 }
