@@ -32,8 +32,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $tecdoc = new Tecdoc();
         foreach ($products as $product) {
             $product->updatetecdoc($tecdoc);
-            /*
             $product->setProductFreesearch();
+            /*
             $cats = $product->getCats();
             $cats2 = array();
             foreach ((array) $cats as $cat) {
