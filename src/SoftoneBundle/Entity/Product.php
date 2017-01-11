@@ -1881,7 +1881,7 @@ class Product extends Entity {
                  * 
                  */
                 $sql = 'update `softone_product` set cars = "'.serialize($cars).'", cats = "'.serialize($categories).'" where id = "'.$this->id.'"';
-                $em->exec($sql);
+                $em->getConnection()->exec($sql);
             }
         } catch (Exception $e) {
             echo $e->getMessage();
