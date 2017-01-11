@@ -26,7 +26,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function indexAction() {
 
-
+        /*
         $products = $this->getDoctrine()->getRepository("SoftoneBundle:Product")
                 ->findAll();
         $tecdoc = new Tecdoc();
@@ -58,7 +58,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
             //if ($i++ > 300) exit;
         }
-
+        */
         return $this->render('SoftoneBundle:Product:index.html.twig', array(
                     'pagename' => 'Είδη',
                     'url' => '/product/getdatatable',
