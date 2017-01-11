@@ -285,6 +285,9 @@ class CustomergroupController extends Main {
         $rules = $this->getDoctrine()->getRepository("SoftoneBundle:Customergrouprule")->findBy(array("group"=>$customer->getCustomergroup()));
         foreach((array)$rules as $rule) {
             $as["id"] = $rule->getId();
+            $as["val"] = $rule->getVal();
+            $as["sortorder"] = $rule->getSortorder();
+            $as["price"] = $rule->getPrice();
             $as["rule"] = json_decode($rule->getRule(), true);
             $as["price_field"] = $customer->getPriceField();
             $jsonarr[$rule->getId()] = $as;
