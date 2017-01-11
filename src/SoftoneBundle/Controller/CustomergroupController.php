@@ -288,7 +288,7 @@ class CustomergroupController extends Main {
             $as["val"] = $rule->getVal();
             $as["sortorder"] = $rule->getSortorder();
             $as["price"] = $rule->getPrice();
-            $as["rule"] = json_decode($rule->getRule(), true);
+            $as["rules"] = json_decode($rule->getRule(), true);
             $as["price_field"] = $customer->getPriceField();
             $jsonarr[$rule->getId()] = $as;
         }
