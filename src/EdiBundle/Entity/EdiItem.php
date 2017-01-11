@@ -808,7 +808,10 @@ class EdiItem extends Entity {
         $this->setProduct($product->getId());
         $em->persist($this);
         $em->flush();
-
+        $sql = 'UPDATE  `softone_product` SET `supplier_code` =  `item_code2`, `title` =  `item_name`, `tecdoc_code` =  `item_apvcode`, `erp_code` =  `item_code`, `tecdoc_supplier_id` =  `item_mtrmark`, `supplier_id` =  `item_mtrmanfctr`';
+        $em->getConnection()->exec($sql);        
+        $sql = 'update `softone_product` set product_sale = 1 where product_sale is null';
+        $em->getConnection()->exec($sql);
         return;
     }
 
