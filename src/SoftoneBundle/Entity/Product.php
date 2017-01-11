@@ -1827,7 +1827,7 @@ class Product extends Entity {
 
             $out = $articleDirectSearchAllNumbers->data->array[0];
             
-            print_r($out);
+            //print_r($out);
 
         }
 
@@ -1845,8 +1845,8 @@ class Product extends Entity {
 
                 $cats = $tecdoc->getTreeForArticle($out->articleId);
 
-                print_r((array) $cats);
-                echo "<BR>";
+                //print_r((array) $cats);
+                //echo "<BR>";
 
                 $params = array(
                     "articleId" => $out->articleId
