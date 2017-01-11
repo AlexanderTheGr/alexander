@@ -1847,6 +1847,9 @@ class Product extends Entity {
                 $articleLinkedAllLinkingTarget = $tecdoc->getArticleLinkedAllLinkingTarget($params);
                 $cars = array();
                 $linkingTargetId = 0;
+                
+                print_r($articleLinkedAllLinkingTarget->data->array);
+                
                 foreach ($articleLinkedAllLinkingTarget->data->array as $v) {
                     if ($linkingTargetId == 0)
                         $linkingTargetId = $v->linkingTargetId;
