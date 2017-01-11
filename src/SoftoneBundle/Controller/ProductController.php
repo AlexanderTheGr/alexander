@@ -33,6 +33,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $product->updatetecdoc();
             $product->setProductFreesearch();
             $cats = $product->getCats();
+            $cats2 = array();
             foreach ((array) $cats as $cat) {
                 $category = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:Productcategory')
@@ -42,12 +43,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     $category->setProduct($product->getId());
                     $category->setCategory($cat);
                     @$this->flushpersist($category);
-                    $cats[] = $cat;
+                    $cats2[] = $cat;
                 }
             }
-            $product->setCats($cats);
+            $cats2 = array_unique($cats2);
+            $product->setCats($cats2);
             $this->flushpersist($product);            
-            if ($i++ > 10) exit;
+            if ($i++ > 3) exit;
         }
 
         return $this->render('SoftoneBundle:Product:index.html.twig', array(
