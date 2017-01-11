@@ -41,10 +41,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         ->getRepository('SoftoneBundle:Productcategory')
                         ->findOneBy(array('category' => $cat, 'product' => $product->getId()));
                 if (count($category) == 0) {
-                    $category = new Productcategory();
-                    $category->setProduct($product->getId());
-                    $category->setCategory($cat);
-                    @$this->flushpersist($category);
+                    //$category = new Productcategory();
+                    //$category->setProduct($product->getId());
+                    //$category->setCategory($cat);
+                    //@$this->flushpersist($category);
+                    $sql = 'insert softone_productcategory set product = "'.$product->getId().'", category = "'.$cat.'"';
+                    $em->getConnection()->exec($sql);
                 }
             }  
 
