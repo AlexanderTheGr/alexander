@@ -1838,8 +1838,8 @@ class Product extends Entity {
                 //$this->setTecdocGenericArticleId($out->articleName);
 
                 $cats = $tecdoc->getTreeForArticle($out->articleId);
-                $cats = $tecdoc->getTreeForArticle($out->articleId);
-                //print_r((array)$cats);
+
+                print_r((array)$cats);
 
                 $params = array(
                     "articleId" => $out->articleId
@@ -1848,7 +1848,7 @@ class Product extends Entity {
                 $cars = array();
                 $linkingTargetId = 0;
                 
-                print_r($articleLinkedAllLinkingTarget->data->array);
+
                 
                 foreach ($articleLinkedAllLinkingTarget->data->array as $v) {
                     if ($linkingTargetId == 0)
