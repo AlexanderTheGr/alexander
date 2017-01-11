@@ -1799,6 +1799,9 @@ class Product extends Entity {
             if (!$tecdoc)
                 $tecdoc = new Tecdoc();
 
+            
+            echo "1-----<BR>";
+            
             $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($postparams);
             $tectdoccode = $this->tecdocCode;
             if (count($articleDirectSearchAllNumbers->data->array) == 0) {
@@ -1811,6 +1814,7 @@ class Product extends Entity {
                     $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($params);
                 }
             }
+            echo "2-----<BR>";
             if (count($articleDirectSearchAllNumbers->data->array) == 0) {
                 $articleId = $tecdoc->getCorrectArtcleNr2(strtolower($tectdoccode), $postparams["brandno"]);
                 if ($article != strtolower($tectdoccode)) {
@@ -1821,6 +1825,8 @@ class Product extends Entity {
                     $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($params);
                 }
             }
+            echo "3-----<BR>";
+            
             $out = $articleDirectSearchAllNumbers->data->array[0];
             
             print_r($out);
