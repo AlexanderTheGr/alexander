@@ -286,7 +286,7 @@ class CustomergroupController extends Main {
         foreach((array)$rules as $rule) {
             $as["id"] = $rule->getId();
             $as["rule"] = json_decode($rule->getRule(), true);
-            $as["price_field"] = $customer->price_field;
+            $as["price_field"] = $customer->getPriceField();
             $jsonarr[$rule->getId()] = $as;
         }
         $json = json_encode($jsonarr);
