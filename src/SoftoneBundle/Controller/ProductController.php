@@ -46,8 +46,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     //$category->setProduct($product->getId());
                     //$category->setCategory($cat);
                     //@$this->flushpersist($category);
-                    $sql = 'insert softone_productcategory set product = "'.$product->getId().'", category = "'.$cat.'"';
-                    $em->getConnection()->exec($sql);
+                    if ($cat > 0) {
+                        $sql = 'insert softone_productcategory set product = "'.$product->getId().'", category = "'.$cat.'"';
+                        $em->getConnection()->exec($sql);
+                    }
                 }
             }  
 
