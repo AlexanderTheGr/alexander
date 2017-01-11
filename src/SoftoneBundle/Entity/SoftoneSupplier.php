@@ -101,12 +101,11 @@ class SoftoneSupplier extends Entity {
     
     function toSoftone() {
         $softone = new Softone();
-        $params["fSQL"] = "SELECT * FROM MTRMANFCTR";
+        $params["fSQL"] = "SELECT * FROM MTRMANFCTR where MTRMANFCTR = ".$this->id;
         $datas = $softone->createSql($params); 
-        print_r($datas);
-        return;
+
         if (@count($datas->data)) return;
-        $params["fSQL"] = 'Insert INTO MTRMANFCTR (MTRMANFCTR,NAME,CODE,COMPANY) VALUES ('.$this->id.',\''.$this->title.'\', \''.$this->code.'\',1000)';
+        $params["fSQL"] = 'Insert INTO MTRMANFCTR (MTRMANFCTR,NAME,CODE,COMPANY) VALUES ('.$this->id.',\''.$this->title.'\', \''.$this->code.'\',1001)';
         $softone->createSql($params);       
     }
 
