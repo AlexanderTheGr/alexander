@@ -1799,8 +1799,7 @@ class Product extends Entity {
             if (!$tecdoc)
                 $tecdoc = new Tecdoc();
 
-            
-            echo "1-----<BR>";
+
             
             $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($postparams);
             $tectdoccode = $this->tecdocCode;
@@ -1814,7 +1813,7 @@ class Product extends Entity {
                     $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($params);
                 }
             }
-            echo "2-----<BR>";
+
             if (count($articleDirectSearchAllNumbers->data->array) == 0) {
                 $articleId = $tecdoc->getCorrectArtcleNr2(strtolower($tectdoccode), $postparams["brandno"]);
                 if ($article != strtolower($tectdoccode)) {
@@ -1825,12 +1824,11 @@ class Product extends Entity {
                     $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($params);
                 }
             }
-            echo "3-----<BR>";
-            
+
             $out = $articleDirectSearchAllNumbers->data->array[0];
             
             print_r($out);
-            echo "<BR>";
+
         }
 
 
@@ -1844,9 +1842,9 @@ class Product extends Entity {
                 $this->setTecdocArticleId($out->articleId);
                 $this->setTecdocArticleName($out->articleName);
                 //$this->setTecdocGenericArticleId($out->articleName);
-                echo "4-----<BR>";
+
                 $cats = $tecdoc->getTreeForArticle($out->articleId);
-                echo "4-----<BR>";
+
                 print_r((array) $cats);
                 echo "<BR>";
 
@@ -1857,8 +1855,7 @@ class Product extends Entity {
                 $cars = array();
                 $linkingTargetId = 0;
 
-                echo "6-----<BR>";
-
+ 
                 foreach ($articleLinkedAllLinkingTarget->data->array as $v) {
                     if ($linkingTargetId == 0)
                         $linkingTargetId = $v->linkingTargetId;
@@ -1873,15 +1870,18 @@ class Product extends Entity {
                 if (count($categories) == 0) {
                     $categories = $categories2;
                 }
-                echo "7-----<BR>";
+
                 //print_r($categories);
                 //print_r($cars);
                 $this->setCats($categories);
                 $this->setCars($cars);
-
+                /*
                 $em->persist($this);
                 $em->flush();
-                echo "8-----<BR>";
+                 * 
+                 */
+                $sql = 'update `softone_product` set cars = "'.serialize($cars).'", cats = "'.serialize($categories).'" where id = "'.$this->id.'"';
+                $em->exec($sql);
             }
         } catch (Exception $e) {
             echo $e->getMessage();
