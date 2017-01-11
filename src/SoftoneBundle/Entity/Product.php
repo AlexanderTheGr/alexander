@@ -18,6 +18,7 @@ class Product extends Entity {
     var $repositories = array();
     var $uniques = array();
     var $qty;
+
     public function __construct() {
         $this->setRepositories();
     }
@@ -68,7 +69,6 @@ class Product extends Entity {
         }
         return 'string';
     }
-
 
     /**
      * @var integer
@@ -456,8 +456,6 @@ class Product extends Entity {
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     var $id;
-
-
 
     /**
      * Set catalogue
@@ -1753,7 +1751,7 @@ class Product extends Entity {
         return $this;
     }
 
-    function updatetecdoc() {
+    function updatetecdoc($tecdoc = false) {
 
         //$data = array("service" => "login", 'username' => 'dev', 'password' => 'dev', 'appId' => '2000');
         if ($this->getTecdocSupplierId() == null)
@@ -1798,7 +1796,8 @@ class Product extends Entity {
                 "articleNumber" => $this->tecdocCode,
                 "brandno" => $this->getTecdocSupplierId()->getId()
             );
-            $tecdoc = new Tecdoc();
+            if (!$tecdoc)
+                $tecdoc = new Tecdoc();
 
             $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($postparams);
             $tectdoccode = $this->tecdocCode;
@@ -1839,7 +1838,7 @@ class Product extends Entity {
 
                 $cats = $tecdoc->getTreeForArticle($out->articleId);
 
-                print_r((array)$cats);
+                print_r((array) $cats);
 
                 $params = array(
                     "articleId" => $out->articleId
@@ -1847,9 +1846,9 @@ class Product extends Entity {
                 $articleLinkedAllLinkingTarget = $tecdoc->getArticleLinkedAllLinkingTarget($params);
                 $cars = array();
                 $linkingTargetId = 0;
-                
 
-                
+
+
                 foreach ($articleLinkedAllLinkingTarget->data->array as $v) {
                     if ($linkingTargetId == 0)
                         $linkingTargetId = $v->linkingTargetId;
@@ -2463,7 +2462,7 @@ class Product extends Entity {
         return $this->edis;
     }
 
-    function getGroupedDiscount(\SoftoneBundle\Entity\Customer $customer,$vat = 1) {
+    function getGroupedDiscount(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
         $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
         $sortorder = 0;
 
@@ -2479,10 +2478,10 @@ class Product extends Entity {
         $discountedPrice = $this->$pricefield * (1 - $discount / 100 );
         $finalprice = $discount > 0 ? $discountedPrice : $price;
 
-        return number_format($finalprice*$vat, 2, '.', '');
+        return number_format($finalprice * $vat, 2, '.', '');
     }
 
-    function getDiscount(\SoftoneBundle\Entity\Customer $customer,$vat = 1) {
+    function getDiscount(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
         $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
         $sortorder = 0;
 
@@ -2498,9 +2497,9 @@ class Product extends Entity {
         $discountedPrice = $this->$pricefield * (1 - $discount / 100 );
         //$finalprice = $discount > 0 ? $discountedPrice : $price;
 
-        return number_format($price*$vat, 2, '.', '')." (".(float)$discount."%)";
-    }    
-    
+        return number_format($price * $vat, 2, '.', '') . " (" . (float) $discount . "%)";
+    }
+
     public function getForOrderCode() {
 
         $out = '<a title="' . $this->title . '" class="product_info" car="" data-ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
@@ -2537,7 +2536,7 @@ class Product extends Entity {
         $attributs = $tecdoc->getAssignedArticlesByIds(
                 array(
                     "articleId" => $this->tecdocArticleId,
-                    "linkingTargetId" => (string)$linkingTargetId
+                    "linkingTargetId" => (string) $linkingTargetId
         ));
         $arr = array();
         $descrption .= "<ul class='product_attributes' style='max-height: 100px; overflow: hidden;'>";
@@ -2558,7 +2557,7 @@ class Product extends Entity {
         $descrption .= "</ul>";
         return $descrption;
     }
-    
+
     function getArticleAttributes2($linkingTargetId) {
         //return "";
         $tecdoc = new Tecdoc();
@@ -2566,7 +2565,7 @@ class Product extends Entity {
         $attributs = $tecdoc->getAssignedArticlesByIds(
                 array(
                     "articleId" => $this->tecdocArticleId,
-                    "linkingTargetId" => (string)$linkingTargetId
+                    "linkingTargetId" => (string) $linkingTargetId
         ));
         $arr = array();
         $descrption .= "<ul class='product_attributes' style='max-height: 100px; overflow: hidden;'>";
@@ -2587,7 +2586,7 @@ class Product extends Entity {
         $descrption .= "</ul>";
         return $descrption;
     }
-    
+
     function getApothiki() {
         return '1 / <span class="text-lg text-bold text-accent-dark">1</span> (' . $this->itemMtrplace . ")";
     }
@@ -2640,7 +2639,6 @@ class Product extends Entity {
      */
     var $reference;
 
-
     /**
      * Set reference
      *
@@ -2648,8 +2646,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setReference($reference)
-    {
+    public function setReference($reference) {
         $this->reference = $reference;
 
         return $this;
@@ -2660,15 +2657,14 @@ class Product extends Entity {
      *
      * @return integer
      */
-    public function getReference()
-    {
+    public function getReference() {
         return $this->reference;
     }
+
     /**
      * @var \SoftoneBundle\Entity\ProductSale
      */
     private $productSale;
-
 
     /**
      * Set productSale
@@ -2677,8 +2673,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setProductSale(\SoftoneBundle\Entity\ProductSale $productSale = null)
-    {
+    public function setProductSale(\SoftoneBundle\Entity\ProductSale $productSale = null) {
         $this->productSale = $productSale;
 
         return $this;
@@ -2689,8 +2684,8 @@ class Product extends Entity {
      *
      * @return \SoftoneBundle\Entity\ProductSale
      */
-    public function getProductSale()
-    {
+    public function getProductSale() {
         return $this->productSale;
     }
+
 }
