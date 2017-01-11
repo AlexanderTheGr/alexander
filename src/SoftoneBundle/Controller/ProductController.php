@@ -43,12 +43,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     $category->setProduct($product->getId());
                     $category->setCategory($cat);
                     @$this->flushpersist($category);
-                    $cats2[] = $cat;
                 }
-            }
-            $cats2 = array_unique($cats2);
-            $product->setCats($cats2);
-            $this->flushpersist($product);            
+            }   
             if ($i++ > 3) exit;
         }
 
