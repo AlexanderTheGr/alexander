@@ -32,9 +32,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $tecdoc = new Tecdoc();
         $em = $this->getDoctrine()->getManager();
         foreach ($products as $product) {
+            if ($product->getId() < 96669)
+                continue;
             $product->updatetecdoc($tecdoc);
             $product->setProductFreesearch();
-            
+
             $cats = $product->getCats();
             $cats2 = array();
             foreach ((array) $cats as $cat) {
@@ -47,11 +49,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     //$category->setCategory($cat);
                     //@$this->flushpersist($category);
                     if ($cat > 0) {
-                        $sql = 'insert softone_productcategory set product = "'.$product->getId().'", category = "'.$cat.'"';
+                        $sql = 'insert softone_productcategory set product = "' . $product->getId() . '", category = "' . $cat . '"';
                         $em->getConnection()->exec($sql);
                     }
                 }
-            }  
+            }
 
             //if ($i++ > 300) exit;
         }
