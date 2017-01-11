@@ -1822,9 +1822,11 @@ class Product extends Entity {
                 }
             }
             $out = $articleDirectSearchAllNumbers->data->array[0];
+            
+            print_r($out);
         }
 
-        print_r($out);
+
 
         try {
             //$webserviceProduct = WebserviceProduct::model()->findByAttributes(array('product' =>  $this->id,"webservice"=>$this->webservice));
