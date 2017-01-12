@@ -337,7 +337,7 @@ class EdiController extends Main {
                         $attributes[$attrs[$key]] = trim(addslashes($val));
                 }
 
-                //echo ($i++)."<BR>";
+                echo ($i++)."<BR>";
                 //if ($i < 291372) continue;
                 //if ($key == 'similardlnr' OR $key = 'similarartnr' ) continue;
                   
