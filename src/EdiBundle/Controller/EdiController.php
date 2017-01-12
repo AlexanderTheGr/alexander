@@ -337,7 +337,7 @@ class EdiController extends Main {
                         $attributes[$attrs[$key]] = trim(addslashes($val));
                 }
 
-                echo ($i++)."<BR>";
+                //echo ($i++)."<BR>";
                 //if ($i < 291372) continue;
                 //if ($key == 'similardlnr' OR $key = 'similarartnr' ) continue;
                   
@@ -372,7 +372,7 @@ class EdiController extends Main {
                             ->findOneBy(array("itemCode" => $attributes["itemcode"], "Edi" => $ediedi));
                     //$ediediitem->tecdoc = $tecdoc;
                     //$ediediitem->updatetecdoc();
-                    if ($i++ > 60) return;
+                    //if ($i++ > 60) return;
                 }
 
                 
