@@ -1296,6 +1296,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //$order = $request->request->get("order");
         $order = json_decode($json, true);
         print_r($order);
+        $ord = $order["SALDOC"][0];
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($ord["TRDR"]);
@@ -1303,7 +1304,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository("SoftoneBundle:Vat")
                 ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
 
-        $ord = $order["SALDOC"][0];
+        
         $entity = new Order;
         if ($id == 0 AND @ $order->id == 0) {
             $order = new Order;
