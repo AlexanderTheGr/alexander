@@ -295,7 +295,7 @@ class EdiController extends Main {
         $i = 0;
         foreach ($collection as $entity) {
             //if ($i++ <= 1) continue;
-            if ($entity["id"] == 6) {
+            if ($entity["id"] == 2) {
                 $func = $entity["func"];
                 $this->$func($entity);
             }
