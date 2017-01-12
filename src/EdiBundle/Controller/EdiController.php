@@ -338,7 +338,7 @@ class EdiController extends Main {
                 }
 
                 echo ($i++)."<BR>";
-                //if ($i < 291372) continue;
+                if ($i < 271341) continue;
                 //if ($key == 'similardlnr' OR $key = 'similarartnr' ) continue;
                   
                 if ((int)$attributes['dlnr'] == 0) $attributes['dlnr'] = $attributes['similardlnr'];
