@@ -1301,8 +1301,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         
         //$entity = new Order;
         //$entity
-        
-        
+
         exit;
     }    
     
