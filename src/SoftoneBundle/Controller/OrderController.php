@@ -1327,6 +1327,21 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $entity->setRoute($route);
         $this->flushpersist($entity);
 
+        $sql = 'DELETE FROM softone_orderitem where s_order = "'.$entity->id.'"';
+        $this->getDoctrine()->getConnection()->exec($sql);     
+        $items = $order["ITELINES"];
+        foreach($items as $item) {
+            $product = $this->getDoctrine()
+                ->getRepository('SoftoneBundle:Product')
+                ->findOneByReference($item["MTRL"]);
+            $orderItem = new Orderitem;
+            $orderItem->setOrder($entity);
+            $orderItem->setPrice($item["PRICE"]);
+            $orderItem->setQty($item["QTY1"]);
+            $orderItem->setProduct($product);
+            $this->flushpersist($entity);
+        }
+        
         exit;
     }
 
