@@ -958,7 +958,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
-                ->findByReference($mtrl);
+                ->findOneByReference($mtrl);
         $product->updatetecdoc();
         $product->setProductFreesearch();
         return new Response(
