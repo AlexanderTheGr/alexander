@@ -88,8 +88,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository($this->repository)
                 ->find($id);
 
-
-
         if ($id == 0 AND @ $order->id == 0) {
             $order = new Order;
             $this->newentity[$this->repository] = $order;
@@ -1165,6 +1163,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+    
+    
+    
 
     function saveProductSoftone($model) {
 
@@ -1288,6 +1289,15 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         );
     }
 
+    /**
+     * @Route("/order/setb2border")
+     */
+    public function setb2borderAction(Request $request) {
+        $order = $request->request->get("order");
+    }    
+    
+    
+    
     function imitelisMethod($value) {
         return "YES";
     }
