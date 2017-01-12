@@ -1320,8 +1320,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $route = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Route")
                 ->find(1);
-        $order->setRoute($route);
-        $this->flushpersist($order);
+        $entity->setRoute($route);
+        $this->flushpersist($entity);
 
         exit;
     }
