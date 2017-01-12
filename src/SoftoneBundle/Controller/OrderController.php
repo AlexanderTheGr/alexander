@@ -1339,7 +1339,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $orderItem->setPrice($item["PRICE"]);
             $orderItem->setQty($item["QTY1"]);
             $orderItem->setProduct($product);
-            $this->flushpersist($entity);
+            $this->flushpersist($orderItem);
         }
         
         exit;
