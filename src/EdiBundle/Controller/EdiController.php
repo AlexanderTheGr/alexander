@@ -374,7 +374,7 @@ class EdiController extends Main {
                     //$ediediitem->updatetecdoc();
                 }
 
-                //if ($i++ > 60) return;
+                if ($i++ > 60) return;
             }
         }
     }
