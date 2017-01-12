@@ -1296,8 +1296,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         
         $json = '{"SALDOC":[{"TRDR":"364","SERIESNUM":"1100003181","FINCODE":"B2B1100003181","PAYMENT":1010,"VATSTS":"1410","SERIES":7021,"WHOUSE":1101,"ID":"1035"}],"ITELINES":[{"VAT":"1410","QTY1":1,"LINENUM":9000001,"MTRL":"136922","PRICE":83.69,"DISC1PRC":null}]}';
         //$order = $request->request->get("order");
-        $order = json_decode($json);        
+        $order = json_decode($json,true);        
         print_r($order);
+        
+        //$entity = new Order;
+        //$entity
+        
         
         exit;
     }    
