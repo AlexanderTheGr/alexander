@@ -1303,14 +1303,18 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $vat = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Vat")
                 ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
+        
+        
+        $entity = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Order")
+                ->findOneByReference($ord["ID"]);
 
-
-        $entity = new Order;
-
-        $entity = new Order;
-        $this->newentity[$this->repository] = $entity;
-        $this->initialazeNewEntity($entity);
-
+        if ($entity->id == 0) {
+            $order = new Order;
+            $this->newentity[$this->repository] = $entity;
+            $this->initialazeNewEntity($entity);
+        }
+                
         $entity->setCustomer($ord["TRDR"]);
         $entity->setReference($ord["ID"]);
         $entity->setFincode($ord["FINCODE"]);
