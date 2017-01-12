@@ -1321,6 +1321,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $entity->setReference($ord["ID"]);
         $entity->setFincode($ord["FINCODE"]);
         $entity->setSeries($ord["SERIES"]);
+        $entity->setRemarks($ord["REMARKS"]);
+        $entity->setComments($ord["COMMENTS"]);
+        
         $entity->setVat($vat);
         $entity->setCustomerName($customer->getCustomerName() . " (" . $customer->getCustomerAfm() . " - " . $customer->getCustomerCode() . ")");
         $route = $this->getDoctrine()
