@@ -308,6 +308,7 @@ class EdiController extends Main {
         //return;
         $apiToken = $entity["token"];
         echo $apiToken . "<BR>";
+        echo $this->getEdiPartMasterFile($entity["token"])."<BR>";
         //return;
         $tecdoc = new Tecdoc();
         $file = "/home2/partsbox/" . $apiToken . '.csv';
