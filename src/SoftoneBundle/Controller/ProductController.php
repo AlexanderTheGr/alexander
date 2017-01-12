@@ -27,38 +27,38 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     public function indexAction() {
 
         /*
-        $products = $this->getDoctrine()->getRepository("SoftoneBundle:Product")
-                ->findAll();
-        $tecdoc = new Tecdoc();
-        $em = $this->getDoctrine()->getManager();
-        foreach ($products as $product) {
-            if ($product->getId() < 96669)
-                continue;
-            echo $product->getId()."<BR>";
-            $product->updatetecdoc($tecdoc);
-            $product->setProductFreesearch();
+          $products = $this->getDoctrine()->getRepository("SoftoneBundle:Product")
+          ->findAll();
+          $tecdoc = new Tecdoc();
+          $em = $this->getDoctrine()->getManager();
+          foreach ($products as $product) {
+          if ($product->getId() < 96669)
+          continue;
+          echo $product->getId()."<BR>";
+          $product->updatetecdoc($tecdoc);
+          $product->setProductFreesearch();
 
-            $cats = $product->getCats();
-            $cats2 = array();
-            foreach ((array) $cats as $cat) {
-                $category = $this->getDoctrine()
-                        ->getRepository('SoftoneBundle:Productcategory')
-                        ->findOneBy(array('category' => $cat, 'product' => $product->getId()));
-                if (count($category) == 0) {
-                    //$category = new Productcategory();
-                    //$category->setProduct($product->getId());
-                    //$category->setCategory($cat);
-                    //@$this->flushpersist($category);
-                    if ($cat > 0) {
-                        $sql = 'insert softone_productcategory set product = "' . $product->getId() . '", category = "' . $cat . '"';
-                        $em->getConnection()->exec($sql);
-                    }
-                }
-            }
+          $cats = $product->getCats();
+          $cats2 = array();
+          foreach ((array) $cats as $cat) {
+          $category = $this->getDoctrine()
+          ->getRepository('SoftoneBundle:Productcategory')
+          ->findOneBy(array('category' => $cat, 'product' => $product->getId()));
+          if (count($category) == 0) {
+          //$category = new Productcategory();
+          //$category->setProduct($product->getId());
+          //$category->setCategory($cat);
+          //@$this->flushpersist($category);
+          if ($cat > 0) {
+          $sql = 'insert softone_productcategory set product = "' . $product->getId() . '", category = "' . $cat . '"';
+          $em->getConnection()->exec($sql);
+          }
+          }
+          }
 
-            //if ($i++ > 300) exit;
-        }
-        */
+          //if ($i++ > 300) exit;
+          }
+         */
         return $this->render('SoftoneBundle:Product:index.html.twig', array(
                     'pagename' => 'Είδη',
                     'url' => '/product/getdatatable',
@@ -766,10 +766,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
     }
 
-    function retrieveMtrl() {
+    function retrieveMtrl($MTRL = 0) {
         $params = unserialize($this->getSetting("SoftoneBundle:Product:retrieveMtrl"));
         if (count($params) > 0) {
-            $where = ' AND MTRL > 148779 ';
+            if ($MTRL > 0) {
+                $where = ' AND MTRL = "'.$MTRL.'"';
+            }
             $params["softone_object"] = "item";
             $params["repository"] = 'SoftoneBundle:Product';
             $params["softone_table"] = 'MTRL';
@@ -935,17 +937,29 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $tecdoc = new Tecdoc();
         foreach ($results as $result) {
             //if ($result["id"] > 41170) {
-                $ediediitem = $em->getRepository($this->repository)->find($result["id"]);
-                $ediediitem->tecdoc = $tecdoc;
-                $ediediitem->updatetecdoc();
-                unset($ediediitem);
-                echo $result["id"] . "<BR>";
-                //if ($i++ > 3000) exit;
-           // }
+            $ediediitem = $em->getRepository($this->repository)->find($result["id"]);
+            $ediediitem->tecdoc = $tecdoc;
+            $ediediitem->updatetecdoc();
+            unset($ediediitem);
+            echo $result["id"] . "<BR>";
+            //if ($i++ > 3000) exit;
+            // }
         }
         exit;
     }
 
+    
+    /**
+     * 
+     * @Route("/product/retrieveMtrl/{mtrl}")
+     */
+    function retrieveMtrlAction($mtrl) {
+        echo $this->retrieveMtrl($mtrl);
+        return new Response(
+                "", 200
+        );
+    }
+    
     /**
      * 
      * @Route("/product/retrieveSoftone")
@@ -955,12 +969,54 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         ini_set('memory_limit', '2256M');
         echo $this->retrieveMtrcategory();
         echo $this->retrieveMtrmanfctr();
-        //echo $this->retrieveMtrl();
+        echo $this->retrieveMtrl();
+        echo $this->retrieveApothema();
 
 
         return new Response(
                 "", 200
         );
+    }
+
+    function retrieveApothema($filters = false) {
+        //function retrieveProducts($filters=false) {
+        $this->catalogue = 4;
+        //$filters = "ITEM.V3=".date("Y-m-d")."&ITEM.V4=1";//. date("Y-m-d");
+        //$filters = "ITEM.V3=2015-07-29&ITEM.V4=1";//. date("Y-m-d");
+        //$filters = "ITEM.SORENQTY1>1";  
+        //$filters = "ITEM.UPDDATE=".date("Y-m-d")."&ITEM.UPDDATE_TO=".date("Y-m-d");  
+        //$filters = "ITEM.ISACTIVE=1";  
+
+        $datas = $this->retrieveData("ITEM", "apothema");
+        //echo 'Sss';
+        echo count($datas) . "<BR>";
+        //print_r($datas);
+        //exit;
+        foreach ($datas as $data) {
+            //print_r($data);
+            $zoominfo = $data["zoominfo"];
+            $info = explode(";", $zoominfo);
+            $data["reference"] = $info[1];
+
+            $product = Mage::getModel('tecdoc/product')->getCollection()->addFieldToFilter("reference", trim($data["reference"]))->getFirstItem();
+            if ((int) $product->id == 0) {
+                continue;
+            } 
+           $qty = $data["item_mtrl_itemtrdata_qty1"] - $data["item_soreserved"];
+            //echo $product->id." ".$product->erp_code." --> ".$qty." -- ".$product->getApothema()."<BR>";
+            if ($product->getApothema() != $qty) {
+                echo "<span style='color:red'>" . $product->id . " " . $product->erp_code . " --> " . $qty . "</span><BR>";
+                $product->setApothema($qty);
+                $product->save();
+                $product_model = Mage::getModel('catalog/product');
+                if ($product->getProductId() > 0) {
+                    $product_model->load($product->getProductId());
+                }
+                $product->setStockData($product_model, $qty);
+                //return;
+            }
+            //if ($t++ > 100) return;
+        }
     }
 
     //getmodeltypes
