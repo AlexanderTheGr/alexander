@@ -295,7 +295,7 @@ class EdiController extends Main {
         $i = 0;
         foreach ($collection as $entity) {
             //if ($i++ <= 1) continue;
-            if ($entity["id"] == 7) {
+            if ($entity["id"] == 6) {
                 $func = $entity["func"];
                 $this->$func($entity);
             }
@@ -338,7 +338,7 @@ class EdiController extends Main {
                 }
 
                 echo ($i++)."<BR>";
-                if ($i < 271341) continue;
+                //if ($i < 271341) continue;
                 //if ($key == 'similardlnr' OR $key = 'similarartnr' ) continue;
                   
                 if ((int)$attributes['dlnr'] == 0) $attributes['dlnr'] = $attributes['similardlnr'];
