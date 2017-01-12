@@ -1327,7 +1327,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $entity->setRoute($route);
         $this->flushpersist($entity);
 
-        $sql = 'DELETE FROM softone_orderitem where s_order = "'.$entity->id.'"';
+        $sql = 'DELETE FROM softone_orderitem where s_order = "'.$entity->getId().'"';
         $this->getDoctrine()->getConnection()->exec($sql);     
         $items = $order["ITELINES"];
         foreach($items as $item) {
