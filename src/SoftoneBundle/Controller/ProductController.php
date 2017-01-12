@@ -769,7 +769,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     function retrieveMtrl() {
         $params = unserialize($this->getSetting("SoftoneBundle:Product:retrieveMtrl"));
         if (count($params) > 0) {
-            $where = '';
+            $where = ' AND MTRL > 148779 ';
             $params["softone_object"] = "item";
             $params["repository"] = 'SoftoneBundle:Product';
             $params["softone_table"] = 'MTRL';
@@ -934,14 +934,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $i = 0;
         $tecdoc = new Tecdoc();
         foreach ($results as $result) {
-            if ($result["id"] > 41170) {
+            //if ($result["id"] > 41170) {
                 $ediediitem = $em->getRepository($this->repository)->find($result["id"]);
                 $ediediitem->tecdoc = $tecdoc;
                 $ediediitem->updatetecdoc();
                 unset($ediediitem);
                 echo $result["id"] . "<BR>";
                 //if ($i++ > 3000) exit;
-            }
+           // }
         }
         exit;
     }
