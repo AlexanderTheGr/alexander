@@ -1299,7 +1299,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $ord = $order["SALDOC"][0];
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
-                ->find($ord["TRDR"]);
+                ->findOneByReference($ord["TRDR"]);
         $vat = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Vat")
                 ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
