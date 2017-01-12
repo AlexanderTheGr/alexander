@@ -955,7 +955,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      */
     function retrieveMtrlAction($mtrl) {
         echo $this->retrieveMtrl($mtrl);
-        
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->findOneByReference($mtrl);
