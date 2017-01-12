@@ -1310,7 +1310,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->findOneByReference($ord["ID"]);
 
         if ($entity->id == 0) {
-            $order = new Order;
+            $entity = new Order;
             $this->newentity[$this->repository] = $entity;
             $this->initialazeNewEntity($entity);
         }
