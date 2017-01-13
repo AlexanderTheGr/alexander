@@ -39,6 +39,29 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function viewAction($id) {
 
+
+
+        if ($id = 'pelatis') {
+            $entity = new Order;
+            $this->newentity[$this->repository] = $entity;
+            $this->initialazeNewEntity($entity);
+            $customer = $this->getDoctrine()
+                    ->getRepository("SoftoneBundle:Customer")
+                    ->findOneByReference($ord["TRDR"]);
+            $entity->setCustomer(3);
+            $vat = $this->getDoctrine()
+                    ->getRepository("SoftoneBundle:Vat")
+                    ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
+            $entity->setVat($vat);
+            $entity->setCustomerName($customer->getCustomerName() . " (" . $customer->getCustomerAfm() . " - " . $customer->getCustomerCode() . ")");
+            $route = $this->getDoctrine()
+                    ->getRepository("SoftoneBundle:Route")
+                    ->find(1);
+            $entity->setRoute($route);
+            $this->flushpersist($entity);
+            $id = $entity->getId();
+        }
+
         $buttons = array();
         $content = $this->gettabs($id);
         $content = $this->getoffcanvases($id);
@@ -47,7 +70,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->find($id);
         $pagename = "";
         if ($order) {
-           $pagename = $order->getCustomerName();  
+            $pagename = $order->getCustomerName();
         }
         $content = $this->content();
         return $this->render('SoftoneBundle:Order:view.html.twig', array(
@@ -307,7 +330,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $vat = 1.24;
         $recordsTotal = 0;
         $recordsFiltered = 0;
-        
+
         //$this->q_or = array();
         //$this->q_and = array();
         $order = $this->getDoctrine()
