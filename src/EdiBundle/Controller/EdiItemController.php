@@ -727,6 +727,8 @@ class EdiItemController extends Main {
         $itemcode = $request->request->get("itemcode");
         
         
+        $jsonarr["itemcode"] = $itemcode;
+        $jsonarr["mtrsup"] = $itemcode;
         $edi = $this->getDoctrine()
                 ->getRepository('EdiBundle:Edi')
                 ->findOneBy(array("itemMtrsup" => $mtrsup));
