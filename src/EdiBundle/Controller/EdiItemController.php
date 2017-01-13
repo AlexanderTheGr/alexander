@@ -730,7 +730,7 @@ class EdiItemController extends Main {
         if ($edi) {
             $ediItem = $this->getDoctrine()
                     ->getRepository('EdiBundle:EdiItem')
-                    ->findOneBy(array('edi' => $Edi->getId(),'itemcode'=>$itemcode));
+                    ->findOneBy(array('edi' => $edi->getId(),'itemcode'=>$itemcode));
             $jsonarr["itemcode"] = $itemcode;
             $jsonarr["pricer"] = (double)$this->getEdiMarkup("itemPricer");
             $jsonarr["pricew"] = (double)$this->getEdiMarkup("itemPricew");
