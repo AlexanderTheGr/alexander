@@ -1308,7 +1308,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $orderItem->setDisc1prc($request->request->get("discount"));
         elseif ($request->request->get("qty") == 0) {
             try {
-                $this->flushremove($$orderItem);
+                $this->flushremove($orderItem);
                 $json = json_encode(array("error" => false));
             } catch (\Exception $e) {
                 $json = json_encode(array("error" => true, "message" => "Product Exists"));
