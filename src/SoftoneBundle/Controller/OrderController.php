@@ -60,7 +60,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $entity->setRoute($route);
             $this->flushpersist($entity);
             $id = $entity->getId();
-            header("location: /order/view/".$id);
+            header("location: /order/view/" . $id);
             exit;
         }
 
@@ -879,10 +879,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $out[] = $o;
         foreach ($brandsmodeltypes as $brandsmodeltype) {
             $o["id"] = $brandsmodeltype->getId();
+            $yearfrom = substr($brandsmodeltype->getYearFrom(), 4, 2) . "/" . substr($brandsmodeltype->getYearFrom(), 0, 4);
+            $yearto = substr($brandsmodeltype->getYearTo(), 4, 2) . "/" . substr($brandsmodeltype->getYearTo(), 0, 4);
+            $yearto = $yearto == 0 ? 'Today' : $yearto;
+            $year = $yearfrom . " " . $yearto;
             if ($brandsmodeltype->getEngine() != "") {
-                $o["name"] = $brandsmodeltype->getBrandModelType() . " (" . $brandsmodeltype->getEngine() . ")";
+                $o["name"] = $brandsmodeltype->getBrandModelType() . " " . $year . " (" . $brandsmodeltype->getEngine() . ")";
             } else {
-                $o["name"] = $brandsmodeltype->getBrandModelType();
+                $o["name"] = $brandsmodeltype->getBrandModelType(). " " . $year ;
             }
             $out[] = $o;
         }
