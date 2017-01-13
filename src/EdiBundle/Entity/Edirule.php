@@ -232,6 +232,9 @@ class Edirule {
             }
             if ($rule["condition"] == "OR") {
                 $out = false;
+                if ($rl["id"] == "default") {
+                    return true;
+                }                
                 if ($rl["id"] == "category") {
                     if ($rl["operator"] == "equal") {
                         if (in_array($rl["value"], $catsEp)) {
@@ -271,6 +274,9 @@ class Edirule {
                 }
             } elseif ($rule["condition"] == "AND") {
                 $out = true;
+                if ($rl["id"] == "default") {
+                    return true;
+                }
                 if ($rl["id"] == "category") {
                     if ($rl["operator"] == "equal") {
                         if (!in_array($rl["value"], $catsEp)) {
