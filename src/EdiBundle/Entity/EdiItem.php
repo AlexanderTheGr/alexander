@@ -1051,7 +1051,7 @@ class EdiItem extends Entity {
                 $sortorder = $rule->getSortorder();
                 $markup = $rule->getVal();
                 $price = $rule->getPrice();
-                echo $markup;
+                //echo $markup;
             }
         }
         //$markup = $markup == 0 ? 0 : $markup; 
