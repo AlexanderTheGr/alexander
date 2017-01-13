@@ -374,12 +374,12 @@ class EdiItemController extends Main {
                 //$edi = $em->getRepository("EdiBundle:Edi")->find(1);
                 $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".partno != '' AND ((" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
                 /*
-                if ($search[1]) {
-                    $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND ((" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
-                } else {
-                    $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND (" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ")";
-                }
-                */
+                  if ($search[1]) {
+                  $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND ((" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
+                  } else {
+                  $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND (" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ")";
+                  }
+                 */
             } else {
                 $this->createWhere();
             }
@@ -574,7 +574,6 @@ class EdiItemController extends Main {
                     @$jsonarr[$key]['6'] = number_format((float) $xml->Item->Header->PriceOnPolicy, 2, '.', '');
                     @$jsonarr[$key]['DT_RowClass'] .= $xml->Item->Header->Available == "Y" ? ' text-success ' : ' text-danger ';
                 }
-                
             }
             //$jsonarr2[(int)$key] = $json;
             @$jsonarr[$key]['DT_RowClass'] .= ' text-danger ';
@@ -717,6 +716,29 @@ class EdiItemController extends Main {
     public function installAction(Request $request) {
         $this->install();
         $this->getPartMaster();
+    }
+
+    /**
+     * @Route("/edi/ediitem/getEdiMarkup")
+     */
+    public function getEdiMarkupAction(Request $request) {
+        $mtrsup = $request->request->get("mtrsup");
+        $itemcode = $request->request->get("itemcode");
+        $edi = $this->getDoctrine()
+                ->getRepository('EdiBundle:Edi')
+                ->findOneBy(array("itemMtrsup" => $mtrsup));
+        if ($edi) {
+            $ediItem = $this->getDoctrine()
+                    ->getRepository('EdiBundle:EdiItem')
+                    ->findOneBy(array('edi' => $Edi->getId(),'itemcode'=>$itemcode));
+            $jsonarr["itemcode"] = $itemcode;
+            $jsonarr["pricer"] = (double)$this->getEdiMarkup("itemPricer");
+            $jsonarr["pricew"] = (double)$this->getEdiMarkup("itemPricew");
+        }
+        $json = json_encode($jsonarr);
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );        
     }
 
 }
