@@ -41,7 +41,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
 
 
-        if ($id = 'pelatis') {
+        if ($id == 'pelatis') {
             $entity = new Order;
             $this->newentity[$this->repository] = $entity;
             $this->initialazeNewEntity($entity);
