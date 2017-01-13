@@ -858,6 +858,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $yearfrom = substr($brandsmodel->getYearFrom(), 4, 2) . "/" . substr($brandsmodel->getYearFrom(), 0, 4);
             $yearto = substr($brandsmodel->getYearTo(), 4, 2) . "/" . substr($brandsmodel->getYearTo(), 0, 4);
             $yearto = $yearto == 0 ? 'Today' : $yearto;
+            $year = $yearfrom." - ".$yearto;
             $o["id"] = $brandsmodel->getId();
             $o["name"] = $brandsmodel->getBrandModel(). " " . $year;
             $out[] = $o;
