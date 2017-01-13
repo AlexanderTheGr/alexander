@@ -306,10 +306,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $order = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Order")
                 ->find($id);
-        $customer = $this->getDoctrine()
-                ->getRepository("SoftoneBundle:Customer")
-                ->find($order->getCustomer());
-        $priceField = $customer->getPriceField();
+        if ($order) {
+            $customer = $this->getDoctrine()
+                    ->getRepository("SoftoneBundle:Customer")
+                    ->find($order->getCustomer());
+            $priceField = $customer->getPriceField();
+        }
+
         $s = array();
         $f = array();
         $jsonarr = array();
@@ -1294,19 +1297,20 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
         //$json = '{"SALDOC":[{"TRDR":"364","SERIESNUM":"1100003181","FINCODE":"B2B1100003181","PAYMENT":1010,"VATSTS":"1410","SERIES":7021,"WHOUSE":1101,"ID":"1035"}],"ITELINES":[{"VAT":"1410","QTY1":1,"LINENUM":9000001,"MTRL":"136922","PRICE":83.69,"DISC1PRC":null}]}';
         $json = $request->getContent();
-        
+
         $order = json_decode($json, true);
         print_r($order);
         $ord = $order["SALDOC"][0];
-        if (!$ord["ID"]) exit;
+        if (!$ord["ID"])
+            exit;
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->findOneByReference($ord["TRDR"]);
         $vat = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Vat")
                 ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
-        
-        
+
+
         $entity = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Order")
                 ->findOneByReference($ord["ID"]);
@@ -1316,15 +1320,15 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $this->newentity[$this->repository] = $entity;
             $this->initialazeNewEntity($entity);
         }
-                
+
         $entity->setCustomer($ord["TRDR"]);
         $entity->setReference($ord["ID"]);
         $entity->setFincode($ord["FINCODE"]);
         $entity->setSeries($ord["SERIES"]);
-        
+
         $entity->setRemarks($ord["REMARKS"]);
         $entity->setComments($ord["COMMENTS"]);
-        
+
         $entity->setVat($vat);
         $entity->setCustomerName($customer->getCustomerName() . " (" . $customer->getCustomerAfm() . " - " . $customer->getCustomerCode() . ")");
         $route = $this->getDoctrine()
@@ -1333,24 +1337,24 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $entity->setRoute($route);
         $this->flushpersist($entity);
 
-        $sql = 'DELETE FROM softone_orderitem where s_order = "'.$entity->getId().'"';
-        $this->getDoctrine()->getConnection()->exec($sql);     
+        $sql = 'DELETE FROM softone_orderitem where s_order = "' . $entity->getId() . '"';
+        $this->getDoctrine()->getConnection()->exec($sql);
         $items = $order["ITELINES"];
-        foreach($items as $item) {
+        foreach ($items as $item) {
             $product = $this->getDoctrine()
-                ->getRepository('SoftoneBundle:Product')
-                ->findOneByReference($item["MTRL"]);
+                    ->getRepository('SoftoneBundle:Product')
+                    ->findOneByReference($item["MTRL"]);
             $orderItem = new Orderitem;
             $orderItem->setOrder($entity);
             $orderItem->setPrice($item["PRICE"]);
-            $orderItem->setDisc1prc((float)$item["DISC1PRC"]);
-            $orderItem->setLineval($item["PRICE"]*$item["QTY1"]);
+            $orderItem->setDisc1prc((float) $item["DISC1PRC"]);
+            $orderItem->setLineval($item["PRICE"] * $item["QTY1"]);
             $orderItem->setQty($item["QTY1"]);
             $orderItem->setChk(1);
             $orderItem->setProduct($product);
             $this->flushpersist($orderItem);
         }
-        
+
         exit;
     }
 
