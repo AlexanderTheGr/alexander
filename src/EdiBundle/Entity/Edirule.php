@@ -209,7 +209,6 @@ class Edirule {
         if ($SoftoneSupplier)
             $supplier = $SoftoneSupplier->getId();
         
-        print_r($catsEp);
         //$supplier = $ediitem->getSupplierId()->getId();
         //echo $this->rulesLoop($rule, $catsEp, $supplier) ? "true" : "false";
         return $this->rulesLoop($rule, $catsEp, $supplier, $ediitem->getItemCode());
