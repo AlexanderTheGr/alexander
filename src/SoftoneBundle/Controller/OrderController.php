@@ -42,10 +42,16 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $buttons = array();
         $content = $this->gettabs($id);
         $content = $this->getoffcanvases($id);
-
+        $order = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Order")
+                ->find($id);
+        $pagename = "";
+        if ($order) {
+           $pagename = $order->getCustomerName();  
+        }
         $content = $this->content();
         return $this->render('SoftoneBundle:Order:view.html.twig', array(
-                    'pagename' => 's',
+                    'pagename' => $pagename,
                     'order' => $id,
                     'url' => '/order/save',
                     'buttons' => $buttons,
