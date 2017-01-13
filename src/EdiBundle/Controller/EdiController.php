@@ -128,6 +128,7 @@ class EdiController extends Main {
         
         
         $fields["name"] = array("label" => "Name");
+        $fields["markup"] = array("label" => "Default Markup");
         $fields["token"] = array("label" => "Token");
         $fields["func"] = array("label" => "Func");
         $fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "required" => false, "className" => "col-md-2", 'type' => "select", 'dataarray' => $itemMtrsup);
@@ -469,6 +470,7 @@ class EdiController extends Main {
         $this->addField(array("name" => "ID", "index" => 'id'))
                 ->addField(array("name" => "Name", "index" => 'name', 'search' => 'text'))
                 ->addField(array("name" => "Token", "index" => 'token', 'search' => 'text'))
+                ->addField(array("name" => "Default Markup", "index" => 'markup', 'search' => 'text'))
 
         ;
         $json = $this->datatable();
