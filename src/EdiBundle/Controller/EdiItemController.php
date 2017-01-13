@@ -737,8 +737,8 @@ class EdiItemController extends Main {
                     ->findOneBy(array('Edi' => $edi, 'itemCode' => $jsonarr["itemcode"]));
             if ($ediItem) {
                 //$jsonarr["itemcode"] = $itemcode;
-                $jsonarr["pricer"] = (double) $ediItem->getEdiMarkup("itemPricer");
-                $jsonarr["pricew"] = (double) $ediItem->getEdiMarkup("itemPricew");
+                $jsonarr["markupr"] = (double) $ediItem->getEdiMarkup("itemPricer");
+                $jsonarr["markupw"] = (double) $ediItem->getEdiMarkup("itemPricew");
             }
         }
         $json = json_encode($jsonarr);
