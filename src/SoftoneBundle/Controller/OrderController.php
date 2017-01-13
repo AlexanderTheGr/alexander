@@ -855,8 +855,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $o["name"] = "Select an Option";
         $out[] = $o;
         foreach ($brandsmodels as $brandsmodel) {
+            $yearfrom = substr($brandsmodel->getYearFrom(), 4, 2) . "/" . substr($brandsmodel->getYearFrom(), 0, 4);
+            $yearto = substr($brandsmodel->getYearTo(), 4, 2) . "/" . substr($brandsmodel->getYearTo(), 0, 4);
+            $yearto = $yearto == 0 ? 'Today' : $yearto;
             $o["id"] = $brandsmodel->getId();
-            $o["name"] = $brandsmodel->getBrandModel();
+            $o["name"] = $brandsmodel->getBrandModel(). " " . $year;
             $out[] = $o;
         }
 
@@ -879,14 +882,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $out[] = $o;
         foreach ($brandsmodeltypes as $brandsmodeltype) {
             $o["id"] = $brandsmodeltype->getId();
-            $yearfrom = substr($brandsmodeltype->getYearFrom(), 4, 2) . "/" . substr($brandsmodeltype->getYearFrom(), 0, 4);
-            $yearto = substr($brandsmodeltype->getYearTo(), 4, 2) . "/" . substr($brandsmodeltype->getYearTo(), 0, 4);
-            $yearto = $yearto == 0 ? 'Today' : $yearto;
+
             $year = $yearfrom . " " . $yearto;
             if ($brandsmodeltype->getEngine() != "") {
-                $o["name"] = $brandsmodeltype->getBrandModelType() . " " . $year . " (" . $brandsmodeltype->getEngine() . ")";
+                $o["name"] = $brandsmodeltype->getBrandModelType() . " (" . $brandsmodeltype->getEngine() . ")";
             } else {
-                $o["name"] = $brandsmodeltype->getBrandModelType(). " " . $year ;
+                $o["name"] = $brandsmodeltype->getBrandModelType();
             }
             $out[] = $o;
         }
