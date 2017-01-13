@@ -723,7 +723,7 @@ class EdiItemController extends Main {
      */
     public function getEdiMarkupAction(Request $request) {
         $mtrsup = "1196";//$request->request->get("mtrsup");
-        $itemcode = "AC0000050126";//$request->request->get("itemcode");
+        $itemcode = "TCAR9094PMS";//$request->request->get("itemcode");
         $edi = $this->getDoctrine()
                 ->getRepository('EdiBundle:Edi')
                 ->findOneBy(array("itemMtrsup" => $mtrsup));
