@@ -201,7 +201,7 @@ class Edirule {
             $catsEp[] = $pcategory->getSortCode();
         }
         $SoftoneSupplier = $em->getRepository("SoftoneBundle:SoftoneSupplier")
-                ->findOneBy(array('title' => $ediitem->brand));
+                ->findOneBy(array('title' => $ediitem->getBrand()));
         if ($SoftoneSupplier)
             $supplier = $SoftoneSupplier->getId();
         //print_r($catsEp);
