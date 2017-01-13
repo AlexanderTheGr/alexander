@@ -47,7 +47,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $this->initialazeNewEntity($entity);
             $customer = $this->getDoctrine()
                     ->getRepository("SoftoneBundle:Customer")
-                    ->findOneByReference($ord["TRDR"]);
+                    ->find(3);
             $entity->setCustomer(3);
             $vat = $this->getDoctrine()
                     ->getRepository("SoftoneBundle:Vat")
