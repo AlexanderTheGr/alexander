@@ -1042,9 +1042,7 @@ class EdiItem extends Entity {
     }
     
     function getEdiMarkup($pricefield=false) {
-        
-
-        
+        $dmarkup = 0;      
         $rules = $this->getEdi()->loadEdirules($pricefield)->getRules();
         $sortorder = 0;
         $markup = 0;
@@ -1055,9 +1053,9 @@ class EdiItem extends Entity {
                 $price = $rule->getPrice();
             }
         }
-        $markup = $markup == 0 ? 100 : $markup; 
+        $markup = $markup == 0 ? $dmarkup : $markup; 
         //echo $markup."\n";
-        $markupedPrice = $this->retailprice * (1 + $markup/100 );
+        $markupedPrice = $this->retailprice * (1 + $markup/$dmarkup );
         return $price > 0 ? $price : $markupedPrice;
     }
 }
