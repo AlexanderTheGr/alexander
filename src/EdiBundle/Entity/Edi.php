@@ -351,4 +351,33 @@ class Edi extends Entity {
     {
         return $this->itemMtrsup;
     }
+    /**
+     * @var string
+     */
+    private $markup;
+
+
+    /**
+     * Set markup
+     *
+     * @param string $markup
+     *
+     * @return Edi
+     */
+    public function setMarkup($markup)
+    {
+        $this->markup = $markup;
+
+        return $this;
+    }
+
+    /**
+     * Get markup
+     *
+     * @return string
+     */
+    public function getMarkup()
+    {
+        return $this->markup;
+    }
 }
