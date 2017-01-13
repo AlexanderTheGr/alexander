@@ -540,7 +540,7 @@ class EdiItem extends Entity {
         );
         echo ".";
         
-        $tecdoc = $this->tecdoc; //new Tecdoc();
+        $tecdoc = $this->tecdoc ? $this->tecdoc : new Tecdoc(); //new Tecdoc();
         $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($postparams);
         $tectdoccode = $this->artNr;
         if (count($articleDirectSearchAllNumbers->data->array) == 0) {
