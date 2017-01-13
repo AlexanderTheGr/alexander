@@ -1057,7 +1057,7 @@ class EdiItem extends Entity {
         }
         $markup = $markup == 0 ? 100 : $markup; 
         //echo $markup."\n";
-        $markupedPrice = $this->retailprice * (1 + $markup/100 );
+        $markupedPrice = $this->retailprice;
         return $price > 0 ? $price : $markupedPrice;
     }
 }
