@@ -789,8 +789,8 @@ class EdiItem extends Entity {
         $product->setCars($this->getCars());
         $product->setCats($this->getCats());
         
-        $product->setItemPricer((double)$this->getEdiMarkup("itemPricer"));
-        $product->setItemPricew((double)$this->getEdiMarkup("itemPricew"));
+        $product->setItemPricer((double)$this->getEdiMarkupPrice("itemPricer"));
+        $product->setItemPricew((double)$this->getEdiMarkupPrice("itemPricew"));
         
 
         $product->setItemV5($dt);
@@ -1041,7 +1041,7 @@ class EdiItem extends Entity {
         return $this->SoapClient;
     }
     
-    function getEdiMarkup($pricefield=false) {
+    function getEdiMarkupPrice($pricefield=false) {
 
         $rules = $this->getEdi()->loadEdirules($pricefield)->getRules();
         $sortorder = 0;
@@ -1059,4 +1059,23 @@ class EdiItem extends Entity {
         $markupedPrice = $this->retailprice * (1 + $markup/100 );
         return $price > 0 ? $price : $markupedPrice;
     }
+    function getEdiMarkup($pricefield=false) {
+
+        $rules = $this->getEdi()->loadEdirules($pricefield)->getRules();
+        $sortorder = 0;
+        $markup = 0;
+        foreach ($rules as $rule) {
+            if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder() ) {
+                $sortorder = $rule->getSortorder();
+                $markup = $rule->getVal();
+                $price = $rule->getPrice();
+                //echo $markup;
+            }
+        }
+        return $markup;
+        //$markup = $markup == 0 ? 0 : $markup; 
+        //echo $markup."\n";
+        $markupedPrice = $this->retailprice * (1 + $markup/100 );
+        return $price > 0 ? $price : $markupedPrice;
+    }    
 }
