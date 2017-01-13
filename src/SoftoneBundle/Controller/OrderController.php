@@ -60,7 +60,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $entity->setRoute($route);
             $this->flushpersist($entity);
             $id = $entity->getId();
-            
+            header("location: /order/view/".$id);
+            exit;
         }
 
         $buttons = array();
