@@ -204,7 +204,6 @@ class Edirule {
         $SoftoneSupplier = $em->getRepository("SoftoneBundle:SoftoneSupplier")
                 ->findOneBy(array('title' => $ediitem->getBrand()));
         
-        echo $SoftoneSupplier->getId();
         if ($SoftoneSupplier)
             $supplier = $SoftoneSupplier->getId();
         //print_r($catsEp);
