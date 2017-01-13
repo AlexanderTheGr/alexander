@@ -166,7 +166,10 @@ class Customergrouprule {
         }
         //print_r($catsEp);
         $supplier = $product->getSupplierId()->getId();
-        $productsale = $product->getProductsale()->getId();
+        if ($product->getProductsale()) {
+            $productsale = $product->getProductsale()->getId();
+        }
+        $productsale = 1;
         //echo $this->rulesLoop($rule, $catsEp, $supplier) ? "true" : "false";
         return $this->rulesLoop($rule, $catsEp, $supplier, $product->getErpCode(),$productsale);
     }
