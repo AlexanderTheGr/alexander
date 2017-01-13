@@ -722,8 +722,8 @@ class EdiItemController extends Main {
      * @Route("/edi/ediitem/getEdiMarkup")
      */
     public function getEdiMarkupAction(Request $request) {
-        $mtrsup = $request->request->get("mtrsup");
-        $itemcode = $request->request->get("itemcode");
+        $mtrsup = "1196";//$request->request->get("mtrsup");
+        $itemcode = "AC0000050126";//$request->request->get("itemcode");
         $edi = $this->getDoctrine()
                 ->getRepository('EdiBundle:Edi')
                 ->findOneBy(array("itemMtrsup" => $mtrsup));
