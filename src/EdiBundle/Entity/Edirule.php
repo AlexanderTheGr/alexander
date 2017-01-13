@@ -183,9 +183,6 @@ class Edirule {
         return $this->group;
     }
 
-    
-    
-    
     function validateRule($ediitem) {
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
@@ -203,6 +200,10 @@ class Edirule {
             $pcategory = $em->getRepository("SoftoneBundle:Category")->find($category->getParent());
             $catsEp[] = $pcategory->getSortCode();
         }
+        $SoftoneSupplier = $em->getRepository("SoftoneBundle:SoftoneSupplier")
+                ->findOneBy(array('title' => $ediitem->brand));
+        if ($SoftoneSupplier)
+            $supplier = $SoftoneSupplier->getId();
         //print_r($catsEp);
         //$supplier = $ediitem->getSupplierId()->getId();
         //echo $this->rulesLoop($rule, $catsEp, $supplier) ? "true" : "false";
@@ -301,13 +302,12 @@ class Edirule {
             }
         }
         return $out;
-    }    
-    
+    }
+
     /**
      * @var string
      */
     private $price_field;
-
 
     /**
      * Set priceField
@@ -316,8 +316,7 @@ class Edirule {
      *
      * @return Edirule
      */
-    public function setPriceField($priceField)
-    {
+    public function setPriceField($priceField) {
         $this->price_field = $priceField;
 
         return $this;
@@ -328,8 +327,8 @@ class Edirule {
      *
      * @return string
      */
-    public function getPriceField()
-    {
+    public function getPriceField() {
         return $this->price_field;
     }
+
 }
