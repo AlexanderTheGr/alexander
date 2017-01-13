@@ -722,11 +722,11 @@ class EdiItemController extends Main {
      * @Route("/edi/ediitem/getEdiMarkup")
      */
     public function getEdiMarkupAction(Request $request) {
-        
-        
-        
-        $jsonarr = json_decode($request->getContent(),true);
-        
+
+
+
+        $jsonarr = json_decode($request->getContent(), true);
+
 
         $edi = $this->getDoctrine()
                 ->getRepository('EdiBundle:Edi')
@@ -734,16 +734,17 @@ class EdiItemController extends Main {
         if ($edi) {
             $ediItem = $this->getDoctrine()
                     ->getRepository('EdiBundle:EdiItem')
-                    ->findOneBy(array('Edi' => $edi,'itemCode'=>$jsonarr["itemcode"]));
-            
-            $jsonarr["itemcode"] = $itemcode;
-            $jsonarr["pricer"] = (double)$ediItem->getEdiMarkup("itemPricer");
-            $jsonarr["pricew"] = (double)$ediItem->getEdiMarkup("itemPricew");
+                    ->findOneBy(array('Edi' => $edi, 'itemCode' => $jsonarr["itemcode"]));
+            if ($ediItem) {
+                $jsonarr["itemcode"] = $itemcode;
+                $jsonarr["pricer"] = (double) $ediItem->getEdiMarkup("itemPricer");
+                $jsonarr["pricew"] = (double) $ediItem->getEdiMarkup("itemPricew");
+            }
         }
         $json = json_encode($jsonarr);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
-        );        
+        );
     }
 
 }
