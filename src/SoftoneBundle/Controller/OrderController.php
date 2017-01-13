@@ -301,6 +301,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $vat = 1.24;
         $recordsTotal = 0;
         $recordsFiltered = 0;
+        
         //$this->q_or = array();
         //$this->q_and = array();
         $order = $this->getDoctrine()
@@ -311,6 +312,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     ->getRepository("SoftoneBundle:Customer")
                     ->find($order->getCustomer());
             $priceField = $customer->getPriceField();
+        } else {
+            $priceField = "itemPricew";
         }
 
         $s = array();
