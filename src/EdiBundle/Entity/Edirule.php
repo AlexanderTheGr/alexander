@@ -196,7 +196,7 @@ class Edirule {
         $categories = $em->getRepository("SoftoneBundle:Category")->findById($cats);
         $categoriesArr = array();
         $catsEp = array();
-        print_r($cats);
+        //print_r($cats);
         foreach ($categories as $category) {
             $catsEp[] = $category->getSortCode();
             $pcategory = $em->getRepository("SoftoneBundle:Category")->find($category->getParent());
