@@ -538,7 +538,7 @@ class EdiItem extends Entity {
             "articleNumber" => $this->artNr,
             "brandno" => $this->dlnr
         );
-        echo ".";
+        //echo ".";
         
         $tecdoc = $this->tecdoc ? $this->tecdoc : new Tecdoc(); //new Tecdoc();
         $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($postparams);
@@ -575,7 +575,7 @@ class EdiItem extends Entity {
             //$em->execute();
             if (@$out->articleId) {
                 //echo $out->articleId."<BR>";
-                echo $this->id . "<BR>";
+                //echo $this->id . "<BR>";
                 $this->setTecdocArticleId($out->articleId);
                 $this->setTecdocArticleName($out->articleName);
                 //$this->setTecdocGenericArticleId($out->articleName);
