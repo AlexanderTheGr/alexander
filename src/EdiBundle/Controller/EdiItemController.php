@@ -725,7 +725,7 @@ class EdiItemController extends Main {
         
         
         
-        $jsonarr = json_decode($request->getContent());
+        $jsonarr = json_decode($request->getContent(),true);
         
 
         $edi = $this->getDoctrine()
