@@ -1042,9 +1042,7 @@ class EdiItem extends Entity {
     }
     
     function getEdiMarkup($pricefield=false) {
-      
 
-        
         $rules = $this->getEdi()->loadEdirules($pricefield)->getRules();
         $sortorder = 0;
         $markup = 0;
