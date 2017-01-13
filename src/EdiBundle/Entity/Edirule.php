@@ -188,6 +188,7 @@ class Edirule {
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
         }
+        $ediitem->tecdoc = new Tecdoc();
         $ediitem->updatetecdoc(true);
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         $cats = $ediitem->getCats();
