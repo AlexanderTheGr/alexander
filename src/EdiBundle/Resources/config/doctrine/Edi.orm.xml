@@ -23,7 +23,8 @@
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="markup" type="decimal" column="markup" precision="10" scale="2" nullable="false"/>   
+        <field name="markupr" type="decimal" column="markupr" precision="10" scale="2" nullable="false"/> 
+        <field name="markupw" type="decimal" column="markupw" precision="10" scale="2" nullable="false"/>   
         <field name="status" type="integer" column="status" nullable="true">
             <options>
                 <option name="unsigned"/>
