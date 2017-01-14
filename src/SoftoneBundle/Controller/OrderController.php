@@ -423,7 +423,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $like = implode(" AND ", $likearr);
                     $sqlearch = "Select o.id from SoftoneBundle:ProductFreesearch o where " . $like . "";
                 } else {
-                    $sqlearch = "Select o.id from SoftoneBundle:ProductSearch o where o.itemCode='" . $search[1] . "' OR o.itemCode1='" . $search[1] . "' OR o.itemCode2='" . $search[1] . "'";
+                    $sqlearch = "Select o.id from SoftoneBundle:ProductSearch o where o.itemCode like '%" . $search[1] . "%' OR o.itemCode1='" . $search[1] . "' OR o.itemCode2='" . $search[1] . "'";
                 }
 
 
