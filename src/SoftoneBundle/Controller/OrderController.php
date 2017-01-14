@@ -456,15 +456,19 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                 if (count((array) $articleIds)) {
                     $tecdoc_article = 'p.tecdocArticleId in (' . implode(",", $articleIds) . ') OR ';
-                    $tecdoc_article2 = " p.erpCode like '%".$search[1]."%' OR p.id in (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
+                    if ($search[1])
+                        $tecdoc_article2 = " p.erpCode like '%" . $search[1] . "%' OR p.id in (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
+                    else
+                        $tecdoc_article2 = " p.id in (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
+
                     $sql2 = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where p.erpCode like "%'.$search[1].'%" OR ' . $tecdoc_article . $tecdoc_article2 . '
+                                where p.erpCode like "%' . $search[1] . '%" OR ' . $tecdoc_article . $tecdoc_article2 . '
                                 ORDER BY ' . $this->orderBy;
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
                                 where ' . $tecdoc_article . $tecdoc_article2 . '
-                                ORDER BY ' . $this->orderBy;                    
+                                ORDER BY ' . $this->orderBy;
                 } else {
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
@@ -862,9 +866,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $yearfrom = substr($brandsmodel->getYearFrom(), 4, 2) . "/" . substr($brandsmodel->getYearFrom(), 0, 4);
             $yearto = substr($brandsmodel->getYearTo(), 4, 2) . "/" . substr($brandsmodel->getYearTo(), 0, 4);
             $yearto = $yearto == 0 ? 'Today' : $yearto;
-            $year = $yearfrom." - ".$yearto;
+            $year = $yearfrom . " - " . $yearto;
             $o["id"] = $brandsmodel->getId();
-            $o["name"] = $brandsmodel->getBrandModel(). " " . $year;
+            $o["name"] = $brandsmodel->getBrandModel() . " " . $year;
             $out[] = $o;
         }
 
