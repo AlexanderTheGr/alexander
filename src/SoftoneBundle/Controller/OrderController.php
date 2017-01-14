@@ -459,7 +459,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $tecdoc_article2 = " p.id in (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where ' . $tecdoc_article . $tecdoc_article2 . ' OR p.itemCode like "%'.$search[1].'%"
+                                where p.itemCode like "%'.$search[1].'%" OR ' . $tecdoc_article . $tecdoc_article2 . '
                                 ORDER BY ' . $this->orderBy;
                 } else {
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
@@ -468,8 +468,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 ORDER BY ' . $this->orderBy;
                 }
 
-                echo $sql;
-                exit;
+                //echo $sql;
+                //exit;
 
                 $sql = str_replace("p.*,", "", $sql);
                 //$sql = str_replace("ORDER BY p.qty asc","",$sql);
