@@ -559,7 +559,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                  * 
                  */
                 $json[4] = $obj->getArticleAttributes2($articleIds2["linkingTargetId"]);
-                $json[6] = number_format($json[7] * $vat, 2, '.', '');
+                $json[6] = number_format($json[6] * $vat, 2, '.', '');
                 ;
                 $json[7] = $obj->getDiscount($customer, $vat);
                 $json[8] = $obj->getGroupedDiscount($customer, $vat); //str_replace($obj->$priceField, $obj->getGroupedDiscount($customer), $json[5]);
