@@ -457,10 +457,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 if (count((array) $articleIds)) {
                     $tecdoc_article = 'p.tecdocArticleId in (' . implode(",", $articleIds) . ') OR ';
                     $tecdoc_article2 = " p.id in (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
-                    $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
+                    $sql2 = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
                                 where p.erpCode like "%'.$search[1].'%" OR ' . $tecdoc_article . $tecdoc_article2 . '
                                 ORDER BY ' . $this->orderBy;
+                    $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
+                                FROM ' . $this->repository . ' ' . $this->prefix . '
+                                where ' . $tecdoc_article . $tecdoc_article2 . '
+                                ORDER BY ' . $this->orderBy;                    
                 } else {
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
@@ -468,8 +472,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 ORDER BY ' . $this->orderBy;
                 }
 
-                //echo $sql;
-                //exit;
+                echo $sql2;
+                exit;
 
                 $sql = str_replace("p.*,", "", $sql);
                 //$sql = str_replace("ORDER BY p.qty asc","",$sql);
