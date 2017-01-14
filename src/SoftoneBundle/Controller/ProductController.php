@@ -261,6 +261,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $product->setErpCode($erpCode);
 
         $product->setItemCode($product->getErpCode());
+        if ($product->getTecdocSupplierId())
         $product->setItemMtrmark($product->getTecdocSupplierId()->getId());
         $product->setItemMtrmanfctr($product->getSupplierId()->getId());
         $product->setItemApvcode($product->getTecdocCode());
