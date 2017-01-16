@@ -692,12 +692,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //$content = $this->content();
 
         $tecdoc = new Tecdoc();
-        $article_id = $request->request->get("ref");
+        $article_id = $request->request->get("articleId");
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($request->request->get("ref"));
 
-        $params["articleId"] = $product ? $product->getTecdocArticleId() : $article_id;
+        $params["articleId"] =  $article_id;
         
         $params["linkingTargetId"] = $request->request->get("car");
         $out["originals"] = $tecdoc->originals($params);
