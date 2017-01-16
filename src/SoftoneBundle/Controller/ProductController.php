@@ -259,7 +259,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->find($entities[$this->repository]);
 
 
-        if ($product->getErpSupplier() != '' AND !$product->setSupplierId()) {
+        if ($product->getErpSupplier() != '' AND !$product->getSupplierId()) {
             $sup = trim(strtoupper($product->getErpSupplier()));
             $SoftoneSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")
                     ->findOneBy(array('title' => $sup));
