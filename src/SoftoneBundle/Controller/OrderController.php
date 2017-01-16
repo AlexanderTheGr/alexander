@@ -34,7 +34,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         ));
     }
 
-    
     /**
      * @Route("/order/print/{id}")
      */
@@ -42,9 +41,27 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $order = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Order")
                 ->find($id);
-        
+
+        $html = "<table>";
+
+        $html .= "<tr>";
+        $html .= "<td>Title</td>";
+        $html .= "</tr>";
+        foreach ($entity->getItems() as $item) {
+            @$total += $item->getLineval();
+            //$item->getProduct()->getReference();
+            $html .= "<tr>";
+            $html .= "<td>".$item->getProduct()->getTitle()."</td>";
+            $html .= "</tr>";
+        }
+        $html .= "<table>";
+
         $content = 'ssssss';
-        
+
+
+
+
+
         return $this->render('SoftoneBundle:Order:print.html.twig', array(
                     'pagename' => $pagename,
                     'order' => $id,
@@ -56,8 +73,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     'content' => $content,
                     'displaynone' => $displaynone,
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
-        ));        
-    }    
+        ));
+    }
+
     /**
      * @Route("/order/view/{id}")
      */
@@ -470,7 +488,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                     $sql = "SELECT poo.id FROM SoftoneBundle:Product poo where poo.erpCode like '%" . $search[1] . "%'";
                 }
-                
+
                 //echo  $sql;
                 $this->prefix = "p";
                 //$this->q_or[] = $this->prefix . ".id in  (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
@@ -492,7 +510,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     if ($search[1])
                         $tecdoc_article2 = " p.erpCode like '%" . $search[1] . "%' OR ";
                     else
-                        //$tecdoc_article2 = " p.id in (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . ")) OR ";
+                    //$tecdoc_article2 = " p.id in (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . ")) OR ";
                         $tecdoc_article2 = "";
                     $sql2 = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
