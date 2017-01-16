@@ -79,7 +79,7 @@ setTimeout(function () {
         minLength: 2,
         select: function (event, ui) {
             var data = {};
-            data.erp_code = ui.value;
+            data.erp_code = ui.item.value;
             data.id = obj.attr("id");
             $("#loaderer").show();
             $.post("/product/addRelation", data, function (result) {
