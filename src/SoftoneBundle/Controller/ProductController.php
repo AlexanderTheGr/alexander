@@ -287,7 +287,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 }
             }
             //$product->setItemMtrmanfctr($SoftoneSupplier->getId());
-            $product->getSupplierId($SoftoneSupplier);
+            $product->setSupplierId($SoftoneSupplier);
         }
 
         $erpCode = $this->clearCode($product->getSupplierCode()) . "-" . $product->getSupplierId()->getCode();
