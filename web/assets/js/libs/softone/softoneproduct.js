@@ -15,14 +15,7 @@ jQuery('.synafiacode input').live("keyup", function (e) {
     }
 });
 
-var $elem = jQuery(".synafiacode input").autocomplete({
-    source: "/product/autocompletesearch",
-    method: "POST",
-    minLength: 2,
-    select: function (event, ui) {
-        var data = {}
-    }
-})
+
 
 jQuery('.parentcat input').live("keyup", function (e) {
     if (e.keyCode == 13) {
@@ -79,4 +72,12 @@ jQuery('.productcategorychk').live('click', function () {
 
 setTimeout(function () {
     jQuery("select.form-control").chosen({width: "100%"});
+    var $elem = jQuery(".synafiacode input").autocomplete({
+        source: "/product/autocompletesearch",
+        method: "POST",
+        minLength: 2,
+        select: function (event, ui) {
+            var data = {}
+        }
+    })    
 }, 1000)
