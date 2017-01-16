@@ -266,6 +266,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $product->setItemMtrmark($product->getTecdocSupplierId()->getId());
         $product->setItemMtrmanfctr($product->getSupplierId()->getId());
         $product->setItemApvcode($product->getTecdocCode());
+        $product->setItemName($product->getTitle());
 
 
         //$product->reference = 2350;
