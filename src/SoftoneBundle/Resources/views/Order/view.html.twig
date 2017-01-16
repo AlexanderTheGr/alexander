@@ -58,8 +58,10 @@
         jQuery.post("/order/print/{{order}}", data, function (result) {
             jQuery('#printarea').html(result);
             jQuery('#printarea').show();
-            jQuery('#printarea').printElement();
-            jQuery('#printarea').hide();            
+            jQuery('#printarea').printElement();       
+            setTimeout(function () {
+                jQuery('#printarea').hide(); 
+            }, 1000)
         })
     })    
     </script>
