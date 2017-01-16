@@ -431,10 +431,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
 
                 //print_r($articleIds);
-                $this->prefix = "po";
+                $this->prefix = "pi";
                 if (count((array) $articleIds)) {
                     $tecdoc_article = 'po.tecdocArticleId in (' . implode(",", $articleIds) . ')';
-                    $sql = 'SELECT  po.id
+                    $sql = 'SELECT  poi.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
                                 where ' . $tecdoc_article;
                 } else {
@@ -444,7 +444,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
                                ' . str_replace("p.", "po.", $this->where);
 
-                    $sql = "SELECT po.id FROM SoftoneBundle:Product po where po.erpCode like '%" . $search[1] . "%'";
+                    $sql = "SELECT poo.id FROM SoftoneBundle:Product poo where poo.erpCode like '%" . $search[1] . "%'";
                 }
                 //echo  $sql;
                 $this->prefix = "p";
