@@ -474,18 +474,18 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                    
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where ' . $tecdoc_article . $tecdoc_article2 . ' '.$sisxetisi .'
+                                where ' . $tecdoc_article . $tecdoc_article2 . ' OR '.$sisxetisi .'
                                 ORDER BY ' . $this->orderBy;
                     
                 } else {
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where ' . $this->prefix . '.id in (' . $sqlearch . ') '.$sisxetisi .'
+                                where ' . $this->prefix . '.id in (' . $sqlearch . ') OR '.$sisxetisi .'
                                 ORDER BY ' . $this->orderBy;
                 }
 
-                //echo $sql2;
-                //exit;
+                echo $sql;
+                exit;
 
                 $sql = str_replace("p.*,", "", $sql);
                 //$sql = str_replace("ORDER BY p.qty asc","",$sql);
