@@ -44,26 +44,27 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
         $content = $this->printarea($order);
         /*
-        return $this->render('SoftoneBundle:Order:print.html.twig', array(
-                    'pagename' => $pagename,
-                    'order' => $id,
-                    'content' => $content,
-                    'url' => '/order/save',
-                    'buttons' => $buttons,
-                    'ctrl' => $this->generateRandomString(),
-                    'app' => $this->generateRandomString(),
-                    'content' => $content,
-                    'displaynone' => $displaynone,
-                    'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
-        ));
-        */
+          return $this->render('SoftoneBundle:Order:print.html.twig', array(
+          'pagename' => $pagename,
+          'order' => $id,
+          'content' => $content,
+          'url' => '/order/save',
+          'buttons' => $buttons,
+          'ctrl' => $this->generateRandomString(),
+          'app' => $this->generateRandomString(),
+          'content' => $content,
+          'displaynone' => $displaynone,
+          'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
+          ));
+         */
         echo $content;
         exit;
     }
 
     public function printarea($order) {
         $html = "";
-        if (!$order) return "";
+        if (!$order)
+            return "";
         $html .= '<h2>Παραγγελία ' . $order->getfincode() . '</h2>';
         $html .= "<table>";
         $html .= '<tr><th>Όνομα πελάτη</th><td>' . $order->getCustomerName() . '</td>';
@@ -85,10 +86,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ($order->getItems() as $item) {
             @$total += $item->getLineval();
             //$item->getProduct()->getReference();
+            $supplier = $item->getProduct()->getSupplierId() ? $item->getProduct()->getSupplierId()->getTitle() : '';
             $html .= "<tr>";
             $html .= "<td>" . $item->getProduct()->getTitle() . "</td>";
             $html .= "<td>" . $item->getProduct()->getErpCode() . "</td>";
-            $html .= "<td>" . $item->getProduct()->getSupplierId()->getTitle() . "</td>";
+            $html .= "<td>" . $supplier . "</td>";
             $html .= "<td>" . $item->getProduct()->getItemMtrplace() . "</td>";
             $html .= "<td>0</td>";
             $html .= "<td align='right'>" . $item->getQty() . "</td>";
