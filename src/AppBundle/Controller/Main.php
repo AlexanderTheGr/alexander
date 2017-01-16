@@ -502,7 +502,7 @@ class Main extends Controller {
                     $results = $em->getRepository($datasource["repository"])->findAll();
                     $seloptions = array();
                     foreach (@(array) $results as $data) {
-                        $suffix = $datasource['suffix'] ? "(" . $data->getField($datasource['suffix']) . ")" : "";
+                        $suffix = $datasource['suffix'] ? " (" . $data->getField($datasource['suffix']) . ")" : "";
                         $seloptions[] = array("name" => $data->getField($datasource['name']) . $suffix, "value" => $data->getField($datasource['value']));
                     }
                 }
@@ -557,7 +557,7 @@ class Main extends Controller {
                     $seloptions = array();
 
                     foreach (@(array) $results as $data) {
-                        $suffix = $datasource['suffix'] ? "(" . $data->getField($datasource['suffix']) . ")" : "";
+                        $suffix = $datasource['suffix'] ? " (" . $data->getField($datasource['suffix']) . ")" : "";
                         $seloptions[] = array("name" => $data->getField($datasource['name']) . $suffix, "value" => $data->getField($datasource['value']));
                     }
                     $defaultValue = $entity->getField($field) ? $entity->getField($field)->getId() : NULL;
