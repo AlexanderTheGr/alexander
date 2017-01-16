@@ -347,7 +347,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->findOneBy(array('erpCode' => $request->request->get("erp_code")));
-        if (!$product) exit;
+        if (!$product)
+            exit;
         $idArr = explode(":", $request->request->get("id"));
         $id = (int) $idArr[3];
 
@@ -972,9 +973,15 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     //$entity->setField($baz, $val);
                 }
             }
-            $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
-            echo $sql . "<BR>";
-            $em->getConnection()->exec($sql);
+            if (@$entity->id == 0) {
+                $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
+                echo $sql . "<BR>";
+                //$em->getConnection()->exec($sql);
+            } else {
+                $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '".$entity->id."'";
+                echo $sql . "<BR>";
+                //$em->getConnection()->exec($sql);                
+            }
             /*
               @$entity_id = (int) $entity->id;
               //if (@$entity_id > 0) {
@@ -988,8 +995,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
              * 
              */
             $entity = null;
-            //if (@$i++ > 1500)
-            //    break;
+            if (@$i++ > 150)
+                break;
         }
     }
 
@@ -1002,21 +1009,20 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $query = $em->createQuery(
                 "SELECT  p.id, p.title, p.erpCode
                     FROM " . $this->repository . " p
-                    where p.itemCode2 like '".$this->clearstring($_GET["term"])."%' OR p.itemCode like '".$this->clearstring($_GET["term"])."%' OR p.itemApvcode like '".$this->clearstring($_GET["term"])."%'"
+                    where p.itemCode2 like '" . $this->clearstring($_GET["term"]) . "%' OR p.itemCode like '" . $this->clearstring($_GET["term"]) . "%' OR p.itemApvcode like '" . $this->clearstring($_GET["term"]) . "%'"
         );
         $results = $query->getResult();
         $jsonArr = array();
         foreach ($results as $result) {
             $json["id"] = $result["id"];
-            $json["label"] = $result["title"].' '.$result["erpCode"];
+            $json["label"] = $result["title"] . ' ' . $result["erpCode"];
             $json["value"] = $result["erpCode"];
             $jsonArr[] = $json;
         }
         $json = json_encode($jsonArr);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
-        );        
-
+        );
     }
 
     /**
