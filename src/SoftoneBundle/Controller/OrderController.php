@@ -465,7 +465,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 if (count((array) $articleIds)) {
                     $tecdoc_article = 'p.tecdocArticleId in (' . implode(",", $articleIds) . ') OR ';
                     if ($search[1])
-                        $tecdoc_article2 = " p.erpCode like '%" . $search[1] . "%' OR p.id in (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
+                        $tecdoc_article2 = " p.erpCode like '%" . $search[1] . "%'";
                     else
                         $tecdoc_article2 = " p.id in (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
 
