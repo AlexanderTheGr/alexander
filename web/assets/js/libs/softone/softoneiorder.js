@@ -388,8 +388,10 @@ setTimeout(function () {
         method: "POST",
         minLength: 2,
         select: function (event, ui) {
-            jQuery(".brand_model_type-select").val(ui.item.value)
-            jQuery(".gogo").click()
+            
+            alert(ui.item.value);
+            //jQuery(".brand_model_type-select").val(ui.item.value)
+            //jQuery(".gogo").click()
         }
     })
 }, 1000)
