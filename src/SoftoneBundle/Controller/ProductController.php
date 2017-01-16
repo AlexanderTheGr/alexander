@@ -976,7 +976,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             if (@$entity->id == 0) {
                 $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
                 echo $sql . "<BR>";
-                //$em->getConnection()->exec($sql);
+                $em->getConnection()->exec($sql);
             } else {
                 $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '".$entity->id."'";
                 echo $sql . "<BR>";
@@ -995,8 +995,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
              * 
              */
             $entity = null;
-            if (@$i++ > 15)
-                break;
+            //if (@$i++ > 15)
+           //     break;
         }
     }
 
