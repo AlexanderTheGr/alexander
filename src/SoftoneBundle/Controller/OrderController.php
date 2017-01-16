@@ -55,7 +55,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $html .= "<th align='left'>Κωδικός Είδους</th>";
         $html .= "<th align='left'>Ράφι</th>";
         $html .= "<th align='left'>Ποσότητα</th>";
-        $html .= "<th align='left'>Τιμή</th>";
+        $html .= "<th align='left'>Τιμή Μονάδος</th>";
         $html .= "<th align='left'>Έκπτωση</th>";
         $html .= "<th align='left'>Τελική Τιμή</th>";
         $html .= "</tr></thead>";
