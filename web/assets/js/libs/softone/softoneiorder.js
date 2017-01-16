@@ -187,7 +187,7 @@ jQuery(".SoftoneBundleProductQty").live('keyup', function (e) {
         data.qty = jQuery(this).val();
         $("#loaderer").show();
         $.post("/order/addorderitem/", data, function (result) {
-            $(".tick_"+data.item).show();
+            $(".tick_" + data.item).show();
             $("#loaderer").hide();
             var json = angular.fromJson(result);
             if (json.error) {
@@ -388,16 +388,8 @@ setTimeout(function () {
         method: "POST",
         minLength: 2,
         select: function (event, ui) {
-            var data = {};
-            data.erp_code = ui.item.value;
-            data.id = obj.attr("id");
-            $("#loaderer").show();
-            $.post("/product/addRelation", data, function (result) {
-                $("#loaderer").hide();
-                var table = dt_tables["ctrlgettabs"];
-                table.fnFilter();
-                jQuery('.synafiacode input').val('')
-            })
+            jQuery(".brand_model_type-select").val(ui.item.value)
+            jQuery(".gogo").click()
         }
     })
 }, 1000)
