@@ -2,7 +2,7 @@
 {% block body %}
 
     <div id='printarea'>
-        {{content}}
+        {{content | raw}}
     </div>
 {% endblock %}
 {% block stylesheets %}
