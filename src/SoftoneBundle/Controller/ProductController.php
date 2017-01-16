@@ -700,7 +700,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $params["articleId"] = $product->getTecdocArticleId();
         $params["linkingTargetId"] = $request->request->get("car");
         $out["originals"] = $tecdoc->originals($params);
-        $out["articleAttributes"] = $tecdoc->articleAttributesRow($params, 0).$product->media();
+        $out["articleAttributes"] = $tecdoc->articleAttributesRow($params, 0)."<img width=100% src='".$product->media()."'/>";
 
         //$asd = unserialize($this->getArticlesSearchByIds($article_id));
         //$out["articlesSearch"] = $tecdoc->getArticlesSearch($asd[0]->articleNo);
