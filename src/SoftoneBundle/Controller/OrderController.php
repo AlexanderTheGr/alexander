@@ -1348,7 +1348,17 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         );
     }
 
-    /**
+     /**
+     * @Route("/order/motorsearch")
+     */    
+    public function motorsearch() {
+        $json =json_encode(array());
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );        
+    }
+
+      /**
      * @Route("/order/setb2border")
      */
     public function setb2borderAction(Request $request) {
