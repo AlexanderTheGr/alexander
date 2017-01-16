@@ -381,6 +381,7 @@ jQuery(".alexander tr").live('mouseout', function () {
 jQuery(".offcanvas-tools .md-close").live("click", function () {
     $(".offcanvas-search").click();
 })
+var order = 0;
 setTimeout(function () {
 
     var $elem = jQuery("#searchmotor").autocomplete({
@@ -391,7 +392,7 @@ setTimeout(function () {
             alert(ui.item.value);
             //jQuery(".brand_model_type-select").val(ui.item.value)
             //jQuery("#gogo").click();
-            asdda(0, ui.item.value);
+            asdda(order, ui.item.value);
         }
     })
 }, 1000)
