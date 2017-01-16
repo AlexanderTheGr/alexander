@@ -1005,7 +1005,17 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     where p.itemCode like '".$this->clearstring($_GET["term"])."%'"
         );
         $results = $query->getResult();
-        exit;
+        $jsonArr = array();
+        foreach ($results as $result) {
+            $json["id"] = $result["id"];
+            $json["label"] = $result["title"];
+            $jsonArr[] = $json;
+        }
+        $json = json_encode($jsonArr);
+        return new Response(
+                $jsonArr, 200, array('Content-Type' => 'application/json')
+        );        
+
     }
 
     /**
