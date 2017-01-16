@@ -43,7 +43,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->find($id);
         $html = "";
         
-        $html .= '<h2>'.$order->getfincode().'</h2>';
+        $html .= '<h2>Παραγγελία '.$order->getfincode().'</h2>';
+        $html .= "<table>";
+        $html .= '<tr><th>Όνομα πελάτη</th><td>'.$order->getCustomerName().'</td>';
+        $html .= '<tr><th>Σχόλια</th><td>'.$order->getRemarks().'</td>';
+        $html .= "</table>";
         
         $html .= "<table>";
         $html .= "<thead><tr>";
