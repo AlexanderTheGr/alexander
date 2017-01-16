@@ -259,15 +259,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->find($entities[$this->repository]);
 
         
-        
-        
-
-
-
-
-
-
-
         if ($product->getErpSupplier() != '') {
             $sup = trim(strtoupper($product->getErpSupplier()));
             $SoftoneSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")
@@ -577,7 +568,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $fields["tecdocSupplierId"] = array("label" => "Tecdoc Supplier", "required" => false, "className" => "col-md-6", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:TecdocSupplier', 'name' => 'supplier', 'value' => 'id'));
         $fields["tecdocCode"] = array("label" => "Tecdoc Code", "required" => false, "className" => "col-md-6");
 
-        $fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => true, 'dataarray' => $supplierId);
+        $fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'dataarray' => $supplierId);
 
         $fields["erpSupplier"] = array("label" => "New Supplier", "required" => false, "className" => "col-md-3");
 
