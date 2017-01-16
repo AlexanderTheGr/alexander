@@ -502,7 +502,8 @@ class Main extends Controller {
                     $results = $em->getRepository($datasource["repository"])->findAll();
                     $seloptions = array();
                     foreach (@(array) $results as $data) {
-                        $seloptions[] = array("name" => $data->getField($datasource['name']) . "(" . $data->getField($datasource['value']) . ")", "value" => $data->getField($datasource['value']));
+                        $suffix = $datasource['suffix'] ? $datasource['suffix'] : $datasource['value'];
+                        $seloptions[] = array("name" => $data->getField($datasource['name']) . "(" . $data->getField($suffix) . ")", "value" => $data->getField($datasource['value']));
                     }
                 }
                 if ($options["dataarray"]) {
