@@ -43,7 +43,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->find($id);
 
         $content = $this->printarea($order);
-        
+        /*
         return $this->render('SoftoneBundle:Order:print.html.twig', array(
                     'pagename' => $pagename,
                     'order' => $id,
@@ -56,6 +56,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     'displaynone' => $displaynone,
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
+        */
+        echo $content;
+        exit;
     }
 
     public function printarea($order) {
