@@ -83,7 +83,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'content' => $content,
-                    'displaynone' => $order->getReference > 0 ? '' : 'display:none',
+                    'displaynone' => $order->getReference() > 0 ? '' : 'display:none',
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
