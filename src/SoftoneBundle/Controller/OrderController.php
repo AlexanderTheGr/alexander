@@ -47,7 +47,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $html .= "<tr>";
         $html .= "<td>Title</td>";
         $html .= "</tr>";
-        foreach ($entity->getItems() as $item) {
+        foreach ($order->getItems() as $item) {
             @$total += $item->getLineval();
             //$item->getProduct()->getReference();
             $html .= "<tr>";
