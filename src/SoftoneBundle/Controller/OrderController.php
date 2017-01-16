@@ -431,11 +431,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
 
                 //print_r($articleIds);
-                $this->prefix = "pi";
+                $this->prefix = "po";
                 if (count((array) $articleIds)) {
                     $tecdoc_article = 'pi.tecdocArticleId in (' . implode(",", $articleIds) . ')';
                     $sql = 'SELECT  poi.id
-                                FROM ' . $this->repository . ' ' . $this->prefix . '
+                                FROM ' . $this->repository . ' pi
                                 where ' . $tecdoc_article;
                 } else {
 
