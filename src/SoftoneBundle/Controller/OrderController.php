@@ -34,6 +34,27 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         ));
     }
 
+    
+    /**
+     * @Route("/order/print/{id}")
+     */
+    public function printAction($id) {
+        $order = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Order")
+                ->find($id);
+        
+        return $this->render('SoftoneBundle:Order:print.html.twig', array(
+                    'pagename' => $pagename,
+                    'order' => $id,
+                    'url' => '/order/save',
+                    'buttons' => $buttons,
+                    'ctrl' => $this->generateRandomString(),
+                    'app' => $this->generateRandomString(),
+                    'content' => $content,
+                    'displaynone' => $displaynone,
+                    'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
+        ));        
+    }    
     /**
      * @Route("/order/view/{id}")
      */
