@@ -994,10 +994,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     /**
-     * @Route("/product/product/autocompletesearch")
+     * @Route("/product/autocompletesearch")
      */
     
-    public function autocompletesearch() {
+    public function autocompletesearchAction() {
         echo $_GET["term"];
         exit;
     }
