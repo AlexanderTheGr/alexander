@@ -74,7 +74,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $html .= "<thead><tr>";
         $html .= "<th>Είδος</th>";
         $html .= "<th align='left'>Κωδικός Είδους</th>";
+        $html .= "<th align='left'>Supplier</th>";
         $html .= "<th align='left'>Ράφι</th>";
+        $html .= "<th align='left'>Υπόλοιπο</th>";
         $html .= "<th align='left'>Ποσότητα</th>";
         $html .= "<th align='left'>Τιμή Μονάδος</th>";
         $html .= "<th align='left'>Έκπτωση</th>";
@@ -86,7 +88,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $html .= "<tr>";
             $html .= "<td>" . $item->getProduct()->getTitle() . "</td>";
             $html .= "<td>" . $item->getProduct()->getErpCode() . "</td>";
+            $html .= "<td>" . $item->getProduct()->getSupplierId()->getTitle() . "</td>";
             $html .= "<td>" . $item->getProduct()->getItemMtrplace() . "</td>";
+            $html .= "<td>0</td>";
             $html .= "<td align='right'>" . $item->getQty() . "</td>";
             $html .= "<td align='right'>" . $item->getPrice() . "</td>";
             $html .= "<td align='right'>" . $item->getDisc1prc() . "</td>";
@@ -95,6 +99,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         }
         $html .= "<tfooter><tr>";
         $html .= "<th></th>";
+        $html .= "<th align='left'></th>";
+        $html .= "<th align='left'></th>";
         $html .= "<th align='left'></th>";
         $html .= "<th align='left'></th>";
         $html .= "<th align='left'></th>";
