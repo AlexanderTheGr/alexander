@@ -447,6 +447,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 //echo  $sql;
                 $this->prefix = "p";
                 $this->q_or[] = $this->prefix . ".id in  (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
+                
+                $sisxetisi = $this->prefix . ".id in  (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
+                
                 $this->createWhere();
 
                 $this->createOrderBy($fields, $dt_order);
@@ -466,16 +469,18 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                     $sql2 = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where p.erpCode like "%' . $search[1] . '%" OR ' . $tecdoc_article . $tecdoc_article2 . '
+                                where p.erpCode like "%' . $search[1] . '%" OR ' . $tecdoc_article . $tecdoc_article2 . ' '.$sisxetisi .'
                                 ORDER BY ' . $this->orderBy;
+                   
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where ' . $tecdoc_article . $tecdoc_article2 . '
+                                where ' . $tecdoc_article . $tecdoc_article2 . ' '.$sisxetisi .'
                                 ORDER BY ' . $this->orderBy;
+                    
                 } else {
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where ' . $this->prefix . '.id in (' . $sqlearch . ') 
+                                where ' . $this->prefix . '.id in (' . $sqlearch . ') '.$sisxetisi .'
                                 ORDER BY ' . $this->orderBy;
                 }
 
