@@ -56,7 +56,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $html .= "<tr>";
             $html .= "<td>".$item->getProduct()->getTitle()."</td>";
             $html .= "<td>".$item->getProduct()->getErpCode()."</td>";
-            $html .= "<td>".$item->getProduct()->getMtrplace()."</td>";
+            $html .= "<td>".$item->getProduct()->getItemMtrplace()."</td>";
             $html .= "</tr>";
         }
         $html .= "</table>";
