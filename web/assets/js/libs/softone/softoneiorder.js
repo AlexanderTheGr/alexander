@@ -391,7 +391,57 @@ setTimeout(function () {
             alert(ui.item.value);
             //jQuery(".brand_model_type-select").val(ui.item.value)
             //jQuery("#gogo").click();
-            asdda(0,i.item.value);
+            asdda(0, i.item.value);
         }
     })
 }, 1000)
+function asdda(order, car) {
+    var data = {};
+    data.car = car;
+    data.order = order;
+    jQuery(".subcategories").html("");
+    jQuery(".categories").html("");
+    if (data.car > 0) {
+        $("#loaderer").show();
+        jQuery.post("/order/getcategories", data, function (json) {
+            $("#loaderer").hide();
+            var nodes = [];
+            var articles_count = [];
+            var matched_count = [];
+            var edimatched_count = [];
+            var html = '<div style="float:left; width:100%" id="accordion">';
+            var as = json;
+
+            jQuery.each(as, function (i, optionHtml) {
+                if (!nodes[optionHtml.parentNodeId]) {
+                    nodes[optionHtml.parentNodeId] = [];
+                    articles_count[optionHtml.parentNodeId] = 0;
+                    matched_count[optionHtml.parentNodeId] = 0;
+                    edimatched_count[optionHtml.parentNodeId] = 0;
+                }
+                nodes[optionHtml.parentNodeId].push(optionHtml);
+                articles_count[optionHtml.parentNodeId] += optionHtml.articles_count * 1;
+                matched_count[optionHtml.parentNodeId] += optionHtml.matched_count * 1;
+                edimatched_count[optionHtml.parentNodeId] += optionHtml.edimatched_count * 1;
+            });
+
+            jQuery.each(json, function (i, optionHtml) {
+                if (optionHtml.parentNodeId == 0) {
+                    html += '<h3 class="style-info">' + optionHtml.assemblyGroupName + ' (<span style="color:red">' + edimatched_count[optionHtml.assemblyGroupNodeId] + '</span>) (' + matched_count[optionHtml.assemblyGroupNodeId] + ') (<span style="color:blue">' + articles_count[optionHtml.assemblyGroupNodeId] + '</span>)</h3>';
+                    html += '<div class="subcategoriesul" data-id="' + optionHtml.assemblyGroupNodeId + '">';
+                    html += '<ul class="list">';
+                    if (nodes[optionHtml.assemblyGroupNodeId]) {
+                        jQuery.each(nodes[optionHtml.assemblyGroupNodeId], function (o, node) {
+                            html += '<li class="subcategoriesli" data-car="' + jQuery(".brand_model_type-select").val() + '" data-all="' + node.all + '" style="cursor:pointer">' + node.assemblyGroupName + ' (<span style="color:red">' + node.edimatched_count + '</span>) (' + node.matched_count + ') (<span style="color:blue">' + node.articles_count + '</span>)</li>';
+                        });
+                    }
+                    html += '<ul>';
+                    html += '</div>';
+                }
+            });
+            html += '</div>';
+            jQuery('.categories').append(html);
+            jQuery("#accordion").accordion({collapsible: true, active: false});
+        })
+    }
+}
