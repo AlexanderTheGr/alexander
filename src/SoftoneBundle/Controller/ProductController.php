@@ -1002,7 +1002,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $query = $em->createQuery(
                 "SELECT  p.id
                     FROM " . $this->repository . " p
-                    where p.itemCode like '".$this->clearstring($_GET["term"])."%' limit 0,40"
+                    where p.itemCode like '".$this->clearstring($_GET["term"])."%'"
         );
         $results = $query->getResult();
         $jsonArr = array();
