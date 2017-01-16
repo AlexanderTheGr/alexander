@@ -467,9 +467,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $tecdoc_article = 'p.tecdocArticleId in (' . implode(",", $articleIds) . ') OR ';
                     if ($search[1])
                         $tecdoc_article2 = " p.erpCode like '%" . $search[1] . "%'";
-                    //else
-                    //    $tecdoc_article2 = " p.id in (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
-
+                    else
+                        //$tecdoc_article2 = " p.id in (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . ")) OR ";
+                        $tecdoc_article2 = "";
                     $sql2 = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
                                 where p.erpCode like "%' . $search[1] . '%" OR ' . $tecdoc_article . $tecdoc_article2 . ' ' . $sisxetisi . '
@@ -477,7 +477,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where ' . $tecdoc_article . $tecdoc_article2 . ' OR ' . $sisxetisi . '
+                                where ' . $tecdoc_article . $tecdoc_article2 . ' ' . $sisxetisi . '
                                 ORDER BY ' . $this->orderBy;
                 } else {
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
