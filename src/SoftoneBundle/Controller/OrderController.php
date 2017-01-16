@@ -71,8 +71,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository("SoftoneBundle:Order")
                 ->find($id);
         $pagename = "";
+        $displaynone = 'display:none';
         if ($order) {
             $pagename = $order->getCustomerName();
+            $displaynone = $order->getReference() > 0 ? '' : 'display:none';
         }
         $content = $this->content();
         return $this->render('SoftoneBundle:Order:view.html.twig', array(
@@ -83,7 +85,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'content' => $content,
-                    'displaynone' => $order->getReference() > 0 ? '' : 'display:none',
+                    'displaynone' => $displaynone,
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
