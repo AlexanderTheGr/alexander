@@ -274,8 +274,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     //$this->getDoctrine()->flush();
                     $this->flushpersist($SoftoneSupplier);
                     $SoftoneSupplier->setCode("G" . $SoftoneSupplier->getId());
-                    $this->getDoctrine()->persist($SoftoneSupplier);
-                    $this->getDoctrine()->flush();
+                    //$this->getDoctrine()->persist($SoftoneSupplier);
+                    //$this->getDoctrine()->flush();
+                    $this->flushpersist($SoftoneSupplier);
                     $SoftoneSupplier->toSoftone();
                 } else {
                     $SoftoneSupplier = new \SoftoneBundle\Entity\SoftoneSupplier;
