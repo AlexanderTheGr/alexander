@@ -45,13 +45,17 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $html = "<table>";
 
         $html .= "<tr>";
-        $html .= "<td>Title</td>";
+        $html .= "<td>Είδος</td>";
+        $html .= "<td>Κωδικός Είδους</td>";
+        $html .= "<td>Ράφι</td>";
         $html .= "</tr>";
         foreach ($order->getItems() as $item) {
             @$total += $item->getLineval();
             //$item->getProduct()->getReference();
             $html .= "<tr>";
             $html .= "<td>".$item->getProduct()->getTitle()."</td>";
+            $html .= "<td>".$item->getProduct()->getErpCode()."</td>";
+            $html .= "<td>".$item->getProduct()->getMtrplace()."</td>";
             $html .= "</tr>";
         }
         $html .= "</table>";
