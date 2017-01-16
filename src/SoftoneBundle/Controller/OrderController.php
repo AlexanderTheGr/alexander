@@ -72,7 +72,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $html .= "<th align='left'></th>";
         $html .= "<th align='left'></th>";
         $html .= "<th align='left'></th>";
-        $html .= "<th align='left'>".$total."</th>";
+        $html .= "<th align='right'>".$total."</th>";
         $html .= "</tr></tfooter>";        
         $html .= "</table>";
 
