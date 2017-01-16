@@ -72,12 +72,22 @@ jQuery('.productcategorychk').live('click', function () {
 
 setTimeout(function () {
     jQuery("select.form-control").chosen({width: "100%"});
+    var obj = $(".synafiacode input");
     var $elem = jQuery(".synafiacode input").autocomplete({
         source: "/product/autocompletesearch",
         method: "POST",
         minLength: 2,
         select: function (event, ui) {
-            var data = {}
+            var data = {};
+            data.erp_code = obj.val();
+            data.id = obj.attr("id");
+            $("#loaderer").show();
+            $.post("/product/addRelation", data, function (result) {
+                $("#loaderer").hide();
+                var table = dt_tables["ctrlgettabs"];
+                table.fnFilter();
+                jQuery('.synafiacode input').val('')
+            })
         }
-    })    
+    })
 }, 1000)
