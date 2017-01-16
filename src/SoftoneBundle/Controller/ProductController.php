@@ -997,8 +997,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/product/autocompletesearch")
      */
     public function autocompletesearchAction() {
-        echo $_GET["term"];
-
+        //echo $_GET["term"];
+        $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery(
                 "SELECT  p.id
                     FROM " . $this->repository . " p
