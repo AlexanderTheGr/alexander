@@ -383,7 +383,6 @@ jQuery(".offcanvas-tools .md-close").live("click", function () {
 })
 var order = 0;
 setTimeout(function () {
-
     var $elem = jQuery("#searchmotor").autocomplete({
         source: "/order/motorsearch",
         method: "POST",
@@ -392,8 +391,8 @@ setTimeout(function () {
             //alert(ui.item.value);
             //jQuery(".brand_model_type-select").val(ui.item.value)
             //jQuery("#gogo").click();
-            jQuery("#searchmotor").val("");
             asdda(order, ui.item.value);
+            jQuery("#searchmotor").val("");
         }
     })
 }, 1000)
@@ -444,6 +443,7 @@ function asdda(order, car) {
             html += '</div>';
             jQuery('.categories').append(html);
             jQuery("#accordion").accordion({collapsible: true, active: false});
+            jQuery("#searchmotor").val("");
         })
     }
 }
