@@ -1796,11 +1796,9 @@ class Product extends Entity {
                 "articleNumber" => $this->tecdocCode,
                 "brandno" => $this->getTecdocSupplierId()->getId()
             );
-            if (!$tecdoc)
+            //if (!$tecdoc)
                 $tecdoc = new Tecdoc();
 
-
-            
             $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($postparams);
             $tectdoccode = $this->tecdocCode;
             if (count($articleDirectSearchAllNumbers->data->array) == 0) {
