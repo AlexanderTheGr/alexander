@@ -531,7 +531,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $fields["tecdocSupplierId"] = array("label" => "Tecdoc Supplier", "required" => false, "className" => "col-md-6", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:TecdocSupplier', 'name' => 'supplier', 'value' => 'id'));
         $fields["tecdocCode"] = array("label" => "Tecdoc Code", "required" => false, "className" => "col-md-6");
 
-        $fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-6", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id'));
+        $fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id'));
+        
+        $fields["erpSupplier"] = array("label" => "New Supplier", "required" => false, "className" => "col-md-3");
+        
         $fields["supplierCode"] = array("label" => "Supplier Code", "className" => "col-md-6", "required" => true);
 
         $fields["itemMtrplace"] = array("label" => "Ράφι", "className" => "col-md-2", "required" => false);
