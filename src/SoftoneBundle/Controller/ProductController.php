@@ -520,7 +520,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         
         $softoneSuppliers =$this->getDoctrine()
-                        ->getRepository('SoftoneBundle:SoftoneSuppliers')->findAll();
+                        ->getRepository('SoftoneBundle:SoftoneSupplier')->findAll();
         foreach ($softoneSuppliers as $softoneSupplier) {
             $supplierId[] = array("value" => (string) $softoneSupplier->getId(), "name" => $softoneSupplier->getTitle()." (".$softoneSupplier->getCode().")");
         }
