@@ -41,8 +41,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $order = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Order")
                 ->find($id);
-
-        $html = "<table>";
+        $html = "";
+        
+        $html .= '<h2>'.$order->getfincode().'</h2>';
+        
+        $html .= "<table>";
         $html .= "<thead><tr>";
         $html .= "<th>Είδος</th>";
         $html .= "<th align='left'>Κωδικός Είδους</th>";
