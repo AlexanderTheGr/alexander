@@ -316,7 +316,9 @@ $dialog.productInfo = $("<div style='z-index:100000' class='card'></div>")
         });
 jQuery(".product_info").live('click', function () {
     var ref = jQuery(this).attr("data-ref");
+    var articleId = jQuery(this).attr("data-articleId");
     var data = {};
+    data.articleId = articleId;
     data.ref = ref;
     data.car = jQuery(".brand_model_type-select").val();
 
