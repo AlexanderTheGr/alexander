@@ -697,7 +697,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository($this->repository)
                 ->find($request->request->get("ref"));
 
-        $params["articleId"] = $product->getTecdocArticleId();
+        $params["articleId"] = $product ? $product->getTecdocArticleId() : $article_id;
+        
         $params["linkingTargetId"] = $request->request->get("car");
         $out["originals"] = $tecdoc->originals($params);
         $out["articleAttributes"] = $tecdoc->articleAttributesRow($params, 0)."<img width=100% src='".$product->media()."'/>";
