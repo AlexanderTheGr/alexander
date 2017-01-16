@@ -43,9 +43,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository("SoftoneBundle:Order")
                 ->find($id);
         
+        $content = 'ssssss';
+        
         return $this->render('SoftoneBundle:Order:print.html.twig', array(
                     'pagename' => $pagename,
                     'order' => $id,
+                    'content' => $content,
                     'url' => '/order/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
