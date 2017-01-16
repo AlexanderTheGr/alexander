@@ -211,7 +211,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $product->updatetecdoc();
             $product->setProductFreesearch();
             $pagename = $product->getTitle() . " " . $product->getErpCode();
-        } 
+        }
         //$product->toSoftone();
         //exit;
         $content = $this->gettabs($id);
@@ -258,17 +258,56 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository($this->repository)
                 ->find($entities[$this->repository]);
 
+        
+        
+        
+
+
+
+
+
+
+
+        if ($product->getErpSupplier() != '') {
+            $sup = trim(strtoupper($product->getErpSupplier()));
+            $SoftoneSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")
+                    ->findOneBy(array('title' => $sup));
+            if (@$SoftoneSupplier->id == 0) {
+                $TecdocSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:TecdocSupplier")
+                        ->findOneBy(array('supplier' => $sup));
+                if (@$TecdocSupplier->id == 0) {
+                    $SoftoneSupplier = new \SoftoneBundle\Entity\SoftoneSupplier;
+                    $SoftoneSupplier->setTitle($sup);
+                    $SoftoneSupplier->setCode(' ');
+                    $this->getDoctrine()->persist($SoftoneSupplier);
+                    $this->getDoctrine()->flush();
+                    $SoftoneSupplier->setCode("G" . $SoftoneSupplier->getId());
+                    $this->getDoctrine()->persist($SoftoneSupplier);
+                    $this->getDoctrine()->flush();
+                    $SoftoneSupplier->toSoftone();
+                } else {
+                    $SoftoneSupplier = new \SoftoneBundle\Entity\SoftoneSupplier;
+                    $SoftoneSupplier->setTitle($TecdocSupplier->getSupplier());
+                    $SoftoneSupplier->setCode($TecdocSupplier->id);
+                    $this->getDoctrine()->persist($SoftoneSupplier);
+                    $this->getDoctrine()->flush();
+                    $SoftoneSupplier->toSoftone();
+                }
+            }
+            //$product->setItemMtrmanfctr($SoftoneSupplier->getId());
+            $product->getSupplierId($SoftoneSupplier);
+        }
+
         $erpCode = $this->clearCode($product->getSupplierCode()) . "-" . $product->getSupplierId()->getCode();
         $product->setErpCode($erpCode);
-
         $product->setItemCode($product->getErpCode());
         if ($product->getTecdocSupplierId())
-        $product->setItemMtrmark($product->getTecdocSupplierId()->getId());
+            $product->setItemMtrmark($product->getTecdocSupplierId()->getId());
+     
         $product->setItemMtrmanfctr($product->getSupplierId()->getId());
         $product->setItemApvcode($product->getTecdocCode());
         $product->setItemName($product->getTitle());
-
-
+        
         //$product->reference = 2350;
         @$this->flushpersist($product);
         $product = $this->getDoctrine()
@@ -484,7 +523,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->find($id);
         if ($id == 0 AND @ $entity->id == 0) {
             $productsale = $this->getDoctrine()
-                ->getRepository('SoftoneBundle:Productsale')->find(1);
+                            ->getRepository('SoftoneBundle:Productsale')->find(1);
             $entity = new Product;
             $entity->setItemPricew("0.00");
             $entity->setItemPricer("0.00");
@@ -518,13 +557,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $itemMtrsup[] = array("value" => (string) $supplier->getReference(), "name" => $supplier->getSupplierName()); // $supplier->getSupplierName();
         }
 
-        
-        $softoneSuppliers =$this->getDoctrine()
+
+        $softoneSuppliers = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:SoftoneSupplier')->findAll();
         foreach ($softoneSuppliers as $softoneSupplier) {
-            $supplierId[] = array("value" => (string) $softoneSupplier->getId(), "name" => $softoneSupplier->getTitle()." (".$softoneSupplier->getCode().")");
+            $supplierId[] = array("value" => (string) $softoneSupplier->getId(), "name" => $softoneSupplier->getTitle() . " (" . $softoneSupplier->getCode() . ")");
         }
-        
+
         //$fields["reference"] = array("label" => "Ενεργό", "required" => false, "className" => "col-md-12 col-sm-12");
 
         $fields["itemIsactive"] = array("label" => "Ενεργό", 'type' => "select", 'dataarray' => $dataarray, "required" => false, "className" => "col-md-6 col-sm-6");
@@ -539,9 +578,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $fields["tecdocCode"] = array("label" => "Tecdoc Code", "required" => false, "className" => "col-md-6");
 
         $fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => true, 'dataarray' => $supplierId);
-        
+
         $fields["erpSupplier"] = array("label" => "New Supplier", "required" => false, "className" => "col-md-3");
-        
+
         $fields["supplierCode"] = array("label" => "Supplier Code", "className" => "col-md-6", "required" => true);
 
         $fields["itemMtrplace"] = array("label" => "Ράφι", "className" => "col-md-2", "required" => false);
@@ -714,11 +753,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository($this->repository)
                 ->find($request->request->get("ref"));
 
-        $params["articleId"] =  $article_id;
-        
+        $params["articleId"] = $article_id;
+
         $params["linkingTargetId"] = $request->request->get("car");
         $out["originals"] = $tecdoc->originals($params);
-        $out["articleAttributes"] = $tecdoc->articleAttributesRow($params, 0)."<img width=100% src='".$this->media($params["articleId"])."'/>";
+        $out["articleAttributes"] = $tecdoc->articleAttributesRow($params, 0) . "<img width=100% src='" . $this->media($params["articleId"]) . "'/>";
 
         //$asd = unserialize($this->getArticlesSearchByIds($article_id));
         //$out["articlesSearch"] = $tecdoc->getArticlesSearch($asd[0]->articleNo);
@@ -746,6 +785,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
+
     public function media($tecdocArticleId) {
 
         //$product = json_decode($this->flat_data);
@@ -773,6 +813,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //$this->save();
         return $data;
     }
+
     /**
      * @Route("/product/fororderajaxjson")
      */
@@ -817,7 +858,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $params = unserialize($this->getSetting("SoftoneBundle:Product:retrieveMtrl"));
         if (count($params) > 0) {
             if ($MTRL > 0) {
-                $where = ' AND MTRL = '.$MTRL;
+                $where = ' AND MTRL = ' . $MTRL;
             }
             $params["softone_object"] = "item";
             $params["repository"] = 'SoftoneBundle:Product';
@@ -995,7 +1036,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         exit;
     }
 
-    
     /**
      * 
      * @Route("/product/retrieveMtrl/{mtrl}")
@@ -1011,7 +1051,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 "", 200
         );
     }
-    
+
     /**
      * 
      * @Route("/product/retrieveSoftone")
@@ -1053,8 +1093,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $product = Mage::getModel('tecdoc/product')->getCollection()->addFieldToFilter("reference", trim($data["reference"]))->getFirstItem();
             if ((int) $product->id == 0) {
                 continue;
-            } 
-           $qty = $data["item_mtrl_itemtrdata_qty1"] - $data["item_soreserved"];
+            }
+            $qty = $data["item_mtrl_itemtrdata_qty1"] - $data["item_soreserved"];
             //echo $product->id." ".$product->erp_code." --> ".$qty." -- ".$product->getApothema()."<BR>";
             if ($product->getApothema() != $qty) {
                 echo "<span style='color:red'>" . $product->id . " " . $product->erp_code . " --> " . $qty . "</span><BR>";
