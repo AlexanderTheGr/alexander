@@ -56,7 +56,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         }
         $html .= "<table>";
 
-        $content = 'ssssss';
+        $content = $html;
 
 
 
