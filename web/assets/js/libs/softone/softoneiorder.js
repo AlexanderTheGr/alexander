@@ -381,3 +381,23 @@ jQuery(".alexander tr").live('mouseout', function () {
 jQuery(".offcanvas-tools .md-close").live("click", function () {
     $(".offcanvas-search").click();
 })
+setTimeout(function () {
+
+    var $elem = jQuery("#searchmotor").autocomplete({
+        source: "/order/motorsearch",
+        method: "POST",
+        minLength: 2,
+        select: function (event, ui) {
+            var data = {};
+            data.erp_code = ui.item.value;
+            data.id = obj.attr("id");
+            $("#loaderer").show();
+            $.post("/product/addRelation", data, function (result) {
+                $("#loaderer").hide();
+                var table = dt_tables["ctrlgettabs"];
+                table.fnFilter();
+                jQuery('.synafiacode input').val('')
+            })
+        }
+    })
+}, 1000)
