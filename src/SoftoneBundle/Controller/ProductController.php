@@ -484,6 +484,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->find($id);
         if ($id == 0 AND @ $entity->id == 0) {
             $entity = new Product;
+            $entity->setItemPricew(0);
         }
         $customer = $this->getDoctrine()->getRepository('SoftoneBundle:Customer')->find(1);
         //echo $entity->getGroupedDiscount($customer);
