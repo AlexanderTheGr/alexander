@@ -152,6 +152,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     'pagename' => $pagename,
                     'order' => $id,
                     'url' => '/order/save',
+                    'printarea' => printarea($order),
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
