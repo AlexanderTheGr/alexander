@@ -48,7 +48,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $html .= "<th>Είδος</th>";
         $html .= "<th>Κωδικός Είδους</th>";
         $html .= "<th>Ράφι</th>";
-
+        $html .= "<th>Ποσότητα</th>";
+        $html .= "<th>Τιμή</th>";
+        $html .= "<th>Έκπτωση</th>";
+        $html .= "<th>Τελική Τιμή</th>";
         $html .= "</tr></thead>";
         foreach ($order->getItems() as $item) {
             @$total += $item->getLineval();
@@ -57,6 +60,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $html .= "<td>".$item->getProduct()->getTitle()."</td>";
             $html .= "<td>".$item->getProduct()->getErpCode()."</td>";
             $html .= "<td>".$item->getProduct()->getItemMtrplace()."</td>";
+            $html .= "<td>".$item->getQty()."</td>";
+            $html .= "<td>".$item->getPrice()."</td>";
+            $html .= "<td>".$item->getDisc1prc()."</td>";
+            $html .= "<td>".$item->getLineval()."</td>";
             $html .= "</tr>";
         }
         $html .= "</table>";
