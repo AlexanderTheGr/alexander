@@ -1000,7 +1000,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //echo $_GET["term"];
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery(
-                "SELECT  p.id
+                "SELECT  p.id, p.title, p.erpCode
                     FROM " . $this->repository . " p
                     where p.itemCode like '".$this->clearstring($_GET["term"])."%'"
         );
