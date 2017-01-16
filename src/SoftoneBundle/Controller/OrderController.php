@@ -41,14 +41,32 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $order = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Order")
                 ->find($id);
+
+        $content = $this->printarea($order);
+        
+        return $this->render('SoftoneBundle:Order:print.html.twig', array(
+                    'pagename' => $pagename,
+                    'order' => $id,
+                    'content' => $content,
+                    'url' => '/order/save',
+                    'buttons' => $buttons,
+                    'ctrl' => $this->generateRandomString(),
+                    'app' => $this->generateRandomString(),
+                    'content' => $content,
+                    'displaynone' => $displaynone,
+                    'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
+        ));
+    }
+
+    public function printarea() {
         $html = "";
-        
-        $html .= '<h2>Παραγγελία '.$order->getfincode().'</h2>';
+
+        $html .= '<h2>Παραγγελία ' . $order->getfincode() . '</h2>';
         $html .= "<table>";
-        $html .= '<tr><th>Όνομα πελάτη</th><td>'.$order->getCustomerName().'</td>';
-        $html .= '<tr><th>Σχόλια</th><td>'.$order->getRemarks().'</td>';
+        $html .= '<tr><th>Όνομα πελάτη</th><td>' . $order->getCustomerName() . '</td>';
+        $html .= '<tr><th>Σχόλια</th><td>' . $order->getRemarks() . '</td>';
         $html .= "</table>";
-        
+
         $html .= "<table>";
         $html .= "<thead><tr>";
         $html .= "<th>Είδος</th>";
@@ -63,13 +81,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             @$total += $item->getLineval();
             //$item->getProduct()->getReference();
             $html .= "<tr>";
-            $html .= "<td>".$item->getProduct()->getTitle()."</td>";
-            $html .= "<td>".$item->getProduct()->getErpCode()."</td>";
-            $html .= "<td>".$item->getProduct()->getItemMtrplace()."</td>";
-            $html .= "<td align='right'>".$item->getQty()."</td>";
-            $html .= "<td align='right'>".$item->getPrice()."</td>";
-            $html .= "<td align='right'>".$item->getDisc1prc()."</td>";
-            $html .= "<td align='right'>".$item->getLineval()."</td>";
+            $html .= "<td>" . $item->getProduct()->getTitle() . "</td>";
+            $html .= "<td>" . $item->getProduct()->getErpCode() . "</td>";
+            $html .= "<td>" . $item->getProduct()->getItemMtrplace() . "</td>";
+            $html .= "<td align='right'>" . $item->getQty() . "</td>";
+            $html .= "<td align='right'>" . $item->getPrice() . "</td>";
+            $html .= "<td align='right'>" . $item->getDisc1prc() . "</td>";
+            $html .= "<td align='right'>" . $item->getLineval() . "</td>";
             $html .= "</tr>";
         }
         $html .= "<tfooter><tr>";
@@ -79,28 +97,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $html .= "<th align='left'></th>";
         $html .= "<th align='left'></th>";
         $html .= "<th align='left'>Σύνολο</th>";
-        $html .= "<th align='right'>".$total."</th>";
-        $html .= "</tr></tfooter>";        
+        $html .= "<th align='right'>" . $total . "</th>";
+        $html .= "</tr></tfooter>";
         $html .= "</table>";
 
         $content = $html;
-
-
-
-
-
-        return $this->render('SoftoneBundle:Order:print.html.twig', array(
-                    'pagename' => $pagename,
-                    'order' => $id,
-                    'content' => $content,
-                    'url' => '/order/save',
-                    'buttons' => $buttons,
-                    'ctrl' => $this->generateRandomString(),
-                    'app' => $this->generateRandomString(),
-                    'content' => $content,
-                    'displaynone' => $displaynone,
-                    'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
-        ));
+        return $content;
     }
 
     /**
