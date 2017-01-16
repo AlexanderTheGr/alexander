@@ -2602,7 +2602,37 @@ class Product extends Entity {
         $descrption .= "</ul>";
         return $descrption;
     }
+    public function media() {
 
+        //$product = json_decode($this->flat_data);
+        if ($this->tecdocArticleId == "")
+            return;
+
+        if ($this->media != "")
+            return $this->media;
+
+
+        $url = "http://service5.fastwebltd.com/";
+        $fields = array(
+            'action' => 'media',
+            'tecdoc_article_id' => $this->tecdocArticleId
+        );
+
+        foreach ($fields as $key => $value) {
+            $fields_string .= $key . '=' . $value . '&';
+        }
+        rtrim($fields_string, '&');
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, count($fields));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $data = curl_exec($ch);
+        //$this->media = $data;
+        //$this->save();
+        return $data;
+    }
+    
     function getApothiki() {
         return '1 / <span class="text-lg text-bold text-accent-dark">1</span> (' . $this->itemMtrplace . ")";
     }
