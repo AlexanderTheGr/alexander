@@ -206,11 +206,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($id);
-
+        $pagename = "Add new Product";
         if ($id > 0 AND count($product) > 0) {
             $product->updatetecdoc();
             $product->setProductFreesearch();
-        }
+            $pagename = $product->getTitle() . " " . $product->getErpCode();
+        } 
         //$product->toSoftone();
         //exit;
         $content = $this->gettabs($id);
@@ -218,7 +219,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //$content = $this->getoffcanvases($id);
         $content = $this->content();
         return $this->render('SoftoneBundle:Product:view.html.twig', array(
-                    'pagename' => $product->getTitle() . " " . $product->getErpCode(),
+                    'pagename' => $pagename,
                     'url' => '/product/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
