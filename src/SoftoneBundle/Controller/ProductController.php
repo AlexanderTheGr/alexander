@@ -258,7 +258,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository($this->repository)
                 ->find($entities[$this->repository]);
 
-        
+
         if ($product->getErpSupplier() != '') {
             $sup = trim(strtoupper($product->getErpSupplier()));
             $SoftoneSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")
@@ -295,11 +295,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $product->setItemCode($product->getErpCode());
         if ($product->getTecdocSupplierId())
             $product->setItemMtrmark($product->getTecdocSupplierId()->getId());
-     
+
         $product->setItemMtrmanfctr($product->getSupplierId()->getId());
         $product->setItemApvcode($product->getTecdocCode());
         $product->setItemName($product->getTitle());
-        
+
         //$product->reference = 2350;
         @$this->flushpersist($product);
         $product = $this->getDoctrine()
@@ -566,11 +566,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $fields["erpCode"] = array("label" => "Κωδικός Είδους", "required" => false, "className" => "col-md-3 col-sm-3");
         $fields["itemCode1"] = array("label" => "Barcode", "required" => false, "className" => "col-md-3 col-sm-3");
 
-        $fields["tecdocSupplierId"] = array("label" => "Tecdoc Supplier", "required" => false, "className" => "col-md-6", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:TecdocSupplier', 'name' => 'supplier', 'value' => 'id','suffix'=>'id'));
+        $fields["tecdocSupplierId"] = array("label" => "Tecdoc Supplier", "required" => false, "className" => "col-md-6", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:TecdocSupplier', 'name' => 'supplier', 'value' => 'id', 'suffix' => 'id'));
         $fields["tecdocCode"] = array("label" => "Tecdoc Code", "required" => false, "className" => "col-md-6");
 
-        
-        $fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id','suffix'=>'code'));
+
+        $fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
 
         //$fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'dataarray' => $supplierId);
 
@@ -996,9 +996,15 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     /**
      * @Route("/product/autocompletesearch")
      */
-    
     public function autocompletesearchAction() {
         echo $_GET["term"];
+
+        $query = $em->createQuery(
+                "SELECT  p.id
+                    FROM " . $this->repository . " p
+                    where p.itemCode like '".$this->clearstring($_GET["term"])."%'"
+        );
+        $results = $query->getResult();
         exit;
     }
 
