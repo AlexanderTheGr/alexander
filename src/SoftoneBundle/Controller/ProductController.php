@@ -701,7 +701,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         
         $params["linkingTargetId"] = $request->request->get("car");
         $out["originals"] = $tecdoc->originals($params);
-        $out["articleAttributes"] = $tecdoc->articleAttributesRow($params, 0)."<img width=100% src='".$product->media()."'/>";
+        $out["articleAttributes"] = $tecdoc->articleAttributesRow($params, 0)."<img width=100% src='".$this->media($params["articleId"])."'/>";
 
         //$asd = unserialize($this->getArticlesSearchByIds($article_id));
         //$out["articlesSearch"] = $tecdoc->getArticlesSearch($asd[0]->articleNo);
@@ -729,7 +729,33 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
+    public function media($tecdocArticleId) {
 
+        //$product = json_decode($this->flat_data);
+        if ($tecdocArticleId == "")
+            return;
+
+
+        $url = "http://service5.fastwebltd.com/";
+        $fields = array(
+            'action' => 'media',
+            'tecdoc_article_id' => $tecdocArticleId
+        );
+
+        foreach ($fields as $key => $value) {
+            $fields_string .= $key . '=' . $value . '&';
+        }
+        rtrim($fields_string, '&');
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, count($fields));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $data = curl_exec($ch);
+        //$this->media = $data;
+        //$this->save();
+        return $data;
+    }
     /**
      * @Route("/product/fororderajaxjson")
      */
