@@ -58,7 +58,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         ));
     }
 
-    public function printarea() {
+    public function printarea($order) {
         $html = "";
 
         $html .= '<h2>Παραγγελία ' . $order->getfincode() . '</h2>';
