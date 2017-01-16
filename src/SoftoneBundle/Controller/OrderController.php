@@ -879,10 +879,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository('SoftoneBundle:brandModelType')
                 ->find($result["id"]);
             $brandsmodel = $this->getDoctrine()
-                ->getRepository('SoftoneBundle:brandModelType')
+                ->getRepository('SoftoneBundle:brandModel')
                 ->find($brandModelType->getBrandModel());
             $brand = $this->getDoctrine()
-                ->getRepository('SoftoneBundle:brandModelType')
+                ->getRepository('SoftoneBundle:brand')
                 ->find($brandsmodel->getBrand());
             
             $yearfrom = substr($brandsmodel->getYearFrom(), 4, 2) . "/" . substr($brandsmodel->getYearFrom(), 0, 4);
