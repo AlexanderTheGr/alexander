@@ -980,7 +980,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             } else {
                 $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '".$entity->id."'";
                 echo $sql . "<BR>";
-                //$em->getConnection()->exec($sql);                
+                $em->getConnection()->exec($sql);                
             }
             /*
               @$entity_id = (int) $entity->id;
@@ -995,7 +995,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
              * 
              */
             $entity = null;
-            if (@$i++ > 150)
+            if (@$i++ > 15)
                 break;
         }
     }
@@ -1105,7 +1105,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //$filters = "ITEM.SORENQTY1>1";  
         //$filters = "ITEM.UPDDATE=".date("Y-m-d")."&ITEM.UPDDATE_TO=".date("Y-m-d");  
         //$filters = "ITEM.ISACTIVE=1";  
-
+        return;
         $datas = $this->retrieveData("ITEM", "apothema");
         //echo 'Sss';
         echo count($datas) . "<BR>";
