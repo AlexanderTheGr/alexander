@@ -994,6 +994,15 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     /**
+     * @Route("/product/product/autocompletesearch")
+     */
+    
+    public function autocompletesearch() {
+        echo $_GET["term"];
+        exit;
+    }
+
+    /**
      * @Route("/product/product/updatetecdoc")
      */
     public function getUpdateTecdocAction($funct = false) {
