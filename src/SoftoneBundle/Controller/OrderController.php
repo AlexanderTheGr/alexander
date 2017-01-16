@@ -443,7 +443,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $sql = 'SELECT  po.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
                                ' . str_replace("p.", "po.", $this->where);
-                    $sql = "SELECT po.id FROM ' . $this->repository . ' po where po.erpCode like '%" . $search[1] . "%'";
+                    
+                    $sql = "SELECT po.id FROM SoftoneBundle:Product po where po.erpCode like '%" . $search[1] . "%'";
                 }
                 //echo  $sql;
                 $this->prefix = "p";
