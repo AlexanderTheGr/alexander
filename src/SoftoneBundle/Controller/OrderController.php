@@ -862,6 +862,48 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         return $brands;
     }
 
+     /**
+     * @Route("/order/motorsearch")
+     */    
+    public function motorsearch() {
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+                "SELECT  p.id
+                    FROM BrandModelType p
+                    where p.engine like '".$this->clearstring($_GET["term"])."%'"
+        );
+        $results = $query->getResult();
+        
+        foreach ($results as $result) {
+            $brandModelType = $this->getDoctrine()
+                ->getRepository('SoftoneBundle:brandModelType')
+                ->find($result["id"]);
+            $brandsmodel = $this->getDoctrine()
+                ->getRepository('SoftoneBundle:brandModelType')
+                ->find($brandModelType->getBrandModel());
+            $brand = $this->getDoctrine()
+                ->getRepository('SoftoneBundle:brandModelType')
+                ->find($brandsmodel->getBrand());
+            
+            $yearfrom = substr($brandsmodel->getYearFrom(), 4, 2) . "/" . substr($brandsmodel->getYearFrom(), 0, 4);
+            $yearto = substr($brandsmodel->getYearTo(), 4, 2) . "/" . substr($brandsmodel->getYearTo(), 0, 4);
+            $yearto = $yearto == 0 ? 'Today' : $yearto;
+            $year = $yearfrom . " - " . $yearto;            
+            
+            $json["id"] = $result["id"];
+            $json["label"] = $brand->getBrand() . " " . $brandsmodel->getBrandModel() . " " . $year." ".$brandModelType->getBrandModelType();
+            $json["value"] = $result["id"];
+            $jsonArr[] = $json;
+        }
+        
+        $json =json_encode(array());
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );        
+    }
+    
+    
+    
     /**
      * @Route("/order/getmodels")
      */
@@ -1348,15 +1390,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         );
     }
 
-     /**
-     * @Route("/order/motorsearch")
-     */    
-    public function motorsearch() {
-        $json =json_encode(array());
-        return new Response(
-                $json, 200, array('Content-Type' => 'application/json')
-        );        
-    }
+
 
       /**
      * @Route("/order/setb2border")
