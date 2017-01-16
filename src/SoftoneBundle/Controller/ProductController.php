@@ -1014,7 +1014,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
         $json = json_encode($jsonArr);
         return new Response(
-                $jsonArr, 200, array('Content-Type' => 'application/json')
+                $json, 200, array('Content-Type' => 'application/json')
         );        
 
     }
