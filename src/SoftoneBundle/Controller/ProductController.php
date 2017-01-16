@@ -525,7 +525,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $fields["tecdocCode"] = array("label" => "Tecdoc Code", "required" => false, "className" => "col-md-6");
 
         $fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-6", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id'));
-        $fields["supplierCode"] = array("label" => "Supplier Code", "className" => "col-md-6", "required" => true);
+        $fields["supplierCode"] = array("label" => "Supplier Code", "className" => "col-md-6", "required" => false);
 
         $fields["itemMtrplace"] = array("label" => "Ράφι", "className" => "col-md-2", "required" => false);
         //$fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "className" => "col-md-2", "required" => false);        
@@ -700,7 +700,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $params["articleId"] = $product->getTecdocArticleId();
         $params["linkingTargetId"] = $request->request->get("car");
         $out["originals"] = $tecdoc->originals($params);
-        $out["articleAttributes"] = $tecdoc->articleAttributesRow($params, 0);
+        $out["articleAttributes"] = $tecdoc->articleAttributesRow($params, 0).$product->media();
 
         //$asd = unserialize($this->getArticlesSearchByIds($article_id));
         //$out["articlesSearch"] = $tecdoc->getArticlesSearch($asd[0]->articleNo);
