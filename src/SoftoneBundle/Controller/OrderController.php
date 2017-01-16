@@ -443,15 +443,15 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $sql = 'SELECT  po.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
                                ' . str_replace("p.", "po.", $this->where);
-                    
+
                     $sql = "SELECT po.id FROM SoftoneBundle:Product po where po.erpCode like '%" . $search[1] . "%'";
                 }
                 //echo  $sql;
                 $this->prefix = "p";
                 $this->q_or[] = $this->prefix . ".id in  (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
-                
+
                 $sisxetisi = $this->prefix . ".id in  (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
-                
+
                 $this->createWhere();
 
                 $this->createOrderBy($fields, $dt_order);
@@ -471,23 +471,22 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                     $sql2 = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where p.erpCode like "%' . $search[1] . '%" OR ' . $tecdoc_article . $tecdoc_article2 . ' '.$sisxetisi .'
+                                where p.erpCode like "%' . $search[1] . '%" OR ' . $tecdoc_article . $tecdoc_article2 . ' ' . $sisxetisi . '
                                 ORDER BY ' . $this->orderBy;
-                   
+
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where ' . $tecdoc_article . $tecdoc_article2 . ' OR '.$sisxetisi .'
+                                where ' . $tecdoc_article . $tecdoc_article2 . ' OR ' . $sisxetisi . '
                                 ORDER BY ' . $this->orderBy;
-                    
                 } else {
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where ' . $this->prefix . '.id in (' . $sqlearch . ') OR '.$sisxetisi .'
+                                where ' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . '
                                 ORDER BY ' . $this->orderBy;
                 }
 
-               /// echo $sql;
-              /// exit;
+                /// echo $sql;
+                /// exit;
 
                 $sql = str_replace("p.*,", "", $sql);
                 //$sql = str_replace("ORDER BY p.qty asc","",$sql);
@@ -862,48 +861,46 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         return $brands;
     }
 
-     /**
+    /**
      * @Route("/order/motorsearch")
-     */    
+     */
     public function motorsearch() {
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery(
                 "SELECT  p.id
                     FROM SoftoneBundle:BrandModelType p
-                    where p.engine like '".$this->clearstring($_GET["term"])."%'"
+                    where p.engine like '" . $this->clearstring($_GET["term"]) . "%'"
         );
         $results = $query->getResult();
-        
+
         foreach ($results as $result) {
             $brandModelType = $this->getDoctrine()
-                ->getRepository('SoftoneBundle:BrandModelType')
-                ->find($result["id"]);
+                    ->getRepository('SoftoneBundle:BrandModelType')
+                    ->find($result["id"]);
             $brandsmodel = $this->getDoctrine()
-                ->getRepository('SoftoneBundle:BrandModel')
-                ->find($brandModelType->getBrandModel());
+                    ->getRepository('SoftoneBundle:BrandModel')
+                    ->find($brandModelType->getBrandModel());
             $brand = $this->getDoctrine()
-                ->getRepository('SoftoneBundle:Brand')
-                ->find($brandsmodel->getBrand());
-            
+                    ->getRepository('SoftoneBundle:Brand')
+                    ->find($brandsmodel->getBrand());
+
             $yearfrom = substr($brandsmodel->getYearFrom(), 4, 2) . "/" . substr($brandsmodel->getYearFrom(), 0, 4);
             $yearto = substr($brandsmodel->getYearTo(), 4, 2) . "/" . substr($brandsmodel->getYearTo(), 0, 4);
             $yearto = $yearto == 0 ? 'Today' : $yearto;
-            $year = $yearfrom . " - " . $yearto;            
-            
+            $year = $yearfrom . " - " . $yearto;
+
             $json["id"] = $result["id"];
-            $json["label"] = $brand->getBrand() . " " . $brandsmodel->getBrandModel() . " " . $year." ".$brandModelType->getBrandModelType();
+            $json["label"] = $brand->getBrand() . " " . $brandsmodel->getBrandModel() . " " . $year . " " . $brandModelType->getBrandModelType();
             $json["value"] = $result["id"];
             $jsonArr[] = $json;
         }
-        
-        $json =json_encode(array());
+
+        $json = json_encode($jsonArr);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
-        );        
+        );
     }
-    
-    
-    
+
     /**
      * @Route("/order/getmodels")
      */
@@ -1390,9 +1387,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         );
     }
 
-
-
-      /**
+    /**
      * @Route("/order/setb2border")
      */
     public function setb2borderAction(Request $request) {
