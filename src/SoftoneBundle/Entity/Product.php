@@ -2516,7 +2516,7 @@ class Product extends Entity {
 
     public function getForOrderCode() {
 
-        $out = '<a title="' . $this->title . '" class="product_info" car="" data-ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
+        $out = '<a title="' . $this->title . '" class="product_info" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
         <br>
         <span class="text-sm text-info">' . $this->erpCode . '</span>';
 
@@ -2526,7 +2526,7 @@ class Product extends Entity {
     public function getForOrderTitle() {
 
 
-        $out = '<a target="_blank" title="' . $this->title . '" class="" car="" ref="' . $this->id . '" href="/product/view/' . $this->id . '">' . $this->title . '</a>
+        $out = '<a target="_blank" title="' . $this->title . '" class="" car="" data-articleId="' . $this->tecdocArticleId . '" ref="' . $this->id . '" href="/product/view/' . $this->id . '">' . $this->title . '</a>
         <br>
         <span class="text-sm text-info">' . $this->tecdocArticleName . '</span>';
 
@@ -2538,7 +2538,7 @@ class Product extends Entity {
         
         $tecdoc = $this->getTecdocSupplierId() ? $this->getTecdocSupplierId()->getSupplier() : "";
 
-        $out = '<a target="_blank" title="' . $this->getSupplierId()->getTitle() . '" class="" car="" data-ref="' . $this->id . '" href="#">' . $this->getSupplierId()->getTitle() . '</a>
+        $out = '<a target="_blank" title="' . $this->getSupplierId()->getTitle() . '"  class="" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->getSupplierId()->getTitle() . '</a>
         <br>
         <span class="text-sm text-info">' . $tecdoc . '</span>';
 
