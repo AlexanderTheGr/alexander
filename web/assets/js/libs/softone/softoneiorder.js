@@ -391,7 +391,7 @@ setTimeout(function () {
             alert(ui.item.value);
             //jQuery(".brand_model_type-select").val(ui.item.value)
             //jQuery("#gogo").click();
-            asdda(0, i.item.value);
+            asdda(0, ui.item.value);
         }
     })
 }, 1000)
