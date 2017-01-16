@@ -39,6 +39,11 @@
     </div>    
 
     {{ render(controller('SoftoneBundle:Order:content', { 'ctrl': ctrl,'app':app,'url':url,'content':content }) ) }}
+    
+    <div id='printarea'>
+        {{printarea | raw}}
+    </div>
+    
 {% endblock %}
 {% block stylesheets %}
 {% endblock %}
