@@ -270,8 +270,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     $SoftoneSupplier = new \SoftoneBundle\Entity\SoftoneSupplier;
                     $SoftoneSupplier->setTitle($sup);
                     $SoftoneSupplier->setCode(' ');
-                    $this->getDoctrine()->persist($SoftoneSupplier);
-                    $this->getDoctrine()->flush();
+                    //$this->getDoctrine()->persist($SoftoneSupplier);
+                    //$this->getDoctrine()->flush();
+                    $this->flushpersist($SoftoneSupplier);
                     $SoftoneSupplier->setCode("G" . $SoftoneSupplier->getId());
                     $this->getDoctrine()->persist($SoftoneSupplier);
                     $this->getDoctrine()->flush();
@@ -280,8 +281,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     $SoftoneSupplier = new \SoftoneBundle\Entity\SoftoneSupplier;
                     $SoftoneSupplier->setTitle($TecdocSupplier->getSupplier());
                     $SoftoneSupplier->setCode($TecdocSupplier->id);
-                    $this->getDoctrine()->persist($SoftoneSupplier);
-                    $this->getDoctrine()->flush();
+                    $this->flushpersist($SoftoneSupplier);
                     $SoftoneSupplier->toSoftone();
                 }
             }
