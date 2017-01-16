@@ -60,10 +60,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $html .= "<td>".$item->getProduct()->getTitle()."</td>";
             $html .= "<td>".$item->getProduct()->getErpCode()."</td>";
             $html .= "<td>".$item->getProduct()->getItemMtrplace()."</td>";
-            $html .= "<td>".$item->getQty()."</td>";
-            $html .= "<td>".$item->getPrice()."</td>";
-            $html .= "<td>".$item->getDisc1prc()."</td>";
-            $html .= "<td>".$item->getLineval()."</td>";
+            $html .= "<td align='right'>".$item->getQty()."</td>";
+            $html .= "<td align='right'>".$item->getPrice()."</td>";
+            $html .= "<td align='right'>".$item->getDisc1prc()."</td>";
+            $html .= "<td align='right'>".$item->getLineval()."</td>";
             $html .= "</tr>";
         }
         $html .= "</table>";
