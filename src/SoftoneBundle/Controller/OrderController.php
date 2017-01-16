@@ -46,12 +46,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
         $html .= "<thead><tr>";
         $html .= "<th>Είδος</th>";
-        $html .= "<th>Κωδικός Είδους</th>";
-        $html .= "<th>Ράφι</th>";
-        $html .= "<th>Ποσότητα</th>";
-        $html .= "<th>Τιμή</th>";
-        $html .= "<th>Έκπτωση</th>";
-        $html .= "<th>Τελική Τιμή</th>";
+        $html .= "<th align='left'>Κωδικός Είδους</th>";
+        $html .= "<th align='left'>Ράφι</th>";
+        $html .= "<th align='left'>Ποσότητα</th>";
+        $html .= "<th align='left'>Τιμή</th>";
+        $html .= "<th align='left'>Έκπτωση</th>";
+        $html .= "<th align='left'>Τελική Τιμή</th>";
         $html .= "</tr></thead>";
         foreach ($order->getItems() as $item) {
             @$total += $item->getLineval();
