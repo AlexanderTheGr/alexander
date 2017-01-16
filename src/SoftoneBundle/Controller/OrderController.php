@@ -435,7 +435,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 if (count((array) $articleIds)) {
                     $tecdoc_article = 'pi.tecdocArticleId in (' . implode(",", $articleIds) . ')';
                     $sql = 'SELECT  poi.id
-                                FROM ' . $this->repository . ' pi
+                                FROM ' . $this->repository . ' poi
                                 where ' . $tecdoc_article;
                 } else {
 
