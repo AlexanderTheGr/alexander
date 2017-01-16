@@ -760,7 +760,7 @@ class EdiItem extends Entity {
          * 
          */
 
-        
+        $productsale = $em->getRepository('SoftoneBundle:Productsale')->find(1);
         $dt = new \DateTime("now");
         $product = new \SoftoneBundle\Entity\Product;
         
@@ -784,7 +784,7 @@ class EdiItem extends Entity {
         $product->setItemCode($product->getErpCode());
         $product->setEdi($this->getEdi()->getId());
         $product->setEdiId($this->id);
-        
+        $product->setProductSale($productsale);
         
         $product->setCars($this->getCars());
         $product->setCats($this->getCats());
