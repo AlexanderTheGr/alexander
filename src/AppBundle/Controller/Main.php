@@ -555,8 +555,10 @@ class Main extends Controller {
                     $datasource = $options["datasource"];
                     $results = $em->getRepository($datasource["repository"])->findAll();
                     $seloptions = array();
+
                     foreach (@(array) $results as $data) {
-                        $seloptions[] = array("name" => $data->getField($datasource['name']) . "(" . $data->getField($datasource['value']) . ")", "value" => $data->getField($datasource['value']));
+                        $suffix = $datasource['suffix'] ? "(" . $data->getField($datasource['suffix']) . ")" : "";
+                        $seloptions[] = array("name" => $data->getField($datasource['name']) . $suffix, "value" => $data->getField($datasource['value']));
                     }
                     $defaultValue = $entity->getField($field) ? $entity->getField($field)->getId() : NULL;
                 }
