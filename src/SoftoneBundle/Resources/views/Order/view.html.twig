@@ -55,8 +55,11 @@
     
     jQuery('.printarea').click(function(){
         jQuery('#printarea').show();
+        setTimeout(function () {
+            jQuery('#printarea').hide();
+        }, 400)
         jQuery('#printarea').printElement();
-        jQuery('#printarea').hide();
+        
     })    
     </script>
  
