@@ -347,7 +347,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->findOneBy(array('erpCode' => $request->request->get("erp_code")));
-
+        if (!$product) exit;
         $idArr = explode(":", $request->request->get("id"));
         $id = (int) $idArr[3];
 
