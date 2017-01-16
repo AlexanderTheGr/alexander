@@ -1008,7 +1008,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $jsonArr = array();
         foreach ($results as $result) {
             $json["id"] = $result["id"];
-            $json["label"] = $result["title"];
+            $json["label"] = $result["title"].' '.$result["erpCode"];
             $json["value"] = $result["erpCode"];
             $jsonArr[] = $json;
         }
