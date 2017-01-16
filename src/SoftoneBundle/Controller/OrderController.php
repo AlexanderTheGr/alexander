@@ -70,7 +70,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $html .= '<tr><th>Σχόλια</th><td>' . $order->getRemarks() . '</td>';
         $html .= "</table>";
 
-        $html .= "<table>";
+        $html .= "<table width='100%'>";
         $html .= "<thead><tr>";
         $html .= "<th>Είδος</th>";
         $html .= "<th align='left'>Κωδικός Είδους</th>";
