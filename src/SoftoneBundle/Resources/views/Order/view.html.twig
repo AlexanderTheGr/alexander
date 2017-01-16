@@ -40,7 +40,7 @@
 
     {{ render(controller('SoftoneBundle:Order:content', { 'ctrl': ctrl,'app':app,'url':url,'content':content }) ) }}
     
-    <div id='printarea'>
+    <div style='display:none' id='printarea'>
         {{printarea | raw}}
     </div>
     
@@ -51,6 +51,10 @@
     <script src="{{  asset('assets/js/libs/softone/softoneiorder.js') }}"></script>
     <script>
     $(".{{ctrl}}").alexTabs("{{app}}", "{{ctrl}}", "{{url}}", "{{content|json_encode()}}");
+    
+    jQuery('.printarea').click(function(){
+        jQuery('#printarea').printElement();
+    })    
     </script>
  
 {% endblock %}
