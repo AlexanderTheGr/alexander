@@ -54,12 +54,13 @@
     $(".{{ctrl}}").alexTabs("{{app}}", "{{ctrl}}", "{{url}}", "{{content|json_encode()}}");
     
     jQuery('.printarea').click(function(){
-        jQuery('#printarea').show();
-        setTimeout(function () {
-            jQuery('#printarea').hide();
-        }, 400)
-        jQuery('#printarea').printElement();
-        jQuery('#printarea').hide();
+        var data = {}
+        jQuery.post("/order/printarea/{{order}}", data, function (result) {
+            jQuery('#printarea').html(result);
+            jQuery('#printarea').show();
+            jQuery('#printarea').printElement();
+            jQuery('#printarea').hide();            
+        })
     })    
     </script>
  
