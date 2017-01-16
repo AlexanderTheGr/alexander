@@ -43,7 +43,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->find($id);
 
         $html = "<table>";
-
         $html .= "<thead><tr>";
         $html .= "<th>Είδος</th>";
         $html .= "<th align='left'>Κωδικός Είδους</th>";
@@ -66,6 +65,15 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $html .= "<td align='right'>".$item->getLineval()."</td>";
             $html .= "</tr>";
         }
+        $html .= "<tfooter><tr>";
+        $html .= "<th></th>";
+        $html .= "<th align='left'></th>";
+        $html .= "<th align='left'></th>";
+        $html .= "<th align='left'></th>";
+        $html .= "<th align='left'></th>";
+        $html .= "<th align='left'></th>";
+        $html .= "<th align='left'>".$total."</th>";
+        $html .= "</tr></tfooter>";        
         $html .= "</table>";
 
         $content = $html;
