@@ -78,5 +78,5 @@ jQuery('.productcategorychk').live('click', function () {
 })
 
 setTimeout(function () {
-    jQuery(".form-control select").chosen({width: "300px"});
+    jQuery("select.form-control").chosen({width: "300px"});
 }, 1000)
