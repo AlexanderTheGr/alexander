@@ -158,7 +158,7 @@ class Orderitem {
      * @return string
      */
     public function getLinevalQty() {
-        return $this->lineval/$this->qty;
+        return $this->lineval / $this->qty;
     }    
 
     /**
