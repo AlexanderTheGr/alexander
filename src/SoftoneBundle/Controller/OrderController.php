@@ -1269,18 +1269,20 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $data = json_decode($this->datatable());
         $total = 0;
         foreach ($data->data as $item) {
-            
-            $of = "9";
-            $id = 'test1';
-            $text = $item->$of;
-            preg_match_all("/<input type=\"text\"(.*) value=\"(.*?)\"(.*)>/", $text, $matches);
 
-            $value = '';
-            if (isset($matches[2][0])) {
-                $value = $matches[2][0];
-                $total += $value;
+            $of = "9";
+
+            $text = $item->$of;
+            $document = new \DOMDocument();
+            $document->loadHTML($text);
+
+            $inputs = $document->getElementsByTagName("input");
+            $value = 0;
+            foreach ($inputs as $input) {
+                $value = $input->getAttribute("value");
+                break;
             }
-            
+            $total += $value;
         }
         $json[0] = "";
         $json[1] = "";
