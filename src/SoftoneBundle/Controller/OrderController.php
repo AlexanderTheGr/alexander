@@ -1278,7 +1278,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $value = '';
             if (isset($matches[2][0])) {
                 $value = $matches[2][0];
-                $total += $item->$value;
+                $total += $value;
             }
             
         }
