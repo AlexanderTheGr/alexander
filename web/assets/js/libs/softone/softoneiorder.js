@@ -161,7 +161,7 @@ jQuery(".livevalqty").live('keyup', function (e) {
     if (e.keyCode == 13) {
         var data = {}
         data.id = jQuery(this).attr('data-id');
-        data.discount = jQuery(this).val();
+        data.livevalqty = jQuery(this).val();
         $("#loaderer").show();
         $.post("/order/editorderitem/", data, function (result) {
             $("#loaderer").hide();
