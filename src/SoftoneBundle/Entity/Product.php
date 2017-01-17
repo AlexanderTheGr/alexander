@@ -2092,7 +2092,7 @@ class Product extends Entity {
             $this->reference = $out->id;
             $em->persist($this);
             $em->flush();
-            $this->itemMtrmark = $this->itemMtrmark > 0 ? $this->itemMtrmark : 1000;
+            //$this->itemMtrmark = $this->itemMtrmark > 0 ? $this->itemMtrmark : 1000;
             $this->itemMtrmanfctr = $this->itemMtrmanfctr > 0 ? $this->itemMtrmanfctr : 1000;
             $params["fSQL"] = "UPDATE MTRL SET MTRMANFCTR=" . $this->getSupplierId()->getId() . " , MTRMARK=" . $this->itemMtrmark. " WHERE MTRL = " . $this->reference;
             $softone->createSql($params);
