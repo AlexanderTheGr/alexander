@@ -138,8 +138,26 @@ jQuery(".SoftoneBundleOrderitemQty").live('keyup', function (e) {
     }
 })
 
+jQuery(".SoftoneBundleOrderitemQty").live('keyup', function (e) {
+    if (e.keyCode == 13) {
+        var data = {}
+        data.id = jQuery(this).attr('data-id');
+        data.qty = jQuery(this).val();
+        $("#loaderer").show();
+        $.post("/order/editorderitem/", data, function (result) {
+            $("#loaderer").hide();
+            var json = angular.fromJson(result);
+            if (json.error) {
+                toastr.error(json.message, "Error");
+            }
+            var table = dt_tables["ctrlgettabs"];
+            //$(".offcanvas-search").click();
+            table.fnFilter();
+        })
+    }
+})
 
-jQuery(".SoftoneBundleOrderitemDisc1prc").live('keyup', function (e) {
+jQuery(".livevalqty").live('keyup', function (e) {
     if (e.keyCode == 13) {
         var data = {}
         data.id = jQuery(this).attr('data-id');
