@@ -13,6 +13,7 @@
             <index name="tecdoc_article_id" columns="tecdoc_article_id"/>
             <index name="item_name" columns="item_name"/>
             <index name="tecdoc_code" columns="tecdoc_code"/>
+            <index name="sisxetisi" columns="sisxetisi"/>
               
         </indexes>
         <unique-constraints>
@@ -81,6 +82,13 @@
         <field name="tecdocCode" type="string" column="tecdoc_code" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
+            </options>
+        </field>
+
+        <field name="sisxetisi" type="string" column="sisxetisi" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+                <option name="default"></option>
             </options>
         </field>
 
