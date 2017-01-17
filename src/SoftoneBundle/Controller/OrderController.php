@@ -813,8 +813,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($order->getCustomer());
-        $vat = $id > 0 ? $order->getVat()->getVatsts() : $this->getSetting("SoftoneBundle:Product:Vat");
-        //$vat = $id > 0 ? $order->getVat()->getId() : $this->getSetting("SoftoneBundle:Product:Vat");
+        if ($order->getVat())
+            $vat = $id > 0 ? $order->getVat()->getVatsts() : $this->getSetting("SoftoneBundle:Product:Vat");
+        else
+            $vat = $this->getSetting("SoftoneBundle:Product:Vat");
 
         if ($order->getReference() > 0) {
             $data = $softone->delData($object, (int) $order->getReference());
@@ -843,8 +845,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 "QTY1" => $item->getQty(),
                 "LINENUM" => $k++,
                 "MTRL" => $item->getProduct()->getReference(),
-                "PRICE" => $item->getPrice()/$vat,
-                "LINEVAL" => $item->getLineval()/$vat,
+                "PRICE" => $item->getPrice() / $vat,
+                "LINEVAL" => $item->getLineval() / $vat,
                 "DISC1PRC" => $item->getDisc1prc()
             );
         }
