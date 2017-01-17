@@ -1456,7 +1456,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $orderItem->setPrice($request->request->get("price"));
         else if ($request->request->get("discount"))
             $orderItem->setDisc1prc($request->request->get("discount"));
-        elseif ($request->request->get("qty") == 0) {
+        elseif ($request->request->get("livevalqty")) {
+            //$orderItem->setDisc1prc($request->request->get("discount"));
+            $disc1prc = 1 - ($orderitem->getPrice() / $request->request->get("livevalqty"));
+            $orderItem->setDisc1prc($disc1prc);
+        } elseif ($request->request->get("qty") == 0) {
             try {
                 $this->flushremove($orderItem);
                 $json = json_encode(array("error" => false));
@@ -1466,10 +1470,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             return new Response(
                     $json, 200, array('Content-Type' => 'application/json')
             );
-        } elseif ($request->request->get("livevalqty")) {
-            //$orderItem->setDisc1prc($request->request->get("discount"));
-            $disc1prc = 1 - ($orderitem->getPrice() / $request->request->get("livevalqty"));
-            $orderItem->setDisc1prc($disc1prc);
         }
         $fprice = ($orderItem->getPrice() * $orderItem->getQty()) * (1 - ($orderItem->getField('disc1prc') / 100));
         $orderItem->setLineval($fprice);
