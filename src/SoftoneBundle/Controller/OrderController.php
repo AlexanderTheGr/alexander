@@ -1269,7 +1269,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $data = json_decode($this->datatable());
         $total = 0;
         foreach ($data->data as $item) {
-            $of = "8";
+            $of = "9";
             $total += $item->$of;
         }
         $json[0] = "";
