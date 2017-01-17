@@ -159,6 +159,7 @@ class Main extends Controller {
                         }
                     }
                 } elseif (@$field["function"]) {
+                    $obj = $em->getRepository($this->repository)->find($result["id"]);
                     $func = $field["function"];
                     //$obj = $em->getRepository($this->repository)->find($result["id"]);
                     $json[] = $obj->$func(count($results));
