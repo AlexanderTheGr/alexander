@@ -2084,8 +2084,9 @@ class Product extends Entity {
         $dataOut[$object] = (array) $objectArr;
         //@$dataOut["ITEEXTRA"][0] = array("NUM02" => $this->item_mtrl_iteextra_num02);
         print_r(@$dataOut);
-        $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
-        print_r($out);
+        exit;
+        //$out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
+        //print_r($out);
 
         if (@$out->id > 0) {
             $this->reference = $out->id;
