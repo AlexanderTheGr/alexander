@@ -2474,6 +2474,12 @@ class Product extends Entity {
         return $this->edis;
     }
 
+    
+    function getGroupedPrice(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
+        $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
+        return number_format($this->$pricefield  * $vat, 2, '.', '');
+    }    
+    
     function getGroupedDiscountPrice(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
         $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
         $sortorder = 0;
