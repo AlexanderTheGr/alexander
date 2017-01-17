@@ -814,9 +814,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($order->getCustomer());
         if ($order->getVat())
-            $vat = $id > 0 ? $order->getVat()->getVatsts() : $this->getSetting("SoftoneBundle:Product:Vat");
+            $vatsst = $id > 0 ? $order->getVat()->getVatsts() : $this->getSetting("SoftoneBundle:Product:Vat");
         else
-            $vat = 1410; //$this->getSetting("SoftoneBundle:Product:Vat");
+            $vatsst = 1410; //$this->getSetting("SoftoneBundle:Product:Vat");
 
         if ($order->getReference() > 0) {
             $data = $softone->delData($object, (int) $order->getReference());
@@ -841,7 +841,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ($order->getItems() as $item) {
             //$dataOut["ITELINES"][] = array("QTY1" => $item->getQty(), "VAT" => $vat, "LINENUM" => $item->getLineval(), "MTRL" => $item->getProduct()->getReference());
             $dataOut["ITELINES"][] = array(
-                "VAT" => $vat,
+                "VAT" => $vatsst,
                 "QTY1" => $item->getQty(),
                 "LINENUM" => $k++,
                 "MTRL" => $item->getProduct()->getReference(),
