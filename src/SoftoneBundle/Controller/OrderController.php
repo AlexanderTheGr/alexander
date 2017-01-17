@@ -662,7 +662,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $json[6] = number_format($json[6] * $vat, 2, '.', '');
                 ;
                 $json[7] = $obj->getDiscount($customer, $vat);
-                $json[8] = $obj->getGroupedDiscount($customer, $vat); //str_replace($obj->$priceField, $obj->getGroupedDiscount($customer), $json[5]);
+                $json[8] = $obj->getGroupedDiscountPrice($customer, $vat); //str_replace($obj->$priceField, $obj->getGroupedDiscountPrice($customer), $json[5]);
                 //$json[6] = str_replace("value='---'", "value='1'", $json[6]);
                 $jsonarrnoref[$result["id"]] = $json;
             }
@@ -1336,12 +1336,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($order->getCustomer());
-        $price = $product->getGroupedDiscount($customer);
+        $price = $product->getGroupedDiscountPrice($customer);
 
         $orderItem->setField("qty", $qty + $request->request->get("qty"));
         $orderItem->setField("price", $price);
         $orderItem->setField("lineval", $price * $request->request->get("qty"));
-        $orderItem->setField("disc1prc", 0);
+        $orderItem->setField("disc1prc", $product->getGroupedDiscount($customer));
         //$orderItem->setField("store", $store);
         $orderItem->setField("chk", 1);
 
