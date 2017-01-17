@@ -161,7 +161,7 @@ class Orderitem {
         return number_format($this->lineval / $this->qty, 2, '.', '');
         //return $this->lineval / $this->qty;
     }  
-    public function delete() {
+    public function deleteitem() {
         return '<a style="font-size:20px; color:red; cursor: pointer" data-ref="'.$this->id.'" class="deleteitem"><i class="md md-delete"></i></a>';
     }
 
