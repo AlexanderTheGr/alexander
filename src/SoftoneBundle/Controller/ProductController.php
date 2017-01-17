@@ -259,7 +259,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->find($entities[$this->repository]);
 
 
-        if ($product->getErpSupplier() != '' AND !$product->getSupplierId()) {
+        if ($product->getErpSupplier() != '' AND ! $product->getSupplierId()) {
             $sup = trim(strtoupper($product->getErpSupplier()));
             $SoftoneSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")
                     ->findOneBy(array('title' => $sup));
@@ -910,8 +910,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $params["fSQL"] = 'SELECT ' . $selfields . ' FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
         //echo $params["fSQL"];
         //$params["fSQL"] = 'SELECT M.* FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
-       
-        
+
+
         $params["fSQL"] = "SELECT VARCHAR02, MTRL FROM MTREXTRA WHERE VARCHAR02 != ''";
         echo "<BR>";
         echo $params["fSQL"];
@@ -919,10 +919,20 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //return;
         $softone = new Softone();
         $datas = $softone->createSql($params);
-        print_r($datas);
-        exit;;
+        //print_r($datas);
+        
+
 
         $em = $this->getDoctrine()->getManager();
+
+
+        foreach ((array) $datas->data as $data) {
+            $sql = "update softone_product set sisxetisi = '" . $data->VARCHAR02 . "' where referene = '" . $data->MTRL . "'";
+            echo $sql . "<BR>";
+            $em->getConnection()->exec($sql);
+        }
+        exit;
+
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
             //print_r($data);
@@ -981,9 +991,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 echo $sql . "<BR>";
                 $em->getConnection()->exec($sql);
             } else {
-                $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '".$entity->id."'";
+                $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->id . "'";
                 echo $sql . "<BR>";
-                $em->getConnection()->exec($sql);                
+                $em->getConnection()->exec($sql);
             }
             /*
               @$entity_id = (int) $entity->id;
@@ -999,7 +1009,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
              */
             $entity = null;
             //if (@$i++ > 15)
-           //     break;
+            //     break;
         }
     }
 
