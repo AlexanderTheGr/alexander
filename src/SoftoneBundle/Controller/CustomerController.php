@@ -126,6 +126,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             $entity->setField("customerCode", str_pad($customerCode, 7, "0", STR_PAD_LEFT));
             $this->newentity[$this->repository] = $entity;
             $entity->setCustomerVatsts(1);
+            $entity->setPriceField("itemPricer");
         }
         $vats = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:Vat')->findAll();
@@ -143,6 +144,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $fields["customerPhone1"] = array("label" => "Τηλέφωνο", "required" => false);
         //$fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
         $fields["customerVatsts"] = array("label" => "ΦΠΑ", "required" => false, "className" => "col-md-2", 'type' => "select", 'dataarray' => $vatsts);
+        
         $priceField[] = array("value"=>"itemPricer","name"=>"Λιανική");
         $priceField[] = array("value"=>"itemPricew","name"=>"Χονδρική");
         
