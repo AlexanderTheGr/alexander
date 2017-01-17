@@ -137,11 +137,12 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
         $fields["customerCode"] = array("label" => "Customer Code", "required" => true);
         $fields["customerName"] = array("label" => "Customer Name", "required" => true);
-        $fields["customerAfm"] = array("label" => "Customer Afm", "required" => false);
+        $fields["customerAfm"] = array("label" => "Customer Afm", "required" => true);
+        $fields["customerEmail"] = array("label" => "Customer Afm", "required" => false);
         $fields["customerAddress"] = array("label" => "Customer Address", "required" => false);
         $fields["customerCity"] = array("label" => "Customer City", "required" => false);
         $fields["customergroup"] = array("label" => "Group","className"=>"col-md-6", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:Customergroup', 'name' => 'title', 'value' => 'id'));
-        $fields["customerPhone1"] = array("label" => "Τηλέφωνο", "required" => false);
+        $fields["customerPhone1"] = array("label" => "Τηλέφωνο", "required" => true);
         //$fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
         $fields["customerVatsts"] = array("label" => "ΦΠΑ", "required" => false, "className" => "col-md-2", 'type' => "select", 'dataarray' => $vatsts);
         
