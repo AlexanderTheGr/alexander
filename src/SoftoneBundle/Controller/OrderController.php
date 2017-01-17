@@ -503,7 +503,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     }
                 }
 
-                /*
+                
                 if ($search[0] == 'productfreesearch') {
                     $garr = explode(" ", $search[1]);
                     foreach ($garr as $d) {
@@ -514,8 +514,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 } else {
                     $sqlearch = "Select o.id from SoftoneBundle:ProductSearch o where o.itemCode like '%" . $search[1] . "%' OR o.itemCode1 like '%" . $search[1] . "%' OR o.itemCode2 like '%" . $search[1] . "%'";
                 }
-                 * 
-                 */
+                
 
 
                 //print_r($articleIds);
