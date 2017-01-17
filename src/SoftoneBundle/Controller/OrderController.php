@@ -277,14 +277,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         }
 
         $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
-        $dtparams[] = array("name" => "Product", "index" => 'product:title');
-        $dtparams[] = array("name" => "Erp Code", "index" => 'product:erpCode');
-        $dtparams[] = array("name" => "Rafi", "index" => 'product:rafi1');
+        $dtparams[] = array("name" => "Είδος", "index" => 'product:title');
+        $dtparams[] = array("name" => "Κωδικός Είδους", "index" => 'product:erpCode');
+        $dtparams[] = array("name" => "Ράφι", "index" => 'product:rafi1');
         $dtparams[] = array("name" => "Supplier", "index" => 'product:supplierId:title');
         $dtparams[] = array("name" => "Qty", "input" => "text", "index" => 'qty');
-        $dtparams[] = array("name" => "Price", "input" => "text", "index" => 'price');
-        $dtparams[] = array("name" => "Discount", "input" => "text", "index" => 'disc1prc');
-        $dtparams[] = array("name" => "Final Price", "index" => 'lineval');
+        $dtparams[] = array("name" => "Τιμή Καταλόγου", "input" => "text", "index" => 'price');
+        $dtparams[] = array("name" => "Έκπτωση", "input" => "text", "index" => 'disc1prc');
+        $dtparams[] = array("name" => "Τελική Τιμή", "index" => 'lineval');
 
         $params['dtparams'] = $dtparams;
         $params['id'] = $dtparams;
