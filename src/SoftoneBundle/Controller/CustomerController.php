@@ -69,9 +69,15 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $content = $this->gettabs($id);
         $content = $this->content();
 
-
+        $entity = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->find($id);
+        $pagename = '';
+        if ($entity) {
+            $pagename = $entity->getCustomerName();
+        }
         return $this->render('SoftoneBundle:Product:view.html.twig', array(
-                    'pagename' => 's',
+                    'pagename' => $pagename,
                     'url' => '/customer/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
