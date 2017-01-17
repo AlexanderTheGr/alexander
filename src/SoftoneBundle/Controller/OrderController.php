@@ -803,6 +803,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/order/saveSoftone")
      */
     function saveSoftone(Request $request) {
+        $vat = 1.24;
         $id = $request->request->get("id");
         $softone = new Softone();
         $object = "SALDOC";
@@ -842,8 +843,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 "QTY1" => $item->getQty(),
                 "LINENUM" => $k++,
                 "MTRL" => $item->getProduct()->getReference(),
-                "PRICE" => $item->getPrice(),
-                "LINEVAL" => $item->getLineval(),
+                "PRICE" => $item->getPrice()/$vat,
+                "LINEVAL" => $item->getLineval()/$vat,
                 "DISC1PRC" => $item->getDisc1prc()
             );
         }
@@ -1421,8 +1422,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             }
             $objectArr2["CODE2"] = $model->supplier_code;
             $objectArr2["ISACTIVE"] = $model->item_isactive;
-            $objectArr2["PRICER01"] = $objectArr2["PRICEW01"] * 1.23;
-            $objectArr2["PRICER02"] = $objectArr2["PRICEW02"] * 1.23;
+            $objectArr2["PRICER01"] = $objectArr2["PRICEW01"] * 1.24;
+            $objectArr2["PRICER02"] = $objectArr2["PRICEW02"] * 1.24;
             $objectArr[0] = $objectArr2;
             $dataOut[$object] = (array) $objectArr;
             $dataOut["ITEEXTRA"][0] = array("NUM02" => $model->item_mtrl_iteextra_num02);
@@ -1441,8 +1442,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             }
             $objectArr2["MTRUNIT1"] = 101; //$model->supplierCode;
             //$objectArr2["ISACTIVE"] = $model->item_isactive;
-            $objectArr2["PRICER01"] = $objectArr2["PRICEW01"] * 1.23;
-            $objectArr2["PRICER02"] = $objectArr2["PRICEW02"] * 1.23;
+            $objectArr2["PRICER01"] = $objectArr2["PRICEW01"] * 1.24;
+            $objectArr2["PRICER02"] = $objectArr2["PRICEW02"] * 1.24;
             $objectArr[0] = $objectArr2;
             $dataOut[$object] = (array) $objectArr;
             //$dataOut["ITEEXTRA"][0] = array("NUM02" => $model->item_mtrl_iteextra_num02);
