@@ -1278,6 +1278,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $json[3] = "";
         $json[4] = "";
         $json[5] = "";
+        $json[5] = "";
         $json[6] = "";
         $json[7] = "Total";
         $json[8] = $total;
