@@ -229,8 +229,6 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $datas = $softone->retrieveData($params["softone_object"], $params["list"], $filters);
 
 
-        print_r($datas);
-        exit;
         foreach ($datas as $data) {
             $data = (array) $data;
             $zoominfo = $data["zoominfo"];
