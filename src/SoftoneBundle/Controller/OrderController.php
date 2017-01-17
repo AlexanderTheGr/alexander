@@ -285,7 +285,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $dtparams[] = array("name" => "Τιμή Καταλόγου", "input" => "text", "index" => 'price');
         $dtparams[] = array("name" => "Έκπτωση", "input" => "text", "index" => 'disc1prc');
         $dtparams[] = array("name" => "Τιμή", "input" => "text", "function" => 'getLinevalQty', 'class' => 'livevalqty');
-        $dtparams[] = array("name" => "Τελική Τιμή", "index" => 'lineval');
+        $dtparams[] = array("name" => "Τελική Τιμή", "input" => "text", "index" => 'lineval');
 
         $params['dtparams'] = $dtparams;
         $params['id'] = $dtparams;
