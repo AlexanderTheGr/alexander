@@ -371,9 +371,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             if (!$product->getSisxetisi()) {
                 $product->setSisxetisi($product2->getSisxetisi());
                 $this->flushpersist($product);
+            } else {
+                $products = $this->getDoctrine()->getRepository($this->repository)->findBy(array("sisxetisi"=>$product->getSisxetisi()));
+                foreach($products as $product) {
+                    $product->setSisxetisi($product2->getSisxetisi());
+                    $this->flushpersist($product);
+                }
             }
         }
-        
 
         /*
         $asd[] = $id;
