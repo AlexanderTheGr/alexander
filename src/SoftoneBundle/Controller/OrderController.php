@@ -1269,8 +1269,18 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $data = json_decode($this->datatable());
         $total = 0;
         foreach ($data->data as $item) {
+            
             $of = "9";
-            $total += $item->$of;
+            $id = 'test1';
+            $text = $item->$of;
+            preg_match_all("/<input type=\"text\"(.*) value=\"(.*?)\"(.*)>/", $text, $matches);
+
+            $value = '';
+            if (isset($matches[2][0])) {
+                $value = $matches[2][0];
+                $total += $item->$value;
+            }
+            
         }
         $json[0] = "";
         $json[1] = "";
@@ -1459,7 +1469,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         elseif ($request->request->get("livevalqty")) {
             //$orderItem->setDisc1prc($request->request->get("discount"));
             $disc1prc = 1 - ($request->request->get("livevalqty") / $orderItem->getPrice());
-            $orderItem->setDisc1prc($disc1prc*100);
+            $orderItem->setDisc1prc($disc1prc * 100);
         } elseif ($request->request->get("qty") == 0) {
             try {
                 $this->flushremove($orderItem);
