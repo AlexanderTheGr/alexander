@@ -233,11 +233,11 @@ jQuery(".SoftoneBundleOrderitemLineval").live('keyup', function (e) {
     }
 })
 
-jQuery(".SoftoneBundleOrderitemLineval").live('keyup', function (e) {
+jQuery(".SoftoneBundleOrderitemPrice").live('keyup', function (e) {
     if (e.keyCode == 13) {
         var data = {}
         data.id = jQuery(this).attr('data-id');
-        data.liveval = jQuery(this).val();
+        data.price = jQuery(this).val();
         $("#loaderer").show();
         $.post("/order/editorderitem/", data, function (result) {
             $("#loaderer").hide();
