@@ -679,7 +679,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $this->addField($param);
         }
         $this->repository = 'SoftoneBundle:Product';
-        $this->q_and[] = $this->prefix . ".sisxetisi in  (Select k.sisxetisi FROM SoftoneBundle:Product k where k.id = '" . $id . "')";
+        $this->q_and[] = $this->prefix . ".sisxetisi in  (Select k.sisxetisi FROM SoftoneBundle:Product k where k.id = '" . $id . "') AND ".$this->prefix . ".id != '".$id."'";
         $json = $this->datatable();
 
         $datatable = json_decode($json);
