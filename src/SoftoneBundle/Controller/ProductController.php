@@ -927,7 +927,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
 
         foreach ((array) $datas->data as $data) {
-            $sql = "update softone_product set sisxetisi = '" . $data->VARCHAR02 . "' where referene = '" . $data->MTRL . "'";
+            $sql = "update softone_product set sisxetisi = '" . $data->VARCHAR02 . "' where reference = '" . $data->MTRL . "'";
             echo $sql . "<BR>";
             $em->getConnection()->exec($sql);
         }
