@@ -153,6 +153,15 @@ class Orderitem {
     }
 
     /**
+     * Get lineval
+     *
+     * @return string
+     */
+    public function getLinevalQty() {
+        return $this->lineval/$this->qty;
+    }    
+
+    /**
      * Set store
      *
      * @param integer $store
