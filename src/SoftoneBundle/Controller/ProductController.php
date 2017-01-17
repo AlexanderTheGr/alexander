@@ -910,14 +910,17 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $params["fSQL"] = 'SELECT ' . $selfields . ' FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
         //echo $params["fSQL"];
         //$params["fSQL"] = 'SELECT M.* FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
+       
+        
+        $params["fSQL"] = "SELECT * FROM ITEEXTRA";
         echo "<BR>";
         echo $params["fSQL"];
         echo "<BR>";
         //return;
         $softone = new Softone();
         $datas = $softone->createSql($params);
-        //print_r($datas);
-        //return;
+        print_r($datas);
+        exit;;
 
         $em = $this->getDoctrine()->getManager();
         foreach ((array) $datas->data as $data) {
