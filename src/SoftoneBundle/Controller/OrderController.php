@@ -1284,6 +1284,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             }
             $total += $value;
         }
+        $total = number_format($total, 2, '.', '');
         $json[0] = "";
         $json[1] = "";
         $json[2] = "";
