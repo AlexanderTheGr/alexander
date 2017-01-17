@@ -543,7 +543,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $this->prefix = "p";
                 //$this->q_or[] = $this->prefix . ".id in  (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
 
-                $sisxetisi = $this->prefix . ".id in  (Select koo.product FROM SoftoneBundle:Sisxetiseis koo where koo.sisxetisi in (" . $sql . "))";
+                $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM SoftoneBundle:Product koo where koo.sisxetisi != '' AND koo.erpCode like '%" . $search[1] . "%'";
 
                 $this->createWhere();
 
