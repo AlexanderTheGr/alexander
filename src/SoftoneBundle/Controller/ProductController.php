@@ -358,6 +358,15 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository($this->repository)
                 ->find($id);
         
+        if ($product2->getSisxetisi() == '') {
+            if ($product->getSisxetisi()) {
+                $product2->setSisxetisi($product->getSisxetisi());
+            } else {
+                $product2->setSisxetisi(str_pad($product2->getId(), 10, "0", STR_PAD_LEFT));
+            }
+            $this->flushpersist($product2);
+        }
+        
         if ($product2->getSisxetisi()) {
             if (!$product->getSisxetisi()) {
                 $product->setSisxetisi($product2->getSisxetisi());
