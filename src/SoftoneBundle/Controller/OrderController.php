@@ -519,31 +519,29 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $this->prefix = "po";
                 if (count((array) $articleIds)) {
 
-                    if ($search[1])
+                    if ($search[1]) {
                         $tecdoc_article = "poi.tecdocArticleId in (" . implode(",", $articleIds) . ") OR poi.erpCode like '%" . $search[1] . "%'";
-                    elseif ($search[0])
+                        $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM SoftoneBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ") OR koo.erpCode like '%" . $search[1] . "%'))";
+                    } elseif ($search[0]) {
                         $tecdoc_article = "poi.tecdocArticleId in (" . implode(",", $articleIds) . ") OR poi.erpCode like '%" . $search[0] . "%'";
-                    else
+                        $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM SoftoneBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ") OR koo.erpCode like '%" . $search[0] . "%'))";
+                    } else {
                         $tecdoc_article = "poi.tecdocArticleId in (" . implode(",", $articleIds) . ")";
-
-                    $sql = 'SELECT  poi.id
-                                FROM ' . $this->repository . ' poi
-                                where ' . $tecdoc_article;
+                        $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM SoftoneBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ")";
+                    }
+                    
                 } else {
 
                     $this->createWhere();
-                    $sql = 'SELECT  po.id
-                                FROM ' . $this->repository . ' ' . $this->prefix . '
-                               ' . str_replace("p.", "po.", $this->where);
 
-                    $sql = "SELECT poo.id FROM SoftoneBundle:Product poo where poo.erpCode like '%" . $search[1] . "%'";
+                    $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM SoftoneBundle:Product koo where koo.sisxetisi != '' AND koo.erpCode like '%" . $search[1] . "%')";
                 }
 
                 //echo  $sql;
                 $this->prefix = "p";
                 //$this->q_or[] = $this->prefix . ".id in  (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
 
-                $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM SoftoneBundle:Product koo where koo.sisxetisi != '' AND koo.erpCode like '%" . $search[1] . "%')";
+                
 
                 $this->createWhere();
 
