@@ -230,6 +230,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
 
         foreach ($datas as $data) {
+            break;
             $data = (array) $data;
             $zoominfo = $data["zoominfo"];
             $info = explode(";", $zoominfo);
@@ -271,6 +272,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             //break;
         }
         $sql = 'update `softone_customer` set `group` = 1 where `group` is null';
+        echo $sql;
         $this->getDoctrine()->getConnection()->exec($sql);              
         $datas = $softone->getCustomerAddresses();
         $sql = "truncate softone_customeraddress";
