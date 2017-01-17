@@ -284,7 +284,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $dtparams[] = array("name" => "Qty", "input" => "text", "index" => 'qty');
         $dtparams[] = array("name" => "Τιμή Καταλόγου", "input" => "text", "index" => 'price');
         $dtparams[] = array("name" => "Έκπτωση", "input" => "text", "index" => 'disc1prc');
-        $dtparams[] = array("name" => "Τιμή", "input" => "text","function" => 'getLinevalQty','class'=>'livevalqty');
+        $dtparams[] = array("name" => "Τιμή", "input" => "text", "function" => 'getLinevalQty', 'class' => 'livevalqty');
         $dtparams[] = array("name" => "Τελική Τιμή", "index" => 'lineval');
 
         $params['dtparams'] = $dtparams;
@@ -1338,12 +1338,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($order->getCustomer());
-        $price = $product->getGroupedPrice($customer,$vat);
+        $price = $product->getGroupedPrice($customer, $vat);
 
         $orderItem->setField("qty", $qty + $request->request->get("qty"));
         $orderItem->setField("price", $price);
-        $orderItem->setField("lineval", $product->getGroupedDiscountPrice($customer,$vat) * $request->request->get("qty"));
-        $orderItem->setField("disc1prc", $product->getGroupedDiscount($customer,$vat));
+        $orderItem->setField("lineval", $product->getGroupedDiscountPrice($customer, $vat) * $request->request->get("qty"));
+        $orderItem->setField("disc1prc", $product->getGroupedDiscount($customer, $vat));
         //$orderItem->setField("store", $store);
         $orderItem->setField("chk", 1);
 
@@ -1466,6 +1466,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             return new Response(
                     $json, 200, array('Content-Type' => 'application/json')
             );
+        } elseif ($request->request->get("livevalqty")) {
+            //$orderItem->setDisc1prc($request->request->get("discount"));
+            $disc1prc = 1 - ($orderitem->getPrice() / $request->request->get("livevalqty"));
+            $orderItem->setDisc1prc($disc1prc);
         }
         $fprice = ($orderItem->getPrice() * $orderItem->getQty()) * (1 - ($orderItem->getField('disc1prc') / 100));
         $orderItem->setLineval($fprice);
