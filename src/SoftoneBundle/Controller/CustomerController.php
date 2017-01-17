@@ -125,8 +125,14 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             $customerCode = (int) $this->getSetting("SoftoneBundle:Customer:customerCode");
             $entity->setField("customerCode", str_pad($customerCode, 7, "0", STR_PAD_LEFT));
             $this->newentity[$this->repository] = $entity;
+            $entity->setCustomerVatsts(1);
         }
-        
+        $vats = $this->getDoctrine()
+                        ->getRepository('SoftoneBundle:Vat')->findAll();
+        $itemMtrsup = array();
+        foreach ($vats as $vat) {
+            $vatsts[] = array("value" => (string) $vat->getId(), "name" => $vat->getVat()); // $supplier->getSupplierName();
+        }        
 
         $fields["customerCode"] = array("label" => "Customer Code", "required" => true);
         $fields["customerName"] = array("label" => "Customer Name", "required" => true);
@@ -135,8 +141,8 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $fields["customerCity"] = array("label" => "Customer City", "required" => false);
         $fields["customergroup"] = array("label" => "Group","className"=>"col-md-6", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:Customergroup', 'name' => 'title', 'value' => 'id'));
         $fields["customerPhone1"] = array("label" => "Τηλέφωνο", "required" => false);
-        
-        
+        //$fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
+        $fields["customerVatsts"] = array("label" => "ΦΠΑ", "required" => false, "className" => "col-md-2", 'type' => "select", 'dataarray' => $vatsts);
         $priceField[] = array("value"=>"itemPricer","name"=>"Λιανική");
         $priceField[] = array("value"=>"itemPricew","name"=>"Χονδρική");
         
