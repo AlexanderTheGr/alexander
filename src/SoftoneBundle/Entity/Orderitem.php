@@ -162,7 +162,7 @@ class Orderitem {
         //return $this->lineval / $this->qty;
     }  
     public function delete() {
-        return '<a style="font-size:20px; color:red; cursor: pointer" data-ref="'.$this->id.'" class="delete_model"><i class="md md-delete"></i></a>';
+        return '<a style="font-size:20px; color:red; cursor: pointer" data-ref="'.$this->id.'" class="deleteitem"><i class="md md-delete"></i></a>';
     }
 
     /**
