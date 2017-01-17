@@ -349,9 +349,24 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->findOneBy(array('erpCode' => $request->request->get("erp_code")));
         if (!$product)
             exit;
+
         $idArr = explode(":", $request->request->get("id"));
         $id = (int) $idArr[3];
+        
+        
+        $product2 = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->find($id);
+        
+        if ($product2->getSisxetisi()) {
+            if (!$product->getSisxetisi()) {
+                $product->setSisxetisi($product2->getSisxetisi());
+                $this->flushpersist($product);
+            }
+        }
+        
 
+        /*
         $asd[] = $id;
         $asd[] = $product->getId();
         $json = json_encode($asd);
@@ -380,6 +395,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $this->updateSisxetiseis($sisxetisi);
             }
         }
+         * 
+         */
 
         //$json = json_encode($product);
         //print_r($product);
