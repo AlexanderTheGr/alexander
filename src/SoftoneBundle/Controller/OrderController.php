@@ -1472,6 +1472,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             //$orderItem->setDisc1prc($request->request->get("discount"));
             $disc1prc = 1 - ($request->request->get("livevalqty") / $orderItem->getPrice());
             $orderItem->setDisc1prc($disc1prc * 100);
+        } elseif ($request->request->get("liveval")) {
+            //$orderItem->setDisc1prc($request->request->get("discount"));
+            $disc1prc = 1 - (($request->request->get("liveval") / $orderItem->getQty()) / $orderItem->getPrice());
+            $orderItem->setDisc1prc($disc1prc * 100);
         } elseif ($request->request->get("qty") == 0) {
             try {
                 $this->flushremove($orderItem);
