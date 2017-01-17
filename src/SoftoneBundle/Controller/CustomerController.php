@@ -133,6 +133,8 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             $this->newentity[$this->repository] = $entity;
             $entity->setCustomerVatsts(1);
             $entity->setPriceField("itemPricer");
+            $code = $this->getSetting("SoftoneBundle:Customer:CodeIncrement");
+            $entity->setCustomerCode($code);
         }
         $vats = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:Vat')->findAll();
