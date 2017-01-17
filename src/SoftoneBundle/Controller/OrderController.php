@@ -277,6 +277,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         }
 
         $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
+        $dtparams[] = array("name" => "", "function" => 'deleteitem');
         $dtparams[] = array("name" => "Είδος", "index" => 'product:title');
         $dtparams[] = array("name" => "Κωδικός Είδους", "index" => 'product:erpCode');
         $dtparams[] = array("name" => "Ράφι", "index" => 'product:rafi1');
