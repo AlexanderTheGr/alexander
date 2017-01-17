@@ -142,22 +142,22 @@ jQuery(".SoftoneBundleOrderitemQty").live('keyup', function (e) {
 
 
 jQuery(".deleteitem").live('click', function (e) {
-    if (e.keyCode == 13) {
-        var data = {}
-        data.id = jQuery(this).attr('data-id');
-        data.qty = 0;
-        $("#loaderer").show();
-        $.post("/order/editorderitem/", data, function (result) {
-            $("#loaderer").hide();
-            var json = angular.fromJson(result);
-            if (json.error) {
-                toastr.error(json.message, "Error");
-            }
-            var table = dt_tables["ctrlgettabs"];
-            //$(".offcanvas-search").click();
-            table.fnFilter();
-        })
-    }
+
+    var data = {}
+    data.id = jQuery(this).attr('data-id');
+    data.qty = 0;
+    $("#loaderer").show();
+    $.post("/order/editorderitem/", data, function (result) {
+        $("#loaderer").hide();
+        var json = angular.fromJson(result);
+        if (json.error) {
+            toastr.error(json.message, "Error");
+        }
+        var table = dt_tables["ctrlgettabs"];
+        //$(".offcanvas-search").click();
+        table.fnFilter();
+    })
+
 })
 
 jQuery(".SoftoneBundleOrderitemQty").live('keyup', function (e) {
@@ -468,7 +468,7 @@ setTimeout(function () {
             //alert(ui.item.value);
             //jQuery(".brand_model_type-select").val(ui.item.value)
             //jQuery("#gogo").click();
-            asdda(order, ui.item.value,ui.item.label);
+            asdda(order, ui.item.value, ui.item.label);
             jQuery("#searchmotor").val("");
         }
     })
@@ -487,7 +487,7 @@ function asdda(order, car, cartext) {
             var articles_count = [];
             var matched_count = [];
             var edimatched_count = [];
-            var html = '<h2>'+cartext+'</h2>';
+            var html = '<h2>' + cartext + '</h2>';
             html += '<div style="float:left; width:100%" id="accordion">';
             var as = json;
 
