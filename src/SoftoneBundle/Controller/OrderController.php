@@ -1290,7 +1290,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function addorderitemAction(Request $request) {
 
-
+        $vat = 1.24;
         $order = $this->getDoctrine()
                 ->getRepository('SoftoneBundle:Order')
                 ->find($request->request->get("order"));
@@ -1336,12 +1336,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($order->getCustomer());
-        $price = $product->getGroupedDiscountPrice($customer);
+        $price = $product->getGroupedPrice($customer,$vat);
 
         $orderItem->setField("qty", $qty + $request->request->get("qty"));
         $orderItem->setField("price", $price);
-        $orderItem->setField("lineval", $price * $request->request->get("qty"));
-        $orderItem->setField("disc1prc", $product->getGroupedDiscount($customer));
+        $orderItem->setField("lineval", $product->getGroupedDiscountPrice($customer,$vat) * $request->request->get("qty"));
+        $orderItem->setField("disc1prc", $product->getGroupedDiscount($customer,$vat));
         //$orderItem->setField("store", $store);
         $orderItem->setField("chk", 1);
 
