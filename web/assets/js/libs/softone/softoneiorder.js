@@ -141,11 +141,11 @@ jQuery(".SoftoneBundleOrderitemQty").live('keyup', function (e) {
 
 
 
-jQuery(".deleteitem").live('keyup', function (e) {
+jQuery(".deleteitem").live('click', function (e) {
     if (e.keyCode == 13) {
         var data = {}
         data.id = jQuery(this).attr('data-id');
-        data.qty = jQuery(this).val();
+        data.qty = 0;
         $("#loaderer").show();
         $.post("/order/editorderitem/", data, function (result) {
             $("#loaderer").hide();
