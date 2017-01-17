@@ -525,7 +525,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $entity->setProductSale($productsale);
         }
         $customer = $this->getDoctrine()->getRepository('SoftoneBundle:Customer')->find(1);
-        //echo $entity->getGroupedDiscount($customer);
+        //echo $entity->getGroupedDiscountPrice($customer);
 
         $cats = $entity->getCats();
         foreach ((array) $cats as $cat) {
