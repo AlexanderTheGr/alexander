@@ -134,42 +134,41 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             $entity->setCustomerVatsts(1);
             $entity->setPriceField("itemPricer");
             $code = $this->getSetting("SoftoneBundle:Customer:CodeIncrement");
-            
         }
         $vats = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:Vat')->findAll();
         $itemMtrsup = array();
         foreach ($vats as $vat) {
             $vatsts[] = array("value" => (string) $vat->getId(), "name" => $vat->getVat()); // $supplier->getSupplierName();
-        }        
+        }
 
-        $fields["customerCode"] = array("label" => "Κωδικός","className"=>"col-md-6", "required" => true);
-        $fields["customerName"] = array("label" => "Επωνυμία","className"=>"col-md-6", "required" => true);
-        $fields["customerAfm"] = array("label" => "ΑΦΜ","className"=>"col-md-6", "required" => true);
-        $fields["customerEmail"] = array("label" => "Email","className"=>"col-md-6", "required" => false);
-        $fields["customerAddress"] = array("label" => "Customer Address","className"=>"col-md-6", "required" => false);
-        $fields["customerCity"] = array("label" => "Customer City","className"=>"col-md-6", "required" => false);
+        $fields["customerCode"] = array("label" => "Κωδικός", "className" => "col-md-6", "required" => true);
+        $fields["customerName"] = array("label" => "Επωνυμία", "className" => "col-md-6", "required" => true);
+        $fields["customerAfm"] = array("label" => "ΑΦΜ", "className" => "col-md-6", "required" => true);
+        $fields["customerEmail"] = array("label" => "Email", "className" => "col-md-6", "required" => false);
+        $fields["customerAddress"] = array("label" => "Customer Address", "className" => "col-md-6", "required" => false);
+        $fields["customerCity"] = array("label" => "Customer City", "className" => "col-md-6", "required" => false);
         $fields["customerPhone1"] = array("label" => "Τηλέφωνο", "required" => false);
-        
-        $fields["customergroup"] = array("label" => "Group","className"=>"col-md-6", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:Customergroup', 'name' => 'title', 'value' => 'id'));
-        
+
+        $fields["customergroup"] = array("label" => "Group", "className" => "col-md-6", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:Customergroup', 'name' => 'title', 'value' => 'id'));
+
         //$fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
         $fields["customerVatsts"] = array("label" => "ΦΠΑ", "required" => true, "className" => "col-md-6", 'type' => "select", 'dataarray' => $vatsts);
-        
-        $priceField[] = array("value"=>"itemPricer","name"=>"Λιανική");
-        $priceField[] = array("value"=>"itemPricew","name"=>"Χονδρική");
-        
-        $priceField[] = array("value"=>"itemPricer01","name"=>"Λιανική 1");
-        $priceField[] = array("value"=>"itemPricew01","name"=>"Χονδρική 1");
 
-        $priceField[] = array("value"=>"itemPricer02","name"=>"Λιανική 2");
-        $priceField[] = array("value"=>"itemPricew02","name"=>"Χονδρική 2");        
-        
-        $priceField[] = array("value"=>"itemPricer03","name"=>"Λιανική 3");
-        $priceField[] = array("value"=>"itemPricew03","name"=>"Χονδρική 3");
-        
-        
-        $fields["priceField"] = array("label" => "Κατάλογος","className"=>"col-md-6", 'type' => "select", "required" => true, 'dataarray' => $priceField);
+        $priceField[] = array("value" => "itemPricer", "name" => "Λιανική");
+        $priceField[] = array("value" => "itemPricew", "name" => "Χονδρική");
+
+        $priceField[] = array("value" => "itemPricer01", "name" => "Λιανική 1");
+        $priceField[] = array("value" => "itemPricew01", "name" => "Χονδρική 1");
+
+        $priceField[] = array("value" => "itemPricer02", "name" => "Λιανική 2");
+        $priceField[] = array("value" => "itemPricew02", "name" => "Χονδρική 2");
+
+        $priceField[] = array("value" => "itemPricer03", "name" => "Λιανική 3");
+        $priceField[] = array("value" => "itemPricew03", "name" => "Χονδρική 3");
+
+
+        $fields["priceField"] = array("label" => "Κατάλογος", "className" => "col-md-6", 'type' => "select", "required" => true, 'dataarray' => $priceField);
 
         $forms = $this->getFormLyFields($entity, $fields);
         $this->addTab(array("title" => "General1", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
@@ -229,7 +228,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $filters = "CUSTOMER.UPDDATE=" . $date . "&CUSTOMER.UPDDATE_TO=" . date("Y-m-d");
         $datas = $softone->retrieveData($params["softone_object"], $params["list"], $filters);
 
-        
+
         print_r($datas);
         exit;
         foreach ($datas as $data) {
@@ -273,6 +272,8 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             }
             //break;
         }
+        $sql = 'update `softone_customer` set `group` = 1 where `group` is null';
+        $this->getDoctrine()->getConnection()->exec($sql);              
         $datas = $softone->getCustomerAddresses();
         $sql = "truncate softone_customeraddress";
         $em->getConnection()->exec($sql);
@@ -301,7 +302,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
                 $em->getConnection()->exec($sql);
                 //echo $sql . "<BR>";
             }
-        exit;
+
     }
 
     function getRules() {
@@ -315,8 +316,6 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
                 $price = $rule->getPrice();
             }
         }
+    }
 
-    }    
-    
-    
 }
