@@ -816,7 +816,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         if ($order->getVat())
             $vat = $id > 0 ? $order->getVat()->getVatsts() : $this->getSetting("SoftoneBundle:Product:Vat");
         else
-            $vat = $this->getSetting("SoftoneBundle:Product:Vat");
+            $vat = 1410; //$this->getSetting("SoftoneBundle:Product:Vat");
 
         if ($order->getReference() > 0) {
             $data = $softone->delData($object, (int) $order->getReference());
