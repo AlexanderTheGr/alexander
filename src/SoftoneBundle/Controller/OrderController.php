@@ -1271,7 +1271,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $total = 0;
         foreach ($data->data as $item) {
 
-            $of = "9";
+            $of = "10";
 
             $text = $item->$of;
             $document = new \DOMDocument();
@@ -1294,8 +1294,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $json[5] = "";
         $json[6] = "";
         $json[7] = "";
-        $json[8] = "Total";
-        $json[9] = $total;
+        $json[8] = "";
+        $json[9] = "Total";
+        $json[10] = $total;
 
         $data->data[] = $json;
         return json_encode($data);
