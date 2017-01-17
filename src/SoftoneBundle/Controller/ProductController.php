@@ -912,7 +912,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //$params["fSQL"] = 'SELECT M.* FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
        
         
-        $params["fSQL"] = "SELECT * FROM ITEEXTRA";
+        $params["fSQL"] = "SELECT * FROM MTREXTRA";
         echo "<BR>";
         echo $params["fSQL"];
         echo "<BR>";
