@@ -160,7 +160,10 @@ class Orderitem {
     public function getLinevalQty() {
         return number_format($this->lineval / $this->qty, 2, '.', '');
         //return $this->lineval / $this->qty;
-    }    
+    }  
+    public function delete() {
+        return '<a style="font-size:20px; color:red; cursor: pointer" data-ref="'.$this->id.'" class="delete_model"><i class="md md-delete"></i></a>';
+    }
 
     /**
      * Set store
