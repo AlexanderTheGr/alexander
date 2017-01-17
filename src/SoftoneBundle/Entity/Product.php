@@ -2758,4 +2758,33 @@ class Product extends Entity {
         return $this->productSale;
     }
 
+    /**
+     * @var string
+     */
+    private $sisxetisi = '';
+
+
+    /**
+     * Set sisxetisi
+     *
+     * @param string $sisxetisi
+     *
+     * @return Product
+     */
+    public function setSisxetisi($sisxetisi)
+    {
+        $this->sisxetisi = $sisxetisi;
+
+        return $this;
+    }
+
+    /**
+     * Get sisxetisi
+     *
+     * @return string
+     */
+    public function getSisxetisi()
+    {
+        return $this->sisxetisi;
+    }
 }
