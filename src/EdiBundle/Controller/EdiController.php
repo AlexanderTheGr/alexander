@@ -391,7 +391,7 @@ class EdiController extends Main {
             }
             $i = 0;
             while ($data = fgetcsv($handle, 100000, "\t")) {
-                //if ($i++ < 130000) continue;
+                if ($i++ < 120000) continue;
                 foreach ($data as $key => $val) {
                     $attributes[$attrs[$key]] = trim(addslashes($val));
                 }
