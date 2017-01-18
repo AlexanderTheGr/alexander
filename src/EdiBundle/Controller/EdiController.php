@@ -439,7 +439,8 @@ class EdiController extends Main {
                             . "wholesaleprice='" . $attributes["wholeprice"] . "', "
                             . "retailprice='" . $attributes["retailprice"] . "' where id = '" . $ediedi_id . "'";
                     $em->getConnection()->exec($sql);
-                    echo $sql . "<BR>";                    
+                    //echo $sql . "<BR>";
+                    echo ".";
                 }
                 //$ediediitem->updatetecdoc();
 
