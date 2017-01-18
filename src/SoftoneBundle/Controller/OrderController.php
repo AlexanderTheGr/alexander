@@ -964,7 +964,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $query = $em->createQuery(
                 "SELECT  p.id
                     FROM SoftoneBundle:BrandModelType p
-                    where p.engine like '" . $this->clearstring($_GET["term"]) . "%'"
+                    where p.engine like '%" . $this->clearstring($_GET["term"]) . "%'"
         );
         $results = $query->getResult();
 
