@@ -1179,7 +1179,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $json = $this->datatable();
 
 
-
         $datatable = json_decode($json);
         $datatable->data = (array) $datatable->data;
         foreach ($datatable->data as $key => $table) {
