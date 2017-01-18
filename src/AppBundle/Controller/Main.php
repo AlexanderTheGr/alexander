@@ -142,7 +142,7 @@ class Main extends Controller {
                     //$entity->getField($field)->format('Y-m-d');
 
                     if (count($field_relation) > 1) {
-                        //echo $this->repository;
+                        echo $this->repository.",";
                         $obj = $em->getRepository($this->repository)->find($result["id"]);
                         foreach ($field_relation as $relation) {
                             echo $relation.",";
