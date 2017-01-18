@@ -1122,7 +1122,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
 
             $sql = "Select partno, wholesaleprice from partsbox_db.edi_item where replace(replace(replace(replace(`partno`, '/', ''), '.', ''), '-', ''), ' ', '') LIKE '" . $this->clearstring($product->getItemCode2()) . "'";
-            $result = $em->getConnection()->fetch($sql);
+            $result = $em->getConnection()->fetchOne($sql);
             print_r($result);
             /*
 
