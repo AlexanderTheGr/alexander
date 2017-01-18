@@ -1123,10 +1123,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $ediediitem = $this->getDoctrine()
                     ->getRepository('EdiBundle:EdiItem')
                     ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), "Edi" => $ediedi));
-            if ($ediediitem)
-                echo $ediediitem->getWholesaleprice() . " " . $product->getItemPricew() . "<BR>";
-            else
-                echo "<span style='color:red'>".$product->getSupplierId()->getTitle()." " . $product->getItemCode2() . "</span><BR>";
+            if ($ediediitem) {
+                //echo $ediediitem->getWholesaleprice() . " " . $product->getItemPricew() . "<BR>";
+            } else
+                echo "<span style='color:red'>".$product->getSupplierId()->getTitle().";" . $product->getItemCode2() . "</span><BR>";
         }
         exit;
     }
