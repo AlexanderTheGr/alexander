@@ -607,12 +607,12 @@ class EdiItem extends Entity {
                 
                 $sql = "update partsbox_db.edi_item set tecdoc_generic_article_id = '".$out->genericArticleId."', tecdoc_article_name = '".$out->articleName."', tecdoc_article_id = '".$out->articleId."', cars = '".serialize($cars)."', cats = '".serialize($categories)."' where id = '".$this->id."'";
                 echo $sql."<BR>";
-                //$em->getConnection()->exec($sql);
+                $em->getConnection()->exec($sql);
                 
                 $this->setCats($categories); 
                 $this->setCars($cars); 
-                $em->persist($this);
-                $em->flush();
+                //$em->persist($this);
+                //$em->flush();
             } else {
                 /*
                 $this->setTecdocArticleId(-1);
