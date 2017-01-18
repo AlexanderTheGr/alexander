@@ -443,6 +443,7 @@ class EdiController extends Main {
                     //echo $sql . "<BR>";
                     echo ".";
                 }
+                continue;
                 //$ediediitem->updatetecdoc();
 
                 $eltrekaedi = $this->getDoctrine()
