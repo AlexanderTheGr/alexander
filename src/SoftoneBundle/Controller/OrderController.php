@@ -1164,7 +1164,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/order/getdatatable")
      */
     public function getdatatableAction(Request $request) {
-        $this->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
+        $this
+                //->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
                 ->addField(array("name" => "Ημερομηνία", 'datetime'=>'Y-m-d H:s:i',"index" => 'created'))
                 ->addField(array("name" => "Παραστατικό", "index" => 'fincode'))
                 ->addField(array("name" => "Customer Name", "index" => 'customerName'))
