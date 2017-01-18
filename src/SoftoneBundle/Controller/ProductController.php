@@ -1130,6 +1130,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                 $this->flushpersist($product);
                                 $product->toSoftone();
                             }
+                            
                         } else {
                             //echo "<span style='color:red'>".$product->getItemCode()." -- ".$product->getSupplierId()->getTitle()." -- " . $product->getItemCode2() . " ".$ediediitem->getWholesaleprice() . " -- ".$ediediitem->getEdiMarkupPrice("itemPricew")." -- " . $product->getItemPricew() . "</span><BR>";
                         }
