@@ -23,11 +23,9 @@
                 <option name="default">1</option>
             </options>
         </field>
-        <field name="customer" type="integer" column="customer" nullable="true">
-            <options>
-                <option name="unsigned"/>
-            </options>
-        </field>
+       
+
+        
         <field name="customerName" type="string" column="customer_name" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
@@ -128,6 +126,19 @@
                 <cascade-persist/>
             </cascade>
             <join-column name="route" referenced-column-name="id"/>
-        </many-to-one>        
+        </many-to-one>    
+        
+        <many-to-one
+            field="vat"
+            target-entity="SoftoneBundle\Entity\Customer"
+            inversed-by="Customers"
+            join-column="customer">
+            <join-column name="customer" referenced-column-name="id" />
+        </many-to-one> 
+                    
+  
+                    
+                        
+                                
     </entity>
 </doctrine-mapping>
