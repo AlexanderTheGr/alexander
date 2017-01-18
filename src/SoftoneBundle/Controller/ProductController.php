@@ -1126,6 +1126,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             else 
                 echo "<span style='color:red'>".$product->getItemCode2()."</span><BR>";
         }
+        exit;
     }
 
     /**
