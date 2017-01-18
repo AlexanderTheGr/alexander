@@ -1056,7 +1056,7 @@ class EdiItem extends Entity {
         }
         //$markup = $markup == 0 ? 0 : $markup; 
         //echo $markup."\n";
-        $markupedPrice = $this->retailprice * (1 + $markup/100 );
+        $markupedPrice = $this->wholesaleprice * (1 + $markup/100 );
         return $price > 0 ? $price : $markupedPrice;
     }
     function getEdiMarkup($pricefield=false) {
@@ -1075,7 +1075,7 @@ class EdiItem extends Entity {
         return $markup;
         //$markup = $markup == 0 ? 0 : $markup; 
         //echo $markup."\n";
-        $markupedPrice = $this->retailprice * (1 + $markup/100 );
+        $markupedPrice = $this->wholesaleprice * (1 + $markup/100 );
         return $price > 0 ? $price : $markupedPrice;
     }    
     /**
