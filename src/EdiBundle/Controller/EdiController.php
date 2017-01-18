@@ -411,6 +411,7 @@ class EdiController extends Main {
                 }
                 $ediedi = $ediedis[$entity["id"]];
 
+                
 
                 $ediediitem = $this->getDoctrine()
                         ->getRepository('EdiBundle:EdiItem')
