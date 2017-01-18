@@ -860,6 +860,7 @@ class Order extends Entity {
 
     
     function getTotal() {
+        $total = 0;
         foreach ($this->getItems() as $item) {
             @$total += $item->getLineval();
         }
