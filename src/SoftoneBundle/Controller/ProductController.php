@@ -317,12 +317,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         if ($product->getSisxetisi() != '') {
             $sproducts = $this->getDoctrine()
                     ->getRepository($this->repository)
-                    ->findBy(array("sisxetisi"=>$product->getSisxetisi()));
-            foreach($sproducts as $sproduct) {
-                $sproduct->toSoftone();
+                    ->findBy(array("sisxetisi" => $product->getSisxetisi()));
+            foreach ($sproducts as $sproduct) {
+                if ($sproduct->getSisxetisi() != '')
+                    $sproduct->toSoftone();
             }
         }
-        
+
         //print_r($this->error);
         //echo $product->id;
         if (count($this->error[$this->repository])) {
@@ -964,12 +965,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $em = $this->getDoctrine()->getManager();
 
         /*
-        foreach ((array) $datas->data as $data) {
-            $sql = "update softone_product set sisxetisi = '" . $data->VARCHAR02 . "' where reference = '" . $data->MTRL . "'";
-            echo $sql . "<BR>";
-            $em->getConnection()->exec($sql);
-        }
-        exit;
+          foreach ((array) $datas->data as $data) {
+          $sql = "update softone_product set sisxetisi = '" . $data->VARCHAR02 . "' where reference = '" . $data->MTRL . "'";
+          echo $sql . "<BR>";
+          $em->getConnection()->exec($sql);
+          }
+          exit;
          * 
          */
 
@@ -1120,9 +1121,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/product/product/synchronize")
      */
     public function synchronizeAction($funct = false) {
- 
+
         $ediedis = $this->getDoctrine()->getRepository('EdiBundle:Edi')->findAll();
-        foreach($ediedis as $ediedi) {
+        foreach ($ediedis as $ediedi) {
             if ($ediedi->getItemMtrsup() > 0) {
                 $products = $this->getDoctrine()->getRepository('SoftoneBundle:Product')->findBy(array("itemMtrsup" => $ediedi->getItemMtrsup()));
                 foreach ($products as $product) {
@@ -1131,15 +1132,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                             ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), "Edi" => $ediedi));
                     if ($ediediitem) {
                         $itemPricew = $ediediitem->getEdiMarkupPrice("itemPricew");
-                        if ($itemPricew  != $product->getItemPricew()) {
-                            echo $ediedi->getName()." -- ".$product->getItemCode()." -- ".$product->getSupplierId()->getTitle()." -- " . $product->getItemCode2() . " ".$ediediitem->getWholesaleprice() . " -- ".$ediediitem->getEdiMarkupPrice("itemPricew")." -- " . $product->getItemPricew() . "<BR>";
+                        if ($itemPricew != $product->getItemPricew()) {
+                            echo $ediedi->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediediitem->getWholesaleprice() . " -- " . $ediediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
                             //if ($i++ > 2) exit;
                             if ($itemPricew > 0.01) {
-                                $product->setItemPricew( $itemPricew );
+                                $product->setItemPricew($itemPricew);
                                 $this->flushpersist($product);
                                 $product->toSoftone();
                             }
-                            
                         } else {
                             //echo "<span style='color:red'>".$product->getItemCode()." -- ".$product->getSupplierId()->getTitle()." -- " . $product->getItemCode2() . " ".$ediediitem->getWholesaleprice() . " -- ".$ediediitem->getEdiMarkupPrice("itemPricew")." -- " . $product->getItemPricew() . "</span><BR>";
                         }
@@ -1147,10 +1147,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         //echo "<span style='color:red'>".$product->getItemCode().";".$product->getSupplierId()->getTitle().";" . $product->getItemCode2() . "</span><BR>";
                     }
                 }
-                
             }
         }
-        
+
         exit;
     }
 
