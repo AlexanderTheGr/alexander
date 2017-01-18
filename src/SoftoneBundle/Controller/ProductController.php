@@ -352,12 +352,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $idArr = explode(":", $request->request->get("id"));
         $id = (int) $idArr[3];
-        
-        
+
+
         $product2 = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($id);
-        
+
         if ($product2->getSisxetisi() == '') {
             if ($product->getSisxetisi()) {
                 $product2->setSisxetisi($product->getSisxetisi());
@@ -366,14 +366,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             }
             $this->flushpersist($product2);
         }
-        
+
         if ($product2->getSisxetisi()) {
             if (!$product->getSisxetisi()) {
                 $product->setSisxetisi($product2->getSisxetisi());
                 $this->flushpersist($product);
             } else {
-                $products = $this->getDoctrine()->getRepository($this->repository)->findBy(array("sisxetisi"=>$product->getSisxetisi()));
-                foreach($products as $product) {
+                $products = $this->getDoctrine()->getRepository($this->repository)->findBy(array("sisxetisi" => $product->getSisxetisi()));
+                foreach ($products as $product) {
                     $product->setSisxetisi($product2->getSisxetisi());
                     $this->flushpersist($product);
                 }
@@ -381,34 +381,34 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
 
         /*
-        $asd[] = $id;
-        $asd[] = $product->getId();
-        $json = json_encode($asd);
-        if ($id > 0 AND count($product) > 0) {
+          $asd[] = $id;
+          $asd[] = $product->getId();
+          $json = json_encode($asd);
+          if ($id > 0 AND count($product) > 0) {
 
-            $sisxetisi = $this->getDoctrine()
-                    ->getRepository('SoftoneBundle:Sisxetiseis')
-                    ->findOneBy(array('product' => $id, 'sisxetisi' => $product->getId()));
-            if (count($sisxetisi) == 0) {
-                $sisxetisi = new Sisxetiseis();
-                $sisxetisi->setProduct($id);
-                $sisxetisi->setSisxetisi($product->getId());
-                @$this->flushpersist($sisxetisi);
-                $this->updateSisxetiseis($sisxetisi);
-            }
+          $sisxetisi = $this->getDoctrine()
+          ->getRepository('SoftoneBundle:Sisxetiseis')
+          ->findOneBy(array('product' => $id, 'sisxetisi' => $product->getId()));
+          if (count($sisxetisi) == 0) {
+          $sisxetisi = new Sisxetiseis();
+          $sisxetisi->setProduct($id);
+          $sisxetisi->setSisxetisi($product->getId());
+          @$this->flushpersist($sisxetisi);
+          $this->updateSisxetiseis($sisxetisi);
+          }
 
-            $sisxetisi = $this->getDoctrine()
-                    ->getRepository('SoftoneBundle:Sisxetiseis')
-                    ->findOneBy(array('sisxetisi' => $id, 'product' => $product->getId()));
+          $sisxetisi = $this->getDoctrine()
+          ->getRepository('SoftoneBundle:Sisxetiseis')
+          ->findOneBy(array('sisxetisi' => $id, 'product' => $product->getId()));
 
-            if (count($sisxetisi) == 0) {
-                $sisxetisi = new Sisxetiseis();
-                $sisxetisi->setProduct($product->getId());
-                $sisxetisi->setSisxetisi($id);
-                @$this->flushpersist($sisxetisi);
-                $this->updateSisxetiseis($sisxetisi);
-            }
-        }
+          if (count($sisxetisi) == 0) {
+          $sisxetisi = new Sisxetiseis();
+          $sisxetisi->setProduct($product->getId());
+          $sisxetisi->setSisxetisi($id);
+          @$this->flushpersist($sisxetisi);
+          $this->updateSisxetiseis($sisxetisi);
+          }
+          }
          * 
          */
 
@@ -710,7 +710,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $this->addField($param);
         }
         $this->repository = 'SoftoneBundle:Product';
-        $this->q_and[] = $this->prefix . ".sisxetisi in  (Select k.sisxetisi FROM SoftoneBundle:Product k where k.id = '" . $id . "') AND ".$this->prefix . ".sisxetisi != ''  AND ".$this->prefix . ".id != '".$id."'";
+        $this->q_and[] = $this->prefix . ".sisxetisi in  (Select k.sisxetisi FROM SoftoneBundle:Product k where k.id = '" . $id . "') AND " . $this->prefix . ".sisxetisi != ''  AND " . $this->prefix . ".id != '" . $id . "'";
         $json = $this->datatable();
 
         $datatable = json_decode($json);
@@ -951,7 +951,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $softone = new Softone();
         $datas = $softone->createSql($params);
         //print_r($datas);
-        
+
 
 
         $em = $this->getDoctrine()->getManager();
@@ -1106,17 +1106,25 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
         exit;
     }
-    
+
     /**
-    * @Route("/product/product/synchronize")
-    */
+     * @Route("/product/product/synchronize")
+     */
     public function synchronizeAction($funct = false) {
-        $products = $this->getDoctrine()->getRepository('SoftoneBundle:Product')->findBy(array("itemMtrsup"=>1196));
-        echo count($products);
-        exit;
+        $products = $this->getDoctrine()->getRepository('SoftoneBundle:Product')->findBy(array("itemMtrsup" => 1196));
+        //echo count($products);
+        //exit;
+        $ediedi = $this->getDoctrine()
+                ->getRepository('EdiBundle:Edi')
+                ->findOneById(4);
+        foreach ($products as $product) {
+            $ediediitem = $this->getDoctrine()
+                    ->getRepository('EdiBundle:EdiItem')
+                    ->findOneBy(array("partno" => $product->getItemCode2(), "Edi" => $ediedi));
+            if ($ediediitem)
+                echo $ediediitem->getWholesaleprice() . " " . $product->getItemPricew() . "<BR>";
+        }
     }
-    
-    
 
     /**
      * 
