@@ -395,7 +395,7 @@ class EdiController extends Main {
                 foreach ($data as $key => $val) {
                     $attributes[$attrs[$key]] = trim(addslashes($val));
                 }
-                print_r($attributes);
+                //print_r($attributes);
                 $attributes["wholeprice"] = str_replace(",", ".", $attributes["wholeprice"]);
                 $attributes["retailprice"] = str_replace(",", ".", $attributes["retailprice"]);
                 $attributes["gross_weight_gr"] = str_replace(",", ".", $attributes["gross_weight_gr"]);
@@ -427,7 +427,7 @@ class EdiController extends Main {
                             . "description='" . $attributes["description"] . "', "
                             . "dlnr='" . $attributes["tecdocsupplierno"] . "', "
                             . "artnr='" . $attributes["tecdocpartno"] . "', "
-                            . "wholesaleprice='" . $attributes["wholesaleprice"] . "', "
+                            . "wholesaleprice='" . $attributes["wholeprice"] . "', "
                             . "retailprice='" . $attributes["retailprice"] . "'";
                     $em->getConnection()->exec($sql);
                     echo $sql . "<BR>";
