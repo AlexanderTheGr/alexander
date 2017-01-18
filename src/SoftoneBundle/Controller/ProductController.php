@@ -1124,7 +1124,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     ->getRepository('EdiBundle:EdiItem')
                     ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), "Edi" => $ediedi));
             if ($ediediitem) {
-                echo $product->getItemCode()." -- ".$product->getSupplierId()->getTitle()." -- " . $product->getItemCode2() . " ".$ediediitem->getWholesaleprice() . " --  -- " . $product->getItemPricew() . "<BR>";
+                echo $product->getItemCode()." -- ".$product->getSupplierId()->getTitle()." -- " . $product->getItemCode2() . " ".$ediediitem->getWholesaleprice() . " -- ".$ediediitem->getEdiMarkupPrice("itemPricew")." -- " . $product->getItemPricew() . "<BR>";
             } else {
                 //echo "<span style='color:red'>".$product->getItemCode().";".$product->getSupplierId()->getTitle().";" . $product->getItemCode2() . "</span><BR>";
             }
