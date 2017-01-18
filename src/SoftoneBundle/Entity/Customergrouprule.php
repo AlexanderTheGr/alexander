@@ -171,10 +171,10 @@ class Customergrouprule {
         }
         $productsale = 1;
         //echo $this->rulesLoop($rule, $catsEp, $supplier) ? "true" : "false";
-        return $this->rulesLoop($rule, $catsEp, $supplier, $product->getErpCode(),$productsale);
+        return $this->rulesLoop($rule, $catsEp, $supplier, $product->getErpCode(), $productsale);
     }
 
-    function rulesLoop($rule, $catsEp, $supplier, $code,$productsale) {
+    function rulesLoop($rule, $catsEp, $supplier, $code, $productsale) {
         foreach ($rule["rules"] as $rl) {
 
             if (count($rl["rules"])) {
@@ -188,6 +188,9 @@ class Customergrouprule {
             }
             if ($rule["condition"] == "OR") {
                 $out = false;
+                if ($rl["id"] == "default") {
+                    return true;
+                }                   
                 if ($rl["id"] == "category") {
                     if ($rl["operator"] == "equal") {
                         if (in_array($rl["value"], $catsEp)) {
@@ -212,7 +215,7 @@ class Customergrouprule {
                         }
                     }
                 }
-                
+
                 if ($rl["id"] == "productsale") {
                     if ($rl["operator"] == "equal") {
                         if ($rl["value"] == $productsale) {
@@ -224,8 +227,8 @@ class Customergrouprule {
                             return true;
                         }
                     }
-                }                
-                
+                }
+
 
                 if ($rl["id"] == "code") {
                     if ($rl["operator"] == "equal") {
@@ -241,8 +244,10 @@ class Customergrouprule {
                 }
             } elseif ($rule["condition"] == "AND") {
                 $out = true;
-                
-                
+
+                if ($rl["id"] == "default") {
+                    return true;
+                }   
                 if ($rl["id"] == "category") {
                     if ($rl["operator"] == "equal") {
                         if (!in_array($rl["value"], $catsEp)) {
@@ -255,7 +260,7 @@ class Customergrouprule {
                         }
                     }
                 }
-                
+
                 if ($rl["id"] == "supplier") {
                     if ($rl["operator"] == "equal") {
                         if ($rl["value"] != $supplier) {
@@ -268,8 +273,8 @@ class Customergrouprule {
                         }
                     }
                 }
-                
-                
+
+
                 if ($rl["id"] == "productsale") {
                     if ($rl["operator"] == "equal") {
                         if ($rl["value"] != $productsale) {
@@ -281,10 +286,10 @@ class Customergrouprule {
                             return false;
                         }
                     }
-                }                
-                
-                
-                
+                }
+
+
+
                 if ($rl["id"] == "code") {
                     if ($rl["operator"] == "equal") {
                         if ($rl["value"] != $code) {
@@ -334,7 +339,6 @@ class Customergrouprule {
      */
     private $title;
 
-
     /**
      * Set title
      *
@@ -342,8 +346,7 @@ class Customergrouprule {
      *
      * @return Customergrouprule
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
 
         return $this;
@@ -354,15 +357,14 @@ class Customergrouprule {
      *
      * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
+
     /**
      * @var string
      */
     private $price;
-
 
     /**
      * Set price
@@ -371,8 +373,7 @@ class Customergrouprule {
      *
      * @return Customergrouprule
      */
-    public function setPrice($price)
-    {
+    public function setPrice($price) {
         $this->price = $price;
 
         return $this;
@@ -383,8 +384,8 @@ class Customergrouprule {
      *
      * @return string
      */
-    public function getPrice()
-    {
+    public function getPrice() {
         return $this->price;
     }
+
 }
