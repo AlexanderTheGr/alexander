@@ -137,6 +137,10 @@ class Main extends Controller {
             foreach ($data["fields"] as $field) {
                 if (@$field["index"]) {
                     $field_relation = explode(":", $field["index"]);
+
+                    //if (@$field["method"]) {
+                    //$entity->getField($field)->format('Y-m-d');
+
                     if (count($field_relation) > 1) {
                         //echo $this->repository;
                         $obj = $em->getRepository($this->repository)->find($result["id"]);
@@ -151,9 +155,11 @@ class Main extends Controller {
                     if (@$field["method"]) {
                         $method = $field["method"] . "Method";
                         $json[] = $this->$method($val);
+                    } elseif (@$field["datetime"]) {
+                        $val = $val->format($field["datetime"]);
                     } else {
                         if (@$field["input"]) {
-                            $json[] = "<input id='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "_" . $result["id"] . "' data-id='" . $result["id"] . "' class='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . " ".$field["class"]."' type='" . $field["input"] . "' value='" . $val . "'>";
+                            $json[] = "<input id='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "_" . $result["id"] . "' data-id='" . $result["id"] . "' class='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . " " . $field["class"] . "' type='" . $field["input"] . "' value='" . $val . "'>";
                         } else {
                             $json[] = $val;
                         }
@@ -164,7 +170,7 @@ class Main extends Controller {
                     //$obj = $em->getRepository($this->repository)->find($result["id"]);
                     $val = $obj->$func(count($results));
                     if (@$field["input"]) {
-                        @$json[] = "<input id='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "_" . $result["id"] . "' data-id='" . $result["id"] . "' class='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . " ".$field["class"]."' type='" . $field["input"] . "' value='" . $val . "'>";
+                        @$json[] = "<input id='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "_" . $result["id"] . "' data-id='" . $result["id"] . "' class='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . " " . $field["class"] . "' type='" . $field["input"] . "' value='" . $val . "'>";
                     } else {
                         $json[] = $val;
                     }
