@@ -291,7 +291,7 @@ class EdiController extends Main {
         $i = 0;
         foreach ($collection as $entity) {
             //if ($i++ <= 1) continue;
-            if ($entity["id"] == 2) {
+            if ($entity["id"] == 4) {
                 $func = $entity["func"];
                 $this->$func($entity);
             }
@@ -396,6 +396,8 @@ class EdiController extends Main {
         set_time_limit(100000);
         $eltrekaedi = new Eltrekaedi();
         $file = $eltrekaedi->getPartMasterFile();
+        echo $file;
+        exit;
         //$file = 'http://195.144.16.7/EltrekkaEDI/Temp/Parts/RE4V1G9V.txt';
         $em = $this->getDoctrine()->getManager();
         if ((($handle = fopen($file, "r")) !== FALSE)) {
