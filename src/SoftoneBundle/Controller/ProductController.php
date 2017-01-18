@@ -1126,7 +1126,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             if ($ediediitem)
                 echo $ediediitem->getWholesaleprice() . " " . $product->getItemPricew() . "<BR>";
             else
-                echo "<span style='color:red'>".$product->getErpSupplier()." " . $product->getItemCode2() . "</span><BR>";
+                echo "<span style='color:red'>".$product->getSupplierId()->getTtitle()." " . $product->getItemCode2() . "</span><BR>";
         }
         exit;
     }
