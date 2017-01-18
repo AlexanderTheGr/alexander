@@ -2033,8 +2033,8 @@ class Product extends Entity {
 
         $fields[] = "item_mtrsup";
         $fields[] = "item_mtrcategory";
-        $fields[] = "item_markupw";
-        $fields[] = "item_markupr";
+        //$fields[] = "item_markupw";
+        //$fields[] = "item_markupr";
         $fields[] = "item_isactive";
         $fields[] = "item_mtrmark";
         $fields[] = "item_apvcode";
