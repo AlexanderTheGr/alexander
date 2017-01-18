@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="customerrule", indexes={@ORM\Index(name="customer", columns={"customer"})})
  * @ORM\Entity
  */
-class Customerrule
-{
+class Customerrule {
+
     /**
      * @var integer
      *
@@ -42,8 +42,6 @@ class Customerrule
      */
     protected $id;
 
-
-
     /**
      * Set customer
      *
@@ -51,8 +49,7 @@ class Customerrule
      *
      * @return Customerrule
      */
-    public function setCustomer($customer)
-    {
+    public function setCustomer($customer) {
         $this->customer = $customer;
 
         return $this;
@@ -63,8 +60,7 @@ class Customerrule
      *
      * @return integer
      */
-    public function getCustomer()
-    {
+    public function getCustomer() {
         return $this->customer;
     }
 
@@ -75,8 +71,7 @@ class Customerrule
      *
      * @return Customerrule
      */
-    public function setVal($val)
-    {
+    public function setVal($val) {
         $this->val = $val;
 
         return $this;
@@ -87,8 +82,7 @@ class Customerrule
      *
      * @return string
      */
-    public function getVal()
-    {
+    public function getVal() {
         return $this->val;
     }
 
@@ -99,8 +93,7 @@ class Customerrule
      *
      * @return Customerrule
      */
-    public function setSupplier($supplier)
-    {
+    public function setSupplier($supplier) {
         $this->supplier = $supplier;
 
         return $this;
@@ -111,8 +104,7 @@ class Customerrule
      *
      * @return string
      */
-    public function getSupplier()
-    {
+    public function getSupplier() {
         return $this->supplier;
     }
 
@@ -121,8 +113,8 @@ class Customerrule
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
+
 }
