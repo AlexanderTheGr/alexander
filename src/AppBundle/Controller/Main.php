@@ -157,6 +157,7 @@ class Main extends Controller {
                         $json[] = $this->$method($val);
                     } elseif (@$field["datetime"]) {
                         $val = $val->format($field["datetime"]);
+                        $json[] = $val;
                     } else {
                         if (@$field["input"]) {
                             $json[] = "<input id='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "_" . $result["id"] . "' data-id='" . $result["id"] . "' class='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . " " . $field["class"] . "' type='" . $field["input"] . "' value='" . $val . "'>";
