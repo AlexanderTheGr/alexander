@@ -456,8 +456,8 @@ class EdiController extends Main {
                 $sql = "replace partsbox_db.eltrekaedi set id = '" . $eltrekaedi_id . "', ediitem = '" . $ediedi_id . "', " . implode(",", $q);
                 $em->getConnection()->exec($sql);
                 //}
-                if ($i++ > 30)
-                    return;
+                //if ($i++ > 30)
+                //    return;
             }
         }
     }
