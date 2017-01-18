@@ -150,7 +150,7 @@ class EdiOrderController extends Main {
         $dtparams[] = array("name" => "ID", "index" => 'id', "input" => 'checkbox', "active" => "active");
         $dtparams[] = array("name" => "Part No", "index" => 'partno', 'search' => 'text');
         $dtparams[] = array("name" => "Description", "index" => 'description', 'search' => 'text');
-        $dtparams[] = array("name" => "Price", "index" => 'retailprice', "input" => 'text', 'search' => 'text');
+        $dtparams[] = array("name" => "Price", "index" => 'wholesaleprice', "input" => 'text', 'search' => 'text');
         //$dtparams[] = array("name" => "ID", "function" => 'getAvailability', "active" => "active");
         $params['dtparams'] = $dtparams;
         $params['id'] = $dtparams;
