@@ -1117,7 +1117,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             if ($ediedi->getItemMtrsup() > 0) {
                 $products = $this->getDoctrine()->getRepository('SoftoneBundle:Product')->findBy(array("itemMtrsup" => $ediedi->getItemMtrsup()));
                 foreach ($products as $product) {
-
                     $ediediitem = $this->getDoctrine()
                             ->getRepository('EdiBundle:EdiItem')
                             ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), "Edi" => $ediedi));
