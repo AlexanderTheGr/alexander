@@ -1123,6 +1123,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     ->findOneBy(array("partno" => $product->getItemCode2(), "Edi" => $ediedi));
             if ($ediediitem)
                 echo $ediediitem->getWholesaleprice() . " " . $product->getItemPricew() . "<BR>";
+            else 
+                echo "<span style='color:red'>".$product->getItemCode2()."</span><BR>";
         }
     }
 
