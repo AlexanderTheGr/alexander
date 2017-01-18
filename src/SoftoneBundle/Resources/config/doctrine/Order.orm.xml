@@ -129,16 +129,13 @@
         </many-to-one>    
         
         <many-to-one
-            field="vat"
+            field="customer"
             target-entity="SoftoneBundle\Entity\Customer"
             inversed-by="Customers"
             join-column="customer">
             <join-column name="customer" referenced-column-name="id" />
         </many-to-one> 
-                    
-  
-                    
-                        
+            
                                 
     </entity>
 </doctrine-mapping>
