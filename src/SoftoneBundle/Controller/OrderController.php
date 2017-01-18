@@ -213,7 +213,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         }
 
         $order->setCustomerName($request->request->get("customerName"));
-        $order->setCustomer($request->request->get("customer"));
+
+        $customer = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Customer")
+                ->find($request->request->get("customer"));
+        $order->setCustomer($customer);
 
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
@@ -503,7 +507,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     }
                 }
 
-                
+
                 if ($search[0] == 'productfreesearch') {
                     $garr = explode(" ", $search[1]);
                     foreach ($garr as $d) {
@@ -514,7 +518,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 } else {
                     $sqlearch = "Select o.id from SoftoneBundle:ProductSearch o where o.itemCode like '%" . $search[1] . "%' OR o.itemCode1 like '%" . $search[1] . "%' OR o.itemCode2 like '%" . $search[1] . "%'";
                 }
-                
+
 
 
                 //print_r($articleIds);
@@ -537,7 +541,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 //echo  $sql;
                 //$this->q_or[] = $this->prefix . ".id in  (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
 
-                
+
 
                 $this->createWhere();
 
@@ -1166,12 +1170,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     public function getdatatableAction(Request $request) {
         $this
                 ->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
-                ->addField(array("name" => "Ημερομηνία", 'datetime'=>'Y-m-d H:s:i',"index" => 'created'))
+                ->addField(array("name" => "Ημερομηνία", 'datetime' => 'Y-m-d H:s:i', "index" => 'created'))
                 ->addField(array("name" => "Παραστατικό", "index" => 'fincode'))
                 ->addField(array("name" => "Customer Name", "index" => 'customerName'))
                 ->addField(array("name" => "ΑΦΜ", "index" => 'customer:customerAfm'))
                 ->addField(array("name" => "Πωλητής", "index" => 'user:username'))
-                ->addField(array("name" => "Σύνολο", 'function'=>'getTotal'))
+                ->addField(array("name" => "Σύνολο", 'function' => 'getTotal'))
                 ->addField(array("name" => "Παραγγελία", "index" => 'reference', 'method' => 'yesno'))
 
         ;
@@ -1532,8 +1536,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $this->newentity[$this->repository] = $entity;
             $this->initialazeNewEntity($entity);
         }
-
-        $entity->setCustomer($ord["TRDR"]);
+        $customer = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Customer")
+                ->find($ord["TRDR"]);
+        
+        $entity->setCustomer($customer);
         $entity->setReference($ord["ID"]);
         $entity->setFincode($ord["FINCODE"]);
         $entity->setSeries($ord["SERIES"]);
