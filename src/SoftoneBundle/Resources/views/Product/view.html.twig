@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    
-<button class="synchronize btn btn-success btn-raised  ink-reaction save_model_Order">
-    <div class="gui-icon"><i class="md md-save"></i></div>
-    <span style='cursor:pointer' onclick='location.href="/product/product/synchronize"' class="title">Synchronize</span>
-</button>
+<div class="gui-controls" style="text-align: right">
+    <button class="saveorder btn btn-success btn-raised  ink-reaction save_model_Order">
+        <div class="gui-icon"><i class="md md-save"></i></div>
+        <span class="title"><a target='_blank' href='/product/product/synchronize'>Synchronize</a></span>
+    </button>
+</div> 
     
 {{ render(controller('SoftoneBundle:Product:content', { 'ctrl': ctrl,'app':app,'url':url,'content':content }) ) }}
 {% endblock %}
