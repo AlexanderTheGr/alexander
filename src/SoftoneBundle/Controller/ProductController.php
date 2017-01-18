@@ -1111,8 +1111,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     * @Route("/product/product/synchronize")
     */
     public function synchronizeAction($funct = false) {
-        $products = $this->getDoctrine()
-                    ->getRepository('SoftoneBundle:Product')->findBy(array("itemMtrsup"=>1196));
+        $products = $this->getDoctrine()->getRepository('SoftoneBundle:Product')->findBy(array("itemMtrsup"=>1196));
         echo count($products);
         exit;
     }
