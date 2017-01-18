@@ -907,41 +907,6 @@ class Customer extends Entity {
     }
     
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    //private $addresses;
-
-    /**
-     * Add address
-     *
-     * @param \SoftoneBundle\Entity\Customeradress $address
-     *
-     * @return Customer
-     */
-    //public function addAddress(\SoftoneBundle\Entity\Customeradress $address) {
-    //    $this->addresses[] = $address;
-
-    //    return $this;
-    //}
-
-    /**
-     * Remove address
-     *
-     * @param \SoftoneBundle\Entity\Customeradress $address
-     */
-    public function removeAddress(\SoftoneBundle\Entity\Customeradress $address) {
-        $this->addresses->removeElement($address);
-    }
-
-    /**
-     * Get addresses
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getAddresses() {
-        return $this->addresses;
-    }
 
     /**
      * @var \DateTime
