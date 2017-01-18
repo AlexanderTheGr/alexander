@@ -145,6 +145,7 @@ class Main extends Controller {
                         //echo $this->repository;
                         $obj = $em->getRepository($this->repository)->find($result["id"]);
                         foreach ($field_relation as $relation) {
+                            echo $relation;
                             if ($obj)
                                 $obj = $obj->getField($relation);
                         }
