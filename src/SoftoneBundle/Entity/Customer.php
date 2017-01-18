@@ -17,7 +17,7 @@ class Customer extends Entity {
     var $repositories = array();
 
     public function __construct() {
-        $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
+        //$this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
         $this->setRepositories();
     }
 
