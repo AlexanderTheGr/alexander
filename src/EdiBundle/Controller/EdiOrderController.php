@@ -50,6 +50,7 @@ class EdiOrderController extends Main {
         $params['url'] = '/edi/edi/order/getitems/' . $id;
 
         $buttons = array();
+        
 
         $json = json_encode(array());
         $EdiOrder = $this->getDoctrine()
