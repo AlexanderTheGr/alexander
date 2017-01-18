@@ -346,6 +346,8 @@ class EdiController extends Main {
                 
                 $attributes['wholesaleprice'] = $attributes['pricew'];
                 $attributes['retailprice'] = $attributes['pricer'];
+                $attributes['partno'] = $this->clearstring($attributes['partno']);
+                
                 
                 unset($attributes['similardlnr']);
                 unset($attributes['similarartnr']);
