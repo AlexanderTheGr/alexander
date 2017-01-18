@@ -437,7 +437,7 @@ class EdiController extends Main {
                 } else {
                     $sql = "update partsbox_db.edi_item set "
                             . "partno='" . $this->clearstring($attributes["factorypartno"]) . "', "
-                            . "wholesaleprice='" . $this->$attributes["wholeprice"] . "', "
+                            . "wholesaleprice='" . $attributes["wholeprice"] . "', "
                             . "retailprice='" . $attributes["retailprice"] . "' where id = '" . $ediedi_id . "'";
                     $em->getConnection()->exec($sql);
                     //echo $sql . "<BR>";
