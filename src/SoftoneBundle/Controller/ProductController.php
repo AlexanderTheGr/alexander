@@ -1107,7 +1107,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         exit;
     }
     
-    
     /**
     * @Route("/product/product/synchronize")
     */
