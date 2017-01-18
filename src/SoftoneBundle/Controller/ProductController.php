@@ -1120,9 +1120,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->findOneById(4);
         foreach ($products as $product) {
 
-            
-
-
             $ediediitem = $this->getDoctrine()
                     ->getRepository('EdiBundle:EdiItem')
                     ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), "Edi" => $ediedi));
