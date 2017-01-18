@@ -1113,7 +1113,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     public function synchronizeAction($funct = false) {
         $products = $this->getDoctrine()->getRepository('SoftoneBundle:Product')->findBy(array("itemMtrsup" => 1206));
         echo count($products);
-        exit;
+        //exit;
         $em = $this->getDoctrine()->getManager();
         $ediedi = $this->getDoctrine()
                 ->getRepository('EdiBundle:Edi')
@@ -1124,7 +1124,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     ->getRepository('EdiBundle:EdiItem')
                     ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), "Edi" => $ediedi));
             if ($ediediitem) {
-                //echo $ediediitem->getWholesaleprice() . " " . $product->getItemPricew() . "<BR>";
+                echo $ediediitem->getWholesaleprice() . " " . $product->getItemPricew() . "<BR>";
             } else
                 echo "<span style='color:red'>".$product->getItemCode().";".$product->getSupplierId()->getTitle().";" . $product->getItemCode2() . "</span><BR>";
         }
