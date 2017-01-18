@@ -314,6 +314,15 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //$product = $this->newentity[$this->repository];
         $product->updatetecdoc(true);
         $product->toSoftone();
+        if ($product->getSisxetisi() != '') {
+            $sproducts = $this->getDoctrine()
+                    ->getRepository($this->repository)
+                    ->findBy(array("sisxetisi"=>$product->getSisxetisi()));
+            foreach($sproducts as $sproduct) {
+                $sproduct->toSoftone();
+            }
+        }
+        
         //print_r($this->error);
         //echo $product->id;
         if (count($this->error[$this->repository])) {
