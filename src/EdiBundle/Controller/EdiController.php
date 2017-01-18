@@ -422,7 +422,7 @@ class EdiController extends Main {
                             . "edi='" . $entity["id"] . "', "
                             . "itemcode='" . $attributes["partno"] . "', "
                             . "brand='" . $attributes["supplierdescr"] . "', "
-                            . "partno='" . $attributes["factorypartno"] . "', "
+                            . "partno='" . $this->clearstring($attributes["factorypartno"]) . "', "
                             . "description='" . $attributes["description"] . "', "
                             . "dlnr='" . $attributes["tecdocsupplierno"] . "', "
                             . "artnr='" . $attributes["tecdocpartno"] . "', "
