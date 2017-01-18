@@ -905,11 +905,12 @@ class Customer extends Entity {
     public function getRoute() {
         return $this->route;
     }
+    
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $addresses;
+    //private $addresses;
 
     /**
      * Add address
@@ -918,11 +919,11 @@ class Customer extends Entity {
      *
      * @return Customer
      */
-    public function addAddress(\SoftoneBundle\Entity\Customeradress $address) {
-        $this->addresses[] = $address;
+    //public function addAddress(\SoftoneBundle\Entity\Customeradress $address) {
+    //    $this->addresses[] = $address;
 
-        return $this;
-    }
+    //    return $this;
+    //}
 
     /**
      * Remove address
