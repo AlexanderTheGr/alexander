@@ -1120,21 +1120,16 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->findOneById(4);
         foreach ($products as $product) {
 
+            
 
-            $sql = "Select partno, wholesaleprice from partsbox_db.edi_item where replace(replace(replace(replace(`partno`, '/', ''), '.', ''), '-', ''), ' ', '') LIKE '" . $this->clearstring($product->getItemCode2()) . "'";
-            $result = $em->getConnection()->fetchAll($sql);
-            print_r($result);
-            /*
 
-              $ediediitem = $this->getDoctrine()
-              ->getRepository('EdiBundle:EdiItem')
-              ->findOneBy(array("partno" => $product->getItemCode2(), "Edi" => $ediedi));
-              if ($ediediitem)
-              echo $ediediitem->getWholesaleprice() . " " . $product->getItemPricew() . "<BR>";
-              else
-              echo "<span style='color:red'>".$product->getItemCode2()."</span><BR>";
-             * 
-             */
+            $ediediitem = $this->getDoctrine()
+                    ->getRepository('EdiBundle:EdiItem')
+                    ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), "Edi" => $ediedi));
+            if ($ediediitem)
+                echo $ediediitem->getWholesaleprice() . " " . $product->getItemPricew() . "<BR>";
+            else
+                echo "<span style='color:red'>" . $product->getItemCode2() . "</span><BR>";
         }
         exit;
     }
