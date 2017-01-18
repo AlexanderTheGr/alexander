@@ -395,6 +395,7 @@ class EdiController extends Main {
                 foreach ($data as $key => $val) {
                     $attributes[$attrs[$key]] = trim(addslashes($val));
                 }
+                print_r($attributes);
                 $attributes["wholeprice"] = str_replace(",", ".", $attributes["wholeprice"]);
                 $attributes["retailprice"] = str_replace(",", ".", $attributes["retailprice"]);
                 $attributes["gross_weight_gr"] = str_replace(",", ".", $attributes["gross_weight_gr"]);
