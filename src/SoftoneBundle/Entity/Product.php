@@ -2083,7 +2083,7 @@ class Product extends Entity {
         $objectArr2["MTRMANFCTR"] = $this->itemMtrmanfctr > 0 ? $this->itemMtrmanfctr : $this->getSupplierId()->getId();
         $objectArr[0] = $objectArr2;
         $dataOut[$object] = (array) $objectArr;
-        //@$dataOut["ITEEXTRA"][0] = array("NUM02" => $this->item_mtrl_iteextra_num02);
+        @$dataOut["ITEEXTRA"][0] = array("VARCHAR02" => $this->sisxetisi);
         //print_r(@$dataOut);
         $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
         print_r($out);
