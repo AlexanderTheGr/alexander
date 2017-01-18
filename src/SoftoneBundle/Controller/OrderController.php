@@ -1169,6 +1169,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->addField(array("name" => "Ημερομηνία", 'datetime'=>'Y-m-d H:s:i',"index" => 'created'))
                 ->addField(array("name" => "Παραστατικό", "index" => 'fincode'))
                 ->addField(array("name" => "Customer Name", "index" => 'customerName'))
+                ->addField(array("name" => "ΑΦΜ", "index" => 'customer:customerAfm'))
                 ->addField(array("name" => "Πωλητής", "index" => 'user:email'))
                 ->addField(array("name" => "Δρομολόγιο", "index" => 'route:route'))
                 ->addField(array("name" => "Παραγγελία", "index" => 'reference', 'method' => 'yesno'))
