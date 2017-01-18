@@ -343,9 +343,15 @@ class EdiController extends Main {
                 if ($attributes['artnr'] == '')
                     $attributes['dlnr'] = $attributes['similarartnr'];
 
+                
+                $attributes['wholesaleprice'] = $attributes['pricew'];
+                $attributes['retailprice'] = $attributes['pricer'];
+                
                 unset($attributes['similardlnr']);
                 unset($attributes['similarartnr']);
-
+                unset($attributes['pricer']);
+                unset($attributes['pricew']);
+                
                 if (@!$ediedis[$entity["id"]]) {
                     $ediedi = $this->getDoctrine()
                             ->getRepository('EdiBundle:Edi')
