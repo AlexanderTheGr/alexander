@@ -86,12 +86,7 @@ class Order extends Entity {
      */
     protected $route;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="customer", type="integer", nullable=false)
-     */
-    protected $customer;
+
 
     /**
      * @var string
@@ -279,27 +274,7 @@ class Order extends Entity {
         return $this->store;
     }
 
-    /**
-     * Set customer
-     *
-     * @param integer $customer
-     *
-     * @return Order
-     */
-    public function setCustomer($customer) {
-        $this->customer = $customer;
 
-        return $this;
-    }
-
-    /**
-     * Get customer
-     *
-     * @return integer
-     */
-    public function getCustomer() {
-        return $this->customer;
-    }
 
     /**
      * Set customerName
@@ -866,5 +841,34 @@ class Order extends Entity {
     public function getVat()
     {
         return $this->vat;
+    }
+    /**
+     * @var \SoftoneBundle\Entity\Customer
+     */
+    private $customer;
+
+
+    /**
+     * Set customer
+     *
+     * @param \SoftoneBundle\Entity\Customer $customer
+     *
+     * @return Order
+     */
+    public function setCustomer(\SoftoneBundle\Entity\Customer $customer = null)
+    {
+        $this->customer = $customer;
+
+        return $this;
+    }
+
+    /**
+     * Get customer
+     *
+     * @return \SoftoneBundle\Entity\Customer
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
     }
 }
