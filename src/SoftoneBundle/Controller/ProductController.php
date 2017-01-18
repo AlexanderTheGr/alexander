@@ -1117,7 +1117,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $em = $this->getDoctrine()->getManager();
         $ediedi = $this->getDoctrine()
                 ->getRepository('EdiBundle:Edi')
-                ->findOneById(4);
+                ->findOneById(2);
         foreach ($products as $product) {
 
             $ediediitem = $this->getDoctrine()
