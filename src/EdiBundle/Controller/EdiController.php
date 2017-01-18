@@ -291,7 +291,7 @@ class EdiController extends Main {
         $i = 0;
         foreach ($collection as $entity) {
             //if ($i++ <= 1) continue;
-            if ($entity["id"] == 4) {
+            if ($entity["id"] == 2) {
                 $func = $entity["func"];
                 $this->$func($entity);
             }
@@ -371,13 +371,18 @@ class EdiController extends Main {
                 if (@$ediedi_id == 0) {
                     $sql = "replace partsbox_db.edi_item set id = '" . $ediedi_id . "', edi='" . $entity["id"] . "', " . implode(",", $q);
                     echo $sql . "<BR>";
-                    $em->getConnection()->exec($sql);
+                    //$em->getConnection()->exec($sql);
+                    /*
                     $ediediitem = $this->getDoctrine()
                             ->getRepository('EdiBundle:EdiItem')
                             ->findOneBy(array("itemCode" => $attributes["itemcode"], "Edi" => $ediedi));
+                    */
                     //$ediediitem->tecdoc = $tecdoc;
                     //$ediediitem->updatetecdoc();
                     //if ($i++ > 60) return;
+                } else {
+                    $sql = "update partsbox_db.edi_item set " . implode(",", $q) ." where id = '" . $ediedi_id . "'";
+                    echo $sql . "<BR>";
                 }
             }
         }
