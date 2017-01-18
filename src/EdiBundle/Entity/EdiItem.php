@@ -1078,4 +1078,33 @@ class EdiItem extends Entity {
         $markupedPrice = $this->retailprice * (1 + $markup/100 );
         return $price > 0 ? $price : $markupedPrice;
     }    
+    /**
+     * @var string
+     */
+    private $wholesaleprice;
+
+
+    /**
+     * Set wholesaleprice
+     *
+     * @param string $wholesaleprice
+     *
+     * @return EdiItem
+     */
+    public function setWholesaleprice($wholesaleprice)
+    {
+        $this->wholesaleprice = $wholesaleprice;
+
+        return $this;
+    }
+
+    /**
+     * Get wholesaleprice
+     *
+     * @return string
+     */
+    public function getWholesaleprice()
+    {
+        return $this->wholesaleprice;
+    }
 }
