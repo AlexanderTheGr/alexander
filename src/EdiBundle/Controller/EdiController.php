@@ -435,7 +435,7 @@ class EdiController extends Main {
                             ->findOneBy(array("itemCode" => $attributes["partno"], "Edi" => $ediedi));
                     @$ediedi_id = (int) $ediediitem->id;
                 } else {
-                    $sql = "update partsbox_db.edi_item set"
+                    $sql = "update partsbox_db.edi_item set "
                             . "wholesaleprice='" . $attributes["wholesaleprice"] . "', "
                             . "retailprice='" . $attributes["retailprice"] . "' where id = '" . $ediedi_id . "'";
                     $em->getConnection()->exec($sql);
