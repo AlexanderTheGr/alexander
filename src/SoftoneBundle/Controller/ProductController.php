@@ -1114,27 +1114,27 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $products = $this->getDoctrine()->getRepository('SoftoneBundle:Product')->findBy(array("itemMtrsup" => 1196));
         //echo count($products);
         //exit;
+        $em = $this->getDoctrine()->getManager();
         $ediedi = $this->getDoctrine()
                 ->getRepository('EdiBundle:Edi')
                 ->findOneById(4);
         foreach ($products as $product) {
-            
-            
-            $sql = "Select * from partsbox_db.edi_item where replace(replace(replace(replace(`partno`, '/', ''), '.', ''), '-', ''), ' ', '') LIKE '".$this->clearstring($product->getItemCode2())."'";
+
+
+            $sql = "Select * from partsbox_db.edi_item where replace(replace(replace(replace(`partno`, '/', ''), '.', ''), '-', ''), ' ', '') LIKE '" . $this->clearstring($product->getItemCode2()) . "'";
             $result = $em->getConnection()->exec($sql);
             print_r($result);
             /*
-            
-            $ediediitem = $this->getDoctrine()
-                    ->getRepository('EdiBundle:EdiItem')
-                    ->findOneBy(array("partno" => $product->getItemCode2(), "Edi" => $ediedi));
-            if ($ediediitem)
-                echo $ediediitem->getWholesaleprice() . " " . $product->getItemPricew() . "<BR>";
-            else 
-                echo "<span style='color:red'>".$product->getItemCode2()."</span><BR>";
+
+              $ediediitem = $this->getDoctrine()
+              ->getRepository('EdiBundle:EdiItem')
+              ->findOneBy(array("partno" => $product->getItemCode2(), "Edi" => $ediedi));
+              if ($ediediitem)
+              echo $ediediitem->getWholesaleprice() . " " . $product->getItemPricew() . "<BR>";
+              else
+              echo "<span style='color:red'>".$product->getItemCode2()."</span><BR>";
              * 
              */
-            
         }
         exit;
     }
