@@ -1121,8 +1121,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                             ->getRepository('EdiBundle:EdiItem')
                             ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), "Edi" => $ediedi));
                     if ($ediediitem) {
-                        if ($ediediitem->getEdiMarkupPrice("itemPricew") != $product->getItemPricew()) {
+                        $itemPricew = $ediediitem->getEdiMarkupPrice("itemPricew");
+                        if ($itemPricew  != $product->getItemPricew()) {
                             echo $ediedi->getName()." -- ".$product->getItemCode()." -- ".$product->getSupplierId()->getTitle()." -- " . $product->getItemCode2() . " ".$ediediitem->getWholesaleprice() . " -- ".$ediediitem->getEdiMarkupPrice("itemPricew")." -- " . $product->getItemPricew() . "<BR>";
+                            if ($i++ > 5) exit;
+                            $product->getItemPricew( $itemPricew );
+                            $this->flushpersist($product);
+                            $product->toSoftone();
                         } else {
                             //echo "<span style='color:red'>".$product->getItemCode()." -- ".$product->getSupplierId()->getTitle()." -- " . $product->getItemCode2() . " ".$ediediitem->getWholesaleprice() . " -- ".$ediediitem->getEdiMarkupPrice("itemPricew")." -- " . $product->getItemPricew() . "</span><BR>";
                         }
@@ -1130,6 +1135,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         //echo "<span style='color:red'>".$product->getItemCode().";".$product->getSupplierId()->getTitle().";" . $product->getItemCode2() . "</span><BR>";
                     }
                 }
+                
             }
         }
         
