@@ -1179,7 +1179,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->addField(array("name" => "Παραγγελία", "index" => 'reference', 'method' => 'yesno'))
 
         ;
-        $this->q_and[] = $this->prefix . ".id not in (SELECT s_order FROM softone_orderitem)";
+        $this->q_and[] = $this->prefix . ".id not in (id NOT(SELECT k.order FROM SoftoneBundle:Orderitem k))";
 
         $json = $this->datatable();
 
