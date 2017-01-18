@@ -1111,22 +1111,24 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/product/product/synchronize")
      */
     public function synchronizeAction($funct = false) {
-        $products = $this->getDoctrine()->getRepository('SoftoneBundle:Product')->findBy(array("itemMtrsup" => 1206));
-        echo count($products);
+        $products = $this->getDoctrine()->getRepository('SoftoneBundle:Product')->findBy(array("itemMtrsup" => 1196));
+        //echo count($products);
         //exit;
         $em = $this->getDoctrine()->getManager();
         $ediedi = $this->getDoctrine()
                 ->getRepository('EdiBundle:Edi')
-                ->findOneById(2);
+                ->findOneById(4);
         foreach ($products as $product) {
 
             $ediediitem = $this->getDoctrine()
                     ->getRepository('EdiBundle:EdiItem')
                     ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), "Edi" => $ediedi));
             if ($ediediitem) {
-                //echo $ediediitem->getWholesaleprice() . " " . $product->getItemPricew() . "<BR>";
-            } else
-                echo "<span style='color:red'>".$product->getItemCode().";".$product->getSupplierId()->getTitle().";" . $product->getItemCode2() . "</span><BR>";
+                echo $product->getItemCode()." -- ".$product->getSupplierId()->getTitle()." -- " . $product->getItemCode2() . " ".$ediediitem->getWholesaleprice() . " -- ".$ediediitem->getEdiMarkupPrice("itemPricew")." -- " . $product->getItemPricew() . "<BR>";
+            } else {
+                //echo "<span style='color:red'>".$product->getItemCode().";".$product->getSupplierId()->getTitle().";" . $product->getItemCode2() . "</span><BR>";
+            }
+            
         }
         exit;
     }
