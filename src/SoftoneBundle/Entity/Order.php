@@ -12,12 +12,8 @@ use AppBundle\Entity\Entity;
  * @ORM\Entity
  */
 class Order extends Entity {
-    
 
     private $repository = 'SoftoneBundle:Order';
-
-    
-    
     private $types = array();
     var $repositories = array();
     var $uniques = array();
@@ -42,11 +38,13 @@ class Order extends Entity {
     public function getRepository() {
         return $this->repository;
     }
+
     public function getRepositories($repo) {
         $this->repositories['route'] = 'SoftoneBundle:Route';
         $this->repositories['customer'] = 'SoftoneBundle:Customer';
-        return  $this->repositories[$repo];
+        return $this->repositories[$repo];
     }
+
     public function gettype($field) {
         $this->types['route'] = 'object';
         if (@$this->types[$field] != '') {
@@ -56,7 +54,7 @@ class Order extends Entity {
             return gettype($this->$field);
         }
         return 'string';
-    }    
+    }
 
     /**
      * @var integer
@@ -85,8 +83,6 @@ class Order extends Entity {
      * @ORM\Column(name="route", type="integer", nullable=false)
      */
     protected $route;
-
-
 
     /**
      * @var string
@@ -273,8 +269,6 @@ class Order extends Entity {
     public function getStore() {
         return $this->store;
     }
-
-
 
     /**
      * Set customerName
@@ -779,7 +773,6 @@ class Order extends Entity {
      */
     private $items;
 
-
     /**
      * Add item
      *
@@ -787,8 +780,7 @@ class Order extends Entity {
      *
      * @return Order
      */
-    public function addItem(\SoftoneBundle\Entity\Orderitem $item)
-    {
+    public function addItem(\SoftoneBundle\Entity\Orderitem $item) {
         $this->items[] = $item;
 
         return $this;
@@ -799,8 +791,7 @@ class Order extends Entity {
      *
      * @param \SoftoneBundle\Entity\Orderitem $item
      */
-    public function removeItem(\SoftoneBundle\Entity\Orderitem $item)
-    {
+    public function removeItem(\SoftoneBundle\Entity\Orderitem $item) {
         $this->items->removeElement($item);
     }
 
@@ -809,15 +800,14 @@ class Order extends Entity {
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getItems()
-    {
+    public function getItems() {
         return $this->items;
     }
+
     /**
      * @var \SoftoneBundle\Entity\Vat
      */
     private $vat;
-
 
     /**
      * Set vat
@@ -826,8 +816,7 @@ class Order extends Entity {
      *
      * @return Order
      */
-    public function setVat(\SoftoneBundle\Entity\Vat $vat = null)
-    {
+    public function setVat(\SoftoneBundle\Entity\Vat $vat = null) {
         $this->vat = $vat;
 
         return $this;
@@ -838,15 +827,14 @@ class Order extends Entity {
      *
      * @return \SoftoneBundle\Entity\Vat
      */
-    public function getVat()
-    {
+    public function getVat() {
         return $this->vat;
     }
+
     /**
      * @var \SoftoneBundle\Entity\Customer
      */
     private $customer;
-
 
     /**
      * Set customer
@@ -855,8 +843,7 @@ class Order extends Entity {
      *
      * @return Order
      */
-    public function setCustomer(\SoftoneBundle\Entity\Customer $customer = null)
-    {
+    public function setCustomer(\SoftoneBundle\Entity\Customer $customer = null) {
         $this->customer = $customer;
 
         return $this;
@@ -867,8 +854,12 @@ class Order extends Entity {
      *
      * @return \SoftoneBundle\Entity\Customer
      */
-    public function getCustomer()
-    {
+    public function getCustomer() {
         return $this->customer;
+    }
+
+    
+    function getTotal() {
+        return 0;
     }
 }
