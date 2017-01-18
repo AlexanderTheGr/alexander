@@ -130,7 +130,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $customer = $this->getDoctrine()
                     ->getRepository("SoftoneBundle:Customer")
                     ->find(3);
-            $entity->setCustomer(3);
+            $entity->setCustomer($customer);
             $vat = $this->getDoctrine()
                     ->getRepository("SoftoneBundle:Vat")
                     ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
