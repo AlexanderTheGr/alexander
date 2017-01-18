@@ -40,7 +40,7 @@ class EdiController extends Main {
      * @Route("/edi/edi/view/{id}")
      */
     public function viewAction($id) {
-        
+
         $buttons = array();
         $content = $this->gettabs($id);
         $content = $this->content();
@@ -50,7 +50,7 @@ class EdiController extends Main {
         if ($id == 0 AND @ $entity->id == 0) {
             $entity = new Customergroup;
         }
-        
+
         $suppliers = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")->findAll();
         $supplierArr = array();
         foreach ($suppliers as $supplier) {
@@ -78,17 +78,17 @@ class EdiController extends Main {
         $rules = array();
         foreach ($edirules as $edirule) {
             //if ($edirule->getEdi()->getId() == $id) {
-                $rules[$edirule->getId()]["rule"] = $edirule->getRule();
-                $rules[$edirule->getId()]["val"] = $edirule->getVal();
-                $rules[$edirule->getId()]["sortorder"] = $edirule->getSortorder();
-                $rules[$edirule->getId()]["title"] = $edirule->getTitle();
-                $rules[$edirule->getId()]["price"] = $edirule->getPrice();
-                $rules[$edirule->getId()]["price_field"] = $edirule->getPriceField();
+            $rules[$edirule->getId()]["rule"] = $edirule->getRule();
+            $rules[$edirule->getId()]["val"] = $edirule->getVal();
+            $rules[$edirule->getId()]["sortorder"] = $edirule->getSortorder();
+            $rules[$edirule->getId()]["title"] = $edirule->getTitle();
+            $rules[$edirule->getId()]["price"] = $edirule->getPrice();
+            $rules[$edirule->getId()]["price_field"] = $edirule->getPriceField();
             //}
         }
-        
+
         return $this->render('EdiBundle:Edi:view.html.twig', array(
-                    'pagename' => "Edi: ".$entity->getName(),
+                    'pagename' => "Edi: " . $entity->getName(),
                     'url' => '/edi/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
@@ -120,13 +120,13 @@ class EdiController extends Main {
         $buttons = array();
         $buttons[] = array("label" => 'Get PartMaster', 'position' => 'right', 'class' => 'btn-success');
         $suppliers = $this->getDoctrine()
-                    ->getRepository('SoftoneBundle:Supplier')->findAll();
+                        ->getRepository('SoftoneBundle:Supplier')->findAll();
         $itemMtrsup = array();
-        foreach($suppliers as $supplier) {
-            $itemMtrsup[] = array("value"=>(string)$supplier->getReference(),"name"=>$supplier->getSupplierName());// $supplier->getSupplierName();
+        foreach ($suppliers as $supplier) {
+            $itemMtrsup[] = array("value" => (string) $supplier->getReference(), "name" => $supplier->getSupplierName()); // $supplier->getSupplierName();
         }
-        
-        
+
+
         $fields["name"] = array("label" => "Name");
         $fields["token"] = array("label" => "Token");
         $fields["func"] = array("label" => "Func");
@@ -166,14 +166,13 @@ class EdiController extends Main {
         if ($id > 0 AND count($entity) > 0) {
             $tabs[] = array("title" => "Rules", "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
         }
-        foreach ((array)$tabs as $tab) {
+        foreach ((array) $tabs as $tab) {
             $this->addTab($tab);
         }
 
         $json = $this->tabs();
-         
     }
-   
+
     /**
      * @Route("/edi/edi/getrules/{id}")
      */
@@ -202,10 +201,8 @@ class EdiController extends Main {
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
-    }    
+    }
 
-    
-    
     /**
      * @Route("/edi/edi/saverule")
      */
@@ -238,15 +235,15 @@ class EdiController extends Main {
         $this->flushpersist($edirule);
 
         /*
-        $grouprules = $this->getDoctrine()->getRepository('SoftoneBundle:Customergrouprule')->findBy(array("group"=>$edi));
-        $i=0;
-        foreach ((array)$grouprules as $grouprule) {
-            echo $i++;
-            $grouprule->setSortorder($i++);
-            $this->flushpersist($grouprule);       
-        }
+          $grouprules = $this->getDoctrine()->getRepository('SoftoneBundle:Customergrouprule')->findBy(array("group"=>$edi));
+          $i=0;
+          foreach ((array)$grouprules as $grouprule) {
+          echo $i++;
+          $grouprule->setSortorder($i++);
+          $this->flushpersist($grouprule);
+          }
          * 
-         */       
+         */
 
         $json = json_encode(array("id" => $edirule->getId()));
         return new Response(
@@ -265,9 +262,8 @@ class EdiController extends Main {
         //$edirule->delete();
         $this->flushremove($edirule);
         exit;
-    }    
-    
-    
+    }
+
     /**
      * @Route("/edi/save")
      */
@@ -290,7 +286,7 @@ class EdiController extends Main {
      * @Route("/edi/edi/getPartMaster")
      */
     public function getPartMasterAction() {
-        $this->createSelect(array($this->prefix . ".id",$this->prefix . ".token", $this->prefix . ".func", $this->prefix . ".id"));
+        $this->createSelect(array($this->prefix . ".id", $this->prefix . ".token", $this->prefix . ".func", $this->prefix . ".id"));
         $collection = $this->collection($this->repository);
         $i = 0;
         foreach ($collection as $entity) {
@@ -308,7 +304,7 @@ class EdiController extends Main {
         //return;
         $apiToken = $entity["token"];
         echo $apiToken . "<BR>";
-        echo $this->getEdiPartMasterFile($entity["token"])."<BR>";
+        echo $this->getEdiPartMasterFile($entity["token"]) . "<BR>";
         //return;
         $tecdoc = new Tecdoc();
         $file = "/home2/partsbox/" . $apiToken . '.csv';
@@ -322,7 +318,7 @@ class EdiController extends Main {
         if ((($handle = fopen($file, "r")) !== FALSE)) {
             $data = fgetcsv($handle, 100000, "\t");
             //print_r($data);
-            
+
             foreach ($data as $key => $attr) {
                 //similardlnr, similarartnr
                 //if ($key == 'similardlnr' OR $key = 'similarartnr' ) continue;
@@ -330,24 +326,26 @@ class EdiController extends Main {
             }
             print_r($attrs);
             $i = 0;
-            while ($data = fgetcsv($handle, 1000, "\t","|")) {
+            while ($data = fgetcsv($handle, 1000, "\t", "|")) {
                 //if ($i++ == 0) continue;
 
                 foreach ($data as $key => $val) {
                     //if ($attrs[$key])
-                        $attributes[$attrs[$key]] = trim(addslashes($val));
+                    $attributes[$attrs[$key]] = trim(addslashes($val));
                 }
 
-                echo ($i++)."<BR>";
+                echo ($i++) . "<BR>";
                 //if ($i < 271341) continue;
                 //if ($key == 'similardlnr' OR $key = 'similarartnr' ) continue;
-                  
-                if ((int)$attributes['dlnr'] == 0) $attributes['dlnr'] = $attributes['similardlnr'];
-                if ($attributes['artnr'] == '') $attributes['dlnr'] = $attributes['similarartnr'];
-                    
+
+                if ((int) $attributes['dlnr'] == 0)
+                    $attributes['dlnr'] = $attributes['similardlnr'];
+                if ($attributes['artnr'] == '')
+                    $attributes['dlnr'] = $attributes['similarartnr'];
+
                 unset($attributes['similardlnr']);
                 unset($attributes['similarartnr']);
-                
+
                 if (@!$ediedis[$entity["id"]]) {
                     $ediedi = $this->getDoctrine()
                             ->getRepository('EdiBundle:Edi')
@@ -375,8 +373,6 @@ class EdiController extends Main {
                     //$ediediitem->updatetecdoc();
                     //if ($i++ > 60) return;
                 }
-
-                
             }
         }
     }
@@ -430,6 +426,7 @@ class EdiController extends Main {
                             . "description='" . $attributes["description"] . "', "
                             . "dlnr='" . $attributes["tecdocsupplierno"] . "', "
                             . "artnr='" . $attributes["tecdocpartno"] . "', "
+                            . "wholesaleprice='" . $attributes["wholesaleprice"] . "', "
                             . "retailprice='" . $attributes["retailprice"] . "'";
                     $em->getConnection()->exec($sql);
                     echo $sql . "<BR>";
@@ -437,6 +434,12 @@ class EdiController extends Main {
                             ->getRepository('EdiBundle:EdiItem')
                             ->findOneBy(array("itemCode" => $attributes["partno"], "Edi" => $ediedi));
                     @$ediedi_id = (int) $ediediitem->id;
+                } else {
+                    $sql = "update partsbox_db.edi_item set"
+                            . "wholesaleprice='" . $attributes["wholesaleprice"] . "', "
+                            . "retailprice='" . $attributes["retailprice"] . "' where id = '" . $ediedi_id . "'";
+                    $em->getConnection()->exec($sql);
+                    echo $sql . "<BR>";                    
                 }
                 //$ediediitem->updatetecdoc();
 
@@ -453,13 +456,11 @@ class EdiController extends Main {
                 $sql = "replace partsbox_db.eltrekaedi set id = '" . $eltrekaedi_id . "', ediitem = '" . $ediedi_id . "', " . implode(",", $q);
                 $em->getConnection()->exec($sql);
                 //}
-                if ($i++ > 30) return;
+                if ($i++ > 30)
+                    return;
             }
         }
     }
-
-
-    
 
     /**
      * @Route("/edi/edi/getdatatable")
