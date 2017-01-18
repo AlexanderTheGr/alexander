@@ -24,6 +24,7 @@ class Order extends Entity {
 
     public function __construct() {
         $this->repositories['route'] = 'SoftoneBundle:Route';
+        $this->repositories['customer'] = 'SoftoneBundle:Customer';
         $this->types['route'] = 'object';
         $this->route = new \SoftoneBundle\Entity\Route;
         $this->items = new \Doctrine\Common\Collections\ArrayCollection();
@@ -43,6 +44,7 @@ class Order extends Entity {
     }
     public function getRepositories($repo) {
         $this->repositories['route'] = 'SoftoneBundle:Route';
+        $this->repositories['customer'] = 'SoftoneBundle:Customer';
         return  $this->repositories[$repo];
     }
     public function gettype($field) {
