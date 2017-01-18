@@ -137,15 +137,11 @@ class Main extends Controller {
             foreach ($data["fields"] as $field) {
                 if (@$field["index"]) {
                     $field_relation = explode(":", $field["index"]);
-
                     //if (@$field["method"]) {
                     //$entity->getField($field)->format('Y-m-d');
-
                     if (count($field_relation) > 1) {
-                        echo $this->repository.",";
                         $obj = $em->getRepository($this->repository)->find($result["id"]);
                         foreach ($field_relation as $relation) {
-                            echo $relation.",";
                             if ($obj)
                                 $obj = $obj->getField($relation);
                         }
