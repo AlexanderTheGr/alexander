@@ -17,7 +17,6 @@ class Customer extends Entity {
     var $repositories = array();
 
     public function __construct() {
-        //$this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
         $this->setRepositories();
     }
 
@@ -1085,4 +1084,43 @@ class Customer extends Entity {
         return $this->customergroup;
     }
     
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $addresses;
+
+
+    /**
+     * Add address
+     *
+     * @param \SoftoneBundle\Entity\Customeraddress $address
+     *
+     * @return Customer
+     */
+    public function addAddress(\SoftoneBundle\Entity\Customeraddress $address)
+    {
+        $this->addresses[] = $address;
+
+        return $this;
+    }
+
+    /**
+     * Remove address
+     *
+     * @param \SoftoneBundle\Entity\Customeraddress $address
+     */
+    public function removeAddress(\SoftoneBundle\Entity\Customeraddress $address)
+    {
+        $this->addresses->removeElement($address);
+    }
+
+    /**
+     * Get addresses
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAddresses()
+    {
+        return $this->addresses;
+    }
 }
