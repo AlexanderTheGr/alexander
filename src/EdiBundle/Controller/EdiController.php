@@ -295,7 +295,7 @@ class EdiController extends Main {
         $i = 0;
         foreach ($collection as $entity) {
             //if ($i++ <= 1) continue;
-            if ($entity["id"] == 2) {
+            if ($entity["id"] == 4) {
                 $func = $entity["func"];
                 $this->$func($entity);
             }
@@ -382,7 +382,7 @@ class EdiController extends Main {
     }
 
     public function getEltrekaPartMaster($entity) {
-        return;
+        //return;
         set_time_limit(100000);
         $eltrekaedi = new Eltrekaedi();
         $file = $eltrekaedi->getPartMasterFile();
@@ -453,7 +453,7 @@ class EdiController extends Main {
                 $sql = "replace partsbox_db.eltrekaedi set id = '" . $eltrekaedi_id . "', ediitem = '" . $ediedi_id . "', " . implode(",", $q);
                 $em->getConnection()->exec($sql);
                 //}
-                //if ($i++ > 30) return;
+                if ($i++ > 30) return;
             }
         }
     }
