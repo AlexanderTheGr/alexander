@@ -147,7 +147,7 @@ class EdiItemController extends Main {
                 ->addField(array("name" => "Brand", "index" => 'brand', 'search' => 'text'))
                 ->addField(array("name" => "Part No", "index" => 'partno', 'search' => 'text'))
                 ->addField(array("name" => "Description", "index" => 'description', 'search' => 'text'))
-                ->addField(array("name" => "Price", "index" => 'retailprice', 'search' => 'text'))
+                ->addField(array("name" => "Price", "index" => 'wholesaleprice', 'search' => 'text'))
 
         ;
         $json = $this->datatable('setEdiQtyAvailability');
@@ -245,7 +245,7 @@ class EdiItemController extends Main {
                 ->addField(array("name" => "Part No", "index" => 'partno', 'search' => 'text'))
                 ->addField(array("name" => "Description", "index" => 'description', 'search' => 'text'))
                 //->addField(array("name" => "Tecdoc Name", "index" => 'tecdocArticleName', 'search' => 'text'))
-                ->addField(array("name" => "Price", "index" => 'retailprice', 'search' => 'text'))
+                ->addField(array("name" => "Price", "index" => 'wholesaleprice', 'search' => 'text'))
                 ->addField(array("name" => "ID", "function" => 'getQty1', "active" => "active"))
                 ->addField(array("name" => "ID", "function" => 'getQty2', "active" => "active"))
 
