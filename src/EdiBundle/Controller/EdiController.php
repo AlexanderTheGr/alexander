@@ -391,7 +391,7 @@ class EdiController extends Main {
             }
             $i = 0;
             while ($data = fgetcsv($handle, 100000, "\t")) {
-                if ($i++ < 120000) continue;
+                //if ($i++ < 120000) continue;
                 foreach ($data as $key => $val) {
                     $attributes[$attrs[$key]] = trim(addslashes($val));
                 }
@@ -436,7 +436,8 @@ class EdiController extends Main {
                     @$ediedi_id = (int) $ediediitem->id;
                 } else {
                     $sql = "update partsbox_db.edi_item set "
-                            . "wholesaleprice='" . $attributes["wholeprice"] . "', "
+                            . "partno='" . $this->clearstring($attributes["factorypartno"]) . "', "
+                            . "wholesaleprice='" . $this->$attributes["wholeprice"] . "', "
                             . "retailprice='" . $attributes["retailprice"] . "' where id = '" . $ediedi_id . "'";
                     $em->getConnection()->exec($sql);
                     //echo $sql . "<BR>";
@@ -462,7 +463,14 @@ class EdiController extends Main {
             }
         }
     }
-
+    function clearstring($search) {
+        $search = str_replace(" ", "", trim($search));
+        $search = str_replace(".", "", $search);
+        $search = str_replace("-", "", $search);
+        $search = str_replace("/", "", $search);
+        $search = strtoupper($search);
+        return $search;
+    }
     private function fixsuppliers() {
         $em = $this->getDoctrine()->getManager();
 
