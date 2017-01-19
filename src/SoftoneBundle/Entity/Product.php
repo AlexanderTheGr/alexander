@@ -2563,7 +2563,7 @@ class Product extends Entity {
         $tecdoc = $this->getTecdocSupplierId() ? $this->getTecdocSupplierId()->getSupplier() : "";
         $ti = $this->getSupplierId() ? $this->getSupplierId()->getTitle() : "";
 
-        $out = '<a target="_blank" title="' . $ti . '"  class="" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->getSupplierId()->getTitle() . '</a>
+        $out = '<a target="_blank" title="' . $ti . '"  class="" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $ti . '</a>
         <br>
         <span class="text-sm text-info">' . $tecdoc . '</span>';
 
