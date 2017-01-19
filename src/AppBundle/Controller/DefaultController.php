@@ -38,8 +38,8 @@ class DefaultController extends Controller {
         
         return $this->render('default/alerts.html.twig', array(
                     'pagename' => '',
-                    'orderscnt' => count($orders),
-                    'edicnt'    => 0,
+                    'orderscnt' => "Orders:".count($orders),
+                    'edicnt'    => "EDI: 0",
                     'orders' => $ordersHtml,
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
