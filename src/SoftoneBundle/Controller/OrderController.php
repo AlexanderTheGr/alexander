@@ -1120,6 +1120,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $repormodel->setSessionId($session->getId());
         $repormodel->setIp($request->getClientIp());
         $repormodel->setActioneer(0);
+        $repormodel->setFlatData('');
         $this->flushpersist($repormodel);
 
         $tecdocArticleIds = array();
