@@ -965,7 +965,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
     function getTabContentSearch($order) {
         
-        $repormodels = $this->getDoctrine()->getRepository('SoftoneBundle:Reportmodel')->findBy(array('customerId' => $order->getCustomer()->getId()));
+        $repormodels = $this->getDoctrine()->getRepository('SoftoneBundle:Reportmodel')->findBy(array('customerId' => $order->getCustomer()->getId()),array('ts' => 'DESC'));
         
         
         $history = "<ul>";
