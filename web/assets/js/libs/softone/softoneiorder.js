@@ -21,7 +21,7 @@ jQuery('#productfreesearch').live("keyup", function (e) {
 jQuery('#productitem').live("keyup", function (e) {
     if (e.keyCode == 13) {
         $("#loaderer").show();
-        productsearch = "productitem:" + jQuery('#productitem').val();
+        productsearch = "productitem:" + jQuery('#productitem').val()+":supplier:1";
         asdf(this, productsearch);
         var t = $(this).val();
         jQuery('#productfreesearch').val("");
