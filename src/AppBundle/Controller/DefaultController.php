@@ -32,7 +32,7 @@ class DefaultController extends Controller {
         
         $ordersHtml = "<ul class='animation-expand'>";
         foreach($orders as $order) {
-            $ordersHtml .= "<li><a href='/order/view/".$order->getId()."'>".$order->getFincode()." ".$order->getCustomerName()."</a></li>";
+            $ordersHtml .= "<li class='dropdown-header'><a href='/order/view/".$order->getId()."'>".$order->getFincode()." ".$order->getCustomerName()."</a></li>";
         }
         $ordersHtml .= "</ul>";
         
