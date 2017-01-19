@@ -140,6 +140,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     ->getRepository("SoftoneBundle:Route")
                     ->find(1);
             $entity->setRoute($route);
+            $entity->setIsnew(0);
             $this->flushpersist($entity);
             $id = $entity->getId();
             header("location: /order/view/" . $id);
@@ -272,6 +273,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $fincode++;
                 $this->setSetting("SoftoneBundle:Order:fincode", $fincode);
             }
+            
+            $entity->setIsnew(0);
+            $this->flushpersist($entity);
+            
             $fields["fincode"] = array("label" => "Code", 'className' => 'asdfg', "required" => true);
             $fields["customerName"] = array("label" => "Customer Name", "required" => true, 'className' => 'asdfg');
             $fields["route"] = array("label" => "Route", "required" => false, 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Route', 'name' => 'route', 'value' => 'id'));
