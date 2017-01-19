@@ -399,10 +399,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $params["app"] = 'appgetoffcanvases2';
         $params["drawCallback"] = 'fororder2(' . $id . ')';
         $datatables[] = $this->contentDatatable($params);
-
+        
 
         //$datatables = array();
-        $this->addOffCanvas(array('id' => 'asdf', "content" => 'hhh', "index" => $this->generateRandomString(), "datatables" => $datatables));
+        $this->addOffCanvas(array('id' => 'asdf', "content" => '', "index" => $this->generateRandomString(), "datatables" => $datatables));
         //$this->addOffCanvas(array('id' => 'asdf2', "content" => '', "index" => $this->generateRandomString(), "datatables" => $datatables));
         return $this->offcanvases();
     }
