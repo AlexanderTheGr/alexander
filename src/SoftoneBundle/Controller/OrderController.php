@@ -586,7 +586,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $tecdoc_article2 = "";
                     $sql2 = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where ' . $qsupplier . ' p.erpCode like "%' . $search[1] . '%" OR ' . $tecdoc_article . $tecdoc_article2 . ' ' . $sisxetisi . '
+                                where ' . $qsupplier . ' (p.erpCode like "%' . $search[1] . '%" OR ' . $tecdoc_article . $tecdoc_article2 . ' ' . $sisxetisi . ')
                                 ORDER BY ' . $this->orderBy;
 
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
