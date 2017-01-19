@@ -40,8 +40,9 @@ jQuery('#classtitem').live("change", function (e) {
     b = false;
     var table = dt_tables["ctrlgetoffcanvases"];
     table.fnFilter(productsearch);
-
-
+    setTimeout(function () {
+        b = true;
+    }, 1000)    
 })
 
 toastr.options = {
