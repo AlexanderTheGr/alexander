@@ -990,7 +990,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $response = $this->get('twig')->render('SoftoneBundle:Order:search.html.twig', array(
             'brands' => $this->getBrands(),
             'order' => $order->getId(),
-            'histoty' => $history
+            'history' => $history
         ));
         return str_replace("\n", "", htmlentities($response));
     }
