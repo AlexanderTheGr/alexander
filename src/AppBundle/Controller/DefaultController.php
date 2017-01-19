@@ -21,7 +21,7 @@ class DefaultController extends Controller {
     }
     
     /**
-     * @Route("/alerts", name="homepage")
+     * @Route("/alerts", name="alerts")
      */
     public function alerts() {
         return $this->render('default/alerts.html.twig', array(
