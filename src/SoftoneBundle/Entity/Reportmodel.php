@@ -30,7 +30,14 @@ class Reportmodel extends Entity {
         $this->$field = $val;
         return $val;
     }
-
+    public function setRepositories() {
+    }
+    public function getRepository() {
+        return $this->repository;
+    }
+    public function getRepositories($repo) {
+        return $this->repositories[$repo];
+    }    
     /**
      * @var integer
      *
