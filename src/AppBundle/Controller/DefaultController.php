@@ -30,7 +30,7 @@ class DefaultController extends Controller {
         $alerts += count($orders);
         
         
-        $ordersHtml = "<ul>";
+        $ordersHtml = "<ul class='animation-expand'>";
         foreach($orders as $order) {
             $ordersHtml .= "<li><a href='/order/view/".$order->getId()."'>".$order->getFincode()." ".$order->getCustomerName()."</a></li>";
         }
