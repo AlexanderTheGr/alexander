@@ -400,9 +400,17 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $params["drawCallback"] = 'fororder2(' . $id . ')';
         $datatables[] = $this->contentDatatable($params);
         
+        
+        $suppliers = $this->getDoctrine()
+                        ->getRepository('SoftoneBundle:Supplier')->findAll();
+        $itemMtrsup = "<select>";
+        foreach ($suppliers as $supplier) {
+            $itemMtrsup .= "<option value='". $supplier->getId()."'>". $supplier->getSupplierName()."</option>"; //array("value" => (string) $supplier->getReference(), "name" => $supplier->getSupplierName()); // $supplier->getSupplierName();
+        }        
+        $itemMtrsup .= "</select>";
 
         //$datatables = array();
-        $this->addOffCanvas(array('id' => 'asdf', "content" => '', "index" => $this->generateRandomString(), "datatables" => $datatables));
+        $this->addOffCanvas(array('id' => 'asdf', "content" => $itemMtrsup, "index" => $this->generateRandomString(), "datatables" => $datatables));
         //$this->addOffCanvas(array('id' => 'asdf2', "content" => '', "index" => $this->generateRandomString(), "datatables" => $datatables));
         return $this->offcanvases();
     }
