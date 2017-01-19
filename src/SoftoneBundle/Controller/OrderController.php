@@ -15,7 +15,6 @@ use EdiBundle\Entity\EdiItem;
 use EdiBundle\Entity\Edi;
 use SoftoneBundle\Entity\Reportmodel as Reportmodel;
 
-
 class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
     var $repository = 'SoftoneBundle:Order';
@@ -1111,14 +1110,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $order = $this->getDoctrine()->getRepository('SoftoneBundle:Order')->find($request->request->get("order"));
         //$this->getDoctrine()->getRepository('SoftoneBundle:Reportmodel');
         $repormodel = new Reportmodel();
-        
-
-        $this->newentity['SoftoneBundle:Reportmodel'] = $repormodel;
-        $this->initialazeNewEntity($repormodel);       
+        $dt = new \DateTime("now");
+        $repormodel->setTs($dt);
+        $repormodel->setCreated($dt);
+        $repormodel->setModified($dt);
         $repormodel->setModel($request->request->get("car"));
         $repormodel->setCustomerId($order->getCustomer()->getId());
         $this->flushpersist($repormodel);
-        
+
         $tecdocArticleIds = array();
         if (count($articleIds)) {
             $query = $em->createQuery(
