@@ -41,7 +41,7 @@ class DefaultController extends Controller {
 
         $ediordersHtml = "<ul style='overflow: auto; max-height: 400px;' class='animation-expand'>";
         foreach ($ediorders as $ediorder) {
-            $ordersHtml .= "<li class='' style='list-style:none'><a href='/edi/edi/order/view/" . $ediorder->getId() . "'>" . $ediorder->getRemarks() . "</a></li>";
+            $ediordersHtml .= "<li class='' style='list-style:none'><a href='/edi/edi/order/view/" . $ediorder->getId() . "'>" . $ediorder->getRemarks() . "</a></li>";
         }
         $ediordersHtml .= "</ul>";
         
