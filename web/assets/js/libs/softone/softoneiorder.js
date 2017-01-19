@@ -21,7 +21,7 @@ jQuery('#productfreesearch').live("keyup", function (e) {
 jQuery('#productitem').live("keyup", function (e) {
     if (e.keyCode == 13) {
         $("#loaderer").show();
-        productsearch = "productitem:" + jQuery('#productitem').val()+":supplier:1";
+        productsearch = "productitem:" + jQuery('#productitem').val() + ":supplier:1";
         asdf(this, productsearch);
         var t = $(this).val();
         jQuery('#productfreesearch').val("");
@@ -32,10 +32,12 @@ jQuery('#productitem').live("keyup", function (e) {
         jQuery(".brand-select").trigger("chosen:updated")
         jQuery(".brand_model-select").trigger("chosen:updated");
         jQuery(".brand_model_type-select").trigger("chosen:updated");
-
     }
 });
-
+jQuery('#classtitem').live("change", function (e) {
+    productsearch = "productitem:" + jQuery('#productitem').val() + ":supplier:"+jQuery('#classtitem').val();
+    asdf(this, productsearch);
+})
 
 toastr.options = {
     "closeButton": false,
