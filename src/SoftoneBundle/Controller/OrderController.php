@@ -404,7 +404,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $suppliers = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:SoftoneSupplier')->findAll();
         $itemMtrsup = "<select id='classtitem'>";
-        $itemMtrsup = "<option value=0>Select</option>";
+        $itemMtrsup .= "<option value=0>Select</option>";
         foreach ($suppliers as $supplier) {
             $itemMtrsup .= "<option value='" . $supplier->getId() . "'>" . $supplier->getTitle() . "</option>"; //array("value" => (string) $supplier->getReference(), "name" => $supplier->getSupplierName()); // $supplier->getSupplierName();
         }
