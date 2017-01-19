@@ -24,13 +24,22 @@ class DefaultController extends Controller {
      * @Route("/alerts", name="alerts")
      */
     public function alerts() {
-        
+        $alerts = 0;
         $orders = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Order")->findBy(array("isnew"=>1));
+        $alerts += count($orders);
+        
+        
+        $ordersHtml = "<ul>";
+        foreach($orders as $order) {
+            $ordersHtml .= "<li>ass</li>";
+        }
+        $ordersHtml .= "</ul>";
         
         return $this->render('default/alerts.html.twig', array(
                     'pagename' => '',
                     'alerts' => count($orders),
+                    'orders' => $ordersHtml,
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
