@@ -37,7 +37,7 @@ class DefaultController extends Controller {
         $ordersHtml .= "</ul>";
 
         $ediorders = $this->getDoctrine()
-                        ->getRepository('EdiBundle:EdiOrder')->findBy(array("reference" => 0));
+                        ->getRepository('EdiBundle:EdiOrder')->findBy(array("reference" => ''));
 
         $ediordersHtml = "<ul style='overflow: auto; max-height: 400px;' class='animation-expand'>";
         foreach ($ediorders as $ediorder) {
