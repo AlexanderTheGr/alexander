@@ -866,4 +866,33 @@ class Order extends Entity {
         }
         return $total;
     }
+    /**
+     * @var boolean
+     */
+    private $isnew = '1';
+
+
+    /**
+     * Set isnew
+     *
+     * @param boolean $isnew
+     *
+     * @return Order
+     */
+    public function setIsnew($isnew)
+    {
+        $this->isnew = $isnew;
+
+        return $this;
+    }
+
+    /**
+     * Get isnew
+     *
+     * @return boolean
+     */
+    public function getIsnew()
+    {
+        return $this->isnew;
+    }
 }
