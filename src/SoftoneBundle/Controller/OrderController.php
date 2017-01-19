@@ -986,7 +986,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $year = $yearfrom . " - " . $yearto;
             $history .= "<li data-ref='".$repormodel->getModel()."'>".$brand->getBrand() . " " . $brandsmodel->getBrandModel() . " " . $year . " " . $brandModelType->getBrandModelType() . " " . $brandModelType->getEngine()."</li>";
         }
-        $history = "</ul>";
+        $history .= "</ul>";
         $response = $this->get('twig')->render('SoftoneBundle:Order:search.html.twig', array(
             'brands' => $this->getBrands(),
             'order' => $order->getId(),
