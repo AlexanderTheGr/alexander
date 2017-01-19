@@ -19,7 +19,10 @@ class DefaultController extends Controller {
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
-
+    
+    /**
+     * @Route("/alerts", name="homepage")
+     */
     public function alerts() {
         return 'sss';
     }
