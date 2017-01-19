@@ -36,7 +36,7 @@ class DefaultController extends Controller {
         }
         $ordersHtml .= "</ul>";
 
-        $EdiOrders = $this->getDoctrine()
+        $ediorders = $this->getDoctrine()
                         ->getRepository('EdiBundle:EdiOrder')->findBy(array("reference" => 0));
 
         $ediordersHtml = "<ul style='overflow: auto; max-height: 400px;' class='animation-expand'>";
@@ -47,9 +47,10 @@ class DefaultController extends Controller {
         
         return $this->render('default/alerts.html.twig', array(
                     'pagename' => '',
-                    'orderscnt' => "Orders:" . count($orders),
-                    'edicnt' => "EDI: 0",
+                    'orderscnt' => "Orders: " . count($orders),
+                    'edicnt' => "EDI: ".count($ediorders),
                     'orders' => $ordersHtml,
+                    'ediorders' => $ediordersHtml,
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
