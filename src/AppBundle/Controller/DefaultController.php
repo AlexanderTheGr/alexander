@@ -32,7 +32,7 @@ class DefaultController extends Controller {
         
         $ordersHtml = "<ul>";
         foreach($orders as $order) {
-            $ordersHtml .= "<li><a href='/order/view/".$order->getId()."'>".$order->getFindcode()." ".$order->getCustomerName()."</a></li>";
+            $ordersHtml .= "<li><a href='/order/view/".$order->getId()."'>".$order->getFincode()." ".$order->getCustomerName()."</a></li>";
         }
         $ordersHtml .= "</ul>";
         
