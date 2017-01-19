@@ -970,6 +970,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         
         $history = "<ul>";
         foreach($repormodels as $repormodel) {
+            if ($i++ > 15) break;
             $brandModelType = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:BrandModelType')
                     ->find($repormodel->getModel());
