@@ -3,6 +3,7 @@
 namespace SoftoneBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\Entity;
 
 /**
  * Reportmodel
@@ -10,8 +11,26 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="reportmodel", indexes={@ORM\Index(name="customer_id", columns={"customer_id"})})
  * @ORM\Entity
  */
-class Reportmodel
-{
+class Reportmodel extends Entity {
+
+    var $repositories = array();
+    var $uniques = array();
+    var $qty;
+
+    public function __construct() {
+        $this->setRepositories();
+    }
+
+    public function getField($field) {
+
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
+
     /**
      * @var integer
      *
@@ -84,8 +103,6 @@ class Reportmodel
      */
     protected $id;
 
-
-
     /**
      * Set customerId
      *
@@ -93,8 +110,7 @@ class Reportmodel
      *
      * @return Reportmodel
      */
-    public function setCustomerId($customerId)
-    {
+    public function setCustomerId($customerId) {
         $this->customerId = $customerId;
 
         return $this;
@@ -105,8 +121,7 @@ class Reportmodel
      *
      * @return integer
      */
-    public function getCustomerId()
-    {
+    public function getCustomerId() {
         return $this->customerId;
     }
 
@@ -117,8 +132,7 @@ class Reportmodel
      *
      * @return Reportmodel
      */
-    public function setModel($model)
-    {
+    public function setModel($model) {
         $this->model = $model;
 
         return $this;
@@ -129,8 +143,7 @@ class Reportmodel
      *
      * @return integer
      */
-    public function getModel()
-    {
+    public function getModel() {
         return $this->model;
     }
 
@@ -141,8 +154,7 @@ class Reportmodel
      *
      * @return Reportmodel
      */
-    public function setSessionId($sessionId)
-    {
+    public function setSessionId($sessionId) {
         $this->sessionId = $sessionId;
 
         return $this;
@@ -153,8 +165,7 @@ class Reportmodel
      *
      * @return string
      */
-    public function getSessionId()
-    {
+    public function getSessionId() {
         return $this->sessionId;
     }
 
@@ -165,8 +176,7 @@ class Reportmodel
      *
      * @return Reportmodel
      */
-    public function setIp($ip)
-    {
+    public function setIp($ip) {
         $this->ip = $ip;
 
         return $this;
@@ -177,8 +187,7 @@ class Reportmodel
      *
      * @return string
      */
-    public function getIp()
-    {
+    public function getIp() {
         return $this->ip;
     }
 
@@ -189,8 +198,7 @@ class Reportmodel
      *
      * @return Reportmodel
      */
-    public function setTs($ts)
-    {
+    public function setTs($ts) {
         $this->ts = $ts;
 
         return $this;
@@ -201,8 +209,7 @@ class Reportmodel
      *
      * @return \DateTime
      */
-    public function getTs()
-    {
+    public function getTs() {
         return $this->ts;
     }
 
@@ -213,8 +220,7 @@ class Reportmodel
      *
      * @return Reportmodel
      */
-    public function setActioneer($actioneer)
-    {
+    public function setActioneer($actioneer) {
         $this->actioneer = $actioneer;
 
         return $this;
@@ -225,8 +231,7 @@ class Reportmodel
      *
      * @return integer
      */
-    public function getActioneer()
-    {
+    public function getActioneer() {
         return $this->actioneer;
     }
 
@@ -237,8 +242,7 @@ class Reportmodel
      *
      * @return Reportmodel
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -249,8 +253,7 @@ class Reportmodel
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -261,8 +264,7 @@ class Reportmodel
      *
      * @return Reportmodel
      */
-    public function setModified($modified)
-    {
+    public function setModified($modified) {
         $this->modified = $modified;
 
         return $this;
@@ -273,8 +275,7 @@ class Reportmodel
      *
      * @return \DateTime
      */
-    public function getModified()
-    {
+    public function getModified() {
         return $this->modified;
     }
 
@@ -285,8 +286,7 @@ class Reportmodel
      *
      * @return Reportmodel
      */
-    public function setFlatData($flatData)
-    {
+    public function setFlatData($flatData) {
         $this->flatData = $flatData;
 
         return $this;
@@ -297,8 +297,7 @@ class Reportmodel
      *
      * @return string
      */
-    public function getFlatData()
-    {
+    public function getFlatData() {
         return $this->flatData;
     }
 
@@ -307,8 +306,8 @@ class Reportmodel
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
+
 }
