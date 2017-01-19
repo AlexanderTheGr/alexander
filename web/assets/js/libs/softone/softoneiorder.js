@@ -37,8 +37,10 @@ jQuery('#productitem').live("keyup", function (e) {
 jQuery('#classtitem').live("change", function (e) {
     productsearch = "productitem:" + jQuery('#productitem').val() + ":supplier:"+jQuery('#classtitem').val();
     //asdf(this, productsearch);
+    jQuery(".offcanvas-search").click();
     var table = dt_tables["ctrlgetoffcanvases"];
     table.fnFilter(productsearch);
+    
 })
 
 toastr.options = {
