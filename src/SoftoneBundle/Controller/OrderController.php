@@ -531,7 +531,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 } else {
                     $sqlearch = "Select o.id from SoftoneBundle:ProductSearch o where o.itemCode like '%" . $search[1] . "%' OR o.itemCode1 like '%" . $search[1] . "%' OR o.itemCode2 like '%" . $search[1] . "%'";
                 }
-
+                $qsupplier = "";
+                if ($search[2] == 'supplier') {
+                    $supplier = $this->getDoctrine()
+                        ->getRepository('SoftoneBundle:SoftoneSupplier')->find($search[3]);
+                    if ($supplier)
+                    $qsupplier = "supplierId = ".$supplier." OR ";
+                }
 
 
                 //print_r($articleIds);
@@ -575,17 +581,17 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $tecdoc_article2 = "";
                     $sql2 = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where p.erpCode like "%' . $search[1] . '%" OR ' . $tecdoc_article . $tecdoc_article2 . ' ' . $sisxetisi . '
+                                where p.erpCode like "%' . $search[1] . '%" OR ' . $tecdoc_article . $tecdoc_article2 . ' '.$qsupplier.' ' . $sisxetisi . '
                                 ORDER BY ' . $this->orderBy;
 
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where ' . $tecdoc_article . $tecdoc_article2 . ' ' . $sisxetisi . '
+                                where ' . $tecdoc_article . $tecdoc_article2 . ' '.$qsupplier.' ' . $sisxetisi . '
                                 ORDER BY ' . $this->orderBy;
                 } else {
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where ' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . '
+                                where ' . $this->prefix . '.id in (' . $sqlearch . ') OR '.$qsupplier.' ' . $sisxetisi . '
                                 ORDER BY ' . $this->orderBy;
                 }
 
