@@ -81,7 +81,6 @@
             </options>
         </field>
         <field name="noorder" type="boolean" column="noorder" nullable="true"/>
-        <field name="noorder" type="boolean" column="noorder" nullable="true"/>
         <field name="status" type="integer" column="status" nullable="true">
             <options>
                 <option name="unsigned"/>
