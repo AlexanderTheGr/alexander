@@ -536,7 +536,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $supplier = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:SoftoneSupplier')->find($search[3]);
                     if ($supplier)
-                    $qsupplier = "supplierId = ".$supplier." OR ";
+                    $qsupplier = "supplierId = ".$supplier->getId()." OR ";
                 }
 
 
