@@ -984,7 +984,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $yearto = substr($brandsmodel->getYearTo(), 4, 2) . "/" . substr($brandsmodel->getYearTo(), 0, 4);
             $yearto = $yearto == 0 ? 'Today' : $yearto;
             $year = $yearfrom . " - " . $yearto;
-            $history .= "<li class='modelhistory' data-order='".$order->getId()."' data-ref='".$repormodel->getModel()."'>".$brand->getBrand() . " " . $brandsmodel->getBrandModel() . " " . $year . " " . $brandModelType->getBrandModelType() . " " . $brandModelType->getEngine()."</li>";
+            $history .= "<li class='modelhistory' style='cursor:pointer' data-order='".$order->getId()."' data-ref='".$repormodel->getModel()."'>".$brand->getBrand() . " " . $brandsmodel->getBrandModel() . " " . $year . " " . $brandModelType->getBrandModelType() . " " . $brandModelType->getEngine()."</li>";
         }
         $history .= "</ul>";
         $response = $this->get('twig')->render('SoftoneBundle:Order:search.html.twig', array(
