@@ -273,10 +273,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $fincode++;
                 $this->setSetting("SoftoneBundle:Order:fincode", $fincode);
             }
-            
+
             $entity->setIsnew(0);
             $this->flushpersist($entity);
-            
+
             $fields["fincode"] = array("label" => "Code", 'className' => 'asdfg', "required" => true);
             $fields["customerName"] = array("label" => "Customer Name", "required" => true, 'className' => 'asdfg');
             $fields["route"] = array("label" => "Route", "required" => false, 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Route', 'name' => 'route', 'value' => 'id'));
@@ -399,14 +399,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $params["app"] = 'appgetoffcanvases2';
         $params["drawCallback"] = 'fororder2(' . $id . ')';
         $datatables[] = $this->contentDatatable($params);
-        
-        
+
+
         $suppliers = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:SoftoneSupplier')->findAll();
         $itemMtrsup = "<select id='classtitem'>";
         foreach ($suppliers as $supplier) {
-            $itemMtrsup .= "<option value='". $supplier->getId()."'>". $supplier->getTitle()."</option>"; //array("value" => (string) $supplier->getReference(), "name" => $supplier->getSupplierName()); // $supplier->getSupplierName();
-        }        
+            $itemMtrsup .= "<option value='" . $supplier->getId() . "'>" . $supplier->getTitle() . "</option>"; //array("value" => (string) $supplier->getReference(), "name" => $supplier->getSupplierName()); // $supplier->getSupplierName();
+        }
         $itemMtrsup .= "</select>";
 
         //$datatables = array();
@@ -534,9 +534,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $qsupplier = "";
                 if ($search[2] == 'supplier') {
                     $supplier = $this->getDoctrine()
-                        ->getRepository('SoftoneBundle:SoftoneSupplier')->find($search[3]);
+                                    ->getRepository('SoftoneBundle:SoftoneSupplier')->find($search[3]);
                     if ($supplier)
-                    $qsupplier = "supplierId = ".$supplier->getId()." OR ";
+                        $qsupplier = "supplierId = '" . $supplier->getId() . "' OR ";
                 }
 
 
@@ -581,17 +581,17 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $tecdoc_article2 = "";
                     $sql2 = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where p.erpCode like "%' . $search[1] . '%" OR ' . $tecdoc_article . $tecdoc_article2 . ' '.$qsupplier.' ' . $sisxetisi . '
+                                where p.erpCode like "%' . $search[1] . '%" OR ' . $tecdoc_article . $tecdoc_article2 . ' ' . $qsupplier . ' ' . $sisxetisi . '
                                 ORDER BY ' . $this->orderBy;
 
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where ' . $tecdoc_article . $tecdoc_article2 . ' '.$qsupplier.' ' . $sisxetisi . '
+                                where ' . $tecdoc_article . $tecdoc_article2 . ' ' . $qsupplier . ' ' . $sisxetisi . '
                                 ORDER BY ' . $this->orderBy;
                 } else {
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where ' . $this->prefix . '.id in (' . $sqlearch . ') OR '.$qsupplier.' ' . $sisxetisi . '
+                                where ' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $qsupplier . ' ' . $sisxetisi . '
                                 ORDER BY ' . $this->orderBy;
                 }
 
@@ -1004,7 +1004,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $year = $yearfrom . " - " . $yearto;
 
             $json["id"] = $result["id"];
-            $json["label"] = $brand->getBrand() . " " . $brandsmodel->getBrandModel() . " " . $year . " " . $brandModelType->getBrandModelType()." " . $brandModelType->getEngine();
+            $json["label"] = $brand->getBrand() . " " . $brandsmodel->getBrandModel() . " " . $year . " " . $brandModelType->getBrandModelType() . " " . $brandModelType->getEngine();
             $json["value"] = $result["id"];
             $jsonArr[] = $json;
         }
@@ -1560,7 +1560,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($ord["TRDR"]);
-        
+
         $entity->setCustomer($customer);
         $entity->setReference($ord["ID"]);
         $entity->setFincode($ord["FINCODE"]);
