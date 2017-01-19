@@ -24,7 +24,11 @@ class DefaultController extends Controller {
      * @Route("/alerts", name="homepage")
      */
     public function alerts() {
-        return 'sss';
+        return $this->render('default/alerts.html.twig', array(
+                    'pagename' => '',
+                    'alerts' => '',
+                    'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
+        ));
     }
 
 }
