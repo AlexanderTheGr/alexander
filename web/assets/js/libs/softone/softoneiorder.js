@@ -42,7 +42,7 @@ jQuery('#classtitem').live("change", function (e) {
     table.fnFilter(productsearch);
     setTimeout(function () {
         b = true;
-    }, 2000)    
+    }, 3000)    
 })
 
 toastr.options = {
