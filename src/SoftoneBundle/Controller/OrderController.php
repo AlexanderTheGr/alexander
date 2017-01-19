@@ -964,6 +964,29 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     function getTabContentSearch($order) {
+        
+        $repormodels = $this->getDoctrine()->getRepository('SoftoneBundle:Reportmodel')->findBy(array('customerId' => $order->getCustomer()->getId()));
+        
+        
+        $history = "<ul>";
+        foreach($repormodels as $repormodel) {
+            $brandModelType = $this->getDoctrine()
+                    ->getRepository('SoftoneBundle:BrandModelType')
+                    ->find($repormodel->getModel());
+            $brandsmodel = $this->getDoctrine()
+                    ->getRepository('SoftoneBundle:BrandModel')
+                    ->find($brandModelType->getBrandModel());
+            $brand = $this->getDoctrine()
+                    ->getRepository('SoftoneBundle:Brand')
+                    ->find($brandsmodel->getBrand());
+
+            $yearfrom = substr($brandsmodel->getYearFrom(), 4, 2) . "/" . substr($brandsmodel->getYearFrom(), 0, 4);
+            $yearto = substr($brandsmodel->getYearTo(), 4, 2) . "/" . substr($brandsmodel->getYearTo(), 0, 4);
+            $yearto = $yearto == 0 ? 'Today' : $yearto;
+            $year = $yearfrom . " - " . $yearto;
+            $history .= "<li data-ref='".$repormodel->getModel()."'>".$brand->getBrand() . " " . $brandsmodel->getBrandModel() . " " . $year . " " . $brandModelType->getBrandModelType() . " " . $brandModelType->getEngine()."</li>";
+        }
+        $history = "</ul>";
         $response = $this->get('twig')->render('SoftoneBundle:Order:search.html.twig', array(
             'brands' => $this->getBrands(),
             'order' => $order->getId(),
