@@ -1116,6 +1116,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $repormodel->setModified($dt);
         $repormodel->setModel($request->request->get("car"));
         $repormodel->setCustomerId($order->getCustomer()->getId());
+        $session = new Session();
+        $repormodel->setSessionId($session->getId());
         $this->flushpersist($repormodel);
 
         $tecdocArticleIds = array();
