@@ -13,6 +13,8 @@ use SoftoneBundle\Entity\Softone as Softone;
 use AppBundle\Entity\Tecdoc as Tecdoc;
 use EdiBundle\Entity\EdiItem;
 use EdiBundle\Entity\Edi;
+use SoftoneBundle\Entity\Reportmodel as Reportmodel;
+
 
 class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
@@ -1106,9 +1108,17 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $articleIds[] = $articleId;
             }
         }
+        $order = $this->getDoctrine()->getRepository('SoftoneBundle:Order')->find($request->request->get("order"));
+        //$this->getDoctrine()->getRepository('SoftoneBundle:Reportmodel');
+        $repormodel = new Reportmodel();
+        
 
-
-
+        $this->newentity['SoftoneBundle:Reportmodel'] = $repormodel;
+        $this->initialazeNewEntity($repormodel);       
+        $repormodel->setModel($request->request->get("car"));
+        $repormodel->setCustomerId($order->getCustomer()->getId());
+        $this->flushpersist($repormodel);
+        
         $tecdocArticleIds = array();
         if (count($articleIds)) {
             $query = $em->createQuery(
