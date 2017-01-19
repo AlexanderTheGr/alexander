@@ -81,11 +81,18 @@
             </options>
         </field>
         <field name="noorder" type="boolean" column="noorder" nullable="true"/>
+        <field name="noorder" type="boolean" column="noorder" nullable="true"/>
         <field name="status" type="integer" column="status" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>
         </field>
+        <field name="isnew" type="boolean" column="isnew" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="default">1</option>
+            </options>
+        </field>        
         <field name="actioneer" type="integer" column="actioneer" nullable="true">
             <options>
                 <option name="unsigned"/>
