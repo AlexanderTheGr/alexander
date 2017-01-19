@@ -359,6 +359,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
 
         $dtparams[] = array("name" => "Τελική Τιμη", "index" => $priceField, 'search' => 'text');
+        
+        $dtparams[] = array("name" => "Κωδ. Συσχετισης", "index" => "sisxetisi", 'search' => 'text');
+        
         $dtparams[] = array("name" => "Αποθηκη", "function" => 'getApothiki', 'search' => 'text');
 
         $dtparams[] = array("name" => "QTY", "index" => 'qty', "input" => 'text', 'search' => 'text');
@@ -711,6 +714,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $json[] = "<span car='' class='product_info' data-articleId='" . $v->articleId . "' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->genericArticleName . "</span>";
                 $json[] = "<span  car='' class='product_info' data-articleId='" . $v->articleId . "' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->brandName . "</span>";
                 $json[] = $this->getArticleAttributes($v->articleId, $articleIds2["linkingTargetId"]);
+                $json[] = "";
                 $json[] = "";
                 $json[] = "";
                 $json[] = "";
