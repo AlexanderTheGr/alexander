@@ -6,6 +6,7 @@
             <index name="customer" columns="customer"/>
             <index name="status" columns="status"/>
             <index name="store" columns="store"/>
+            <index name="isnew" columns="isnew"/>
             <index name="route" columns="route"/>
         </indexes>
         <id name="id" type="integer" column="id">
