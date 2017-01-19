@@ -372,6 +372,7 @@ function fororder(order) {
         })
         jQuery("#DataTables_Table_2_wrapper").hide();
         jQuery("#DataTables_Table_1_wrapper").show();
+        jQuery("#classtitem").chosen({width: "300px"});
         b = false;
     }
     setTimeout(function () {
