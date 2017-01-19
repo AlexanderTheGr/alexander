@@ -966,7 +966,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     function getTabContentSearch($order) {
         $response = $this->get('twig')->render('SoftoneBundle:Order:search.html.twig', array(
             'brands' => $this->getBrands(),
-            'order' => $order->getId()
+            'order' => $order->getId(),
+            'histoty' => $history
         ));
         return str_replace("\n", "", htmlentities($response));
     }
@@ -1097,6 +1098,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
           $data = curl_exec($ch);
           $data = unserialize($data);
          */
+        $session = new Session();
         $em = $this->getDoctrine()->getManager();
         $tecdoc = new Tecdoc();
         $params["linkingTargetId"] = $request->request->get("car");
@@ -1108,15 +1110,18 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             }
         }
         $order = $this->getDoctrine()->getRepository('SoftoneBundle:Order')->find($request->request->get("order"));
-        //$this->getDoctrine()->getRepository('SoftoneBundle:Reportmodel');
-        $repormodel = new Reportmodel();
+        $repormodel = $this->getDoctrine()->getRepository('SoftoneBundle:Reportmodel')->findOneBy(array("sessionId" => $session->getId(), 'customerId' => $order->getCustomer()->getId(), 'model' => $request->request->get("car")));
+
+        if (!$repormodel)
+            $repormodel = new Reportmodel();
+
         $dt = new \DateTime("now");
         $repormodel->setTs($dt);
         $repormodel->setCreated($dt);
         $repormodel->setModified($dt);
         $repormodel->setModel($request->request->get("car"));
         $repormodel->setCustomerId($order->getCustomer()->getId());
-        $session = new Session();
+
         $repormodel->setSessionId($session->getId());
         $repormodel->setIp($request->getClientIp());
         $repormodel->setActioneer(0);
