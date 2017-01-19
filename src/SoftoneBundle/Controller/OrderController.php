@@ -581,17 +581,17 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $tecdoc_article2 = "";
                     $sql2 = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where p.erpCode like "%' . $search[1] . '%" OR ' . $tecdoc_article . $tecdoc_article2 . ' ' . $qsupplier . ' ' . $sisxetisi . '
+                                where ' . $qsupplier . ' p.erpCode like "%' . $search[1] . '%" OR ' . $tecdoc_article . $tecdoc_article2 . ' ' . $sisxetisi . '
                                 ORDER BY ' . $this->orderBy;
 
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where ' . $tecdoc_article . $tecdoc_article2 . ' ' . $qsupplier . ' ' . $sisxetisi . '
+                                where ' . $qsupplier . ' (' . $tecdoc_article . $tecdoc_article2 . ' ' . $sisxetisi . ')
                                 ORDER BY ' . $this->orderBy;
                 } else {
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where ' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $qsupplier . ' ' . $sisxetisi . '
+                                where ' . $qsupplier . ' (' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . ')
                                 ORDER BY ' . $this->orderBy;
                 }
 
