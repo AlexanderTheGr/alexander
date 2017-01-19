@@ -26,7 +26,7 @@ class DefaultController extends Controller {
     public function alerts() {
         return $this->render('default/alerts.html.twig', array(
                     'pagename' => '',
-                    'alerts' => '',
+                    'alerts' => 3,
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
