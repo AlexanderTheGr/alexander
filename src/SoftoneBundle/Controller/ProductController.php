@@ -1029,7 +1029,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 }
             }
             
-            $q[] = "`" . strtolower($params["softone_object"] . "_cccpriceupd") . "` = '" . addslashes($data["CCCPRICEUPD "]) . "'";
+            $q[] = "`" . strtolower($params["softone_object"] . "_cccpriceupd") . "` = '" . addslashes($data["CCCPRICEUPD"]) . "'";
             $q[] = "`" . strtolower($params["softone_object"] . "_cccwebupd") . "` = '" . addslashes($data["CCCWEBUPD"]) . "'";
             
             if (@$entity->id == 0) {
