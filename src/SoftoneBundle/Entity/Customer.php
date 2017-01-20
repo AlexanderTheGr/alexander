@@ -32,14 +32,13 @@ class Customer extends Entity {
 
     public function setRepositories() {
         $this->repositories['customergroup'] = 'SoftoneBundle:Customergroup';
+        $this->repositories['customerirs'] = 'SoftoneBundle:Customerirs';
         //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:SoftoneSupplier';
         $this->types['customergroup'] = 'object';
         //$this->types['supplierId'] = 'object';
-        
         //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:TecdocSupplier';
         //$this->types['tecdocSupplierId'] = 'object';
         //$this->tecdocSupplierId = new \SoftoneBundle\Entity\TecdocSupplier;
-        
     }
 
     public function getRepository() {
@@ -48,11 +47,13 @@ class Customer extends Entity {
 
     public function getRepositories($repo) {
         $this->repositories['customergroup'] = 'SoftoneBundle:Customergroup';
+        $this->repositories['customerirs'] = 'SoftoneBundle:Customerirs';
         return $this->repositories[$repo];
     }
 
     public function gettype($field) {
         $this->types['customergroup'] = 'object';
+        $this->types['customerirs'] = 'object';
         if (@$this->types[$field] != '') {
             return @$this->types[$field];
         }
@@ -904,8 +905,6 @@ class Customer extends Entity {
     public function getRoute() {
         return $this->route;
     }
-    
-
 
     /**
      * @var \DateTime
@@ -1050,7 +1049,6 @@ class Customer extends Entity {
                 $em->persist($this);
                 $em->flush();
             }
-
         }
     }
 
@@ -1059,7 +1057,6 @@ class Customer extends Entity {
      */
     private $customergroup;
 
-
     /**
      * Set customergroup
      *
@@ -1067,8 +1064,7 @@ class Customer extends Entity {
      *
      * @return Customer
      */
-    public function setCustomergroup(\SoftoneBundle\Entity\Customergroup $customergroup = null)
-    {
+    public function setCustomergroup(\SoftoneBundle\Entity\Customergroup $customergroup = null) {
         $this->customergroup = $customergroup;
 
         return $this;
@@ -1079,16 +1075,14 @@ class Customer extends Entity {
      *
      * @return \SoftoneBundle\Entity\Customergroup
      */
-    public function getCustomergroup()
-    {
+    public function getCustomergroup() {
         return $this->customergroup;
     }
-    
+
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $addresses;
-
 
     /**
      * Add address
@@ -1097,8 +1091,7 @@ class Customer extends Entity {
      *
      * @return Customer
      */
-    public function addAddress(\SoftoneBundle\Entity\Customeraddress $address)
-    {
+    public function addAddress(\SoftoneBundle\Entity\Customeraddress $address) {
         $this->addresses[] = $address;
 
         return $this;
@@ -1109,8 +1102,7 @@ class Customer extends Entity {
      *
      * @param \SoftoneBundle\Entity\Customeraddress $address
      */
-    public function removeAddress(\SoftoneBundle\Entity\Customeraddress $address)
-    {
+    public function removeAddress(\SoftoneBundle\Entity\Customeraddress $address) {
         $this->addresses->removeElement($address);
     }
 
@@ -1119,8 +1111,35 @@ class Customer extends Entity {
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getAddresses()
-    {
+    public function getAddresses() {
         return $this->addresses;
     }
+
+    /**
+     * @var \SoftoneBundle\Entity\Customerirs
+     */
+    private $customerirs;
+
+    /**
+     * Set customerirs
+     *
+     * @param \SoftoneBundle\Entity\Customerirs $customerirs
+     *
+     * @return Customer
+     */
+    public function setCustomerirs(\SoftoneBundle\Entity\Customerirs $customerirs = null) {
+        $this->customerirs = $customerirs;
+
+        return $this;
+    }
+
+    /**
+     * Get customerirs
+     *
+     * @return \SoftoneBundle\Entity\Customerirs
+     */
+    public function getCustomerirs() {
+        return $this->customerirs;
+    }
+
 }
