@@ -253,17 +253,15 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             $data = (array) $data;
             //$data["IRSDATA2"] = $IRSDATA[$data["IRSDATA"]];
             //print_r($data);
-            
             //if ($i++ > 100 ) exit;
-            
-            
+
+
             $entity = $this->getDoctrine()
                     ->getRepository($params["repository"])
                     ->findOneBy(array("reference" => (int) $data[$params["softone_table"]]));
 
             echo @$entity->id . "<BR>";
-            if ($i++ > 100 ) exit;
-            continue;
+
             //if ($data[$params["softone_table"]] < 7385) continue;
             $dt = new \DateTime("now");
             if (@$entity->id == 0) {
@@ -310,11 +308,14 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
                 }
             }
             if ($entity) {
-                $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '".$entity->getId()."'";
+                $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
             } else {
                 $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
             }
             echo $sql . "<BR>";
+            if ($i++ > 100)
+                exit;
+            continue;
             //$em->getConnection()->exec($sql);
             /*
               @$entity_id = (int) $entity->id;
