@@ -25,7 +25,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function tetet() {
 
-        $sql = "SELECT * FROM FINDOC";
+        $sql = "SELECT FINCODE,FULLYTRANSF FROM FINDOC";
         $params["fSQL"] = $sql;
         $softone = new Softone();
         $datas = $softone->createSql($params);
