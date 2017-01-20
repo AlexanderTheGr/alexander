@@ -32,7 +32,6 @@ class Customer extends Entity {
 
     public function setRepositories() {
         $this->repositories['customergroup'] = 'SoftoneBundle:Customergroup';
-        $this->repositories['customerirs'] = 'SoftoneBundle:CustomerIrs';
         //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:SoftoneSupplier';
         $this->types['customergroup'] = 'object';
         //$this->types['supplierId'] = 'object';
@@ -47,13 +46,11 @@ class Customer extends Entity {
 
     public function getRepositories($repo) {
         $this->repositories['customergroup'] = 'SoftoneBundle:Customergroup';
-        $this->repositories['customerirs'] = 'SoftoneBundle:CustomerIrs';
         return $this->repositories[$repo];
     }
 
     public function gettype($field) {
         $this->types['customergroup'] = 'object';
-        $this->types['customerirs'] = 'object';
         if (@$this->types[$field] != '') {
             return @$this->types[$field];
         }
@@ -1142,4 +1139,33 @@ class Customer extends Entity {
         return $this->customerirs;
     }
 
+    /**
+     * @var string
+     */
+    private $customerIrsdata;
+
+
+    /**
+     * Set customerIrsdata
+     *
+     * @param string $customerIrsdata
+     *
+     * @return Customer
+     */
+    public function setCustomerIrsdata($customerIrsdata)
+    {
+        $this->customerIrsdata = $customerIrsdata;
+
+        return $this;
+    }
+
+    /**
+     * Get customerIrsdata
+     *
+     * @return string
+     */
+    public function getCustomerIrsdata()
+    {
+        return $this->customerIrsdata;
+    }
 }
