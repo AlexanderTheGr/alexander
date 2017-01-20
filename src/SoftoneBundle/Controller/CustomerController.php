@@ -252,16 +252,18 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
             //$data["IRSDATA2"] = $IRSDATA[$data["IRSDATA"]];
-            print_r($data);
+            //print_r($data);
             
-            if ($i++ > 100 ) exit;
-            continue;
+            //if ($i++ > 100 ) exit;
+            
             
             $entity = $this->getDoctrine()
                     ->getRepository($params["repository"])
                     ->findOneBy(array("reference" => (int) $data[$params["softone_table"]]));
 
             echo @$entity->id . "<BR>";
+            if ($i++ > 100 ) exit;
+            continue;
             //if ($data[$params["softone_table"]] < 7385) continue;
             $dt = new \DateTime("now");
             if (@$entity->id == 0) {
