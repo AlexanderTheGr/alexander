@@ -493,7 +493,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             //print_r($articleIds2["articleIds"]);
 
             if ($this->clearstring($dt_search["value"]) != "") {
-                $dt_search["value"] = addslashes($dt_search["value"]);
+                //$dt_search["value"] = addslashes($dt_search["value"]);
                 $softone = new Softone();
                 $recordsTotal = $em->getRepository($this->repository)->recordsTotal();
                 
@@ -567,7 +567,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 //echo  $sql;
                 //$this->q_or[] = $this->prefix . ".id in  (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
 
-
+                echo "1111\n";
 
                 //$this->createWhere();
 
