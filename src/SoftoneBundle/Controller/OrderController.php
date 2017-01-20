@@ -579,7 +579,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
                 //$tecdoc_article = '';
                 echo '...';
-                exit;
+                //exit;
 
                 if (count((array) $articleIds)) {
                     $tecdoc_article = 'p.tecdocArticleId in (' . implode(",", $articleIds) . ') OR ';
