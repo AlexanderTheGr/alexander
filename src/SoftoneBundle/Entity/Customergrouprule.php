@@ -169,7 +169,7 @@ class Customergrouprule {
         if ($product->getProductsale()) {
             $productsale = $product->getProductsale()->getId();
         }
-        $productsale = 1;
+        //$productsale = 1;
         //echo $this->rulesLoop($rule, $catsEp, $supplier) ? "true" : "false";
         return $this->rulesLoop($rule, $catsEp, $supplier, $product->getErpCode(), $productsale);
     }
