@@ -526,7 +526,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         }
                     }
                 }
-                echo "....\n";
+                echo "1....\n";
                 //echo 'sss\n';
                 
                 if ($search[0] == 'productfreesearch') {
@@ -546,7 +546,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     if ($supplier)
                         $qsupplier = " p.supplierId = '" . $supplier->getId() . "' AND ";
                 }
-                echo "....\n";
+                echo "2....\n";
 
                 //print_r($articleIds);
                 $this->prefix = "p";
@@ -578,7 +578,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                 $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
                 //$tecdoc_article = '';
-                echo '...';
+                echo "3...\n";
                 //exit;
 
                 if (count((array) $articleIds)) {
@@ -603,7 +603,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 where ' . $qsupplier . ' (' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . ')
                                 ORDER BY ' . $this->orderBy;
                 }
-
+                echo "4...\n";
                 echo $sql;
                 exit;
 
