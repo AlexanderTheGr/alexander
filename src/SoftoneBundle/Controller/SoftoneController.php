@@ -28,7 +28,7 @@ class SoftoneController extends  Main {
                 $itemfield[] = "M." . strtoupper(str_replace($params["softone_object"], "", $field));
             }
         }
-        print_r($params["extra"]);
+
         foreach ($params["extra"] as $field => $extra) {
             //if (@$data[$extra] AND in_array($field, $fields)) {
             if ($field == $extra)
@@ -37,7 +37,7 @@ class SoftoneController extends  Main {
                 $itemfield[] = "M." . strtoupper($field) . " as $extra";
             //}
         }
-        print_r($itemfield);
+
 
         $selfields = implode(",", $itemfield);
         $params["fSQL"] = 'SELECT ' . $selfields . ' FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
@@ -46,11 +46,12 @@ class SoftoneController extends  Main {
         echo "<BR>";
         echo $params["fSQL"];
         echo "<BR>";
-        exit;
+        
         $softone = new Softone();
         $datas = $softone->createSql($params);
-        //print_r($datas);
+        print_r($datas);
         //return;
+        //exit;
         $em = $this->getDoctrine()->getManager();
         foreach ((array)$datas->data as $data) {
             $data = (array) $data;
