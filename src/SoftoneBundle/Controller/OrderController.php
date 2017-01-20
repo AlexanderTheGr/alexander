@@ -571,7 +571,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 
                 
 
-                $this->createWhere();
+                //$this->createWhere();
 
                 
                 
@@ -610,7 +610,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 }
                 echo "5...\n";
                 echo $sql;
-                exit;
+                //exit;
 
                 $sql = str_replace("p.*,", "", $sql);
                 //$sql = str_replace("ORDER BY p.qty asc","",$sql);
