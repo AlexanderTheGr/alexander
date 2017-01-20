@@ -1224,7 +1224,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //echo $product->id." ".$product->erp_code." --> ".$qty." -- ".$product->getApothema()."<BR>";
             $sql = "update softone_product set qty = '".$data["item_mtrl_itemtrdata_qty1"]."', reserved = '". $data["item_soreserved"]."' where reference = '".$data["reference"]."'";
             echo $sql."<BR>";
-            
+            if ($i++ > 100) return;
         }
     }
 
