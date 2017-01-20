@@ -633,7 +633,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $fields["itemRemarks"] = array("label" => "Remarks", "required" => false, 'type' => "textarea", "className" => "col-md-6 col-sm-6");
         $fields["sisxetisi"] = array("label" => "Κωδικός Συσχέτισης", "className" => "col-md-6", "required" => false);
-        
+
 
         $forms = $this->getFormLyFields($entity, $fields);
 
@@ -905,7 +905,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $params["object"] = 'SoftoneBundle\Entity\Product';
             $params["filter"] = 'WHERE M.SODTYPE=51 ' . $where;
             $params["relation"] = array();
-            $params["extra"] = array("cccWebUpd"=>"cccWebUpd","cccPriceUpd"=>"cccPriceUpd");
+            $params["extra"] = array("cccWebUpd" => "cccWebUpd", "cccPriceUpd" => "cccPriceUpd");
             $params["extrafunction"] = array();
             //$params["extra"]["CCCFXRELTDCODE"] = "CCCFXRELTDCODE";
             //$params["extra"]["CCCFXRELBRAND"] = "CCCFXRELBRAND";
@@ -1028,10 +1028,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     //$entity->setField($baz, $val);
                 }
             }
-            
+
             $q[] = "`" . strtolower($params["softone_object"] . "_cccpriceupd") . "` = '" . addslashes($data["CCCPRICEUPD"]) . "'";
             $q[] = "`" . strtolower($params["softone_object"] . "_cccwebupd") . "` = '" . addslashes($data["CCCWEBUPD"]) . "'";
-            
+
             if (@$entity->id == 0) {
                 $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
                 echo $sql . "<BR>";
@@ -1055,7 +1055,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
              */
             $entity = null;
             if (@$i++ > 150)
-                 break;
+                break;
         }
     }
 
@@ -1141,22 +1141,22 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         $itemPricer = $ediediitem->getEdiMarkupPrice("itemPricer");
                         if ($itemPricew != $product->getItemPricew() OR $itemPricer != $product->getItemPricer()) {
                             //echo $ediedi->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediediitem->getWholesaleprice() . " -- " . $ediediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
-                            if ($i++ > 2) exit;
+                            if ($i++ > 2)
+                                exit;
                             if ($itemPricew > 0.01 AND $product->getReference() > 0) {
-                                
-                                echo $product->getItemCode()." itemPricew:(".$itemPricew."/".$product->getItemPricew().") itemPricer:(".$itemPricer."/".$product->getItemPricer().")<BR>";
-                                
+
+                                echo $ediedi->getName() . " -- " . $product->getItemCode() . " itemPricew:(" . $itemPricew . "/" . $product->getItemPricew() . ") itemPricer:(" . $itemPricer . "/" . $product->getItemPricer() . ")<BR>";
+
                                 //$product->setCccPriceUpd(1);
                                 //$product->setItemPricew($itemPricew);
                                 //$product->setItemPricer($itemPricer);
                                 //
                                 //$this->flushpersist($product);
                                 //$product->toSoftone();
-                                $sql = "UPDATE MTRL SET PRICEW = ".$itemPricew.", PRICER = ".$itemPricer."  WHERE MTRL = ".$product->getReference();
+                                $sql = "UPDATE MTRL SET PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
                                 $params["fSQL"] = $sql;
                                 $datas = $softone->createSql($params);
-                                echo $sql."<BR>";
-                                
+                                echo $sql . "<BR>";
                             }
                         } else {
                             //echo "<span style='color:red'>".$product->getItemCode()." -- ".$product->getSupplierId()->getTitle()." -- " . $product->getItemCode2() . " ".$ediediitem->getWholesaleprice() . " -- ".$ediediitem->getEdiMarkupPrice("itemPricew")." -- " . $product->getItemPricew() . "</span><BR>";
@@ -1228,8 +1228,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $data["reference"] = $info[1];
 
             //echo $product->id." ".$product->erp_code." --> ".$qty." -- ".$product->getApothema()."<BR>";
-            $sql = "update softone_product set qty = '".$data["item_mtrl_itemtrdata_qty1"]."', reserved = '". $data["item_soreserved"]."' where reference = '".$data["reference"]."'";
-            echo $sql."<BR>";
+            $sql = "update softone_product set qty = '" . $data["item_mtrl_itemtrdata_qty1"] . "', reserved = '" . $data["item_soreserved"] . "' where reference = '" . $data["reference"] . "'";
+            echo $sql . "<BR>";
             $em->getConnection()->exec($sql);
             //if ($i++ > 100) return;
         }
