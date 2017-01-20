@@ -202,7 +202,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $params["filter"] = '';
         $params["filter"] = 'WHERE M.SODTYPE=13 ' . $where;
         $params["relation"] = array();
-        $params["extra"] = array();
+        $params["extra"] = array("irsdata");
         $params["extrafunction"] = array();
         $this->setSetting("SoftoneBundle:Customer:retrieveCustomer", serialize($params));
 
