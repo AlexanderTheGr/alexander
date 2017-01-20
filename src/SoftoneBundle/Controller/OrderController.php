@@ -1605,9 +1605,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $this->newentity[$this->repository] = $entity;
             $this->initialazeNewEntity($entity);
         }
-        $customer = $this->getDoctrine()
-                ->getRepository("SoftoneBundle:Customer")
-                ->find($ord["TRDR"]);
+
 
         $entity->setCustomer($customer);
         $entity->setReference($ord["ID"]);
