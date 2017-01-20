@@ -492,6 +492,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             //print_r($articleIds);
             //print_r($articleIds2["articleIds"]);
             $dt_search["value"] = strlen($dt_search["value"]) > 200 ? "||||" : $dt_search["value"];
+            echo $dt_search["value"];
             if ($this->clearstring($dt_search["value"]) != "") {
 
                 $softone = new Softone();
