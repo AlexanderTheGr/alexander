@@ -491,7 +491,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             //print_r($articleIds);
             //print_r($articleIds2["articleIds"]);
             $dt_search["value"] = strlen($dt_search["value"]) > 200 ? "||||" : $dt_search["value"];
-
+            
             
             if ($this->clearstring($dt_search["value"]) != "") {
 
@@ -553,12 +553,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     if ($search[1]) {
                         $tecdoc_article = "poi.tecdocArticleId in (" . implode(",", $articleIds) . ") OR poi.erpCode like '%" . $search[1] . "%'";
                         $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM SoftoneBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ") OR koo.erpCode like '%" . $search[1] . "%' OR koo.itemApvcode like '%" . $search[0] . "%' OR koo.itemCode1 like '%" . $search[1] . "%' OR koo.itemCode2 like '%" . $search[1] . "%'))";
-                    } elseif (strlen($search[0])<250) {
+                    } elseif ($search[0]) {
+                        if (strlen($search[0]) > 200) $search[0] = '|||||';
                         $tecdoc_article = "poi.tecdocArticleId in (" . implode(",", $articleIds) . ") OR poi.erpCode like '%" . $search[0] . "%'";
                         $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM SoftoneBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ") OR koo.erpCode like '%" . $search[0] . "%' OR koo.itemApvcode like '%" . $search[0] . "%' OR koo.itemCode1 like '%" . $search[0] . "%' OR koo.itemCode2 like '%" . $search[0] . "%'))";
                     } else {
                         $tecdoc_article = "poi.tecdocArticleId in (" . implode(",", $articleIds) . ")";
-                        $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM SoftoneBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . "))";
+                        $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM SoftoneBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ")";
                     }
                 } else {
                     $this->createWhere();
