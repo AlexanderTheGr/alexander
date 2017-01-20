@@ -359,9 +359,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
 
         $dtparams[] = array("name" => "Τελική Τιμη", "index" => $priceField, 'search' => 'text');
-        
+
         $dtparams[] = array("name" => "Κωδ. Συσχετισης", "index" => "sisxetisi", 'search' => 'text');
-        
+
         $dtparams[] = array("name" => "Αποθηκη", "function" => 'getApothiki', 'search' => 'text');
 
         $dtparams[] = array("name" => "QTY", "index" => 'qty', "input" => 'text', 'search' => 'text');
@@ -437,298 +437,305 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     public function fororderitemsDatatable($id = false) {
-        ini_set("memory_limit", "1256M");
-        $request = Request::createFromGlobals();
-        $vat = 1.24;
-        $recordsTotal = 0;
-        $recordsFiltered = 0;
+        try {
+            ini_set("memory_limit", "1256M");
+            $request = Request::createFromGlobals();
+            $vat = 1.24;
+            $recordsTotal = 0;
+            $recordsFiltered = 0;
 
-        //$this->q_or = array();
-        //$this->q_and = array();
-        $order = $this->getDoctrine()
-                ->getRepository("SoftoneBundle:Order")
-                ->find($id);
-        if ($order) {
-            $customer = $this->getDoctrine()
-                    ->getRepository("SoftoneBundle:Customer")
-                    ->find($order->getCustomer());
-            $priceField = $customer->getPriceField();
-        } else {
-            $priceField = "itemPricew";
-        }
-
-        $s = array();
-        $f = array();
-        $jsonarr = array();
-        if ($request->request->get("length")) {
-            $em = $this->getDoctrine()->getManager();
-            $orderFields = $em->getClassMetadata('SoftoneBundle\Entity\Product')->getFieldNames();
-            $doctrineConfig = $em->getConfiguration();
-            $doctrineConfig->addCustomStringFunction('FIELD', 'DoctrineExtensions\Query\Mysql\Field');
-
-            $dt_order = $request->request->get("order");
-            $dt_search = $request->request->get("search");
-            $dt_columns = $request->request->get("columns");
-            //$recordsTotal = $em->getRepository($this->repository)->recordsTotal();
-            $fields = array();
-            $jsonarr = array();
-
-
-            $search = $dt_search["value"];
-            $search = explode(":", $dt_search["value"]);
-
-            $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
-
-            if ($search[1]) {
-                @$articleIds2 = unserialize(base64_decode($search[1]));
+            //$this->q_or = array();
+            //$this->q_and = array();
+            $order = $this->getDoctrine()
+                    ->getRepository("SoftoneBundle:Order")
+                    ->find($id);
+            if ($order) {
+                $customer = $this->getDoctrine()
+                        ->getRepository("SoftoneBundle:Customer")
+                        ->find($order->getCustomer());
+                $priceField = $customer->getPriceField();
             } else {
-                @$articleIds2 = unserialize(base64_decode($search[0]));
+                $priceField = "itemPricew";
             }
 
-            //$articleIds2["linkingTargetId"];
+            $s = array();
+            $f = array();
+            $jsonarr = array();
+            if ($request->request->get("length")) {
+                $em = $this->getDoctrine()->getManager();
+                $orderFields = $em->getClassMetadata('SoftoneBundle\Entity\Product')->getFieldNames();
+                $doctrineConfig = $em->getConfiguration();
+                $doctrineConfig->addCustomStringFunction('FIELD', 'DoctrineExtensions\Query\Mysql\Field');
 
-            $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
-            //print_r($articleIds);
-            //print_r($articleIds2["articleIds"]);
+                $dt_order = $request->request->get("order");
+                $dt_search = $request->request->get("search");
+                $dt_columns = $request->request->get("columns");
+                //$recordsTotal = $em->getRepository($this->repository)->recordsTotal();
+                $fields = array();
+                $jsonarr = array();
 
-            if ($this->clearstring($dt_search["value"]) != "") {
 
-                $softone = new Softone();
-                $recordsTotal = $em->getRepository($this->repository)->recordsTotal();
+                $search = $dt_search["value"];
+                $search = explode(":", $dt_search["value"]);
 
-                foreach ($this->fields as $index => $field) {
-                    if (@$field["index"]) {
-                        $fields[] = $field["index"];
-                        $field_relation = explode(":", $field["index"]);
-                        if (count($field_relation) == 1) {
-                            if ($this->clearstring($dt_search["value"]) != "" AND in_array($field["index"], $orderFields)) {
-                                $this->q_or[] = $this->prefix . "." . $field["index"] . " LIKE '%" . $this->clearstring($dt_search["value"]) . "%'";
-                            }
-                            if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != "" AND in_array($this->fields[$index]["index"], $orderFields)) {
-                                $this->q_and[] = $this->prefix . "." . $this->fields[$index]["index"] . " LIKE '%" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "%'";
-                            }
-                            if (in_array($field_relation[0], $orderFields)) {
-                                $s[] = $this->prefix . "." . $field_relation[0];
-                            }
-                        } else {
-                            if ($dt_search["value"] === true) {
-                                if ($this->clearstring($dt_search["value"]) != "" AND in_array($field_relation[0], $orderFields)) {
-                                    $this->q_or[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_search["value"]) . "'";
+                $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
+
+                if ($search[1]) {
+                    @$articleIds2 = unserialize(base64_decode($search[1]));
+                } else {
+                    @$articleIds2 = unserialize(base64_decode($search[0]));
+                }
+
+                //$articleIds2["linkingTargetId"];
+
+                $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
+                //print_r($articleIds);
+                //print_r($articleIds2["articleIds"]);
+
+                if ($this->clearstring($dt_search["value"]) != "") {
+
+                    $softone = new Softone();
+                    $recordsTotal = $em->getRepository($this->repository)->recordsTotal();
+
+                    foreach ($this->fields as $index => $field) {
+                        if (@$field["index"]) {
+                            $fields[] = $field["index"];
+                            $field_relation = explode(":", $field["index"]);
+                            if (count($field_relation) == 1) {
+                                if ($this->clearstring($dt_search["value"]) != "" AND in_array($field["index"], $orderFields)) {
+                                    $this->q_or[] = $this->prefix . "." . $field["index"] . " LIKE '%" . $this->clearstring($dt_search["value"]) . "%'";
                                 }
-                            }
-                            if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != "" AND in_array($field_relation[0], $orderFields)) {
-                                $field_relation = explode(":", $this->fields[$index]["index"]);
-                                $this->q_and[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "'";
-                                //$s[] = $this->prefix . "." . $field_relation[0];  
+                                if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != "" AND in_array($this->fields[$index]["index"], $orderFields)) {
+                                    $this->q_and[] = $this->prefix . "." . $this->fields[$index]["index"] . " LIKE '%" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "%'";
+                                }
+                                if (in_array($field_relation[0], $orderFields)) {
+                                    $s[] = $this->prefix . "." . $field_relation[0];
+                                }
+                            } else {
+                                if ($dt_search["value"] === true) {
+                                    if ($this->clearstring($dt_search["value"]) != "" AND in_array($field_relation[0], $orderFields)) {
+                                        $this->q_or[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_search["value"]) . "'";
+                                    }
+                                }
+                                if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != "" AND in_array($field_relation[0], $orderFields)) {
+                                    $field_relation = explode(":", $this->fields[$index]["index"]);
+                                    $this->q_and[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "'";
+                                    //$s[] = $this->prefix . "." . $field_relation[0];  
+                                }
                             }
                         }
                     }
-                }
 
 
-                if ($search[0] == 'productfreesearch') {
-                    $garr = explode(" ", $search[1]);
-                    foreach ($garr as $d) {
-                        $likearr[] = "o.dataIndex like '%" . $d . "%'";
-                    }
-                    $like = implode(" AND ", $likearr);
-                    $sqlearch = "Select o.id from SoftoneBundle:ProductFreesearch o where " . $like . "";
-                } else {
-                    $sqlearch = "Select o.id from SoftoneBundle:ProductSearch o where o.itemCode like '%" . $search[1] . "%' OR o.itemCode1 like '%" . $search[1] . "%' OR o.itemCode2 like '%" . $search[1] . "%'";
-                }
-                $qsupplier = "";
-                if ($search[2] == 'supplier') {
-                    $supplier = $this->getDoctrine()
-                                    ->getRepository('SoftoneBundle:SoftoneSupplier')->find($search[3]);
-                    if ($supplier)
-                        $qsupplier = " p.supplierId = '" . $supplier->getId() . "' AND ";
-                }
-
-
-                //print_r($articleIds);
-                $this->prefix = "p";
-                if (count((array) $articleIds)) {
-                    if ($search[1]) {
-                        $tecdoc_article = "poi.tecdocArticleId in (" . implode(",", $articleIds) . ") OR poi.erpCode like '%" . $search[1] . "%'";
-                        $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM SoftoneBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ") OR koo.erpCode like '%" . $search[1] . "%' OR koo.itemApvcode like '%" . $search[0] . "%' OR koo.itemCode1 like '%" . $search[1] . "%' OR koo.itemCode2 like '%" . $search[1] . "%'))";
-                    } elseif ($search[0]) {
-                        $tecdoc_article = "poi.tecdocArticleId in (" . implode(",", $articleIds) . ") OR poi.erpCode like '%" . $search[0] . "%'";
-                        $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM SoftoneBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ") OR koo.erpCode like '%" . $search[0] . "%' OR koo.itemApvcode like '%" . $search[0] . "%' OR koo.itemCode1 like '%" . $search[0] . "%' OR koo.itemCode2 like '%" . $search[0] . "%'))";
+                    if ($search[0] == 'productfreesearch') {
+                        $garr = explode(" ", $search[1]);
+                        foreach ($garr as $d) {
+                            $likearr[] = "o.dataIndex like '%" . $d . "%'";
+                        }
+                        $like = implode(" AND ", $likearr);
+                        $sqlearch = "Select o.id from SoftoneBundle:ProductFreesearch o where " . $like . "";
                     } else {
-                        $tecdoc_article = "poi.tecdocArticleId in (" . implode(",", $articleIds) . ")";
-                        $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM SoftoneBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ")";
+                        $sqlearch = "Select o.id from SoftoneBundle:ProductSearch o where o.itemCode like '%" . $search[1] . "%' OR o.itemCode1 like '%" . $search[1] . "%' OR o.itemCode2 like '%" . $search[1] . "%'";
                     }
-                } else {
+                    $qsupplier = "";
+                    if ($search[2] == 'supplier') {
+                        $supplier = $this->getDoctrine()
+                                        ->getRepository('SoftoneBundle:SoftoneSupplier')->find($search[3]);
+                        if ($supplier)
+                            $qsupplier = " p.supplierId = '" . $supplier->getId() . "' AND ";
+                    }
+
+
+                    //print_r($articleIds);
+                    $this->prefix = "p";
+                    if (count((array) $articleIds)) {
+                        if ($search[1]) {
+                            $tecdoc_article = "poi.tecdocArticleId in (" . implode(",", $articleIds) . ") OR poi.erpCode like '%" . $search[1] . "%'";
+                            $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM SoftoneBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ") OR koo.erpCode like '%" . $search[1] . "%' OR koo.itemApvcode like '%" . $search[0] . "%' OR koo.itemCode1 like '%" . $search[1] . "%' OR koo.itemCode2 like '%" . $search[1] . "%'))";
+                        } elseif ($search[0]) {
+                            $tecdoc_article = "poi.tecdocArticleId in (" . implode(",", $articleIds) . ") OR poi.erpCode like '%" . $search[0] . "%'";
+                            $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM SoftoneBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ") OR koo.erpCode like '%" . $search[0] . "%' OR koo.itemApvcode like '%" . $search[0] . "%' OR koo.itemCode1 like '%" . $search[0] . "%' OR koo.itemCode2 like '%" . $search[0] . "%'))";
+                        } else {
+                            $tecdoc_article = "poi.tecdocArticleId in (" . implode(",", $articleIds) . ")";
+                            $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM SoftoneBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ")";
+                        }
+                    } else {
+                        $this->createWhere();
+                        $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM SoftoneBundle:Product koo where koo.sisxetisi != '' AND (koo.erpCode like '%" . $search[1] . "%' OR koo.itemApvcode like '%" . $search[0] . "%' OR koo.itemCode1 like '%" . $search[1] . "%' OR koo.itemCode2 like '%" . $search[1] . "%'))";
+                    }
+                    //echo  $sql;
+                    //$this->q_or[] = $this->prefix . ".id in  (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
+
+
+
                     $this->createWhere();
-                    $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM SoftoneBundle:Product koo where koo.sisxetisi != '' AND (koo.erpCode like '%" . $search[1] . "%' OR koo.itemApvcode like '%" . $search[0] . "%' OR koo.itemCode1 like '%" . $search[1] . "%' OR koo.itemCode2 like '%" . $search[1] . "%'))";
-                }
-                //echo  $sql;
-                //$this->q_or[] = $this->prefix . ".id in  (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
+
+                    $this->createOrderBy($fields, $dt_order);
+                    $this->createSelect($s);
+                    //$select = count($s) > 0 ? implode(",", $s) : $this->prefix . ".*";
+
+                    $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
+                    //$tecdoc_article = '';
 
 
-
-                $this->createWhere();
-
-                $this->createOrderBy($fields, $dt_order);
-                $this->createSelect($s);
-                //$select = count($s) > 0 ? implode(",", $s) : $this->prefix . ".*";
-
-                $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
-                //$tecdoc_article = '';
-
-
-                if (count((array) $articleIds)) {
-                    $tecdoc_article = 'p.tecdocArticleId in (' . implode(",", $articleIds) . ') OR ';
-                    if ($search[1])
-                        $tecdoc_article2 = " p.erpCode like '%" . $search[1] . "%' OR ";
-                    else
-                    //$tecdoc_article2 = " p.id in (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . ")) OR ";
-                        $tecdoc_article2 = "";
-                    $sql2 = 'SELECT  ' . $this->select . ', p.reference, p.id
+                    if (count((array) $articleIds)) {
+                        $tecdoc_article = 'p.tecdocArticleId in (' . implode(",", $articleIds) . ') OR ';
+                        if ($search[1])
+                            $tecdoc_article2 = " p.erpCode like '%" . $search[1] . "%' OR ";
+                        else
+                        //$tecdoc_article2 = " p.id in (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . ")) OR ";
+                            $tecdoc_article2 = "";
+                        $sql2 = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
                                 where ' . $qsupplier . ' (p.erpCode like "%' . $search[1] . '%" OR ' . $tecdoc_article . $tecdoc_article2 . ' ' . $sisxetisi . ')
                                 ORDER BY ' . $this->orderBy;
 
-                    $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
+                        $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
                                 where ' . $qsupplier . ' (' . $tecdoc_article . $tecdoc_article2 . ' ' . $sisxetisi . ')
                                 ORDER BY ' . $this->orderBy;
-                } else {
-                    $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
+                    } else {
+                        $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
                                 where ' . $qsupplier . ' (' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . ')
                                 ORDER BY ' . $this->orderBy;
-                }
-
-                //echo $sql;
-                //exit;
-
-                $sql = str_replace("p.*,", "", $sql);
-                //$sql = str_replace("ORDER BY p.qty asc","",$sql);
-
-                $query = $em->createQuery(
-                                $sql
-                        )
-                        ->setMaxResults($request->request->get("length"))
-                        ->setFirstResult($request->request->get("start"))
-                ;
-                //echo $sql."<BR>";    
-                /*
-                  echo 'SELECT  ' . $this->select . ', p.reference
-                  FROM ' . $this->repository . ' ' . $this->prefix . '
-                  ' . $this->where . ' ' . $tecdoc_article . '
-                  ORDER BY ' . $this->orderBy;
-                  //exit;
-                 */
-                $results = $query->getResult();
-            }
-            $data["fields"] = $this->fields;
-
-            $jsonarr = array();
-            $jsonarrnoref = array();
-
-            $r = explode(":", $this->repository);
-            $i = 0;
-            foreach (@(array) $results as $result) {
-                $json = array();
-                foreach ($data["fields"] as $field) {
-                    if (@$field["index"]) {
-                        $field_relation = explode(":", $field["index"]);
-                        if (count($field_relation) > 1) {
-                            //echo $this->repository;
-                            $obj = $em->getRepository($this->repository)->find($result["id"]);
-                            foreach ($field_relation as $relation) {
-                                if ($obj)
-                                    $obj = $obj->getField($relation);
-                            }
-                            $val = $obj;
-                        } else {
-                            $val = @$result[$field["index"]];
-                        }
-                        if (@$field["method"]) {
-                            $method = $field["method"] . "Method";
-                            $json[] = $this->$method($val);
-                        } else {
-                            if (@$field["input"]) {
-                                $obj = $em->getRepository($this->repository)->find($result["id"]);
-                                $ref = $obj->getField('reference'); //$result[$field["reference"]];
-                                $f[] = $obj->getField('tecdocArticleId');
-                                //$articleIds[] = $obj->getField('tecdocArticleId');
-                                $value = $field["index"] == 'qty' ? 1 : 1;
-                                $value = $field["index"] == 'edi' ? 1 : 1;
-                                $json[] = "<input data-id='" . $result["id"] . "' data-rep='" . $this->repository . "' data-ref='" . $ref . "' id='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "_" . $result["id"] . "' data-id='" . $result["id"] . "' class='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "' type='" . $field["input"] . "' value='$value'>";
-                            } else {
-                                $json[] = $val;
-                            }
-                        }
-                    } elseif (@$field["function"]) {
-                        $func = $field["function"];
-                        $obj = $em->getRepository($this->repository)->find($result["id"]);
-                        $json[] = $obj->$func($order);
                     }
+
+                    //echo $sql;
+                    //exit;
+
+                    $sql = str_replace("p.*,", "", $sql);
+                    //$sql = str_replace("ORDER BY p.qty asc","",$sql);
+
+                    $query = $em->createQuery(
+                                    $sql
+                            )
+                            ->setMaxResults($request->request->get("length"))
+                            ->setFirstResult($request->request->get("start"))
+                    ;
+                    //echo $sql."<BR>";    
+                    /*
+                      echo 'SELECT  ' . $this->select . ', p.reference
+                      FROM ' . $this->repository . ' ' . $this->prefix . '
+                      ' . $this->where . ' ' . $tecdoc_article . '
+                      ORDER BY ' . $this->orderBy;
+                      //exit;
+                     */
+                    $results = $query->getResult();
                 }
-                $apothema = 1;
-                $colorcss = $apothema > 0 ? "instock" : "outofstock";
-                $json["DT_RowClass"] = $colorcss . " dt_row_" . strtolower($r[1]);
-                $json["DT_RowId"] = 'dt_id_' . strtolower($r[1]) . '_' . $result["id"];
-                /*
-                  if ($result["reference"]) {
-                  $jsonarr[(int) $result["reference"]] = $json;
-                  } else {
+                $data["fields"] = $this->fields;
 
-                  $json[5] = str_replace("value='---'", "value='" . $obj->getField("itemPricew") . "'", $json[5]);
-                  $json[6] = str_replace("value='---'", "value='1'", $json[6]);
-                  $jsonarrnoref[$result["id"]] = $json;
-                  }
-                 * 
-                 */
-                $json[4] = $obj->getArticleAttributes2($articleIds2["linkingTargetId"]);
-                $json[6] = number_format($json[6] * $vat, 2, '.', '');
-                ;
-                $json[7] = $obj->getDiscount($customer, $vat);
-                $json[8] = $obj->getGroupedDiscountPrice($customer, $vat); //str_replace($obj->$priceField, $obj->getGroupedDiscountPrice($customer), $json[5]);
-                //$json[6] = str_replace("value='---'", "value='1'", $json[6]);
-                $jsonarrnoref[$result["id"]] = $json;
+                $jsonarr = array();
+                $jsonarrnoref = array();
+
+                $r = explode(":", $this->repository);
+                $i = 0;
+                foreach (@(array) $results as $result) {
+                    $json = array();
+                    foreach ($data["fields"] as $field) {
+                        if (@$field["index"]) {
+                            $field_relation = explode(":", $field["index"]);
+                            if (count($field_relation) > 1) {
+                                //echo $this->repository;
+                                $obj = $em->getRepository($this->repository)->find($result["id"]);
+                                foreach ($field_relation as $relation) {
+                                    if ($obj)
+                                        $obj = $obj->getField($relation);
+                                }
+                                $val = $obj;
+                            } else {
+                                $val = @$result[$field["index"]];
+                            }
+                            if (@$field["method"]) {
+                                $method = $field["method"] . "Method";
+                                $json[] = $this->$method($val);
+                            } else {
+                                if (@$field["input"]) {
+                                    $obj = $em->getRepository($this->repository)->find($result["id"]);
+                                    $ref = $obj->getField('reference'); //$result[$field["reference"]];
+                                    $f[] = $obj->getField('tecdocArticleId');
+                                    //$articleIds[] = $obj->getField('tecdocArticleId');
+                                    $value = $field["index"] == 'qty' ? 1 : 1;
+                                    $value = $field["index"] == 'edi' ? 1 : 1;
+                                    $json[] = "<input data-id='" . $result["id"] . "' data-rep='" . $this->repository . "' data-ref='" . $ref . "' id='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "_" . $result["id"] . "' data-id='" . $result["id"] . "' class='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "' type='" . $field["input"] . "' value='$value'>";
+                                } else {
+                                    $json[] = $val;
+                                }
+                            }
+                        } elseif (@$field["function"]) {
+                            $func = $field["function"];
+                            $obj = $em->getRepository($this->repository)->find($result["id"]);
+                            $json[] = $obj->$func($order);
+                        }
+                    }
+                    $apothema = 1;
+                    $colorcss = $apothema > 0 ? "instock" : "outofstock";
+                    $json["DT_RowClass"] = $colorcss . " dt_row_" . strtolower($r[1]);
+                    $json["DT_RowId"] = 'dt_id_' . strtolower($r[1]) . '_' . $result["id"];
+                    /*
+                      if ($result["reference"]) {
+                      $jsonarr[(int) $result["reference"]] = $json;
+                      } else {
+
+                      $json[5] = str_replace("value='---'", "value='" . $obj->getField("itemPricew") . "'", $json[5]);
+                      $json[6] = str_replace("value='---'", "value='1'", $json[6]);
+                      $jsonarrnoref[$result["id"]] = $json;
+                      }
+                     * 
+                     */
+                    $json[4] = $obj->getArticleAttributes2($articleIds2["linkingTargetId"]);
+                    $json[6] = number_format($json[6] * $vat, 2, '.', '');
+                    ;
+                    $json[7] = $obj->getDiscount($customer, $vat);
+                    $json[8] = $obj->getGroupedDiscountPrice($customer, $vat); //str_replace($obj->$priceField, $obj->getGroupedDiscountPrice($customer), $json[5]);
+                    //$json[6] = str_replace("value='---'", "value='1'", $json[6]);
+                    $jsonarrnoref[$result["id"]] = $json;
+                }
+
+                //$jsonarr = $this->softoneCalculate($jsonarr, $id);
+                //echo count($jsonarr);
+                $jsonarr = array_merge($jsonarr, $jsonarrnoref);
+
+
+                //print_r($articleIds);
+                $f = array_unique((array) $f);
+                $articleIds = array_unique((array) $articleIds);
+                $de = array_diff((array) $articleIds, (array) $f);
+                //print_r($de);
+                $out = $this->getArticlesSearchByIds(implode(",", (array) $de));
+                //print_r($out);
+                $p = array();
+                foreach ($out as $v) {
+                    $p[$v->articleId] = $v;
+                    $json = array();
+
+                    $json[] = "";
+                    $json[] = "<span  car='' class='product_info' data-articleId='" . $v->articleId . "' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span></a><BR><a class='create_product' data-ref='" . $v->articleId . "' style='font-size:10px; color:rose' href='#'>Create Product</a>";
+                    //$json[] = "<span car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span>";
+                    $json[] = "<span car='' class='product_info' data-articleId='" . $v->articleId . "' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->genericArticleName . "</span>";
+                    $json[] = "<span  car='' class='product_info' data-articleId='" . $v->articleId . "' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->brandName . "</span>";
+                    $json[] = $this->getArticleAttributes($v->articleId, $articleIds2["linkingTargetId"]);
+                    $json[] = "";
+                    $json[] = "";
+                    $json[] = "";
+                    $json[] = "";
+                    $json[] = "";
+                    $json[] = "";
+                    $json[] = "";
+                    $json[] = "";
+
+                    $jsonarr[] = $json;
+                }
+                // print_r($p);
             }
-
-            //$jsonarr = $this->softoneCalculate($jsonarr, $id);
-            //echo count($jsonarr);
-            $jsonarr = array_merge($jsonarr, $jsonarrnoref);
-
-
-            //print_r($articleIds);
-            $f = array_unique((array) $f);
-            $articleIds = array_unique((array) $articleIds);
-            $de = array_diff((array) $articleIds, (array) $f);
-            //print_r($de);
-            $out = $this->getArticlesSearchByIds(implode(",", (array) $de));
-            //print_r($out);
-            $p = array();
-            foreach ($out as $v) {
-                $p[$v->articleId] = $v;
-                $json = array();
-
-                $json[] = "";
-                $json[] = "<span  car='' class='product_info' data-articleId='" . $v->articleId . "' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span></a><BR><a class='create_product' data-ref='" . $v->articleId . "' style='font-size:10px; color:rose' href='#'>Create Product</a>";
-                //$json[] = "<span car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span>";
-                $json[] = "<span car='' class='product_info' data-articleId='" . $v->articleId . "' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->genericArticleName . "</span>";
-                $json[] = "<span  car='' class='product_info' data-articleId='" . $v->articleId . "' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->brandName . "</span>";
-                $json[] = $this->getArticleAttributes($v->articleId, $articleIds2["linkingTargetId"]);
-                $json[] = "";
-                $json[] = "";
-                $json[] = "";
-                $json[] = "";
-                $json[] = "";
-                $json[] = "";
-                $json[] = "";
-                $json[] = "";
-
-                $jsonarr[] = $json;
-            }
-            // print_r($p);
+            //$jsonarr = array_merge($jsonarr, $jsonarrnoref);
+            //print_r($jsonarr);
+            //exit;
+        } catch (\Exception $e) {
+            //$json = json_encode(array("error" => true, "message" => $e->getMessage()));
+            echo $e->getMessage();
+            exit;
         }
-        //$jsonarr = array_merge($jsonarr, $jsonarrnoref);
-        print_r($jsonarr);
         exit;
         $data["data"] = $jsonarr;
         $data["recordsTotal"] = $recordsTotal;
@@ -969,13 +976,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     function getTabContentSearch($order) {
-        
-        $repormodels = $this->getDoctrine()->getRepository('SoftoneBundle:Reportmodel')->findBy(array('customerId' => $order->getCustomer()->getId()),array('ts' => 'DESC'));
-        
-        
+
+        $repormodels = $this->getDoctrine()->getRepository('SoftoneBundle:Reportmodel')->findBy(array('customerId' => $order->getCustomer()->getId()), array('ts' => 'DESC'));
+
+
         $history = "<ul>";
-        foreach($repormodels as $repormodel) {
-            if ($i++ > 15) break;
+        foreach ($repormodels as $repormodel) {
+            if ($i++ > 15)
+                break;
             $brandModelType = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:BrandModelType')
                     ->find($repormodel->getModel());
@@ -990,7 +998,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $yearto = substr($brandsmodel->getYearTo(), 4, 2) . "/" . substr($brandsmodel->getYearTo(), 0, 4);
             $yearto = $yearto == 0 ? 'Today' : $yearto;
             $year = $yearfrom . " - " . $yearto;
-            $history .= "<li class='modelhistory' style='cursor:pointer' data-order='".$order->getId()."' data-ref='".$repormodel->getModel()."'>".$brand->getBrand() . " " . $brandsmodel->getBrandModel() . " " . $year . " " . $brandModelType->getBrandModelType() . " " . $brandModelType->getEngine()."</li>";
+            $history .= "<li class='modelhistory' style='cursor:pointer' data-order='" . $order->getId() . "' data-ref='" . $repormodel->getModel() . "'>" . $brand->getBrand() . " " . $brandsmodel->getBrandModel() . " " . $year . " " . $brandModelType->getBrandModelType() . " " . $brandModelType->getEngine() . "</li>";
         }
         $history .= "</ul>";
         $response = $this->get('twig')->render('SoftoneBundle:Order:search.html.twig', array(
