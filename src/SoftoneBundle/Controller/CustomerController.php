@@ -316,7 +316,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             echo $sql . "<BR>";
             //if ($i++ > 100)
             //    exit;
-            continue;
+            //continue;
             $em->getConnection()->exec($sql);
             /*
               @$entity_id = (int) $entity->id;
