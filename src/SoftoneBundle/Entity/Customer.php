@@ -1168,4 +1168,33 @@ class Customer extends Entity {
     {
         return $this->customerIrsdata;
     }
+    /**
+     * @var string
+     */
+    private $customerJobtypetrd;
+
+
+    /**
+     * Set customerJobtypetrd
+     *
+     * @param string $customerJobtypetrd
+     *
+     * @return Customer
+     */
+    public function setCustomerJobtypetrd($customerJobtypetrd)
+    {
+        $this->customerJobtypetrd = $customerJobtypetrd;
+
+        return $this;
+    }
+
+    /**
+     * Get customerJobtypetrd
+     *
+     * @return string
+     */
+    public function getCustomerJobtypetrd()
+    {
+        return $this->customerJobtypetrd;
+    }
 }
