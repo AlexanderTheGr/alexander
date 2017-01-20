@@ -23,9 +23,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     /**
      * @Route("/order/order/asd")
      */
-    public function tetet() {
-
-        $sql = "SELECT FINDOC,FULLYTRANSF FROM FINDOC WHERE FULLYTRANSF = 0";
+    public function setfullytrans() {
+        $em = $this->getDoctrine()->getManager();
+        $sql = "SELECT FINDOC,FULLYTRANSF FROM FINDOC WHERE FULLYTRANSF = 1";
         $params["fSQL"] = $sql;
         $softone = new Softone();
         $datas = $softone->createSql($params);
@@ -36,7 +36,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             echo $sql."<BR>";
             //$em->getConnection()->exec($sql);
         }
-        exit;
     }
 
     /**
