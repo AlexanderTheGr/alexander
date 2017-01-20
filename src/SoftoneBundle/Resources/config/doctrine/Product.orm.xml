@@ -125,6 +125,7 @@
                 <option name="default">1</option>
             </options>
         </field>
+        
         <field name="cccPriceUpd" type="boolean" column="item_cccpriceupd" nullable="true">
             <options>
                 <option name="default">1</option>
