@@ -1138,6 +1138,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                             ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), "Edi" => $ediedi));
                     if ($ediediitem) {
                         $itemPricew = $ediediitem->getEdiMarkupPrice("itemPricew");
+                        $itemPricer = $ediediitem->getEdiMarkupPrice("itemPricer");
                         if ($itemPricew != $product->getItemPricew()) {
                             echo $ediedi->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediediitem->getWholesaleprice() . " -- " . $ediediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
                             if ($i++ > 20) exit;
@@ -1145,9 +1146,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                 //$product->setItemPricew($itemPricew);
                                 //$this->flushpersist($product);
                                 //$product->toSoftone();
-                                $sql = "UPDATE MTRL SET PRICEW = ".$itemPricew."  WHERE MTRL = ".$product->getReference();
+                                $sql = "UPDATE MTRL SET PRICEW = ".$itemPricew.", PRICEW = ".$itemPricer."  WHERE MTRL = ".$product->getReference();
                                 $params["fSQL"] = $sql;
-                                $datas = $softone->createSql($params);
+                                //$datas = $softone->createSql($params);
                                 echo $sql."<BR>";
                                 
                             }
