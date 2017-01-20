@@ -526,7 +526,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         }
                     }
                 }
-
+                echo "....\n";
+                //echo 'sss\n';
                 
                 if ($search[0] == 'productfreesearch') {
                     $garr = explode(" ", $search[1]);
