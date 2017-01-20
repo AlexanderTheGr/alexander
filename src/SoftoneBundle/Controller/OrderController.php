@@ -491,9 +491,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
             //print_r($articleIds);
             //print_r($articleIds2["articleIds"]);
-
+            $dt_search["value"] = strlen($dt_search["value"]) > 200 ? "||||" : $dt_search["value"];
             if ($this->clearstring($dt_search["value"]) != "") {
-                //$dt_search["value"] = addslashes($dt_search["value"]);
+
                 $softone = new Softone();
                 $recordsTotal = $em->getRepository($this->repository)->recordsTotal();
                 
@@ -567,17 +567,17 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 //echo  $sql;
                 //$this->q_or[] = $this->prefix . ".id in  (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
 
-                
+
 
                 //$this->createWhere();
-                echo "1111\n";
+
                 $this->createOrderBy($fields, $dt_order);
                 $this->createSelect($s);
                 //$select = count($s) > 0 ? implode(",", $s) : $this->prefix . ".*";
 
                 $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
                 //$tecdoc_article = '';
-                echo "1111\n";
+
 
                 if (count((array) $articleIds)) {
                     $tecdoc_article = 'p.tecdocArticleId in (' . implode(",", $articleIds) . ') OR ';
@@ -602,8 +602,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 ORDER BY ' . $this->orderBy;
                 }
 
-                echo $sql;
-                exit;
+                //echo $sql;
+                //exit;
 
                 $sql = str_replace("p.*,", "", $sql);
                 //$sql = str_replace("ORDER BY p.qty asc","",$sql);
