@@ -261,7 +261,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $em = $this->getDoctrine()->getManager();
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
-            $data["IRSDATA"] = $IRSDATA[$data["IRSDATA"]];
+            //$data["IRSDATA"] = $IRSDATA[$data["IRSDATA"]];
             print_r($data);
             
             if ($i++ > 100 ) exit;
