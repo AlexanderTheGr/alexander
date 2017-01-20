@@ -1131,44 +1131,51 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $ediedis = $this->getDoctrine()->getRepository('EdiBundle:Edi')->findAll();
         foreach ($ediedis as $ediedi) {
             if ($ediedi->getId() == 4)
-            if ($ediedi->getItemMtrsup() > 0) {
-                $products = $this->getDoctrine()->getRepository('SoftoneBundle:Product')->findBy(array("itemMtrsup" => $ediedi->getItemMtrsup()));
-                foreach ($products as $product) {
-                    $brand =  $this->getSupplierId() ? $this->getSupplierId()->getTitle() : "";
-                    if ($brand == '') return;
-                    $ediediitem = $this->getDoctrine()
-                            ->getRepository('EdiBundle:EdiItem')
-                            ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()),'brand'=>$brand, "Edi" => $ediedi));
-                    if ($ediediitem) {
-                        $itemPricew = $ediediitem->getEdiMarkupPrice("itemPricew");
-                        $itemPricer = $ediediitem->getEdiMarkupPrice("itemPricer");
-                        if (round($itemPricew,2) != round($product->getItemPricew(),2) OR round($itemPricer,2) != round($product->getItemPricer(),2)) {
-                            //echo $ediedi->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediediitem->getWholesaleprice() . " -- " . $ediediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
-                            if ($i++ > 5)
-                                exit;
-                            if ($itemPricew > 0.01 AND $product->getReference() > 0) {
+                if ($ediedi->getItemMtrsup() > 0) {
+                    $products = $this->getDoctrine()->getRepository('SoftoneBundle:Product')->findBy(array("itemMtrsup" => $ediedi->getItemMtrsup()));
+                    foreach ($products as $product) {
+                        $brand = $this->getSupplierId() ? $this->getSupplierId()->getTitle() : "";
 
-                                echo $ediedi->getName() . " ".$ediediitem->getWholesaleprice()." -- " . $product->getItemCode() . " itemPricew:(" . $itemPricew . "/" . $product->getItemPricew() . ") itemPricer:(" . $itemPricer . "/" . $product->getItemPricer() . ")<BR>";
+                        if ($brand != '') {
+;
+                            $ediediitem = $this->getDoctrine()
+                                    ->getRepository('EdiBundle:EdiItem')
+                                    ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), 'brand' => $brand, "Edi" => $ediedi));
+                        } else {
+                            $ediediitem = $this->getDoctrine()
+                                    ->getRepository('EdiBundle:EdiItem')
+                                    ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), "Edi" => $ediedi));
+                        }
+                        if ($ediediitem) {
+                            $itemPricew = $ediediitem->getEdiMarkupPrice("itemPricew");
+                            $itemPricer = $ediediitem->getEdiMarkupPrice("itemPricer");
+                            if (round($itemPricew, 2) != round($product->getItemPricew(), 2) OR round($itemPricer, 2) != round($product->getItemPricer(), 2)) {
+                                //echo $ediedi->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediediitem->getWholesaleprice() . " -- " . $ediediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
+                                if ($i++ > 5)
+                                    exit;
+                                if ($itemPricew > 0.01 AND $product->getReference() > 0) {
 
-                                //$product->setCccPriceUpd(1);
-                                //$product->setItemPricew($itemPricew);
-                                //$product->setItemPricer($itemPricer);
-                                //
+                                    echo $ediedi->getName() . " " . $ediediitem->getWholesaleprice() . " -- " . $product->getItemCode() . " itemPricew:(" . $itemPricew . "/" . $product->getItemPricew() . ") itemPricer:(" . $itemPricer . "/" . $product->getItemPricer() . ")<BR>";
+
+                                    //$product->setCccPriceUpd(1);
+                                    //$product->setItemPricew($itemPricew);
+                                    //$product->setItemPricer($itemPricer);
+                                    //
                                 //$this->flushpersist($product);
-                                //$product->toSoftone();
-                                $sql = "UPDATE MTRL SET CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
-                                $params["fSQL"] = $sql;
-                                $datas = $softone->createSql($params);
-                                echo $sql . "<BR>";
+                                    //$product->toSoftone();
+                                    $sql = "UPDATE MTRL SET CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
+                                    $params["fSQL"] = $sql;
+                                    $datas = $softone->createSql($params);
+                                    echo $sql . "<BR>";
+                                }
+                            } else {
+                                //echo "<span style='color:red'>".$product->getItemCode()." -- ".$product->getSupplierId()->getTitle()." -- " . $product->getItemCode2() . " ".$ediediitem->getWholesaleprice() . " -- ".$ediediitem->getEdiMarkupPrice("itemPricew")." -- " . $product->getItemPricew() . "</span><BR>";
                             }
                         } else {
-                            //echo "<span style='color:red'>".$product->getItemCode()." -- ".$product->getSupplierId()->getTitle()." -- " . $product->getItemCode2() . " ".$ediediitem->getWholesaleprice() . " -- ".$ediediitem->getEdiMarkupPrice("itemPricew")." -- " . $product->getItemPricew() . "</span><BR>";
+                            //echo "<span style='color:red'>".$product->getItemCode().";".$product->getSupplierId()->getTitle().";" . $product->getItemCode2() . "</span><BR>";
                         }
-                    } else {
-                        //echo "<span style='color:red'>".$product->getItemCode().";".$product->getSupplierId()->getTitle().";" . $product->getItemCode2() . "</span><BR>";
                     }
                 }
-            }
         }
 
         exit;
