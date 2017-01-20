@@ -216,7 +216,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
     function retrieveSoftoneData($params = array()) {
 
         //$this->retrieveCustomer();
-        
+        $em = $this->getDoctrine()->getManager();
         
         
         $sql = "SELECT * FROM IRSDATA";
@@ -224,6 +224,16 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $softone = new Softone();
         $datas = $softone->createSql($params);
         print_r($datas);
+        foreach($datas->data as $data) {
+            $sql = "Insert softone_customerirs set "
+                    . "id = '".$data->IRSDATA."', "
+                    . "name = '".$data->NAME."', "
+                    . "address = '".$data->ADDRESS."', "
+                    . "district = '".$data->DISTRICT."', "
+                    . "zip = '".$data->ZIP."', "
+                    ;
+            $em->getConnection()->exec($sql);
+        }
         exit;
         
         $params["list"] = 'partsbox';
