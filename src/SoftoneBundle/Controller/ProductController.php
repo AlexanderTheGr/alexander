@@ -1146,7 +1146,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                 //$product->setItemPricew($itemPricew);
                                 //$this->flushpersist($product);
                                 //$product->toSoftone();
-                                $sql = "UPDATE MTRL SET PRICEW = ".$itemPricew.", PRICEW = ".$itemPricer."  WHERE MTRL = ".$product->getReference();
+                                $sql = "UPDATE MTRL SET PRICEW = ".$itemPricew.", PRICER = ".$itemPricer."  WHERE MTRL = ".$product->getReference();
                                 $params["fSQL"] = $sql;
                                 //$datas = $softone->createSql($params);
                                 echo $sql."<BR>";
