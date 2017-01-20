@@ -1266,6 +1266,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->addField(array("name" => "Πωλητής", "index" => 'user:username'))
                 ->addField(array("name" => "Σύνολο", 'function' => 'getTotal'))
                 ->addField(array("name" => "Παραγγελία", "index" => 'reference', 'method' => 'yesno'))
+                ->addField(array("name" => "Τιμολογημένη", "index" => 'fullytrans', 'method' => 'yesno'))
 
         ;
         //$this->q_and[] = $this->prefix . ".id not in (SELECT k.order FROM SoftoneBundle:Orderitem k)";
