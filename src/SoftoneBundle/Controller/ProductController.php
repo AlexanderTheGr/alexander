@@ -1130,7 +1130,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $ediedis = $this->getDoctrine()->getRepository('EdiBundle:Edi')->findAll();
         foreach ($ediedis as $ediedi) {
-            if ($ediedi->getId() == 4)
+            //if ($ediedi->getId() == 4)
                 if ($ediedi->getItemMtrsup() > 0) {
                     $products = $this->getDoctrine()->getRepository('SoftoneBundle:Product')->findBy(array("itemMtrsup" => $ediedi->getItemMtrsup()));
                     foreach ($products as $product) {
@@ -1152,8 +1152,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                             $itemPricer = $ediediitem->getEdiMarkupPrice("itemPricer");
                             if (round($itemPricew, 2) != round($product->getItemPricew(), 2) OR round($itemPricer, 2) != round($product->getItemPricer(), 2)) {
                                 //echo $ediedi->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediediitem->getWholesaleprice() . " -- " . $ediediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
-                                if ($i++ > 15)
-                                    exit;
+                                //if ($i++ > 15)
+                                //    exit;
                                 if ($itemPricew > 0.01 AND $product->getReference() > 0) {
 
                                     echo $ediedi->getName() . " " . $ediediitem->getWholesaleprice() . " -- " . $product->getItemCode() . " itemPricew:(" . $itemPricew . "/" . $product->getItemPricew() . ") itemPricer:(" . $itemPricer . "/" . $product->getItemPricer() . ")<BR>";
