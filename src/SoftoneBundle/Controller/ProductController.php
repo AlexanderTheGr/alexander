@@ -1188,9 +1188,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     function retrieveSoftoneDataAction($params = array()) {
         set_time_limit(100000);
         ini_set('memory_limit', '2256M');
-        echo $this->retrieveMtrcategory();
-        echo $this->retrieveMtrmanfctr();
-        echo $this->retrieveMtrl();
+        //echo $this->retrieveMtrcategory();
+        //echo $this->retrieveMtrmanfctr();
+        //echo $this->retrieveMtrl();
         echo $this->retrieveApothema();
 
 
@@ -1207,12 +1207,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //$filters = "ITEM.SORENQTY1>1";  
         //$filters = "ITEM.UPDDATE=".date("Y-m-d")."&ITEM.UPDDATE_TO=".date("Y-m-d");  
         //$filters = "ITEM.ISACTIVE=1";  
-        return;
+        //return;
         $datas = $this->retrieveData("ITEM", "apothema");
         //echo 'Sss';
         echo count($datas) . "<BR>";
-        //print_r($datas);
-        //exit;
+        print_r($datas);
+        exit;
         foreach ($datas as $data) {
             //print_r($data);
             $zoominfo = $data["zoominfo"];
