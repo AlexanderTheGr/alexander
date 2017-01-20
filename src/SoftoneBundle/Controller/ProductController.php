@@ -977,7 +977,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
-            print_r($data);
+            //print_r($data);
             //exit;
             $entity = $this->getDoctrine()
                     ->getRepository($params["repository"])
@@ -1054,8 +1054,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
              * 
              */
             $entity = null;
-            if (@$i++ > 150)
-                 break;
+            //if (@$i++ > 150)
+            //     break;
         }
     }
 
