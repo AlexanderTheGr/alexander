@@ -567,7 +567,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 //echo  $sql;
                 //$this->q_or[] = $this->prefix . ".id in  (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
 
-                echo "1111\n";
+                
 
                 //$this->createWhere();
 
@@ -577,7 +577,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                 $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
                 //$tecdoc_article = '';
-
+                echo "1111\n";
 
                 if (count((array) $articleIds)) {
                     $tecdoc_article = 'p.tecdocArticleId in (' . implode(",", $articleIds) . ') OR ';
