@@ -18,7 +18,7 @@ class SoftoneController extends  Main {
         $object = $params["object"];
         $em = $this->getDoctrine()->getManager();
         $fields = $em->getClassMetadata($params["object"])->getFieldNames();
-        //print_r($fields);
+        print_r($fields);
         
         $itemfield = array();
         $itemfield[] = "M." . $params["softone_table"];
