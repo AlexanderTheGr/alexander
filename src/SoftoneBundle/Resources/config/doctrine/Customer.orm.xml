@@ -90,6 +90,11 @@
                 <option name="fixed"/>
             </options>
         </field>
+        <field name="customerIrsdata" type="string" column="customer_irsdata" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>        
         <field name="customerEmail" type="string" column="customer_email" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
@@ -151,16 +156,7 @@
             <join-column name="customergroup" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>            
         </many-to-one> 
         
-        <many-to-one
-            field="customerirs"
-            target-entity="CustomerIrs"
-            inversed-by="Customerirses"
-            join-column="customer_irsdata">
-            <cascade>
-                <cascade-remove />
-            </cascade>
-            <join-column name="customer_irsdata" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>            
-        </many-to-one>               
+      
                 
         <many-to-one
             field="route"
