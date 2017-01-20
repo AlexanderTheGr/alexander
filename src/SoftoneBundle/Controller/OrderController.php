@@ -491,7 +491,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
             //print_r($articleIds);
             //print_r($articleIds2["articleIds"]);
-            echo $dt_search["value"];
+            echo $dt_search["value"]."\n";
           
             if ($this->clearstring($dt_search["value"]) != "") {
 
@@ -546,7 +546,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     if ($supplier)
                         $qsupplier = " p.supplierId = '" . $supplier->getId() . "' AND ";
                 }
-
+                echo "....\n";
 
                 //print_r($articleIds);
                 $this->prefix = "p";
