@@ -493,12 +493,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             //print_r($articleIds2["articleIds"]);
 
             if ($this->clearstring($dt_search["value"]) != "") {
-
+                $dt_search["value"] = addslashes($dt_search["value"]);
                 $softone = new Softone();
                 $recordsTotal = $em->getRepository($this->repository)->recordsTotal();
                 
                 foreach ($this->fields as $index => $field) {
-                    return;
+                    
                     if (@$field["index"]) {
                         $fields[] = $field["index"];
                         $field_relation = explode(":", $field["index"]);
