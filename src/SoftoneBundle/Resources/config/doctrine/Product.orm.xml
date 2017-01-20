@@ -136,6 +136,19 @@
             </options>
         </field>                
         
+        <field name="qty" type="integer" column="qty" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="default">1</option>
+            </options>
+        </field>   
+        <field name="reserved" type="integer" column="reserved" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="default">1</option>
+            </options>
+        </field>                  
+        
         <field name="itemVat" type="integer" column="item_vat" nullable="true">
             <options>
                 <option name="unsigned"/>
