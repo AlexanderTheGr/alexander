@@ -21,6 +21,19 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     var $newentity = '';
 
     /**
+     * @Route("/order/order/asd")
+     */
+    public function tetet() {
+
+        $sql = "SELECT * FROM SALDOC";
+        $params["fSQL"] = $sql;
+        $softone = new Softone();
+        $datas = $softone->createSql($params);
+        print_r($datas);
+        exit;
+    }
+
+    /**
      * @Route("/order/order")
      */
     public function indexAction() {
@@ -359,9 +372,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
 
         $dtparams[] = array("name" => "Τελική Τιμη", "index" => $priceField, 'search' => 'text');
-        
+
         $dtparams[] = array("name" => "Κωδ. Συσχετισης", "index" => "sisxetisi", 'search' => 'text');
-        
+
         $dtparams[] = array("name" => "Αποθηκη", "function" => 'getApothiki', 'search' => 'text');
 
         $dtparams[] = array("name" => "QTY", "index" => 'qty', "input" => 'text', 'search' => 'text');
@@ -491,8 +504,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             //print_r($articleIds);
             //print_r($articleIds2["articleIds"]);
             $dt_search["value"] = strlen($dt_search["value"]) > 200 ? "||||" : $dt_search["value"];
-            
-            
+
+
             if ($this->clearstring($dt_search["value"]) != "") {
 
                 $softone = new Softone();
@@ -554,7 +567,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $tecdoc_article = "poi.tecdocArticleId in (" . implode(",", $articleIds) . ") OR poi.erpCode like '%" . $search[1] . "%'";
                         $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM SoftoneBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ") OR koo.erpCode like '%" . $search[1] . "%' OR koo.itemApvcode like '%" . $search[0] . "%' OR koo.itemCode1 like '%" . $search[1] . "%' OR koo.itemCode2 like '%" . $search[1] . "%'))";
                     } elseif ($search[0]) {
-                        if (strlen($search[0]) > 250) $search[0] = '|||||';
+                        if (strlen($search[0]) > 250)
+                            $search[0] = '|||||';
                         $tecdoc_article = "poi.tecdocArticleId in (" . implode(",", $articleIds) . ") OR poi.erpCode like '%" . $search[0] . "%'";
                         $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM SoftoneBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ") OR koo.erpCode like '%" . $search[0] . "%' OR koo.itemApvcode like '%" . $search[0] . "%' OR koo.itemCode1 like '%" . $search[0] . "%' OR koo.itemCode2 like '%" . $search[0] . "%'))";
                     } else {
@@ -707,8 +721,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $out = $this->getArticlesSearchByIds(implode(",", (array) $de));
             //print_r($out);
             $p = array();
-            
-            foreach ((array)$out as $v) {
+
+            foreach ((array) $out as $v) {
                 $p[$v->articleId] = $v;
                 $json = array();
 
@@ -972,13 +986,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     function getTabContentSearch($order) {
-        
-        $repormodels = $this->getDoctrine()->getRepository('SoftoneBundle:Reportmodel')->findBy(array('customerId' => $order->getCustomer()->getId()),array('ts' => 'DESC'));
-        
-        
+
+        $repormodels = $this->getDoctrine()->getRepository('SoftoneBundle:Reportmodel')->findBy(array('customerId' => $order->getCustomer()->getId()), array('ts' => 'DESC'));
+
+
         $history = "<ul>";
-        foreach($repormodels as $repormodel) {
-            if ($i++ > 15) break;
+        foreach ($repormodels as $repormodel) {
+            if ($i++ > 15)
+                break;
             $brandModelType = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:BrandModelType')
                     ->find($repormodel->getModel());
@@ -993,7 +1008,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $yearto = substr($brandsmodel->getYearTo(), 4, 2) . "/" . substr($brandsmodel->getYearTo(), 0, 4);
             $yearto = $yearto == 0 ? 'Today' : $yearto;
             $year = $yearfrom . " - " . $yearto;
-            $history .= "<li class='modelhistory' style='cursor:pointer' data-order='".$order->getId()."' data-ref='".$repormodel->getModel()."'>".$brand->getBrand() . " " . $brandsmodel->getBrandModel() . " " . $year . " " . $brandModelType->getBrandModelType() . " " . $brandModelType->getEngine()."</li>";
+            $history .= "<li class='modelhistory' style='cursor:pointer' data-order='" . $order->getId() . "' data-ref='" . $repormodel->getModel() . "'>" . $brand->getBrand() . " " . $brandsmodel->getBrandModel() . " " . $year . " " . $brandModelType->getBrandModelType() . " " . $brandModelType->getEngine() . "</li>";
         }
         $history .= "</ul>";
         $response = $this->get('twig')->render('SoftoneBundle:Order:search.html.twig', array(
