@@ -155,11 +155,11 @@
             field="customerirs"
             target-entity="CustomerIrs"
             inversed-by="Customerirses"
-            join-column="customerirs">
+            join-column="customer_irsdata">
             <cascade>
                 <cascade-remove />
             </cascade>
-            <join-column name="customerirs" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>            
+            <join-column name="customer_irsdata" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>            
         </many-to-one>               
                 
         <many-to-one
