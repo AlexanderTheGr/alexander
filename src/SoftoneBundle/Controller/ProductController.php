@@ -1212,8 +1212,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $datas = $softone->retrieveData("ITEM", "apothema");
         //echo 'Sss';
         echo count($datas) . "<BR>";
-        print_r($datas);
-        exit;
+        //print_r($datas);
+        //exit;
         
         foreach ($datas as $data) {
             //print_r($data);
@@ -1221,24 +1221,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $info = explode(";", $zoominfo);
             $data["reference"] = $info[1];
 
-            $product = Mage::getModel('tecdoc/product')->getCollection()->addFieldToFilter("reference", trim($data["reference"]))->getFirstItem();
-            if ((int) $product->id == 0) {
-                continue;
-            }
-            $qty = $data["item_mtrl_itemtrdata_qty1"] - $data["item_soreserved"];
             //echo $product->id." ".$product->erp_code." --> ".$qty." -- ".$product->getApothema()."<BR>";
-            if ($product->getApothema() != $qty) {
-                echo "<span style='color:red'>" . $product->id . " " . $product->erp_code . " --> " . $qty . "</span><BR>";
-                $product->setApothema($qty);
-                $product->save();
-                $product_model = Mage::getModel('catalog/product');
-                if ($product->getProductId() > 0) {
-                    $product_model->load($product->getProductId());
-                }
-                $product->setStockData($product_model, $qty);
-                //return;
-            }
-            //if ($t++ > 100) return;
+            $sql = "update softone_product set qty = '".$data["item_mtrl_itemtrdata_qty1"]."', reserved = '". $data["item_soreserved"]."' where reference = '".$data["reference"]."'";
+            echo $sql."<BR>";
+            
         }
     }
 
