@@ -460,7 +460,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $s = array();
         $f = array();
         $jsonarr = array();
-        exit;
+       
         if ($request->request->get("length")) {
             $em = $this->getDoctrine()->getManager();
             $orderFields = $em->getClassMetadata('SoftoneBundle\Entity\Product')->getFieldNames();
@@ -526,7 +526,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     }
                 }
 
-
+                exit;
                 if ($search[0] == 'productfreesearch') {
                     $garr = explode(" ", $search[1]);
                     foreach ($garr as $d) {
