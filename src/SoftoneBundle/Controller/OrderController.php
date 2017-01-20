@@ -736,7 +736,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $data["data"] = $jsonarr;
         $data["recordsTotal"] = $recordsTotal;
         $data["recordsFiltered"] = $recordsFiltered;
-        //return json_encode($data);
+        return json_encode($data);
     }
 
     function getArticleAttributes($articleId, $linkingTargetId = '') {
