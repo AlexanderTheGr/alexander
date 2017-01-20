@@ -1574,7 +1574,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             //$orderItem->setDisc1prc($request->request->get("discount"));
             $disc1prc = 1 - (($request->request->get("liveval") / $orderItem->getQty()) / $orderItem->getPrice());
             $orderItem->setDisc1prc($disc1prc * 100);
-        } elseif ($request->request->get("qty") == 0) {
+        } elseif ($request->request->get("qty") == "0") {
             try {
                 $this->flushremove($orderItem);
                 $json = json_encode(array("error" => false));
