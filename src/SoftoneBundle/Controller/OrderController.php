@@ -496,8 +496,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                 $softone = new Softone();
                 $recordsTotal = $em->getRepository($this->repository)->recordsTotal();
-
+                
                 foreach ($this->fields as $index => $field) {
+                    return;
                     if (@$field["index"]) {
                         $fields[] = $field["index"];
                         $field_relation = explode(":", $field["index"]);
