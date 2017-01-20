@@ -2846,4 +2846,57 @@ class Product extends Entity {
     {
         return $this->cccWebUpd;
     }
+    /**
+     * @var integer
+     */
+    private $reserved = '1';
+
+
+    /**
+     * Set qty
+     *
+     * @param integer $qty
+     *
+     * @return Product
+     */
+    public function setQty($qty)
+    {
+        $this->qty = $qty;
+
+        return $this;
+    }
+
+    /**
+     * Get qty
+     *
+     * @return integer
+     */
+    public function getQty()
+    {
+        return $this->qty;
+    }
+
+    /**
+     * Set reserved
+     *
+     * @param integer $reserved
+     *
+     * @return Product
+     */
+    public function setReserved($reserved)
+    {
+        $this->reserved = $reserved;
+
+        return $this;
+    }
+
+    /**
+     * Get reserved
+     *
+     * @return integer
+     */
+    public function getReserved()
+    {
+        return $this->reserved;
+    }
 }
