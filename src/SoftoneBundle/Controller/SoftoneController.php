@@ -28,6 +28,7 @@ class SoftoneController extends  Main {
                 $itemfield[] = "M." . strtoupper(str_replace($params["softone_object"], "", $field));
             }
         }
+        print_r($params["extra"]);
         foreach ($params["extra"] as $field => $extra) {
             //if (@$data[$extra] AND in_array($field, $fields)) {
             if ($field == $extra)
