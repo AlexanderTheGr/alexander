@@ -131,7 +131,7 @@
                 <option name="default">1</option>
             </options>
         </field>        
-        <field name="cccWebUpd" type="boolean" column="item_cccwebupd " nullable="true">
+        <field name="cccWebUpd" type="boolean" column="item_cccwebupd" nullable="true">
             <options>
                 <option name="default">1</option>
             </options>
