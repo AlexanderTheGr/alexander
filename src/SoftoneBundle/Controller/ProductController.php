@@ -1152,17 +1152,17 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                             $itemPricer = $ediediitem->getEdiMarkupPrice("itemPricer");
                             if (round($itemPricew, 2) != round($product->getItemPricew(), 2) OR round($itemPricer, 2) != round($product->getItemPricer(), 2)) {
                                 //echo $ediedi->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediediitem->getWholesaleprice() . " -- " . $ediediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
-                                //if ($i++ > 25)
-                                //    exit;
+                                if ($i++ > 15)
+                                    exit;
                                 if ($itemPricew > 0.01 AND $product->getReference() > 0) {
 
                                     echo $ediedi->getName() . " " . $ediediitem->getWholesaleprice() . " -- " . $product->getItemCode() . " itemPricew:(" . $itemPricew . "/" . $product->getItemPricew() . ") itemPricer:(" . $itemPricer . "/" . $product->getItemPricer() . ")<BR>";
 
-                                    //$product->setCccPriceUpd(1);
-                                    //$product->setItemPricew($itemPricew);
-                                    //$product->setItemPricer($itemPricer);
+                                    $product->setCccPriceUpd(1);
+                                    $product->setItemPricew($itemPricew);
+                                    $product->setItemPricer($itemPricer);
                                     //
-                                //$this->flushpersist($product);
+                                    $this->flushpersist($product);
                                     //$product->toSoftone();
                                     $sql = "UPDATE MTRL SET CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
                                     $params["fSQL"] = $sql;
