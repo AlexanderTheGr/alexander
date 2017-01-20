@@ -94,7 +94,12 @@
             <options>
                 <option name="fixed"/>
             </options>
-        </field>        
+        </field>     
+        <field name="customerJobtypetrd" type="string" column="customer_jobtypetrd" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>     
         <field name="customerEmail" type="string" column="customer_email" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
