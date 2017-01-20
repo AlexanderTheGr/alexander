@@ -264,7 +264,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             $data["IRSDATA"] = $IRSDATA[$data["IRSDATA"]];
             print_r($data);
             
-            if ($i++ > 10 ) exit;
+            if ($i++ > 100 ) exit;
             continue;
             
             $entity = $this->getDoctrine()
