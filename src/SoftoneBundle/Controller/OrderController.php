@@ -526,7 +526,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     }
                 }
 
-                exit;
+                
                 if ($search[0] == 'productfreesearch') {
                     $garr = explode(" ", $search[1]);
                     foreach ($garr as $d) {
@@ -566,7 +566,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 //echo  $sql;
                 //$this->q_or[] = $this->prefix . ".id in  (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
 
-
+                exit;
 
                 $this->createWhere();
 
