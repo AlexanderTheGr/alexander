@@ -578,6 +578,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $this->createOrderBy($fields, $dt_order);
                 $this->createSelect($s);
                 //$select = count($s) > 0 ? implode(",", $s) : $this->prefix . ".*";
+                echo $this->where;
                 echo "3...\n";
                 
                 $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
