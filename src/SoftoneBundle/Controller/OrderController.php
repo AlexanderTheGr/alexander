@@ -579,11 +579,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $this->createSelect($s);
                 //$select = count($s) > 0 ? implode(",", $s) : $this->prefix . ".*";
                 //echo $this->where;
-                echo "3...\n";
+                //echo "3...\n";
                 
                 //$recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
                 //$tecdoc_article = '';
-                echo "4...\n";
+                //echo "4...\n";
                 //exit;
 
                 if (count((array) $articleIds)) {
@@ -608,8 +608,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 where ' . $qsupplier . ' (' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . ')
                                 ORDER BY ' . $this->orderBy;
                 }
-                echo "5...\n";
-                echo $sql;
+                //echo "5...\n";
+                //echo $sql;
                 //exit;
 
                 $sql = str_replace("p.*,", "", $sql);
