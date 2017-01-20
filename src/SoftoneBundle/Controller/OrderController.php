@@ -550,6 +550,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                 //print_r($articleIds);
                 $this->prefix = "p";
+                print_r($articleIds);
                 if (count((array) $articleIds)) {
                     if ($search[1]) {
                         $tecdoc_article = "poi.tecdocArticleId in (" . implode(",", $articleIds) . ") OR poi.erpCode like '%" . $search[1] . "%'";
