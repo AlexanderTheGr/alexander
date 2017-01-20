@@ -194,7 +194,7 @@ class Main extends Controller {
     }
 
     function yesnoMethod($value) {
-        return $value ? "YES" : "NO";
+        return $value > 0 ? "YES" : "NO";
     }
 
     function clearstring2($string) {
