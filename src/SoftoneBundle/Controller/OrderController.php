@@ -550,7 +550,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                 //print_r($articleIds);
                 $this->prefix = "p";
-                print_r($articleIds);
+
                 if (count((array) $articleIds)) {
                     if ($search[1]) {
                         $tecdoc_article = "poi.tecdocArticleId in (" . implode(",", $articleIds) . ") OR poi.erpCode like '%" . $search[1] . "%'";
@@ -568,15 +568,18 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 }
                 //echo  $sql;
                 //$this->q_or[] = $this->prefix . ".id in  (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
-                echo "3...\n";
+                
                 
 
                 $this->createWhere();
 
+                
+                
                 $this->createOrderBy($fields, $dt_order);
                 $this->createSelect($s);
                 //$select = count($s) > 0 ? implode(",", $s) : $this->prefix . ".*";
-
+                echo "3...\n";
+                
                 $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
                 //$tecdoc_article = '';
                 echo "4...\n";
