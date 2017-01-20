@@ -1130,14 +1130,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $ediedis = $this->getDoctrine()->getRepository('EdiBundle:Edi')->findAll();
         foreach ($ediedis as $ediedi) {
-            if ($ediedi->getId() == 4)
+            //if ($ediedi->getId() == 4)
                 if ($ediedi->getItemMtrsup() > 0) {
                     $products = $this->getDoctrine()->getRepository('SoftoneBundle:Product')->findBy(array("itemMtrsup" => $ediedi->getItemMtrsup()));
                     foreach ($products as $product) {
                         $brand = $product->getSupplierId() ? $product->getSupplierId()->getTitle() : "";
 
                         if ($brand != '') {
-;
+
                             $ediediitem = $this->getDoctrine()
                                     ->getRepository('EdiBundle:EdiItem')
                                     ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), 'brand' => $brand, "Edi" => $ediedi));
@@ -1146,14 +1146,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                     ->getRepository('EdiBundle:EdiItem')
                                     ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), "Edi" => $ediedi));
                         }
-                        if ($brand == "BERU")
+                        //if ($brand == "BERU")
                         if ($ediediitem) {
                             $itemPricew = $ediediitem->getEdiMarkupPrice("itemPricew");
                             $itemPricer = $ediediitem->getEdiMarkupPrice("itemPricer");
                             if (round($itemPricew, 2) != round($product->getItemPricew(), 2) OR round($itemPricer, 2) != round($product->getItemPricer(), 2)) {
                                 //echo $ediedi->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediediitem->getWholesaleprice() . " -- " . $ediediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
-                                if ($i++ > 25)
-                                    exit;
+                                //if ($i++ > 25)
+                                //    exit;
                                 if ($itemPricew > 0.01 AND $product->getReference() > 0) {
 
                                     echo $ediedi->getName() . " " . $ediediitem->getWholesaleprice() . " -- " . $product->getItemCode() . " itemPricew:(" . $itemPricew . "/" . $product->getItemPricew() . ") itemPricer:(" . $itemPricer . "/" . $product->getItemPricer() . ")<BR>";
