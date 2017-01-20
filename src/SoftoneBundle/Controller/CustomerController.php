@@ -230,7 +230,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
                     . "name = '".$data->NAME."', "
                     . "address = '".$data->ADDRESS."', "
                     . "district = '".$data->DISTRICT."', "
-                    . "zip = '".$data->ZIP."', "
+                    . "zip = '".$data->ZIP."'"
                     ;
             $em->getConnection()->exec($sql);
         }
