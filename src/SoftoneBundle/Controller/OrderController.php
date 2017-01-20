@@ -25,14 +25,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function tetet() {
 
-        $sql = "SELECT FINCODE,FULLYTRANSF FROM FINDOC";
+        $sql = "SELECT FINDOC,FULLYTRANSF FROM FINDOC";
         $params["fSQL"] = $sql;
         $softone = new Softone();
         $datas = $softone->createSql($params);
         // print_r($datas);
         //exit;
         foreach ($datas->data as $data) {
-            $sql = "update softone_order set fullytrans = '".$data->FULLYTRANSF."' where id = '" . $data->FINCODE . "'";
+            $sql = "update softone_order set fullytrans = '".$data->FULLYTRANSF."' where id = '" . $data->FINDOC . "'";
             echo $sql."<BR>";
             //$em->getConnection()->exec($sql);
         }
