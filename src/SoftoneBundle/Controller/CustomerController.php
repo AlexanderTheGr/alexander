@@ -215,7 +215,17 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
      */
     function retrieveSoftoneData($params = array()) {
 
-        $this->retrieveCustomer();
+        //$this->retrieveCustomer();
+        
+        
+        
+        $sql = "SELECT * FROM IRSDATA";
+        $params["fSQL"] = $sql;
+        $softone = new Softone();
+        $datas = $softone->createSql($params);
+        print_r($datas);
+        exit;
+        
         $params["list"] = 'partsbox';
 
         $params = array("softone_object" => "CUSTOMER", "eav_model" => "customer", "model" => "Customer", "list" => "monitor");
