@@ -1214,7 +1214,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         echo count($datas) . "<BR>";
         //print_r($datas);
         //exit;
-        
+        $em = $this->getDoctrine()->getManager();
         foreach ($datas as $data) {
             //print_r($data);
             $zoominfo = $data["zoominfo"];
@@ -1224,6 +1224,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //echo $product->id." ".$product->erp_code." --> ".$qty." -- ".$product->getApothema()."<BR>";
             $sql = "update softone_product set qty = '".$data["item_mtrl_itemtrdata_qty1"]."', reserved = '". $data["item_soreserved"]."' where reference = '".$data["reference"]."'";
             echo $sql."<BR>";
+            $em->getConnection()->exec($sql);
             if ($i++ > 100) return;
         }
     }
