@@ -239,7 +239,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $softone = new Softone();
         $datas = $softone->createSql($params);
 
-        print_r($datas);
+        //print_r($datas);
         foreach ($datas->data as $data) {
             $IRSDATA[$data->NAME] = $data->IRSDATA;
 
