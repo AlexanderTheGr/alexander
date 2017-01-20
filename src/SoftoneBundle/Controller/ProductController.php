@@ -1141,7 +1141,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         if ($itemPricew != $product->getItemPricew()) {
                             echo $ediedi->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediediitem->getWholesaleprice() . " -- " . $ediediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
                             if ($i++ > 20) exit;
-                            if ($itemPricew > 0.01 AND $product->gerReference() > 0) {
+                            if ($itemPricew > 0.01 AND $product->getReference() > 0) {
                                 //$product->setItemPricew($itemPricew);
                                 //$this->flushpersist($product);
                                 //$product->toSoftone();
