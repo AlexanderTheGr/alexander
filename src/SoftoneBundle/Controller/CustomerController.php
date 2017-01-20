@@ -234,17 +234,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             //}
         }
 
-        $sql = "SELECT * FROM IRSDATA";
-        $params["fSQL"] = $sql;
-        $softone = new Softone();
-        $datas = $softone->createSql($params);
 
-        //print_r($datas);
-        foreach ($datas->data as $data) {
-            $IRSDATA[trim($data->NAME)] = $data->IRSDATA;
-
-            
-        }
         $selfields = implode(",", $itemfield);
         $params["fSQL"] = 'SELECT ' . $selfields . ' FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
         //echo $params["fSQL"];
@@ -255,9 +245,9 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
         $softone = new Softone();
         $datas = $softone->createSql($params);
-
+        print_r($datas);
         //return;
-        //exit;
+        exit;
         $em = $this->getDoctrine()->getManager();
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
