@@ -241,7 +241,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
         //print_r($datas);
         foreach ($datas->data as $data) {
-            $IRSDATA[$data->NAME] = $data->IRSDATA;
+            $IRSDATA[trim($data->NAME)] = $data->IRSDATA;
 
             
         }
