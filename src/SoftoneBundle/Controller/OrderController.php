@@ -30,8 +30,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         // print_r($datas);
         //exit;
         foreach ((array)$datas->data as $data) {
-            $sql = "update softone_order set fullytrans = '".$data->FULLYTRANSF."' where id = '" . $data->FINDOC . "'";
-            echo $sql."<BR>";
+            $sql = "update softone_order set fullytrans = '".$data->FULLYTRANSF."' where reference = '" . $data->FINDOC . "'";
+            //echo $sql."<BR>";
             $em->getConnection()->exec($sql);
         }
     }
