@@ -147,7 +147,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $fields["customerAfm"] = array("label" => "ΑΦΜ", "className" => "col-md-6", "required" => true);
         $fields["customerEmail"] = array("label" => "Email", "className" => "col-md-6", "required" => false);
         
-        $fields["customerIrsdata"] = array("label" => "ΔΟΥ", "className" => "col-md-6", "required" => true);
+        $fields["customerIrsdata"] = array("label" => "ΔΟΥ", "className" => "col-md-6", "required" => false);
         $fields["customerJobtypetrd"] = array("label" => "Επάγγελμα", "className" => "col-md-6", "required" => false);        
         
         $fields["customerAddress"] = array("label" => "Customer Address", "className" => "col-md-6", "required" => false);
