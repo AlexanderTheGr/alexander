@@ -20,9 +20,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     var $repository = 'SoftoneBundle:Order';
     var $newentity = '';
 
-    /**
-     * @Route("/order/order/asd")
-     */
+
     public function setfullytrans() {
         $em = $this->getDoctrine()->getManager();
         $sql = "SELECT FINDOC,FULLYTRANSF FROM FINDOC WHERE FULLYTRANSF = 1";
@@ -42,7 +40,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/order/order")
      */
     public function indexAction() {
-
+        $this->setfullytrans();
         return $this->render('SoftoneBundle:Order:index.html.twig', array(
                     'pagename' => 'Customers',
                     'url' => '/order/getdatatable',
