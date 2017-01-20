@@ -5,7 +5,7 @@
             <generator strategy="IDENTITY"/>
         </id>
     
-        <field name="name" type="string" column="supplier" length="255" nullable="true">
+        <field name="name" type="string" column="name" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
