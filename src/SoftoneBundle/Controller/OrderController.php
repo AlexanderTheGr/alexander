@@ -460,6 +460,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $s = array();
         $f = array();
         $jsonarr = array();
+        exit;
         if ($request->request->get("length")) {
             $em = $this->getDoctrine()->getManager();
             $orderFields = $em->getClassMetadata('SoftoneBundle\Entity\Product')->getFieldNames();
