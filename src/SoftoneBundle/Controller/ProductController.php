@@ -1139,15 +1139,18 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     if ($ediediitem) {
                         $itemPricew = $ediediitem->getEdiMarkupPrice("itemPricew");
                         $itemPricer = $ediediitem->getEdiMarkupPrice("itemPricer");
-                        if ($itemPricew != $product->getItemPricew()) {
-                            echo $ediedi->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediediitem->getWholesaleprice() . " -- " . $ediediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
+                        if ($itemPricew != $product->getItemPricew() OR $itemPricer != $product->getItemPricer()) {
+                            //echo $ediedi->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediediitem->getWholesaleprice() . " -- " . $ediediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
                             if ($i++ > 20) exit;
                             if ($itemPricew > 0.01 AND $product->getReference() > 0) {
-                                $product->setCccPriceUpd(1);
-                                $product->setItemPricew($itemPricew);
-                                $product->setItemPricer($itemPricer);
+                                
+                                echo $product->getItemCode()." itemPricew:(".$itemPricew."/".$product->getItemPricew().") itemPricer:(".$itemPricer."/".$product->getItemPricer().")<BR>";
+                                
+                                //$product->setCccPriceUpd(1);
+                                //$product->setItemPricew($itemPricew);
+                                //$product->setItemPricer($itemPricer);
                                 //
-                                $this->flushpersist($product);
+                                //$this->flushpersist($product);
                                 //$product->toSoftone();
                                 $sql = "UPDATE MTRL SET PRICEW = ".$itemPricew.", PRICER = ".$itemPricer."  WHERE MTRL = ".$product->getReference();
                                 $params["fSQL"] = $sql;
