@@ -2792,7 +2792,7 @@ class Product extends Entity {
     /**
      * @var boolean
      */
-    private $cccPriceUpd = '1';
+    private $cccPriceUpd = '0';
 
     /**
      * @var boolean
