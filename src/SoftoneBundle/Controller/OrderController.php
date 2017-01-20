@@ -460,7 +460,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $s = array();
         $f = array();
         $jsonarr = array();
-       
+        
         if ($request->request->get("length")) {
             $em = $this->getDoctrine()->getManager();
             $orderFields = $em->getClassMetadata('SoftoneBundle\Entity\Product')->getFieldNames();
@@ -491,8 +491,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
             //print_r($articleIds);
             //print_r($articleIds2["articleIds"]);
-            echo $dt_search["value"]."\n";
-          
+
             if ($this->clearstring($dt_search["value"]) != "") {
 
                 $softone = new Softone();
@@ -526,9 +525,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         }
                     }
                 }
-                echo "1....\n";
-                //echo 'sss\n';
-                
+
+
                 if ($search[0] == 'productfreesearch') {
                     $garr = explode(" ", $search[1]);
                     foreach ($garr as $d) {
@@ -546,11 +544,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     if ($supplier)
                         $qsupplier = " p.supplierId = '" . $supplier->getId() . "' AND ";
                 }
-                echo "2....\n";
+
 
                 //print_r($articleIds);
                 $this->prefix = "p";
-
                 if (count((array) $articleIds)) {
                     if ($search[1]) {
                         $tecdoc_article = "poi.tecdocArticleId in (" . implode(",", $articleIds) . ") OR poi.erpCode like '%" . $search[1] . "%'";
@@ -568,23 +565,18 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 }
                 //echo  $sql;
                 //$this->q_or[] = $this->prefix . ".id in  (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
-                
-                
+
+
 
                 //$this->createWhere();
 
-                
-                
                 $this->createOrderBy($fields, $dt_order);
                 $this->createSelect($s);
                 //$select = count($s) > 0 ? implode(",", $s) : $this->prefix . ".*";
-                //echo $this->where;
-                //echo "3...\n";
-                
-                //$recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
+
+                $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
                 //$tecdoc_article = '';
-                //echo "4...\n";
-                //exit;
+
 
                 if (count((array) $articleIds)) {
                     $tecdoc_article = 'p.tecdocArticleId in (' . implode(",", $articleIds) . ') OR ';
@@ -608,7 +600,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 where ' . $qsupplier . ' (' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . ')
                                 ORDER BY ' . $this->orderBy;
                 }
-                //echo "5...\n";
+
                 //echo $sql;
                 //exit;
 
