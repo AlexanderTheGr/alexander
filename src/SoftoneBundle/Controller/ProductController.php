@@ -1213,6 +1213,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         echo count($datas) . "<BR>";
         print_r($datas);
         exit;
+        
         foreach ($datas as $data) {
             //print_r($data);
             $zoominfo = $data["zoominfo"];
