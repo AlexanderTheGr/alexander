@@ -570,7 +570,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 
 
                 //$this->createWhere();
-
+                echo "1111\n";
                 $this->createOrderBy($fields, $dt_order);
                 $this->createSelect($s);
                 //$select = count($s) > 0 ? implode(",", $s) : $this->prefix . ".*";
@@ -602,8 +602,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 ORDER BY ' . $this->orderBy;
                 }
 
-                //echo $sql;
-                //exit;
+                echo $sql;
+                exit;
 
                 $sql = str_replace("p.*,", "", $sql);
                 //$sql = str_replace("ORDER BY p.qty asc","",$sql);
