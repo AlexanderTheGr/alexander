@@ -1018,15 +1018,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
              */
             //$this->flushpersist($entity);
             $q = array();
-            $q[] = "reference = '" . $data[$params["softone_table"]] . "'";
-            foreach ($params["extra"] as $field => $extra) {
-                //if (@$data[$extra] AND in_array($field, $fields)) {
-                if ($field == $extra)
-                    $itemfield[] = "M." . strtoupper($field);
-                else
-                    $itemfield[] = "M." . strtoupper($field) . " as $extra";
-            }
-            print_r($itemfield);
+
             foreach ($data as $identifier => $val) {
                 $imporetedData[strtolower($params["softone_object"] . "_" . $identifier)] = addslashes($val);
                 $ad = strtolower($identifier);
