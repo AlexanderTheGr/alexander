@@ -1208,7 +1208,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //$filters = "ITEM.UPDDATE=".date("Y-m-d")."&ITEM.UPDDATE_TO=".date("Y-m-d");  
         //$filters = "ITEM.ISACTIVE=1";  
         //return;
-        $datas = $this->retrieveData("ITEM", "apothema");
+        $softone = new Softone();
+        $datas = $softone->retrieveData("ITEM", "apothema");
         //echo 'Sss';
         echo count($datas) . "<BR>";
         print_r($datas);
