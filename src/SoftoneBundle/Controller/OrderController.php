@@ -558,13 +558,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM SoftoneBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ") OR koo.erpCode like '%" . $search[0] . "%' OR koo.itemApvcode like '%" . $search[0] . "%' OR koo.itemCode1 like '%" . $search[0] . "%' OR koo.itemCode2 like '%" . $search[0] . "%'))";
                     } else {
                         $tecdoc_article = "poi.tecdocArticleId in (" . implode(",", $articleIds) . ")";
-                        $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM SoftoneBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ")";
+                        $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM SoftoneBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . "))";
                     }
                 } else {
                     $this->createWhere();
                     $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM SoftoneBundle:Product koo where koo.sisxetisi != '' AND (koo.erpCode like '%" . $search[1] . "%' OR koo.itemApvcode like '%" . $search[0] . "%' OR koo.itemCode1 like '%" . $search[1] . "%' OR koo.itemCode2 like '%" . $search[1] . "%'))";
                 }
-                echo  $sql;
+                //echo  $sql;
                 //$this->q_or[] = $this->prefix . ".id in  (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
 
 
