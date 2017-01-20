@@ -1141,14 +1141,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         $itemPricer = $ediediitem->getEdiMarkupPrice("itemPricer");
                         if ($itemPricew != $product->getItemPricew()) {
                             echo $ediedi->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediediitem->getWholesaleprice() . " -- " . $ediediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
-                            if ($i++ > 20) exit;
+                            if ($i++ > 2) exit;
                             if ($itemPricew > 0.01 AND $product->getReference() > 0) {
                                 //$product->setItemPricew($itemPricew);
                                 //$this->flushpersist($product);
                                 //$product->toSoftone();
                                 $sql = "UPDATE MTRL SET PRICEW = ".$itemPricew.", PRICER = ".$itemPricer."  WHERE MTRL = ".$product->getReference();
                                 $params["fSQL"] = $sql;
-                                //$datas = $softone->createSql($params);
+                                $datas = $softone->createSql($params);
                                 echo $sql."<BR>";
                                 
                             }
