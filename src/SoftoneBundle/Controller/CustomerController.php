@@ -314,8 +314,8 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
                 $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
             }
             echo $sql . "<BR>";
-            if ($i++ > 100)
-                exit;
+            //if ($i++ > 100)
+            //    exit;
             continue;
             //$em->getConnection()->exec($sql);
             /*
