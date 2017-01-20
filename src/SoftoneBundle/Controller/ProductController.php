@@ -1122,6 +1122,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/product/product/synchronize")
      */
     public function synchronizeAction($funct = false) {
+        $softone = new Softone();
 
         $ediedis = $this->getDoctrine()->getRepository('EdiBundle:Edi')->findAll();
         foreach ($ediedis as $ediedi) {
@@ -1135,11 +1136,15 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         $itemPricew = $ediediitem->getEdiMarkupPrice("itemPricew");
                         if ($itemPricew != $product->getItemPricew()) {
                             echo $ediedi->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediediitem->getWholesaleprice() . " -- " . $ediediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
-                            //if ($i++ > 2) exit;
-                            if ($itemPricew > 0.01) {
+                            if ($i++ > 2) exit;
+                            if ($itemPricew > 0.01 AND $product->gerReference() > 0) {
                                 $product->setItemPricew($itemPricew);
                                 $this->flushpersist($product);
-                                $product->toSoftone();
+                                //$product->toSoftone();
+                                $sql = "UPDATE MTRL SET PRICEW = ".$itemPricew."  WHERE MTRL = ".$product->gerReference();
+                                $params["fSQL"] = $sql;
+                                //$datas = $softone->createSql($params);
+                                
                             }
                         } else {
                             //echo "<span style='color:red'>".$product->getItemCode()." -- ".$product->getSupplierId()->getTitle()." -- " . $product->getItemCode2() . " ".$ediediitem->getWholesaleprice() . " -- ".$ediediitem->getEdiMarkupPrice("itemPricew")." -- " . $product->getItemPricew() . "</span><BR>";
