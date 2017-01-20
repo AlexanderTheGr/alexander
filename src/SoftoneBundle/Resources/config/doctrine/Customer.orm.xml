@@ -149,7 +149,18 @@
                 <cascade-remove />
             </cascade>
             <join-column name="customergroup" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>            
-        </many-to-one>     
+        </many-to-one> 
+        
+        <many-to-one
+            field="customerirs"
+            target-entity="Customerirs"
+            inversed-by="Customerirses"
+            join-column="customerirs">
+            <cascade>
+                <cascade-remove />
+            </cascade>
+            <join-column name="customerirs" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>            
+        </many-to-one>               
                 
         <many-to-one
             field="route"
