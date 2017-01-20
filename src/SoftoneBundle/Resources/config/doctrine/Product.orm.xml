@@ -125,6 +125,17 @@
                 <option name="default">1</option>
             </options>
         </field>
+        <field name="cccPriceUpd" type="boolean" column="cccpriceupd" nullable="true">
+            <options>
+                <option name="default">1</option>
+            </options>
+        </field>        
+        <field name="cccWebUpd" type="boolean" column="cccwebupd " nullable="true">
+            <options>
+                <option name="default">1</option>
+            </options>
+        </field>                
+        
         <field name="itemVat" type="integer" column="item_vat" nullable="true">
             <options>
                 <option name="unsigned"/>
