@@ -32,7 +32,7 @@ class Customer extends Entity {
 
     public function setRepositories() {
         $this->repositories['customergroup'] = 'SoftoneBundle:Customergroup';
-        $this->repositories['customerirs'] = 'SoftoneBundle:Customerirs';
+        $this->repositories['customerirs'] = 'SoftoneBundle:CustomerIrs';
         //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:SoftoneSupplier';
         $this->types['customergroup'] = 'object';
         //$this->types['supplierId'] = 'object';
@@ -47,7 +47,7 @@ class Customer extends Entity {
 
     public function getRepositories($repo) {
         $this->repositories['customergroup'] = 'SoftoneBundle:Customergroup';
-        $this->repositories['customerirs'] = 'SoftoneBundle:Customerirs';
+        $this->repositories['customerirs'] = 'SoftoneBundle:CustomerIrs';
         return $this->repositories[$repo];
     }
 
@@ -1116,18 +1116,18 @@ class Customer extends Entity {
     }
 
     /**
-     * @var \SoftoneBundle\Entity\Customerirs
+     * @var \SoftoneBundle\Entity\CustomerIrs
      */
     private $customerirs;
 
     /**
      * Set customerirs
      *
-     * @param \SoftoneBundle\Entity\Customerirs $customerirs
+     * @param \SoftoneBundle\Entity\CustomerIrs $customerirs
      *
      * @return Customer
      */
-    public function setCustomerirs(\SoftoneBundle\Entity\Customerirs $customerirs = null) {
+    public function setCustomerIrs(\SoftoneBundle\Entity\CustomerIrs $customerirs = null) {
         $this->customerirs = $customerirs;
 
         return $this;
@@ -1136,9 +1136,9 @@ class Customer extends Entity {
     /**
      * Get customerirs
      *
-     * @return \SoftoneBundle\Entity\Customerirs
+     * @return \SoftoneBundle\Entity\CustomerIrs
      */
-    public function getCustomerirs() {
+    public function getCustomerIrs() {
         return $this->customerirs;
     }
 
