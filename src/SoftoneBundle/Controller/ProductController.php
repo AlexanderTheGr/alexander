@@ -1028,6 +1028,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     //$entity->setField($baz, $val);
                 }
             }
+            
+            $q[] = "`" . strtolower($params["softone_object"] . "_cccpriceupd") . "` = '" . addslashes($data["CCCPRICEUPD "]) . "'";
+            $q[] = "`" . strtolower($params["softone_object"] . "_cccwebupd") . "` = '" . addslashes($data["CCCWEBUPD"]) . "'";
+            
             if (@$entity->id == 0) {
                 $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
                 echo $sql . "<BR>";
