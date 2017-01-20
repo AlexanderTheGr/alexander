@@ -153,7 +153,7 @@
         
         <many-to-one
             field="customerirs"
-            target-entity="Customerirs"
+            target-entity="CustomerIrs"
             inversed-by="Customerirses"
             join-column="customerirs">
             <cascade>
