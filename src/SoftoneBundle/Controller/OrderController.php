@@ -581,7 +581,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 echo $this->where;
                 echo "3...\n";
                 
-                $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
+                //$recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
                 //$tecdoc_article = '';
                 echo "4...\n";
                 //exit;
