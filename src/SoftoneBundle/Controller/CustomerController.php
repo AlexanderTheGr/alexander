@@ -309,9 +309,13 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
                     //$entity->setField($baz, $val);
                 }
             }
-            $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
+            if ($entity) {
+                $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '".$entity->getId()."'";
+            } else {
+                $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
+            }
             echo $sql . "<BR>";
-            $em->getConnection()->exec($sql);
+            //$em->getConnection()->exec($sql);
             /*
               @$entity_id = (int) $entity->id;
               //if (@$entity_id > 0) {
