@@ -1026,6 +1026,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 else
                     $itemfield[] = "M." . strtoupper($field) . " as $extra";
             }
+            print_r($itemfield);
             foreach ($data as $identifier => $val) {
                 $imporetedData[strtolower($params["softone_object"] . "_" . $identifier)] = addslashes($val);
                 $ad = strtolower($identifier);
