@@ -31,7 +31,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $datas = $softone->createSql($params);
         // print_r($datas);
         //exit;
-        foreach ($datas->data as $data) {
+        foreach ((array)$datas->data as $data) {
             $sql = "update softone_order set fullytrans = '".$data->FULLYTRANSF."' where id = '" . $data->FINDOC . "'";
             echo $sql."<BR>";
             //$em->getConnection()->exec($sql);
