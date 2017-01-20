@@ -2788,4 +2788,62 @@ class Product extends Entity {
     {
         return $this->sisxetisi;
     }
+    /**
+     * @var boolean
+     */
+    private $cccPriceUpd = '1';
+
+    /**
+     * @var boolean
+     */
+    private $cccWebUpd = '1';
+
+
+    /**
+     * Set cccPriceUpd
+     *
+     * @param boolean $cccPriceUpd
+     *
+     * @return Product
+     */
+    public function setCccPriceUpd($cccPriceUpd)
+    {
+        $this->cccPriceUpd = $cccPriceUpd;
+
+        return $this;
+    }
+
+    /**
+     * Get cccPriceUpd
+     *
+     * @return boolean
+     */
+    public function getCccPriceUpd()
+    {
+        return $this->cccPriceUpd;
+    }
+
+    /**
+     * Set cccWebUpd
+     *
+     * @param boolean $cccWebUpd
+     *
+     * @return Product
+     */
+    public function setCccWebUpd($cccWebUpd)
+    {
+        $this->cccWebUpd = $cccWebUpd;
+
+        return $this;
+    }
+
+    /**
+     * Get cccWebUpd
+     *
+     * @return boolean
+     */
+    public function getCccWebUpd()
+    {
+        return $this->cccWebUpd;
+    }
 }
