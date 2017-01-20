@@ -263,6 +263,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             echo @$entity->id . "<BR>";
 
             //if ($data[$params["softone_table"]] < 7385) continue;
+            /*
             $dt = new \DateTime("now");
             if (@$entity->id == 0) {
                 $entity = new $object();
@@ -273,7 +274,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
                 continue;
                 //$entity->setRepositories();                
             }
-
+            */
             //@print_r($entity->repositories);
             foreach ($params["relation"] as $field => $extra) {
                 //echo $field." - ".@$data[$extra]."<BR>";
