@@ -36,6 +36,7 @@ class SoftoneController extends  Main {
                 $itemfield[] = "M." . strtoupper($field) . " as $extra";
             //}
         }
+        print_r($itemfield);
 
         $selfields = implode(",", $itemfield);
         $params["fSQL"] = 'SELECT ' . $selfields . ' FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
