@@ -5,8 +5,8 @@ namespace SoftoneBundle\Entity;
 /**
  * CustomerIrs
  */
-class CustomerIrs
-{
+class CustomerIrs {
+
     /**
      * @var string
      */
@@ -52,7 +52,6 @@ class CustomerIrs
      */
     private $id;
 
-
     /**
      * Set name
      *
@@ -60,8 +59,7 @@ class CustomerIrs
      *
      * @return CustomerIrs
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -72,8 +70,7 @@ class CustomerIrs
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -84,8 +81,7 @@ class CustomerIrs
      *
      * @return CustomerIrs
      */
-    public function setAddress($address)
-    {
+    public function setAddress($address) {
         $this->address = $address;
 
         return $this;
@@ -96,8 +92,7 @@ class CustomerIrs
      *
      * @return string
      */
-    public function getAddress()
-    {
+    public function getAddress() {
         return $this->address;
     }
 
@@ -108,8 +103,7 @@ class CustomerIrs
      *
      * @return CustomerIrs
      */
-    public function setDistrict($district)
-    {
+    public function setDistrict($district) {
         $this->district = $district;
 
         return $this;
@@ -120,8 +114,7 @@ class CustomerIrs
      *
      * @return string
      */
-    public function getDistrict()
-    {
+    public function getDistrict() {
         return $this->district;
     }
 
@@ -132,8 +125,7 @@ class CustomerIrs
      *
      * @return CustomerIrs
      */
-    public function setZip($zip)
-    {
+    public function setZip($zip) {
         $this->zip = $zip;
 
         return $this;
@@ -144,8 +136,7 @@ class CustomerIrs
      *
      * @return string
      */
-    public function getZip()
-    {
+    public function getZip() {
         return $this->zip;
     }
 
@@ -156,8 +147,7 @@ class CustomerIrs
      *
      * @return CustomerIrs
      */
-    public function setTs($ts)
-    {
+    public function setTs($ts) {
         $this->ts = $ts;
 
         return $this;
@@ -168,8 +158,7 @@ class CustomerIrs
      *
      * @return \DateTime
      */
-    public function getTs()
-    {
+    public function getTs() {
         return $this->ts;
     }
 
@@ -180,8 +169,7 @@ class CustomerIrs
      *
      * @return CustomerIrs
      */
-    public function setActioneer($actioneer)
-    {
+    public function setActioneer($actioneer) {
         $this->actioneer = $actioneer;
 
         return $this;
@@ -192,8 +180,7 @@ class CustomerIrs
      *
      * @return integer
      */
-    public function getActioneer()
-    {
+    public function getActioneer() {
         return $this->actioneer;
     }
 
@@ -204,8 +191,7 @@ class CustomerIrs
      *
      * @return CustomerIrs
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -216,8 +202,7 @@ class CustomerIrs
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -228,8 +213,7 @@ class CustomerIrs
      *
      * @return CustomerIrs
      */
-    public function setModified($modified)
-    {
+    public function setModified($modified) {
         $this->modified = $modified;
 
         return $this;
@@ -240,8 +224,7 @@ class CustomerIrs
      *
      * @return \DateTime
      */
-    public function getModified()
-    {
+    public function getModified() {
         return $this->modified;
     }
 
@@ -250,8 +233,8 @@ class CustomerIrs
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
+
 }
