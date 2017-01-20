@@ -728,11 +728,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             // print_r($p);
         }
         //$jsonarr = array_merge($jsonarr, $jsonarrnoref);
-
+        print_r($jsonarr);
+        exit;
         $data["data"] = $jsonarr;
         $data["recordsTotal"] = $recordsTotal;
         $data["recordsFiltered"] = $recordsFiltered;
-        return json_encode($data);
+        //return json_encode($data);
     }
 
     function getArticleAttributes($articleId, $linkingTargetId = '') {
