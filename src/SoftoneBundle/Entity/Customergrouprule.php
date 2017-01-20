@@ -170,6 +170,7 @@ class Customergrouprule {
         if ($product->getProductsale()) {
             $productsale = $product->getProductsale()->getId();
         }
+        
         //
         //echo $this->rulesLoop($rule, $catsEp, $supplier) ? "true" : "false";
         return $this->rulesLoop($rule, $catsEp, $supplier, $product->getErpCode(), $productsale);
