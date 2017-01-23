@@ -1222,7 +1222,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      */   
     function retrieveApothemaAction() {
         // 88.99.31.23
-        if ($_SERVER["REMOTE_ADDR"] == "88.99.31.23" OR  $_SERVER["REMOTE_ADDR"] == "136.243.49.31" OR $_SERVER["REMOTE_ADDR"] == "212.205.224.191") {
+        if (!$this->getSetting("SoftoneBundle:Product:Allowedips")) {
+            $allowedips = "88.99.31.23,136.243.49.31,212.205.224.191";
+            $this->setSetting("SoftoneBundle:Product:Allowedips", $allowedips);
+        }
+        $allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
+        $allowedipsArr = explode(",", $allowedips);
+        if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
             $this->retrieveApothema();
         } else {
             exit;
