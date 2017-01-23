@@ -584,7 +584,7 @@ class EdiItemController extends Main {
                 foreach ($packs as $k => $data) {
                     $data_string = json_encode($data);
                     print_r($data);
-                    continue;
+                    //continue;
                     $result = file_get_contents($requerstUrl, null, stream_context_create(array(
                         'http' => array(
                             'method' => 'POST',
