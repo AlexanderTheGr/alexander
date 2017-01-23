@@ -255,7 +255,7 @@ class EdiItemController extends Main {
 
 
         ;
-        $json = $this->ediitemdatatable('setEdiQtyAvailability');
+        $json = $this->ediitemdatatable('setEdiQtyAvailability',$id);
 
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
@@ -301,7 +301,7 @@ class EdiItemController extends Main {
         exit;
     }
 
-    public function ediitemdatatable($funct = false) {
+    public function ediitemdatatable($funct = false,$id=false) {
         ini_set("memory_limit", "1256M");
         $request = Request::createFromGlobals();
 
@@ -448,7 +448,7 @@ class EdiItemController extends Main {
         if ($funct) {
             $jsonarrnoref = array();
             if (count($jsonarr)) {
-                $jsonarr = $this->$funct($jsonarr);
+                $jsonarr = $this->$funct($jsonarr,$id);
                 $jsonarr = array_merge($jsonarr, $jsonarrnoref);
             }
         }
@@ -513,13 +513,16 @@ class EdiItemController extends Main {
         //return $out;        
     }
 
-    function setEdiQtyAvailability($jsonarr) {
+    function setEdiQtyAvailability($jsonarr,$id=0) {
         $limit = 25;
         //return;
         //return $jsonarr;
         $datas = array();
         //print_r($jsonarr);
-
+        $order = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Order")
+                ->find($id);
+        $customer - $order->getCustomer();
         $request = Request::createFromGlobals();
         $dt_columns = $request->request->get("columns");
         if ($dt_columns[1]["search"]["value"] == 4) {
@@ -575,7 +578,8 @@ class EdiItemController extends Main {
                                 "EltrekkaRef" => $entity->getItemcode()));
                     $xml = $response->GetAvailabilityResult->any;
                     $xml = simplexml_load_string($xml);
-                    @$jsonarr[$key]['6'] = number_format((float) $xml->Item->Header->PriceOnPolicy, 2, '.', '');
+                    @$jsonarr[$key]['6'] = $customer->getId();
+                    @$jsonarr[$key]['7'] = number_format((float) $xml->Item->Header->PriceOnPolicy, 2, '.', '');
                     @$jsonarr[$key]['DT_RowClass'] .= $xml->Item->Header->Available == "Y" ? ' text-success ' : ' text-danger ';
                 }
             }
@@ -608,8 +612,8 @@ class EdiItemController extends Main {
 
                             //echo $Item->ItemCode."\n";
                             if (@$jsonarr[$ands[$Item->ItemCode]]) {
-
-                                @$jsonarr[$ands[$Item->ItemCode]]['6'] = number_format($Item->UnitPrice, 2, '.', '');
+                                @$jsonarr[$ands[$Item->ItemCode]]['6'] = $customer->getId();
+                                @$jsonarr[$ands[$Item->ItemCode]]['7'] = number_format($Item->UnitPrice, 2, '.', '');
 
                                 $entity = $entities[$Item->ItemCode];
                                 //$entity->setRetailprice(number_format($Item->UnitPrice, 2, '.', ''));
