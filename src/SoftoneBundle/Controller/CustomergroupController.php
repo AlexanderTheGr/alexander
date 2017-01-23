@@ -56,8 +56,8 @@ class CustomergroupController extends Main {
         foreach ($productsales as $productsale) {
             $productsaleArr[$productsale->getId()] = $productsale->getTitle();
         }
-        $productsalejson = json_encode($productsaleArr);        
-        
+        $productsalejson = json_encode($productsaleArr);
+
         $suppliers = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")->findAll();
         $supplierArr = array();
         foreach ($suppliers as $supplier) {
@@ -93,7 +93,7 @@ class CustomergroupController extends Main {
             }
         }
         return $this->render('SoftoneBundle:Customergroup:view.html.twig', array(
-                    'pagename' => "Ομάδες Πελατών: ".$entity->getTitle(),
+                    'pagename' => "Ομάδες Πελατών: " . $entity->getTitle(),
                     'url' => '/customergroup/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
@@ -157,15 +157,15 @@ class CustomergroupController extends Main {
         $this->flushpersist($customergrouprule);
 
         /*
-        $grouprules = $this->getDoctrine()->getRepository('SoftoneBundle:Customergrouprule')->findBy(array("group"=>$customergroup));
-        $i=0;
-        foreach ((array)$grouprules as $grouprule) {
-            echo $i++;
-            $grouprule->setSortorder($i++);
-            $this->flushpersist($grouprule);       
-        }
+          $grouprules = $this->getDoctrine()->getRepository('SoftoneBundle:Customergrouprule')->findBy(array("group"=>$customergroup));
+          $i=0;
+          foreach ((array)$grouprules as $grouprule) {
+          echo $i++;
+          $grouprule->setSortorder($i++);
+          $this->flushpersist($grouprule);
+          }
          * 
-         */       
+         */
 
         $json = json_encode(array("id" => $customergrouprule->getId()));
         return new Response(
@@ -237,7 +237,7 @@ class CustomergroupController extends Main {
         if ($id > 0 AND count($entity) > 0) {
             $tabs[] = array("title" => "Rules", "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
         }
-        foreach ((array)$tabs as $tab) {
+        foreach ((array) $tabs as $tab) {
             $this->addTab($tab);
         }
 
@@ -274,30 +274,33 @@ class CustomergroupController extends Main {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
-    
-    
-     /**
+
+    /**
      * @Route("/customergroup/getrulesjson/{id}")
      */
     public function getCustomerRulesJsonAction($id) {
-        $customer = $this->getDoctrine()->getRepository("SoftoneBundle:Customer")->findOneBy(array("reference"=>$id));
-        //echo $customer->getCustomergroup()->getId();
-        $rules = $this->getDoctrine()->getRepository("SoftoneBundle:Customergrouprule")->findBy(array("group"=>$customer->getCustomergroup()));
-        foreach((array)$rules as $rule) {
-            $as["id"] = $rule->getId();
-            $as["val"] = $rule->getVal();
-            $as["sortorder"] = $rule->getSortorder();
-            $as["price"] = $rule->getPrice();
-            $as["rules"] = json_decode($rule->getRule(), true);
-            $as["price_field"] = $customer->getPriceField();
-            $jsonarr[$rule->getId()] = $as;
+        $allowedipsArr = explode(",", $allowedips);
+        if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
+            $customer = $this->getDoctrine()->getRepository("SoftoneBundle:Customer")->findOneBy(array("reference" => $id));
+            //echo $customer->getCustomergroup()->getId();
+            $rules = $this->getDoctrine()->getRepository("SoftoneBundle:Customergrouprule")->findBy(array("group" => $customer->getCustomergroup()));
+            foreach ((array) $rules as $rule) {
+                $as["id"] = $rule->getId();
+                $as["val"] = $rule->getVal();
+                $as["sortorder"] = $rule->getSortorder();
+                $as["price"] = $rule->getPrice();
+                $as["rules"] = json_decode($rule->getRule(), true);
+                $as["price_field"] = $customer->getPriceField();
+                $jsonarr[$rule->getId()] = $as;
+            }
+            $json = json_encode($jsonarr);
+            return new Response(
+                    $json, 200, array('Content-Type' => 'application/json')
+            );
+        } else {
+            exit;
         }
-        $json = json_encode($jsonarr);
-        return new Response(
-                $json, 200, array('Content-Type' => 'application/json')
-        );
     }
-    
 
     function getRuleAction() {
         $total = 0;
