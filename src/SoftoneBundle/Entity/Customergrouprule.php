@@ -171,7 +171,7 @@ class Customergrouprule {
             $catsEp[] = $pcategory->getSortCode();
         }
         //print_r($catsEp);
-        $supplier = 0;
+        $supplier = 122220;
         $productsale = 1;
         $erpcode = '';
         if ($editem) {
@@ -186,9 +186,6 @@ class Customergrouprule {
             }
             $erpcode = $product->getErpCode();
         }
-
-
-
         //
         //echo $this->rulesLoop($rule, $catsEp, $supplier) ? "true" : "false";
         return $this->rulesLoop($rule, $catsEp, $supplier, $erpcode, $productsale);
