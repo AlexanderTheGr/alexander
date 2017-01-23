@@ -1231,6 +1231,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
             $this->retrieveApothema();
         } else {
+            echo 'sss';
             exit;
         }
     }
