@@ -173,7 +173,7 @@ class EdiItemController extends Main {
 
         if ($search[1]) {
             $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
-            print_r($articleIds);
+            
             @$articleIds2 = unserialize(base64_decode($search[1]));
             $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
             $articleIds[] = 1;
@@ -182,7 +182,7 @@ class EdiItemController extends Main {
                     FROM " . $this->repository . " p, EdiBundle:Edi e
                     where 
                         e.id = p.Edi AND
-                        (p.partno LIKE '%" . $search[1] . "%' OR p.itemCode LIKE '%" . $search[1] . "%' OR p.tecdocArticleId in (" . implode(",", $articleIds) . ")) "
+                        (" . $this->prefix . ".partno != '' AND p.partno LIKE '%" . $search[1] . "%' OR p.itemCode LIKE '%" . $search[1] . "%' OR p.tecdocArticleId in (" . implode(",", $articleIds) . ")) "
             );
         } else {
             $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[0])));
@@ -327,7 +327,7 @@ class EdiItemController extends Main {
             $articleIds = count($articles["articleIds"]) ? $articles["articleIds"] : (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
             $articleIds[] = 1;
 
-            print_r($articleIds);
+
 
             //print_r(base64_decode($dt_search["value"]));
             $dt_search["value"] = '';
