@@ -920,8 +920,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             }
 
             $order->setReference($out->id);
-            $this->flushpersist($order);
-            
+            $this->flushpersist($order);            
         }
         //exit;
 
