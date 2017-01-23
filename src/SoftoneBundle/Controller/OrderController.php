@@ -103,13 +103,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ($order->getItems() as $item) {
             @$total += $item->getLineval();
             //$item->getProduct()->getReference();
+            $product = $item->getProduct();
             $supplier = $item->getProduct()->getSupplierId() ? $item->getProduct()->getSupplierId()->getTitle() : '';
             $html .= "<tr>";
-            $html .= "<td>" . $item->getProduct()->getTitle() . "</td>";
-            $html .= "<td>" . $item->getProduct()->getErpCode() . "</td>";
+            $html .= "<td>" . $product->getTitle() . "</td>";
+            $html .= "<td>" . $product->getErpCode() . "</td>";
             $html .= "<td>" . $supplier . "</td>";
-            $html .= "<td>" . $item->getProduct()->getItemMtrplace() . "</td>";
-            $html .= "<td>0</td>";
+            $html .= "<td>" . $product->getItemMtrplace() . "</td>";
+            $html .= "<td>".$product->getApothiki()."</td>";
             $html .= "<td align='right'>" . $item->getQty() . "</td>";
             $html .= "<td align='right'>" . $item->getPrice() . "</td>";
             $html .= "<td align='right'>" . $item->getDisc1prc() . "</td>";
