@@ -1216,9 +1216,17 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         );
     }
 
+     /**
+     * 
+     * @Route("/product/retrieveApothema")
+     */   
+    function retrieveApothemaAction() {
+        $this->retrieveApothema();
+    }
+    
     function retrieveApothema($filters = false) {
         //function retrieveProducts($filters=false) {
-        $this->catalogue = 4;
+        //$this->catalogue = 4;
         //$filters = "ITEM.V3=".date("Y-m-d")."&ITEM.V4=1";//. date("Y-m-d");
         //$filters = "ITEM.V3=2015-07-29&ITEM.V4=1";//. date("Y-m-d");
         //$filters = "ITEM.SORENQTY1>1";  
