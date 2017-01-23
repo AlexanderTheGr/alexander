@@ -583,8 +583,8 @@ class EdiItemController extends Main {
             foreach ($datas as $catalogue => $packs) {
                 foreach ($packs as $k => $data) {
                     $data_string = json_encode($data);
-                    //print_r($data);
-                    //continue;
+                    print_r($data);
+                    continue;
                     $result = file_get_contents($requerstUrl, null, stream_context_create(array(
                         'http' => array(
                             'method' => 'POST',
@@ -596,8 +596,8 @@ class EdiItemController extends Main {
                     )));
                     $re = json_decode($result);
 
-                    //print_r($re);
-                    //continue;
+                    print_r($re);
+                    continue;
                     if (@count($re->Items)) {
                         foreach ($re->Items as $Item) {
                             $qty = $Item->Availability == 'green' ? 100 : 0;
