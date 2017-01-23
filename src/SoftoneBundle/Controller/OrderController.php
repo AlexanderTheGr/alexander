@@ -422,7 +422,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $params['dtparams'] = $dtparams;
         $params['id'] = $dtparams;
         $params['key'] = 'getoffcanvases2_' . $id;
-        $params['url'] = '/edi/ediitem/getorderdatatable/1';
+        $params['url'] = '/edi/ediitem/getorderdatatable/'.$id;
         $params["ctrl"] = 'ctrlgetoffcanvases2';
         $params["app"] = 'appgetoffcanvases2';
         $params["drawCallback"] = 'fororder2(' . $id . ')';
