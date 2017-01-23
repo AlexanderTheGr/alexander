@@ -1221,7 +1221,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/product/retrieveApothema")
      */   
     function retrieveApothemaAction() {
-        $this->retrieveApothema();
+        if ($_SERVER["REMOTE_ADDR"] == "136.243.49.31" OR $_SERVER["REMOTE_ADDR"] == "212.205.224.191") {
+            echo 'ssss';
+            //$this->retrieveApothema();
+        }
     }
     
     function retrieveApothema($filters = false) {
