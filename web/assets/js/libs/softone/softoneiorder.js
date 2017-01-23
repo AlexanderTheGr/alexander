@@ -108,6 +108,7 @@ jQuery(".savesoftone").live('click', function (e) {
             toastr.error(json.error, "Error");
         } else {
             toastr.success(json.error, "Success");
+            $(".apestaleni").show();
         }
     })
 })
