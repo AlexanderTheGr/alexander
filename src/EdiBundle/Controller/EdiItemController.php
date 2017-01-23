@@ -185,11 +185,6 @@ class EdiItemController extends Main {
                         (p.partno LIKE '%" . $search[1] . "%' OR p.itemCode LIKE '%" . $search[1] . "%' OR p.tecdocArticleId in (" . implode(",", $articleIds) . ")) "
             
                     );
-            echo "SELECT  distinct(e.id) as eid, e.name as edi
-                    FROM " . $this->repository . " p, EdiBundle:Edi e
-                    where 
-                        e.id = p.Edi AND p.partno != '' AND
-                        (p.partno LIKE '%" . $search[1] . "%' OR p.itemCode LIKE '%" . $search[1] . "%' OR p.tecdocArticleId in (" . implode(",", $articleIds) . "))";
         } else {
             $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[0])));
            
@@ -212,7 +207,7 @@ class EdiItemController extends Main {
         $results = $query->getResult();
         $html .= '<button type="button" class="edibutton btn btn-raised ink-reaction" data-id="0">Invetory</button>';
         $edi = array();
-        print_r($results);
+
         foreach ($results as $data) {
             $edi[$data['eid']] = $data;
         }
@@ -380,7 +375,7 @@ class EdiItemController extends Main {
                 $edi = $dt_columns[1]["search"]["value"];
 
                 //$edi = $em->getRepository("EdiBundle:Edi")->find(1);
-                $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".partno != '' AND ((" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
+                $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".partno != '' AND ((" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno like '%" . $search[1] . "%' OR " . $this->prefix . ".itemCode like '%" . $search[1] . "%'))";
                 /*
                   if ($search[1]) {
                   $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND ((" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
