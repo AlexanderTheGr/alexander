@@ -20,7 +20,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     var $repository = 'SoftoneBundle:Order';
     var $newentity = '';
 
-
     public function setfullytrans() {
         $em = $this->getDoctrine()->getManager();
         $sql = "SELECT FINDOC,FULLYTRANSF FROM FINDOC WHERE FULLYTRANSF = 1";
@@ -29,8 +28,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $datas = $softone->createSql($params);
         // print_r($datas);
         //exit;
-        foreach ((array)$datas->data as $data) {
-            $sql = "update softone_order set fullytrans = '".$data->FULLYTRANSF."' where reference = '" . $data->FINDOC . "'";
+        foreach ((array) $datas->data as $data) {
+            $sql = "update softone_order set fullytrans = '" . $data->FULLYTRANSF . "' where reference = '" . $data->FINDOC . "'";
             //echo $sql."<BR>";
             $em->getConnection()->exec($sql);
         }
@@ -103,18 +102,19 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ($order->getItems() as $item) {
             @$total += $item->getLineval();
             //$item->getProduct()->getReference();
-            
+
             $product = $item->getProduct();
-            if (!$product) continue;
+            if (!$product)
+                continue;
             $ti = $product->getSupplierId() ? $product->getSupplierId()->getTitle() : "";
-            
+
             $supplier = $item->getProduct()->getSupplierId() ? $item->getProduct()->getSupplierId()->getTitle() : '';
             $html .= "<tr>";
             $html .= "<td>" . $product->getTitle() . "</td>";
             $html .= "<td>" . $product->getErpCode() . "</td>";
             $html .= "<td>" . $ti . "</td>";
             //$html .= "<td>" . $product->getItemMtrplace() . "</td>";
-            $html .= "<td>".$product->getApothiki()."</td>";
+            $html .= "<td>" . $product->getApothiki() . "</td>";
             $html .= "<td align='right'>" . $item->getQty() . "</td>";
             $html .= "<td align='right'>" . $item->getPrice() . "</td>";
             $html .= "<td align='right'>" . $item->getDisc1prc() . "</td>";
@@ -910,21 +910,22 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 foreach ($order->getItems() as $item) {
                     $product = $item->getProduct();
                     if ($product) {
-                        $reserved = (int)$product->getReserved();
+                        $reserved = (int) $product->getReserved();
                         $reserved += $item->getQty();
                         $product->setReserved($reserved);
                         $this->flushpersist($product);
-                        echo "\n(".$reserved.")\n";
+                        echo "\n(" . $reserved . ")\n";
                     }
                 }
             }
-            
+
             $order->setReference($out->id);
             $this->flushpersist($order);
-
-            
+            header("location: /order/view/" . $order->getId());
+            exit;
         }
         //exit;
+
         $json = json_encode($out);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
