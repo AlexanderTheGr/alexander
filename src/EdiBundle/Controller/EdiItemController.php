@@ -546,7 +546,7 @@ class EdiItemController extends Main {
                     $datas[$entity->getEdi()->getId()][$k]['ApiToken'] = $entity->getEdi()->getToken();
                     $datas[$entity->getEdi()->getId()][$k]['Items'] = array();
                 }
-                $Items[$entity->getEdi()->getId()][$k]["ItemCode"] = $entity->getPartno();
+                $Items[$entity->getEdi()->getId()][$k]["ItemCode"] = $entity->getItemcode();
                 $Items[$entity->getEdi()->getId()][$k]["ReqQty"] = 1;
                 $datas[$entity->getEdi()->getId()][$k]['Items'][] = $Items[$entity->getEdi()->getId()][$k];
 
@@ -583,8 +583,8 @@ class EdiItemController extends Main {
             foreach ($datas as $catalogue => $packs) {
                 foreach ($packs as $k => $data) {
                     $data_string = json_encode($data);
-                    print_r($data);
-                    continue;
+                    //print_r($data);
+                    //continue;
                     $result = file_get_contents($requerstUrl, null, stream_context_create(array(
                         'http' => array(
                             'method' => 'POST',
