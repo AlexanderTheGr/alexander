@@ -42,17 +42,17 @@ class EdiItem extends Entity {
      * @var string
      */
     private $description;
-    
+
     /**
      * @var string
      */
-    private $cats;    
-    
+    private $cats;
+
     /**
      * @var string
      */
-    private $cars; 
-    
+    private $cars;
+
     /**
      * @var integer
      */
@@ -180,8 +180,7 @@ class EdiItem extends Entity {
     public function getDescription() {
         return $this->description;
     }
-    
-    
+
     /**
      * Set cats
      *
@@ -193,7 +192,7 @@ class EdiItem extends Entity {
         $this->cats = serialize($cats);
         return $this;
     }
-    
+
     /**
      * Get cats
      *
@@ -202,9 +201,7 @@ class EdiItem extends Entity {
     public function getCats() {
         return unserialize($this->cats);
     }
-    
-    
-    
+
     /**
      * Set cats
      *
@@ -216,7 +213,7 @@ class EdiItem extends Entity {
         $this->cars = serialize($cars);
         return $this;
     }
-    
+
     /**
      * Get cars
      *
@@ -224,9 +221,8 @@ class EdiItem extends Entity {
      */
     public function getCars() {
         return unserialize($this->cars);
-    }    
-    
-    
+    }
+
     /**
      * Set dlnr
      *
@@ -539,7 +535,7 @@ class EdiItem extends Entity {
             "brandno" => $this->dlnr
         );
         //echo ".";
-        
+
         $tecdoc = $this->tecdoc ? $this->tecdoc : new Tecdoc(); //new Tecdoc();
         $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($postparams);
         $tectdoccode = $this->artNr;
@@ -581,7 +577,7 @@ class EdiItem extends Entity {
                 //$this->setTecdocGenericArticleId($out->articleName);
                 $cats = $tecdoc->getTreeForArticle($out->articleId);
                 //print_r((array)$cats);
-                
+
                 $params = array(
                     "articleId" => $out->articleId
                 );
@@ -590,35 +586,35 @@ class EdiItem extends Entity {
                 $linkingTargetId = 0;
                 foreach ($articleLinkedAllLinkingTarget->data->array as $v) {
                     if ($linkingTargetId == 0)
-                    $linkingTargetId = $v->linkingTargetId;
+                        $linkingTargetId = $v->linkingTargetId;
                     $cars[] = $v->linkingTargetId;
                     //break;
                 }
                 $categories2 = array();
-                foreach($cats as $cat) {
+                foreach ($cats as $cat) {
                     $categories2[] = $cat->tree_id;
                 }
-                $categories = $this->checkForUniqueCategory($out, $cats,$tecdoc,$linkingTargetId);
+                $categories = $this->checkForUniqueCategory($out, $cats, $tecdoc, $linkingTargetId);
                 if (count($categories) == 0) {
                     $categories = $categories2;
-                }     
+                }
                 //print_r($categories);
                 //print_r($cars);
-                
-                $sql = "update partsbox_db.edi_item set tecdoc_generic_article_id = '".$out->genericArticleId."', tecdoc_article_name = '".$out->articleName."', tecdoc_article_id = '".$out->articleId."', cars = '".serialize($cars)."', cats = '".serialize($categories)."' where id = '".$this->id."'";
+
+                $sql = "update partsbox_db.edi_item set tecdoc_generic_article_id = '" . $out->genericArticleId . "', tecdoc_article_name = '" . $out->articleName . "', tecdoc_article_id = '" . $out->articleId . "', cars = '" . serialize($cars) . "', cats = '" . serialize($categories) . "' where id = '" . $this->id . "'";
                 //echo $sql."<BR>";
                 $em->getConnection()->exec($sql);
-                
-                $this->setCats($categories); 
-                $this->setCars($cars); 
+
+                $this->setCats($categories);
+                $this->setCars($cars);
                 //$em->persist($this);
                 //$em->flush();
             } else {
                 /*
-                $this->setTecdocArticleId(-1);
-                //$this->setTecdocGenericArticleId($out->articleName);
-                $em->persist($this);
-                $em->flush();
+                  $this->setTecdocArticleId(-1);
+                  //$this->setTecdocGenericArticleId($out->articleName);
+                  $em->persist($this);
+                  $em->flush();
                  * 
                  */
             }
@@ -629,10 +625,10 @@ class EdiItem extends Entity {
         //echo $result;
     }
 
-    
-    function checkForUniqueCategory($article, $cats,$tecdoc,$linkingTargetId) {
-        if ($cats <= 2) return array();
-	$categories = array();	
+    function checkForUniqueCategory($article, $cats, $tecdoc, $linkingTargetId) {
+        if ($cats <= 2)
+            return array();
+        $categories = array();
         foreach ($cats as $c) {
 
             $params = array(
@@ -650,9 +646,7 @@ class EdiItem extends Entity {
         }
         return $categories;
     }
-    
-    
-    
+
     public function toErp() {
 
 
@@ -699,20 +693,20 @@ class EdiItem extends Entity {
         }
 
         /*
-        $TecdocSuppliers = $em->getRepository("SoftoneBundle:TecdocSupplier")->findAll();
-        foreach($TecdocSuppliers as $TecdocSupplier) {
-            $TecdocSupplier->toSoftone();
-        }
-        */
+          $TecdocSuppliers = $em->getRepository("SoftoneBundle:TecdocSupplier")->findAll();
+          foreach($TecdocSuppliers as $TecdocSupplier) {
+          $TecdocSupplier->toSoftone();
+          }
+         */
         $TecdocSupplier = $em->getRepository("SoftoneBundle:TecdocSupplier")
                 ->find($this->dlnr);
-        $TecdocSupplier->toSoftone(); 
-        
-        
-        
+        $TecdocSupplier->toSoftone();
+
+
+
         $erpCode = $this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode();
         $product = $em->getRepository("SoftoneBundle:Product")->findOneBy(array("erpCode" => $erpCode));
-        
+
         if (@$product->id > 0) {
 
             //$product = $em->getRepository("SoftoneBundle:Product")->find($this->getProduct());
@@ -721,11 +715,11 @@ class EdiItem extends Entity {
             $product->setErpCode($this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode());
             $product->setItemCode($product->getErpCode());
             $product->setCars($this->getCars());
-            $product->setCats($this->getCats());            
-            
-            $product->setItemPricer((double)$this->getEdiMarkup("itemPricer"));
-            $product->setItemPricew((double)$this->getEdiMarkup("itemPricew"));
-            
+            $product->setCats($this->getCats());
+
+            $product->setItemPricer((double) $this->getEdiMarkup("itemPricer"));
+            $product->setItemPricew((double) $this->getEdiMarkup("itemPricew"));
+
             $em->persist($product);
             $em->flush();
             if ($TecdocSupplier) {
@@ -737,42 +731,42 @@ class EdiItem extends Entity {
         }
 
         /*
-        if ($this->getProduct() > 0) {
-            if (!$product->getEdiId()) {
-                $product->setEdi($this->getEdi()->getId());
-                $product->setEdiId($this->id);
-                $em->persist($product);
-                $em->flush();
-                $product->toSoftone();
-                return;
-            } else {
-                if (!$product->getEdis()) {
-                    $edis = array();
-                } else {
-                    $edis = unserialize($product->getEdis());
-                }
-                $edis[] = $this->id;
-                $edis[] = $product->getEdiId();
-                $edis = array_filter(array_unique($edis));
-                $product->setEdis(serialize($edis));
-                $em->persist($product);
-                $em->flush();
-                $product->toSoftone();
-                return;
-            }
-            return;
-        }
+          if ($this->getProduct() > 0) {
+          if (!$product->getEdiId()) {
+          $product->setEdi($this->getEdi()->getId());
+          $product->setEdiId($this->id);
+          $em->persist($product);
+          $em->flush();
+          $product->toSoftone();
+          return;
+          } else {
+          if (!$product->getEdis()) {
+          $edis = array();
+          } else {
+          $edis = unserialize($product->getEdis());
+          }
+          $edis[] = $this->id;
+          $edis[] = $product->getEdiId();
+          $edis = array_filter(array_unique($edis));
+          $product->setEdis(serialize($edis));
+          $em->persist($product);
+          $em->flush();
+          $product->toSoftone();
+          return;
+          }
+          return;
+          }
          * 
          */
 
         $productsale = $em->getRepository('SoftoneBundle:Productsale')->find(1);
         $dt = new \DateTime("now");
         $product = new \SoftoneBundle\Entity\Product;
-        
+
         $product->setSupplierCode($this->partno);
         $product->setTitle($this->description);
         $product->setTecdocCode($this->artNr);
-        
+
         $product->setItemMtrsup($this->getEdi()->getItemMtrsup());
 
         $product->setItemMtrmark($this->dlnr);
@@ -790,13 +784,13 @@ class EdiItem extends Entity {
         $product->setEdi($this->getEdi()->getId());
         $product->setEdiId($this->id);
         $product->setProductSale($productsale);
-        
+
         $product->setCars($this->getCars());
         $product->setCats($this->getCats());
-        
-        $product->setItemPricer((double)$this->getEdiMarkupPrice("itemPricer"));
-        $product->setItemPricew((double)$this->getEdiMarkupPrice("itemPricew"));
-        
+
+        $product->setItemPricer((double) $this->getEdiMarkupPrice("itemPricer"));
+        $product->setItemPricew((double) $this->getEdiMarkupPrice("itemPricew"));
+
 
         $product->setItemV5($dt);
         $product->setTs($dt);
@@ -814,7 +808,7 @@ class EdiItem extends Entity {
         $em->persist($this);
         $em->flush();
         $sql = 'UPDATE  `softone_product` SET `supplier_code` =  `item_code2`, `title` =  `item_name`, `tecdoc_code` =  `item_apvcode`, `erp_code` =  `item_code`, `tecdoc_supplier_id` =  `item_mtrmark`, `supplier_id` =  `item_mtrmanfctr`';
-        $em->getConnection()->exec($sql);        
+        $em->getConnection()->exec($sql);
         $sql = 'update `softone_product` set product_sale = 1 where product_sale is null';
         $em->getConnection()->exec($sql);
         return;
@@ -1013,7 +1007,7 @@ class EdiItem extends Entity {
             $xml = $response->GetPartPriceResult->any;
             $xml = simplexml_load_string($xml);
             //print_r($xml);
-            
+
             return $xml->Item->PriceOnPolicy;
         }
         //print_r($jsonarr);
@@ -1045,14 +1039,14 @@ class EdiItem extends Entity {
         //$session->set('SoapClient', $this->SoapClient);
         return $this->SoapClient;
     }
-    
-    function getEdiMarkupPrice($pricefield=false) {
+
+    function getEdiMarkupPrice($pricefield = false) {
 
         $rules = $this->getEdi()->loadEdirules($pricefield)->getRules();
         $sortorder = 0;
         $markup = $this->markup;
         foreach ($rules as $rule) {
-            if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder() ) {
+            if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
                 $sortorder = $rule->getSortorder();
                 $markup = $rule->getVal();
                 $price = $rule->getPrice();
@@ -1061,16 +1055,17 @@ class EdiItem extends Entity {
         }
         //$markup = $markup == 0 ? 0 : $markup; 
         //echo $markup."\n";
-        $markupedPrice = $this->wholesaleprice * (1 + $markup/100 );
+        $markupedPrice = $this->wholesaleprice * (1 + $markup / 100 );
         return $price > 0 ? $price : $markupedPrice;
     }
-    function getEdiMarkup($pricefield=false) {
+
+    function getEdiMarkup($pricefield = false) {
 
         $rules = $this->getEdi()->loadEdirules($pricefield)->getRules();
         $sortorder = 0;
         $markup = $this->markup;
         foreach ($rules as $rule) {
-            if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder() ) {
+            if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
                 $sortorder = $rule->getSortorder();
                 $markup = $rule->getVal();
                 $price = $rule->getPrice();
@@ -1080,14 +1075,14 @@ class EdiItem extends Entity {
         return $markup;
         //$markup = $markup == 0 ? 0 : $markup; 
         //echo $markup."\n";
-        $markupedPrice = $this->wholesaleprice * (1 + $markup/100 );
+        $markupedPrice = $this->wholesaleprice * (1 + $markup / 100 );
         return $price > 0 ? $price : $markupedPrice;
-    }    
+    }
+
     /**
      * @var string
      */
     private $wholesaleprice;
-
 
     /**
      * Set wholesaleprice
@@ -1096,8 +1091,7 @@ class EdiItem extends Entity {
      *
      * @return EdiItem
      */
-    public function setWholesaleprice($wholesaleprice)
-    {
+    public function setWholesaleprice($wholesaleprice) {
         $this->wholesaleprice = $wholesaleprice;
 
         return $this;
@@ -1108,8 +1102,29 @@ class EdiItem extends Entity {
      *
      * @return string
      */
-    public function getWholesaleprice()
-    {
+    public function getWholesaleprice() {
         return $this->wholesaleprice;
     }
+
+    
+    function getGroupedDiscountPrice(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
+        $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
+        $sortorder = 0;
+
+        foreach ($rules as $rule) {
+            if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
+                $sortorder = $rule->getSortorder();
+                $discount = $rule->getVal();
+                $price = $rule->getPrice();
+            }
+        }
+        $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
+        $this->getEdiMarkupPrice($pricefield);
+        $price = $price > 0 ? $price : $this->getEdiMarkupPrice($pricefield);
+        $discountedPrice = $this->getEdiMarkupPrice($pricefield) * (1 - $discount / 100 );
+        $finalprice = $discount > 0 ? $discountedPrice : $price;
+
+        return number_format($finalprice * $vat, 2, '.', '');
+    }    
+    
 }
