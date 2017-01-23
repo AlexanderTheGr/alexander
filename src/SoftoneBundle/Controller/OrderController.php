@@ -901,9 +901,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         }
 
         $locateinfo = "MTRL,NAME,PRICE,QTY1,VAT;ITELINES:DISC1PRC,ITELINES:LINEVAL,MTRL,MTRL_ITEM_CODE,MTRL_ITEM_CODE1,MTRL_ITEM_NAME,MTRL_ITEM_NAME1,PRICE,QTY1;SALDOC:BUSUNITS,EXPN,TRDR,MTRL,PRICE,QTY1,VAT";
-        print_r($dataOut);
+        //print_r($dataOut);
         $out = $softone->setData((array) $dataOut, $object, (int) 0);
-        print_r($out);
+        //print_r($out);
 
         if (@$out->id > 0) {
             if ($order->getReference() == 0) {
@@ -924,7 +924,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
             
         }
-        exit;
+        //exit;
         $json = json_encode($out);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
