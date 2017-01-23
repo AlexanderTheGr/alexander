@@ -168,7 +168,7 @@ class Customergrouprule {
         $supplier = 0;
         if ($editem) {
             $SoftoneSupplier = $em->getRepository("SoftoneBundle:SoftoneSupplier")
-                    ->findOneBy(array('title' => $editem->brand));
+                    ->findOneBy(array('title' => $editem->getBrand()));
             if ($SoftoneSupplier)
             $supplier = $SoftoneSupplier->getId();
             
