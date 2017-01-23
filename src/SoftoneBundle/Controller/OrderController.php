@@ -882,7 +882,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $dataOut["ITELINES"] = array();
 
         $k = 0;
-        print_r($dataOut);
+        //print_r($dataOut);
         foreach ($order->getItems() as $item) {
             //$dataOut["ITELINES"][] = array("QTY1" => $item->getQty(), "VAT" => $vat, "LINENUM" => $item->getLineval(), "MTRL" => $item->getProduct()->getReference());
             $dataOut["ITELINES"][] = array(
@@ -902,8 +902,20 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         print_r($out);
 
         if (@$out->id > 0) {
+            if ($order->getReference() == 0) {
+                foreach ($order->getItems() as $item) {
+                    $product = $item->getProduct();
+                    $reserved = (int)$product->getReserved();
+                    $reserved += $item->getQty();
+                    $product->setReserved($reserved);
+                    $this->flushpersist($product);
+                }
+            }
+            
             $order->setReference($out->id);
             $this->flushpersist($order);
+
+            
         }
         exit;
         $json = json_encode($out);
