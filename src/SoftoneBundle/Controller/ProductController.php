@@ -761,6 +761,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $fields[] = array("name" => "Supplier", "index" => 'supplierId:title', 'type' => 'select', 'object' => 'SoftoneSupplier');
         $fields[] = array("name" => "Προσφορά", "index" => 'productSale:title', 'type' => 'select', 'object' => 'ProductSale');
         $fields[] = array("name" => "Ράφι", "index" => 'itemMtrplace');
+        $fields[] = array("name" => "Συνχρ.", "index" => 'cccPriceUpd', 'method' => 'yesno');
         $fields[] = array("name" => "Λιανική", "index" => 'itemPricer');
         $fields[] = array("name" => "Χονδρική", "index" => 'itemPricew');
         $this->setSetting("SoftoneBundle:Product:getdatatable", serialize($fields));
