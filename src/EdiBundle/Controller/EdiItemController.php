@@ -327,7 +327,7 @@ class EdiItemController extends Main {
             $articleIds = count($articles["articleIds"]) ? $articles["articleIds"] : (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
             $articleIds[] = 1;
 
-
+            print_r($articleIds);
 
             //print_r(base64_decode($dt_search["value"]));
             $dt_search["value"] = '';
