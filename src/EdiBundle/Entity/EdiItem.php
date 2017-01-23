@@ -1112,7 +1112,7 @@ class EdiItem extends Entity {
         $sortorder = 0;
 
         foreach ($rules as $rule) {
-            if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
+            if ($rule->validateRule($this,$this) AND $sortorder <= $rule->getSortorder()) {
                 $sortorder = $rule->getSortorder();
                 $discount = $rule->getVal();
                 $price = $rule->getPrice();
