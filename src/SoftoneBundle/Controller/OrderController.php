@@ -921,8 +921,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
             $order->setReference($out->id);
             $this->flushpersist($order);
-            header("location: /order/view/" . $order->getId());
-            exit;
+            
         }
         //exit;
 
