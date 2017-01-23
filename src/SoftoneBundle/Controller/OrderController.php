@@ -105,7 +105,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             //$item->getProduct()->getReference();
             
             $product = $item->getProduct();
-            
+            if (!$product) continue;
             $ti = $product->getSupplierId() ? $product->getSupplierId()->getTitle() : "";
             
             $supplier = $item->getProduct()->getSupplierId() ? $item->getProduct()->getSupplierId()->getTitle() : '';
