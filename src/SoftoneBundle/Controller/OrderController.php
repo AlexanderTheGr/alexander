@@ -910,6 +910,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $reserved += $item->getQty();
                         $product->setReserved($reserved);
                         $this->flushpersist($product);
+                        echo "\n(".$reserved.")\n";
                     }
                 }
             }
