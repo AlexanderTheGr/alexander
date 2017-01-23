@@ -279,7 +279,7 @@ class CustomergroupController extends Main {
      * @Route("/customergroup/getrulesjson/{id}")
      */
     public function getCustomerRulesJsonAction($id) {
-         $allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
+        $allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
         $allowedipsArr = explode(",", $allowedips);
         if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
             $customer = $this->getDoctrine()->getRepository("SoftoneBundle:Customer")->findOneBy(array("reference" => $id));
