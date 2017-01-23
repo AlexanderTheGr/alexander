@@ -173,6 +173,7 @@ class EdiItemController extends Main {
 
         if ($search[1]) {
             $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
+            print_r($articleIds);
             @$articleIds2 = unserialize(base64_decode($search[1]));
             $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
             $articleIds[] = 1;
@@ -185,7 +186,7 @@ class EdiItemController extends Main {
             );
         } else {
             $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[0])));
-            print_r($articleIds);
+           
             @$articleIds2 = unserialize(base64_decode($search[0]));
             $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
             $articleIds[] = 1;
