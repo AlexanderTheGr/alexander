@@ -183,7 +183,13 @@ class EdiItemController extends Main {
                     where 
                         e.id = p.Edi AND p.partno != '' AND
                         (p.partno LIKE '%" . $search[1] . "%' OR p.itemCode LIKE '%" . $search[1] . "%' OR p.tecdocArticleId in (" . implode(",", $articleIds) . ")) "
-            );
+            
+                    );
+            echo "SELECT  distinct(e.id) as eid, e.name as edi
+                    FROM " . $this->repository . " p, EdiBundle:Edi e
+                    where 
+                        e.id = p.Edi AND p.partno != '' AND
+                        (p.partno LIKE '%" . $search[1] . "%' OR p.itemCode LIKE '%" . $search[1] . "%' OR p.tecdocArticleId in (" . implode(",", $articleIds) . "))";
         } else {
             $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[0])));
            
