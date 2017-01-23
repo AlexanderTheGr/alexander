@@ -409,7 +409,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $dtparams[] = array("name" => "Part No", "index" => 'partno', 'search' => 'text');
         $dtparams[] = array("name" => "Description", "index" => 'description', 'search' => 'text');
         //$dtparams[] = array("name" => "Tecdoc Name", "index" => 'tecdocArticleName', 'search' => 'text');
+        
+        $dtparams[] = array("name" => "Customer Price", "index" => 'wholesaleprice', 'search' => 'text');
         $dtparams[] = array("name" => "Price", "index" => 'wholesaleprice', 'search' => 'text');
+        
         $dtparams[] = array("name" => "QTY1", "index" => 'qty1', "input" => 'text', 'search' => 'text');
         //$dtparams[] = array("name" => "QTY2", "index" => 'qty2', "input" => 'text', 'search' => 'text');
         //$dtparams[] = array("name" => "QTY", "index" => 'qty', "input" => 'text', 'search' => 'text');
