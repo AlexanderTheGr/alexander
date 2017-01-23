@@ -173,6 +173,7 @@ class Customergrouprule {
         //print_r($catsEp);
         $supplier = 0;
         $productsale = 1;
+        $erpcode = '';
         if ($editem) {
             $SoftoneSupplier = $em->getRepository("SoftoneBundle:SoftoneSupplier")
                     ->findOneBy(array('title' => $editem->getBrand()));
@@ -183,13 +184,14 @@ class Customergrouprule {
             if ($product->getProductsale()) {
                 $productsale = $product->getProductsale()->getId();
             }
+            $erpcode = $product->getErpCode();
         }
 
 
 
         //
         //echo $this->rulesLoop($rule, $catsEp, $supplier) ? "true" : "false";
-        return $this->rulesLoop($rule, $catsEp, $supplier, $product->getErpCode(), $productsale);
+        return $this->rulesLoop($rule, $catsEp, $supplier, $erpcode, $productsale);
     }
 
     function rulesLoop($rule, $catsEp, $supplier, $code, $productsale) {
