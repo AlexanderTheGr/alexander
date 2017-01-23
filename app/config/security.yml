@@ -20,6 +20,7 @@ security:
         - { path: ^/customergroup/getrulesjson/*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/product/retrieveMtrl/*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/edi/ediitem/getEdiMarkup, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/product/retrieveApothema, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/order/setb2border*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: ROLE_USER }
     firewalls:
