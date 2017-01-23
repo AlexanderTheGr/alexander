@@ -601,17 +601,18 @@ class EdiItemController extends Main {
                         foreach ($re->Items as $Item) {
                             $qty = $Item->Availability == 'green' ? 100 : 0;
                             $Item->UnitPrice;
-                            echo $Item->Availability;
+
                             //echo $Item->ItemCode."\n";
                             if (@$jsonarr[$ands[$Item->ItemCode]]) {
 
                                 @$jsonarr[$ands[$Item->ItemCode]]['6'] = number_format($Item->UnitPrice, 2, '.', '');
 
                                 $entity = $entities[$Item->ItemCode];
-                                $entity->setRetailprice(number_format($Item->UnitPrice, 2, '.', ''));
-                                $this->flushpersist($entity);
-
+                                //$entity->setRetailprice(number_format($Item->UnitPrice, 2, '.', ''));
+                                //$this->flushpersist($entity);
+                                echo $Item->Availability;    
                                 if ($Item->Availability == 'green') {
+                                     
                                     @$jsonarr[$ands[$Item->ItemCode]]['DT_RowClass'] .= ' text-success ';
                                 }
                             }
