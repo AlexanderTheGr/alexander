@@ -1229,7 +1229,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
         $allowedipsArr = explode(",", $allowedips);
         if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
-            $this->retrieveApothema();
+            echo "aaaa";
+            //$this->retrieveApothema();
         } else {
             echo 'sss';
             exit;
