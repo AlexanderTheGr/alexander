@@ -1187,15 +1187,22 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/product/retrieveMtrl/{mtrl}")
      */
     function retrieveMtrlAction($mtrl) {
-        echo $this->retrieveMtrl($mtrl);
-        $product = $this->getDoctrine()
-                ->getRepository($this->repository)
-                ->findOneByReference($mtrl);
-        $product->updatetecdoc();
-        $product->setProductFreesearch();
-        return new Response(
-                "", 200
-        );
+        
+        
+        $allowedipsArr = explode(",", $allowedips);
+        if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
+            echo $this->retrieveMtrl($mtrl);
+            $product = $this->getDoctrine()
+                    ->getRepository($this->repository)
+                    ->findOneByReference($mtrl);
+            $product->updatetecdoc();
+            $product->setProductFreesearch();
+            return new Response(
+                    "", 200
+            );
+        } else {
+            exit;
+        }
     }
 
     /**
@@ -1205,12 +1212,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     function retrieveSoftoneDataAction($params = array()) {
         set_time_limit(100000);
         ini_set('memory_limit', '2256M');
-        //echo $this->retrieveMtrcategory();
-        //echo $this->retrieveMtrmanfctr();
-        //echo $this->retrieveMtrl();
-        echo $this->retrieveApothema();
-
-
+        
+        
+        echo $this->retrieveMtrcategory();
+        echo $this->retrieveMtrmanfctr();
+        echo $this->retrieveMtrl();
+        
+        //echo $this->retrieveApothema();
         return new Response(
                 "", 200
         );
@@ -1221,11 +1229,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/product/retrieveApothema")
      */   
     function retrieveApothemaAction() {
-        // 88.99.31.23
-        if (!$this->getSetting("SoftoneBundle:Product:Allowedips")) {
-            $allowedips = "88.99.31.23,136.243.49.31,212.205.224.191";
-            $this->setSetting("SoftoneBundle:Product:Allowedips", $allowedips);
-        }
         $allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
         $allowedipsArr = explode(",", $allowedips);
         if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
