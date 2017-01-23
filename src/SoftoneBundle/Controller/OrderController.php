@@ -102,16 +102,17 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $html .= "</tr></thead>";
         foreach ($order->getItems() as $item) {
             @$total += $item->getLineval();
-            $ti = $item->getProduct()->getSupplierId() ? $item->getProduct()->getSupplierId()->getTitle() : "";
-            //$item->getProduct()->ge
-            //tReference();
-            //$item->getProduct(
+            //$item->getProduct()->getReference();
+            
             $product = $item->getProduct();
-            $supplier = $ti;
+            
+            $ti = $product->getSupplierId() ? $product->getSupplierId()->getTitle() : "";
+            
+            $supplier = $item->getProduct()->getSupplierId() ? $item->getProduct()->getSupplierId()->getTitle() : '';
             $html .= "<tr>";
             $html .= "<td>" . $product->getTitle() . "</td>";
             $html .= "<td>" . $product->getErpCode() . "</td>";
-            $html .= "<td>" . $supplier . "</td>";
+            $html .= "<td>" . $ti . "</td>";
             //$html .= "<td>" . $product->getItemMtrplace() . "</td>";
             $html .= "<td>".$product->getApothiki()."</td>";
             $html .= "<td align='right'>" . $item->getQty() . "</td>";
