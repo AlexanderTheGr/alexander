@@ -602,7 +602,7 @@ class EdiItemController extends Main {
                             $qty = $Item->Availability == 'green' ? 100 : 0;
                             $Item->UnitPrice;
 
-                            echo $Item->ItemCode."\n";
+                            //echo $Item->ItemCode."\n";
                             if (@$jsonarr[$ands[$Item->ItemCode]]) {
 
                                 @$jsonarr[$ands[$Item->ItemCode]]['6'] = number_format($Item->UnitPrice, 2, '.', '');
