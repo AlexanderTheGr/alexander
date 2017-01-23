@@ -515,6 +515,7 @@ class EdiItemController extends Main {
 
     function setEdiQtyAvailability($jsonarr,$id=0) {
         $limit = 25;
+        $vat = 1.24;
         //return;
         //return $jsonarr;
         $datas = array();
@@ -578,7 +579,7 @@ class EdiItemController extends Main {
                                 "EltrekkaRef" => $entity->getItemcode()));
                     $xml = $response->GetAvailabilityResult->any;
                     $xml = simplexml_load_string($xml);
-                    @$jsonarr[$key]['6'] = $entity->getGroupedDiscountPrice($customer);
+                    @$jsonarr[$key]['6'] = $entity->getGroupedDiscountPrice($customer,$vat);
                     @$jsonarr[$key]['7'] = number_format((float) $xml->Item->Header->PriceOnPolicy, 2, '.', '');
                     @$jsonarr[$key]['DT_RowClass'] .= $xml->Item->Header->Available == "Y" ? ' text-success ' : ' text-danger ';
                 }
@@ -612,7 +613,7 @@ class EdiItemController extends Main {
 
                             //echo $Item->ItemCode."\n";
                             if (@$jsonarr[$ands[$Item->ItemCode]]) {
-                                @$jsonarr[$ands[$Item->ItemCode]]['6'] = $entity->getGroupedDiscountPrice($customer);
+                                @$jsonarr[$ands[$Item->ItemCode]]['6'] = $entity->getGroupedDiscountPrice($customer,$vat);
                                 @$jsonarr[$ands[$Item->ItemCode]]['7'] = number_format($Item->UnitPrice, 2, '.', '');
 
                                 $entity = $entities[$Item->ItemCode];
