@@ -1106,13 +1106,12 @@ class EdiItem extends Entity {
         return $this->wholesaleprice;
     }
 
-    
     function getGroupedDiscountPrice(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
         $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
         $sortorder = 0;
 
         foreach ($rules as $rule) {
-            if ($rule->validateRule($this,$this) AND $sortorder <= $rule->getSortorder()) {
+            if ($rule->validateRule($this, $this) AND $sortorder <= $rule->getSortorder()) {
                 $sortorder = $rule->getSortorder();
                 $discount = $rule->getVal();
                 $price = $rule->getPrice();
@@ -1124,7 +1123,27 @@ class EdiItem extends Entity {
         $discountedPrice = $this->getEdiMarkupPrice($pricefield) * (1 - $discount / 100 );
         $finalprice = $discount > 0 ? $discountedPrice : $price;
 
-        return number_format($finalprice * $vat, 2, '.', ''). " (" . (float) $discount . "%)";
-    }    
-    
+        return number_format($finalprice * $vat, 2, '.', '');
+    }
+
+    function getDiscount(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
+        $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
+        $sortorder = 0;
+
+        foreach ($rules as $rule) {
+            if ($rule->validateRule($this, $this) AND $sortorder <= $rule->getSortorder()) {
+                $sortorder = $rule->getSortorder();
+                $discount = $rule->getVal();
+                $price = $rule->getPrice();
+            }
+        }
+        $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
+        $this->getEdiMarkupPrice($pricefield);
+        $price = $price > 0 ? $price : $this->getEdiMarkupPrice($pricefield);
+        $discountedPrice = $this->getEdiMarkupPrice($pricefield) * (1 - $discount / 100 );
+        $finalprice = $discount > 0 ? $discountedPrice : $price;
+
+        return number_format($finalprice * $vat, 2, '.', '') . " (" . (float) $discount . "%)";
+    }
+
 }
