@@ -147,6 +147,7 @@ class EdiItemController extends Main {
                 ->addField(array("name" => "Brand", "index" => 'brand', 'search' => 'text'))
                 ->addField(array("name" => "Part No", "index" => 'partno', 'search' => 'text'))
                 ->addField(array("name" => "Description", "index" => 'description', 'search' => 'text'))
+                ->addField(array("name" => "Cust Price", "index" => 'wholesaleprice', 'search' => 'text'))
                 ->addField(array("name" => "Price", "index" => 'wholesaleprice', 'search' => 'text'))
 
         ;
