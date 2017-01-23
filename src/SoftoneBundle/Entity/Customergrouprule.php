@@ -153,7 +153,13 @@ class Customergrouprule {
             $kernel = $kernel->getKernel();
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
-        $cats = $product->getCats();
+
+        if ($editem) {
+            $cats = $editem->getCats();
+        } else {
+            $cats = $product->getCats();
+        }
+
         $rule = json_decode($this->rule, true);
         $categories = $em->getRepository("SoftoneBundle:Category")->findById($cats);
         $categoriesArr = array();
@@ -166,19 +172,20 @@ class Customergrouprule {
         }
         //print_r($catsEp);
         $supplier = 0;
+        $productsale = 1;
         if ($editem) {
             $SoftoneSupplier = $em->getRepository("SoftoneBundle:SoftoneSupplier")
                     ->findOneBy(array('title' => $editem->getBrand()));
             if ($SoftoneSupplier)
-            $supplier = $SoftoneSupplier->getId();
-            
+                $supplier = $SoftoneSupplier->getId();
         } else {
             $supplier = $product->getSupplierId()->getId();
+            if ($product->getProductsale()) {
+                $productsale = $product->getProductsale()->getId();
+            }
         }
-        $productsale = 1;
-        if ($product->getProductsale()) {
-            $productsale = $product->getProductsale()->getId();
-        }
+
+
 
         //
         //echo $this->rulesLoop($rule, $catsEp, $supplier) ? "true" : "false";
