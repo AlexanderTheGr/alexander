@@ -1188,7 +1188,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      */
     function retrieveMtrlAction($mtrl) {
         
-        
+        $allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
         $allowedipsArr = explode(",", $allowedips);
         if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
             echo $this->retrieveMtrl($mtrl);
