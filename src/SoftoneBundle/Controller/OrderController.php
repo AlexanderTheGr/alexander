@@ -1311,13 +1311,15 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $html = $entity->getId();
 
             foreach ($entity->getItems() as $item) {
-                $items = array();
-                $items["id"] = $item->getId();
-                $items["Title"] = $item->getProduct()->getTitle();
-                $items["Qty"] = $item->getQty();
-                $items["Price"] = $item->getLineval();
-                @$total += $item->getLineval();
-                $content[] = $items;
+                if ($item->getProduct()) {
+                    $items = array();
+                    $items["id"] = $item->getId();
+                    $items["Title"] = $item->getProduct()->getTitle();
+                    $items["Qty"] = $item->getQty();
+                    $items["Price"] = $item->getLineval();
+                    @$total += $item->getLineval();
+                    $content[] = $items;
+                }
             }
             $items = array();
             $items["id"] = "";
