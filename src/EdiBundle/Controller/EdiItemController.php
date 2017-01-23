@@ -596,8 +596,8 @@ class EdiItemController extends Main {
                     )));
                     $re = json_decode($result);
 
-                    //print_r($re);
-                    //continue;
+                    print_r($re);
+                    continue;
                     if (@count($re->Items)) {
                         foreach ($re->Items as $Item) {
                             $qty = $Item->Availability == 'green' ? 100 : 0;
