@@ -1231,9 +1231,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     function retrieveApothemaAction() {
         $allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
         $allowedipsArr = explode(",", $allowedips);
+        file_put_contents("ip.txt",$_SERVER["REMOTE_ADDR"]);
         if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
             //echo "aaaa";
             //exit;
+            file_put_contents("ip1.txt",$_SERVER["REMOTE_ADDR"]);
             $this->retrieveApothema();
             exit;
         } else {
