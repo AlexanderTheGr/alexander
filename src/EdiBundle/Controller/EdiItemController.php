@@ -613,10 +613,11 @@ class EdiItemController extends Main {
 
                             //echo $Item->ItemCode."\n";
                             if (@$jsonarr[$ands[$Item->ItemCode]]) {
+                                $entity = $entities[$Item->ItemCode];
                                 @$jsonarr[$ands[$Item->ItemCode]]['6'] = $entity->getDiscount($customer,$vat);
                                 @$jsonarr[$ands[$Item->ItemCode]]['7'] = number_format($Item->UnitPrice, 2, '.', '');
 
-                                $entity = $entities[$Item->ItemCode];
+                                
                                 //$entity->setRetailprice(number_format($Item->UnitPrice, 2, '.', ''));
                                 //$this->flushpersist($entity);
                                 //echo $Item->Availability;    
