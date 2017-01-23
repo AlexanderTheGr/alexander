@@ -93,7 +93,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $html .= "<th>Είδος</th>";
         $html .= "<th align='left'>Κωδικός Είδους</th>";
         $html .= "<th align='left'>Supplier</th>";
-        $html .= "<th align='left'>Ράφι</th>";
+        //$html .= "<th align='left'>Ράφι</th>";
         $html .= "<th align='left'>Υπόλοιπο</th>";
         $html .= "<th align='left'>Ποσότητα</th>";
         $html .= "<th align='left'>Τιμή Μονάδος</th>";
@@ -109,7 +109,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $html .= "<td>" . $product->getTitle() . "</td>";
             $html .= "<td>" . $product->getErpCode() . "</td>";
             $html .= "<td>" . $supplier . "</td>";
-            $html .= "<td>" . $product->getItemMtrplace() . "</td>";
+            //$html .= "<td>" . $product->getItemMtrplace() . "</td>";
             $html .= "<td>".$product->getApothiki()."</td>";
             $html .= "<td align='right'>" . $item->getQty() . "</td>";
             $html .= "<td align='right'>" . $item->getPrice() . "</td>";
