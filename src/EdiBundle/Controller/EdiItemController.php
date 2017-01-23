@@ -610,7 +610,7 @@ class EdiItemController extends Main {
                                 $entity = $entities[$Item->ItemCode];
                                 //$entity->setRetailprice(number_format($Item->UnitPrice, 2, '.', ''));
                                 //$this->flushpersist($entity);
-                                echo $Item->Availability;    
+                                //echo $Item->Availability;    
                                 if ($Item->Availability == 'green') {
                                      
                                     @$jsonarr[$ands[$Item->ItemCode]]['DT_RowClass'] .= ' text-success ';
