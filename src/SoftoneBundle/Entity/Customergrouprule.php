@@ -147,7 +147,7 @@ class Customergrouprule {
         return $this->rule;
     }
 
-    function validateRule($product) {
+    function validateRule($product, $editem = false) {
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
@@ -165,12 +165,19 @@ class Customergrouprule {
             $catsEp[] = $pcategory->getSortCode();
         }
         //print_r($catsEp);
-        $supplier = $product->getSupplierId()->getId();
+        $supplier = 0;
+        if ($editem) {
+            $SoftoneSupplier = $em->getRepository("SoftoneBundle:SoftoneSupplier")
+                    ->findOneBy(array('title' => $editem->brand));
+            $supplier = $SoftoneSupplier->getId();
+        } else {
+            $supplier = $product->getSupplierId()->getId();
+        }
         $productsale = 1;
         if ($product->getProductsale()) {
             $productsale = $product->getProductsale()->getId();
         }
-        
+
         //
         //echo $this->rulesLoop($rule, $catsEp, $supplier) ? "true" : "false";
         return $this->rulesLoop($rule, $catsEp, $supplier, $product->getErpCode(), $productsale);
@@ -192,7 +199,7 @@ class Customergrouprule {
                 $out = false;
                 if ($rl["id"] == "default") {
                     return true;
-                }                   
+                }
                 if ($rl["id"] == "category") {
                     if ($rl["operator"] == "equal") {
                         if (in_array($rl["value"], $catsEp)) {
@@ -249,7 +256,7 @@ class Customergrouprule {
 
                 if ($rl["id"] == "default") {
                     return true;
-                }   
+                }
                 if ($rl["id"] == "category") {
                     if ($rl["operator"] == "equal") {
                         if (!in_array($rl["value"], $catsEp)) {
