@@ -905,10 +905,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             if ($order->getReference() == 0) {
                 foreach ($order->getItems() as $item) {
                     $product = $item->getProduct();
-                    $reserved = (int)$product->getReserved();
-                    $reserved += $item->getQty();
-                    $product->setReserved($reserved);
-                    $this->flushpersist($product);
+                    if ($product) {
+                        $reserved = (int)$product->getReserved();
+                        $reserved += $item->getQty();
+                        $product->setReserved($reserved);
+                        $this->flushpersist($product);
+                    }
                 }
             }
             
