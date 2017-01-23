@@ -522,7 +522,7 @@ class EdiItemController extends Main {
         $order = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Order")
                 ->find($id);
-        $customer - $order->getCustomer();
+        $customer = $order->getCustomer();
         $request = Request::createFromGlobals();
         $dt_columns = $request->request->get("columns");
         if ($dt_columns[1]["search"]["value"] == 4) {
@@ -578,7 +578,7 @@ class EdiItemController extends Main {
                                 "EltrekkaRef" => $entity->getItemcode()));
                     $xml = $response->GetAvailabilityResult->any;
                     $xml = simplexml_load_string($xml);
-                    @$jsonarr[$key]['6'] = $id;//$customer->getId();
+                    @$jsonarr[$key]['6'] = $entity->getGroupedDiscountPrice($customer);
                     @$jsonarr[$key]['7'] = number_format((float) $xml->Item->Header->PriceOnPolicy, 2, '.', '');
                     @$jsonarr[$key]['DT_RowClass'] .= $xml->Item->Header->Available == "Y" ? ' text-success ' : ' text-danger ';
                 }
@@ -612,7 +612,7 @@ class EdiItemController extends Main {
 
                             //echo $Item->ItemCode."\n";
                             if (@$jsonarr[$ands[$Item->ItemCode]]) {
-                                @$jsonarr[$ands[$Item->ItemCode]]['6'] = $id;//$customer->getId();
+                                @$jsonarr[$ands[$Item->ItemCode]]['6'] = $entity->getGroupedDiscountPrice($customer);
                                 @$jsonarr[$ands[$Item->ItemCode]]['7'] = number_format($Item->UnitPrice, 2, '.', '');
 
                                 $entity = $entities[$Item->ItemCode];
