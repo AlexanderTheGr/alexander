@@ -704,7 +704,6 @@ class EdiItem extends Entity {
 
 
         $sql = "Select id from softone_product where replace(replace(replace(replace(replace(`item_cccref`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $this->itemCode . "' AND edi = '" . $this->getEdi()->getId() . "'";
-
         //echo $sql . "<BR>";
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
