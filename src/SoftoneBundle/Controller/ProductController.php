@@ -1168,6 +1168,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                      */
                     //$this->clearstring($search);
                     $ediediitem = false;
+                    $newcccref = false;
                     $code = trim($this->clearstring($product->getCccRef()));
                     if ($code != '') {
                         $sql = "Select id from partsbox_db.edi_item where 
@@ -1193,6 +1194,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                             if ($ediediitem) {
                                 echo $this->clearstring($product->getItemCode2()) . "<BR>";
                                 $product->setCccRef($ediediitem->getItemCode());
+                                $newcccref = true;
                             }
                         }
                     }
@@ -1218,7 +1220,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                 //
                                 $this->flushpersist($product);
                                 //$product->toSoftone();
-                                $sql = "UPDATE MTRL SET CCCREF='".$product->getCccRef()."', CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
+                                if ($newcccref)
+                                    $sql = "UPDATE MTRL SET CCCREF='" . $product->getCccRef() . "', CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
+                                else
+                                    $sql = "UPDATE MTRL SET CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
+
                                 $params["fSQL"] = $sql;
                                 $datas = $softone->createSql($params);
                                 echo $sql . "<BR>";
