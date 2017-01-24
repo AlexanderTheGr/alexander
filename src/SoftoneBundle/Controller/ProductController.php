@@ -1041,6 +1041,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
             $q[] = "`" . strtolower($params["softone_object"] . "_cccpriceupd") . "` = '" . addslashes($data["CCCPRICEUPD"]) . "'";
             $q[] = "`" . strtolower($params["softone_object"] . "_cccwebupd") . "` = '" . addslashes($data["CCCWEBUPD"]) . "'";
+            $q[] = "`" . strtolower($params["softone_object"] . "_cccref") . "` = '" . addslashes($data["CCCREF"]) . "'";
 
             if (@$entity->id == 0) {
                 $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
