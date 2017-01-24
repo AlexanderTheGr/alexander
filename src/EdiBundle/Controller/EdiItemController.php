@@ -439,7 +439,16 @@ class EdiItemController extends Main {
                     $json[] = $obj->$func(count($results));
                 }
             }
-            $prd = $obj->getProduct() > 0 ? ' bold ' : '';
+            
+            
+            $sql = "Select id from softone_product where replace(replace(replace(replace(replace(`item_cccref`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $obj->getItemCode() . "' AND edi = '" . $obj->getEdi()->getId() . "'";
+            //echo $sql . "<BR>";
+            $connection = $em->getConnection();
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            $refdata = $statement->fetch();
+
+            $prd = $refdata["id"] > 0 ? ' bold ' : '';
             $json["DT_RowClass"] = $prd . "dt_row_" . strtolower($r[1]);
 
             $json["DT_RowId"] = 'dt_id_' . strtolower($r[1]) . '_' . $result["id"];
