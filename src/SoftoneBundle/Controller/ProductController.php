@@ -994,7 +994,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     ->findOneBy(array("reference" => (int) $data[$params["softone_table"]]));
 
             echo @$entity->id . "<BR>";
-            //if ($data[$params["softone_table"]] < 109705) continue;
+            if ($data[$params["softone_table"]] < 149090) continue;
             $dt = new \DateTime("now");
             /*
             if (@$entity->id == 0) {
