@@ -1177,7 +1177,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         $connection = $em->getConnection();
                         $statement = $connection->prepare($sql);
                         $statement->execute();
-                        $results = $statement->fetchOne();
+                        $results = $statement->fetch();
                         print_r($results);
                         echo "<BR>";
                     }
