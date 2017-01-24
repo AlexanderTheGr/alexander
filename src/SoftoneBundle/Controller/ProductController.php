@@ -1278,18 +1278,22 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/product/retrieveSoftone")
      */
     function retrieveSoftoneDataAction($params = array()) {
-        set_time_limit(100000);
-        ini_set('memory_limit', '2256M');
+        $allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
+        $allowedipsArr = explode(",", $allowedips);
+            if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {        
+            set_time_limit(100000);
+            ini_set('memory_limit', '2256M');
 
 
-        echo $this->retrieveMtrcategory();
-        echo $this->retrieveMtrmanfctr();
-        echo $this->retrieveMtrl();
+            echo $this->retrieveMtrcategory();
+            echo $this->retrieveMtrmanfctr();
+            echo $this->retrieveMtrl();
 
-        //echo $this->retrieveApothema();
-        return new Response(
-                "", 200
-        );
+            //echo $this->retrieveApothema();
+            return new Response(
+                    "", 200
+            );
+        }
     }
 
     /**
