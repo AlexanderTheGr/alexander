@@ -56,7 +56,7 @@ class Product extends Entity {
         $this->repositories['supplierId'] = 'SoftoneBundle:SoftoneSupplier';
         $this->repositories['productSale'] = 'SoftoneBundle:ProductSale';
         $this->repositories['mtrsup'] = 'SoftoneBundle:Supplier';
-        
+
         return $this->repositories[$repo];
     }
 
@@ -1755,13 +1755,15 @@ class Product extends Entity {
         return $this;
     }
 
-    function updatetecdoc($tecdoc = false) {
+    function updatetecdoc($tecdoc = false, $forceupdate = false) {
 
         //$data = array("service" => "login", 'username' => 'dev', 'password' => 'dev', 'appId' => '2000');
-        if ($this->getTecdocSupplierId() == null)
+        if ($this->getTecdocSupplierId() == null AND $forceupdate == false)
             return;
 
-
+        $this->setTecdocArticleId($out->articleId);
+        $this->setTecdocArticleName($out->articleName);
+        
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
