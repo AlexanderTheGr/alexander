@@ -1158,21 +1158,24 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
                     //$brand = $product->getSupplierId() ? $product->getSupplierId()->getTitle() : "";
                     /*
-                    $ediediitem = $this->getDoctrine()
-                            ->getRepository('EdiBundle:EdiItem')
-                            ->findOneBy(array("itemCode" => $product->getCccRef(), "Edi" => $ediedi));
-                    if (!$ediediitem) {
-                        
-                    }
+                      $ediediitem = $this->getDoctrine()
+                      ->getRepository('EdiBundle:EdiItem')
+                      ->findOneBy(array("itemCode" => $product->getCccRef(), "Edi" => $ediedi));
+                      if (!$ediediitem) {
+
+                      }
                      * 
                      */
                     //$this->clearstring($search);
                     $sql = "Select id from partsbox_db.edi_item where 
-					replace(replace(replace(replace(replace(`itemcode`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  LIKE '".$this->clearstring($product->getCccRef())."' AND edi = '".$ediedi->getId()."'
+					replace(replace(replace(replace(replace(`itemcode`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  LIKE '" . $this->clearstring($product->getCccRef()) . "' AND edi = '" . $ediedi->getId() . "'
 					limit 0,100";
-                    
-                    echo $sql."<BR>";
-                    $result = $em->getConnection()->exec($sql)->getResult();
+
+                    echo $sql . "<BR>";
+
+                    $statement = $connection->prepare($sql);
+                    $statement->execute();
+                    $results = $statement->fetchAll();
                     print_r($result);
                     echo "<BR>";
                     /*
@@ -1187,7 +1190,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                       }
                      */
                     //if ($brand == "BERU")
-                    if ($i++ > 100) exit;
+                    if ($i++ > 100)
+                        exit;
                     continue;
                     if ($ediediitem) {
                         $itemPricew = $ediediitem->getEdiMarkupPrice("itemPricew");
