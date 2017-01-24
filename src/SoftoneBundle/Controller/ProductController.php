@@ -1150,11 +1150,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     public function synchronizeAction($funct = false) {
         $softone = new Softone();
         $em = $this->getDoctrine()->getManager();
-        $ediedis = $this->getDoctrine()->getRepository('EdiBundle:Edi')->findBy(array(), array('id'=>'asc'));
+        $ediedis = $this->getDoctrine()->getRepository('EdiBundle:Edi')->findAll();
         foreach ($ediedis as $ediedi) {
             if ($ediedi->getId() == 4)
             if ($ediedi->getItemMtrsup() > 0) {
-                $products = $this->getDoctrine()->getRepository('SoftoneBundle:Product')->findBy(array("itemMtrsup" => $ediedi->getItemMtrsup()));
+                $products = $this->getDoctrine()->getRepository('SoftoneBundle:Product')->findBy(array("itemMtrsup" => $ediedi->getItemMtrsup()), array('id'=>'desc'));
                 foreach ($products as $product) {
 
                     //$brand = $product->getSupplierId() ? $product->getSupplierId()->getTitle() : "";
@@ -1173,7 +1173,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     $code = trim($this->clearstring($product->getCccRef()));
                     if ($code != '') {
                         $sql = "Select id from partsbox_db.edi_item where 
-                                            replace(replace(replace(replace(replace(`itemcode`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  LIKE '" . $code . "' AND edi = '" . $ediedi->getId() . "'
+                                            replace(replace(replace(replace(replace(`itemcode`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $code . "' AND edi = '" . $ediedi->getId() . "'
                                             limit 0,100";
 
                         //echo $sql . "<BR>";
