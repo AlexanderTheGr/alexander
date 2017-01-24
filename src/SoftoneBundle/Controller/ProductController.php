@@ -312,7 +312,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //echo $product->id."\n";
         //echo $product->reference."\n";
         //$product = $this->newentity[$this->repository];
-        $product->updatetecdoc(true);
+        $product->updatetecdoc(false,true);
         $product->toSoftone();
         if ($product->getSisxetisi() != '') {
             $sproducts = $this->getDoctrine()
