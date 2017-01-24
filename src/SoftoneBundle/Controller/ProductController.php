@@ -1203,7 +1203,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         }
 
                         //if ($brand == "BERU")
-                        if ($i++ > 140)
+                        if ($i++ > 240)
                             exit;
                         //continue;
                         if ($ediediitem) {
