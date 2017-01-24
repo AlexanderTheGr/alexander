@@ -1190,7 +1190,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                             $ediediitem = $this->getDoctrine()
                                     ->getRepository('EdiBundle:EdiItem')
                                     ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), 'brand' => $brand, "Edi" => $ediedi));
-                            echo $this->clearstring($product->getItemCode2()) . "<BR>";
+                            if ($ediediitem) {
+                                echo $this->clearstring($product->getItemCode2()) . "<BR>";
+                            }
                         } else {
                             /*
                               $ediediitem = $this->getDoctrine()
