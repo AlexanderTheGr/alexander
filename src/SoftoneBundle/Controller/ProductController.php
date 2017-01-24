@@ -1288,7 +1288,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             echo $this->retrieveMtrcategory();
             echo $this->retrieveMtrmanfctr();
             echo $this->retrieveMtrl();
-
+            file_put_contents("retrieveSoftone.txt", $allowedipsArr);
             //echo $this->retrieveApothema();
             return new Response(
                     "", 200
