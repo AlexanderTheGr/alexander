@@ -1181,8 +1181,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         $data = $statement->fetch();
                         ;
                         //echo "<BR>";
-                        $ediediitem = $this->getDoctrine()->getRepository('EdiBundle:EdiItem')->find($data["id"]);
-                        
+                        if ($data["id"])
+                            $ediediitem = $this->getDoctrine()->getRepository('EdiBundle:EdiItem')->find($data["id"]);
                     }
                     if (!$ediediitem) {
                         $brand = $product->getSupplierId() ? $product->getSupplierId()->getTitle() : "";
@@ -1190,12 +1190,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                             $ediediitem = $this->getDoctrine()
                                     ->getRepository('EdiBundle:EdiItem')
                                     ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), 'brand' => $brand, "Edi" => $ediedi));
-                            echo $this->clearstring($product->getItemCode2())."<BR>";
+                            echo $this->clearstring($product->getItemCode2()) . "<BR>";
                         } else {
                             /*
-                            $ediediitem = $this->getDoctrine()
-                                    ->getRepository('EdiBundle:EdiItem')
-                                    ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), "Edi" => $ediedi));
+                              $ediediitem = $this->getDoctrine()
+                              ->getRepository('EdiBundle:EdiItem')
+                              ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), "Edi" => $ediedi));
                              * 
                              */
                         }
