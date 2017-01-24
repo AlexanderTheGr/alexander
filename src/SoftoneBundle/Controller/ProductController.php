@@ -1193,13 +1193,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                             if ($ediediitem) {
                                 echo $this->clearstring($product->getItemCode2()) . "<BR>";
                             }
-                        } else {
-                            /*
-                              $ediediitem = $this->getDoctrine()
-                              ->getRepository('EdiBundle:EdiItem')
-                              ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), "Edi" => $ediedi));
-                             * 
-                             */
+                        }
+                        if (!$ediediitem) {
+                            $ediediitem = $this->getDoctrine()
+                                    ->getRepository('EdiBundle:EdiItem')
+                                    ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), "Edi" => $ediedi));
+                            if ($ediediitem) {
+                                echo $this->clearstring($product->getItemCode2()) . "<BR>";
+                            }
                         }
                     }
 
