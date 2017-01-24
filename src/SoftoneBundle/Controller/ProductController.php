@@ -1211,7 +1211,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                             //if ($i++ > 15)
                             //    exit;
                             if ($itemPricew > 0.01 AND $product->getReference() > 0) {
-
+                                $color = '';
+                                if ($itemPricew == $itemPricer) {
+                                    $color = 'red';
+                                }
+                                echo "<div style='color:".$color."'>";
                                 echo $ediedi->getName() . " " . $ediediitem->getWholesaleprice() . " -- " . $product->getItemCode() . " itemPricew:(" . $itemPricew . "/" . $product->getItemPricew() . ") itemPricer:(" . $itemPricer . "/" . $product->getItemPricer() . ")<BR>";
 
                                 $product->setCccPriceUpd(1);
@@ -1228,6 +1232,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                 $params["fSQL"] = $sql;
                                 $datas = $softone->createSql($params);
                                 echo $sql . "<BR>";
+                                
+                                echo "</div>";
+                                
                             }
                         } else {
                             //echo "<span style='color:red'>".$product->getItemCode()." -- ".$product->getSupplierId()->getTitle()." -- " . $product->getItemCode2() . " ".$ediediitem->getWholesaleprice() . " -- ".$ediediitem->getEdiMarkupPrice("itemPricew")." -- " . $product->getItemPricew() . "</span><BR>";
