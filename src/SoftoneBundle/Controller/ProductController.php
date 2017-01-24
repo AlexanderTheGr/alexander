@@ -1166,8 +1166,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     }
                      * 
                      */
+                    //$this->clearstring($search);
                     $sql = "Select id from partsbox_db.edi_item where 
-					replace(replace(replace(replace(replace(`item_code`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  LIKE '".$product->getCccRef()." AND edi = '".$ediedi->getId()."'
+					replace(replace(replace(replace(replace(`item_code`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  LIKE '".$this->clearstring($product->getCccRef())."' AND edi = '".$ediedi->getId()."'
 					limit 0,100";
                     
                     echo $sql."<BR>";
