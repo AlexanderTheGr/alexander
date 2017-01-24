@@ -704,9 +704,13 @@ class EdiItem extends Entity {
 
 
 
-        $erpCode = $this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode();
-        $product = $em->getRepository("SoftoneBundle:Product")->findOneBy(array("erpCode" => $erpCode));
-
+        
+        
+        $product = $em->getRepository("SoftoneBundle:Product")->findOneBy(array("cccRef" => $this->itemCode));
+        if (!$product) {
+            $erpCode = $this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode();
+            $product = $em->getRepository("SoftoneBundle:Product")->findOneBy(array("erpCode" => $erpCode));
+        }
         if (@$product->id > 0) {
             echo "ssssss";
             //$product = $em->getRepository("SoftoneBundle:Product")->find($this->getProduct());
