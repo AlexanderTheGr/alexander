@@ -703,10 +703,17 @@ class EdiItem extends Entity {
         $TecdocSupplier->toSoftone();
 
 
+        $sql = "Select id from softone_product where replace(replace(replace(replace(replace(`item_cccref`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $this->itemCode . "' AND edi = '" . $this->getEdi()->getId() . "'";
 
+        //echo $sql . "<BR>";
+        $connection = $em->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $data = $statement->fetch();
+        $product = false;
+        if ($data["id"] > 0)
+            $product = $em->getRepository("SoftoneBundle:Product")->find($data["id"]);
         
-        
-        $product = $em->getRepository("SoftoneBundle:Product")->findOneBy(array("cccRef" => $this->itemCode));
         if (!$product) {
             $erpCode = $this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode();
             $product = $em->getRepository("SoftoneBundle:Product")->findOneBy(array("erpCode" => $erpCode));
@@ -723,7 +730,7 @@ class EdiItem extends Entity {
 
             //echo "itemPricer:".$this->getEdiMarkupPrice("itemPricer")."\n";
             //echo "itemPricew:".$this->getEdiMarkupPrice("itemPricew")."\n";
-            
+
             $product->setItemPricer((double) $this->getEdiMarkupPrice("itemPricer"));
             $product->setItemPricew((double) $this->getEdiMarkupPrice("itemPricew"));
 
@@ -787,9 +794,9 @@ class EdiItem extends Entity {
         $product->setErpSupplier($this->brand);
         $product->setItemMtrmanfctr($SoftoneSupplier->getId());
         $product->setErpCode($erpCode);
-        
+
         $product->setCccRef($this->itemCode);
-        
+
         $product->setItemCode($product->getErpCode());
         $product->setItemCode2($this->clearCode($this->partno));
         $product->setEdi($this->getEdi()->getId());
