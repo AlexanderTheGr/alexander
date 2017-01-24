@@ -1183,6 +1183,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         $data = $statement->fetch();
                         ;
                         //echo "<BR>";
+                        echo ".";
                         if ($data["id"] > 0)
                             $ediediitem = $this->getDoctrine()->getRepository('EdiBundle:EdiItem')->find($data["id"]);
                     }
