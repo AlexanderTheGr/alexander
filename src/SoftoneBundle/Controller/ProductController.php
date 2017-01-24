@@ -1172,7 +1172,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 					limit 0,100";
                     
                     echo $sql."<BR>";
-                    $result = $em->getConnection()->exec($sql);
+                    $result = $em->getConnection()->exec($sql)->fetchAll();
                     print_r($result);
                     echo "<BR>";
                     /*
