@@ -1148,7 +1148,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function synchronizeAction($funct = false) {
         $softone = new Softone();
-
+        $em = $this->getDoctrine()->getManager();
         $ediedis = $this->getDoctrine()->getRepository('EdiBundle:Edi')->findAll();
         foreach ($ediedis as $ediedi) {
             //if ($ediedi->getId() == 4)
@@ -1172,6 +1172,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 					limit 0,100";
                     
                     echo $sql."<BR>";
+                    $result = $em->getConnection()->exec($sql);
+                    print_r($result);
+                    echo "<BR>";
                     /*
                       if ($brand != '') {
                       $ediediitem = $this->getDoctrine()
