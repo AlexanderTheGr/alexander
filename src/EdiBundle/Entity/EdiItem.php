@@ -708,7 +708,7 @@ class EdiItem extends Entity {
         $product = $em->getRepository("SoftoneBundle:Product")->findOneBy(array("erpCode" => $erpCode));
 
         if (@$product->id > 0) {
-
+            echo "ssssss";
             //$product = $em->getRepository("SoftoneBundle:Product")->find($this->getProduct());
             //if ($product->getReference() == 0) {
             $product->setItemMtrmanfctr($SoftoneSupplier->getId());
