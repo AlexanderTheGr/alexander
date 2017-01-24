@@ -703,7 +703,7 @@ class EdiItem extends Entity {
         $TecdocSupplier->toSoftone();
 
 
-        $sql = "Select id from softone_product where replace(replace(replace(replace(replace(`item_cccref`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $this->clearCode($this->itemCode) . "' AND edi = '" . $this->getEdi()->getItemMtrsup() . "'";
+        $sql = "Select id from softone_product where replace(replace(replace(replace(replace(`item_cccref`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $this->clearstring($this->itemCode) . "' AND edi = '" . $this->getEdi()->getItemMtrsup() . "'";
         //echo $sql . "<BR>";
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
@@ -876,7 +876,15 @@ class EdiItem extends Entity {
         $code = strtoupper($code);
         return $code;
     }
-
+    function clearstring($search) {
+        $search = str_replace(" ", "", trim($search));
+        $search = str_replace(".", "", $search);
+        $search = str_replace("-", "", $search);
+        $search = str_replace("/", "", $search);
+        $search = str_replace("*", "", $search);
+        $search = strtoupper($search);
+        return $search;
+    }
     /**
      * Get tecdocArticleId
      *
