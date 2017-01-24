@@ -996,11 +996,20 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             echo @$entity->id . "<BR>";
             //if ($data[$params["softone_table"]] < 7385) continue;
             $dt = new \DateTime("now");
+            /*
+            if (@$entity->id == 0) {
+                $entity = $this->getDoctrine()
+                    ->getRepository($params["repository"])
+                    ->findOneBy(array("itemCode" => $data["CODE"]));
+            }
+             * 
+             */
             if (@$entity->id == 0) {
                 $entity = new $object();
                 $entity->setTs($dt);
                 $entity->setCreated($dt);
                 $entity->setModified($dt);
+                
             } else {
                 //continue;
                 //$entity->setRepositories();                
@@ -1042,8 +1051,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $q[] = "`" . strtolower($params["softone_object"] . "_cccpriceupd") . "` = '" . addslashes($data["CCCPRICEUPD"]) . "'";
             $q[] = "`" . strtolower($params["softone_object"] . "_cccwebupd") . "` = '" . addslashes($data["CCCWEBUPD"]) . "'";
             $q[] = "`" . strtolower($params["softone_object"] . "_cccref") . "` = '" . addslashes($data["CCCREF"]) . "'";
+            
 
             if (@$entity->id == 0) {
+                $q[] = "`reference` = '" . $data[$params["softone_table"]] . "'";
                 $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
                 echo $sql . "<BR>";
                 $em->getConnection()->exec($sql);
