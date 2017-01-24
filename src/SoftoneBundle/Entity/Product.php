@@ -2900,4 +2900,62 @@ class Product extends Entity {
     {
         return $this->reserved;
     }
+    /**
+     * @var string
+     */
+    private $cccRef = '';
+
+    /**
+     * @var \SoftoneBundle\Entity\Supplier
+     */
+    private $mtrsup;
+
+
+    /**
+     * Set cccRef
+     *
+     * @param string $cccRef
+     *
+     * @return Product
+     */
+    public function setCccRef($cccRef)
+    {
+        $this->cccRef = $cccRef;
+
+        return $this;
+    }
+
+    /**
+     * Get cccRef
+     *
+     * @return string
+     */
+    public function getCccRef()
+    {
+        return $this->cccRef;
+    }
+
+    /**
+     * Set mtrsup
+     *
+     * @param \SoftoneBundle\Entity\Supplier $mtrsup
+     *
+     * @return Product
+     */
+    public function setMtrsup(\SoftoneBundle\Entity\Supplier $mtrsup = null)
+    {
+        $this->mtrsup = $mtrsup;
+
+        return $this;
+    }
+
+    /**
+     * Get mtrsup
+     *
+     * @return \SoftoneBundle\Entity\Supplier
+     */
+    public function getMtrsup()
+    {
+        return $this->mtrsup;
+    }
 }
