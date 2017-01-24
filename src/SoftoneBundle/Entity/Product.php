@@ -1758,6 +1758,8 @@ class Product extends Entity {
     function updatetecdoc($tecdoc = false, $forceupdate = false) {
 
         //$data = array("service" => "login", 'username' => 'dev', 'password' => 'dev', 'appId' => '2000');
+        if (!$this->getTecdocSupplierId())
+            return;
         if ($this->getTecdocSupplierId() == null AND $forceupdate == false)
             return;
 
@@ -1797,7 +1799,7 @@ class Product extends Entity {
             //echo $out;
             //echo 'sssssssssss';
         } else {
-
+            
             $postparams = array(
                 "articleNumber" => $this->tecdocCode,
                 "brandno" => $this->getTecdocSupplierId()->getId()
