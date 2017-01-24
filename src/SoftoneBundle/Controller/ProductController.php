@@ -1167,33 +1167,42 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                      * 
                      */
                     //$this->clearstring($search);
+                    $ediediitem = false;
                     $code = trim($this->clearstring($product->getCccRef()));
                     if ($code != '') {
                         $sql = "Select id from partsbox_db.edi_item where 
                                             replace(replace(replace(replace(replace(`itemcode`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  LIKE '" . $code . "' AND edi = '" . $ediedi->getId() . "'
                                             limit 0,100";
 
-                        echo $sql . "<BR>";
+                        //echo $sql . "<BR>";
                         $connection = $em->getConnection();
                         $statement = $connection->prepare($sql);
                         $statement->execute();
-                        $results = $statement->fetch();
-                        print_r($results);
-                        echo "<BR>";
+                        $data = $statement->fetch();
+                        ;
+                        //echo "<BR>";
+                        $ediediitem = $this->getDoctrine()->getRepository('EdiBundle:EdiItem')->find($data["id"]);
+                        
                     }
-                    /*
-                      if ($brand != '') {
-                      $ediediitem = $this->getDoctrine()
-                      ->getRepository('EdiBundle:EdiItem')
-                      ->findOneBy(array("itemCode" => $product->getCccRef(), "Edi" => $ediedi));
-                      } else {
-                      $ediediitem = $this->getDoctrine()
-                      ->getRepository('EdiBundle:EdiItem')
-                      ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), "Edi" => $ediedi));
-                      }
-                     */
+                    if (!$ediediitem) {
+                        $brand = $product->getSupplierId() ? $product->getSupplierId()->getTitle() : "";
+                        if ($brand != '') {
+                            $ediediitem = $this->getDoctrine()
+                                    ->getRepository('EdiBundle:EdiItem')
+                                    ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), 'brand' => $brand, "Edi" => $ediedi));
+                            echo $this->clearstring($product->getItemCode2())."<BR>";
+                        } else {
+                            /*
+                            $ediediitem = $this->getDoctrine()
+                                    ->getRepository('EdiBundle:EdiItem')
+                                    ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), "Edi" => $ediedi));
+                             * 
+                             */
+                        }
+                    }
+
                     //if ($brand == "BERU")
-                    if ($i++ > 100)
+                    if ($i++ > 400)
                         exit;
                     continue;
                     if ($ediediitem) {
