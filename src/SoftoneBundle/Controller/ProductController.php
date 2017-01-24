@@ -642,8 +642,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $fields["sisxetisi"] = array("label" => "Κωδικός Συσχέτισης", "className" => "col-md-6", "required" => false);
 
 
-        $forms = $this->getFormLyFields($entity, $fields);
-
+        //$forms = $this->getFormLyFields($entity, $fields);
+        /*
         if ($id > 0 AND count($entity) > 0) {
             $entity2 = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Product')
@@ -664,6 +664,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $params["app"] = 'appgettabs';
             $datatables[] = $this->contentDatatable($params);
         }
+         * 
+         */
 
 
         $tabs[] = array("title" => "General", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
