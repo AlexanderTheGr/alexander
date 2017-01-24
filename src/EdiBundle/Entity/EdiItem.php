@@ -703,7 +703,7 @@ class EdiItem extends Entity {
         $TecdocSupplier->toSoftone();
 
 
-        $sql = "Select id from softone_product where replace(replace(replace(replace(replace(`item_cccref`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $this->itemCode . "' AND edi = '" . $this->getEdi()->getId() . "'";
+        $sql = "Select id from softone_product where replace(replace(replace(replace(replace(`item_cccref`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $this->itemCode . "' AND edi = '" . $this->getEdi()->getItemMtrsup() . "'";
         //echo $sql . "<BR>";
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
