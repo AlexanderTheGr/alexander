@@ -717,6 +717,9 @@ class EdiItem extends Entity {
             $product->setCars($this->getCars());
             $product->setCats($this->getCats());
 
+            echo $this->getEdiMarkup("itemPricer");
+            echo $this->getEdiMarkup("itemPricew");
+            
             $product->setItemPricer((double) $this->getEdiMarkup("itemPricer"));
             $product->setItemPricew((double) $this->getEdiMarkup("itemPricew"));
 
