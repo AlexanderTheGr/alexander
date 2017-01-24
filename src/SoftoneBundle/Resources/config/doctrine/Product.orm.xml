@@ -135,7 +135,14 @@
                 <option name="default">1</option>
             </options>
         </field>                
-        
+           
+        <field name="cccRef" type="string" column="item_cccref" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+                <option name="default"></option>
+            </options>
+        </field>
+      
         <field name="qty" type="integer" column="qty" nullable="true">
             <options>
                 <option name="unsigned"/>
@@ -306,7 +313,19 @@
                 <cascade-remove />
             </cascade>
             <join-column name="supplier_id" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>            
-        </many-to-one>  
+        </many-to-one> 
+        
+        <many-to-one
+            field="mtrsup"
+            target-entity="Supplier"
+            inversed-by="SoftoneSuppliers"
+            join-column="mtrsup">
+            <cascade>
+                <cascade-remove />
+            </cascade>
+            <join-column name="mtrsup" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>            
+        </many-to-one>          
+           
         <many-to-one
             field="productSale"
             target-entity="ProductSale"
