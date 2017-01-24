@@ -2080,6 +2080,7 @@ class Product extends Entity {
         $objectArr2["MTRUNIT1"] = 101;
         $objectArr2["VAT"] = 1410;
         $objectArr2["CODE2"] = $this->supplierCode;
+        $objectArr2["CCCREF"] = $this->cccRef;
         $objectArr2["ISACTIVE"] = $this->itemIsactive;
         $objectArr2["REMARKS"] = $this->itemRemarks;
         $objectArr2["MTRMARK"] = $this->itemMtrmark;
