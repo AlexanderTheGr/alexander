@@ -37,6 +37,7 @@ class Product extends Entity {
         $this->repositories['tecdocSupplierId'] = 'SoftoneBundle:TecdocSupplier';
         $this->repositories['supplierId'] = 'SoftoneBundle:SoftoneSupplier';
         $this->repositories['productSale'] = 'SoftoneBundle:ProductSale';
+        $this->repositories['mtrsup'] = 'SoftoneBundle:Supplier';
         $this->types['tecdocSupplierId'] = 'object';
         $this->types['supplierId'] = 'object';
         $this->types['productSale'] = 'object';
@@ -54,6 +55,8 @@ class Product extends Entity {
         $this->repositories['tecdocSupplierId'] = 'SoftoneBundle:TecdocSupplier';
         $this->repositories['supplierId'] = 'SoftoneBundle:SoftoneSupplier';
         $this->repositories['productSale'] = 'SoftoneBundle:ProductSale';
+        $this->repositories['mtrsup'] = 'SoftoneBundle:Supplier';
+        
         return $this->repositories[$repo];
     }
 
@@ -61,6 +64,7 @@ class Product extends Entity {
         $this->types['tecdocSupplierId'] = 'object';
         $this->types['supplierId'] = 'object';
         $this->types['productSale'] = 'object';
+        $this->types['mtrsup'] = 'object';
         if (@$this->types[$field] != '') {
             return @$this->types[$field];
         }
@@ -1797,7 +1801,7 @@ class Product extends Entity {
                 "brandno" => $this->getTecdocSupplierId()->getId()
             );
             //if (!$tecdoc)
-                $tecdoc = new Tecdoc();
+            $tecdoc = new Tecdoc();
 
             $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($postparams);
             $tectdoccode = $this->tecdocCode;
@@ -1824,9 +1828,8 @@ class Product extends Entity {
             }
 
             $out = $articleDirectSearchAllNumbers->data->array[0];
-            
-            //print_r($out);
 
+            //print_r($out);
         }
 
 
@@ -1853,7 +1856,7 @@ class Product extends Entity {
                 $cars = array();
                 $linkingTargetId = 0;
 
- 
+
                 foreach ($articleLinkedAllLinkingTarget->data->array as $v) {
                     if ($linkingTargetId == 0)
                         $linkingTargetId = $v->linkingTargetId;
@@ -1874,11 +1877,11 @@ class Product extends Entity {
                 $this->setCats($categories);
                 $this->setCars($cars);
                 /*
-                $em->persist($this);
-                $em->flush();
+                  $em->persist($this);
+                  $em->flush();
                  * 
                  */
-                $sql = "update `softone_product` set tecdoc_generic_article_id = '".$out->genericArticleId."', tecdoc_article_name = '".$out->articleName."', tecdoc_article_id = '".$out->articleId."', cars = '".serialize($cars)."', cats = '".serialize($categories)."' where id = '".$this->id."'";
+                $sql = "update `softone_product` set tecdoc_generic_article_id = '" . $out->genericArticleId . "', tecdoc_article_name = '" . $out->articleName . "', tecdoc_article_id = '" . $out->articleId . "', cars = '" . serialize($cars) . "', cats = '" . serialize($categories) . "' where id = '" . $this->id . "'";
                 $em->getConnection()->exec($sql);
             }
         } catch (Exception $e) {
@@ -2088,14 +2091,14 @@ class Product extends Entity {
         $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
         //print_r($out);
 
-        
+
         if (@$out->id > 0) {
             $this->reference = $out->id;
             $em->persist($this);
             $em->flush();
             //$this->itemMtrmark = $this->itemMtrmark > 0 ? $this->itemMtrmark : 1000;
             $this->itemMtrmanfctr = $this->itemMtrmanfctr > 0 ? $this->itemMtrmanfctr : 1000;
-            $params["fSQL"] = "UPDATE MTRL SET MTRMANFCTR=" . $this->getSupplierId()->getId() . " , MTRMARK=" . $this->itemMtrmark. " WHERE MTRL = " . $this->reference;
+            $params["fSQL"] = "UPDATE MTRL SET MTRMANFCTR=" . $this->getSupplierId()->getId() . " , MTRMARK=" . $this->itemMtrmark . " WHERE MTRL = " . $this->reference;
             $softone->createSql($params);
             //print_r($softone->createSql($params));
         }
@@ -2387,8 +2390,8 @@ class Product extends Entity {
             $kernel = $kernel->getKernel();
         }
         if ($this->getSupplierId())
-        $this->erpSupplier = $this->getSupplierId()->getTitle();
-        
+            $this->erpSupplier = $this->getSupplierId()->getTitle();
+
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         $dataindexarr = array();
 
@@ -2477,12 +2480,11 @@ class Product extends Entity {
         return $this->edis;
     }
 
-    
     function getGroupedPrice(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
         $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
-        return number_format($this->$pricefield  * $vat, 2, '.', '');
-    }    
-    
+        return number_format($this->$pricefield * $vat, 2, '.', '');
+    }
+
     function getGroupedDiscountPrice(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
         $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
         $sortorder = 0;
@@ -2501,6 +2503,7 @@ class Product extends Entity {
 
         return number_format($finalprice * $vat, 2, '.', '');
     }
+
     function getGroupedDiscount(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
         $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
         $sortorder = 0;
@@ -2519,6 +2522,7 @@ class Product extends Entity {
         return (float) $discount;
         //return number_format($price * $vat, 2, '.', '') . " (" . (float) $discount . "%)";
     }
+
     function getDiscount(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
         $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
         $sortorder = 0;
@@ -2558,8 +2562,8 @@ class Product extends Entity {
     }
 
     public function getForOrderSupplier() {
-  
-        
+
+
         $tecdoc = $this->getTecdocSupplierId() ? $this->getTecdocSupplierId()->getSupplier() : "";
         $ti = $this->getSupplierId() ? $this->getSupplierId()->getTitle() : "";
 
@@ -2627,6 +2631,7 @@ class Product extends Entity {
         $descrption .= "</ul>";
         return $descrption;
     }
+
     public function media() {
 
         //$product = json_decode($this->flat_data);
@@ -2657,10 +2662,10 @@ class Product extends Entity {
         //$this->save();
         return $data;
     }
-    
+
     function getApothiki() {
-        $qty = $this->qty-$this->reserved;
-        return $this->qty.' / <span class="text-lg text-bold text-accent-dark">'.($qty).'</span> (' . $this->itemMtrplace . ")";
+        $qty = $this->qty - $this->reserved;
+        return $this->qty . ' / <span class="text-lg text-bold text-accent-dark">' . ($qty) . '</span> (' . $this->itemMtrplace . ")";
     }
 
     function getTick($order) {
@@ -2765,7 +2770,6 @@ class Product extends Entity {
      */
     private $sisxetisi = '';
 
-
     /**
      * Set sisxetisi
      *
@@ -2773,8 +2777,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setSisxetisi($sisxetisi)
-    {
+    public function setSisxetisi($sisxetisi) {
         $this->sisxetisi = $sisxetisi;
 
         return $this;
@@ -2785,10 +2788,10 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getSisxetisi()
-    {
+    public function getSisxetisi() {
         return $this->sisxetisi;
     }
+
     /**
      * @var boolean
      */
@@ -2799,7 +2802,6 @@ class Product extends Entity {
      */
     private $cccWebUpd = '1';
 
-
     /**
      * Set cccPriceUpd
      *
@@ -2807,8 +2809,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setCccPriceUpd($cccPriceUpd)
-    {
+    public function setCccPriceUpd($cccPriceUpd) {
         $this->cccPriceUpd = $cccPriceUpd;
 
         return $this;
@@ -2819,8 +2820,7 @@ class Product extends Entity {
      *
      * @return boolean
      */
-    public function getCccPriceUpd()
-    {
+    public function getCccPriceUpd() {
         return $this->cccPriceUpd;
     }
 
@@ -2831,8 +2831,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setCccWebUpd($cccWebUpd)
-    {
+    public function setCccWebUpd($cccWebUpd) {
         $this->cccWebUpd = $cccWebUpd;
 
         return $this;
@@ -2843,15 +2842,14 @@ class Product extends Entity {
      *
      * @return boolean
      */
-    public function getCccWebUpd()
-    {
+    public function getCccWebUpd() {
         return $this->cccWebUpd;
     }
+
     /**
      * @var integer
      */
     private $reserved = '1';
-
 
     /**
      * Set qty
@@ -2860,8 +2858,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setQty($qty)
-    {
+    public function setQty($qty) {
         $this->qty = $qty;
 
         return $this;
@@ -2872,8 +2869,7 @@ class Product extends Entity {
      *
      * @return integer
      */
-    public function getQty()
-    {
+    public function getQty() {
         return $this->qty;
     }
 
@@ -2884,8 +2880,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setReserved($reserved)
-    {
+    public function setReserved($reserved) {
         $this->reserved = $reserved;
 
         return $this;
@@ -2896,10 +2891,10 @@ class Product extends Entity {
      *
      * @return integer
      */
-    public function getReserved()
-    {
+    public function getReserved() {
         return $this->reserved;
     }
+
     /**
      * @var string
      */
@@ -2910,7 +2905,6 @@ class Product extends Entity {
      */
     private $mtrsup;
 
-
     /**
      * Set cccRef
      *
@@ -2918,8 +2912,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setCccRef($cccRef)
-    {
+    public function setCccRef($cccRef) {
         $this->cccRef = $cccRef;
 
         return $this;
@@ -2930,8 +2923,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getCccRef()
-    {
+    public function getCccRef() {
         return $this->cccRef;
     }
 
@@ -2942,8 +2934,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setMtrsup(\SoftoneBundle\Entity\Supplier $mtrsup = null)
-    {
+    public function setMtrsup(\SoftoneBundle\Entity\Supplier $mtrsup = null) {
         $this->mtrsup = $mtrsup;
 
         return $this;
@@ -2954,8 +2945,8 @@ class Product extends Entity {
      *
      * @return \SoftoneBundle\Entity\Supplier
      */
-    public function getMtrsup()
-    {
+    public function getMtrsup() {
         return $this->mtrsup;
     }
+
 }
