@@ -763,7 +763,7 @@ class EdiItem extends Entity {
         $dt = new \DateTime("now");
         $product = new \SoftoneBundle\Entity\Product;
 
-        $product->setSupplierCode($this->partno);
+        $product->setSupplierCode($this->clearCode($this->partno));
         $product->setTitle($this->description);
         $product->setTecdocCode($this->artNr);
 
@@ -781,6 +781,7 @@ class EdiItem extends Entity {
         $product->setItemMtrmanfctr($SoftoneSupplier->getId());
         $product->setErpCode($erpCode);
         $product->setItemCode($product->getErpCode());
+        $product->setItemCode2($this->clearCode($this->partno));
         $product->setEdi($this->getEdi()->getId());
         $product->setEdiId($this->id);
         $product->setProductSale($productsale);
