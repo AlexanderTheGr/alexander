@@ -312,7 +312,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //echo $product->id."\n";
         //echo $product->reference."\n";
         //$product = $this->newentity[$this->repository];
-        $product->updatetecdoc(false,true);
+        $product->updatetecdoc(false, true);
         $product->toSoftone();
         if ($product->getSisxetisi() != '') {
             $sproducts = $this->getDoctrine()
@@ -814,7 +814,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $egarmoges = '<ul>';
         foreach ($tecdoc->efarmoges($params) as $efarmogi) {
             $brandModelType = $this->getDoctrine()->getRepository('SoftoneBundle:BrandModelType')->find($efarmogi);
-            if (!$brandModelType) continue;
+            if (!$brandModelType)
+                continue;
             $brandModel = $this->getDoctrine()->getRepository('SoftoneBundle:BrandModel')->find($brandModelType->getBrandModel());
             $brand = $this->getDoctrine()->getRepository('SoftoneBundle:Brand')->find($brandModel->getBrand());
             $egarmoges .= '<li>' . $brand->getBrand() . ' ' . $brandModel->getBrandModel() . ' ' . $brandModelType->getBrandModelType() . '</li>';
@@ -1153,104 +1154,107 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $ediedis = $this->getDoctrine()->getRepository('EdiBundle:Edi')->findAll();
         foreach ($ediedis as $ediedi) {
             if ($ediedi->getId() == 4)
-            if ($ediedi->getItemMtrsup() > 0) {
-                $products = $this->getDoctrine()->getRepository('SoftoneBundle:Product')->findBy(array("itemMtrsup" => $ediedi->getItemMtrsup()), array('id'=>'desc'));
-                foreach ($products as $product) {
+                if ($ediedi->getItemMtrsup() > 0) {
+                    $products = $this->getDoctrine()->getRepository('SoftoneBundle:Product')->findBy(array("itemMtrsup" => $ediedi->getItemMtrsup()), array('id' => 'desc'));
+                    foreach ($products as $product) {
 
-                    //$brand = $product->getSupplierId() ? $product->getSupplierId()->getTitle() : "";
-                    /*
-                      $ediediitem = $this->getDoctrine()
-                      ->getRepository('EdiBundle:EdiItem')
-                      ->findOneBy(array("itemCode" => $product->getCccRef(), "Edi" => $ediedi));
-                      if (!$ediediitem) {
+                        //$brand = $product->getSupplierId() ? $product->getSupplierId()->getTitle() : "";
+                        /*
+                          $ediediitem = $this->getDoctrine()
+                          ->getRepository('EdiBundle:EdiItem')
+                          ->findOneBy(array("itemCode" => $product->getCccRef(), "Edi" => $ediedi));
+                          if (!$ediediitem) {
 
-                      }
-                     * 
-                     */
-                    //$this->clearstring($search);
-                    $ediediitem = false;
-                    $newcccref = false;
-                    $code = trim($this->clearstring($product->getCccRef()));
-                    if ($code != '') {
-                        $sql = "Select id from partsbox_db.edi_item where 
+                          }
+                         * 
+                         */
+                        //$this->clearstring($search);
+                        $ediediitem = false;
+                        $newcccref = false;
+                        $code = trim($this->clearstring($product->getCccRef()));
+                        if ($code != '') {
+                            $sql = "Select id from partsbox_db.edi_item where 
                                             replace(replace(replace(replace(replace(`itemcode`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $code . "' AND edi = '" . $ediedi->getId() . "'
                                             limit 0,100";
 
-                        //echo $sql . "<BR>";
-                        $connection = $em->getConnection();
-                        $statement = $connection->prepare($sql);
-                        $statement->execute();
-                        $data = $statement->fetch();
-                        ;
-                        //echo "<BR>";
-                        echo ".";
-                        if ($data["id"] > 0)
-                            $ediediitem = $this->getDoctrine()->getRepository('EdiBundle:EdiItem')->find($data["id"]);
-                    }
-                    if (!$ediediitem) {
-                        $brand = $product->getSupplierId() ? $product->getSupplierId()->getTitle() : "";
-                        if ($brand != '') {
-                            $ediediitem = $this->getDoctrine()
-                                    ->getRepository('EdiBundle:EdiItem')
-                                    ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), 'brand' => $brand, "Edi" => $ediedi));
-                            if ($ediediitem) {
-                                echo $this->clearstring($product->getItemCode2()) . "<BR>";
-                                $product->setCccRef($ediediitem->getItemCode());
-                                $newcccref = true;
+                            //echo $sql . "<BR>";
+                            $connection = $em->getConnection();
+                            $statement = $connection->prepare($sql);
+                            $statement->execute();
+                            $data = $statement->fetch();
+                            ;
+                            //echo "<BR>";
+                            echo ".";
+                            if ($data["id"] > 0)
+                                $ediediitem = $this->getDoctrine()->getRepository('EdiBundle:EdiItem')->find($data["id"]);
+                        }
+                        if (!$ediediitem) {
+                            $brand = $product->getSupplierId() ? $product->getSupplierId()->getTitle() : "";
+                            if ($brand != '') {
+                                $ediediitem = $this->getDoctrine()
+                                        ->getRepository('EdiBundle:EdiItem')
+                                        ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), 'brand' => $brand, "Edi" => $ediedi));
+                                if ($ediediitem) {
+                                    echo $this->clearstring($product->getItemCode2()) . "<BR>";
+                                    $product->setCccRef($ediediitem->getItemCode());
+                                    $newcccref = true;
+                                }
                             }
                         }
-                    }
 
-                    //if ($brand == "BERU")
-                    if ($i++ > 100)
-                       exit;
-                    //continue;
-                    if ($ediediitem) {
-                        $itemPricew = $ediediitem->getEdiMarkupPrice("itemPricew");
-                        $itemPricer = $ediediitem->getEdiMarkupPrice("itemPricer");
-                        if ($newcccref OR round($itemPricew, 2) != round($product->getItemPricew(), 2) OR round($itemPricer, 2) != round($product->getItemPricer(), 2)) {
-                            //echo $ediedi->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediediitem->getWholesaleprice() . " -- " . $ediediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
-                            //if ($i++ > 15)
-                            //    exit;
-                            if ($itemPricew > 0.01 AND $product->getReference() > 0) {
-                                $color = '';
-                                if ($itemPricew == $itemPricer) {
-                                    $color = 'red';
+                        //if ($brand == "BERU")
+                        if ($i++ > 100)
+                            exit;
+                        //continue;
+                        if ($ediediitem) {
+                            $itemPricew = $ediediitem->getEdiMarkupPrice("itemPricew");
+                            $itemPricer = $ediediitem->getEdiMarkupPrice("itemPricer");
+                            if ($newcccref OR round($itemPricew, 2) != round($product->getItemPricew(), 2) OR round($itemPricer, 2) != round($product->getItemPricer(), 2)) {
+                                //echo $ediedi->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediediitem->getWholesaleprice() . " -- " . $ediediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
+                                //if ($i++ > 15)
+                                //    exit;
+                                if ($itemPricew > 0.01 AND $product->getReference() > 0) {
+                                    $color = '';
+                                    if ($itemPricew == $itemPricer) {
+                                        $color = 'red';
+                                    }
+                                    echo "<div style='color:" . $color . "'>";
+                                    echo $ediedi->getName() . " " . $ediediitem->getWholesaleprice() . " -- " . $product->getItemCode() . " itemPricew:(" . $itemPricew . "/" . $product->getItemPricew() . ") itemPricer:(" . $itemPricer . "/" . $product->getItemPricer() . ")<BR>";
+
+                                    $product->setCccPriceUpd(1);
+                                    $product->setItemPricew($itemPricew);
+                                    $product->setItemPricer($itemPricer);
+                                    //
+                                    //echo $product->id." ".$product->erp_code." --> ".$qty." -- ".$product->getApothema()."<BR>";
+                                    $sql = "update softone_product set item_pricew = '".$itemPricew."', item_pricer = '".$itemPricer."', item_cccpriceupd = 1, item_cccref = '".$product->getCccRef()."',   where id = '" . $product->getId() . "'";
+                                    echo $sql . "<BR>";
+                                    $em->getConnection()->exec($sql);
+                                    //$this->flushpersist($product);
+                                    
+                                    //$product->toSoftone();
+                                    if ($newcccref)
+                                        $sql = "UPDATE MTRL SET CCCREF='" . $product->getCccRef() . "', CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
+                                    else
+                                        $sql = "UPDATE MTRL SET CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
+
+                                    $params["fSQL"] = $sql;
+                                    $datas = $softone->createSql($params);
+                                    echo $sql . "<BR>";
+
+                                    echo "</div>";
                                 }
-                                echo "<div style='color:".$color."'>";
-                                echo $ediedi->getName() . " " . $ediediitem->getWholesaleprice() . " -- " . $product->getItemCode() . " itemPricew:(" . $itemPricew . "/" . $product->getItemPricew() . ") itemPricer:(" . $itemPricer . "/" . $product->getItemPricer() . ")<BR>";
-
-                                $product->setCccPriceUpd(1);
-                                $product->setItemPricew($itemPricew);
-                                $product->setItemPricer($itemPricer);
-                                //
-                                $this->flushpersist($product);
-                                //$product->toSoftone();
-                                if ($newcccref)
-                                    $sql = "UPDATE MTRL SET CCCREF='" . $product->getCccRef() . "', CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
-                                else
-                                    $sql = "UPDATE MTRL SET CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
-
-                                $params["fSQL"] = $sql;
-                                $datas = $softone->createSql($params);
-                                echo $sql . "<BR>";
-                                
-                                echo "</div>";
-                                
+                            } else {
+                                //echo "<span style='color:red'>".$product->getItemCode()." -- ".$product->getSupplierId()->getTitle()." -- " . $product->getItemCode2() . " ".$ediediitem->getWholesaleprice() . " -- ".$ediediitem->getEdiMarkupPrice("itemPricew")." -- " . $product->getItemPricew() . "</span><BR>";
                             }
                         } else {
-                            //echo "<span style='color:red'>".$product->getItemCode()." -- ".$product->getSupplierId()->getTitle()." -- " . $product->getItemCode2() . " ".$ediediitem->getWholesaleprice() . " -- ".$ediediitem->getEdiMarkupPrice("itemPricew")." -- " . $product->getItemPricew() . "</span><BR>";
+                            //echo "<span style='color:red'>".$product->getItemCode().";".$product->getSupplierId()->getTitle().";" . $product->getItemCode2() . "</span><BR>";
                         }
-                    } else {
-                        //echo "<span style='color:red'>".$product->getItemCode().";".$product->getSupplierId()->getTitle().";" . $product->getItemCode2() . "</span><BR>";
                     }
                 }
-            }
         }
 
         exit;
     }
-
 
     /**
      * 
@@ -1282,7 +1286,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     function retrieveSoftoneDataAction($params = array()) {
         $allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
         $allowedipsArr = explode(",", $allowedips);
-            if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {        
+        if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
             set_time_limit(100000);
             ini_set('memory_limit', '2256M');
 
