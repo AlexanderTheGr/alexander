@@ -1226,7 +1226,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                     $product->setItemPricer($itemPricer);
                                     //
                                     //echo $product->id." ".$product->erp_code." --> ".$qty." -- ".$product->getApothema()."<BR>";
-                                    $sql = "update softone_product set item_pricew = '".$itemPricew."', item_pricer = '".$itemPricer."', item_cccpriceupd = 1, item_cccref = '".$product->getCccRef()."',   where id = '" . $product->getId() . "'";
+                                    $sql = "update softone_product set item_pricew = '".$itemPricew."', item_pricer = '".$itemPricer."', item_cccpriceupd = 1, item_cccref = '".$product->getCccRef()."'   where id = '" . $product->getId() . "'";
                                     echo $sql . "<BR>";
                                     $em->getConnection()->exec($sql);
                                     //$this->flushpersist($product);
