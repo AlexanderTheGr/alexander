@@ -219,12 +219,12 @@ class Edirule {
     }
 
     
-    function fix($supplier) {
-        $supplier = str_replace("MANN", "MANN-FILTER", trim($supplier));
+    function fixsuppliers($supplier) {
+        $supplier = str_replace("MANN", "MANN-FILTER", $supplier);
         $supplier = str_replace("MEAT&DORIA", "MEAT & DORIA", $supplier);
         $supplier = str_replace("BEHR-HELLA", "BEHR HELLA SERVICE", $supplier);
-        $supplier = str_replace("BLUEPRINT", "BLUEPRINT", $supplier);
-        $supplier = str_replace("BLUE PRINT", "BLUEPRINT", $supplier);
+        $supplier = str_replace("BLUEPRINT", "BLUE-PRINT", $supplier);
+        $supplier = str_replace("BLUE PRINT", "BLUE-PRINT", $supplier);
         $supplier = str_replace("BENDIX WBK", "BENDIX", $supplier);
         $supplier = str_replace("CONTI-TECH", "CONTITECH", $supplier);
         $supplier = str_replace("Fai AutoParts", "FAI AutoParts", $supplier);
@@ -236,6 +236,10 @@ class Edirule {
         $supplier = str_replace("KAYABA", "KYB", $supplier);
         $supplier = str_replace("KM", "KM Germany", $supplier);
         $supplier = str_replace("LUK", "LuK", $supplier);
+        $supplier = str_replace("FEBI BILSTEIN BILSTEIN", "FEBI BILSTEIN", $supplier);
+        $supplier = str_replace("COOPERSCOOPERSCOOPERSCOOPERSFIAAM FILTERS FILTERS FILTERS FILTERS", "COOPERSFIAAM FILTERS", $supplier);
+        $supplier = str_replace("COOPERSCOOPERSCOOPERSFIAAM FILTERS FILTERS FILTERS", "COOPERSFIAAM FILTERS", $supplier);
+        $supplier = str_replace("COOPERSCOOPERSFIAAM FILTERS FILTERS", "COOPERSFIAAM FILTERS", $supplier);
         $supplier = str_replace("MANN", "MANN-FILTER", $supplier);
         $supplier = str_replace("MANN-FILTER-FILTER", "MANN-FILTER", $supplier);
         $supplier = str_replace("MANN-FILTEREX", "MANN-FILTER", $supplier);
@@ -245,8 +249,10 @@ class Edirule {
         $supplier = str_replace("VERNET", "CALORSTAT by Vernet", $supplier);
         $supplier = str_replace("ZIMMERMANN-FILTER", "ZIMMERMANN", $supplier);
         $supplier = str_replace("FEBI", "FEBI BILSTEIN", $supplier);
+        $supplier = str_replace("LESJ?FORS", "LESJOFORS", $supplier);
+        $supplier = str_replace("LEMF?RDER", "LEMFORDER", $supplier);
         return $supplier;
-    }    
+    }   
     
     function rulesLoop($rule, $catsEp, $supplier, $code) {
         foreach ($rule["rules"] as $rl) {
