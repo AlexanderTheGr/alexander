@@ -1065,8 +1065,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
              * 
              */
             $entity = null;
-            if (@$i++ > 150)
-                break;
+            //if (@$i++ > 150)
+            //    break;
         }
     }
 
