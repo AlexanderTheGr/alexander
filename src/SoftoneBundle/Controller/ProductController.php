@@ -1176,7 +1176,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     $statement = $connection->prepare($sql);
                     $statement->execute();
                     $results = $statement->fetchAll();
-                    print_r($result);
+                    print_r($results);
                     echo "<BR>";
                     /*
                       if ($brand != '') {
