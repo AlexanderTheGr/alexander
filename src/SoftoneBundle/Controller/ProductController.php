@@ -1182,7 +1182,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         $data = $statement->fetch();
                         ;
                         //echo "<BR>";
-                        if ($data["id"]>0)
+                        if ($data["id"] > 0)
                             $ediediitem = $this->getDoctrine()->getRepository('EdiBundle:EdiItem')->find($data["id"]);
                     }
                     if (!$ediediitem) {
@@ -1241,6 +1241,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         exit;
     }
+
 
     /**
      * 
