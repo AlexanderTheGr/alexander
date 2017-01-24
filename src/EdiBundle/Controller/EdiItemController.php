@@ -442,7 +442,7 @@ class EdiItemController extends Main {
             
             
             $sql = "Select id from softone_product where replace(replace(replace(replace(replace(`item_cccref`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $obj->getItemCode() . "' AND edi = '" . $obj->getEdi()->getId() . "'";
-            //echo $sql . "<BR>";
+            echo $sql . "<BR>";
             $connection = $em->getConnection();
             $statement = $connection->prepare($sql);
             $statement->execute();
