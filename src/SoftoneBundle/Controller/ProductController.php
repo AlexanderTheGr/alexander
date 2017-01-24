@@ -1201,7 +1201,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
                     //if ($brand == "BERU")
                     //if ($i++ > 400)
-                    //    exit;
+                    //   exit;
                     //continue;
                     if ($ediediitem) {
                         $itemPricew = $ediediitem->getEdiMarkupPrice("itemPricew");
