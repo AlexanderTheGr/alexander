@@ -853,6 +853,7 @@ class EdiItem extends Entity {
         $supplier = str_replace("FEBI", "FEBI BILSTEIN", $supplier);
         $supplier = str_replace("LESJ?FORS", "LESJOFORS", $supplier);
         $supplier = str_replace("LEMF?RDER", "LEMFORDER", $supplier);
+        $supplier = str_replace("SALERI", "Saleri SIL", $supplier);
         return $supplier;
     }
 
