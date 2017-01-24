@@ -780,6 +780,7 @@ class EdiItem extends Entity {
         $product->setErpSupplier($this->brand);
         $product->setItemMtrmanfctr($SoftoneSupplier->getId());
         $product->setErpCode($erpCode);
+        $product->setCccRef($this->itemCode);
         $product->setItemCode($product->getErpCode());
         $product->setItemCode2($this->clearCode($this->partno));
         $product->setEdi($this->getEdi()->getId());
