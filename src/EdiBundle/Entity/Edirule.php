@@ -206,7 +206,7 @@ class Edirule {
         }
         //echo $ediitem->getBrand();
         $SoftoneSupplier = $em->getRepository("SoftoneBundle:SoftoneSupplier")
-                ->findOneBy(array('title' => $ediitem->getBrand()));
+                ->findOneBy(array('title' => $this->fix($ediitem->getBrand())));
         
         //print_r($rule);
         
@@ -218,6 +218,36 @@ class Edirule {
         return $this->rulesLoop($rule, $catsEp, $supplier, $ediitem->getItemCode());
     }
 
+    
+    function fix($supplier) {
+        $supplier = str_replace("MANN", "MANN-FILTER", trim($supplier));
+        $supplier = str_replace("MEAT&DORIA", "MEAT & DORIA", $supplier);
+        $supplier = str_replace("BEHR-HELLA", "BEHR HELLA SERVICE", $supplier);
+        $supplier = str_replace("BLUEPRINT", "BLUEPRINT", $supplier);
+        $supplier = str_replace("BLUE PRINT", "BLUEPRINT", $supplier);
+        $supplier = str_replace("BENDIX WBK", "BENDIX", $supplier);
+        $supplier = str_replace("CONTI-TECH", "CONTITECH", $supplier);
+        $supplier = str_replace("Fai AutoParts", "FAI AutoParts", $supplier);
+        $supplier = str_replace("FIAAM", "COOPERSFIAAM FILTERS", $supplier);
+        $supplier = str_replace("FIBA", "FI.BA", $supplier);
+        $supplier = str_replace("FLENOR", "FLENNOR", $supplier);
+        $supplier = str_replace("FRITECH", "fri.tech.", $supplier);
+        $supplier = str_replace("HERTH & BUSS JAKOPARTS", "HERTH+BUSS JAKOPARTS", $supplier);
+        $supplier = str_replace("KAYABA", "KYB", $supplier);
+        $supplier = str_replace("KM", "KM Germany", $supplier);
+        $supplier = str_replace("LUK", "LuK", $supplier);
+        $supplier = str_replace("MANN", "MANN-FILTER", $supplier);
+        $supplier = str_replace("MANN-FILTER-FILTER", "MANN-FILTER", $supplier);
+        $supplier = str_replace("MANN-FILTEREX", "MANN-FILTER", $supplier);
+        $supplier = str_replace("METALCAUCHO", "Metalcaucho", $supplier);
+        $supplier = str_replace("MULLER", "MULLER FILTER", $supplier);
+        $supplier = str_replace("RICAMBI", "GENERAL RICAMBI", $supplier);
+        $supplier = str_replace("VERNET", "CALORSTAT by Vernet", $supplier);
+        $supplier = str_replace("ZIMMERMANN-FILTER", "ZIMMERMANN", $supplier);
+        $supplier = str_replace("FEBI", "FEBI BILSTEIN", $supplier);
+        return $supplier;
+    }    
+    
     function rulesLoop($rule, $catsEp, $supplier, $code) {
         foreach ($rule["rules"] as $rl) {
 
