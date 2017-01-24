@@ -1192,14 +1192,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                     ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), 'brand' => $brand, "Edi" => $ediedi));
                             if ($ediediitem) {
                                 echo $this->clearstring($product->getItemCode2()) . "<BR>";
-                            }
-                        }
-                        if (!$ediediitem) {
-                            $ediediitem = $this->getDoctrine()
-                                    ->getRepository('EdiBundle:EdiItem')
-                                    ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), "Edi" => $ediedi));
-                            if ($ediediitem) {
-                                echo $this->clearstring($product->getItemCode2()) . "<BR>";
+                                $product->setCccRef($ediediitem->getItemCode());
                             }
                         }
                     }
@@ -1225,7 +1218,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                 //
                                 $this->flushpersist($product);
                                 //$product->toSoftone();
-                                $sql = "UPDATE MTRL SET CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
+                                $sql = "UPDATE MTRL SET CCCREF='".$product->getCccRef()."', CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
                                 $params["fSQL"] = $sql;
                                 $datas = $softone->createSql($params);
                                 echo $sql . "<BR>";
