@@ -643,7 +643,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
 
         $forms = $this->getFormLyFields($entity, $fields);
-        
+
         if ($id > 0 AND count($entity) > 0) {
             $entity2 = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Product')
@@ -997,11 +997,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //if ($data[$params["softone_table"]] < 149090) continue;
             $dt = new \DateTime("now");
             /*
-            if (@$entity->id == 0) {
-                $entity = $this->getDoctrine()
-                    ->getRepository($params["repository"])
-                    ->findOneBy(array("itemCode" => $data["CODE"]));
-            }
+              if (@$entity->id == 0) {
+              $entity = $this->getDoctrine()
+              ->getRepository($params["repository"])
+              ->findOneBy(array("itemCode" => $data["CODE"]));
+              }
              * 
              */
             if (@$entity->id == 0) {
@@ -1009,7 +1009,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $entity->setTs($dt);
                 $entity->setCreated($dt);
                 $entity->setModified($dt);
-                
             } else {
                 //continue;
                 //$entity->setRepositories();                
@@ -1051,7 +1050,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $q[] = "`" . strtolower($params["softone_object"] . "_cccpriceupd") . "` = '" . addslashes($data["CCCPRICEUPD"]) . "'";
             $q[] = "`" . strtolower($params["softone_object"] . "_cccwebupd") . "` = '" . addslashes($data["CCCWEBUPD"]) . "'";
             $q[] = "`" . strtolower($params["softone_object"] . "_cccref") . "` = '" . addslashes($data["CCCREF"]) . "'";
-            
+
 
             if (@$entity->id == 0) {
                 $q[] = "`reference` = '" . $data[$params["softone_table"]] . "'";
@@ -1156,19 +1155,36 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             if ($ediedi->getItemMtrsup() > 0) {
                 $products = $this->getDoctrine()->getRepository('SoftoneBundle:Product')->findBy(array("itemMtrsup" => $ediedi->getItemMtrsup()));
                 foreach ($products as $product) {
-                    $brand = $product->getSupplierId() ? $product->getSupplierId()->getTitle() : "";
 
-                    if ($brand != '') {
-
-                        $ediediitem = $this->getDoctrine()
-                                ->getRepository('EdiBundle:EdiItem')
-                                ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), 'brand' => $brand, "Edi" => $ediedi));
-                    } else {
-                        $ediediitem = $this->getDoctrine()
-                                ->getRepository('EdiBundle:EdiItem')
-                                ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), "Edi" => $ediedi));
+                    //$brand = $product->getSupplierId() ? $product->getSupplierId()->getTitle() : "";
+                    /*
+                    $ediediitem = $this->getDoctrine()
+                            ->getRepository('EdiBundle:EdiItem')
+                            ->findOneBy(array("itemCode" => $product->getCccRef(), "Edi" => $ediedi));
+                    if (!$ediediitem) {
+                        
                     }
+                     * 
+                     */
+                    $sql = "Select id from partsbox_db.edi_item where 
+					replace(replace(replace(replace(replace(`item_code`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  LIKE '".$product->getCccRef()." AND edi = '".$ediedi->getId()."'
+					limit 0,100";
+                    
+                    echo $sql."<BR>";
+                    /*
+                      if ($brand != '') {
+                      $ediediitem = $this->getDoctrine()
+                      ->getRepository('EdiBundle:EdiItem')
+                      ->findOneBy(array("itemCode" => $product->getCccRef(), "Edi" => $ediedi));
+                      } else {
+                      $ediediitem = $this->getDoctrine()
+                      ->getRepository('EdiBundle:EdiItem')
+                      ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), "Edi" => $ediedi));
+                      }
+                     */
                     //if ($brand == "BERU")
+                    if ($i++ > 100) exit;
+                    continue;
                     if ($ediediitem) {
                         $itemPricew = $ediediitem->getEdiMarkupPrice("itemPricew");
                         $itemPricer = $ediediitem->getEdiMarkupPrice("itemPricer");
