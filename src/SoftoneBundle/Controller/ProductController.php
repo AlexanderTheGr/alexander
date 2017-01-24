@@ -1011,7 +1011,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $entity->setModified($dt);
                 
             } else {
-                continue;
+                //continue;
                 //$entity->setRepositories();                
             }
 
