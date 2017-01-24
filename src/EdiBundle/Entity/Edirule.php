@@ -219,7 +219,7 @@ class Edirule {
     }
 
     
-    function fixsuppliers($supplier) {
+    function fix($supplier) {
         $supplier = str_replace("MANN", "MANN-FILTER", $supplier);
         $supplier = str_replace("MEAT&DORIA", "MEAT & DORIA", $supplier);
         $supplier = str_replace("BEHR-HELLA", "BEHR HELLA SERVICE", $supplier);
