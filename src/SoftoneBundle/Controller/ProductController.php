@@ -602,8 +602,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $fields["itemIsactive"] = array("label" => "Ενεργό", 'type' => "select", 'dataarray' => $dataarray, "required" => false, "className" => "col-md-3 col-sm-3");
         $fields["cccPriceUpd"] = array("label" => "Συχρονισμός", 'type' => "select", 'dataarray' => $dataarray, "required" => false, "className" => "col-md-3 col-sm-3");
-        $fields["cccWebUpd"] = array("label" => "WEB", 'type' => "select", 'dataarray' => $dataarray, "required" => false, "className" => "col-md-3 col-sm-3");       
-        	
+        $fields["cccWebUpd"] = array("label" => "WEB", 'type' => "select", 'dataarray' => $dataarray, "required" => false, "className" => "col-md-3 col-sm-3");
+
 
         $fields["productSale"] = array("label" => "Προσφορά", "className" => "col-md-3", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:ProductSale', 'name' => 'title', 'value' => 'id'));
 
@@ -622,15 +622,15 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $fields["erpSupplier"] = array("label" => "New Supplier", "required" => false, "className" => "col-md-3");
 
         $fields["supplierCode"] = array("label" => "Supplier Code", "className" => "col-md-3", "required" => true);
-        
-        
+
+
 
         $fields["itemMtrplace"] = array("label" => "Ράφι", "className" => "col-md-3", "required" => false);
         //$fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "className" => "col-md-2", "required" => false);        
         $fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "required" => false, "className" => "col-md-2", 'type' => "select", 'dataarray' => $itemMtrsup);
         $fields["cccRef"] = array("label" => "Κωδικός Προμηθευτή", "className" => "col-md-2", "required" => false);
-        
-        
+
+
         $fields["itemPricew"] = array("label" => "Τιμή Χοδρικής", "className" => "col-md-2", "required" => false);
         $fields["itemPricer"] = array("label" => "Τιμή Λιανικής", "className" => "col-md-2", "required" => false);
 
@@ -915,7 +915,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $params["object"] = 'SoftoneBundle\Entity\Product';
             $params["filter"] = 'WHERE M.SODTYPE=51 ' . $where;
             $params["relation"] = array();
-            $params["extra"] = array("cccWebUpd" => "cccWebUpd", "cccPriceUpd" => "cccPriceUpd");
+            $params["extra"] = array("cccRef" => "cccRef", "cccWebUpd" => "cccWebUpd", "cccPriceUpd" => "cccPriceUpd");
             $params["extrafunction"] = array();
             //$params["extra"]["CCCFXRELTDCODE"] = "CCCFXRELTDCODE";
             //$params["extra"]["CCCFXRELBRAND"] = "CCCFXRELBRAND";
@@ -1141,52 +1141,52 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $ediedis = $this->getDoctrine()->getRepository('EdiBundle:Edi')->findAll();
         foreach ($ediedis as $ediedi) {
             //if ($ediedi->getId() == 4)
-                if ($ediedi->getItemMtrsup() > 0) {
-                    $products = $this->getDoctrine()->getRepository('SoftoneBundle:Product')->findBy(array("itemMtrsup" => $ediedi->getItemMtrsup()));
-                    foreach ($products as $product) {
-                        $brand = $product->getSupplierId() ? $product->getSupplierId()->getTitle() : "";
+            if ($ediedi->getItemMtrsup() > 0) {
+                $products = $this->getDoctrine()->getRepository('SoftoneBundle:Product')->findBy(array("itemMtrsup" => $ediedi->getItemMtrsup()));
+                foreach ($products as $product) {
+                    $brand = $product->getSupplierId() ? $product->getSupplierId()->getTitle() : "";
 
-                        if ($brand != '') {
+                    if ($brand != '') {
 
-                            $ediediitem = $this->getDoctrine()
-                                    ->getRepository('EdiBundle:EdiItem')
-                                    ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), 'brand' => $brand, "Edi" => $ediedi));
-                        } else {
-                            $ediediitem = $this->getDoctrine()
-                                    ->getRepository('EdiBundle:EdiItem')
-                                    ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), "Edi" => $ediedi));
-                        }
-                        //if ($brand == "BERU")
-                        if ($ediediitem) {
-                            $itemPricew = $ediediitem->getEdiMarkupPrice("itemPricew");
-                            $itemPricer = $ediediitem->getEdiMarkupPrice("itemPricer");
-                            if (round($itemPricew, 2) != round($product->getItemPricew(), 2) OR round($itemPricer, 2) != round($product->getItemPricer(), 2)) {
-                                //echo $ediedi->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediediitem->getWholesaleprice() . " -- " . $ediediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
-                                //if ($i++ > 15)
-                                //    exit;
-                                if ($itemPricew > 0.01 AND $product->getReference() > 0) {
+                        $ediediitem = $this->getDoctrine()
+                                ->getRepository('EdiBundle:EdiItem')
+                                ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), 'brand' => $brand, "Edi" => $ediedi));
+                    } else {
+                        $ediediitem = $this->getDoctrine()
+                                ->getRepository('EdiBundle:EdiItem')
+                                ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), "Edi" => $ediedi));
+                    }
+                    //if ($brand == "BERU")
+                    if ($ediediitem) {
+                        $itemPricew = $ediediitem->getEdiMarkupPrice("itemPricew");
+                        $itemPricer = $ediediitem->getEdiMarkupPrice("itemPricer");
+                        if (round($itemPricew, 2) != round($product->getItemPricew(), 2) OR round($itemPricer, 2) != round($product->getItemPricer(), 2)) {
+                            //echo $ediedi->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediediitem->getWholesaleprice() . " -- " . $ediediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
+                            //if ($i++ > 15)
+                            //    exit;
+                            if ($itemPricew > 0.01 AND $product->getReference() > 0) {
 
-                                    echo $ediedi->getName() . " " . $ediediitem->getWholesaleprice() . " -- " . $product->getItemCode() . " itemPricew:(" . $itemPricew . "/" . $product->getItemPricew() . ") itemPricer:(" . $itemPricer . "/" . $product->getItemPricer() . ")<BR>";
+                                echo $ediedi->getName() . " " . $ediediitem->getWholesaleprice() . " -- " . $product->getItemCode() . " itemPricew:(" . $itemPricew . "/" . $product->getItemPricew() . ") itemPricer:(" . $itemPricer . "/" . $product->getItemPricer() . ")<BR>";
 
-                                    $product->setCccPriceUpd(1);
-                                    $product->setItemPricew($itemPricew);
-                                    $product->setItemPricer($itemPricer);
-                                    //
-                                    $this->flushpersist($product);
-                                    //$product->toSoftone();
-                                    $sql = "UPDATE MTRL SET CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
-                                    $params["fSQL"] = $sql;
-                                    $datas = $softone->createSql($params);
-                                    echo $sql . "<BR>";
-                                }
-                            } else {
-                                //echo "<span style='color:red'>".$product->getItemCode()." -- ".$product->getSupplierId()->getTitle()." -- " . $product->getItemCode2() . " ".$ediediitem->getWholesaleprice() . " -- ".$ediediitem->getEdiMarkupPrice("itemPricew")." -- " . $product->getItemPricew() . "</span><BR>";
+                                $product->setCccPriceUpd(1);
+                                $product->setItemPricew($itemPricew);
+                                $product->setItemPricer($itemPricer);
+                                //
+                                $this->flushpersist($product);
+                                //$product->toSoftone();
+                                $sql = "UPDATE MTRL SET CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
+                                $params["fSQL"] = $sql;
+                                $datas = $softone->createSql($params);
+                                echo $sql . "<BR>";
                             }
                         } else {
-                            //echo "<span style='color:red'>".$product->getItemCode().";".$product->getSupplierId()->getTitle().";" . $product->getItemCode2() . "</span><BR>";
+                            //echo "<span style='color:red'>".$product->getItemCode()." -- ".$product->getSupplierId()->getTitle()." -- " . $product->getItemCode2() . " ".$ediediitem->getWholesaleprice() . " -- ".$ediediitem->getEdiMarkupPrice("itemPricew")." -- " . $product->getItemPricew() . "</span><BR>";
                         }
+                    } else {
+                        //echo "<span style='color:red'>".$product->getItemCode().";".$product->getSupplierId()->getTitle().";" . $product->getItemCode2() . "</span><BR>";
                     }
                 }
+            }
         }
 
         exit;
@@ -1197,7 +1197,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/product/retrieveMtrl/{mtrl}")
      */
     function retrieveMtrlAction($mtrl) {
-        
+
         $allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
         $allowedipsArr = explode(",", $allowedips);
         if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
@@ -1222,30 +1222,30 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     function retrieveSoftoneDataAction($params = array()) {
         set_time_limit(100000);
         ini_set('memory_limit', '2256M');
-        
-        
+
+
         echo $this->retrieveMtrcategory();
         echo $this->retrieveMtrmanfctr();
         echo $this->retrieveMtrl();
-        
+
         //echo $this->retrieveApothema();
         return new Response(
                 "", 200
         );
     }
 
-     /**
+    /**
      * 
      * @Route("/product/retrieveApothema")
-     */   
+     */
     function retrieveApothemaAction() {
         $allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
         $allowedipsArr = explode(",", $allowedips);
-        file_put_contents("ip.txt",$_SERVER["REMOTE_ADDR"]);
+        file_put_contents("ip.txt", $_SERVER["REMOTE_ADDR"]);
         if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
             //echo "aaaa";
             //exit;
-            file_put_contents("ip1.txt",$_SERVER["REMOTE_ADDR"]);
+            file_put_contents("ip1.txt", $_SERVER["REMOTE_ADDR"]);
             $this->retrieveApothema();
             exit;
         } else {
@@ -1253,7 +1253,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             exit;
         }
     }
-    
+
     function retrieveApothema($filters = false) {
         //function retrieveProducts($filters=false) {
         //$this->catalogue = 4;
