@@ -621,9 +621,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $fields["erpSupplier"] = array("label" => "New Supplier", "required" => false, "className" => "col-md-3");
 
-        $fields["supplierCode"] = array("label" => "Supplier Code", "className" => "col-md-6", "required" => true);
+        $fields["supplierCode"] = array("label" => "Supplier Code", "className" => "col-md-3", "required" => true);
         
-        $fields["cccRef"] = array("label" => "Κωδικός Προμηθευτή", "className" => "col-md-6", "required" => false);
+        $fields["cccRef"] = array("label" => "Κωδικός Προμηθευτή", "className" => "col-md-3", "required" => false);
 
         $fields["itemMtrplace"] = array("label" => "Ράφι", "className" => "col-md-2", "required" => false);
         //$fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "className" => "col-md-2", "required" => false);        
