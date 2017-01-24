@@ -606,7 +606,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
 
         $fields["productSale"] = array("label" => "Προσφορά", "className" => "col-md-3", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:ProductSale', 'name' => 'title', 'value' => 'id'));
-
+        /*
         $fields["title"] = array("label" => "Περιγραφή", "required" => true, "className" => "col-md-6 col-sm-6");
         $fields["erpCode"] = array("label" => "Κωδικός Είδους", "required" => false, "className" => "col-md-3 col-sm-3");
         $fields["itemCode1"] = array("label" => "Barcode", "required" => false, "className" => "col-md-3 col-sm-3");
@@ -623,8 +623,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $fields["supplierCode"] = array("label" => "Supplier Code", "className" => "col-md-3", "required" => true);
 
-
-
         $fields["itemMtrplace"] = array("label" => "Ράφι", "className" => "col-md-3", "required" => false);
         //$fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "className" => "col-md-2", "required" => false);        
         $fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "required" => false, "className" => "col-md-2", 'type' => "select", 'dataarray' => $itemMtrsup);
@@ -640,7 +638,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $fields["itemRemarks"] = array("label" => "Remarks", "required" => false, 'type' => "textarea", "className" => "col-md-6 col-sm-6");
         $fields["sisxetisi"] = array("label" => "Κωδικός Συσχέτισης", "className" => "col-md-6", "required" => false);
-
+        */
 
         $forms = $this->getFormLyFields($entity, $fields);
         /*
