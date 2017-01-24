@@ -1167,17 +1167,20 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                      * 
                      */
                     //$this->clearstring($search);
-                    $sql = "Select id from partsbox_db.edi_item where 
-					replace(replace(replace(replace(replace(`itemcode`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  LIKE '" . $this->clearstring($product->getCccRef()) . "' AND edi = '" . $ediedi->getId() . "'
-					limit 0,100";
+                    $code = trim($this->clearstring($product->getCccRef()));
+                    if ($code != '') {
+                        $sql = "Select id from partsbox_db.edi_item where 
+                                            replace(replace(replace(replace(replace(`itemcode`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  LIKE '" . $code . "' AND edi = '" . $ediedi->getId() . "'
+                                            limit 0,100";
 
-                    echo $sql . "<BR>";
-                    $connection = $em->getConnection();
-                    $statement = $connection->prepare($sql);
-                    $statement->execute();
-                    $results = $statement->fetchAll();
-                    print_r($results);
-                    echo "<BR>";
+                        echo $sql . "<BR>";
+                        $connection = $em->getConnection();
+                        $statement = $connection->prepare($sql);
+                        $statement->execute();
+                        $results = $statement->fetchOne();
+                        print_r($results);
+                        echo "<BR>";
+                    }
                     /*
                       if ($brand != '') {
                       $ediediitem = $this->getDoctrine()
