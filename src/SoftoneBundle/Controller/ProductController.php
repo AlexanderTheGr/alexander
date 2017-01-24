@@ -814,7 +814,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $egarmoges = '<ul>';
         foreach ($tecdoc->efarmoges($params) as $efarmogi) {
             $brandModelType = $this->getDoctrine()->getRepository('SoftoneBundle:BrandModelType')->find($efarmogi);
-            if (!$brandModelType)
+            if (!$brandModelType) continue;
             $brandModel = $this->getDoctrine()->getRepository('SoftoneBundle:BrandModel')->find($brandModelType->getBrandModel());
             $brand = $this->getDoctrine()->getRepository('SoftoneBundle:Brand')->find($brandModel->getBrand());
             $egarmoges .= '<li>' . $brand->getBrand() . ' ' . $brandModel->getBrandModel() . ' ' . $brandModelType->getBrandModelType() . '</li>';
