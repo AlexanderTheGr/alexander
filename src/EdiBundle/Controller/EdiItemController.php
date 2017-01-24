@@ -448,6 +448,7 @@ class EdiItemController extends Main {
             $statement->execute();
             $refdata = $statement->fetch();
 
+            
             $prd = $refdata["id"] > 0 ? ' bold ' : '';
             $json["DT_RowClass"] = $prd . "dt_row_" . strtolower($r[1]);
 
