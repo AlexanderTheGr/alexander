@@ -42,6 +42,8 @@ jQuery('#classtitem').live("change", function (e) {
     table.fnFilter(jQuery('#classtitem').val(),3);
     setTimeout(function () {
         b = true;
+    },4000)
+    setTimeout(function () {
         var tecdocArticleName = [];
         $("span.tecdocArticleName").each(function(){
             tecdocArticleName[$(this).text()] = $(this).text();
@@ -51,7 +53,7 @@ jQuery('#classtitem').live("change", function (e) {
             as = as+"<label>"+i+"</label><input type='radio' name='tecdocArticleName' value = '"+i+"'>";
         }
         $("#tecdocArticleName").html(as);
-    }, 3000)
+    }, 1000)
 })
 
 toastr.options = {
