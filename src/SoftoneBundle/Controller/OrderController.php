@@ -431,7 +431,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
         $suppliers = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:SoftoneSupplier')->findAll();
-        $tecdocArticleName = "<div id='tecdocArticleName'></div>";
+        $tecdocArticleName = "<div style='float:left'id='tecdocArticleName'></div>";
         $itemMtrsup = "<select id='classtitem'>";
         $itemMtrsup .= "<option value=0>Select</option>";
         foreach ($suppliers as $supplier) {
