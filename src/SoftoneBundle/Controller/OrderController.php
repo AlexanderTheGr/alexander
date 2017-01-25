@@ -1302,17 +1302,23 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $table = (array) $table;
             $tbl = (array) $table;
             $table1 = array();
+            
             foreach ($table as $f => $val) {
                 if ($f == 0 AND $f != 'DT_RowId' AND $f != 'DT_RowClass') {
                     $table1[$f] = $val;
                     $table1[1] = $this->getOrderItemsPopup($val);
+                    $hasOrderItems = $this->getHasOrderItems($val);
                 } else if ($f == 1) {
                     $table1[$f] = $table1[1] . $val;
                 } else {
                     $table1[$f] = $val;
                 }
             }
-            $datatable->data[$key] = $table1;
+            if ($hasOrderItems) {
+                $datatable->data[$key] = $table1;
+            } else {
+                unset($datatable->data[$key]);
+            }
         }
         $json = json_encode($datatable);
 
@@ -1322,6 +1328,19 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         );
     }
 
+    function getHasOrderItems($id) {
+        $id = (int) $id;
+
+        $entity = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->find($id);
+        $content = array(); 
+        if ($entity) {
+            if (count($entity->getItems())) return true;
+        }
+        return false;
+    }
+    
     function getOrderItemsPopup($id) {
         $id = (int) $id;
 
