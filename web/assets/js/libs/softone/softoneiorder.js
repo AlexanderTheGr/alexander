@@ -42,7 +42,7 @@ jQuery('#classtitem').live("change", function (e) {
     table.fnFilter(productsearch);
     setTimeout(function () {
         b = true;
-    }, 3000)    
+    }, 3000)
 })
 
 toastr.options = {
@@ -329,6 +329,7 @@ function asdf(obj, search) {
 
     var table = dt_tables["ctrlgetoffcanvases"];
     table.fnFilter(search);
+    table.column(10).sort();
     var table2 = dt_tables["ctrlgetoffcanvases2"];
     table2.fnFilter('');
     setTimeout(function () {
