@@ -89,7 +89,7 @@ class Main extends Controller {
                         }
                         if (@$field["method"] == 'yesno') {
                             if (@$this->clearstring($dt_columns[$index]["search"]["value"]) == "0") {
-                                $this->q_and[] = $this->prefix . "." . $this->fields[$index]["index"] . " = '0'";
+                                $this->q_and[] = $this->prefix . "." . $this->fields[$index]["index"] . " < 1";
                             }   
                             if (@$this->clearstring($dt_columns[$index]["search"]["value"]) == "1") {
                                 $this->q_and[] = $this->prefix . "." . $this->fields[$index]["index"] . " > '0'";
