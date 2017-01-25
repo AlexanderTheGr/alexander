@@ -42,9 +42,15 @@ jQuery('#classtitem').live("change", function (e) {
     table.fnFilter(jQuery('#classtitem').val(),3);
     setTimeout(function () {
         b = true;
+        var tecdocArticleName = [];
         $("span.tecdocArticleName").each(function(){
-            //alert($(this).text())
+            tecdocArticleName[$(this).text()] = $(this).text();
         })
+        var as = "";
+        for(var i in tecdocArticleName) {
+            as = as+"<label>"+i+"</label><input type='radio' name='tecdocArticleName' value = '"+i+"'>";
+        }
+        $("#tecdocArticleName").html(as);
     }, 2000)
 })
 
