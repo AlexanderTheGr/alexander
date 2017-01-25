@@ -739,7 +739,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $json = array();
                 
                 if ($supplier) {
-                    if ($supplier->getSupplier() != $v->brandName) continue;
+                    if ($supplier->getTitle() != $v->brandName) continue;
                 }
                 
                 $json[] = "";
