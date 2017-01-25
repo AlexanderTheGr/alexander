@@ -431,6 +431,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
         $suppliers = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:SoftoneSupplier')->findAll();
+        $tecdocArticleName = "<div id='tecdocArticleName'></div>";
         $itemMtrsup = "<select id='classtitem'>";
         $itemMtrsup .= "<option value=0>Select</option>";
         foreach ($suppliers as $supplier) {
@@ -439,7 +440,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $itemMtrsup .= "</select>";
 
         //$datatables = array();
-        $this->addOffCanvas(array('id' => 'asdf', "content" => $itemMtrsup, "index" => $this->generateRandomString(), "datatables" => $datatables));
+        $this->addOffCanvas(array('id' => 'asdf', "content" => $tecdocArticleName.$itemMtrsup, "index" => $this->generateRandomString(), "datatables" => $datatables));
         //$this->addOffCanvas(array('id' => 'asdf2', "content" => '', "index" => $this->generateRandomString(), "datatables" => $datatables));
         return $this->offcanvases();
     }
@@ -745,7 +746,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $json[] = "";
                 $json[] = "<span  car='' class='product_info' data-articleId='" . $v->articleId . "' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span></a><BR><a class='create_product' data-ref='" . $v->articleId . "' style='font-size:10px; color:rose' href='#'>Create Product</a>";
                 //$json[] = "<span car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span>";
-                $json[] = "<span car='' class='product_info' data-articleId='" . $v->articleId . "' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->genericArticleName . "</span>";
+                $json[] = "<span car='' class='product_info tecdocArticleName' data-articleId='" . $v->articleId . "' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->genericArticleName . "</span>";
                 $json[] = "<span  car='' class='product_info' data-articleId='" . $v->articleId . "' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->brandName . "</span>";
                 $json[] = $this->getArticleAttributes($v->articleId, $articleIds2["linkingTargetId"]);
                 $json[] = "";
