@@ -66,6 +66,7 @@
 
             $(alexander).find(".search_init").change(function () {
                 alert(this.value);
+                alert($(alexander).find(".search_init").index(this));
                 dt_table.fnFilter(this.value, $(alexander).find(".search_init").index(this));
             });
         }
