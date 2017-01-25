@@ -737,7 +737,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             foreach ((array) $out as $v) {
                 $p[$v->articleId] = $v;
                 $json = array();
-
+                
+                if ($supplier) {
+                    if ($supplier->getSupplier() != $v->brandName) continue;
+                }
+                
                 $json[] = "";
                 $json[] = "<span  car='' class='product_info' data-articleId='" . $v->articleId . "' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span></a><BR><a class='create_product' data-ref='" . $v->articleId . "' style='font-size:10px; color:rose' href='#'>Create Product</a>";
                 //$json[] = "<span car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span>";
