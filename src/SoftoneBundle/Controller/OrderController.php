@@ -1307,6 +1307,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
         $datatable = json_decode($json);
         $datatable->data = (array) $datatable->data;
+        $i = 0;
         foreach ($datatable->data as $key => $table) {
             $table = (array) $table;
             $tbl = (array) $table;
@@ -1315,7 +1316,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             foreach ($table as $f => $val) {
                 if ($f == 0 AND $f != 'DT_RowId' AND $f != 'DT_RowClass') {
                     $table1[$f] = $val;
-                    $table1[1] = $this->getOrderItemsPopup($val);
+                    if ($i++ < 100) {
+                        $table1[1] = $this->getOrderItemsPopup($val);
+                    }
                     //$hasOrderItems = $this->getHasOrderItems($val);
                 } else if ($f == 1) {
                     $table1[$f] = $table1[1] . $val;
