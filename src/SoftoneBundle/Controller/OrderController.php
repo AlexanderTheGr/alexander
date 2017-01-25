@@ -1286,9 +1286,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->addField(array("name" => "Customer Name", "index" => 'customerName'))
                 ->addField(array("name" => "ΑΦΜ", "index" => 'customer:customerAfm'))
                 ->addField(array("name" => "Πωλητής", "index" => 'user:username'))
-                ->addField(array("name" => "Σύνολο", 'function' => 'getTotal'))
                 ->addField(array("name" => "Παραγγελία", "index" => 'reference', 'method' => 'yesno'))
                 ->addField(array("name" => "Τιμολογημένη", "index" => 'fullytrans', 'method' => 'yesno'))
+                ->addField(array("name" => "Σύνολο", 'function' => 'getTotal'))
 
         ;
         $em = $this->getDoctrine()->getManager();
