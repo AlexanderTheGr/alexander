@@ -3,6 +3,8 @@ var orderid = 0;
 var productsearch = ''
 jQuery('#productfreesearch').live("keyup", function (e) {
     if (e.keyCode == 13) {
+        table.fnFilter("",2);
+        table.fnFilter("",3);        
         $("#loaderer").show();
         productsearch = "productfreesearch:" + jQuery('#productfreesearch').val();
         asdf(this, productsearch);
@@ -20,6 +22,8 @@ jQuery('#productfreesearch').live("keyup", function (e) {
 });
 jQuery('#productitem').live("keyup", function (e) {
     if (e.keyCode == 13) {
+        table.fnFilter("",2);
+        table.fnFilter("",3);
         $("#loaderer").show();
         productsearch = "productitem:" + jQuery('#productitem').val() + ":supplier:1";
         asdf(this, productsearch);
@@ -402,6 +406,7 @@ function fororder(order) {
                 as = as+"<label>"+i+"</label><input type='radio' class='rtecdocArticleName' name='tecdocArticleName' value = '"+i+"'>";
             }
         }
+        as = as+"<label>Καθαρισμός</label><input type='radio' class='rtecdocArticleName' name='tecdocArticleName' value = ''>";
         $("#tecdocArticleName").html(as);
     }, 3000)    
 }
