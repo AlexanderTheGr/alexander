@@ -53,7 +53,7 @@ jQuery('#classtitem').live("change", function (e) {
             as = as+"<label>"+i+"</label><input type='radio' name='tecdocArticleName' value = '"+i+"'>";
         }
         $("#tecdocArticleName").html(as);
-    }, 1000)
+    }, 3000)
 })
 
 toastr.options = {
