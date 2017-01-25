@@ -46,7 +46,7 @@ jQuery('#classtitem').live("change", function (e) {
     table.fnFilter(jQuery('#classtitem').val(), 3);
     setTimeout(function () {
         b = true;
-    }, 1000)
+    }, 3000)
 
 })
 jQuery('.rtecdocArticleName').live("click", function (e) {
@@ -55,7 +55,7 @@ jQuery('.rtecdocArticleName').live("click", function (e) {
     table.fnFilter(jQuery(this).val(), 2);
     setTimeout(function () {
         b = true;
-    }, 1000)
+    }, 3000)
 })
 
 
