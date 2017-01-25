@@ -328,14 +328,13 @@ function asdf(obj, search) {
 
 
     var table = dt_tables["ctrlgetoffcanvases"];
-    table.column(10).sort();
     table.fnFilter(search);
-
+    
     var table2 = dt_tables["ctrlgetoffcanvases2"];
     table2.fnFilter('');
     setTimeout(function () {
         jQuery(".SoftoneBundleProductQty").val(1);
-        table.column(10).sort();
+        
     }, 1000)
     //})
 }
