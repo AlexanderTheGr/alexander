@@ -35,11 +35,11 @@ jQuery('#productitem').live("keyup", function (e) {
     }
 });
 jQuery('#classtitem').live("change", function (e) {
-    productsearch2 = "productitem:" + productsearch + ":supplier:" + jQuery('#classtitem').val();
+    //productsearch = "productitem:" + jQuery('#productitem').val() + ":supplier:" + jQuery('#classtitem').val();
     //asdf(this, productsearch);
     b = false;
     var table = dt_tables["ctrlgetoffcanvases"];
-    table.fnFilter(productsearch2);
+    table.fnFilter(jQuery('#classtitem').val(),3);
     setTimeout(function () {
         b = true;
     }, 3000)
@@ -352,7 +352,6 @@ function asdf2(obj) {
     var table2 = dt_tables["ctrlgetoffcanvases2"];
     table.fnFilter(obj.all);
     table2.fnFilter(obj.all);
-    productsearch = "productitem:"+obj.all;
     //$(".offcanvas-search").click();
     setTimeout(function () {
         jQuery(".SoftoneBundleProductQty").val(1);
