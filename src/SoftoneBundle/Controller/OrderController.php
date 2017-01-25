@@ -1317,7 +1317,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             if ($hasOrderItems) {
                 $datatable->data[$key] = $table1;
             } else {
-                unset($datatable->data[$key]);
+                $datatable->data[$key] = $table1;
+                //unset($datatable->data[$key]);
             }
         }
         $json = json_encode($datatable);
