@@ -43,19 +43,19 @@ jQuery('#classtitem').live("change", function (e) {
     //asdf(this, productsearch);
     b = false;
     var table = dt_tables["ctrlgetoffcanvases"];
-    table.fnFilter(jQuery('#classtitem').val(),3);
+    table.fnFilter(jQuery('#classtitem').val(), 3);
     setTimeout(function () {
         b = true;
-    },4000)
+    }, 1000)
 
 })
 jQuery('.rtecdocArticleName').live("click", function (e) {
     b = false;
     var table = dt_tables["ctrlgetoffcanvases"];
-    table.fnFilter(jQuery(this).val(),2);
+    table.fnFilter(jQuery(this).val(), 2);
     setTimeout(function () {
         b = true;
-    },4000)    
+    }, 1000)
 })
 
 
@@ -343,12 +343,12 @@ function asdf(obj, search) {
 
     var table = dt_tables["ctrlgetoffcanvases"];
     table.fnFilter(search);
-    
+
     var table2 = dt_tables["ctrlgetoffcanvases2"];
     table2.fnFilter('');
     setTimeout(function () {
         jQuery(".SoftoneBundleProductQty").val(1);
-        
+
     }, 1000)
     //})
 }
@@ -396,19 +396,19 @@ function fororder(order) {
         b = true;
     }, 1000)
 
-        var tecdocArticleName = [];
-        $("span.tecdocArticleName").each(function(){
-            tecdocArticleName[$(this).text()] = $(this).text();
-        })
-        var as = "";
-        for(var i in tecdocArticleName) {
-            if (i!='') {
-                as = as+"<label>"+i+"</label><input type='radio' class='rtecdocArticleName' name='tecdocArticleName' value = '"+i+"'>";
-            }
+    var tecdocArticleName = [];
+    $("span.tecdocArticleName").each(function () {
+        tecdocArticleName[$(this).text()] = $(this).text();
+    })
+    var as = "";
+    for (var i in tecdocArticleName) {
+        if (i != '') {
+            as = as + "<label>" + i + "</label><input type='radio' class='rtecdocArticleName' name='tecdocArticleName' value = '" + i + "'>";
         }
-        as = as+"<label>Καθαρισμός</label><input type='radio' class='rtecdocArticleName' name='tecdocArticleName' value = ''>";
-        $("#tecdocArticleName").html(as);
-   
+    }
+    as = as + "<label>Καθαρισμός</label><input type='radio' class='rtecdocArticleName' name='tecdocArticleName' value = ''>";
+    $("#tecdocArticleName").html(as);
+
 }
 
 jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .SoftoneBundleProductEdi').live("keyup", function (e) {
