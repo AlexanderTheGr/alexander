@@ -1336,6 +1336,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 if ($item->getProduct()) {
                     $items = array();
                     $items["id"] = $item->getId();
+                    $items["Code"] = $item->getProduct()->getItemCode();
                     $items["Title"] = $item->getProduct()->getTitle();
                     $items["Qty"] = $item->getQty();
                     $items["Price"] = $item->getLineval();
@@ -1346,6 +1347,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $items = array();
             $items["id"] = "";
             $items["Title"] = "";
+            $items["Code"] = "";
             $items["Qty"] = "";
             $items["Price"] = @$total;
             $content[] = $items;
