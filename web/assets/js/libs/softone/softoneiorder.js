@@ -395,7 +395,7 @@ function fororder(order) {
     setTimeout(function () {
         b = true;
     }, 1000)
-    setTimeout(function () {
+
         var tecdocArticleName = [];
         $("span.tecdocArticleName").each(function(){
             tecdocArticleName[$(this).text()] = $(this).text();
@@ -408,7 +408,7 @@ function fororder(order) {
         }
         as = as+"<label>Καθαρισμός</label><input type='radio' class='rtecdocArticleName' name='tecdocArticleName' value = ''>";
         $("#tecdocArticleName").html(as);
-    }, 3000)    
+ 
 }
 
 jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .SoftoneBundleProductEdi').live("keyup", function (e) {
