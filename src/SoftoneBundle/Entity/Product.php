@@ -2854,8 +2854,8 @@ class Product extends Entity {
     /**
      * @var integer
      */
-    private $reserved = 0;
-    private $qty = 0;
+    private $reserved = '0';
+    private $qty = '0';
 
     /**
      * Set qty
