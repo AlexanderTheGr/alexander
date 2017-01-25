@@ -180,7 +180,7 @@ class Customergrouprule {
             if ($SoftoneSupplier)
                 $supplier = $SoftoneSupplier->getId();
         } else {
-            $supplier = $product->getSupplierId()->getId();
+            $supplier = $product->getSupplierId() ? $product->getSupplierId()->getId() : 0;
             if ($product->getProductsale()) {
                 $productsale = $product->getProductsale()->getId();
             }
