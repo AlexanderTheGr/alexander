@@ -283,8 +283,14 @@ class CustomergroupController extends Main {
         $allowedipsArr = explode(",", $allowedips);
         if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
             $customer = $this->getDoctrine()->getRepository("SoftoneBundle:Customer")->findOneBy(array("reference" => $id));
-            echo $customer->getCustomergroup()->getId();
+            //echo $customer->getCustomergroup()->getId();
             $rules = $this->getDoctrine()->getRepository("SoftoneBundle:Customergrouprule")->findBy(array("group" => $customer->getCustomergroup()));
+            $as["id"] = 0;
+            $as["val"] = 0;
+            $as["sortorder"] = 0;
+            $as["price"] = "";
+            $as["rules"] = json_decode(array(), true);
+            $as["price_field"] = $customer->getPriceField();            
             foreach ((array) $rules as $rule) {
                 $as["id"] = $rule->getId();
                 $as["val"] = $rule->getVal();
