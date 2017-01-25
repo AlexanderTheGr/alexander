@@ -45,6 +45,15 @@ jQuery('#classtitem').live("change", function (e) {
     },4000)
 
 })
+jQuery('.rtecdocArticleName').live("click", function (e) {
+    b = false;
+    var table = dt_tables["ctrlgetoffcanvases"];
+    table.fnFilter(jQuery(this).val(),2);
+    setTimeout(function () {
+        b = true;
+    },4000)    
+})
+
 
 toastr.options = {
     "closeButton": false,
@@ -390,7 +399,7 @@ function fororder(order) {
         var as = "";
         for(var i in tecdocArticleName) {
             if (i!='') {
-                as = as+"<label>"+i+"</label><input type='radio' name='tecdocArticleName' value = '"+i+"'>";
+                as = as+"<label>"+i+"</label><input type='radio' class='rtecdocArticleName' name='tecdocArticleName' value = '"+i+"'>";
             }
         }
         $("#tecdocArticleName").html(as);
