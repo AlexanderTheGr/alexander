@@ -43,17 +43,7 @@ jQuery('#classtitem').live("change", function (e) {
     setTimeout(function () {
         b = true;
     },4000)
-    setTimeout(function () {
-        var tecdocArticleName = [];
-        $("span.tecdocArticleName").each(function(){
-            tecdocArticleName[$(this).text()] = $(this).text();
-        })
-        var as = "";
-        for(var i in tecdocArticleName) {
-            as = as+"<label>"+i+"</label><input type='radio' name='tecdocArticleName' value = '"+i+"'>";
-        }
-        $("#tecdocArticleName").html(as);
-    }, 3000)
+
 })
 
 toastr.options = {
@@ -392,6 +382,19 @@ function fororder(order) {
     setTimeout(function () {
         b = true;
     }, 1000)
+    setTimeout(function () {
+        var tecdocArticleName = [];
+        $("span.tecdocArticleName").each(function(){
+            tecdocArticleName[$(this).text()] = $(this).text();
+        })
+        var as = "";
+        for(var i in tecdocArticleName) {
+            if (i!='') {
+                as = as+"<label>"+i+"</label><input type='radio' name='tecdocArticleName' value = '"+i+"'>";
+            }
+        }
+        $("#tecdocArticleName").html(as);
+    }, 3000)    
 }
 
 jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .SoftoneBundleProductEdi').live("keyup", function (e) {
