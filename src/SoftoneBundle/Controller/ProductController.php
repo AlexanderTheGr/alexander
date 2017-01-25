@@ -817,7 +817,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             if (!$brandModelType)
                 continue;
             $brandModel = $this->getDoctrine()->getRepository('SoftoneBundle:BrandModel')->find($brandModelType->getBrandModel());
+            if (!$brandModel)
+                continue;              
             $brand = $this->getDoctrine()->getRepository('SoftoneBundle:Brand')->find($brandModel->getBrand());
+            if (!$brand)
+                continue;            
             $egarmoges .= '<li>' . $brand->getBrand() . ' ' . $brandModel->getBrandModel() . ' ' . $brandModelType->getBrandModelType() . '</li>';
         }
         $egarmoges .= '</ul>';
