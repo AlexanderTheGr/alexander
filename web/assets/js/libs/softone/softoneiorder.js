@@ -39,7 +39,7 @@ jQuery('#classtitem').live("change", function (e) {
     //asdf(this, productsearch);
     b = false;
     var table = dt_tables["ctrlgetoffcanvases"];
-    table.fnFilter(jQuery('#classtitem').val(),3,function(){
+    table.fnFilter(jQuery('#classtitem').val(),3,false,function(){
         alert(2)
     });
     setTimeout(function () {
