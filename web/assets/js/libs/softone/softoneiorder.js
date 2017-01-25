@@ -352,6 +352,7 @@ function asdf2(obj) {
     var table2 = dt_tables["ctrlgetoffcanvases2"];
     table.fnFilter(obj.all);
     table2.fnFilter(obj.all);
+    productsearch = obj.all;
     //$(".offcanvas-search").click();
     setTimeout(function () {
         jQuery(".SoftoneBundleProductQty").val(1);
