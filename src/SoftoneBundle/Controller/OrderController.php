@@ -604,7 +604,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
                 //$tecdoc_article = '';
 
-                $this->orderBy = "p.qty";
+                $this->orderBy = "p.qty desc";
                 if (count((array) $articleIds)) {
                     $tecdoc_article = 'p.tecdocArticleId in (' . implode(",", $articleIds) . ') OR ';
                     if ($search[1])
