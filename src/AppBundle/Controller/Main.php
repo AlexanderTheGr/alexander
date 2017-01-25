@@ -87,11 +87,23 @@ class Main extends Controller {
                         if ($this->clearstring($dt_search["value"]) != "") {
                             $this->q_or[] = $this->prefix . "." . $field["index"] . " LIKE '%" . $this->clearstring($dt_search["value"]) . "%'";
                         }
-                        if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != "") {
-                            $this->q_and[] = $this->prefix . "." . $this->fields[$index]["index"] . " LIKE '%" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "%'";
+                        if (@$field["method"] == 'yesno') {
+                            if (@$this->clearstring($dt_columns[$index]["search"]["value"]) == "0") {
+                                $this->q_and[] = $this->prefix . "." . $this->fields[$index]["index"] . " = '0'";
+                            }   
+                            if (@$this->clearstring($dt_columns[$index]["search"]["value"]) == "1") {
+                                $this->q_and[] = $this->prefix . "." . $this->fields[$index]["index"] . " > '0'";
+                            }                               
+                        } else {
+                            if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != "") {
+                                $this->q_and[] = $this->prefix . "." . $this->fields[$index]["index"] . " LIKE '%" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "%'";
+                            }
                         }
                         $s[] = $this->prefix . "." . $field_relation[0];
                     } else {
+
+
+
                         if ($dt_search["value"] === true) {
                             if ($this->clearstring($dt_search["value"]) != "") {
                                 $this->q_or[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_search["value"]) . "'";
