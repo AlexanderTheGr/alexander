@@ -329,12 +329,12 @@ function asdf(obj, search) {
 
     var table = dt_tables["ctrlgetoffcanvases"];
     table.fnFilter(search);
-    table.order( [ 10, 'asc' ] );
+    
     var table2 = dt_tables["ctrlgetoffcanvases2"];
     table2.fnFilter('');
     setTimeout(function () {
         jQuery(".SoftoneBundleProductQty").val(1);
-        table.order( [ 10, 'asc' ] );
+        
     }, 1000)
     //})
 }
