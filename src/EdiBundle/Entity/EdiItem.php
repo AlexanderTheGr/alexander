@@ -1149,7 +1149,7 @@ class EdiItem extends Entity {
         $discountedPrice = $this->getEdiMarkupPrice($pricefield) * (1 - $discount / 100 );
         $finalprice = $discount > 0 ? $discountedPrice : $price;
 
-        return number_format($finalprice * $vat, 2, '.', '')." - ".$pricefield."";
+        return number_format($finalprice * $vat, 2, '.', '');
     }
 
     function getDiscount(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
@@ -1169,7 +1169,7 @@ class EdiItem extends Entity {
         $discountedPrice = $this->getEdiMarkupPrice($pricefield) * (1 - $discount / 100 );
         $finalprice = $discount > 0 ? $discountedPrice : $price;
 
-        return number_format($finalprice * $vat, 2, '.', '') . " (" . (float) $discount . "%)";
+        return number_format($finalprice * $vat, 2, '.', '') . " (" . (float) $discount . "%)777";
     }
 
 }
