@@ -61,7 +61,7 @@ class Order extends Entity {
      *
      * @ORM\Column(name="reference", type="integer", nullable=false)
      */
-    protected $reference = "0";
+    protected $reference = 0;
 
     /**
      * @var integer
@@ -166,7 +166,7 @@ class Order extends Entity {
      *
      * @ORM\Column(name="fullytrans", type="boolean", nullable=false)
      */
-    protected $fullytrans = "0";
+    protected $fullytrans;
 
     /**
      * @var integer
