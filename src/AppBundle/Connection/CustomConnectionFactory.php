@@ -42,8 +42,8 @@ class CustomConnectionFactory extends ConnectionFactory {
             $params['password'] = ')7uT[LJOPyX$';     
         } else {
             $params['dbname'] = 'partsbox_symfony6';
-            $params['user'] = 'root';
-            $params['password'] = '123456';
+            $params['user'] = 'partsbox';
+            $params['password'] = ')7uT[LJOPyX$'
             
             //$params['dbname'] = 'partsbox_gratsias';
             //$params['user'] = 'partsbox';
