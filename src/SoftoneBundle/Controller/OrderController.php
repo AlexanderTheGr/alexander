@@ -440,7 +440,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $itemMtrsup .= "</select>";
 
         //$datatables = array();
-        $this->addOffCanvas(array('id' => 'asdf', "content" => $tecdocArticleName.$itemMtrsup, "index" => $this->generateRandomString(), "datatables" => $datatables));
+        $this->addOffCanvas(array('id' => 'asdf', "content" => $tecdocArticleName . $itemMtrsup, "index" => $this->generateRandomString(), "datatables" => $datatables));
         //$this->addOffCanvas(array('id' => 'asdf2', "content" => '', "index" => $this->generateRandomString(), "datatables" => $datatables));
         return $this->offcanvases();
     }
@@ -565,13 +565,16 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 }
                 $qsupplier = "";
                 if ($dt_columns[3]["search"]["value"] > 3) {
-                    
+
                     $supplier = $this->getDoctrine()
                                     ->getRepository('SoftoneBundle:SoftoneSupplier')->find($dt_columns[3]["search"]["value"]);
                     if ($supplier)
                         $qsupplier = " p.supplierId = '" . $supplier->getId() . "' AND ";
                 }
-
+                $qtitle = "";
+                if ($dt_columns[2]["search"]["value"] != '') {
+                    $qsupplier .= " (p.title = '" . $dt_columns[2]["search"]["value"] . "' OR  p.tecdocArticleName = '" . $dt_columns[2]["search"]["value"] . "') AND ";
+                }
 
                 //print_r($articleIds);
                 $this->prefix = "p";
@@ -738,11 +741,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             foreach ((array) $out as $v) {
                 $p[$v->articleId] = $v;
                 $json = array();
-                
+
                 if ($supplier) {
-                    if ($supplier->getTitle() != $v->brandName) continue;
+                    if ($supplier->getTitle() != $v->brandName)
+                        continue;
                 }
-                
+
                 $json[] = "";
                 $json[] = "<span  car='' class='product_info' data-articleId='" . $v->articleId . "' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span></a><BR><a class='create_product' data-ref='" . $v->articleId . "' style='font-size:10px; color:rose' href='#'>Create Product</a>";
                 //$json[] = "<span car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span>";
@@ -1303,10 +1307,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $statement = $connection->prepare($sql);
         $statement->execute();
         $results = $statement->fetchAll();
-        foreach($results as $data) {
+        foreach ($results as $data) {
             $arr[] = $data["id"];
         }
-        $this->q_and[] = $this->prefix . ".id in (".implode(",",$arr).")";
+        $this->q_and[] = $this->prefix . ".id in (" . implode(",", $arr) . ")";
 
         $json = $this->datatable();
 
@@ -1335,8 +1339,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             //if ($hasOrderItems) {
             $datatable->data[$key] = $table1;
             //} else {
-                //$datatable->data[$key] = $table1;
-                //unset($datatable->data[$key]);
+            //$datatable->data[$key] = $table1;
+            //unset($datatable->data[$key]);
             //}
         }
         $json = json_encode($datatable);
