@@ -406,9 +406,9 @@ function fororder(order) {
                 as = as+"<label>"+i+"</label><input type='radio' class='rtecdocArticleName' name='tecdocArticleName' value = '"+i+"'>";
             }
         }
-        as = as+"<label>Καθαρισμός</label><input type='radio' class='rtecdocArticleName' name='tecdocArticleName' value = ''>";
+
         $("#tecdocArticleName").html(as);
- 
+   
 }
 
 jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .SoftoneBundleProductEdi').live("keyup", function (e) {
