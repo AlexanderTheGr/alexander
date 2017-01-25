@@ -245,7 +245,7 @@ class Main extends Controller {
         } elseif ($field_order[0]) {
             $this->orderBy = $this->prefix . '.' . $field_order[0] . ' ' . $dt_order[0]["dir"] . ' ';
         } else {
-            $this->orderBy = $this->prefix . '.id';
+            $this->orderBy = $this->prefix . '.id desc';
         }
         return $this->orderBy;
     }
