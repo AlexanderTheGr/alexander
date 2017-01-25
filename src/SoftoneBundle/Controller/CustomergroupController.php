@@ -299,7 +299,10 @@ class CustomergroupController extends Main {
                     $json, 200, array('Content-Type' => 'application/json')
             );
         } else {
-            exit;
+            $json = array("opssss");
+            return new Response(
+                    $json, 200, array('Content-Type' => 'application/json')
+            );
         }
     }
 
