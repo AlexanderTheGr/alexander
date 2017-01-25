@@ -409,10 +409,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $dtparams[] = array("name" => "Part No", "index" => 'partno', 'search' => 'text');
         $dtparams[] = array("name" => "Description", "index" => 'description', 'search' => 'text');
         //$dtparams[] = array("name" => "Tecdoc Name", "index" => 'tecdocArticleName', 'search' => 'text');
-        
+
         $dtparams[] = array("name" => "Customer Price", "index" => 'wholesaleprice', 'search' => 'text');
         $dtparams[] = array("name" => "Price", "index" => 'wholesaleprice', 'search' => 'text');
-        
+
         $dtparams[] = array("name" => "QTY1", "index" => 'qty1', "input" => 'text', 'search' => 'text');
         //$dtparams[] = array("name" => "QTY2", "index" => 'qty2', "input" => 'text', 'search' => 'text');
         //$dtparams[] = array("name" => "QTY", "index" => 'qty', "input" => 'text', 'search' => 'text');
@@ -422,7 +422,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $params['dtparams'] = $dtparams;
         $params['id'] = $dtparams;
         $params['key'] = 'getoffcanvases2_' . $id;
-        $params['url'] = '/edi/ediitem/getorderdatatable/'.$id;
+        $params['url'] = '/edi/ediitem/getorderdatatable/' . $id;
         $params["ctrl"] = 'ctrlgetoffcanvases2';
         $params["app"] = 'appgetoffcanvases2';
         $params["drawCallback"] = 'fororder2(' . $id . ')';
@@ -923,7 +923,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             }
 
             $order->setReference($out->id);
-            $this->flushpersist($order);            
+            $this->flushpersist($order);
         }
         //exit;
 
@@ -1291,7 +1291,16 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->addField(array("name" => "Τιμολογημένη", "index" => 'fullytrans', 'method' => 'yesno'))
 
         ;
-        //$this->q_and[] = $this->prefix . ".id not in (SELECT k.order FROM SoftoneBundle:Orderitem k)";
+        $em = $this->getDoctrine()->getManager();
+        $sql = "SELECT id FROM  `softone_order` WHERE id IN (SELECT s_order FROM softone_orderitem)";
+        $connection = $em->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $results = $statement->fetchAll();
+        foreach($results as $data) {
+            $arr[] = $data["id"];
+        }
+        $this->q_and[] = $this->prefix . ".id not in (".implode(",",$arr).")";
 
         $json = $this->datatable();
 
@@ -1302,7 +1311,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $table = (array) $table;
             $tbl = (array) $table;
             $table1 = array();
-            
+
             foreach ($table as $f => $val) {
                 if ($f == 0 AND $f != 'DT_RowId' AND $f != 'DT_RowClass') {
                     $table1[$f] = $val;
@@ -1335,13 +1344,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($id);
-        $content = array(); 
+        $content = array();
         if ($entity) {
-            if (count($entity->getItems())) return true;
+            if (count($entity->getItems()))
+                return true;
         }
         return false;
     }
-    
+
     function getOrderItemsPopup($id) {
         $id = (int) $id;
 
