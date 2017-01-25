@@ -17,7 +17,6 @@ class Product extends Entity {
 
     var $repositories = array();
     var $uniques = array();
-    var $qty;
 
     public function __construct() {
         $this->setRepositories();
