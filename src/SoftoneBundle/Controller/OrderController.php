@@ -563,9 +563,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $sqlearch = "Select o.id from SoftoneBundle:ProductSearch o where o.itemCode like '%" . $search[1] . "%' OR o.itemCode1 like '%" . $search[1] . "%' OR o.itemCode2 like '%" . $search[1] . "%'";
                 }
                 $qsupplier = "";
-                if ($search[2] == 'supplier') {
+                if ($dt_columns[3]["search"]["value"] > 3) {
+                    
                     $supplier = $this->getDoctrine()
-                                    ->getRepository('SoftoneBundle:SoftoneSupplier')->find($search[3]);
+                                    ->getRepository('SoftoneBundle:SoftoneSupplier')->find($dt_columns[3]["search"]["value"]);
                     if ($supplier)
                         $qsupplier = " p.supplierId = '" . $supplier->getId() . "' AND ";
                 }
