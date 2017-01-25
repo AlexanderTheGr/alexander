@@ -42,6 +42,9 @@ jQuery('#classtitem').live("change", function (e) {
     table.fnFilter(jQuery('#classtitem').val(),3);
     setTimeout(function () {
         b = true;
+        $("span.tecdocArticleName").each(function(){
+            alert($(this).text())
+        })
     }, 2000)
 })
 
