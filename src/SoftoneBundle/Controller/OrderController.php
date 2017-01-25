@@ -1300,7 +1300,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         foreach($results as $data) {
             $arr[] = $data["id"];
         }
-        $this->q_and[] = $this->prefix . ".id not in (".implode(",",$arr).")";
+        $this->q_and[] = $this->prefix . ".id in (".implode(",",$arr).")";
 
         $json = $this->datatable();
 
