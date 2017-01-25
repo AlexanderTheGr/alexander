@@ -31,6 +31,7 @@
                                     "pageLength": 100,
                                     "processing": true,
                                     "serverSide": true,
+                                    "order": [[ 0, "desc" ]],
                                     "initComplete": initComplete,
                                     "drawCallback": drawCallback,
                                     "rowCallback": rowCallback,
