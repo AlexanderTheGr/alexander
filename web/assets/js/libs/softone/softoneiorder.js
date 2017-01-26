@@ -396,9 +396,10 @@ function fororder(order) {
         tecdocArticleName[$(this).text()] = $(this).text();
     })
     var as = "";
+    
     for (var i in tecdocArticleName) {
         if (i != '') {
-            as = as + "<label>" + i + "</label><input type='radio' class='rtecdocArticleName' name='tecdocArticleName' value = '" + i + "'>";
+            as = as + "<div style='float:-left; margin-left:2px;'><label>" + i + "</label><input type='radio' class='rtecdocArticleName' name='tecdocArticleName' value = '" + i + "'></div>";
         }
     }
     as = as + "<label>Καθαρισμός</label><input type='radio' class='rtecdocArticleName' name='tecdocArticleName' value = ''>";
