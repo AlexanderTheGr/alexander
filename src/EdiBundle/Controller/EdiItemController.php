@@ -590,11 +590,18 @@ class EdiItemController extends Main {
                                 "EltrekkaRef" => $entity->getItemcode()));
                     $xml = $response->GetAvailabilityResult->any;
                     $xml = simplexml_load_string($xml);
-                    
-                    
-                    @$jsonarr[$key]['6'] = $entity->getDiscount($customer,$vat).print_r($xml->Item,true);
+                    $AvailabilityDetailsHtml = "<select>";
+                    foreach($xml->Item->AvailabilityDetails as $details)  {
+                        if ($details->IsAvailable == 'Y') {
+                            $AvailabilityDetailsHtml .= "<option style='color:green'>".$details->StoreNo."</option";
+                        } else {
+                            $AvailabilityDetailsHtml .= "<option style='color:gred'>".$details->StoreNo." (".$details->StoreNo->EstimatedBODeliveryTime.")</option";
+                        }
+                    }
+                    $AvailabilityDetailsHtml .= "</select>";        
+                    @$jsonarr[$key]['6'] = $entity->getDiscount($customer,$vat).$AvailabilityDetailsHtml;
                     @$jsonarr[$key]['7'] = number_format((float) $xml->Item->Header->PriceOnPolicy, 2, '.', '');
-                    
+                    @$jsonarr[$key]['8'] = $jsonarr[$key]['8'].$AvailabilityDetailsHtml;
                     @$jsonarr[$key]['DT_RowClass'] .= $xml->Item->Header->Available == "Y" ? ' text-success ' : ' text-danger ';
                 }
             }
