@@ -296,7 +296,7 @@ class EdiItemController extends Main {
                 $xml = $response->GetAvailabilityResult->any;
                 
                 $xml = simplexml_load_string($xml);
-                print_r($xml);
+                //print_r($xml);
                 foreach ((array)$xml->Item->AvailabilityDetails as $details) {
                     if ($entity->getStore() == (int) $details->StoreNo AND $details->IsAvailable == 'Y') {
                         $asd = "";
