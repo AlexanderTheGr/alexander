@@ -590,7 +590,7 @@ class EdiItemController extends Main {
                                 "EltrekkaRef" => $entity->getItemcode()));
                     $xml = $response->GetAvailabilityResult->any;
                     $xml = simplexml_load_string($xml);
-                    $AvailabilityDetailsHtml = "<select style='width:120px'>";
+                    $AvailabilityDetailsHtml = "<select data-id='".$entity->getId()."' class='edistore' id='store_".$entity->getId()."' style='width:120px'>";
                     foreach($xml->Item->AvailabilityDetails as $details)  {
                         if ($details->IsAvailable == 'Y') {
                             $selected = (int)$xml->Item->Header->SUGGESTED_STORE == (int)$details->StoreNo ? "selected" : "";
