@@ -294,8 +294,10 @@ class EdiItemController extends Main {
                             "RequestedQty" => 1,
                             "EltrekkaRef" => $data["itemCode"]));
                 $xml = $response->GetAvailabilityResult->any;
+                
                 $xml = simplexml_load_string($xml);
-                foreach ($xml->Item->AvailabilityDetails as $details) {
+                print_r($xml);
+                foreach ((array)$xml->Item->AvailabilityDetails as $details) {
                     if ($entity->getStore() == (int) $details->StoreNo AND $details->IsAvailable == 'Y') {
                         $asd = "";
                     } else {
