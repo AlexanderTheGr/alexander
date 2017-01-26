@@ -396,7 +396,7 @@ function fororder(order) {
         tecdocArticleName[$(this).text()] = $(this).text();
     })
     var as = "<div style='float:left width:600px;'>";
-    as = as + "<input type='radio' class='rtecdocArticleName' name='tecdocArticleName' value = ''><label>Καθαρισμός</label></div>";
+    as = as + "<div style='float:left; margin-left:5px;'><input type='radio' class='rtecdocArticleName' name='tecdocArticleName' value = ''><label>Καθαρισμός</label></div>";
     for (var i in tecdocArticleName) {
         if (i != '') {
             as = as + "<div style='float:left; margin-left:5px;'><input type='radio' class='rtecdocArticleName' name='tecdocArticleName' value = '" + i + "'><label>" + i + "</label></div>";
