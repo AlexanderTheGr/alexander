@@ -300,17 +300,19 @@ class EdiItemController extends Main {
                 foreach ((array)$xml->Item->AvailabilityDetails as $details) {
                     if ($entity->getStore() == (int) $details->StoreNo AND $details->IsAvailable == 'Y') {
                         $asd = "";
+                        $avail = true;
                     } else {
                         $asd = "(" . $details->EstimatedBODeliveryTime . ")";
                     }
                 }
+                if ($avail) $asd= '';
             }
 
 
             $json = array();
             $json["id"] = $data["id"];
-            $json["value"] = $data["description"] . " (" . $data["itemCode"] . " - " . $data["brand"] . " " . $data["partno"] . ")";
-            $json["label"] = "<span style='color:red'>" . $data["description"] . " (" . $data["itemCode"] . " - " . $data["brand"] . " " . $data["partno"] . ")</span>";
+            $json["value"] = $data["description"] . " (" . $data["itemCode"] . " - " . $data["brand"] . " " . $data["partno"] . ") ";
+            $json["label"] = $data["description"] . " (" . $data["itemCode"] . " - " . $data["brand"] . " " . $data["partno"] . ") ".$asd;
             $out[] = $json;
         }
 
