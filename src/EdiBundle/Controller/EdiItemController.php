@@ -262,10 +262,10 @@ class EdiItemController extends Main {
         );
     }
     /**
-     * @Route("/edi/ediitem/autocompletesearch")
+     * @Route("/edi/ediitem/autocompletesearch/{$edi}")
      */
-    public function autocompletesearchAction($funct = false) {
-        echo 'ssd';
+    public function autocompletesearchAction($edi) {
+        echo $edi;
         exit;
     }
     /**
