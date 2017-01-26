@@ -31,8 +31,7 @@ class CustomConnectionFactory extends ConnectionFactory {
           }
          */
         $databale = @explode(".", $_SERVER["HTTP_HOST"]);
-
-        if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\web') {
+        if ($_SERVER["COMPUTERNAME"] == 'ALEXANDERDIMEAS') {
             $params['dbname'] = 'partsbox_symfony6';
             $params['user'] = 'root';
             $params['password'] = '123456';
@@ -44,7 +43,7 @@ class CustomConnectionFactory extends ConnectionFactory {
             $params['dbname'] = 'partsbox_symfony6';
             $params['user'] = 'root';
             $params['password'] = '123456';
-
+            
             $params['dbname'] = 'partsbox_partsbox6';
             $params['user'] = 'partsbox';
             $params['password'] = ')7uT[LJOPyX$';   
