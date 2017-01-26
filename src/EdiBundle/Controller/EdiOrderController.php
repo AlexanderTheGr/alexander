@@ -228,8 +228,7 @@ class EdiOrderController extends Main {
                 $EdiOrder->setRemarks("EL1-" . $EdiOrder->getId()." ".$Ediitem->getEdi()->getName()."_".$request->request->get("store"));
                 $this->flushpersist($EdiOrder);                
             }
-            $EdiOrder->setRemarks("EL1-" . $EdiOrder->getId()." ".$Ediitem->getEdi()->getName()."_".$request->request->get("store"));
-            $this->flushpersist($EdiOrder);   
+  
         }
 
 
