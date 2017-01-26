@@ -217,6 +217,7 @@ class EdiOrderController extends Main {
                 $this->newentity[$this->repository] = $EdiOrder;
                 $EdiOrder->setEdi($Ediitem->getEdi());
                 $EdiOrder->setStore($request->request->get("store"));
+                $EdiOrder->setStore("");
                 $EdiOrder->setRemarks($Ediitem->getEdi()->getName());
                 $EdiOrder->setInsdate($dt);
                 $EdiOrder->setCreated($dt);
