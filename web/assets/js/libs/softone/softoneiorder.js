@@ -415,12 +415,14 @@ jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .SoftoneBundleProductEdi').live("
             data.id = jQuery(this).attr('data-id');
         }
         data.qty = jQuery(this).val();
+        data.store = jQuery("#store_"+data.product).val();
         $("#loaderer").show();
         $.post("/edi/order/addorderitem/", data, function (result) {
             $("#loaderer").hide();
         })
     }
 });
+
 
 jQuery(".create_product").live('click', function () {
     var ref = jQuery(this).attr("data-ref");
