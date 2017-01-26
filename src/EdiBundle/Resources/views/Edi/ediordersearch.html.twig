@@ -23,7 +23,7 @@
         setTimeout(function () {
 
             var $elem = jQuery("#orderediitem").autocomplete({
-                source: "/edi/ediitem/autocompletesearch",
+                source: "/edi/ediitem/autocompletesearch/{{edi}}",
                 method: "POST",
                 minLength: 2,
                 select: function (event, ui) {
