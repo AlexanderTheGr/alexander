@@ -727,6 +727,7 @@ class EdiItem extends Entity {
             $product->setCats($this->getCats());
             $product->setSupplierId($SoftoneSupplier);
             $product->setCccRef($this->itemCode);
+            $product->setCccPriceUpd(1);
             //echo "itemPricer:".$this->getEdiMarkupPrice("itemPricer")."\n";
             //echo "itemPricew:".$this->getEdiMarkupPrice("itemPricew")."\n";
 
@@ -795,7 +796,7 @@ class EdiItem extends Entity {
         $product->setErpCode($erpCode);
 
         $product->setCccRef($this->itemCode);
-
+        $product->setCccPriceUpd(1);
         $product->setItemCode($product->getErpCode());
         $product->setItemCode2($this->clearCode($this->partno));
         $product->setEdi($this->getEdi()->getId());
