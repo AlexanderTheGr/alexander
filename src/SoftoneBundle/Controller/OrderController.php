@@ -1724,6 +1724,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $items = $order["ITELINES"];
         
         $vat = 1.24;
+        
         foreach ($items as $item) {
             $product = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Product')
