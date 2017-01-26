@@ -725,7 +725,7 @@ class EdiItem extends Entity {
             $product->setItemCode($product->getErpCode());
             $product->setCars($this->getCars());
             $product->setCats($this->getCats());
-
+            $product->setSupplierId($SoftoneSupplier);
             $product->setCccRef($this->itemCode);
             //echo "itemPricer:".$this->getEdiMarkupPrice("itemPricer")."\n";
             //echo "itemPricew:".$this->getEdiMarkupPrice("itemPricew")."\n";
