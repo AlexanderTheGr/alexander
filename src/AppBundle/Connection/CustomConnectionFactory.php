@@ -31,7 +31,7 @@ class CustomConnectionFactory extends ConnectionFactory {
           }
          */
         $databale = @explode(".", $_SERVER["HTTP_HOST"]);
-        if ($_SERVER["COMPUTERNAME"] == 'ALEXANDERDIMEAS') {
+        if (@$_SERVER["COMPUTERNAME"] == 'ALEXANDERDIMEAS') {
             $params['dbname'] = 'partsbox_symfony6';
             $params['user'] = 'root';
             $params['password'] = '123456';
