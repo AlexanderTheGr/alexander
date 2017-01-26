@@ -163,6 +163,7 @@
         });
         jQuery(".subcategoriesli").live('click', function () {
             var data = {};
+            b=true;
             data.car = jQuery(".brand_model_type-select").val();
             data.order = '{{order}}';
             data.all = jQuery(this).attr('data-all');
