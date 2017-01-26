@@ -210,5 +210,5 @@ table.dataTable tbody tr {
 }
 
 .ediiteqty1, .edistore {
-    width:120px;    
+    width:120px !important;    
 }
