@@ -218,7 +218,7 @@ class EdiOrderController extends Main {
                 $EdiOrder->setEdi($Ediitem->getEdi());
                 $EdiOrder->setStore($request->request->get("store"));
                 $EdiOrder->setShip("");
-                $EdiOrder->setRemarks($Ediitem->getEdi()->getName());
+                $EdiOrder->setRemarks($Ediitem->getEdi()->getName()."_".$request->request->get("store"));
                 $EdiOrder->setInsdate($dt);
                 $EdiOrder->setCreated($dt);
                 $EdiOrder->setModified($dt);
