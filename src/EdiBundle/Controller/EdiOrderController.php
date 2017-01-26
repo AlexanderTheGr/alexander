@@ -212,7 +212,7 @@ class EdiOrderController extends Main {
             $EdiOrder = $query->setMaxResults(1)->getOneOrNullResult();
             */
             $EdiOrder = $this->getDoctrine()
-                    ->getRepository('EdiBundle:EdiOrder')->findBy(array("reference"=>'',"store"=>$request->request->get("store"),"Edi"=>$Ediitem->getEdi()));
+                    ->getRepository('EdiBundle:EdiOrder')->findOneBy(array("reference"=>'',"store"=>$request->request->get("store"),"Edi"=>$Ediitem->getEdi()));
             if (!$EdiOrder) {
                 $EdiOrder = new EdiOrder;
                 $dt = new \DateTime("now");
@@ -228,7 +228,8 @@ class EdiOrderController extends Main {
                 $EdiOrder->setRemarks("EL1-" . $EdiOrder->getId()." ".$Ediitem->getEdi()->getName()."_".$request->request->get("store"));
                 $this->flushpersist($EdiOrder);                
             }
-  
+            $EdiOrder->setRemarks("EL1-" . $EdiOrder->getId()." ".$Ediitem->getEdi()->getName()."_".$request->request->get("store"));
+            $this->flushpersist($EdiOrder);   
         }
 
 
