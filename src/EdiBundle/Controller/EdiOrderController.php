@@ -143,7 +143,7 @@ class EdiOrderController extends Main {
 
         $this->addTab(array("title" => "General", 'buttons' => $buttons, "form" => $tabforms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         if ($entity->getId()) {
-            $this->addTab(array("title" => "Items", "datatables" => $datatables, "form" => $this->getTabContentSearch(), "content" => $this->getTabContentSearch(), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
+            $this->addTab(array("title" => "Items", "datatables" => $datatables, "form" => '', "content" => $this->getTabContentSearch(), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
         }
         return $this->tabs();
     }
