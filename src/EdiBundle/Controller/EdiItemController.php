@@ -275,7 +275,7 @@ class EdiItemController extends Main {
 
 
         $query = $em->createQuery(
-                        "SELECT p.id, p.itemCode,p.partno,p.artNr,p.artNr,p.description, p.brand FROM " . $this->repository . " " . $this->prefix . " where Edi=".$entity->getId()." AND (p.partno LIKE '" . $_GET["term"] . "' OR p.itemCode LIKE '%" . $_GET["term"] . "%' OR p.artNr LIKE '" . $_GET["term"] . "%')"
+                        "SELECT p.id, p.itemCode,p.partno,p.artNr,p.artNr,p.description, p.brand FROM " . $this->repository . " " . $this->prefix . " where Edi=".$entity." AND (p.partno LIKE '" . $_GET["term"] . "' OR p.itemCode LIKE '%" . $_GET["term"] . "%' OR p.artNr LIKE '" . $_GET["term"] . "%')"
                 )
                 ->setMaxResults(20)
                 ->setFirstResult(0);
