@@ -199,20 +199,24 @@ class EdiOrderController extends Main {
                     ->find($request->request->get("order"));
         } elseif ($request->request->get("order") == 0) {
 
+            /*
             $query = $em->createQuery(
                             'SELECT p
                             FROM EdiBundle:EdiOrder p
                             WHERE 
                             p.reference = 0
-                            AND p.Edi = :edi'
+                            AND p.Edi = :edi AND p.store = :store'
                     )->setParameter('edi', $Ediitem->getEdi());
             $EdiOrder = $query->setMaxResults(1)->getOneOrNullResult();
-
-            if (@ $EdiOrder->id == 0) {
+            */
+            $EdiOrder = $this->getDoctrine()
+                    ->getRepository('EdiBundle:EdiOrder')->findBy(array("reference"=>0,"store"=>$request->request->get("store"),"Edi"=>$Ediitem->getEdi()));
+            if (!$EdiOrder) {
                 $EdiOrder = new EdiOrder;
                 $dt = new \DateTime("now");
                 $this->newentity[$this->repository] = $EdiOrder;
                 $EdiOrder->setEdi($Ediitem->getEdi());
+                $EdiOrder->setEdi($request->request->get("store"));
                 $EdiOrder->setRemarks($Ediitem->getEdi()->getName());
                 $EdiOrder->setInsdate($dt);
                 $EdiOrder->setCreated($dt);
