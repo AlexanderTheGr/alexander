@@ -399,7 +399,7 @@ function fororder(order) {
     
     for (var i in tecdocArticleName) {
         if (i != '') {
-            as = as + "<div style='float:left; margin-left:2px;'><label>" + i + "</label><input type='radio' class='rtecdocArticleName' name='tecdocArticleName' value = '" + i + "'></div>";
+            as = as + "<div style='float:left; margin-left:5px;'><label>" + i + "</label><input type='radio' class='rtecdocArticleName' name='tecdocArticleName' value = '" + i + "'></div>";
         }
     }
     as = as + "<label>Καθαρισμός</label><input type='radio' class='rtecdocArticleName' name='tecdocArticleName' value = ''></div>";
