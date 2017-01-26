@@ -281,13 +281,34 @@ class EdiItemController extends Main {
                 ->setFirstResult(0);
         $datas = $query->getResult();
         $out = array();
+        $elteka = $this->eltekaAuth();
         foreach ((array) $datas as $data) {
             //print_r($data);
             //$data["flat_data"] = "";
+            if (strlen($entity->getEdi()->getToken()) == 36) {
+                
+            } else {
+                $response = $elteka->getAvailability(
+                        array('CustomerNo' => $this->CustomerNo,
+                            "RequestedQty" => 1,
+                            "EltrekkaRef" => $entity->getItemcode()));
+                $xml = $response->GetAvailabilityResult->any;
+                $xml = simplexml_load_string($xml);
+                foreach($xml->Item->AvailabilityDetails as $details)  {
+                    if ($entity->getStore() == (int)$details->StoreNo AND $details->IsAvailable == 'Y') {
+                        $asd = "";
+                    } else {
+                        $asd = "(".$details->EstimatedBODeliveryTime.")";
+                    }
+                    
+                }
+            }
+            
+            
             $json = array();
             $json["id"] = $data["id"];
             $json["value"] = $data["description"] . " (" . $data["itemCode"] . " - " . $data["brand"] . " " . $data["partno"] . ")";
-            $json["label"] = $data["description"] . " (" . $data["itemCode"] . " - " . $data["brand"] . " " . $data["partno"] . ")";
+            $json["label"] = "<span style='color:red'>".$data["description"] . " (" . $data["itemCode"] . " - " . $data["brand"] . " " . $data["partno"] . ")</span>";
             $out[] = $json;
         }
 
