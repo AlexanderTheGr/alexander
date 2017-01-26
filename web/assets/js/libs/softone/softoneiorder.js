@@ -406,16 +406,19 @@ function fororder(order) {
 
 }
 
+
 jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .SoftoneBundleProductEdi').live("keyup", function (e) {
     if (e.keyCode == 13) {
         var data = {};
         if (jQuery(this).attr('class') == 'SoftoneBundleProductEdi') {
             data.product = jQuery(this).attr('data-id');
+            var store = data.product;
         } else {
             data.id = jQuery(this).attr('data-id');
+            var store = data.id;
         }
         data.qty = jQuery(this).val();
-        data.store = jQuery("#store_"+data.product).val();
+        data.store = jQuery("#store_"+store).val();
         $("#loaderer").show();
         $.post("/edi/order/addorderitem/", data, function (result) {
             $("#loaderer").hide();
