@@ -262,7 +262,7 @@ class EdiItemController extends Main {
         );
     }
     /**
-     * @Route("/edi/ediitem/autocompletesearch/{$edi}")
+     * @Route("/edi/ediitem/autocompletesearch/{edi}")
      */
     public function autocompletesearchAction($edi) {
         echo $edi;
