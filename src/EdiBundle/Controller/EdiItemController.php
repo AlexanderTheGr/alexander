@@ -294,25 +294,27 @@ class EdiItemController extends Main {
                             "RequestedQty" => 1,
                             "EltrekkaRef" => $data["itemCode"]));
                 $xml = $response->GetAvailabilityResult->any;
-                
+
                 $xml = simplexml_load_string($xml);
                 print_r($xml);
-                foreach ((array)$xml->Item->AvailabilityDetails as $details) {
+                foreach ((array) $xml->Item->AvailabilityDetails as $details) {
                     if ($entity->getStore() == (int) $details->StoreNo AND $details->IsAvailable == 'Y') {
-                        $asd = "";
+                        $asd = $details->IsAvailable;
                         $avail = true;
+                        break;
                     } else {
                         $asd = "(" . $details->EstimatedBODeliveryTime . ")";
                     }
                 }
-                if ($avail) $asd= '';
+                if ($avail)
+                    $asd = '';
             }
 
 
             $json = array();
             $json["id"] = $data["id"];
             $json["value"] = $data["description"] . " (" . $data["itemCode"] . " - " . $data["brand"] . " " . $data["partno"] . ") ";
-            $json["label"] = $data["description"] . " (" . $data["itemCode"] . " - " . $data["brand"] . " " . $data["partno"] . ") ".$asd;
+            $json["label"] = $data["description"] . " (" . $data["itemCode"] . " - " . $data["brand"] . " " . $data["partno"] . ") " . $asd;
             $out[] = $json;
         }
 
