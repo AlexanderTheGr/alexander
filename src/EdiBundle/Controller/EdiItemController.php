@@ -590,7 +590,7 @@ class EdiItemController extends Main {
                                 "EltrekkaRef" => $entity->getItemcode()));
                     $xml = $response->GetAvailabilityResult->any;
                     $xml = simplexml_load_string($xml);
-                    $AvailabilityDetailsHtml = "<select style='wdith:40px'>";
+                    $AvailabilityDetailsHtml = "<select style='width:40px'>";
                     foreach($xml->Item->AvailabilityDetails as $details)  {
                         if ($details->IsAvailable == 'Y') {
                             $AvailabilityDetailsHtml .= "<option value='".$details->StoreNo."' style='color:green'>".$details->StoreNo."</option>";
