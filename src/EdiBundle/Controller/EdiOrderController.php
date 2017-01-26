@@ -143,7 +143,7 @@ class EdiOrderController extends Main {
 
         $this->addTab(array("title" => "General", 'buttons' => $buttons, "form" => $tabforms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         if ($entity->getId()) {
-            $this->addTab(array("title" => "Items", "datatables" => $datatables, "form" => '', "content" => $this->getTabContentSearch(), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
+            $this->addTab(array("title" => "Items", "datatables" => $datatables, "form" => '', "content" => $this->getTabContentSearch($entity->getEdi()->getId()), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
         }
         return $this->tabs();
     }
@@ -168,8 +168,8 @@ class EdiOrderController extends Main {
         return $this->offcanvases();
     }
 
-    function getTabContentSearch() {
-        $response = $this->get('twig')->render('EdiBundle:Edi:ediordersearch.html.twig', array());
+    function getTabContentSearch($edi) {
+        $response = $this->get('twig')->render('EdiBundle:Edi:ediordersearch.html.twig', array('edi'=>$edi));
         return str_replace("\n", "", htmlentities($response));
     }
 
