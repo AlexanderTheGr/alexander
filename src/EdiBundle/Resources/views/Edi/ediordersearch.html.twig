@@ -4,7 +4,7 @@
             <div class="col-lg-6 ">
                 <div class="col-lg-12 ">
                     <div class="height-2 form" style="float:left;  width: 100%; margin: 0; padding: 0">
-                        <input id="viacarediitem" class='form-control viacarediitem' placeholder="Αναζήτηση με Κωδικό" type="text">        
+                        <input id="orderediitem" class='form-control viacarediitem' placeholder="Αναζήτηση με Κωδικό" type="text">        
                     </div> 
                 </div>
                 <div class="col-lg-12 ">
@@ -15,4 +15,34 @@
             </div>
         </div>    
     </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $(".{{ctrl}}").alexTabs("{{app}}", "{{ctrl}}", "{{url}}", "{{content|json_encode()}}");
+    </script>
+    <script>
+
+        setTimeout(function () {
+
+            var $elem = jQuery("#orderediitem").autocomplete({
+                source: "/edi/ediitem/autocompletesearch",
+                method: "POST",
+                minLength: 2,
+                select: function (event, ui) {
+                    var data = {};
+                    data.erp_code = ui.item.value;
+                    data.id = obj.attr("id");
+                    $("#loaderer").show();
+                    $.post("/product/addRelation", data, function (result) {
+                        $("#loaderer").hide();
+                        var table = dt_tables["ctrlgettabs"];
+                        table.fnFilter();
+                        jQuery('.synafiacode input').val('')
+                    })
+                }
+            })
+        }, 1000)
+
+    </script>
+
 {% endblock %}
