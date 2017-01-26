@@ -422,6 +422,8 @@ class EdiOrderController extends Main {
         $this->addField(array("name" => "ID", "index" => 'id'));
         $this->addField(array("name" => "Reference", "index" => 'reference'));
         $this->addField(array("name" => "Order", "index" => 'remarks'));
+        $this->addField(array("name" => "Store", "index" => 'store'));
+        $this->addField(array("name" => "Ship", "index" => 'ship'));
         $json = $this->datatable();
 
         return new Response(
