@@ -112,6 +112,8 @@ class EdiOrderController extends Main {
 
         //$tabfields["PurchaseOrderNo"] = array("label" => "Purchase Order No","value"=>1);
         $tabfields["remarks"] = array("label" => "Remarks");
+        $tabfields["store"] = array("label" => "Store");
+        $tabfields["ship"] = array("label" => "Ship");
 
         $tabforms = $this->getFormLyFields($entity, $tabfields);
 
