@@ -265,7 +265,32 @@ class EdiItemController extends Main {
      * @Route("/edi/ediitem/autocompletesearch/{edi}")
      */
     public function autocompletesearchAction($edi) {
-        echo $edi;
+        $json = json_encode(array("ok"));
+
+        $em = $this->getDoctrine()->getManager();
+
+
+        $query = $em->createQuery(
+                        "SELECT p.id, p.itemCode,p.partno,p.artNr,p.artNr,p.description, p.brand FROM " . $this->repository . " " . $this->prefix . " where p.partno LIKE '%" . $_GET["term"] . "%' OR p.itemCode LIKE '%" . $_GET["term"] . "%' OR p.artNr LIKE '%" . $_GET["term"] . "%'"
+                )
+                ->setMaxResults(20)
+                ->setFirstResult(0);
+        $datas = $query->getResult();
+        $out = array();
+        foreach ((array) $datas as $data) {
+            //print_r($data);
+            //$data["flat_data"] = "";
+            $json = array();
+            $json["id"] = $data["id"];
+            $json["value"] = $data["description"] . " (" . $data["itemCode"] . " - " . $data["brand"] . " " . $data["partno"] . ")";
+            $json["label"] = $data["description"] . " (" . $data["itemCode"] . " - " . $data["brand"] . " " . $data["partno"] . ")";
+            $out[] = $json;
+        }
+
+
+        return new Response(
+                json_encode($out), 200, array('Content-Type' => 'application/json')
+        );
         exit;
     }
     /**
