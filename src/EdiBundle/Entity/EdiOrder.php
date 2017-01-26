@@ -388,7 +388,7 @@ class EdiOrder extends Entity {
             $PartTable = array();
             $params = array(
                 "CustomerNo" => $this->CustomerNo,
-                "StoreNo" => "10",
+                "StoreNo" => $this->store ? $this->store : 10,
                 "PurchaseOrderNo" => "EL1-" . $this->getId(),
                 "PmtTermsCode" => 2,
                 "Make" => "",
