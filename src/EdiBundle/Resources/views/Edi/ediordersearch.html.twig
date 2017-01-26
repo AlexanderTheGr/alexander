@@ -29,7 +29,7 @@
                 select: function (event, ui) {
                     var data = {};
 
-                    data.id = ui.item.value;
+                    data.id = ui.item.id;
                     data.qty = 1;
                     data.order = {{edi}};
                     $("#loaderer").show();
