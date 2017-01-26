@@ -32,7 +32,6 @@
                     data.id = ui.item.value;
                     data.qty = 1;
                     data.order = {{edi}};
-                    data.store = jQuery("#store_" + store).val();
                     $("#loaderer").show();
                     $.post("/edi/order/addorderitem/", data, function (result) {
                         $("#loaderer").hide();
