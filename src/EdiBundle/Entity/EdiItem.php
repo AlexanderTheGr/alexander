@@ -662,17 +662,17 @@ class EdiItem extends Entity {
         $this->brand = $this->fixsuppliers($this->brand);
 
         $SoftoneSupplier = $em->getRepository("SoftoneBundle:SoftoneSupplier")
-                ->findOneBy(array('title' => $this->brand));
+                ->findOneBy(array('title' => $this->fixsuppliers($this->brand)));
 
         //echo $SoftoneSupplier->id;
         //exit;
         if (@$SoftoneSupplier->id == 0) {
 
             $TecdocSupplier = $em->getRepository("SoftoneBundle:TecdocSupplier")
-                    ->findOneBy(array('supplier' => $this->brand));
+                    ->findOneBy(array('supplier' => $this->fixsuppliers($this->brand)));
             if (@$TecdocSupplier->id == 0) {
                 $SoftoneSupplier = new \SoftoneBundle\Entity\SoftoneSupplier;
-                $SoftoneSupplier->setTitle($this->brand);
+                $SoftoneSupplier->setTitle($this->fixsuppliers($this->brand));
                 $SoftoneSupplier->setCode(' ');
                 $em->persist($SoftoneSupplier);
                 $em->flush();
