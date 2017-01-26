@@ -593,13 +593,14 @@ class EdiItemController extends Main {
                     $AvailabilityDetailsHtml = "<select style='width:120px'>";
                     foreach($xml->Item->AvailabilityDetails as $details)  {
                         if ($details->IsAvailable == 'Y') {
-                            $AvailabilityDetailsHtml .= "<option value='".$details->StoreNo."' style='color:green'>".$details->StoreNo."</option>";
+                            $selected = $xml->Item->Header->SUGGESTED_STORE == $details->StoreNo ? "selected" : "";
+                            $AvailabilityDetailsHtml .= "<option ".$selected." value='".$details->StoreNo."' style='color:green'>".$details->StoreNo."</option>";
                         } else {
                             $AvailabilityDetailsHtml .= "<option value='".$details->StoreNo."' style='color:red'>".$details->StoreNo." (".$details->EstimatedBODeliveryTime.")</option>";
                         }
                     }
                     $AvailabilityDetailsHtml .= "</select>";        
-                    @$jsonarr[$key]['6'] = $entity->getDiscount($customer,$vat).print_r($xml->Item,true);
+                    @$jsonarr[$key]['6'] = $entity->getDiscount($customer,$vat);
                     @$jsonarr[$key]['7'] = number_format((float) $xml->Item->Header->PriceOnPolicy, 2, '.', '');
                     @$jsonarr[$key]['8'] = $jsonarr[$key]['8'].$AvailabilityDetailsHtml;
                     @$jsonarr[$key]['DT_RowClass'] .= $xml->Item->Header->Available == "Y" ? ' text-success ' : ' text-danger ';
