@@ -210,7 +210,7 @@ class EdiOrderController extends Main {
             $EdiOrder = $query->setMaxResults(1)->getOneOrNullResult();
             */
             $EdiOrder = $this->getDoctrine()
-                    ->getRepository('EdiBundle:EdiOrder')->findBy(array("reference"=>0,"store"=>$request->request->get("store"),"Edi"=>$Ediitem->getEdi()));
+                    ->getRepository('EdiBundle:EdiOrder')->findBy(array("reference"=>'',"store"=>$request->request->get("store"),"Edi"=>$Ediitem->getEdi()));
             if (!$EdiOrder) {
                 $EdiOrder = new EdiOrder;
                 $dt = new \DateTime("now");
