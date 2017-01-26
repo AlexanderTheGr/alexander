@@ -595,7 +595,7 @@ class EdiItemController extends Main {
                         if ($details->IsAvailable == 'Y') {
                             $AvailabilityDetailsHtml .= "<option value='".$details->StoreNo."' style='color:green'>".$details->StoreNo."</option>";
                         } else {
-                            $AvailabilityDetailsHtml .= "<option value='".$details->StoreNo."' style='color:gred'>".$details->StoreNo." (".$details->StoreNo->EstimatedBODeliveryTime.")</option>";
+                            $AvailabilityDetailsHtml .= "<option value='".$details->StoreNo."' style='color:red'>".$details->StoreNo." (".$details->EstimatedBODeliveryTime.")</option>";
                         }
                     }
                     $AvailabilityDetailsHtml .= "</select>";        
