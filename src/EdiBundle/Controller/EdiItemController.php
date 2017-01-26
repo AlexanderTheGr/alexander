@@ -593,7 +593,7 @@ class EdiItemController extends Main {
                     $AvailabilityDetailsHtml = "<select style='width:120px'>";
                     foreach($xml->Item->AvailabilityDetails as $details)  {
                         if ($details->IsAvailable == 'Y') {
-                            $selected = $xml->Item->Header->SUGGESTED_STORE == $details->StoreNo ? "selected" : "";
+                            $selected = (int)$xml->Item->Header->SUGGESTED_STORE == (int)$details->StoreNo ? "selected" : "";
                             $AvailabilityDetailsHtml .= "<option ".$selected." value='".$details->StoreNo."' style='color:green'>".$details->StoreNo."</option>";
                         } else {
                             $AvailabilityDetailsHtml .= "<option value='".$details->StoreNo."' style='color:red'>".$details->StoreNo." (".$details->EstimatedBODeliveryTime.")</option>";
