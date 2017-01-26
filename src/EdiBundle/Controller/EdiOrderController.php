@@ -224,6 +224,8 @@ class EdiOrderController extends Main {
                 $EdiOrder->setModified($dt);
                 $this->flushpersist($EdiOrder);
             }
+            $EdiOrder->setRemarks($Ediitem->getEdi()->getName()."_".$request->request->get("store"));
+            $this->flushpersist($EdiOrder);
         }
 
 
