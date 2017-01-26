@@ -3,8 +3,9 @@ var orderid = 0;
 var productsearch = ''
 jQuery('#productfreesearch').live("keyup", function (e) {
     if (e.keyCode == 13) {
+        b == true
         //table.fnFilter("",2);
-        //table.fnFilter("",3);        
+        //table.fnFilter("",3);
         $("#loaderer").show();
         productsearch = "productfreesearch:" + jQuery('#productfreesearch').val();
         asdf(this, productsearch);
@@ -24,6 +25,7 @@ jQuery('#productitem').live("keyup", function (e) {
     if (e.keyCode == 13) {
         //table.fnFilter("",2);
         //table.fnFilter("",3);
+        b == true
         $("#loaderer").show();
         productsearch = "productitem:" + jQuery('#productitem').val() + ":supplier:1";
         asdf(this, productsearch);
@@ -44,18 +46,14 @@ jQuery('#classtitem').live("change", function (e) {
     b = false;
     var table = dt_tables["ctrlgetoffcanvases"];
     table.fnFilter(jQuery('#classtitem').val(), 3);
-    setTimeout(function () {
-        b = true;
-    }, 3000)
+
 
 })
 jQuery('.rtecdocArticleName').live("click", function (e) {
     b = false;
     var table = dt_tables["ctrlgetoffcanvases"];
     table.fnFilter(jQuery(this).val(), 2);
-    setTimeout(function () {
-        b = true;
-    }, 3000)
+
 })
 
 
@@ -323,7 +321,6 @@ function asdf(obj, search) {
     data.terms = $(obj).val();
 
     //$.post("/edi/eltreka/order/fororder", data, function (result) {
-    b = true;
     $("#offcanvas-search .offcanvas-head .text-primary").html(title);
 
     /*
@@ -360,7 +357,7 @@ function asdf2(obj) {
     //var title = 'Αναζήτηση για "' + $(obj).val() + '"';
     //data.terms = $(obj).val()
     //$.post("/edi/eltreka/order/fororder", data, function (result) {
-    b = true;
+
     //$("#offcanvas-search .offcanvas-head .text-primary").html(title);
     var table = dt_tables["ctrlgetoffcanvases"];
     var table2 = dt_tables["ctrlgetoffcanvases2"];
@@ -392,9 +389,7 @@ function fororder(order) {
         jQuery("#classtitem").chosen({width: "300px"});
         b = false;
     }
-    setTimeout(function () {
-        b = true;
-    }, 1000)
+
 
     var tecdocArticleName = [];
     $("span.tecdocArticleName").each(function () {
