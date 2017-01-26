@@ -467,4 +467,33 @@ class EdiOrder extends Entity {
         return $this->EdiOrderItem;
     }
 
+    /**
+     * @var string
+     */
+    private $store;
+
+
+    /**
+     * Set store
+     *
+     * @param string $store
+     *
+     * @return EdiOrder
+     */
+    public function setStore($store)
+    {
+        $this->store = $store;
+
+        return $this;
+    }
+
+    /**
+     * Get store
+     *
+     * @return string
+     */
+    public function getStore()
+    {
+        return $this->store;
+    }
 }
