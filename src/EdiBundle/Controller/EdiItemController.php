@@ -261,7 +261,13 @@ class EdiItemController extends Main {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
-
+    /**
+     * @Route("/edi/ediitem/autocompletesearch")
+     */
+    public function autocompletesearchAction($funct = false) {
+        echo 'ssd';
+        exit;
+    }
     /**
      * @Route("/edi/ediitem/updatetecdoc")
      */
