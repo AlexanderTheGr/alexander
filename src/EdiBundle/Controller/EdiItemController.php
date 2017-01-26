@@ -265,13 +265,17 @@ class EdiItemController extends Main {
      * @Route("/edi/ediitem/autocompletesearch/{edi}")
      */
     public function autocompletesearchAction($edi) {
+        
+        
+        $entity = $this->getDoctrine()
+                ->getRepository("EdiBundle:EdiOrder")
+                ->find($edi);        
         $json = json_encode(array("ok"));
-
         $em = $this->getDoctrine()->getManager();
 
 
         $query = $em->createQuery(
-                        "SELECT p.id, p.itemCode,p.partno,p.artNr,p.artNr,p.description, p.brand FROM " . $this->repository . " " . $this->prefix . " where p.partno LIKE '%" . $_GET["term"] . "%' OR p.itemCode LIKE '%" . $_GET["term"] . "%' OR p.artNr LIKE '%" . $_GET["term"] . "%'"
+                        "SELECT p.id, p.itemCode,p.partno,p.artNr,p.artNr,p.description, p.brand FROM " . $this->repository . " " . $this->prefix . " where edi=".$entity." AND (p.partno LIKE '" . $_GET["term"] . "' OR p.itemCode LIKE '%" . $_GET["term"] . "%' OR p.artNr LIKE '" . $_GET["term"] . "%')"
                 )
                 ->setMaxResults(20)
                 ->setFirstResult(0);
