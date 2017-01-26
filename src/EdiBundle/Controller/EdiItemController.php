@@ -173,7 +173,7 @@ class EdiItemController extends Main {
 
         if ($search[1]) {
             $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
-            
+
             @$articleIds2 = unserialize(base64_decode($search[1]));
             $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
             $articleIds[] = 1;
@@ -183,11 +183,10 @@ class EdiItemController extends Main {
                     where 
                         e.id = p.Edi AND p.partno != '' AND
                         (p.partno = '" . $search[1] . "' OR p.itemCode = '" . $search[1] . "' OR p.tecdocArticleId in (" . implode(",", $articleIds) . ")) "
-            
-                    );
-       } else {
+            );
+        } else {
             $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[0])));
-           
+
             @$articleIds2 = unserialize(base64_decode($search[0]));
             $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
             $articleIds[] = 1;
@@ -255,27 +254,28 @@ class EdiItemController extends Main {
 
 
         ;
-        $json = $this->ediitemdatatable('setEdiQtyAvailability',$id);
+        $json = $this->ediitemdatatable('setEdiQtyAvailability', $id);
 
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+
     /**
      * @Route("/edi/ediitem/autocompletesearch/{edi}")
      */
     public function autocompletesearchAction($edi) {
-        
-        
+
+
         $entity = $this->getDoctrine()
                 ->getRepository("EdiBundle:EdiOrder")
-                ->find($edi);        
+                ->find($edi);
         $json = json_encode(array("ok"));
         $em = $this->getDoctrine()->getManager();
 
 
         $query = $em->createQuery(
-                        "SELECT p.id, p.itemCode,p.partno,p.artNr,p.artNr,p.description, p.brand FROM " . $this->repository . " " . $this->prefix . " where p.Edi=".$entity->getEdi()->getId()." AND (p.partno LIKE '" . $_GET["term"] . "' OR p.itemCode LIKE '%" . $_GET["term"] . "%' OR p.artNr LIKE '" . $_GET["term"] . "%')"
+                        "SELECT p.id, p.itemCode,p.partno,p.artNr,p.artNr,p.description, p.brand FROM " . $this->repository . " " . $this->prefix . " where p.Edi=" . $entity->getEdi()->getId() . " AND (p.partno LIKE '" . $_GET["term"] . "' OR p.itemCode LIKE '%" . $_GET["term"] . "%' OR p.artNr LIKE '" . $_GET["term"] . "%')"
                 )
                 ->setMaxResults(20)
                 ->setFirstResult(0);
@@ -288,27 +288,27 @@ class EdiItemController extends Main {
             if (strlen($entity->getEdi()->getToken()) == 36) {
                 
             } else {
+
                 $response = $elteka->getAvailability(
                         array('CustomerNo' => $this->CustomerNo,
                             "RequestedQty" => 1,
-                            "EltrekkaRef" => $entity->getItemcode()));
+                            "EltrekkaRef" => $data["itemCode"]));
                 $xml = $response->GetAvailabilityResult->any;
                 $xml = simplexml_load_string($xml);
-                foreach($xml->Item->AvailabilityDetails as $details)  {
-                    if ($entity->getStore() == (int)$details->StoreNo AND $details->IsAvailable == 'Y') {
+                foreach ($xml->Item->AvailabilityDetails as $details) {
+                    if ($entity->getStore() == (int) $details->StoreNo AND $details->IsAvailable == 'Y') {
                         $asd = "";
                     } else {
-                        $asd = "(".$details->EstimatedBODeliveryTime.")";
+                        $asd = "(" . $details->EstimatedBODeliveryTime . ")";
                     }
-                    
                 }
             }
-            
-            
+
+
             $json = array();
             $json["id"] = $data["id"];
             $json["value"] = $data["description"] . " (" . $data["itemCode"] . " - " . $data["brand"] . " " . $data["partno"] . ")";
-            $json["label"] = "<span style='color:red'>".$data["description"] . " (" . $data["itemCode"] . " - " . $data["brand"] . " " . $data["partno"] . ")</span>";
+            $json["label"] = "<span style='color:red'>" . $data["description"] . " (" . $data["itemCode"] . " - " . $data["brand"] . " " . $data["partno"] . ")</span>";
             $out[] = $json;
         }
 
@@ -318,6 +318,7 @@ class EdiItemController extends Main {
         );
         exit;
     }
+
     /**
      * @Route("/edi/ediitem/updatetecdoc")
      */
@@ -357,7 +358,7 @@ class EdiItemController extends Main {
         exit;
     }
 
-    public function ediitemdatatable($funct = false,$id=false) {
+    public function ediitemdatatable($funct = false, $id = false) {
         ini_set("memory_limit", "1256M");
         $request = Request::createFromGlobals();
 
@@ -495,9 +496,9 @@ class EdiItemController extends Main {
                     $json[] = $obj->$func(count($results));
                 }
             }
-            
-            
-            
+
+
+
             $sql = "Select id from softone_product where replace(replace(replace(replace(replace(`item_cccref`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $this->clearstring($obj->getItemCode()) . "' AND item_mtrsup = '" . $obj->getEdi()->getItemMtrsup() . "'";
             //echo $sql . "<BR>";
             $connection = $em->getConnection();
@@ -505,7 +506,7 @@ class EdiItemController extends Main {
             $statement->execute();
             $refdata = $statement->fetch();
 
-            
+
             $prd = $refdata["id"] > 0 ? ' bold ' : '';
             $json["DT_RowClass"] = $prd . "dt_row_" . strtolower($r[1]);
 
@@ -515,7 +516,7 @@ class EdiItemController extends Main {
         if ($funct) {
             $jsonarrnoref = array();
             if (count($jsonarr)) {
-                $jsonarr = $this->$funct($jsonarr,$id);
+                $jsonarr = $this->$funct($jsonarr, $id);
                 $jsonarr = array_merge($jsonarr, $jsonarrnoref);
             }
         }
@@ -580,7 +581,7 @@ class EdiItemController extends Main {
         //return $out;        
     }
 
-    function setEdiQtyAvailability($jsonarr,$id=0) {
+    function setEdiQtyAvailability($jsonarr, $id = 0) {
         $limit = 25;
         $vat = 1.24;
         //return;
@@ -646,19 +647,19 @@ class EdiItemController extends Main {
                                 "EltrekkaRef" => $entity->getItemcode()));
                     $xml = $response->GetAvailabilityResult->any;
                     $xml = simplexml_load_string($xml);
-                    $AvailabilityDetailsHtml = "<select data-id='".$entity->getId()."' class='edistore' id='store_".$entity->getId()."' style=''>";
-                    foreach($xml->Item->AvailabilityDetails as $details)  {
+                    $AvailabilityDetailsHtml = "<select data-id='" . $entity->getId() . "' class='edistore' id='store_" . $entity->getId() . "' style=''>";
+                    foreach ($xml->Item->AvailabilityDetails as $details) {
                         if ($details->IsAvailable == 'Y') {
-                            $selected = (int)$xml->Item->Header->SUGGESTED_STORE == (int)$details->StoreNo ? "selected" : "";
-                            $AvailabilityDetailsHtml .= "<option ".$selected." value='".$details->StoreNo."' style='color:green'>".$details->StoreNo."</option>";
+                            $selected = (int) $xml->Item->Header->SUGGESTED_STORE == (int) $details->StoreNo ? "selected" : "";
+                            $AvailabilityDetailsHtml .= "<option " . $selected . " value='" . $details->StoreNo . "' style='color:green'>" . $details->StoreNo . "</option>";
                         } else {
-                            $AvailabilityDetailsHtml .= "<option value='".$details->StoreNo."' style='color:red'>".$details->StoreNo." (".$details->EstimatedBODeliveryTime.")</option>";
+                            $AvailabilityDetailsHtml .= "<option value='" . $details->StoreNo . "' style='color:red'>" . $details->StoreNo . " (" . $details->EstimatedBODeliveryTime . ")</option>";
                         }
                     }
-                    $AvailabilityDetailsHtml .= "</select>";        
-                    @$jsonarr[$key]['6'] = $entity->getDiscount($customer,$vat);
+                    $AvailabilityDetailsHtml .= "</select>";
+                    @$jsonarr[$key]['6'] = $entity->getDiscount($customer, $vat);
                     @$jsonarr[$key]['7'] = number_format((float) $xml->Item->Header->PriceOnPolicy, 2, '.', '');
-                    @$jsonarr[$key]['8'] = $jsonarr[$key]['8'].$AvailabilityDetailsHtml;
+                    @$jsonarr[$key]['8'] = $jsonarr[$key]['8'] . $AvailabilityDetailsHtml;
                     @$jsonarr[$key]['DT_RowClass'] .= $xml->Item->Header->Available == "Y" ? ' text-success ' : ' text-danger ';
                 }
             }
@@ -692,15 +693,15 @@ class EdiItemController extends Main {
                             //echo $Item->ItemCode."\n";
                             if (@$jsonarr[$ands[$Item->ItemCode]]) {
                                 $entity = $entities[$Item->ItemCode];
-                                @$jsonarr[$ands[$Item->ItemCode]]['6'] = $entity->getDiscount($customer,$vat);
+                                @$jsonarr[$ands[$Item->ItemCode]]['6'] = $entity->getDiscount($customer, $vat);
                                 @$jsonarr[$ands[$Item->ItemCode]]['7'] = number_format($Item->UnitPrice, 2, '.', '');
 
-                                
+
                                 //$entity->setRetailprice(number_format($Item->UnitPrice, 2, '.', ''));
                                 //$this->flushpersist($entity);
                                 //echo $Item->Availability;    
                                 if ($Item->Availability == 'green') {
-                                     
+
                                     @$jsonarr[$ands[$Item->ItemCode]]['DT_RowClass'] .= ' text-success ';
                                 }
                             }
