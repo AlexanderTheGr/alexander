@@ -96,13 +96,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $SoftoneSupplier->setTitle($asd->brandName);
                 $SoftoneSupplier->setCode(' ');
                 @$this->flushpersist($SoftoneSupplier);
-                $SoftoneSupplier->setCode("S" . $SoftoneSupplier->getId());
+                $SoftoneSupplier->setCode("G" . $SoftoneSupplier->getId());
                 @$this->flushpersist($SoftoneSupplier);
                 $SoftoneSupplier->toSoftone();
             } else {
                 $SoftoneSupplier = new \SoftoneBundle\Entity\SoftoneSupplier;
                 $SoftoneSupplier->setTitle($TecdocSupplier->getSupplier());
-                $SoftoneSupplier->setCode("T" . $TecdocSupplier->id);
+                $SoftoneSupplier->setCode($TecdocSupplier->id);
                 @$this->flushpersist($SoftoneSupplier);
                 $SoftoneSupplier->toSoftone();
             }
