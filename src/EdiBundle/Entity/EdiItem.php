@@ -659,7 +659,7 @@ class EdiItem extends Entity {
         $this->updatetecdoc();
         //$TecdocSupplier = new \SoftoneBundle\Entity\TecdocSupplier;
         //$TecdocSupplier->updateToSoftone();
-        $this->brand = $this->fixsuppliers($this->brand);
+        //$this->brand = $this->fixsuppliers($this->brand);
 
         $SoftoneSupplier = $em->getRepository("SoftoneBundle:SoftoneSupplier")
                 ->findOneBy(array('title' => $this->fixsuppliers($this->brand)));
