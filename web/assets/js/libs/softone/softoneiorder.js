@@ -395,14 +395,14 @@ function fororder(order) {
     $("span.tecdocArticleName").each(function () {
         tecdocArticleName[$(this).text()] = $(this).text();
     })
-    var as = "";
+    var as = "<div style='float:left width:600px;'>";
     
     for (var i in tecdocArticleName) {
         if (i != '') {
             as = as + "<div style='float:-left; margin-left:2px;'><label>" + i + "</label><input type='radio' class='rtecdocArticleName' name='tecdocArticleName' value = '" + i + "'></div>";
         }
     }
-    as = as + "<label>Καθαρισμός</label><input type='radio' class='rtecdocArticleName' name='tecdocArticleName' value = ''>";
+    as = as + "<label>Καθαρισμός</label><input type='radio' class='rtecdocArticleName' name='tecdocArticleName' value = ''></div>";
     $("#tecdocArticleName").html(as);
 
 }
