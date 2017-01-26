@@ -1730,7 +1730,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $orderItem->setOrder($entity);
             $orderItem->setPrice($item["PRICE"]);
             $orderItem->setDisc1prc((float) $item["DISC1PRC"]);
-            $orderItem->setLineval($item["LINEVAL"]);
+            $orderItem->setLineval($item["LINEVAL"] * $item["QTY1"]);
             $orderItem->setQty($item["QTY1"]);
             $orderItem->setChk(1);
             $orderItem->setProduct($product);
