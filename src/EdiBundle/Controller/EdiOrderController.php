@@ -109,10 +109,16 @@ class EdiOrderController extends Main {
         }
         $buttons = array();
         $buttons[] = array("label" => 'Get PartMaster', 'position' => 'right', 'class' => 'btn-success');
-
+        
+        $dataarray[] = array("value" => "06", "name" => "06");
+        $dataarray[] = array("value" => "10", "name" => "10");
+        $dataarray[] = array("value" => "12", "name" => "12");
+        $dataarray[] = array("value" => "14", "name" => "14");
+        $dataarray[] = array("value" => "15", "name" => "15");
+        
         //$tabfields["PurchaseOrderNo"] = array("label" => "Purchase Order No","value"=>1);
         $tabfields["remarks"] = array("label" => "Remarks");
-        $tabfields["store"] = array("label" => "Store");
+        $tabfields["store"] = array("label" => "Store",'type' => "select", 'dataarray' => $dataarray);
         $tabfields["ship"] = array("label" => "Ship");
 
         $tabforms = $this->getFormLyFields($entity, $tabfields);
