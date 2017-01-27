@@ -152,7 +152,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $customer = $this->getDoctrine()
                     ->getRepository("SoftoneBundle:Customer")
                     ->find(3);
+
             $entity->setCustomer($customer);
+            $user = $this->getDoctrine()
+                    ->getRepository("AppBundle:User")
+                    ->find(1);
+            $entity->setCustomer($user);
+            
             $vat = $this->getDoctrine()
                     ->getRepository("SoftoneBundle:Vat")
                     ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
@@ -747,10 +753,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         continue;
                 }
                 if ($dt_columns[2]["search"]["value"] != '') {
-                    if ($dt_columns[2]["search"]["value"] != $v->genericArticleName) continue;
+                    if ($dt_columns[2]["search"]["value"] != $v->genericArticleName)
+                        continue;
                 }
-                
-                
+
+
                 $json[] = "";
                 $json[] = "<span  car='' class='product_info' data-articleId='" . $v->articleId . "' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span></a><BR><a class='create_product' data-ref='" . $v->articleId . "' style='font-size:10px; color:rose' href='#'>Create Product</a>";
                 //$json[] = "<span car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span>";
@@ -1678,7 +1685,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
         //$json = '{"SALDOC":[{"TRDR":"364","SERIESNUM":"1100003181","FINCODE":"B2B1100003181","PAYMENT":1010,"VATSTS":"1410","SERIES":7021,"WHOUSE":1101,"ID":"1035"}],"ITELINES":[{"VAT":"1410","QTY1":1,"LINENUM":9000001,"MTRL":"136922","PRICE":83.69,"DISC1PRC":null}]}';
         $json = $request->getContent();
-        
+
         $order = json_decode($json, true);
         print_r($order);
         $ord = $order["SALDOC"][0];
@@ -1691,6 +1698,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository("SoftoneBundle:Vat")
                 ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
 
+        $user = $this->getDoctrine()
+                ->getRepository("AppBundle:User")
+                ->find(2);
+        $entity->setCustomer($user);
 
         $entity = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Order")
@@ -1722,18 +1733,18 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $sql = 'DELETE FROM softone_orderitem where s_order = "' . $entity->getId() . '"';
         $this->getDoctrine()->getConnection()->exec($sql);
         $items = $order["ITELINES"];
-        
+
         $vat = 1.24;
-        
+
         foreach ($items as $item) {
             $product = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Product')
                     ->findOneByReference($item["MTRL"]);
             $orderItem = new Orderitem;
             $orderItem->setOrder($entity);
-            $orderItem->setPrice($item["PRICE"]*$vat);
+            $orderItem->setPrice($item["PRICE"] * $vat);
             $orderItem->setDisc1prc((float) $item["DISC1PRC"]);
-            $orderItem->setLineval($item["LINEVAL"] * $item["QTY1"]*$vat);
+            $orderItem->setLineval($item["LINEVAL"] * $item["QTY1"] * $vat);
             $orderItem->setQty($item["QTY1"]);
             $orderItem->setChk(1);
             $orderItem->setProduct($product);
