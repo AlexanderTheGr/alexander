@@ -154,9 +154,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     ->find(3);
 
             $entity->setCustomer($customer);
-            $user = $this->getDoctrine()
-                    ->getRepository("AppBundle:User")
-                    ->find(1);
+            $user = $this->get('security.token_storage')->getToken()->getUser();
             $entity->setUser($user);
             
             $vat = $this->getDoctrine()
@@ -242,9 +240,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         }
 
         $order->setCustomerName($request->request->get("customerName"));
-        $user = $this->getDoctrine()
-                ->getRepository("AppBundle:User")
-                ->find(1);
+        $user = $this->get('security.token_storage')->getToken()->getUser();
         $order->setUser($user);
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
