@@ -75,6 +75,9 @@ class UserController extends Main {
                         ->getRepository($df[0] . ":" . $df[1])
                         ->find($df[3]);
             }
+            if (!@$entities[$df[0] . ":" . $df[1]]) {
+                $entities[$df[0] . ":" . $df[1]] = new User;
+            }            
             if ($df[3] == 0) {
                 $entities[$df[0] . ":" . $df[1]] = $this->newentity[$df[0] . ":" . $df[1]];
             }
