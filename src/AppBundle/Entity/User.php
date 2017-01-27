@@ -4,8 +4,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-
 use AppBundle\Entity\Entity;
+
 /**
  * User
  *
@@ -15,9 +15,6 @@ use AppBundle\Entity\Entity;
 class User extends Entity implements UserInterface, \Serializable {
 
     private $repository = 'AppBundle:User';
-
-    
-    
     private $types = array();
     var $repositories = array();
 
@@ -40,10 +37,12 @@ class User extends Entity implements UserInterface, \Serializable {
     public function getRepository() {
         return $this->repository;
     }
+
     public function getRepositories($repo) {
         $this->repositories['softoneStore'] = 'SoftoneBundle:Store';
-        return  $this->repositories[$repo];
+        return $this->repositories[$repo];
     }
+
     public function gettype($field) {
         $this->types['softoneStore'] = 'object';
         if (@$this->types[$field] != '') {
@@ -53,8 +52,7 @@ class User extends Entity implements UserInterface, \Serializable {
             return gettype($this->$field);
         }
         return 'string';
-    }    
-
+    }
 
     /**
      * @var string
@@ -463,7 +461,6 @@ class User extends Entity implements UserInterface, \Serializable {
      */
     protected $softoneStore;
 
-
     /**
      * Set softoneStore
      *
@@ -471,8 +468,7 @@ class User extends Entity implements UserInterface, \Serializable {
      *
      * @return User
      */
-    public function setSoftoneStore(\SoftoneBundle\Entity\Store $softoneStore = null)
-    {
+    public function setSoftoneStore(\SoftoneBundle\Entity\Store $softoneStore = null) {
         $this->softoneStore = $softoneStore;
 
         return $this;
@@ -483,8 +479,8 @@ class User extends Entity implements UserInterface, \Serializable {
      *
      * @return \SoftoneBundle\Entity\Store
      */
-    public function getSoftoneStore()
-    {
+    public function getSoftoneStore() {
         return $this->softoneStore;
     }
+
 }
