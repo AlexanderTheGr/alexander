@@ -1700,7 +1700,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $user = $this->getDoctrine()
                 ->getRepository("AppBundle:User")
                 ->find(2);
-        $entity->setUser($user);
+        
 
         $entity = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Order")
@@ -1714,6 +1714,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
 
         $entity->setCustomer($customer);
+        $entity->setUser($user);
         $entity->setReference($ord["ID"]);
         $entity->setFincode($ord["FINCODE"]);
         $entity->setSeries($ord["SERIES"]);
