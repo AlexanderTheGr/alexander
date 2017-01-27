@@ -19,7 +19,15 @@ class EdiOrder extends Entity {
         $this->$field = $val;
         return $val;
     }
-
+    public function gettype($field) {
+        if (@$this->types[$field] != '') {
+            return @$this->types[$field];
+        }
+        if (gettype($field) != NULL) {
+            return gettype($this->$field);
+        }
+        return 'string';
+    }
     /**
      * @var string
      */
@@ -378,8 +386,8 @@ class EdiOrder extends Entity {
                     'content' => $data_string,
                 ),
             )));
-            
-            $order =  json_decode($result);
+
+            $order = json_decode($result);
             return $order->OrderId;
         } else {
             $elteka = $this->eltekaAuth();
@@ -402,7 +410,7 @@ class EdiOrder extends Entity {
                 "PartTable" => $this->createPartBuffer($elteka)
             );
             print_r($params);
-            $result = $elteka->__soapCall("PlaceOrder",array($params));
+            $result = $elteka->__soapCall("PlaceOrder", array($params));
             print_r($result);
             $xmlNode = new \SimpleXMLElement($result->PlaceOrderResult->any);
             print_r($xmlNode);
@@ -435,7 +443,7 @@ class EdiOrder extends Entity {
         ini_set("soap.wsdl_cache_enabled", "0");
         $this->SoapUrl = $this->getSetting("EdiBundle:Eltreka:SoapUrl");
         $this->SoapNs = $this->getSetting("EdiBundle:Eltreka:SoapNs");
-        
+
         $this->Username = "TESTUID";
         $this->Password = "TESTPWD";
         $this->CustomerNo = "999999L";
@@ -450,7 +458,7 @@ class EdiOrder extends Entity {
             return $this->SoapClient;
         }
 
-        $this->SoapClient = new \SoapClient($this->SoapUrl, array('cache_wsdl' => WSDL_CACHE_NONE) );
+        $this->SoapClient = new \SoapClient($this->SoapUrl, array('cache_wsdl' => WSDL_CACHE_NONE));
         $headerbody = array('Username' => $this->Username, 'Password' => $this->Password);
         $header = new \SOAPHeader($this->SoapNs, 'AuthHeader', $headerbody);
         $this->SoapClient->__setSoapHeaders($header);
@@ -472,7 +480,6 @@ class EdiOrder extends Entity {
      */
     private $store;
 
-
     /**
      * Set store
      *
@@ -480,8 +487,7 @@ class EdiOrder extends Entity {
      *
      * @return EdiOrder
      */
-    public function setStore($store)
-    {
+    public function setStore($store) {
         $this->store = $store;
 
         return $this;
@@ -492,15 +498,14 @@ class EdiOrder extends Entity {
      *
      * @return string
      */
-    public function getStore()
-    {
+    public function getStore() {
         return $this->store;
     }
+
     /**
      * @var string
      */
     private $ship;
-
 
     /**
      * Set ship
@@ -509,8 +514,7 @@ class EdiOrder extends Entity {
      *
      * @return EdiOrder
      */
-    public function setShip($ship)
-    {
+    public function setShip($ship) {
         $this->ship = $ship;
 
         return $this;
@@ -521,8 +525,8 @@ class EdiOrder extends Entity {
      *
      * @return string
      */
-    public function getShip()
-    {
+    public function getShip() {
         return $this->ship;
     }
+
 }
