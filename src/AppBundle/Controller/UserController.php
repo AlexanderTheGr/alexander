@@ -17,8 +17,8 @@ class UserController extends Main {
      */
     public function indexAction() {
 
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-        echo $user->getEmail();
+        
+
         return $this->render('AppBundle:User:index.html.twig', array(
                     'pagename' => 'Customers',
                     'url' => '/user/getdatatable',
