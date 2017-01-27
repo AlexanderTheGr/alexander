@@ -153,7 +153,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     ->getRepository("SoftoneBundle:Customer")
                     ->find(3);
             $user = $this->getDoctrine()
-                    ->getRepository("SoftoneBundle:User")
+                    ->getRepository("AppBundle:User")
                     ->find(1);
             $entity->setUser($user);
             $entity->setCustomer($customer);
@@ -264,7 +264,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository("SoftoneBundle:Route")
                 ->find(1);
         $user = $this->getDoctrine()
-                ->getRepository("AppBundle:User")
+                ->getRepository("SoftoneBundle:User")
                 ->find(1);
         $order->setUser($user);
         $order->setRoute($route);
@@ -1701,7 +1701,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
 
         $user = $this->getDoctrine()
-                ->getRepository("SoftoneBundle:User")
+                ->getRepository("AppBundle:User")
                 ->find(2);
 
         $entity = $this->getDoctrine()
