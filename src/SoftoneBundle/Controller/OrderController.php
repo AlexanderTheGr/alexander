@@ -1701,7 +1701,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $user = $this->getDoctrine()
                 ->getRepository("AppBundle:User")
                 ->find(2);
-        $entity->setCustomer($user);
+        $entity->setUser($user);
 
         $entity = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Order")
