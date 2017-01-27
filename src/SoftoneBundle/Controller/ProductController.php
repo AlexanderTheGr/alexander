@@ -1173,6 +1173,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                          * 
                          */
                         //$this->clearstring($search);
+                        if ($product->getItemCode2() != '333114') continue;
+                       
                         $ediediitem = false;
                         $newcccref = false;
                         $code = trim($this->clearstring($product->getCccRef()));
