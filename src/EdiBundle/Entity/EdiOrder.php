@@ -33,7 +33,7 @@ class EdiOrder extends Entity {
     /**
      * @var string
      */
-    private $remarks;
+    var $remarks;
 
     /**
      * @var integer
