@@ -242,7 +242,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         }
 
         $order->setCustomerName($request->request->get("customerName"));
-
+        $user = $this->getDoctrine()
+                ->getRepository("AppBundle:User")
+                ->find(1);
+        $order->setUser($user);
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($request->request->get("customer"));
