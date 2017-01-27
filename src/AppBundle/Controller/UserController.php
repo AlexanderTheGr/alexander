@@ -50,8 +50,8 @@ class UserController extends Main {
      */
     public function saveAction() {
         $entity = new User;
-        $this->initialazeNewEntity($entity);
         $this->newentity[$this->repository] = $entity;
+        $this->initialazeNewEntity($entity);
         //$this->newentity[$this->repository]->setField("status", 1);
         //$this->newentity[$this->repository]->setField("route", 0);
         $out = $this->save();
