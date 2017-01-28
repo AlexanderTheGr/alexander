@@ -1186,7 +1186,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                             replace(replace(replace(replace(replace(`itemcode`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $code . "' AND edi = '" . $ediedi->getId() . "'
                                             limit 0,100";
 
-                            //echo $sql . "<BR>";
+                            echo $sql . "<BR>";
                             $connection = $em->getConnection();
                             $statement = $connection->prepare($sql);
                             $statement->execute();
