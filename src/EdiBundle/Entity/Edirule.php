@@ -252,6 +252,7 @@ class Edirule {
         $supplier = str_replace("LESJ?FORS", "LESJOFORS", $supplier);
         $supplier = str_replace("LEMF?RDER", "LEMFORDER", $supplier);
         $supplier = str_replace("SALERI", "Saleri SIL", $supplier);
+        $supplier = str_replace("CASTROL", "CASTROL LUBRICANTS", $supplier);
         
         return $supplier;
     }   
