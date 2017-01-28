@@ -1178,6 +1178,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         $ediediitem = false;
                         $newcccref = false;
                         $code = trim($this->clearstring($product->getCccRef()));
+                        
+                        echo $code."<BR>";
+                        
                         if ($code != '') {
                             $sql = "Select id from partsbox_db.edi_item where 
                                             replace(replace(replace(replace(replace(`itemcode`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $code . "' AND edi = '" . $ediedi->getId() . "'
