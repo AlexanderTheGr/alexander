@@ -1173,20 +1173,17 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                          * 
                          */
                         //$this->clearstring($search);
-                        if ($product->getItemCode2() != '10404L') continue;
+                        //if ($product->getItemCode2() != '333114') continue;
                        
                         $ediediitem = false;
                         $newcccref = false;
                         $code = trim($this->clearstring($product->getCccRef()));
-                        
-                        echo $code."<BR>";
-                        
                         if ($code != '') {
                             $sql = "Select id from partsbox_db.edi_item where 
                                             replace(replace(replace(replace(replace(`itemcode`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $code . "' AND edi = '" . $ediedi->getId() . "'
                                             limit 0,100";
 
-                            echo $sql . "<BR>";
+                            //echo $sql . "<BR>";
                             $connection = $em->getConnection();
                             $statement = $connection->prepare($sql);
                             $statement->execute();
@@ -1218,10 +1215,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         if ($ediediitem) {
                             $itemPricew = $ediediitem->getEdiMarkupPrice("itemPricew");
                             $itemPricer = $ediediitem->getEdiMarkupPrice("itemPricer");
-                            
-                            echo $ediedi->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediediitem->getWholesaleprice() . " -- " . $ediediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
-
-                            
                             if ($newcccref OR round($itemPricew, 2) != round($product->getItemPricew(), 2) OR round($itemPricer, 2) != round($product->getItemPricer(), 2)) {
                                 //echo $ediedi->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediediitem->getWholesaleprice() . " -- " . $ediediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
                                 //if ($i++ > 15)
