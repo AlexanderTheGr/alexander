@@ -102,11 +102,5 @@ function sendChat(message, from, to)
     });
 }
 $("#triggeroffcanvaschat").click(function () {
-    alert("SSSSSS");
 
-    $("#offcanvas-chat").css({
-        "-webkit-transform": "translate(500px,0px)",
-        "-ms-transform": "translate(500px,0px)",
-        "transform": "translate(500px,0px)"
-    });
 })
