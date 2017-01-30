@@ -373,17 +373,22 @@ function fororder2(order) {
 
 
 }
-
-$(document).keydown(function(e) {
+var offcanvassearch = false;
+$(document).keydown(function (e) {
     // ESCAPE key pressed
     if (e.keyCode == 27) {
-        $(".offcanvas-search").click();
+        if (offcanvassearch) {
+            $(".offcanvas-search").click();
+            offcanvassearch = !offcanvassearch;
+        }
     }
 });
+
 function fororder(order) {
     if (b == true) {
         orderid = order;
         $(".offcanvas-search").click();
+        offcanvassearch = !offcanvassearch;
         var data = {}
         data.value = $("#DataTables_Table_1_filter input").val();
         $("#loaderer").show();
@@ -425,7 +430,7 @@ jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .SoftoneBundleProductEdi').live("
             var store = data.id;
         }
         data.qty = jQuery(this).val();
-        data.store = jQuery("#store_"+store).val();
+        data.store = jQuery("#store_" + store).val();
         $("#loaderer").show();
         $.post("/edi/order/addorderitem/", data, function (result) {
             $("#loaderer").hide();
@@ -521,6 +526,7 @@ jQuery(".alexander tr").live('mouseout', function () {
 
 jQuery(".offcanvas-tools .md-close").live("click", function () {
     $(".offcanvas-search").click();
+    offcanvassearch = !offcanvassearch;
 })
 var order = 0;
 setTimeout(function () {
