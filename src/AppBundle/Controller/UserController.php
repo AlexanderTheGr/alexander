@@ -17,7 +17,7 @@ class UserController extends Main {
      */
     public function indexAction() {
 
-        
+
 
         return $this->render('AppBundle:User:index.html.twig', array(
                     'pagename' => 'Customers',
@@ -154,11 +154,12 @@ class UserController extends Main {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+
     /**
      * 
      * 
      * @Route("/user/chatprocess")
-     */    
+     */
     public function chatprocessAction() {
 
         $function = $_POST['function'];
@@ -172,20 +173,20 @@ class UserController extends Main {
                     $lines = file('chat.txt');
                 }
                 $log['state'] = count($lines);
-                foreach ((array)$lines as $line_num => $line) {
+                foreach ((array) $lines as $line_num => $line) {
                     if ($line_num >= $state) {
-                            if (strpos($line, 'from="'.$user->getEmail().'"')) {
-                                $line1 = str_replace("chatpossition", "chat-right", $line);
-                                $text[] =  str_replace("\n", "", $line1);
-                            } elseif (strpos($line, 'to=""')) {
-                                $line1 = str_replace("chatpossition", "chat-left", $line);
-                                $text[] = str_replace("\n", "", $line1);
-                            }
-                            if (strpos($line, 'to="'.$user->getEmail().'"')) {
-                                $line1 = str_replace("chatpossition", "chat-left", $line);
-                                $line1 = str_replace("chat-body", "chat-body style-accent", $line1);
-                                $text[] = str_replace("\n", "", $line1);
-                            }
+                        if (strpos($line, 'from="' . $user->getUsername() . '"')) {
+                            $line1 = str_replace("chatpossition", "chat-right", $line);
+                            $text[] = str_replace("\n", "", $line1);
+                        } elseif (strpos($line, 'to=""')) {
+                            $line1 = str_replace("chatpossition", "chat-left", $line);
+                            $text[] = str_replace("\n", "", $line1);
+                        }
+                        if (strpos($line, 'to="' . $user->getUsername() . '"')) {
+                            $line1 = str_replace("chatpossition", "chat-left", $line);
+                            $line1 = str_replace("chat-body", "chat-body style-accent", $line1);
+                            $text[] = str_replace("\n", "", $line1);
+                        }
                     }
                 }
 
@@ -206,20 +207,19 @@ class UserController extends Main {
                     $log['state'] = $state + count($lines) - $state;
                     foreach ($lines as $line_num => $line) {
                         if ($line_num >= $state) {
-                            
-                            if (strpos($line, 'from="'.$user->getEmail().'"')) {
+
+                            if (strpos($line, 'from="' . $user->getUsername() . '"')) {
                                 $line1 = str_replace("chatpossition", "chat-right", $line);
                                 $text[] = str_replace("\n", "", $line1);
                             } elseif (strpos($line, 'to=""')) {
                                 $line1 = str_replace("chatpossition", "chat-left", $line);
                                 $text[] = str_replace("\n", "", $line1);
                             }
-                            if (strpos($line, 'to="'.$user->getEmail().'"')) {
+                            if (strpos($line, 'to="' . $user->getUsername() . '"')) {
                                 $line1 = str_replace("chatpossition", "chat-left", $line);
                                 $line1 = str_replace("chat-body", "chat-body style-accent", $line1);
                                 $text[] = str_replace("\n", "", $line1);
                             }
-                            
                         }
                     }
 
@@ -237,7 +237,7 @@ class UserController extends Main {
                     if (preg_match($reg_exUrl, $message, $url)) {
                         $message = preg_replace($reg_exUrl, '<a href="' . $url[0] . '" target="_blank">' . $url[0] . '</a>', $message);
                     }
-                    fwrite(fopen('chat.txt', 'a'), $this->chatLine($from,$to,$message) . "\n");
+                    fwrite(fopen('chat.txt', 'a'), $this->chatLine($from, $to, $message) . "\n");
                 }
                 break;
         }
@@ -245,10 +245,12 @@ class UserController extends Main {
         $json = json_encode($log);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
-        );        
+        );
     }
+
     public function chatLine($from, $to, $message) {
         $message = str_replace("\n", " ", $message);
-        return '<li from="'.$from.'"  to="'.$to.'" class="chatpossition"><div class="chat"><div class="chat-avatar"><img class="img-circle" src="/assets/img/avatar1.jpg?1403934956" alt="" /></div><div class="chat-body"><strong>' . $from . ' -> <i>'.$to.'</i></strong>' . $message . '<small>' . date("d/m/Y H:i:s") . '</small></div></div><!--end .chat --></li>';
-    }    
+        return '<li from="' . $from . '"  to="' . $to . '" class="chatpossition"><div class="chat"><div class="chat-avatar"><img class="img-circle" src="/assets/img/avatar1.jpg?1403934956" alt="" /></div><div class="chat-body"><strong>' . $from . ' -> <i>' . $to . '</i></strong>' . $message . '<small>' . date("d/m/Y H:i:s") . '</small></div></div><!--end .chat --></li>';
+    }
+
 }
