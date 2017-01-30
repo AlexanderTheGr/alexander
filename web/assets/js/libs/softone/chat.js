@@ -108,5 +108,5 @@ $("#triggeroffcanvaschat").click(function () {
         "-webkit-transform": "translate(500px,0px)",
         "-ms-transform": "translate(500px,0px)",
         "transform": "translate(500px,0px)"
-    });   ​
+    });
 })
