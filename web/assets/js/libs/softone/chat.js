@@ -102,5 +102,6 @@ function sendChat(message, from, to)
     });
 }
 $("#triggeroffcanvaschat").click(function() {
+    alert("SSSSSS");
     $("#offcanvas-chat").css("transform","translate(-500px, 0px)")
 })
