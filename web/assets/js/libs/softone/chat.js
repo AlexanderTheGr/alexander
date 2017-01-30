@@ -167,6 +167,7 @@ $(function () {
             //text = 'tettettet';
             // send 
             alert(text);
+            
             if (length <= maxLength + 1) {
 
                 chat.send(text, from, to);
