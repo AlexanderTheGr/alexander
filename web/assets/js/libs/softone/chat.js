@@ -159,21 +159,20 @@ $(function () {
     });
     // watch textarea for release of key press
     $('#sidebarChatMessage').keyup(function (e) {
+        alert($(this).val())
         if (e.keyCode == 13) {
             var to = $("#user_email").val();
-            var text = $('#sidebarChatMessage').val();
+            var text = $(this).val();
             var maxLength = $(this).attr("maxlength");
             var length = text.length;
-            //text = 'tettettet';
-            // send 
-            alert(text);
             
+            // send 
             if (length <= maxLength + 1) {
 
                 chat.send(text, from, to);
-                $(this).val("");
+                //$(this).val("");
             } else {
-                $(this).val(text.substring(0, maxLength));
+                //$(this).val(text.substring(0, maxLength));
             }
         }
     });
