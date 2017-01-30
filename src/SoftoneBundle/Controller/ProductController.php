@@ -625,7 +625,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
 
 
-        $fields["itemMtrplace"] = array("label" => "Ράφι", "className" => "col-md-3", "required" => false);
+        $fields["itemMtrplace"] = array("label" => "Ράφι", "className" => "col-md-1", "required" => false);
+        
+        $fields["qty"] = array("label" => "Αποθήκη", "className" => "col-md-1", "required" => false);
+        $fields["reserved"] = array("label" => "Δεσμευμενα", "className" => "col-md-1", "required" => false);
+        
         //$fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "className" => "col-md-2", "required" => false);        
         $fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "required" => false, "className" => "col-md-2", 'type' => "select", 'dataarray' => $itemMtrsup);
         $fields["cccRef"] = array("label" => "Κωδικός Προμηθευτή", "className" => "col-md-2", "required" => false);
