@@ -107,7 +107,7 @@ $("#triggeroffcanvaschat").click(function () {
 
 
 var url = "/user/chatprocess";
-var from = 'a.dimeas@gmail.com';
+var from = 'admin';
 $("#page-wrap").hide();
 $(".togglechat").click(function () {
     $("#page-wrap").toggle();
