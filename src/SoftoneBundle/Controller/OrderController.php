@@ -1102,8 +1102,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $json["id"] = $result["id"];
             $json["label"] = $brand->getBrand() . " " . $brandsmodel->getBrandModel() . " " . $year . " " . $brandModelType->getBrandModelType() . " " . $brandModelType->getEngine();
             $json["value"] = $result["id"];
-            $jsonArr[] = $json;
+            $jsonArr[$json["label"]] = $json;
         }
+        ksort($jsonArr);
 
         $json = json_encode($jsonArr);
         return new Response(
