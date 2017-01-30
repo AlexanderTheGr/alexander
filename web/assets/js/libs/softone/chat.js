@@ -158,7 +158,7 @@ $(function () {
         }
     });
     // watch textarea for release of key press
-    $('#sidebarChatMessage').keyup(function (e) {
+    $('.sidebarChatMessage').keyup(function (e) {
         if (e.keyCode == 13) {
             var to = $("#user_email").val();
             var text = $(this).val();
