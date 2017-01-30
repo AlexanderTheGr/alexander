@@ -373,6 +373,13 @@ function fororder2(order) {
 
 
 }
+
+$(document).keydown(function(e) {
+    // ESCAPE key pressed
+    if (e.keyCode == 27) {
+        $(".offcanvas-search").click();
+    }
+});
 function fororder(order) {
     if (b == true) {
         orderid = order;
