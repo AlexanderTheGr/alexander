@@ -159,11 +159,11 @@ $(function () {
     });
     // watch textarea for release of key press
     $('#sidebarChatMessage').keyup(function (e) {
-        alert($(this).val())
+        //alert($(this).val())
         if (e.keyCode == 13) {
             var to = $("#user_email").val();
             var text = $(this).val();
-            var maxLength = $(this).attr("maxlength");
+            var maxLength = 100;
             var length = text.length;
             
             // send 
