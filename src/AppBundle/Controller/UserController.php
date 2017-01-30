@@ -242,7 +242,10 @@ class UserController extends Main {
                 break;
         }
 
-        echo json_encode($log);
+        $json = json_encode($log);
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );        
     }
     public function chatLine($from, $to, $message) {
         $message = str_replace("\n", " ", $message);
