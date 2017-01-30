@@ -181,6 +181,7 @@
 			
 			// Refresh for correct scroller size
 			$('.offcanvas').trigger('refresh');
+                        
 		}
 	};
 
