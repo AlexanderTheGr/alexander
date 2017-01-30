@@ -148,7 +148,7 @@ $(function () {
         //all keys including return.  
         if (key >= 33) {
 
-            var maxLength = $(this).attr("maxlength");
+            var maxLength = 100; //$(this).attr("maxlength");
             var length = this.value.length;
 
             // don't allow new content if length is maxed out
