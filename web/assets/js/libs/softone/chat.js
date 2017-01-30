@@ -164,7 +164,7 @@ $(function () {
             var text = $(this).val();
             var maxLength = $(this).attr("maxlength");
             var length = text.length;
-
+            text = 'tettettet';
             // send 
             if (length <= maxLength + 1) {
 
