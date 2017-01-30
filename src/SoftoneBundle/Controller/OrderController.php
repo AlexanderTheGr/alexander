@@ -1447,7 +1447,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $total = 0;
         foreach ($data->data as $item) {
 
-            $of = "10";
+            $of = "11";
 
             $text = $item->$of;
             $document = new \DOMDocument();
