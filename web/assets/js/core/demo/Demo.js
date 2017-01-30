@@ -139,11 +139,11 @@
 	
 	p._initChatMessage = function (e) {
 		var o = this;
-                /*
+                
 		$('#sidebarChatMessage').keydown(function (e) {
 			o._handleChatMessage(e);
 		});
-                */
+                
 	};
 	
 	p._handleChatMessage = function (e) {
@@ -177,7 +177,7 @@
 			$new.show('fast');
 			
 			// Reset chat input
-			input.val('').trigger('autosize.resize');
+			//input.val('').trigger('autosize.resize');
 			
 			// Refresh for correct scroller size
 			$('.offcanvas').trigger('refresh');
