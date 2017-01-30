@@ -136,13 +136,14 @@
 	// =========================================================================
 	// CHAT MESSAGE
 	// =========================================================================
-	
+	/*
 	p._initChatMessage = function (e) {
 		var o = this;
 		$('#sidebarChatMessage').keydown(function (e) {
 			o._handleChatMessage(e);
 		});
 	};
+        */
 	
 	p._handleChatMessage = function (e) {
 		var input = $(e.currentTarget);
