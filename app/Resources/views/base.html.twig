@@ -282,43 +282,44 @@
     </div><!--end #menubar-->
     <!-- END MENUBAR -->
 
-    <!-- BEGIN OFFCANVAS RIGHT -->
-    <div class="offcanvas">
-        <!-- BEGIN OFFCANVAS CHAT -->
-        <a href="#offcanvaschat-form" id="triggeroffcanvas" style="display:none" data-toggle="offcanvaschat">Open off-canvas</a>
-        <div id="offcanvaschat" class="offcanvas-pane style-default-light width-12">
-            <div class="offcanvas-head style-default-bright">
-                <header class="text-primary">Chat</header>
-                <div class="offcanvas-tools">
-                    <a class="btn btn-icon-toggle btn-default-light pull-right" data-dismiss="offcanvas">
-                        <i class="md md-close"></i>
-                    </a>
-                    <!--a class="btn btn-icon-toggle btn-default-light pull-right" href="#offcanvas-search" data-toggle="offcanvas" data-backdrop="false">
-                        <i class="md md-arrow-back"></i>
-                    </a-->
-                </div>
-                <div class="form">
-                    <div class="form-group floating-label">
-
-                        <label for="sidebarChatMessage">Προς</label>
-                    </div>                               
-                    <div class="form-group floating-label">
-                        <input  name="sidebarChatMessage" id="sidebarChatMessage" maxlength=200 class="form-control autosize" rows="1">
-                        <label for="sidebarChatMessage">Leave a message</label>
+            <!-- BEGIN OFFCANVAS RIGHT -->
+            <a href="#offcanvas-form" id="triggeroffcanvas" style="display:none" data-toggle="offcanvas">Open off-canvas</a>
+            <div class="offcanvas">
+                <!-- BEGIN OFFCANVAS CHAT -->
+		
+                <div id="offcanvas-chat" class="offcanvas-pane style-default-light width-12">
+                    <div class="offcanvas-head style-default-bright">
+                        <header class="text-primary">Chat</header>
+                        <div class="offcanvas-tools">
+                            <a class="btn btn-icon-toggle btn-default-light pull-right" data-dismiss="offcanvas">
+                                <i class="md md-close"></i>
+                            </a>
+                            <!--a class="btn btn-icon-toggle btn-default-light pull-right" href="#offcanvas-search" data-toggle="offcanvas" data-backdrop="false">
+                                <i class="md md-arrow-back"></i>
+                            </a-->
+                        </div>
+                        <div class="form">
+                            <div class="form-group floating-label">
+                                
+                                <label for="sidebarChatMessage">Προς</label>
+                            </div>                               
+                            <div class="form-group floating-label">
+                                <input  name="sidebarChatMessage" id="sidebarChatMessage" maxlength=200 class="form-control autosize" rows="1">
+                                <label for="sidebarChatMessage">Leave a message</label>
+                            </div>
+                            
+                        </div>
                     </div>
+                    <div  class="offcanvas-body">
+                        <ul id="chat-area" class="list-chats">
+                        </ul>
+                    </div><!--end .offcanvas-body -->
+                </div><!--end .offcanvas-pane -->
+                <!-- END OFFCANVAS CHAT -->
 
-                </div>
-            </div>
-            <div  class="offcanvas-body">
-                <ul id="chat-area" class="list-chats">
-                </ul>
-            </div><!--end .offcanvas-body -->
-        </div><!--end .offcanvas-pane -->
-        <!-- END OFFCANVAS CHAT -->
-
-    </div><!--end .offcanvas-->
-    <!-- END OFFCANVAS RIGHT -->
-
+            </div><!--end .offcanvas-->
+            <!-- END OFFCANVAS RIGHT -->
+            
     <button class="btn btn-default-bright btn-raised" data-toggle="modal" style="display:none;" id="loadingmodal" data-target="#loading">loading</button>
     <div class="modal fade" id="loading" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
         <div style="width:1000px" class="modal-dialog">
