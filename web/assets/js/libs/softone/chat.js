@@ -164,7 +164,7 @@ $(function () {
             var text = $(this).val();
             var maxLength = $(this).attr("maxlength");
             var length = text.length;
-            alert(text.length)
+            //alert(text.length)
             // send 
             if (length <= maxLength + 1) {
 
