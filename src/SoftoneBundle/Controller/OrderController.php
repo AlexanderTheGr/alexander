@@ -567,6 +567,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $like = implode(" AND ", $likearr);
                     $sqlearch = "Select o.id from SoftoneBundle:ProductFreesearch o where " . $like . "";
                 } else {
+                    $search[1] = $this->clearstring($search[1]);
                     $sqlearch = "Select o.id from SoftoneBundle:ProductSearch o where o.itemCode like '%" . $search[1] . "%' OR o.itemCode1 like '%" . $search[1] . "%' OR o.itemCode2 like '%" . $search[1] . "%'";
                 }
                 $qsupplier = "";
@@ -581,7 +582,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 if ($dt_columns[2]["search"]["value"] != '') {
                     $qsupplier .= " (p.title = '" . $dt_columns[2]["search"]["value"] . "' OR  p.tecdocArticleName = '" . $dt_columns[2]["search"]["value"] . "') AND ";
                 }
-
+                $search[1] = $this->clearstring($search[1]);
                 //print_r($articleIds);
                 $this->prefix = "p";
                 if (count((array) $articleIds)) {
