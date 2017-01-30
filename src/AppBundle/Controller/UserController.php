@@ -249,6 +249,6 @@ class UserController extends Main {
     }
     public function chatLine($from, $to, $message) {
         $message = str_replace("\n", " ", $message);
-        return '<li from="'.$from.'"  to="'.$to.'" class="chatpossition"><div class="chat"><div class="chat-avatar"><img class="img-circle" src="' . Yii::app()->request->baseUrl . '/assets/img/avatar1.jpg?1403934956" alt="" /></div><div class="chat-body"><strong>' . $from . ' -> <i>'.$to.'</i></strong>' . $message . '<small>' . date("d/m/Y H:i:s") . '</small></div></div><!--end .chat --></li>';
+        return '<li from="'.$from.'"  to="'.$to.'" class="chatpossition"><div class="chat"><div class="chat-avatar"><img class="img-circle" src="/assets/img/avatar1.jpg?1403934956" alt="" /></div><div class="chat-body"><strong>' . $from . ' -> <i>'.$to.'</i></strong>' . $message . '<small>' . date("d/m/Y H:i:s") . '</small></div></div><!--end .chat --></li>';
     }    
 }
