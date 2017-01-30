@@ -167,7 +167,6 @@ $(function () {
             //alert(text.length)
             // send 
             if (length <= maxLength + 1) {
-
                 chat.send(text, from, to);
                 $(this).val("");
             } else {
