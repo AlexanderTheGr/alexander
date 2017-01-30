@@ -161,10 +161,10 @@ $(function () {
     $('#sidebarChatMessage').keyup(function (e) {
         if (e.keyCode == 13) {
             var to = $("#user_email").val();
-            var text = $(this).val();
+            var text = $('#sidebarChatMessage').val();
             var maxLength = $(this).attr("maxlength");
             var length = text.length;
-            text = 'tettettet';
+            //text = 'tettettet';
             // send 
             if (length <= maxLength + 1) {
 
