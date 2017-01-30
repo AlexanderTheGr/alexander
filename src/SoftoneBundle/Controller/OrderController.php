@@ -318,6 +318,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $dtparams[] = array("name" => "Κωδικός Είδους", "index" => 'product:erpCode');
         $dtparams[] = array("name" => "Ράφι", "index" => 'product:itemMtrplace');
         $dtparams[] = array("name" => "Supplier", "index" => 'product:supplierId:title');
+        $dtparams[] = array("name" => "Αποθηκη", "function" => 'getApothiki', 'search' => 'text');
         $dtparams[] = array("name" => "Qty", "input" => "text", "index" => 'qty');
         $dtparams[] = array("name" => "Τιμή Καταλόγου", "input" => "text", "index" => 'price');
         $dtparams[] = array("name" => "Έκπτωση", "input" => "text", "index" => 'disc1prc');
@@ -1468,6 +1469,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $json[5] = "";
         $json[6] = "";
         $json[7] = "";
+        $json[8] = "";
         $json[8] = "";
         $json[9] = "Total";
         $json[10] = $total;
