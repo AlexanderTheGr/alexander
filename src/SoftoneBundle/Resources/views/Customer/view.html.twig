@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+<button style='float:right' data-ref='0' id="btn-get-new" class="btn btn-primary parse-json" data-target="basic">New Rule</button>       
 {{ render(controller('SoftoneBundle:Customer:content', { 'ctrl': ctrl,'app':app,'url':url,'content':content }) ) }}
 {% endblock %}
 {% block stylesheets %}
@@ -36,7 +37,7 @@
             titles[{{ key }}] = "{{rule.title}}";
             prices[{{ key }}] = "{{rule.price}}";
     {% endfor %}    
-            $dialog.customergrouprule = $("<div style='z-index:100000' class='card'></div>")
+            $dialog.customerrule = $("<div style='z-index:100000' class='card'></div>")
             .dialog({
             autoOpen: false,
                     resizable: false,
@@ -46,7 +47,7 @@
                     modal: true
             });
             var ref = 0;
-            $(".dt_row_customergrouprule").live("click", function(){
+            $(".dt_row_customerrule").live("click", function(){
     rule(this);
     })
             $("#btn-get-new").live("click", function(){
@@ -60,9 +61,9 @@
     });
             function rule(obj) {
             ref = $(obj).attr("data-ref");
-                    $dialog.customergrouprule.dialog({title:titles[ref]});
-                    //$dialog.customergrouprule.title(titles[ref]);
-                    $dialog.customergrouprule.html('<button id="btn-get" class="btn btn-primary parse-json" data-target="basic">Save Rule</button> <button id="btn-delete" class="btn btn-danger parse-json" data-target="basic">Delete Rule</button> <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:' + ref + '" class="control-label">Title</label><input value="' + titles[ref] + '" class="form-control" id="title" name="SoftoneBundle:Customergroup:id:' + ref + '" formly-custom-validation="" type=""></div></div>   <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:' + ref + '" class="control-label">Discount</label><input value="' + discounts[ref] + '" class="form-control" id="discount" name="SoftoneBundle:Customergroup:id:' + ref + '" formly-custom-validation="" type=""></div></div>  <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:' + ref + '" class="control-label">Price</label><input value="' + prices[ref] + '" class="form-control" id="price" name="SoftoneBundle:Customergroup:id:' + ref + '" formly-custom-validation="" type=""></div></div>   <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:' + ref + '" class="control-label">Sortorder</label><input value="' + sortorders[ref] + '" class="form-control" id="sortorder" name="SoftoneBundle:Customergroup:id:' + ref + '" formly-custom-validation="" type=""></div></div>  <div id="builder-basic"></div>');
+                    $dialog.customerrule.dialog({title:titles[ref]});
+                    //$dialog.customerrule.title(titles[ref]);
+                    $dialog.customerrule.html('<button id="btn-get" class="btn btn-primary parse-json" data-target="basic">Save Rule</button> <button id="btn-delete" class="btn btn-danger parse-json" data-target="basic">Delete Rule</button> <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:' + ref + '" class="control-label">Title</label><input value="' + titles[ref] + '" class="form-control" id="title" name="SoftoneBundle:Customergroup:id:' + ref + '" formly-custom-validation="" type=""></div></div>   <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:' + ref + '" class="control-label">Discount</label><input value="' + discounts[ref] + '" class="form-control" id="discount" name="SoftoneBundle:Customergroup:id:' + ref + '" formly-custom-validation="" type=""></div></div>  <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:' + ref + '" class="control-label">Price</label><input value="' + prices[ref] + '" class="form-control" id="price" name="SoftoneBundle:Customergroup:id:' + ref + '" formly-custom-validation="" type=""></div></div>   <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:' + ref + '" class="control-label">Sortorder</label><input value="' + sortorders[ref] + '" class="form-control" id="sortorder" name="SoftoneBundle:Customergroup:id:' + ref + '" formly-custom-validation="" type=""></div></div>  <div id="builder-basic"></div>');
                     var rules_basic = rules_basics[ref];
                     $('#builder-basic').queryBuilder({
             plugins: ['bt-tooltip-errors'],
@@ -111,7 +112,7 @@
                     }],
                     rules: rules_basic
             });
-                    $dialog.customergrouprule.dialog("open");
+                    $dialog.customerrule.dialog("open");
                     setTimeout(function(){
                     var w = jQuery(".rule-value-container select").width();
                             jQuery(".rule-value-container select").chosen({width: "300px"});
@@ -127,8 +128,8 @@
     var data = {};
             data.id = ref;
             $("#loaderer").show();
-            $dialog.customergrouprule.dialog("close");
-            $.post("/customergroup/deleterule", data, function (result) {
+            $dialog.customerrule.dialog("close");
+            $.post("/customer/deleterule", data, function (result) {
             $("#loaderer").hide();
                     var table = dt_tables["ctrlgettabs"];
                     table.fnFilter();
@@ -159,8 +160,8 @@
             data.sortorder = $("#sortorder").val();
             data.rule = result;
             $("#loaderer").show();
-            $dialog.customergrouprule.dialog("close");
-            $.post("/customergroup/saverule", data, function (result) {
+            $dialog.customerrule.dialog("close");
+            $.post("/customer/saverule", data, function (result) {
             $("#loaderer").hide();
                     if (ref == 0) {
             rules_basics[result.id] = rules_basics[ref];
