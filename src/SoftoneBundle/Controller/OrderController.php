@@ -21,9 +21,16 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     var $newentity = '';
 
     public function setfullytrans() {
-        return;
+        //return;
+        
+        $sql = "SELECT max(reference) as ref  FROM  `softone_order` WHERE id IN (SELECT s_order FROM softone_orderitem)";
+        $connection = $em->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $data = $statement->fetch();
+        $findoc = $data["ref"] - 20;
         $em = $this->getDoctrine()->getManager();
-        $sql = "SELECT FINDOC,FULLYTRANSF FROM FINDOC WHERE FULLYTRANSF = 1";
+        $sql = "SELECT FINDOC,FULLYTRANSF FROM FINDOC WHERE FULLYTRANSF = 1 AND FINDOC > ".$findoc;
         $params["fSQL"] = $sql;
         $softone = new Softone();
         $datas = $softone->createSql($params);
