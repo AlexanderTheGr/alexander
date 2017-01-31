@@ -22,7 +22,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
     public function setfullytrans() {
         //return;
-        
+        $em = $this->getDoctrine()->getManager();
         $sql = "SELECT max(reference) as ref  FROM  `softone_order` WHERE id IN (SELECT s_order FROM softone_orderitem)";
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
