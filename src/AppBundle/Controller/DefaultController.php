@@ -21,6 +21,25 @@ class DefaultController extends Controller {
     }
 
     /**
+     * @Route("/chat", name="chat")
+     */
+    public function chat() {
+        $users = $this->getDoctrine()
+                        ->getRepository("AppBundle:User")->findAll();
+        $usersarr = "<select class='form-control' id='user_email' name='user_email'>";
+        $usersarr .= "<option value=0>ALL</option>";
+        foreach ($users as $user) {
+            $usersarr .= "<option value='" . $user->getUsername() . "'>" . $user->getUsername() . "</option>"; //array("value" => (string) $supplier->getReference(), "name" => $supplier->getSupplierName()); // $supplier->getSupplierName();
+        }
+        $usersarr .= "</select>";
+        
+        return $this->render('default/chat.html.twig', array(
+                    'usersarr' => $usersarr,
+                    'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
+        ));
+    }
+
+    /**
      * @Route("/alerts", name="alerts")
      */
     public function alerts() {
