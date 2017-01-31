@@ -3,11 +3,13 @@
 namespace SoftoneBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Controller\Main;
 use SoftoneBundle\Entity\Softone as Softone;
 use SoftoneBundle\Entity\Customer as Customer;
+use SoftoneBundle\Entity\Customerrule as Customerrule;
 
 class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
