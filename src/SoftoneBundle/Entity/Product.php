@@ -2533,6 +2533,15 @@ class Product extends Entity {
                 $price = $rule->getPrice();
             }
         }
+        $rules = $customer->loadCustomerrules()->getRules();
+        $sortorder = 0;
+        foreach ((array)$rules as $rule) {
+            if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
+                $sortorder = $rule->getSortorder();
+                $discount = $rule->getVal();
+                $price = $rule->getPrice();
+            }
+        }        
         //$pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
         //$price = $price > 0 ? $price : $this->$pricefield;
         //$discountedPrice = $this->$pricefield * (1 - $discount / 100 );
@@ -2552,6 +2561,15 @@ class Product extends Entity {
                 $price = $rule->getPrice();
             }
         }
+        $rules = $customer->loadCustomerrules()->getRules();
+        $sortorder = 0;
+        foreach ((array)$rules as $rule) {
+            if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
+                $sortorder = $rule->getSortorder();
+                $discount = $rule->getVal();
+                $price = $rule->getPrice();
+            }
+        }        
         $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
         $price = $price > 0 ? $price : $this->$pricefield;
         $discountedPrice = $this->$pricefield * (1 - $discount / 100 );
