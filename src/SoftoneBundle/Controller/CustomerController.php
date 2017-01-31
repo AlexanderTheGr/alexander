@@ -562,7 +562,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ($session->get('params_gettabs_' . $id) as $param) {
             $this->addField($param);
         }
-        $this->repository = 'SoftoneBundle:Customerprule';
+        $this->repository = 'SoftoneBundle:Customerrule';
         $this->q_and[] = $this->prefix . ".customer = '" . $id . "'";
         $json = $this->datatable();
 
