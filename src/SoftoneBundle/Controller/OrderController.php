@@ -21,6 +21,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     var $newentity = '';
 
     public function setfullytrans() {
+        return;
         $em = $this->getDoctrine()->getManager();
         $sql = "SELECT FINDOC,FULLYTRANSF FROM FINDOC WHERE FULLYTRANSF = 1";
         $params["fSQL"] = $sql;
