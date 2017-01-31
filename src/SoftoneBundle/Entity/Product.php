@@ -2494,15 +2494,17 @@ class Product extends Entity {
         $sortorder = 0;
         $discount = 0;
         $price = 0;
+        $ruled = false;
         foreach ((array) $rules as $rule) {
             if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
                 $sortorder = $rule->getSortorder();
                 $discount = $rule->getVal();
                 $price = $rule->getPrice();
+                $ruled = true;
             }
         }
 
-        if ($discount == 0) {
+        if (!$ruled) {
             $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
             $sortorder = 0;
             foreach ($rules as $rule) {
@@ -2528,15 +2530,17 @@ class Product extends Entity {
         $sortorder = 0;
         $discount = 0;
         $price = 0;
+        $ruled = false;
         foreach ((array) $rules as $rule) {
             if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
                 $sortorder = $rule->getSortorder();
                 $discount = $rule->getVal();
                 $price = $rule->getPrice();
+                $ruled = true;
             }
         }
 
-        if ($discount == 0) {
+        if (!$ruled) {
             $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
             $sortorder = 0;
             foreach ($rules as $rule) {
@@ -2560,15 +2564,17 @@ class Product extends Entity {
         $sortorder = 0;
         $discount = 0;
         $price = 0;
+        $ruled = false;
         foreach ((array) $rules as $rule) {
             if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
                 $sortorder = $rule->getSortorder();
                 $discount = $rule->getVal();
                 $price = $rule->getPrice();
+                $ruled = true;
             }
         }
 
-        if ($discount == 0) {
+        if (!$ruled) {
             $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
             $sortorder = 0;
             foreach ($rules as $rule) {
