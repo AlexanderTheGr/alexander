@@ -552,7 +552,9 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
                 //echo $sql . "<BR>";
             }
     }
-
+    /**
+     * @Route("/customer/getrules/{id}")
+     */
     public function getRulesAction($id) {
         $session = new Session();
         foreach ($session->get('params_gettabs_' . $id) as $param) {
