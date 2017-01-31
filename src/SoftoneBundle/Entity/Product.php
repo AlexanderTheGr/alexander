@@ -2490,6 +2490,10 @@ class Product extends Entity {
     }
 
     function getGroupedDiscountPrice(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
+        
+        
+        
+        
         $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
         $sortorder = 0;
         foreach ($rules as $rule) {
