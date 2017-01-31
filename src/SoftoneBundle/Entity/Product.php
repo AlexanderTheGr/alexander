@@ -1764,7 +1764,7 @@ class Product extends Entity {
 
         $this->setTecdocArticleId($out->articleId);
         $this->setTecdocArticleName($out->articleName);
-        
+
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
@@ -1798,7 +1798,7 @@ class Product extends Entity {
             //echo $out;
             //echo 'sssssssssss';
         } else {
-            
+
             $postparams = array(
                 "articleNumber" => $this->tecdocCode,
                 "brandno" => $this->getTecdocSupplierId()->getId()
@@ -2490,29 +2490,28 @@ class Product extends Entity {
     }
 
     function getGroupedDiscountPrice(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
-        
-        
-        
-        
         $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
         $sortorder = 0;
-        foreach ($rules as $rule) {
-            if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
-                $sortorder = $rule->getSortorder();
-                $discount = $rule->getVal();
-                $price = $rule->getPrice();
+        if (count($rules) > 0) {
+            foreach ((array) $rules as $rule) {
+                if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
+                    $sortorder = $rule->getSortorder();
+                    $discount = $rule->getVal();
+                    $price = $rule->getPrice();
+                }
+            }
+        } else {
+            $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
+            $sortorder = 0;
+            foreach ($rules as $rule) {
+                if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
+                    $sortorder = $rule->getSortorder();
+                    $discount = $rule->getVal();
+                    $price = $rule->getPrice();
+                }
             }
         }
-        $rules = $customer->loadCustomerrules()->getRules();
-        $sortorder = 0;
-        foreach ((array)$rules as $rule) {
-            if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
-                $sortorder = $rule->getSortorder();
-                $discount = $rule->getVal();
-                $price = $rule->getPrice();
-            }
-        }
-        
+
         //loadCustomerrules
         $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
         $price = $price > 0 ? $price : $this->$pricefield;
@@ -2525,23 +2524,26 @@ class Product extends Entity {
     function getGroupedDiscount(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
         $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
         $sortorder = 0;
+        if (count($rules) > 0) {
+            foreach ((array) $rules as $rule) {
+                if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
+                    $sortorder = $rule->getSortorder();
+                    $discount = $rule->getVal();
+                    $price = $rule->getPrice();
+                }
+            }
+        } else {
 
-        foreach ($rules as $rule) {
-            if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
-                $sortorder = $rule->getSortorder();
-                $discount = $rule->getVal();
-                $price = $rule->getPrice();
+            $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
+            $sortorder = 0;
+            foreach ($rules as $rule) {
+                if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
+                    $sortorder = $rule->getSortorder();
+                    $discount = $rule->getVal();
+                    $price = $rule->getPrice();
+                }
             }
         }
-        $rules = $customer->loadCustomerrules()->getRules();
-        $sortorder = 0;
-        foreach ((array)$rules as $rule) {
-            if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
-                $sortorder = $rule->getSortorder();
-                $discount = $rule->getVal();
-                $price = $rule->getPrice();
-            }
-        }        
         //$pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
         //$price = $price > 0 ? $price : $this->$pricefield;
         //$discountedPrice = $this->$pricefield * (1 - $discount / 100 );
@@ -2553,23 +2555,26 @@ class Product extends Entity {
     function getDiscount(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
         $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
         $sortorder = 0;
-
-        foreach ($rules as $rule) {
-            if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
-                $sortorder = $rule->getSortorder();
-                $discount = $rule->getVal();
-                $price = $rule->getPrice();
+        if (count($rules) > 0) {
+            foreach ((array) $rules as $rule) {
+                if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
+                    $sortorder = $rule->getSortorder();
+                    $discount = $rule->getVal();
+                    $price = $rule->getPrice();
+                }
+            }
+        } else {
+            $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
+            $sortorder = 0;
+            foreach ($rules as $rule) {
+                if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
+                    $sortorder = $rule->getSortorder();
+                    $discount = $rule->getVal();
+                    $price = $rule->getPrice();
+                }
             }
         }
-        $rules = $customer->loadCustomerrules()->getRules();
-        $sortorder = 0;
-        foreach ((array)$rules as $rule) {
-            if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
-                $sortorder = $rule->getSortorder();
-                $discount = $rule->getVal();
-                $price = $rule->getPrice();
-            }
-        }        
+
         $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
         $price = $price > 0 ? $price : $this->$pricefield;
         $discountedPrice = $this->$pricefield * (1 - $discount / 100 );
