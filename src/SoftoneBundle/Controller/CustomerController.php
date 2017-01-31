@@ -596,7 +596,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $price = $request->request->get("price");
         $group = $request->request->get("group");
         if ($id == 0) {
-            $customerrule = new Customergrouprule;
+            $customerrule = new Customerrule;
             $this->initialazeNewEntity($entity);
             $customergroup = $this->getDoctrine()
                     ->getRepository($this->repository)
