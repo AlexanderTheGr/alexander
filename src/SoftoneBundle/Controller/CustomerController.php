@@ -76,6 +76,66 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         if ($entity) {
             $pagename = $entity->getCustomerName();
         }
+        
+        
+        $productsales = $this->getDoctrine()->getRepository("SoftoneBundle:ProductSale")->findAll();
+        $productsaleArr = array();
+        foreach ($productsales as $productsale) {
+            $productsaleArr[$productsale->getId()] = $productsale->getTitle();
+        }
+        $productsalejson = json_encode($productsaleArr);
+
+        $suppliers = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")->findAll();
+        $supplierArr = array();
+        foreach ($suppliers as $supplier) {
+            $supplierArr[$supplier->getId()] = $supplier->getTitle();
+        }
+        $supplierjson = json_encode($supplierArr);
+
+        $categories = $this->getDoctrine()->getRepository("SoftoneBundle:Category")->findBy(array("parent" => 0));
+        $categoriesArr = array();
+        foreach ($categories as $category) {
+            //$CategoryLang = $this->getDoctrine()->getRepository("SoftoneBundle:CategoryLang")->findOneBy(array("category" => $category));
+            //$category->setSortcode($category->getId()."00000");
+            //$this->flushpersist($category);
+            $categoriesArr[$category->getSortcode()] = $category->getName();
+            $categories2 = $this->getDoctrine()->getRepository("SoftoneBundle:Category")->findBy(array("parent" => $category->getId()));
+            foreach ($categories2 as $category2) {
+                //$CategoryLang = $this->getDoctrine()->getRepository("SoftoneBundle:CategoryLang")->findOneBy(array("category" => $category2));
+                $categoriesArr[$category2->getSortcode()] = "-- " . $category2->getName();
+                //$category2->setSortcode($category->getId().$category2->getId());
+                //$this->flushpersist($category2);
+            }
+        }
+        $categoryjson = json_encode($categoriesArr);
+        $grouprules = $entity->loadCustomerrules()->getRules();
+        $rules = array();
+        foreach ($grouprules as $grouprule) {
+            if ($grouprule->getGroup()->getId() == $id) {
+                $rules[$grouprule->getId()]["rule"] = $grouprule->getRule();
+                $rules[$grouprule->getId()]["val"] = $grouprule->getVal();
+                $rules[$grouprule->getId()]["sortorder"] = $grouprule->getSortorder();
+                $rules[$grouprule->getId()]["title"] = $grouprule->getTitle();
+                $rules[$grouprule->getId()]["price"] = $grouprule->getPrice();
+            }
+        }
+        return $this->render('SoftoneBundle:Customer:view.html.twig', array(
+                    'pagename' => $pagename,
+                    'url' => '/customer/save',
+                    'buttons' => $buttons,
+                    'ctrl' => $this->generateRandomString(),
+                    'app' => $this->generateRandomString(),
+                    'content' => $content,
+                    'rules' => $rules,
+                    'group' => $id,
+                    'supplierjson' => $supplierjson,
+                    "categoryjson" => $categoryjson,
+                    "productsalejson" => $productsalejson,
+                    'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
+        ));    
+        
+        
+        /*
         return $this->render('SoftoneBundle:Product:view.html.twig', array(
                     'pagename' => $pagename,
                     'url' => '/customer/save',
@@ -85,6 +145,8 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
                     'content' => $content,
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
+         * 
+         */
     }
 
     /**

@@ -1144,7 +1144,6 @@ class Customer extends Entity {
      */
     private $customerIrsdata;
 
-
     /**
      * Set customerIrsdata
      *
@@ -1152,8 +1151,7 @@ class Customer extends Entity {
      *
      * @return Customer
      */
-    public function setCustomerIrsdata($customerIrsdata)
-    {
+    public function setCustomerIrsdata($customerIrsdata) {
         $this->customerIrsdata = $customerIrsdata;
 
         return $this;
@@ -1164,15 +1162,14 @@ class Customer extends Entity {
      *
      * @return string
      */
-    public function getCustomerIrsdata()
-    {
+    public function getCustomerIrsdata() {
         return $this->customerIrsdata;
     }
+
     /**
      * @var string
      */
     private $customerJobtypetrd;
-
 
     /**
      * Set customerJobtypetrd
@@ -1181,8 +1178,7 @@ class Customer extends Entity {
      *
      * @return Customer
      */
-    public function setCustomerJobtypetrd($customerJobtypetrd)
-    {
+    public function setCustomerJobtypetrd($customerJobtypetrd) {
         $this->customerJobtypetrd = $customerJobtypetrd;
 
         return $this;
@@ -1193,8 +1189,31 @@ class Customer extends Entity {
      *
      * @return string
      */
-    public function getCustomerJobtypetrd()
-    {
+    public function getCustomerJobtypetrd() {
         return $this->customerJobtypetrd;
     }
+
+    private $rules = array();
+
+    public function loadCustomerrules() {
+        //if ($this->reference)
+        if (count($this->rules) > 0)
+            return $this;
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $grouprules = $em->getRepository('SoftoneBundle:Customerrule')->findBy(array("customer" => $this), array('sortorder' => 'ASC'));
+        foreach ((array) $grouprules as $grouprule) {
+            $this->rules[] = $grouprule;
+        }
+
+        return $this;
+    }
+
+    public function getRules() {
+        return $this->rules;
+    }
+
 }

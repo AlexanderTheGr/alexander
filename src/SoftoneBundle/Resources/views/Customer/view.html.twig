@@ -10,5 +10,173 @@
 <script>
     $(".{{ctrl}}").alexTabs("{{app}}", "{{ctrl}}", "{{url}}","{{content|json_encode()}}");
 </script>
+<script>
+            var $dialog = {};
+            var rules_basics = [];
+            var discounts = [];
+            var prices = [];
+            var sortorders = [];
+            var titles = [];
+            rules_basics_new = {
+            condition: 'AND',
+                    rules: [{
+                    id: 'code',
+                            operator: 'equal',
+                            value: ""
+                    }]
+            };
+            rules_basics[0] = rules_basics_new;
+            discounts[0] = 0;
+            prices[0] = 0;
+            sortorders[0] = 0;
+            titles[0] = "";{% for key,rule in rules %}
+            rules_basics[{{ key }}] = {{rule.rule | raw}};
+            discounts[{{ key }}] = "{{rule.val}}";
+            sortorders[{{ key }}] = "{{rule.sortorder}}";
+            titles[{{ key }}] = "{{rule.title}}";
+            prices[{{ key }}] = "{{rule.price}}";
+    {% endfor %}    
+            $dialog.customergrouprule = $("<div style='z-index:100000' class='card'></div>")
+            .dialog({
+            autoOpen: false,
+                    resizable: false,
+                    draggable: false,
+                    width: "60%",
+                    height: 800,
+                    modal: true
+            });
+            var ref = 0;
+            $(".dt_row_customergrouprule").live("click", function(){
+    rule(this);
+    })
+            $("#btn-get-new").live("click", function(){
+    rule(this);
+    })
+            $('#btn-reset').live('click', function () {
+    $('#builder-basic').queryBuilder('reset');
+    });
+            $('#btn-set').live('click', function () {
+    $('#builder-basic').queryBuilder('setRules', rules_basic);
+    });
+            function rule(obj) {
+            ref = $(obj).attr("data-ref");
+                    $dialog.customergrouprule.dialog({title:titles[ref]});
+                    //$dialog.customergrouprule.title(titles[ref]);
+                    $dialog.customergrouprule.html('<button id="btn-get" class="btn btn-primary parse-json" data-target="basic">Save Rule</button> <button id="btn-delete" class="btn btn-danger parse-json" data-target="basic">Delete Rule</button> <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:' + ref + '" class="control-label">Title</label><input value="' + titles[ref] + '" class="form-control" id="title" name="SoftoneBundle:Customergroup:id:' + ref + '" formly-custom-validation="" type=""></div></div>   <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:' + ref + '" class="control-label">Discount</label><input value="' + discounts[ref] + '" class="form-control" id="discount" name="SoftoneBundle:Customergroup:id:' + ref + '" formly-custom-validation="" type=""></div></div>  <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:' + ref + '" class="control-label">Price</label><input value="' + prices[ref] + '" class="form-control" id="price" name="SoftoneBundle:Customergroup:id:' + ref + '" formly-custom-validation="" type=""></div></div>   <div class="form-group"><div><label for="SoftoneBundle:Customergroup:id:' + ref + '" class="control-label">Sortorder</label><input value="' + sortorders[ref] + '" class="form-control" id="sortorder" name="SoftoneBundle:Customergroup:id:' + ref + '" formly-custom-validation="" type=""></div></div>  <div id="builder-basic"></div>');
+                    var rules_basic = rules_basics[ref];
+                    $('#builder-basic').queryBuilder({
+            plugins: ['bt-tooltip-errors'],
+                    filters: [{
+                    id: 'name',
+                            label: 'Name',
+                            type: 'string'
+                    }, {
+                    id: 'supplier',
+                            label: 'Supplier',
+                            type: 'integer',
+                            input: 'select',
+                            values:{{supplierjson | raw}},
+                            /*operators: ['equal', 'not_equal', 'in', 'not_in', 'is_null', 'is_not_null']*/
+                            operators: ['equal', 'not_equal']
+                    },
+                    {
+                    id: 'productsale',
+                            label: 'Προσφορά',
+                            type: 'integer',
+                            input: 'select',
+                            values:{{productsalejson | raw}},
+                            /*operators: ['equal', 'not_equal', 'in', 'not_in', 'is_null', 'is_not_null']*/
+                            operators: ['equal', 'not_equal']
+                    },
+                    {
+                    id: 'category',
+                            label: 'Category',
+                            type: 'integer',
+                            input: 'select',
+                            values:{{categoryjson | raw}},
+                            operators: ['equal', 'not_equal']
+                    }, {
+                    id: 'default',
+                            label: 'Default',
+                            type: 'integer',
+                            input: 'radio',
+                            values: {
+                            1: 'Yes'
+                            },
+                            operators: ['equal']
+                    }, {
+                    id: 'code',
+                            label: 'ERP Code',
+                            type: 'string'
+                    }],
+                    rules: rules_basic
+            });
+                    $dialog.customergrouprule.dialog("open");
+                    setTimeout(function(){
+                    var w = jQuery(".rule-value-container select").width();
+                            jQuery(".rule-value-container select").chosen({width: "300px"});
+                    }, 10)
+            }
+    $('.rule-filter-container').live('change', function () {
+    setTimeout(function(){
+    var w = jQuery(".rule-value-container select").width();
+            jQuery(".rule-value-container select").chosen({width: "300px"});
+    }, 10)
+    })
+            $('#btn-delete').live('click', function () {
+    var data = {};
+            data.id = ref;
+            $("#loaderer").show();
+            $dialog.customergrouprule.dialog("close");
+            $.post("/customergroup/deleterule", data, function (result) {
+            $("#loaderer").hide();
+                    var table = dt_tables["ctrlgettabs"];
+                    table.fnFilter();
+            })
+    })
+            $("#price").live("change", function(){
+    $("#discount").val("0.00")
+    })
+            $("#discount").live("change", function(){
+    $("#price").val("0.00")
+    })
+            $('#btn-get').live('click', function () {
+    var result = $('#builder-basic').queryBuilder('getRules');
+            if (!$.isEmptyObject(result)) {
+    //alert(JSON.stringify(result, null, 2));
 
+    rules_basics[ref] = result;
+            discounts[ref] = $("#discount").val();
+            titles[ref] = $("#title").val();
+            sortorders[ref] = $("#sortorder").val();
+            prices[ref] = $("#price").val();
+            var data = {};
+            data.id = ref;
+            data.group = '{{group}}';
+            data.title = $("#title").val();
+            data.val = $("#discount").val();
+            data.price = $("#price").val();
+            data.sortorder = $("#sortorder").val();
+            data.rule = result;
+            $("#loaderer").show();
+            $dialog.customergrouprule.dialog("close");
+            $.post("/customergroup/saverule", data, function (result) {
+            $("#loaderer").hide();
+                    if (ref == 0) {
+            rules_basics[result.id] = rules_basics[ref];
+                    discounts[result.id] = discounts[ref];
+                    sortorders[result.id] = sortorders[ref];
+                    prices[result.id] = prices[ref];
+                    titles[result.id] = titles[ref];
+                    discounts[0] = 0;
+                    rules_basics[0] = rules_basics_new;
+            }
+            var table = dt_tables["ctrlgettabs"];
+                    table.fnFilter();
+            })
+
+
+    }
+    });
+    </script>
 {% endblock %}
