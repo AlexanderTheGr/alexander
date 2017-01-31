@@ -598,10 +598,10 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         if ($id == 0) {
             $customerrule = new Customerrule;
             $this->initialazeNewEntity($entity);
-            $customergroup = $this->getDoctrine()
+            $customer = $this->getDoctrine()
                     ->getRepository($this->repository)
                     ->find($group);
-            $customerrule->setGroup($customergroup);
+            $customerrule->setCustomer($customer);
         } else {
             $customerrule = $this->getDoctrine()->getRepository('SoftoneBundle:Customerrule')->find($id);
         }
