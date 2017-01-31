@@ -583,5 +583,63 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+    /**
+     * @Route("/customer/saverule")
+     */
+    function saveruleAction(Request $request) {
+
+        $id = $request->request->get("id");
+        $rule = $request->request->get("rule");
+        $val = $request->request->get("val");
+        $sortorder = $request->request->get("sortorder");
+        $title = $request->request->get("title");
+        $price = $request->request->get("price");
+        $group = $request->request->get("group");
+        if ($id == 0) {
+            $customerrule = new Customergrouprule;
+            $this->initialazeNewEntity($entity);
+            $customergroup = $this->getDoctrine()
+                    ->getRepository($this->repository)
+                    ->find($group);
+            $customerrule->setGroup($customergroup);
+        } else {
+            $customerrule = $this->getDoctrine()->getRepository('SoftoneBundle:Customerrule')->find($id);
+        }
+        $customerrule->setRule(json_encode($rule));
+        $customerrule->setVal($val);
+        $customerrule->setSortorder($sortorder);
+        $customerrule->setTitle($title);
+        $customerrule->setPrice($price);
+        $this->flushpersist($customerrule);
+
+        /*
+          $grouprules = $this->getDoctrine()->getRepository('SoftoneBundle:Customergrouprule')->findBy(array("group"=>$customergroup));
+          $i=0;
+          foreach ((array)$grouprules as $grouprule) {
+          echo $i++;
+          $grouprule->setSortorder($i++);
+          $this->flushpersist($grouprule);
+          }
+         * 
+         */
+
+        $json = json_encode(array("id" => $customerrule->getId()));
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+
+        exit;
+    }
+
+    /**
+     * @Route("/customer/deleterule")
+     */
+    function deleteruleAction(Request $request) {
+        $id = $request->request->get("id");
+        $customerrule = $this->getDoctrine()->getRepository('SoftoneBundle:Customerrule')->find($id);
+        //$customerrule->delete();
+        $this->flushremove($customerrule);
+        exit;
+    }
 
 }
