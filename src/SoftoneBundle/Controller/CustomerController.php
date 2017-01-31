@@ -113,7 +113,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $grouprules = $entity->loadCustomerrules()->getRules();
         $rules = array();
         foreach ($grouprules as $grouprule) {
-            if ($grouprule->getGroup()->getId() == $id) {
+            if ($grouprule->getCustomer()->getId() == $id) {
                 $rules[$grouprule->getId()]["rule"] = $grouprule->getRule();
                 $rules[$grouprule->getId()]["val"] = $grouprule->getVal();
                 $rules[$grouprule->getId()]["sortorder"] = $grouprule->getSortorder();
