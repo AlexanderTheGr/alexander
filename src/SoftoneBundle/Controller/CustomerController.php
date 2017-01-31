@@ -317,6 +317,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         return $json;
     }
 
+    
     /**
      * @Route("/customer/getdatatable")
      */
