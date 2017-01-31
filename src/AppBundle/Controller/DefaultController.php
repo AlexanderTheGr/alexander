@@ -25,9 +25,23 @@ class DefaultController extends Controller {
      */
     public function alerts() {
         $alerts = 0;
+
+
+        $users = $this->getDoctrine()
+                        ->getRepository("AppBundle:User")->findAll();
+        $usersarr = "<select class='form-control' id='user_email' name='user_email'>";
+        $usersarr .= "<option value=0>ALL</option>";
+        foreach ($users as $user) {
+            $usersarr .= "<option value='" . $user->getUsername() . "'>" . $user->getUsername() . "</option>"; //array("value" => (string) $supplier->getReference(), "name" => $supplier->getSupplierName()); // $supplier->getSupplierName();
+        }
+        $usersarr .= "</select>";
+
+
         $orders = $this->getDoctrine()
                         ->getRepository("SoftoneBundle:Order")->findBy(array("isnew" => 1));
         $alerts += count($orders);
+
+
 
 
         $ordersHtml = "<ul style='overflow: auto; max-height: 400px;' class='animation-expand'>";
@@ -44,12 +58,13 @@ class DefaultController extends Controller {
             $ediordersHtml .= "<li class='' style='list-style:none'><a href='/edi/edi/order/view/" . $ediorder->getId() . "'>" . $ediorder->getRemarks() . "</a></li>";
         }
         $ediordersHtml .= "</ul>";
-        
+
         return $this->render('default/alerts.html.twig', array(
                     'pagename' => '',
                     'orderscnt' => "Orders: " . count($orders),
-                    'edicnt' => "EDI: ".count($ediorders),
+                    'edicnt' => "EDI: " . count($ediorders),
                     'orders' => $ordersHtml,
+                    'usersarr' => $usersarr,
                     'ediorders' => $ediordersHtml,
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
