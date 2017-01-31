@@ -237,7 +237,41 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $fields["priceField"] = array("label" => "Κατάλογος", "className" => "col-md-6", 'type' => "select", "required" => true, 'dataarray' => $priceField);
 
         $forms = $this->getFormLyFields($entity, $fields);
+        
+        
+        
+        if ($id > 0 AND count($entity) > 0) {
+            //$entity2 = $this->getDoctrine()
+            //        ->getRepository('SoftoneBundle:Customergrouprule')
+            //       ->find($id);
+            //$fields2["reference"] = array("label" => "Erp Code", "className" => "synafiacode col-md-12");
+            //$forms2 = $this->getFormLyFields($entity2, $fields2);
+
+            $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
+            $dtparams[] = array("name" => "Title", "index" => 'title');
+            $dtparams[] = array("name" => "Discount", "index" => 'val');
+            $dtparams[] = array("name" => "Price", "index" => 'price');
+            $dtparams[] = array("name" => "Order", "index" => 'sortorder');
+
+            $params['dtparams'] = $dtparams;
+            $params['id'] = $dtparams;
+            $params['url'] = '/customer/getrules/' . $id;
+            //$params['view'] = '/customergroup/getrule/' . $id;
+            $params['key'] = 'gettabs_' . $id;
+            $params["ctrl"] = 'ctrlgettabs';
+            $params["app"] = 'appgettabs';
+            $datatables[] = $this->contentDatatable($params);
+        }
+        
+        
+        
         $this->addTab(array("title" => "General1", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
+        if ($id > 0 AND count($entity) > 0) {
+            $tabs[] = array("title" => "Rules", "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
+        }
+        foreach ((array) $tabs as $tab) {
+            $this->addTab($tab);
+        }        
         $json = $this->tabs();
         return $json;
     }
@@ -519,17 +553,31 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             }
     }
 
-    function getRules() {
-        $rules = $this->getCustomergroup()->loadCustomergrouprules()->getRules();
-        $sortorder = 0;
-
-        foreach ($rules as $rule) {
-            if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
-                $sortorder = $rule->getSortorder();
-                $discount = $rule->getVal();
-                $price = $rule->getPrice();
-            }
+    public function getRulesAction($id) {
+        $session = new Session();
+        foreach ($session->get('params_gettabs_' . $id) as $param) {
+            $this->addField($param);
         }
+        $this->repository = 'SoftoneBundle:Customerprule';
+        $this->q_and[] = $this->prefix . ".customer = '" . $id . "'";
+        $json = $this->datatable();
+
+        $datatable = json_decode($json);
+        $datatable->data = (array) $datatable->data;
+        foreach ($datatable->data as $key => $table) {
+            $table = (array) $table;
+            $table1 = array();
+            foreach ($table as $f => $val) {
+                $table1[$f] = $val;
+            }
+            $datatable->data[$key] = $table1;
+        }
+        $json = json_encode($datatable);
+
+
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
     }
 
 }
