@@ -789,7 +789,7 @@ class EdiItem extends Entity {
         $product->setTecdocCode($this->artNr);
         $product->setItemName($this->description);
         $product->setTecdocArticleId($this->tecdocArticleId);
-        //$product->setItemCode($this->partno);
+        $product->setItemIsactive(1);
         $product->setItemApvcode($this->artNr);
         $product->setErpSupplier($this->fixsuppliers($this->brand));
         $product->setItemMtrmanfctr($SoftoneSupplier->getId());
