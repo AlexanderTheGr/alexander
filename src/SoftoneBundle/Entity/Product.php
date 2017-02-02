@@ -2616,6 +2616,7 @@ class Product extends Entity {
     
     public function getEditLink() {
         $out = '<a target="_blank" title="' . $this->title . '" class="" car="" data-articleId="' . $this->tecdocArticleId . '" ref="' . $this->id . '" href="/product/view/' . $this->id . '">Edit</a>';
+        return $out;
     }
     
     public function getForOrderSupplier() {
