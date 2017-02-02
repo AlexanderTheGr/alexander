@@ -49,7 +49,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     public function indexAction() {
         $this->setfullytrans();
         return $this->render('SoftoneBundle:Order:index.html.twig', array(
-                    'pagename' => 'Customers',
+                    'pagename' => 'Orders',
                     'url' => '/order/getdatatable',
                     'view' => '/order/view',
                     'ctrl' => $this->generateRandomString(),
