@@ -148,6 +148,7 @@ class UserController extends Main {
     public function getdatatableAction(Request $request) {
         $this->addField(array("name" => "ID", "index" => 'id'))
                 ->addField(array("name" => "Email", "index" => 'email'))
+                ->addField(array("name" => "Username", "index" => 'username'))
         ;
         $json = $this->datatable();
         return new Response(
