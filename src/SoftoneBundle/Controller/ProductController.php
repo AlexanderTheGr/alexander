@@ -773,6 +773,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $fields[] = array("name" => "Λιανική", "index" => 'itemPricer');
         $fields[] = array("name" => "Χονδρική", "index" => 'itemPricew');
         $fields[] = array("name" => "Αποθηκη", "function" => 'getApothiki', 'search' => 'text');
+        $fields[] = array("name" => "", "function" => 'getEditLink', 'search' => 'text');
         $this->setSetting("SoftoneBundle:Product:getdatatable", serialize($fields));
         //}
 
