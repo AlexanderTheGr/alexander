@@ -104,7 +104,7 @@ class ProductSaleController extends \SoftoneBundle\Controller\SoftoneController 
 
         $this->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
                 ->addField(array("name" => "Name", "index" => 'title'))
-                ->addField(array("name" => "Expired", "index" => 'expired'))
+                //->addField(array("name" => "Expired", "index" => 'expired'))
                 ;
         $json = $this->datatable();
         return new Response(
