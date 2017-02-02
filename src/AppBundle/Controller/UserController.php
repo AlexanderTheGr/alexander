@@ -20,7 +20,7 @@ class UserController extends Main {
 
 
         return $this->render('AppBundle:User:index.html.twig', array(
-                    'pagename' => 'Customers',
+                    'pagename' => 'Users',
                     'url' => '/user/getdatatable',
                     'view' => '/user/view',
                     'ctrl' => $this->generateRandomString(),
