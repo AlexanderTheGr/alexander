@@ -195,7 +195,7 @@ class Customergrouprule {
         foreach ($rule["rules"] as $rl) {
 
             if (count($rl["rules"])) {
-                $out = $this->rulesLoop($rl, $catsEp, $supplier, $code);
+                $out = $this->rulesLoop($rl, $catsEp, $supplier, $code,$productsale);
                 if ($rule["condition"] == "OR" AND $out == true) {
                     return true;
                 }
