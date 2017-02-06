@@ -134,7 +134,15 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $product->setSupplierId($SoftoneSupplier);
         $product->setItemName($asd->genericArticleName);
         $product->setTecdocArticleId($asd->articleId);
-
+        
+        $productsale = $this->getDoctrine()
+                        ->getRepository('SoftoneBundle:Productsale')->find(1);
+        $product->setItemPricew("0.00");
+        $product->setItemPricer("0.00");
+        $product->setItemMarkupw("0.00");
+        $product->setItemMarkupr("0.00");
+        $product->setProductSale($productsale);
+        
         //$product->setItemCode($this->partno);
         $product->setItemApvcode($asd->articleNo);
         $product->setErpSupplier($asd->brand);
