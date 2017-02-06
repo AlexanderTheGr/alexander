@@ -1046,10 +1046,10 @@ class EdiItem extends Entity {
         //print_r($jsonarr);
     }
 
-    protected $soapPrice;
-    protected $soapStock;
-    protected $soapAvail1;
-    protected $soapAvail2;
+    var $soapPrice;
+    var $soapStock;
+    var $soapAvail1;
+    var $soapAvail2;
 
     public function setComlineSoap($qty = 1) {
         $LogUniqueKey = $this->getSetting("EdiBundle:Comline:LogUniqueKey");//""; //Mage::getModel("core/cookie")->get('LogUniqueKey');
