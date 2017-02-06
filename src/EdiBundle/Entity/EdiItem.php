@@ -712,7 +712,7 @@ class EdiItem extends Entity {
         $product = false;
         if ($data["id"] > 0)
             $product = $em->getRepository("SoftoneBundle:Product")->find($data["id"]);
-        
+
         if (!$product) {
             $erpCode = $this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode();
             $product = $em->getRepository("SoftoneBundle:Product")->findOneBy(array("erpCode" => $erpCode));
@@ -868,7 +868,7 @@ class EdiItem extends Entity {
         $supplier = str_replace("LEMF?RDER", "LEMFORDER", $supplier);
         $supplier = str_replace("SALERI", "Saleri SIL", $supplier);
         $supplier = str_replace("CASTROL LUBRICANTS", "CASTROL", $supplier);
-        
+
         return $supplier;
     }
 
@@ -882,6 +882,7 @@ class EdiItem extends Entity {
         $code = strtoupper($code);
         return $code;
     }
+
     function clearstring($search) {
         $search = str_replace(" ", "", trim($search));
         $search = str_replace(".", "", $search);
@@ -891,6 +892,7 @@ class EdiItem extends Entity {
         $search = strtoupper($search);
         return $search;
     }
+
     /**
      * Get tecdocArticleId
      *
@@ -1042,6 +1044,51 @@ class EdiItem extends Entity {
             return $xml->Item->PriceOnPolicy;
         }
         //print_r($jsonarr);
+    }
+
+    protected $soapPrice;
+    protected $soapStock;
+    protected $soapAvail1;
+    protected $soapAvail2;
+
+    public function setComlineSoap($qty = 1) {
+        $LogUniqueKey = $this->setSetting("EdiBundle:Comline:LogUniqueKey");//""; //Mage::getModel("core/cookie")->get('LogUniqueKey');
+        //$client = new SoapClient("http://www.keysoft.gr/WseService.asmx?wsdl");
+        //$lstLst = $client->lstPrice("sko@keysoft.gr;sko1;81-194;1");
+        if ($LogUniqueKey == "") {
+            //    Mage::getSingleton('customer/session')->logout();
+            $login['username'] = "01111-101";
+            $login['password'] = "88qq";
+            $client = new SoapClient("http://www.comlinehellas.gr/WseService.asmx?wsdl");
+            $params = array(
+                "ssParameters" => $login['username'] . ";" . $login['password']
+            );
+            $response = $client->__soapCall("lstLogin", array($params));
+            $LogUniqueKey = $response->lstLoginResult->lstLogin->LogUniqueKey;
+            $this->setSetting("EdiBundle:Comline:LogUniqueKey",$LogUniqueKey);
+        }
+        $client = new \SoapClient("http://www.comlinehellas.gr/WseService.asmx?wsdl");
+        $params = array(
+            "ssParameters" => $LogUniqueKey . ";;" . $this->getItemCode() . ";" . $qty
+        );
+
+        if ($qty > 100) {
+            //print_r($params);
+        }
+        $response = $client->__soapCall("lstPrice", array($params));
+        if ($qty > 100) {
+            //print_r($response);
+        }
+        //print_r($response);
+        $ProOrdCus = $response->lstPriceResult->lstPrice->ProOrdCus > 0 ? $response->lstPriceResult->lstPrice->ProOrdCus : 0;
+        $stock = $response->lstPriceResult->lstPrice->ProStock - $ProOrdCus;
+        $this->wholesaleprice = $response->lstPriceResult->lstPrice->PplPrice;
+        $this->soapPrice = $response->lstPriceResult->lstPrice->PplPrice;
+        $this->soapStock = $stock > 0 ? $stock : 0;
+        $this->soapAvail1 = $response->lstPriceResult->lstPrice->ProAvail1;
+        $this->soapAvail2 = $response->lstPriceResult->lstPrice->ProAvail2;
+
+        return $response->lstPriceResult->lstPrice;
     }
 
     protected $SoapClient = false;
