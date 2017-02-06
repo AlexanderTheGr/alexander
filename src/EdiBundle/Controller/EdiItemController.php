@@ -352,14 +352,14 @@ class EdiItemController extends Main {
         $i = 0;
         $tecdoc = new Tecdoc();
         foreach ($results as $result) {
-            if ($result["id"] > 356633) {
+            //if ($result["id"] > 356633) {
                 $ediediitem = $em->getRepository($this->repository)->find($result["id"]);
                 $ediediitem->tecdoc = $tecdoc;
                 $ediediitem->updatetecdoc();
                 unset($ediediitem);
                 //echo $result["id"]."<BR>";
                 //if ($i++ > 300) exit;
-            }
+            //}
         }
         exit;
     }
