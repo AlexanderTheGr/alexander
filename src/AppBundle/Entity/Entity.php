@@ -81,7 +81,8 @@ class Entity {
             $this->flushpersist($setting);
         }
         $setting->setValue($value);
-        $this->flushpersist($setting);
+        $em->persist($setting);
+        $em->flush();
         return $setting->getValue();
     }
     function greeklish($name) {
