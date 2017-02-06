@@ -635,7 +635,7 @@ class EdiItemController extends Main {
 
                 $ands[$entity->getItemcode()] = $key;
                 $entities[$entity->getItemcode()] = $entity;
-            } elseif ($entity->getEdi()->getToken() == 'comline') {
+            } elseif ($entity->getEdi()->getFunc() == 'getComlineEdiPartMaster') {
                 $entity->setComlineSoap();
                 $AvailabilityDetailsHtml = '';
                 $availability = '';
