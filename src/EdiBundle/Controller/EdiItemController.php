@@ -296,7 +296,7 @@ class EdiItemController extends Main {
                 $xml = $response->GetAvailabilityResult->any;
 
                 $xml = simplexml_load_string($xml);
-                
+
                 foreach (@$xml->Item->AvailabilityDetails as $details) {
                     if ($entity->getStore() == (int) $details->StoreNo AND $details->IsAvailable == 'Y') {
                         $asd = $details->IsAvailable;
@@ -353,12 +353,13 @@ class EdiItemController extends Main {
         $tecdoc = new Tecdoc();
         foreach ($results as $result) {
             //if ($result["id"] > 356633) {
-                $ediediitem = $em->getRepository($this->repository)->find($result["id"]);
-                $ediediitem->tecdoc = $tecdoc;
-                $ediediitem->updatetecdoc();
-                unset($ediediitem);
-                echo $result["id"]."<BR>";
-                if ($i++ > 300) exit;
+            $ediediitem = $em->getRepository($this->repository)->find($result["id"]);
+            $ediediitem->tecdoc = $tecdoc;
+            $ediediitem->updatetecdoc();
+            unset($ediediitem);
+            echo $result["id"] . "<BR>";
+            if ($i++ > 300)
+                exit;
             //}
         }
         exit;
@@ -736,6 +737,8 @@ class EdiItemController extends Main {
           }
          */
     }
+
+
 
     public function getArticlesSearchByIds($search) {
         //if (file_exists(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term")) {
