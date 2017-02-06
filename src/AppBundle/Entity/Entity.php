@@ -62,7 +62,11 @@ class Entity {
         return $setting->getValue();
     }
     function setSetting($path, $value) {
-        $em = $this->getDoctrine()->getManager();
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         $repository = $em->getRepository('AppBundle:Setting');
         $setting = $repository->findOneBy(
                 array('path' => $path)
