@@ -599,7 +599,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ($suppliers as $supplier) {
             $itemMtrsup[] = array("value" => (string) $supplier->getReference(), "name" => $supplier->getSupplierName()); // $supplier->getSupplierName();
         }
-
+        $cccPriceUpd = $entity->getCccPriceUpd() ? "1" : "0";
+        $entity->setCccPriceUpd($cccPriceUpd);
 
         $softoneSuppliers = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:SoftoneSupplier')->findAll();
