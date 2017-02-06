@@ -108,7 +108,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $html .= "<th align='left'>Έκπτωση</th>";
         $html .= "<th align='left'>Τελική Τιμή</th>";
         $html .= "</tr></thead>";
+        $items = array();
         foreach ($order->getItems() as $item) {
+            $product = $item->getProduct();
+            $items[$product->getItemMtrplace()] = $item;
+        }
+        ksort($items);
+        foreach ($items as $item) {
             @$total += $item->getLineval();
             //$item->getProduct()->getReference();
 
