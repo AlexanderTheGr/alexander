@@ -325,6 +325,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
 
         print_r($this->error);
+        
         //echo $product->id;
         if (count($this->error[$this->repository])) {
             $json = json_encode(array("error" => 1, "id" => (int) $product->id, 'unique' => $this->error[$this->repository]));
