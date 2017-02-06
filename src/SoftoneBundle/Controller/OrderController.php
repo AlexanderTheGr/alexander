@@ -1163,9 +1163,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
             $year = $yearfrom . " " . $yearto;
             if ($brandsmodeltype->getEngine() != "") {
-                $o["name"] = $brandsmodeltype->getBrandModelType() . " (" . $brandsmodeltype->getEngine() . ")";
+                $o["name"] = $brandsmodeltype->getBrandModelType() . " ".$brandsmodeltype->getPowerHp() . "ps (" . $brandsmodeltype->getEngine() . ")";
             } else {
-                $o["name"] = $brandsmodeltype->getBrandModelType();
+                $o["name"] = $brandsmodeltype->getBrandModelType(). " ".$brandsmodeltype->getPowerHp() . "ps";
             }
             $out[] = $o;
         }
