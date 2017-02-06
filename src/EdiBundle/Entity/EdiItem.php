@@ -1057,11 +1057,11 @@ class EdiItem extends Entity {
         //$lstLst = $client->lstPrice("sko@keysoft.gr;sko1;81-194;1");
         if ($LogUniqueKey == "") {
             //    Mage::getSingleton('customer/session')->logout();
-            $login['username'] = "01111-101";
-            $login['password'] = "88qq";
+            //$login['username'] = "01111-101";
+            //$login['password'] = "88qq";
             $client = new \SoapClient("http://www.comlinehellas.gr/WseService.asmx?wsdl");
             $params = array(
-                "ssParameters" => $login['username'] . ";" . $login['password']
+                "ssParameters" => $this->getEdi()->getToken()//$login['username'] . ";" . $login['password']
             );
             $response = $client->__soapCall("lstLogin", array($params));
             $LogUniqueKey = $response->lstLoginResult->lstLogin->LogUniqueKey;
