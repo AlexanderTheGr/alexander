@@ -1052,7 +1052,7 @@ class EdiItem extends Entity {
     protected $soapAvail2;
 
     public function setComlineSoap($qty = 1) {
-        $LogUniqueKey = $this->setSetting("EdiBundle:Comline:LogUniqueKey");//""; //Mage::getModel("core/cookie")->get('LogUniqueKey');
+        $LogUniqueKey = $this->getSetting("EdiBundle:Comline:LogUniqueKey");//""; //Mage::getModel("core/cookie")->get('LogUniqueKey');
         //$client = new SoapClient("http://www.keysoft.gr/WseService.asmx?wsdl");
         //$lstLst = $client->lstPrice("sko@keysoft.gr;sko1;81-194;1");
         if ($LogUniqueKey == "") {
