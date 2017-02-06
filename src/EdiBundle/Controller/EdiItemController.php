@@ -639,7 +639,7 @@ class EdiItemController extends Main {
                 $entity->setComlineSoap();
                 $AvailabilityDetailsHtml = '';
                 $availability = '';
-                $AvailabilityDetailsHtml = $entity->soapStock;
+                $AvailabilityDetailsHtml = $entity->soapStock.",".$entity->soapAvail1.",".$entity->soapAvail2;
                 if ($entity->soapStock  >= 1 && $entity->soapAvail1 == 0 && $entity->soapAvail2 == 0) {
                     $availability = "Y";
                 }
