@@ -358,7 +358,7 @@ class EdiItemController extends Main {
                 $ediediitem->updatetecdoc();
                 unset($ediediitem);
                 echo $result["id"]."<BR>";
-                //if ($i++ > 300) exit;
+                if ($i++ > 300) exit;
             //}
         }
         exit;
