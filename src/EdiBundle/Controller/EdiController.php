@@ -315,7 +315,7 @@ class EdiController extends Main {
         //return;
         $em = $this->getDoctrine()->getManager();
         if ((($handle = fopen($file, "r")) !== FALSE)) {
-            $data = fgetcsv($handle, 100000, "\t");
+            $data = fgetcsv($handle, 100000, ";");
             //print_r($data);
 
             foreach ($data as $key => $attr) {
@@ -325,7 +325,7 @@ class EdiController extends Main {
             }
             print_r($attrs);
             $i = 0;
-            while ($data = fgetcsv($handle, 1000, "\t", "|")) {
+            while ($data = fgetcsv($handle, 1000, ";", "|")) {
                 //if ($i++ == 0) continue;
 
                 foreach ($data as $key => $val) {
