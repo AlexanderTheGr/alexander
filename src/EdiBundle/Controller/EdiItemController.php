@@ -640,7 +640,7 @@ class EdiItemController extends Main {
                 $AvailabilityDetailsHtml = '';
                 $availability = '';
                 if ($entity->soapStock  >= 1 && $entity->soapAvail1 == 0 && $entity->soapAvail2 == 0) {
-                    $availability == "Y";
+                    $availability = "Y";
                 }
                 
                 @$jsonarr[$key]['6'] = $entity->getDiscount($customer, $vat);
