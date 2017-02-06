@@ -1079,7 +1079,7 @@ class EdiItem extends Entity {
         if ($qty > 100) {
             //print_r($response);
         }
-        //print_r($response);
+        print_r($response);
         $ProOrdCus = $response->lstPriceResult->lstPrice->ProOrdCus > 0 ? $response->lstPriceResult->lstPrice->ProOrdCus : 0;
         $stock = $response->lstPriceResult->lstPrice->ProStock - $ProOrdCus;
         $this->wholesaleprice = $response->lstPriceResult->lstPrice->PplPrice;
