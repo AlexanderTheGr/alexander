@@ -333,10 +333,12 @@ class EdiController extends Main {
                     $attributes[$attrs[$key]] = trim(addslashes($val));
                 }
 
+                
                 print_r($attributes);
                 if ($i++ > 10)
                     break;
                 continue;
+                
                 echo ($i++) . "<BR>";
                 //if ($i < 271341) continue;
                 //if ($key == 'similardlnr' OR $key = 'similarartnr' ) continue;
