@@ -637,6 +637,17 @@ class EdiItemController extends Main {
                 $entities[$entity->getItemcode()] = $entity;
             } elseif ($entity->getEdi()->getToken() == 'comline') {
                 $entity->setComlineSoap();
+                $AvailabilityDetailsHtml = '';
+                $availability = '';
+                if ($entity->soapStock  >= 1 && $entity->soapAvail1 == 0 && $entity->soapAvail2 == 0) {
+                    $availability == "Y";
+                }
+                
+                @$jsonarr[$key]['6'] = $entity->getDiscount($customer, $vat);
+                @$jsonarr[$key]['7'] = number_format((float) $entity->soapPrice, 2, '.', '');
+                @$jsonarr[$key]['8'] = $jsonarr[$key]['8'] . $AvailabilityDetailsHtml;
+                @$jsonarr[$key]['DT_RowClass'] .= $availability == "Y" ? ' text-success ' : ' text-danger ';       
+                
             } else {
                 /*
                   @$jsonarr[$key]['DT_RowClass'] .= $eltrekaavailability[$entity->getItemcode()] > 0 ? ' text-success ' : ' text-danger ';
