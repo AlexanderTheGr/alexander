@@ -2084,10 +2084,10 @@ class Product extends Entity {
         $objectArr2["VAT"] = 1410;
         $objectArr2["CODE2"] = $this->supplierCode;
         $objectArr2["CCCREF"] = $this->cccRef;
-        $objectArr2["ISACTIVE"] = $this->itemIsactive;
         $objectArr2["REMARKS"] = $this->itemRemarks;
         $objectArr2["MTRMARK"] = $this->itemMtrmark;
         $objectArr2["MTRMANFCTR"] = $this->itemMtrmanfctr > 0 ? $this->itemMtrmanfctr : $this->getSupplierId()->getId();
+        $objectArr2["ISACTIVE"] = $this->itemIsactive;
         $objectArr[0] = $objectArr2;
         $dataOut[$object] = (array) $objectArr;
         @$dataOut["ITEEXTRA"][0] = array("VARCHAR02" => $this->sisxetisi);
