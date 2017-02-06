@@ -335,8 +335,8 @@ class EdiController extends Main {
 
                 
                 print_r($attributes);
-                if ($i++ > 10)
-                    break;
+                //if ($i++ > 10)
+                //    break;
                 //continue;
                 
                 echo ($i++) . "<BR>";
