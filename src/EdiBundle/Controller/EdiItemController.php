@@ -636,7 +636,7 @@ class EdiItemController extends Main {
                 $ands[$entity->getItemcode()] = $key;
                 $entities[$entity->getItemcode()] = $entity;
             } elseif ($entity->getEdi()->getToken() == 'comline') {
-                
+                $entity->setComlineSoap();
             } else {
                 /*
                   @$jsonarr[$key]['DT_RowClass'] .= $eltrekaavailability[$entity->getItemcode()] > 0 ? ' text-success ' : ' text-danger ';
