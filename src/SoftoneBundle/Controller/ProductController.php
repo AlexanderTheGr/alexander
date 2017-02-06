@@ -319,8 +319,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     ->getRepository($this->repository)
                     ->findBy(array("sisxetisi" => $product->getSisxetisi()));
             foreach ($sproducts as $sproduct) {
-                if ($sproduct->getSisxetisi() != '')
-                    $sproduct->toSoftone();
+                //if ($sproduct->getSisxetisi() != '')
+                //    $sproduct->toSoftone();
             }
         }
 
