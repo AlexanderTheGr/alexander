@@ -93,6 +93,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $html .= "<table>";
         $html .= '<tr><th>Όνομα πελάτη</th><td>' . $order->getCustomerName() . '</td>';
         $html .= '<tr><th>Σχόλια</th><td>' . $order->getRemarks() . '</td>';
+        $html .= '<tr><th>Χρήστης</th><td>' . $order->getUser()->getUsername() . '</td>';
         $html .= "</table>";
 
         $html .= "<table width='100%'>";
