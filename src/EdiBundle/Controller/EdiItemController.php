@@ -654,26 +654,26 @@ class EdiItemController extends Main {
 			$AvailabilityDetailsHtml = "&nbsp;Διαθέσιμο&nbsp;";
                         $availability = "Y";
 			//psColor = "Green";
-			$qty = "<img title='Διαθέσιμο' alt='Διαθέσιμο' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/diathesimo.png'><br>Διαθέσιμο ".$apoth;
+			//$qty = "<img title='Διαθέσιμο' alt='Διαθέσιμο' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/diathesimo.png'><br>Διαθέσιμο ".$apoth;
 		} else if ($entity->soapStock  <= 0 && $entity->soapAvail1 > 0) {
 			$AvailabilityDetailsHtml = "&nbsp;Μη Διαθέσιμο&nbsp;";
 			//psColor = "Red";
-			$qty = "<img title='Μη Διαθέσιμο' alt='Διαθέσιμο' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/midiathesimo.png'><BR>Μη Διαθέσιμο".$apoth;
+			//$qty = "<img title='Μη Διαθέσιμο' alt='Διαθέσιμο' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/midiathesimo.png'><BR>Μη Διαθέσιμο".$apoth;
 		} else if ($entity->soapStock  > 0 && $entity->soapStock  <= $entity->soapAvail1 && $entity->soapAvail1 > 0) {
 			$AvailabilityDetailsHtml = "&nbsp;Χαμηλή&nbsp;";
                         $availability = "Y";
 			//psColor = "Orange";
-			$qty = "<img title='Χαμηλή' alt='Χαμηλή' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/oriakadiathesimo.png'><BR>Χαμηλή".$apoth;
+			//$qty = "<img title='Χαμηλή' alt='Χαμηλή' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/oriakadiathesimo.png'><BR>Χαμηλή".$apoth;
 		} else if ($entity->soapStock  > $entity->soapAvail1 && $entity->soapStock  <= $entity->soapAvail2 && $entity->soapAvail1 > 0) {
 			$AvailabilityDetailsHtml = "&nbsp;Μεσαία&nbsp;";
                         $availability = "Y";
 			//psColor = "DodgerBlue";
-			$qty = "<img title='Μεσαία' alt='Μεσαία' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/oriakadiathesimo.png'><BR>Μεσαία".$apoth;
+			//$qty = "<img title='Μεσαία' alt='Μεσαία' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/oriakadiathesimo.png'><BR>Μεσαία".$apoth;
 		} else if ($entity->soapStock  > $entity->soapAvail2 && $entity->soapAvail2 > 0) {
 			$AvailabilityDetailsHtml = "&nbsp;Πλήρης&nbsp;";
                         $availability = "Y";
 			//psColor = "Green";
-			$qty = "<img title='Πλήρης' alt='Πλήρης' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/diathesimo.png'><BR>Πλήρης".$apoth;
+			//$qty = "<img title='Πλήρης' alt='Πλήρης' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/diathesimo.png'><BR>Πλήρης".$apoth;
 		}                
                 
                 
