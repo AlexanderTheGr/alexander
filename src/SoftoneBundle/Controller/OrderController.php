@@ -111,7 +111,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $items = array();
         foreach ($order->getItems() as $item) {
             $product = $item->getProduct();
-            $items[$product->getItemMtrplace()."-".$i++] = $item;
+            $items[$product->getItemMtrplace()."-".$product->getId()] = $item;
         }
         ksort($items);
         foreach ($items as $item) {
