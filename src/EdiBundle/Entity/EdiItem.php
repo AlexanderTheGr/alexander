@@ -1059,7 +1059,7 @@ class EdiItem extends Entity {
             //    Mage::getSingleton('customer/session')->logout();
             $login['username'] = "01111-101";
             $login['password'] = "88qq";
-            $client = new SoapClient("http://www.comlinehellas.gr/WseService.asmx?wsdl");
+            $client = new \SoapClient("http://www.comlinehellas.gr/WseService.asmx?wsdl");
             $params = array(
                 "ssParameters" => $login['username'] . ";" . $login['password']
             );
