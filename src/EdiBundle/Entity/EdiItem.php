@@ -649,8 +649,6 @@ class EdiItem extends Entity {
 
     public function toErp() {
 
-
-
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
