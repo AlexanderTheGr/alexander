@@ -635,55 +635,55 @@ class EdiItemController extends Main {
 
                 $ands[$entity->getItemcode()] = $key;
                 $entities[$entity->getItemcode()] = $entity;
+            } elseif ($entity->getEdi()->getFunc() == 'getFibaEdiPartMaster') {
+                
             } elseif ($entity->getEdi()->getFunc() == 'getComlineEdiPartMaster') {
                 $entity->setComlineSoap();
                 $AvailabilityDetailsHtml = '';
                 $availability = '';
                 $apoth = "";
-                $AvailabilityDetailsHtml = $entity->soapStock.",".$entity->soapAvail1.",".$entity->soapAvail2;
-                if ($entity->soapStock  >= 1 && $entity->soapAvail1 == 0 && $entity->soapAvail2 == 0) {
+                $AvailabilityDetailsHtml = $entity->soapStock . "," . $entity->soapAvail1 . "," . $entity->soapAvail2;
+                if ($entity->soapStock >= 1 && $entity->soapAvail1 == 0 && $entity->soapAvail2 == 0) {
                     $availability = "Y";
                 }
-                
-		if ($entity->soapStock  < 1 && $entity->soapAvail1 == 0 && $entity->soapAvail2 == 0) {
-			$AvailabilityDetailsHtml = "Μη Διαθέσιμο&nbsp;";
-			//psColor = "Orange";
-                        
-			//$qty = "<img title='Μη Διαθέσιμο' alt='Μη Διαθέσιμο' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/oriakadiathesimo.png'><BR>Μη Διαθέσιμο".$apoth;
-		} else if ($entity->soapStock  >= 1 && $entity->soapAvail1 == 0 && $entity->soapAvail2 == 0) {
-			$AvailabilityDetailsHtml = "&nbsp;Διαθέσιμο&nbsp;";
-                        $availability = "Y";
-			//psColor = "Green";
-			//$qty = "<img title='Διαθέσιμο' alt='Διαθέσιμο' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/diathesimo.png'><br>Διαθέσιμο ".$apoth;
-		} else if ($entity->soapStock  <= 0 && $entity->soapAvail1 > 0) {
-			$AvailabilityDetailsHtml = "&nbsp;Μη Διαθέσιμο&nbsp;";
-			//psColor = "Red";
-			//$qty = "<img title='Μη Διαθέσιμο' alt='Διαθέσιμο' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/midiathesimo.png'><BR>Μη Διαθέσιμο".$apoth;
-		} else if ($entity->soapStock  > 0 && $entity->soapStock  <= $entity->soapAvail1 && $entity->soapAvail1 > 0) {
-			$AvailabilityDetailsHtml = "&nbsp;Χαμηλή&nbsp;";
-                        $availability = "Y";
-			//psColor = "Orange";
-			//$qty = "<img title='Χαμηλή' alt='Χαμηλή' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/oriakadiathesimo.png'><BR>Χαμηλή".$apoth;
-		} else if ($entity->soapStock  > $entity->soapAvail1 && $entity->soapStock  <= $entity->soapAvail2 && $entity->soapAvail1 > 0) {
-			$AvailabilityDetailsHtml = "&nbsp;Μεσαία&nbsp;";
-                        $availability = "Y";
-			//psColor = "DodgerBlue";
-			//$qty = "<img title='Μεσαία' alt='Μεσαία' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/oriakadiathesimo.png'><BR>Μεσαία".$apoth;
-		} else if ($entity->soapStock  > $entity->soapAvail2 && $entity->soapAvail2 > 0) {
-			$AvailabilityDetailsHtml = "&nbsp;Πλήρης&nbsp;";
-                        $availability = "Y";
-			//psColor = "Green";
-			//$qty = "<img title='Πλήρης' alt='Πλήρης' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/diathesimo.png'><BR>Πλήρης".$apoth;
-		}                
-                
-                
-                
-                
+
+                if ($entity->soapStock < 1 && $entity->soapAvail1 == 0 && $entity->soapAvail2 == 0) {
+                    $AvailabilityDetailsHtml = "Μη Διαθέσιμο&nbsp;";
+                    //psColor = "Orange";
+                    //$qty = "<img title='Μη Διαθέσιμο' alt='Μη Διαθέσιμο' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/oriakadiathesimo.png'><BR>Μη Διαθέσιμο".$apoth;
+                } else if ($entity->soapStock >= 1 && $entity->soapAvail1 == 0 && $entity->soapAvail2 == 0) {
+                    $AvailabilityDetailsHtml = "&nbsp;Διαθέσιμο&nbsp;";
+                    $availability = "Y";
+                    //psColor = "Green";
+                    //$qty = "<img title='Διαθέσιμο' alt='Διαθέσιμο' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/diathesimo.png'><br>Διαθέσιμο ".$apoth;
+                } else if ($entity->soapStock <= 0 && $entity->soapAvail1 > 0) {
+                    $AvailabilityDetailsHtml = "&nbsp;Μη Διαθέσιμο&nbsp;";
+                    //psColor = "Red";
+                    //$qty = "<img title='Μη Διαθέσιμο' alt='Διαθέσιμο' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/midiathesimo.png'><BR>Μη Διαθέσιμο".$apoth;
+                } else if ($entity->soapStock > 0 && $entity->soapStock <= $entity->soapAvail1 && $entity->soapAvail1 > 0) {
+                    $AvailabilityDetailsHtml = "&nbsp;Χαμηλή&nbsp;";
+                    $availability = "Y";
+                    //psColor = "Orange";
+                    //$qty = "<img title='Χαμηλή' alt='Χαμηλή' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/oriakadiathesimo.png'><BR>Χαμηλή".$apoth;
+                } else if ($entity->soapStock > $entity->soapAvail1 && $entity->soapStock <= $entity->soapAvail2 && $entity->soapAvail1 > 0) {
+                    $AvailabilityDetailsHtml = "&nbsp;Μεσαία&nbsp;";
+                    $availability = "Y";
+                    //psColor = "DodgerBlue";
+                    //$qty = "<img title='Μεσαία' alt='Μεσαία' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/oriakadiathesimo.png'><BR>Μεσαία".$apoth;
+                } else if ($entity->soapStock > $entity->soapAvail2 && $entity->soapAvail2 > 0) {
+                    $AvailabilityDetailsHtml = "&nbsp;Πλήρης&nbsp;";
+                    $availability = "Y";
+                    //psColor = "Green";
+                    //$qty = "<img title='Πλήρης' alt='Πλήρης' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/diathesimo.png'><BR>Πλήρης".$apoth;
+                }
+
+
+
+
                 @$jsonarr[$key]['6'] = $entity->getDiscount($customer, $vat);
                 @$jsonarr[$key]['7'] = number_format((float) $entity->soapPrice, 2, '.', '');
                 @$jsonarr[$key]['8'] = $jsonarr[$key]['8'] . $AvailabilityDetailsHtml;
-                @$jsonarr[$key]['DT_RowClass'] .= $availability == "Y" ? ' text-success ' : ' text-danger ';       
-                
+                @$jsonarr[$key]['DT_RowClass'] .= $availability == "Y" ? ' text-success ' : ' text-danger ';
             } else {
                 /*
                   @$jsonarr[$key]['DT_RowClass'] .= $eltrekaavailability[$entity->getItemcode()] > 0 ? ' text-success ' : ' text-danger ';
@@ -784,8 +784,6 @@ class EdiItemController extends Main {
           }
          */
     }
-
-
 
     public function getArticlesSearchByIds($search) {
         //if (file_exists(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term")) {
