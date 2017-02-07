@@ -624,7 +624,7 @@ class EdiItemController extends Main {
             $entity = $this->getDoctrine()
                     ->getRepository($this->repository)
                     ->find($json[0]);
-            if (strlen($entity->getEdi()->getToken()) == 36) { // is viakar, liakopoulos
+            if ($entity->getEdi()->getFunc() == 'getEdiPartMaster') { // is viakar, liakopoulos
                 if (@!$datas[$entity->getEdi()->getId()][$k]) {
                     $datas[$entity->getEdi()->getId()][$k]['ApiToken'] = $entity->getEdi()->getToken();
                     $datas[$entity->getEdi()->getId()][$k]['Items'] = array();
