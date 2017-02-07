@@ -358,7 +358,7 @@ class EdiItemController extends Main {
             $ediediitem->updatetecdoc();
             unset($ediediitem);
             echo $result["id"] . "<BR>";
-            if ($i++ > 10000)
+            if ($i++ > 3000)
                 exit;
             //}
         }
@@ -638,6 +638,9 @@ class EdiItemController extends Main {
             } elseif ($entity->getEdi()->getFunc() == 'getFibaEdiPartMaster') {
                 $AvailabilityDetailsHtml = '';
                 $entity->setFibaSoap();
+                if ($entity->soapStock >= 1) {
+                    $availability = "Y";
+                }                
                 @$jsonarr[$key]['6'] = $entity->getDiscount($customer, $vat);
                 @$jsonarr[$key]['7'] = number_format((float) $entity->soapPrice, 2, '.', '');
                 @$jsonarr[$key]['8'] = $jsonarr[$key]['8'] . $AvailabilityDetailsHtml;
