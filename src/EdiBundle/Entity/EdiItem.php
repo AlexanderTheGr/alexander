@@ -1093,6 +1093,9 @@ class EdiItem extends Entity {
 
         return $response->lstPriceResult->lstPrice;
     }
+    public function setFibaSoap($qty = 1) {
+        $this->wholesaleprice = (float)file_get_contents("http://b2b.fiba.gr/antallaktika/edi/getProductPrice/code/".$this->itemCode."/customer/10");
+    }
 
     protected $SoapClient = false;
     protected $Username = '';
