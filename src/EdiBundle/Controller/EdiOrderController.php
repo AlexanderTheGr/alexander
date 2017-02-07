@@ -224,7 +224,7 @@ class EdiOrderController extends Main {
                 $dt = new \DateTime("now");
                 $this->newentity[$this->repository] = $EdiOrder;
                 $EdiOrder->setEdi($Ediitem->getEdi());
-                $EdiOrder->setStore($request->request->get("store"));
+                $EdiOrder->setStore($request->request->get("store")?$request->request->get("store"):"Default");
                 $EdiOrder->setShip("");
                 $EdiOrder->setRemarks($Ediitem->getEdi()->getName()."_".$request->request->get("store"));
                 $EdiOrder->setInsdate($dt);
