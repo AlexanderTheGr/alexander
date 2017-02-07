@@ -636,7 +636,11 @@ class EdiItemController extends Main {
                 $ands[$entity->getItemcode()] = $key;
                 $entities[$entity->getItemcode()] = $entity;
             } elseif ($entity->getEdi()->getFunc() == 'getFibaEdiPartMaster') {
-                
+                $AvailabilityDetailsHtml = '';
+                @$jsonarr[$key]['6'] = $entity->getDiscount($customer, $vat);
+                //@$jsonarr[$key]['7'] = number_format((float) $entity->soapPrice, 2, '.', '');
+                @$jsonarr[$key]['8'] = $jsonarr[$key]['8'] . $AvailabilityDetailsHtml;
+                @$jsonarr[$key]['DT_RowClass'] .= $availability == "Y" ? ' text-success ' : ' text-danger ';                
             } elseif ($entity->getEdi()->getFunc() == 'getComlineEdiPartMaster') {
                 $entity->setComlineSoap();
                 $AvailabilityDetailsHtml = '';
