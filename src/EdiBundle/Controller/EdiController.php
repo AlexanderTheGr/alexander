@@ -282,6 +282,7 @@ class EdiController extends Main {
         return 'http://zerog.gr/edi/fw.ashx?method=getinventoryfile&apiToken=' . $apiToken;
     }
 
+    
     /**
      * @Route("/edi/edi/getPartMaster")
      */
