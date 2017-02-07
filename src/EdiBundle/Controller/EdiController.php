@@ -291,7 +291,7 @@ class EdiController extends Main {
         $i = 0;
         foreach ($collection as $entity) {
             //if ($i++ <= 1) continue;
-            if ($entity["id"] == 8) {
+            if ($entity["id"] == 9) {
                 $func = $entity["func"];
                 $this->$func($entity);
             }
@@ -299,6 +299,104 @@ class EdiController extends Main {
         exit;
     }
 
+    public function getFibaEdiPartMaster($entity) {
+        //echo $this->getPartMaster();
+        //return;
+        $comlineEdiPartMaster = "http://b2b.fiba.gr/antallaktika/edi/getPartMaster";
+        echo $comlineEdiPartMaster . "<BR>";
+        //return;
+        $tecdoc = new Tecdoc();
+        $file = "/home2/partsbox/comline.csv";
+        $fiestr = file_get_contents($comlineEdiPartMaster);
+        file_put_contents($file, $fiestr);
+        set_time_limit(100000);
+        ini_set('memory_limit', '4096M');
+
+        //return;
+        $em = $this->getDoctrine()->getManager();
+        if ((($handle = fopen($file, "r")) !== FALSE)) {
+            $data = fgetcsv($handle, 100000, ";");
+            //print_r($data);
+
+            foreach ($data as $key => $attr) {
+                //similardlnr, similarartnr
+                //if ($key == 'similardlnr' OR $key = 'similarartnr' ) continue;
+                $attrs[$key] = strtolower($attr);
+            }
+            print_r($attrs);
+            $i = 0;
+            while ($data = fgetcsv($handle, 1000, ";")) {
+                //if ($i++ == 0) continue;
+
+                foreach ($data as $key => $val) {
+                    //if ($attrs[$key])
+                    $attributes[$attrs[$key]] = trim(addslashes($val));
+                }
+
+                
+                print_r($attributes);
+                //if ($i++ > 10)
+                //    break;
+                //continue;
+                
+                echo ($i++) . "<BR>";
+                //if ($i < 271341) continue;
+                //if ($key == 'similardlnr' OR $key = 'similarartnr' ) continue;
+
+                if ((int) $attributes['dlnr'] == 0)
+                    $attributes['dlnr'] = $attributes['similardlnr'];
+                if ($attributes['artnr'] == '')
+                    $attributes['dlnr'] = $attributes['similarartnr'];
+
+
+                $attributes['wholesaleprice'] = $attributes['pricew'];
+                $attributes['retailprice'] = $attributes['pricer'];
+                $attributes['partno'] = $this->clearstring($attributes['partno']);
+
+
+                unset($attributes['similardlnr']);
+                unset($attributes['similarartnr']);
+                unset($attributes['pricer']);
+                unset($attributes['pricew']);
+
+                if (@!$ediedis[$entity["id"]]) {
+                    $ediedi = $this->getDoctrine()
+                            ->getRepository('EdiBundle:Edi')
+                            ->findOneById($entity["id"]);
+                    $ediedis[$entity["id"]] = $ediedi;
+                }
+                $ediedi = $ediedis[$entity["id"]];
+                $ediediitem = $this->getDoctrine()
+                        ->getRepository('EdiBundle:EdiItem')
+                        ->findOneBy(array("itemCode" => $attributes["itemcode"], "Edi" => $ediedi));
+                //echo @$ediediitem->id . "<BR>";
+                $q = array();
+                foreach ($attributes as $field => $val) {
+                    $q[] = "`" . $field . "` = '" . addslashes($val) . "'";
+                }
+                @$ediedi_id = (int) $ediediitem->id;
+                if (@$ediedi_id == 0) {
+                    $sql = "replace partsbox_db.edi_item set id = '" . $ediedi_id . "', edi='" . $entity["id"] . "', " . implode(",", $q);
+                    echo $sql . "<BR>";
+                    $em->getConnection()->exec($sql);
+                    /*
+                      $ediediitem = $this->getDoctrine()
+                      ->getRepository('EdiBundle:EdiItem')
+                      ->findOneBy(array("itemCode" => $attributes["itemcode"], "Edi" => $ediedi));
+                     */
+                    //$ediediitem->tecdoc = $tecdoc;
+                    //$ediediitem->updatetecdoc();
+                    //if ($i++ > 60) return;
+                } else {
+                    $sql = "update partsbox_db.edi_item set " . implode(",", $q) . " where id = '" . $ediedi_id . "'";
+                    echo $sql . "<BR>";
+                    $em->getConnection()->exec($sql);
+                }
+            }
+        }
+    }
+
+    
     public function getComlineEdiPartMaster($entity) {
         //echo $this->getPartMaster();
         //return;
