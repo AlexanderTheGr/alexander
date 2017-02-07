@@ -698,6 +698,9 @@ class EdiItem extends Entity {
           $TecdocSupplier->toSoftone();
           }
          */
+        if ($this->getEdi()->getFunc() == 'getComlineEdiPartMaster') {
+            $this->setComlineSoap();
+        }
         $TecdocSupplier = $em->getRepository("SoftoneBundle:TecdocSupplier")
                 ->find($this->dlnr);
         $TecdocSupplier->toSoftone();
@@ -743,6 +746,7 @@ class EdiItem extends Entity {
             echo $this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode();
             return;
         }
+        
 
         /*
           if ($this->getProduct() > 0) {
