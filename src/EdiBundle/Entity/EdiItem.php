@@ -1086,7 +1086,7 @@ class EdiItem extends Entity {
         $ProOrdCus = $response->lstPriceResult->lstPrice->ProOrdCus > 0 ? $response->lstPriceResult->lstPrice->ProOrdCus : 0;
         $stock = $response->lstPriceResult->lstPrice->ProStock - $ProOrdCus;
         $this->wholesaleprice = $response->lstPriceResult->lstPrice->PplPrice;
-        $this->soapPrice = $response->lstPriceResult->lstPrice->PplPrice;
+        $this->soapPrice = str_replace(",",".",$response->lstPriceResult->lstPrice->PplPrice);
         $this->soapStock = $stock > 0 ? $stock : 0;
         $this->soapAvail1 = $response->lstPriceResult->lstPrice->ProAvail1;
         $this->soapAvail2 = $response->lstPriceResult->lstPrice->ProAvail2;
