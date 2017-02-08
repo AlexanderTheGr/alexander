@@ -81,7 +81,7 @@ class DefaultController extends Controller {
         return $this->render('default/alerts.html.twig', array(
                     'pagename' => '',
                     'orderscnt' => "Orders: " . count($orders),
-                    'orderscntbkg' => count($orders) > 0 ? "#ff1100": "#ff1100",
+                    'orderscntbkg' => count($orders) > 0 ? "#ff1100": "#ff9800",
                     'edicnt' => "EDI: " . count($ediorders),
                     'orders' => $ordersHtml,
                     'usersarr' => $usersarr,
