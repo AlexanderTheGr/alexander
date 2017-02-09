@@ -48,9 +48,9 @@ class CustomConnectionFactory extends ConnectionFactory {
             $params['user'] = 'partsbox';
             $params['password'] = ')7uT[LJOPyX$';   
             //            
-            $params['dbname'] = 'partsbox_gratsias';
-            $params['user'] = 'partsbox';
-            $params['password'] = ')7uT[LJOPyX$';               
+           // $params['dbname'] = 'partsbox_gratsias';
+           // $params['user'] = 'partsbox';
+            //$params['password'] = ')7uT[LJOPyX$';               
         }             
 
         return parent::createConnection($params, $config, $eventManager, $mappingTypes);
