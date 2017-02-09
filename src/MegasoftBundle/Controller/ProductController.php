@@ -1008,7 +1008,7 @@ class ProductController extends Main {
                 echo $sql . "<BR>";
                 $em->getConnection()->exec($sql);
             }
-            exit;
+            //exit;
         }
     }
 
