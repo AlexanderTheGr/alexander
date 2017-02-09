@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="MegasoftBundle\Entity\Product" repository-class="MegasoftBundle\Entity\ProductRepository" table="megasoft_product">
+        <indexes>
+            <index name="catalogue" columns="catalogue"/>
+            <index name="reference" columns="reference"/>
+            <index name="erp_code" columns="erp_code"/>
+            <index name="edi_id" columns="edi_id"/>     
+            <index name="supplier_code" columns="supplier_code"/>
+            <index name="tecdoc_article_id" columns="tecdoc_article_id"/>
+            <index name="tecdoc_code" columns="tecdoc_code"/>
+            <index name="sisxetisi" columns="sisxetisi"/>
+        </indexes>
+        <unique-constraints>
+            <unique-constraint name="u_item_code" columns="item_code"/>
+            <unique-constraint name="u_erp_code" columns="erp_code"/>
+        </unique-constraints>
+        
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        
+        <field name="reference" type="integer" column="reference" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        
+        <field name="edi" type="string" column="edi" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>  
+              
+        <field name="ediId" type="integer" column="edi_id" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>        
+
+        <field name="edis" type="text" column="edis" length="65535" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>          
+        
+        <field name="erpCode" type="string" column="erp_code" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+               
+                        
+        <field name="title" type="text" column="title" length="65535" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field> 
+        
+           
+        <field name="cats" type="string" column="cats" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field> 
+        <field name="cars" type="string" column="cars" length="65535" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>                 
+                    
+            
+        <field name="tecdocCode" type="string" column="tecdoc_code" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+
+        <field name="sisxetisi" type="string" column="sisxetisi" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+                <option name="default"></option>
+            </options>
+        </field>
+
+        <field name="tecdocArticleId" type="integer" column="tecdoc_article_id" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>     
+          
+        <field name="supplierCode" type="string" column="supplier_code" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field> 
+        
+        <field name="erpSupplier" type="string" column="erp_supplier" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        
+        <field name="tecdocArticleName" type="string" column="tecdoc_article_name" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        
+        <field name="tecdocGenericArticleId" type="integer" column="tecdoc_generic_article_id" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+              
+        <field name="qty" type="integer" column="qty" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="default">0</option>
+            </options>
+        </field>   
+        <field name="reserved" type="integer" column="reserved" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="default">0</option>
+            </options>
+        </field>                  
+        
+        <field name="storeRetailPrice" type="decimal" column="store_retail_price" precision="10" scale="2" nullable="true"/>
+        <field name="storeWholeSalePrice" type="decimal" column="store+wholesale_price" precision="10" scale="2" nullable="true"/>
+        
+        
+        <field name="media" type="string" column="media" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        
+        <field name="ts" type="datetime" column="ts" nullable="true">
+            <options>
+                
+            </options>
+        </field>
+        
+        <field name="actioneer" type="integer" column="actioneer" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        
+        <field name="created" type="datetime" column="created" nullable="true"/>
+        <field name="modified" type="datetime" column="modified" nullable="true"/>
+        
+        <many-to-one
+            field="tecdocSupplierId"
+            target-entity="TecdocSupplier"
+            inversed-by="TecdocSuppliers"
+            join-column="tecdoc_supplier_id">
+            <cascade>
+                <cascade-remove />
+            </cascade>
+            <join-column name="tecdoc_supplier_id" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>            
+        </many-to-one> 
+             
+        <many-to-one
+            field="productSale"
+            target-entity="ProductSale"
+            inversed-by="ProductSales"
+            join-column="product_sale">
+            <cascade>
+                <cascade-remove />
+            </cascade>
+            <join-column name="product_sale" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>            
+        </many-to-one>             
+    </entity>
+</doctrine-mapping>
+
