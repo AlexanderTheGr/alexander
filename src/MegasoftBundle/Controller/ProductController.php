@@ -964,18 +964,6 @@ class ProductController extends Main {
                 //$entity->setRepositories();                
             }
 
-            //@print_r($entity->repositories);
-            foreach ($params["relation"] as $field => $extra) {
-                //echo $field." - ".@$data[$extra]."<BR>";
-                if (@$data[$extra] AND in_array($field, $fields)) {
-                    $entity->setField($field, @$data[$extra]);
-                }
-                //echo @$entity->repositories[$field];
-                if (@$data[$extra] AND @ $entity->repositories[$field]) {
-                    $rel = $this->getDoctrine()->getRepository($entity->repositories[$field])->findOneById($data[$extra]);
-                    $entity->setField($field, $rel);
-                }
-            }
 
             /*
 
