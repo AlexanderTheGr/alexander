@@ -954,7 +954,7 @@ class ProductController extends Main {
 
             $dt = new \DateTime("now");
 
-            if (@$entity->id == 0) {
+            if (!$entity) {
                 $entity = new Product();
                 $entity->setTs($dt);
                 $entity->setCreated($dt);
