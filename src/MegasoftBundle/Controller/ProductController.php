@@ -773,14 +773,14 @@ class ProductController extends Main {
         $fields[] = array("name" => "ID", "index" => 'id', "active" => "active");
         $fields[] = array("name" => "Title", "index" => 'title');
         $fields[] = array("name" => "Code", "index" => 'erpCode');
-        $fields[] = array("name" => "Supplier", "index" => 'supplierId:title', 'type' => 'select', 'object' => 'MegasoftSupplier');
+        //$fields[] = array("name" => "Supplier", "index" => 'supplierId:title', 'type' => 'select', 'object' => 'MegasoftSupplier');
         $fields[] = array("name" => "Προσφορά", "index" => 'productSale:title', 'type' => 'select', 'object' => 'ProductSale');
-        $fields[] = array("name" => "Ράφι", "index" => 'itemMtrplace');
-        $fields[] = array("name" => "Συνχρ.", "index" => 'cccPriceUpd', 'method' => 'yesno');
-        $fields[] = array("name" => "Λιανική", "index" => 'itemPricer');
-        $fields[] = array("name" => "Χονδρική", "index" => 'itemPricew');
-        $fields[] = array("name" => "Αποθηκη", "function" => 'getApothiki', 'search' => 'text');
-        $fields[] = array("name" => "", "function" => 'getEditLink', 'search' => 'text');
+        //$fields[] = array("name" => "Ράφι", "index" => 'itemMtrplace');
+        //$fields[] = array("name" => "Συνχρ.", "index" => 'cccPriceUpd', 'method' => 'yesno');
+       // $fields[] = array("name" => "Λιανική", "index" => 'itemPricer');
+       // $fields[] = array("name" => "Χονδρική", "index" => 'itemPricew');
+       // $fields[] = array("name" => "Αποθηκη", "function" => 'getApothiki', 'search' => 'text');
+       // $fields[] = array("name" => "", "function" => 'getEditLink', 'search' => 'text');
         $this->setSetting("MegasoftBundle:Product:getdatatable", serialize($fields));
         //}
 
