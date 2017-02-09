@@ -997,10 +997,11 @@ class ProductController extends Main {
             $q[] = "`tecdoc_supplier_id` = '" . addslashes($data["fwSupplierId"]) . "'";
             $q[] = "`tecdoc_code` = '" . addslashes($data["fwCode"]) . "'";
             $q[] = "`title` = '" . addslashes($data["StoreDescr"]) . "'";
-
+            $q[] = "`product_sale` = '1'";
             if (@$entity->getId() == 0) {
                 //$q[] = "`reference` = '" . $data[$params["megasoft_table"]] . "'";
                 $q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
+                
                 $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
                 echo $sql . "<BR>";
                 $em->getConnection()->exec($sql);
