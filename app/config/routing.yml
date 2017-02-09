@@ -1,3 +1,8 @@
+megasoft:
+    resource: "@MegasoftBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 admin:
     resource: "@AdminBundle/Controller/"
     type:     annotation
