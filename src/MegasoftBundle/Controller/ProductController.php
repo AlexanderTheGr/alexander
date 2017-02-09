@@ -996,6 +996,7 @@ class ProductController extends Main {
             $q[] = "`erp_supplier` = '" . addslashes($data["SupplierId"]) . "'";
             $q[] = "`tecdoc_supplier_id` = '" . addslashes($data["fwSupplierId"]) . "'";
             $q[] = "`tecdoc_code` = '" . addslashes($data["fwCode"]) . "'";
+            $q[] = "`title` = '" . addslashes($data["StoreDescr"]) . "'";
 
             if (@$entity->getId() == 0) {
                 //$q[] = "`reference` = '" . $data[$params["megasoft_table"]] . "'";
