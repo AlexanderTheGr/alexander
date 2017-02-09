@@ -11,7 +11,6 @@
             <index name="sisxetisi" columns="sisxetisi"/>
         </indexes>
         <unique-constraints>
-            <unique-constraint name="u_item_code" columns="item_code"/>
             <unique-constraint name="u_erp_code" columns="erp_code"/>
         </unique-constraints>
         
