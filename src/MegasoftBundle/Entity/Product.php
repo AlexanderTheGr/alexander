@@ -2,10 +2,76 @@
 
 namespace MegasoftBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\Entity;
+use AppBundle\Entity\Tecdoc as Tecdoc;
+use MegasoftBundle\Entity\Megasoft as Megasoft;
+use MegasoftBundle\Entity\TecdocSupplier as TecdocSupplier;
+
 /**
  * Product
+ *
+ * @ORM\Entity(repositoryClass="MegasoftBundle\Entity\ProductRepository")
  */
-class Product {
+class Product extends Entity {
+
+    var $repositories = array();
+    var $uniques = array();
+
+    public function __construct() {
+        $this->setRepositories();
+    }
+
+    public function getField($field) {
+
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
+
+    public function setRepositories() {
+        $this->repositories['tecdocSupplierId'] = 'MegasoftBundle:TecdocSupplier';
+
+        $this->repositories['productSale'] = 'MegasoftBundle:ProductSale';
+
+        $this->types['tecdocSupplierId'] = 'object';
+        $this->types['supplierId'] = 'object';
+        $this->types['productSale'] = 'object';
+
+        $this->uniques = array("erpCode", "itemCode");
+
+        //$this->tecdocSupplierId = new \MegasoftBundle\Entity\TecdocSupplier;
+    }
+
+    public function getRepository() {
+        return $this->repository;
+    }
+
+    public function getRepositories($repo) {
+        $this->repositories['tecdocSupplierId'] = 'MegasoftBundle:TecdocSupplier';
+       // $this->repositories['supplierId'] = 'MegasoftBundle:MegasoftSupplier';
+        $this->repositories['productSale'] = 'MegasoftBundle:ProductSale';
+        //$this->repositories['mtrsup'] = 'MegasoftBundle:Supplier';
+
+        return $this->repositories[$repo];
+    }
+
+    public function gettype($field) {
+        $this->types['tecdocSupplierId'] = 'object';
+      //  $this->types['supplierId'] = 'object';
+        $this->types['productSale'] = 'object';
+      //  $this->types['mtrsup'] = 'object';
+        if (@$this->types[$field] != '') {
+            return @$this->types[$field];
+        }
+        if (gettype($field) != NULL) {
+            return gettype($this->$field);
+        }
+        return 'string';
+    }
 
     /**
      * @var integer
