@@ -946,23 +946,14 @@ class ProductController extends Main {
 
         foreach ($StoreDetails as $data) {
             $data = (array) $data;
-            print_r($data);
-            exit;
+      
             $entity = $this->getDoctrine()
-                    ->getRepository($params["repository"])
-                    ->findOneBy(array("reference" => (int) $data[$params["megasoft_table"]]));
+                    ->getRepository($this->repository)
+                    ->findOneBy(array("reference" => (int) $data["StoreId"]));
 
-            //echo @$entity->id . "<BR>";
-            //if ($data[$params["megasoft_table"]] < 149090) continue;
+
             $dt = new \DateTime("now");
-            /*
-              if (@$entity->id == 0) {
-              $entity = $this->getDoctrine()
-              ->getRepository($params["repository"])
-              ->findOneBy(array("itemCode" => $data["CODE"]));
-              }
-             * 
-             */
+
             if (@$entity->id == 0) {
                 $entity = new $object();
                 $entity->setTs($dt);
@@ -985,27 +976,37 @@ class ProductController extends Main {
                     $entity->setField($field, $rel);
                 }
             }
-            echo $data[$params["megasoft_table"]] . "<BR>";
-            /*
-              $imporetedData = array();
-              $entity->setReference($data[$params["megasoft_table"]]);
 
-              $em->persist($entity);
-              $em->flush();
+            /*
+
+
+              [StoreLastUpdate] =&gt; 2016-12-20T17:32:24
+              [StoreId] =&gt; 345
+              [StoreDescr] =&gt; ΤΣΙΜΟΥΧΑΚΙ ΒΑΛΒΙΔΩΝ ΑΕΧ 7αρι
+              [StoreKwd] =&gt; 027-109-675-REINZ
+              [StoreRetailPrice] =&gt; 0.3655
+              [StoreWholeSalePrice] =&gt; 0.2805
+              [StoreStock] =&gt; 184
+              [SupplierCode] =&gt; 702605800
+              [SupplierId] =&gt; REINZ
+              [fwSupplierId] =&gt; 9
+              [fwCode] =&gt; 70-26058-00
+             * 
+             * 
              */
             //$this->flushpersist($entity);
+            $params["table"] = "megasoft_product";
             $q = array();
-
-            foreach ($data as $identifier => $val) {
-                $imporetedData[strtolower($params["megasoft_object"] . "_" . $identifier)] = addslashes($val);
-                $ad = strtolower($identifier);
-                $baz = $params["megasoft_object"] . ucwords(str_replace("_", " ", $ad));
-                if (in_array($baz, $fields)) {
-                    $q[] = "`" . strtolower($params["megasoft_object"] . "_" . $identifier) . "` = '" . addslashes($val) . "'";
-                    //$entity->setField($baz, $val);
-                }
-            }
-
+            //$q[] =
+            //$q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
+            $q[] = "`erp_code` = '" . addslashes($data["StoreKwd"]) . "'";
+            $q[] = "`store_retail_price` = '" . addslashes($data["StoreRetailPrice"]) . "'";
+            $q[] = "`store_wholesale_price` = '" . addslashes($data["StoreWholeSalePrice"]) . "'";
+            $q[] = "`qty` = '" . addslashes($data["StoreStock"]) . "'";
+            $q[] = "`supplier_code` = '" . addslashes($data["SupplierCode"]) . "'";
+            $q[] = "`erp_supplier` = '" . addslashes($data["SupplierId"]) . "'";
+            $q[] = "`tecdoc_supplier_id` = '" . addslashes($data["fwSupplierId"]) . "'";
+            $q[] = "`tecdoc_code` = '" . addslashes($data["fwCode"]) . "'";
 
             if (@$entity->id == 0) {
                 $q[] = "`reference` = '" . $data[$params["megasoft_table"]] . "'";
@@ -1017,7 +1018,7 @@ class ProductController extends Main {
                 echo $sql . "<BR>";
                 $em->getConnection()->exec($sql);
             }
-
+            exit;
         }
     }
 
@@ -1228,15 +1229,15 @@ class ProductController extends Main {
         //$allowedips = $this->getSetting("MegasoftBundle:Product:Allowedips");
         //$allowedipsArr = explode(",", $allowedips);
         //if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
-            set_time_limit(100000);
-            ini_set('memory_limit', '2256M');
+        set_time_limit(100000);
+        ini_set('memory_limit', '2256M');
 
-            echo $this->retrieveProduct();
-            file_put_contents("retrieveMegasoft.txt", $allowedipsArr);
-            //echo $this->retrieveApothema();
-            return new Response(
-                    "", 200
-            );
+        echo $this->retrieveProduct();
+        file_put_contents("retrieveMegasoft.txt", $allowedipsArr);
+        //echo $this->retrieveApothema();
+        return new Response(
+                "", 200
+        );
         //}
     }
 
