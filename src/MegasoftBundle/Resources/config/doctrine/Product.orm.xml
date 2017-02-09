@@ -2,7 +2,6 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
     <entity name="MegasoftBundle\Entity\Product" repository-class="MegasoftBundle\Entity\ProductRepository" table="megasoft_product">
         <indexes>
-            <index name="catalogue" columns="catalogue"/>
             <index name="reference" columns="reference"/>
             <index name="erp_code" columns="erp_code"/>
             <index name="edi_id" columns="edi_id"/>     
