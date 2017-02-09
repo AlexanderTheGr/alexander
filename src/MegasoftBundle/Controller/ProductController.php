@@ -1225,9 +1225,9 @@ class ProductController extends Main {
      * @Route("/megasoft/product/retrieveMegasoft")
      */
     function retrieveMegasoftDataAction($params = array()) {
-        $allowedips = $this->getSetting("MegasoftBundle:Product:Allowedips");
-        $allowedipsArr = explode(",", $allowedips);
-        if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
+        //$allowedips = $this->getSetting("MegasoftBundle:Product:Allowedips");
+        //$allowedipsArr = explode(",", $allowedips);
+        //if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
             set_time_limit(100000);
             ini_set('memory_limit', '2256M');
 
@@ -1237,7 +1237,7 @@ class ProductController extends Main {
             return new Response(
                     "", 200
             );
-        }
+        //}
     }
 
     /**
