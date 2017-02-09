@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Controller\Main as Main;
 use MegasoftBundle\Entity\Product as Product;
-
 use AppBundle\Entity\Tecdoc as Tecdoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
@@ -131,7 +130,7 @@ class ProductController extends Main {
         $product->setSupplierId($MegasoftSupplier);
         $product->setItemName($asd->genericArticleName);
         $product->setTecdocArticleId($asd->articleId);
-        
+
         $productsale = $this->getDoctrine()
                         ->getRepository('MegasoftBundle:Productsale')->find(1);
         $product->setItemPricew("0.00");
@@ -139,7 +138,7 @@ class ProductController extends Main {
         $product->setItemMarkupw("0.00");
         $product->setItemMarkupr("0.00");
         $product->setProductSale($productsale);
-        
+
         //$product->setItemCode($this->partno);
         $product->setItemApvcode($asd->articleNo);
         $product->setErpSupplier($asd->brand);
@@ -330,7 +329,6 @@ class ProductController extends Main {
         }
 
         //print_r($this->error);
-        
         //echo $product->id;
         if (count($this->error[$this->repository])) {
             $json = json_encode(array("error" => 1, "id" => (int) $product->id, 'unique' => $this->error[$this->repository]));
@@ -633,10 +631,10 @@ class ProductController extends Main {
 
 
         $fields["itemMtrplace"] = array("label" => "Ράφι", "className" => "col-md-1", "required" => false);
-        
+
         $fields["qty"] = array("label" => "Αποθήκη", "className" => "col-md-1", "required" => false);
         $fields["reserved"] = array("label" => "Δεσμευμενα", "className" => "col-md-1", "required" => false);
-        
+
         //$fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "className" => "col-md-2", "required" => false);        
         $fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "required" => false, "className" => "col-md-2", 'type' => "select", 'dataarray' => $itemMtrsup);
         $fields["cccRef"] = array("label" => "Κωδικός Προμηθευτή", "className" => "col-md-2", "required" => false);
@@ -777,10 +775,10 @@ class ProductController extends Main {
         $fields[] = array("name" => "Προσφορά", "index" => 'productSale:title', 'type' => 'select', 'object' => 'ProductSale');
         //$fields[] = array("name" => "Ράφι", "index" => 'itemMtrplace');
         //$fields[] = array("name" => "Συνχρ.", "index" => 'cccPriceUpd', 'method' => 'yesno');
-       // $fields[] = array("name" => "Λιανική", "index" => 'itemPricer');
-       // $fields[] = array("name" => "Χονδρική", "index" => 'itemPricew');
-       // $fields[] = array("name" => "Αποθηκη", "function" => 'getApothiki', 'search' => 'text');
-       // $fields[] = array("name" => "", "function" => 'getEditLink', 'search' => 'text');
+        // $fields[] = array("name" => "Λιανική", "index" => 'itemPricer');
+        // $fields[] = array("name" => "Χονδρική", "index" => 'itemPricew');
+        // $fields[] = array("name" => "Αποθηκη", "function" => 'getApothiki', 'search' => 'text');
+        // $fields[] = array("name" => "", "function" => 'getEditLink', 'search' => 'text');
         $this->setSetting("MegasoftBundle:Product:getdatatable", serialize($fields));
         //}
 
@@ -830,10 +828,10 @@ class ProductController extends Main {
                 continue;
             $brandModel = $this->getDoctrine()->getRepository('MegasoftBundle:BrandModel')->find($brandModelType->getBrandModel());
             if (!$brandModel)
-                continue;              
+                continue;
             $brand = $this->getDoctrine()->getRepository('MegasoftBundle:Brand')->find($brandModel->getBrand());
             if (!$brand)
-                continue;            
+                continue;
             $egarmoges .= '<li>' . $brand->getBrand() . ' ' . $brandModel->getBrandModel() . ' ' . $brandModelType->getBrandModelType() . '</li>';
         }
         $egarmoges .= '</ul>';
@@ -920,93 +918,36 @@ class ProductController extends Main {
         }
     }
 
-    function retrieveMtrl($MTRL = 0) {
-        $params = unserialize($this->getSetting("MegasoftBundle:Product:retrieveMtrl"));
-        if (count($params) > 0) {
-            if ($MTRL > 0) {
-                $where = ' AND MTRL = ' . $MTRL;
-            }
-            $params["megasoft_object"] = "item";
-            $params["repository"] = 'MegasoftBundle:Product';
-            $params["megasoft_table"] = 'MTRL';
-            $params["table"] = 'megasoft_product';
-            $params["object"] = 'MegasoftBundle\Entity\Product';
-            $params["filter"] = 'WHERE M.SODTYPE=51 ' . $where;
-            $params["relation"] = array();
-            $params["extra"] = array("cccRef" => "cccRef", "cccWebUpd" => "cccWebUpd", "cccPriceUpd" => "cccPriceUpd");
-            $params["extrafunction"] = array();
-            //$params["extra"]["CCCFXRELTDCODE"] = "CCCFXRELTDCODE";
-            //$params["extra"]["CCCFXRELBRAND"] = "CCCFXRELBRAND";
-            $params["relation"]["reference"] = "MTRL";
-            $params["relation"]["erpCode"] = "CODE";
-            $params["relation"]["supplierCode"] = "CODE2";
-            $params["relation"]["title"] = "NAME";
-            $params["relation"]["tecdocCode"] = "APVCODE";
-            $params["relation"]["tecdocSupplierId"] = "MTRMARK";
-            $params["extrafunction"][] = "updatetecdoc";
-            $this->setSetting("MegasoftBundle:Product:retrieveMtrl", serialize($params));
-        }
-        $this->retrieveProduct($params);
-        $sql = 'UPDATE  `megasoft_product` SET `supplier_code` =  `item_code2`, `title` =  `item_name`, `tecdoc_code` =  `item_apvcode`, `erp_code` =  `item_code`, `tecdoc_supplier_id` =  `item_mtrmark`, `supplier_id` =  `item_mtrmanfctr`';
-        $this->getDoctrine()->getConnection()->exec($sql);
-        $sql = 'update `megasoft_product` set product_sale = 1 where product_sale is null';
-        $this->getDoctrine()->getConnection()->exec($sql);
-    }
-
     function retrieveProduct($params = array()) {
-        $object = $params["object"];
+        $login = "W600-K78438624F8";
         $em = $this->getDoctrine()->getManager();
-        $fields = $em->getClassMetadata($params["object"])->getFieldNames();
-        //print_r($fields);
-
-        $itemfield = array();
-        $itemfield[] = "M." . $params["megasoft_table"];
-        foreach ($fields as $field) {
-            $ffield = " " . $field;
-            if (strpos($ffield, $params["megasoft_object"]) == true) {
-                $itemfield[] = "M." . strtoupper(str_replace($params["megasoft_object"], "", $field));
-            }
-        }
-        foreach ($params["extra"] as $field => $extra) {
-            //if (@$data[$extra] AND in_array($field, $fields)) {
-            if ($field == $extra)
-                $itemfield[] = "M." . strtoupper($field);
-            else
-                $itemfield[] = "M." . strtoupper($field) . " as $extra";
-            //}
-        }
-
-        $selfields = implode(",", $itemfield);
-        $params["fSQL"] = 'SELECT ' . $selfields . ' FROM ' . $params["megasoft_table"] . ' M ' . $params["filter"];
-        //echo $params["fSQL"];
-        //$params["fSQL"] = 'SELECT M.* FROM ' . $params["megasoft_table"] . ' M ' . $params["filter"];
-        //$params["fSQL"] = "SELECT VARCHAR02, MTRL FROM MTREXTRA WHERE VARCHAR02 != ''";
-        echo "<BR>";
-        echo $params["fSQL"];
-        echo "<BR>";
-        //return;
-        $megasoft = new Megasoft();
-        $datas = $megasoft->createSql($params);
-        //print_r($datas);
-
-
-
-        $em = $this->getDoctrine()->getManager();
-
+        $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
         /*
-          foreach ((array) $datas->data as $data) {
-          $sql = "update megasoft_product set sisxetisi = '" . $data->VARCHAR02 . "' where reference = '" . $data->MTRL . "'";
-          echo $sql . "<BR>";
-          $em->getConnection()->exec($sql);
-          }
-          exit;
-         * 
+          $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
+          $headerbody = array('Login' => "alexander", 'Date' => "2016-10-10");
+          $header = new SOAPHeader($ns,"AuthHeader",$headerbody);
+          $soap->__setSoapHeaders($header);
          */
+        $params["Login"] = $login;
+        $params["Date"] = date("Y-m-d");
+        $params["ParticipateInEshop"] = 1;
+        //$results = $soap->GetCustomers();
+        $response = $soap->__soapCall("GetProducts", array($params));
 
-        foreach ((array) $datas->data as $data) {
+        //echo count($response->GetProductsResult->StoreDetails);
+        //exit;	
+        if (count($response->GetProductsResult->StoreDetails) == 1) {
+            $StoreDetails[] = $response->GetProductsResult->StoreDetails;
+        } elseif (count($response->GetProductsResult->StoreDetails) > 1) {
+            $StoreDetails = $response->GetProductsResult->StoreDetails;
+        }
+
+
+
+        foreach ($StoreDetails as $megasoft) {
             $data = (array) $data;
-            //print_r($data);
-            //exit;
+            print_r($data);
+            exit;
             $entity = $this->getDoctrine()
                     ->getRepository($params["repository"])
                     ->findOneBy(array("reference" => (int) $data[$params["megasoft_table"]]));
@@ -1065,10 +1006,6 @@ class ProductController extends Main {
                 }
             }
 
-            $q[] = "`" . strtolower($params["megasoft_object"] . "_cccpriceupd") . "` = '" . addslashes($data["CCCPRICEUPD"]) . "'";
-            $q[] = "`" . strtolower($params["megasoft_object"] . "_cccwebupd") . "` = '" . addslashes($data["CCCWEBUPD"]) . "'";
-            $q[] = "`" . strtolower($params["megasoft_object"] . "_cccref") . "` = '" . addslashes($data["CCCREF"]) . "'";
-
 
             if (@$entity->id == 0) {
                 $q[] = "`reference` = '" . $data[$params["megasoft_table"]] . "'";
@@ -1080,21 +1017,7 @@ class ProductController extends Main {
                 echo $sql . "<BR>";
                 $em->getConnection()->exec($sql);
             }
-            /*
-              @$entity_id = (int) $entity->id;
-              //if (@$entity_id > 0) {
-              $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity_id . "'";
-              echo $sql."<BR>";
-              $em->getConnection()->exec($sql);
-              foreach ($params["extrafunction"] as $field => $func) {
-              //$entity->$func();
-              }
-              //}
-             * 
-             */
-            $entity = null;
-            //if (@$i++ > 150)
-            //    break;
+
         }
     }
 
@@ -1186,7 +1109,7 @@ class ProductController extends Main {
                          */
                         //$this->clearstring($search);
                         //if ($product->getItemCode2() != '333114') continue;
-                       
+
                         $ediediitem = false;
                         $newcccref = false;
                         $code = trim($this->clearstring($product->getCccRef()));
@@ -1244,11 +1167,10 @@ class ProductController extends Main {
                                     $product->setItemPricer($itemPricer);
                                     //
                                     //echo $product->id." ".$product->erp_code." --> ".$qty." -- ".$product->getApothema()."<BR>";
-                                    $sql = "update megasoft_product set item_pricew = '".$itemPricew."', item_pricer = '".$itemPricer."', item_cccpriceupd = 1, item_cccref = '".$product->getCccRef()."'   where id = '" . $product->getId() . "'";
+                                    $sql = "update megasoft_product set item_pricew = '" . $itemPricew . "', item_pricer = '" . $itemPricer . "', item_cccpriceupd = 1, item_cccref = '" . $product->getCccRef() . "'   where id = '" . $product->getId() . "'";
                                     echo $sql . "<BR>";
                                     $em->getConnection()->exec($sql);
                                     //$this->flushpersist($product);
-                                    
                                     //$product->toMegasoft();
                                     if ($newcccref)
                                         $sql = "UPDATE MTRL SET CCCREF='" . $product->getCccRef() . "', CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
@@ -1309,9 +1231,7 @@ class ProductController extends Main {
             set_time_limit(100000);
             ini_set('memory_limit', '2256M');
 
-            echo $this->retrieveMtrcategory();
-            echo $this->retrieveMtrmanfctr();
-            echo $this->retrieveMtrl();
+            echo $this->retrieveProduct();
             file_put_contents("retrieveMegasoft.txt", $allowedipsArr);
             //echo $this->retrieveApothema();
             return new Response(
