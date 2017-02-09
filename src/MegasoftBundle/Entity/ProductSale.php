@@ -2,11 +2,48 @@
 
 namespace MegasoftBundle\Entity;
 
+use AppBundle\Entity\Entity;
+
 /**
  * ProductSale
  */
-class ProductSale
-{
+class ProductSale extends Entity {
+
+    var $repositories = array();
+    var $uniques = array();
+    var $qty;
+
+    public function __construct() {
+        $this->setRepositories();
+    }
+
+    public function getField($field) {
+
+        return $this->$field;
+    }
+
+    public function setRepositories() {
+        //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:TecdocSupplier';
+        $this->types['expired'] = 'datetime';
+        //$this->tecdocSupplierId = new \SoftoneBundle\Entity\TecdocSupplier;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
+
+    public function gettype($field) {
+        $this->types['expired'] = 'datetime';
+        if (@$this->types[$field] != '') {
+            return @$this->types[$field];
+        }
+        if (gettype($field) != NULL) {
+            return gettype($this->$field);
+        }
+        return 'string';
+    }
+
     /**
      * @var string
      */
@@ -42,7 +79,6 @@ class ProductSale
      */
     private $id;
 
-
     /**
      * Set title
      *
@@ -50,8 +86,7 @@ class ProductSale
      *
      * @return ProductSale
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
 
         return $this;
@@ -62,8 +97,7 @@ class ProductSale
      *
      * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -74,8 +108,7 @@ class ProductSale
      *
      * @return ProductSale
      */
-    public function setExpired($expired)
-    {
+    public function setExpired($expired) {
         $this->expired = $expired;
 
         return $this;
@@ -86,8 +119,7 @@ class ProductSale
      *
      * @return \DateTime
      */
-    public function getExpired()
-    {
+    public function getExpired() {
         return $this->expired;
     }
 
@@ -98,8 +130,7 @@ class ProductSale
      *
      * @return ProductSale
      */
-    public function setTs($ts)
-    {
+    public function setTs($ts) {
         $this->ts = $ts;
 
         return $this;
@@ -110,8 +141,7 @@ class ProductSale
      *
      * @return \DateTime
      */
-    public function getTs()
-    {
+    public function getTs() {
         return $this->ts;
     }
 
@@ -122,8 +152,7 @@ class ProductSale
      *
      * @return ProductSale
      */
-    public function setActioneer($actioneer)
-    {
+    public function setActioneer($actioneer) {
         $this->actioneer = $actioneer;
 
         return $this;
@@ -134,8 +163,7 @@ class ProductSale
      *
      * @return integer
      */
-    public function getActioneer()
-    {
+    public function getActioneer() {
         return $this->actioneer;
     }
 
@@ -146,8 +174,7 @@ class ProductSale
      *
      * @return ProductSale
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -158,8 +185,7 @@ class ProductSale
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -170,8 +196,7 @@ class ProductSale
      *
      * @return ProductSale
      */
-    public function setModified($modified)
-    {
+    public function setModified($modified) {
         $this->modified = $modified;
 
         return $this;
@@ -182,8 +207,7 @@ class ProductSale
      *
      * @return \DateTime
      */
-    public function getModified()
-    {
+    public function getModified() {
         return $this->modified;
     }
 
@@ -192,8 +216,8 @@ class ProductSale
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
+
 }
