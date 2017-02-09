@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use MegasoftBundle\Entity\ProductSale as ProductSale;
 use AppBundle\Controller\Main as Main;
 
-class ProductSaleController extends \MegasoftBundle\Controller\SoftoneController  {
+class ProductSaleController extends Main {
 
     var $repository = 'MegasoftBundle:ProductSale';
 
