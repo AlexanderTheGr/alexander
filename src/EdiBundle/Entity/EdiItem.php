@@ -648,6 +648,11 @@ class EdiItem extends Entity {
     }
 
     public function toErp() {
+        $this->toSoftoneErp();
+    }
+    
+    
+    private function toSoftoneErp() {
 
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
