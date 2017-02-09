@@ -944,7 +944,7 @@ class ProductController extends Main {
 
 
 
-        foreach ($StoreDetails as $megasoft) {
+        foreach ($StoreDetails as $data) {
             $data = (array) $data;
             print_r($data);
             exit;
