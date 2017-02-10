@@ -961,8 +961,8 @@ class Product extends Entity {
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
         }
-        if ($this->getSupplierId())
-            $this->erpSupplier = $this->getSupplierId()->getTitle();
+        //if ($this->getSupplierId())
+        //    $this->erpSupplier = $this->getSupplierId()->getTitle();
 
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         $dataindexarr = array();
