@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="SoftoneBundle\Entity\ProductSearch" table="softone_product_search">
+        <indexes>
+            <index name="erp_code" columns="erp_code"/>
+            <index name="search" columns="search"/>
+            <index name="sisxetisi" columns="sisxetisi"/>
+            <index name="tecdoc_code" columns="tecdoc_code"/>
+            <index name="supplier_code" columns="supplier_code"/>
+        </indexes>
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="erpCode" type="string" column="erp_code" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="tecdocCode" type="string" column="tecdoc_code" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="supplierCode" type="string" column="supplier_code" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>         
+        <field name="search" type="string" column="search" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="sisxetisi" type="string" column="sisxetisi" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+                <option name="default"></option>
+            </options>
+        </field>
+    </entity>
+</doctrine-mapping>
