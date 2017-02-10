@@ -601,12 +601,14 @@ class ProductController extends Main {
         
         //$cccPriceUpd = $entity->getCccPriceUpd() ? "1" : "0";
         //$entity->setCccPriceUpd($cccPriceUpd);
-
+        /*
         $megasoftSuppliers = $this->getDoctrine()
                         ->getRepository('MegasoftBundle:MegasoftSupplier')->findAll();
         foreach ($megasoftSuppliers as $megasoftSupplier) {
             $supplierId[] = array("value" => (string) $megasoftSupplier->getId(), "name" => $megasoftSupplier->getTitle() . " (" . $megasoftSupplier->getCode() . ")");
         }
+         * 
+         */
 
         //$fields["reference"] = array("label" => "Ενεργό", "required" => false, "className" => "col-md-12 col-sm-12");
 
