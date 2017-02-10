@@ -2,11 +2,24 @@
 
 namespace MegasoftBundle\Entity;
 
+use AppBundle\Entity\Entity;
 /**
  * Customergroup
  */
-class Customergroup
-{
+class Customergroup extends Entity {
+
+    var $repositories = array();
+    var $uniques = array();
+    
+    public function __construct() {
+        $this->setRepositories();
+    }
+
+    public function getField($field) {
+
+        return $this->$field;
+    }
+
     /**
      * @var string
      */
@@ -50,8 +63,7 @@ class Customergroup
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->customergrouprules = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -62,8 +74,7 @@ class Customergroup
      *
      * @return Customergroup
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
 
         return $this;
@@ -74,8 +85,7 @@ class Customergroup
      *
      * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -86,8 +96,7 @@ class Customergroup
      *
      * @return Customergroup
      */
-    public function setBasePrice($basePrice)
-    {
+    public function setBasePrice($basePrice) {
         $this->basePrice = $basePrice;
 
         return $this;
@@ -98,8 +107,7 @@ class Customergroup
      *
      * @return string
      */
-    public function getBasePrice()
-    {
+    public function getBasePrice() {
         return $this->basePrice;
     }
 
@@ -110,8 +118,7 @@ class Customergroup
      *
      * @return Customergroup
      */
-    public function setTs($ts)
-    {
+    public function setTs($ts) {
         $this->ts = $ts;
 
         return $this;
@@ -122,8 +129,7 @@ class Customergroup
      *
      * @return \DateTime
      */
-    public function getTs()
-    {
+    public function getTs() {
         return $this->ts;
     }
 
@@ -134,8 +140,7 @@ class Customergroup
      *
      * @return Customergroup
      */
-    public function setActioneer($actioneer)
-    {
+    public function setActioneer($actioneer) {
         $this->actioneer = $actioneer;
 
         return $this;
@@ -146,8 +151,7 @@ class Customergroup
      *
      * @return integer
      */
-    public function getActioneer()
-    {
+    public function getActioneer() {
         return $this->actioneer;
     }
 
@@ -158,8 +162,7 @@ class Customergroup
      *
      * @return Customergroup
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -170,8 +173,7 @@ class Customergroup
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -182,8 +184,7 @@ class Customergroup
      *
      * @return Customergroup
      */
-    public function setModified($modified)
-    {
+    public function setModified($modified) {
         $this->modified = $modified;
 
         return $this;
@@ -194,8 +195,7 @@ class Customergroup
      *
      * @return \DateTime
      */
-    public function getModified()
-    {
+    public function getModified() {
         return $this->modified;
     }
 
@@ -204,8 +204,7 @@ class Customergroup
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -216,8 +215,7 @@ class Customergroup
      *
      * @return Customergroup
      */
-    public function addCustomergrouprule(\MegasoftBundle\Entity\Customergrouprule $customergrouprule)
-    {
+    public function addCustomergrouprule(\MegasoftBundle\Entity\Customergrouprule $customergrouprule) {
         $this->customergrouprules[] = $customergrouprule;
 
         return $this;
@@ -228,8 +226,7 @@ class Customergroup
      *
      * @param \MegasoftBundle\Entity\Customergrouprule $customergrouprule
      */
-    public function removeCustomergrouprule(\MegasoftBundle\Entity\Customergrouprule $customergrouprule)
-    {
+    public function removeCustomergrouprule(\MegasoftBundle\Entity\Customergrouprule $customergrouprule) {
         $this->customergrouprules->removeElement($customergrouprule);
     }
 
@@ -238,8 +235,8 @@ class Customergroup
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCustomergrouprules()
-    {
+    public function getCustomergrouprules() {
         return $this->customergrouprules;
     }
+
 }
