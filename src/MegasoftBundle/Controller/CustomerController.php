@@ -346,8 +346,8 @@ class CustomerController extends Main {
         $params["Date"] = ""; //date("Y-m-d");
         //$results = $soap->GetCustomers();
         $response = $soap->__soapCall("GetCustomers", array($params));
-        print_r($response);
-        exit;
+        //print_r($response);
+        //exit;
         if ($response->GetCustomersResult->CustomerDetails) {
             echo count($response->GetCustomersResult->CustomerDetails);
             foreach ($response->GetCustomersResult->CustomerDetails as $megasoft) {
