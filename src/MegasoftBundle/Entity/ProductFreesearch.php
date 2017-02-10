@@ -52,4 +52,3 @@ class ProductFreesearch
         return $this->id;
     }
 }
-

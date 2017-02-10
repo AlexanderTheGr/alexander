@@ -168,4 +168,3 @@ class ProductSearch
         return $this->id;
     }
 }
-
