@@ -965,6 +965,9 @@ class ProductController extends Main {
             }
 
             
+            
+            
+            
 
             /*
 
@@ -981,6 +984,16 @@ class ProductController extends Main {
               [fwSupplierId] =&gt; 9
               [fwCode] =&gt; 70-26058-00
              * 
+             * 
+            mtrplace
+            sisxetisi
+            remarks
+            cccref
+            cccwebupd
+            cccpriceupd 
+            mtrsup
+            barccode
+            mtrmanfctr
              * 
              */
             //$this->flushpersist($entity);
