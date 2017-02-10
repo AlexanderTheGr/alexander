@@ -243,4 +243,3 @@ class Customergroup
         return $this->customergrouprules;
     }
 }
-

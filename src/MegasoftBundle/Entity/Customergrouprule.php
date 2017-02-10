@@ -197,4 +197,3 @@ class Customergrouprule
         return $this->group;
     }
 }
-

@@ -823,4 +823,3 @@ class Customer
         return $this->customergroup;
     }
 }
-
