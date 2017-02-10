@@ -264,7 +264,8 @@ class ProductController extends Main {
                 ->find($entities[$this->repository]);
 
 
-        if ($product->getErpSupplier() != '' AND ! $product->getSupplierId()) {
+        //if ($product->getErpSupplier() != '' AND ! $product->getSupplierId()) {
+        if ($product->getErpSupplier() != '') {    
             $sup = trim(strtoupper($product->getErpSupplier()));
             $MegasoftSupplier = $this->getDoctrine()->getRepository("MegasoftBundle:MegasoftSupplier")
                     ->findOneBy(array('title' => $sup));
