@@ -330,147 +330,45 @@ class CustomerController extends Main {
         );
     }
 
-    function retrieveCustomer() {
-        $where = '';
-        $params["megasoft_object"] = 'customer';
-        $params["repository"] = 'MegasoftBundle:Customer';
-        $params["megasoft_table"] = 'TRDR';
-        $params["table"] = 'megasoft_customer';
-        $params["object"] = 'MegasoftBundle\Entity\Customer';
-        $params["filter"] = '';
-        $params["filter"] = 'WHERE M.SODTYPE=13 ' . $where;
-        $params["relation"] = array();
-        $params["extra"] = array();
-        $params["extrafunction"] = array();
-        $this->setSetting("MegasoftBundle:Customer:retrieveCustomer", serialize($params));
+    public function getMegasoft() {
+        //return;
+        $login = "W600-K78438624F8";
+        $soap = new SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
+        /*
+          $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
+          $headerbody = array('Login' => "alexander", 'Date' => "2016-10-10");
+          $header = new SOAPHeader($ns,"AuthHeader",$headerbody);
+          $soap->__setSoapHeaders($header);
+         */
 
-        $params = unserialize($this->getSetting("MegasoftBundle:Customer:retrieveCustomer"));
-        $this->retrieve($params);
-    }
-
-    function retrieve($params = array()) {
-        $object = $params["object"];
-        $em = $this->getDoctrine()->getManager();
-        $fields = $em->getClassMetadata($params["object"])->getFieldNames();
-        //print_r($fields);
-
-        $itemfield = array();
-        $itemfield[] = "M." . $params["megasoft_table"];
-        foreach ($fields as $field) {
-            $ffield = " " . $field;
-            if (strpos($ffield, $params["megasoft_object"]) == true) {
-                $itemfield[] = "M." . strtoupper(str_replace($params["megasoft_object"], "", $field));
-            }
-        }
-
-        foreach ($params["extra"] as $field => $extra) {
-            //if (@$data[$extra] AND in_array($field, $fields)) {
-            if ($field == $extra)
-                $itemfield[] = "M." . strtoupper($field);
-            else
-                $itemfield[] = "M." . strtoupper($field) . " as $extra";
-            //}
-        }
-
-
-        $selfields = implode(",", $itemfield);
-        $params["fSQL"] = 'SELECT ' . $selfields . ' FROM ' . $params["megasoft_table"] . ' M ' . $params["filter"];
-        //echo $params["fSQL"];
-        //$params["fSQL"] = 'SELECT M.* FROM ' . $params["megasoft_table"] . ' M ' . $params["filter"];
-        echo "<BR>";
-        echo $params["fSQL"];
-        echo "<BR>";
-
-        $megasoft = new Megasoft();
-        $datas = $megasoft->createSql($params);
-        //print_r($datas);
-        ///return;
-        ///exit;
-        $em = $this->getDoctrine()->getManager();
-        foreach ((array) $datas->data as $data) {
-            $data = (array) $data;
-            //$data["IRSDATA2"] = $IRSDATA[$data["IRSDATA"]];
-            //print_r($data);
-            //if ($i++ > 100 ) exit;
-
-
-            $entity = $this->getDoctrine()
-                    ->getRepository($params["repository"])
-                    ->findOneBy(array("reference" => (int) $data[$params["megasoft_table"]]));
-
-            echo @$entity->id . "<BR>";
-
-            //if ($data[$params["megasoft_table"]] < 7385) continue;
-            /*
-              $dt = new \DateTime("now");
-              if (@$entity->id == 0) {
-              $entity = new $object();
-              $entity->setTs($dt);
-              $entity->setCreated($dt);
-              $entity->setModified($dt);
-              } else {
-              continue;
-              //$entity->setRepositories();
-              }
-             */
-            //@print_r($entity->repositories);
-            foreach ($params["relation"] as $field => $extra) {
-                //echo $field." - ".@$data[$extra]."<BR>";
-                if (@$data[$extra] AND in_array($field, $fields)) {
-                    $entity->setField($field, @$data[$extra]);
+        $params["Login"] = $login;
+        $params["Date"] = "";//date("Y-m-d");
+        //$results = $soap->GetCustomers();
+        $response = $soap->__soapCall("GetCustomers", array($params));
+        print_r($response);
+        exit;
+        if ($response->GetCustomersResult->CustomerDetails) {
+            echo count($response->GetCustomersResult->CustomerDetails);
+            foreach ($response->GetCustomersResult->CustomerDetails as $megasoft) {
+                $customer = Mage::getModel('b2b/customer')->load($megasoft->CustomerId, "reference");
+                if ($customer->id == 0) {
+                    $customer = Mage::getModel('b2b/customer');
+                    $customer->reference = $megasoft->CustomerId;
                 }
-                //echo @$entity->repositories[$field];
-                if (@$data[$extra] AND @ $entity->repositories[$field]) {
-                    $rel = $this->getDoctrine()->getRepository($entity->repositories[$field])->findOneById($data[$extra]);
-                    $entity->setField($field, $rel);
-                }
+                echo ".";
+                $customer->code = $megasoft->CustomerCode;
+                $customer->name = $megasoft->CustomerName;
+                $customer->afm = $megasoft->CustomerAfm;
+                $customer->email = $megasoft->CustomerEmail;
+                $customer->address = $megasoft->CustomerAddress;
+                $customer->city = $megasoft->CustomerCity;
+                $customer->zip = $megasoft->CustomerZip;
+                $customer->phone1 = $megasoft->CustomerPhone1;
+                $customer->phone2 = $megasoft->CustomerPhone2;
+                $customer->save();
+                $customer->updateCustomer();
+                //if ($i++ > 10) return;
             }
-            echo $data[$params["megasoft_table"]] . "<BR>";
-            /*
-              $imporetedData = array();
-              $entity->setReference($data[$params["megasoft_table"]]);
-
-              $em->persist($entity);
-              $em->flush();
-             */
-            //$this->flushpersist($entity);
-            $q = array();
-            $q[] = "reference = '" . $data[$params["megasoft_table"]] . "'";
-
-            foreach ($data as $identifier => $val) {
-                $imporetedData[strtolower($params["megasoft_object"] . "_" . $identifier)] = addslashes($val);
-                $ad = strtolower($identifier);
-                $baz = $params["megasoft_object"] . ucwords(str_replace("_", " ", $ad));
-                if (in_array($baz, $fields)) {
-                    $q[] = "`" . strtolower($params["megasoft_object"] . "_" . $identifier) . "` = '" . addslashes($val) . "'";
-                    //$entity->setField($baz, $val);
-                }
-            }
-            if ($entity) {
-                $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
-            } else {
-                $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
-            }
-            echo $sql . "<BR>";
-            //if ($i++ > 100)
-            //    exit;
-            //continue;
-            $em->getConnection()->exec($sql);
-            /*
-              @$entity_id = (int) $entity->id;
-              //if (@$entity_id > 0) {
-              $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity_id . "'";
-              echo $sql."<BR>";
-              $em->getConnection()->exec($sql);
-              foreach ($params["extrafunction"] as $field => $func) {
-              //$entity->$func();
-              }
-              //}
-             * 
-             */
-            $entity = null;
-            //if (@$i++ > 1500)
-            //    break;
         }
     }
 
@@ -478,117 +376,7 @@ class CustomerController extends Main {
      * @Route("/megasoft/customer/retrieve")
      */
     function retrieveMegasoftData($params = array()) {
-
-        $this->retrieveCustomer();
-        $em = $this->getDoctrine()->getManager();
-
-        /*
-          $sql = "SELECT * FROM IRSDATA";
-          $params["fSQL"] = $sql;
-          $megasoft = new Megasoft();
-          $datas = $megasoft->createSql($params);
-
-          print_r($datas);
-          foreach($datas->data as $data) {
-          $sql = "Insert megasoft_customerirs set "
-          . "id = '".$data->IRSDATA."', "
-          . "name = '".$data->NAME."', "
-          . "address = '".$data->ADDRESS."', "
-          . "district = '".$data->DISTRICT."', "
-          . "zip = '".$data->ZIP."'"
-          ;
-          $em->getConnection()->exec($sql);
-          }
-         * 
-         */
-        exit;
-
-        $params["list"] = 'partsbox';
-
-        $params = array("megasoft_object" => "CUSTOMER", "eav_model" => "customer", "model" => "Customer", "list" => "monitor");
-        set_time_limit(100000);
-        ini_set('memory_limit', '2256M');
-        $megasoft = new Megasoft();
-        $em = $this->getDoctrine()->getManager();
-        $fields = $em->getClassMetadata('MegasoftBundle\Entity\Customer')->getFieldNames();
-        $date = "2016-02-01";
-        $filters = "CUSTOMER.UPDDATE=" . $date . "&CUSTOMER.UPDDATE_TO=" . date("Y-m-d");
-        $datas = $megasoft->retrieveData($params["megasoft_object"], $params["list"], $filters);
-
-
-        foreach ($datas as $data) {
-            break;
-            $data = (array) $data;
-            $zoominfo = $data["zoominfo"];
-            $info = explode(";", $zoominfo);
-
-            $entity = $this->getDoctrine()
-                    ->getRepository($this->repository)
-                    ->findOneBy(array("reference" => (int) $info[1]));
-            if (@$entity->id == 0) {
-                $entity = new Customer();
-                $dt = new \DateTime("now");
-                $entity->setTs($dt);
-                $entity->setField("reference", (int) $info[1]);
-                //$entity->setCustomerInsdate($dt);
-                //$entity->setCustomerUpddate($dt);
-                $entity->setCreated($dt);
-                $entity->setModified($dt);
-            }
-            $this->flushpersist($entity);
-            $q = array();
-
-            foreach ($data as $identifier => $val) {
-                $imporetedData[strtolower($identifier)] = addslashes($val);
-                $ad = strtolower(str_replace(strtolower($params["megasoft_object"]) . "_", "", $identifier));
-                $baz = strtolower($params["megasoft_object"]) . ucwords(str_replace("_", " ", $ad));
-                //echo $baz."<BR>";
-                if (in_array($baz, $fields)) {
-                    $q[] = "`" . strtolower($identifier) . "` = '" . addslashes($val) . "'";
-                    //$entity->setField($baz, $val);
-                }
-            }
-
-            @$entity_id = (int) $entity->id;
-            if (@$entity_id > 0) {
-
-                $sql = "update megasoft_customer set " . implode(",", $q) . " where id = '" . $entity_id . "'";
-                //echo $sql."<BR>";
-                $em->getConnection()->exec($sql);
-            }
-            //break;
-        }
-        $sql = 'update `megasoft_customer` set `group` = 1 where `group` is null';
-        echo $sql;
-        $this->getDoctrine()->getConnection()->exec($sql);
-        $datas = $megasoft->getCustomerAddresses();
-        $sql = "truncate megasoft_customeraddress";
-        $em->getConnection()->exec($sql);
-        $fields = $em->getClassMetadata('MegasoftBundle\Entity\Customeraddress')->getFieldNames();
-        //print_r($datas);
-        if (@$datas->data)
-            foreach ($datas->data as $data) {
-                $data = (array) $data;
-                $customer = $this->getDoctrine()
-                        ->getRepository($this->repository)
-                        ->findOneBy(array("reference" => (int) $data["TRDR"]));
-
-                $entity = new \MegasoftBundle\Entity\Customeraddress();
-                $entity->setCustomer($customer);
-                $entity->setReference($data["TRDR"]);
-                $this->flushpersist($entity);
-                $q = array();
-                foreach ($data as $identifier => $val) {
-                    if (in_array(strtolower($identifier), $fields)) {
-                        $q[] = "`" . strtolower($identifier) . "` = '" . addslashes($val) . "'";
-                        //$entity->setField($baz, $val);
-                    }
-                }
-                @$entity_id = (int) $entity->id;
-                $sql = "update megasoft_customeraddress set " . implode(",", $q) . " where id = '" . $entity_id . "'";
-                $em->getConnection()->exec($sql);
-                //echo $sql . "<BR>";
-            }
+        $this->getMegasoft();
     }
 
     /**
