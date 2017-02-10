@@ -352,7 +352,7 @@ class CustomerController extends Main {
             echo count($response->GetCustomersResult->CustomerDetails);
             foreach ($response->GetCustomersResult->CustomerDetails as $megasoft) {
                 //$customer = Mage::getModel('b2b/customer')->load($megasoft->CustomerId, "reference");
-                $data = (array) $data;
+                $data = (array) $megasoft;
                 $entity = $this->getDoctrine()
                         ->getRepository($this->repository)
                         ->findOneBy(array("reference" => (int) $data["CustomerId"]));
