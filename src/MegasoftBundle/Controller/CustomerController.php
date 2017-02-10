@@ -333,6 +333,7 @@ class CustomerController extends Main {
     public function getMegasoft() {
         //return;
         $login = "W600-K78438624F8";
+        $em = $this->getDoctrine()->getManager();
         $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
         /*
           $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
@@ -342,7 +343,7 @@ class CustomerController extends Main {
          */
 
         $params["Login"] = $login;
-        $params["Date"] = "";//date("Y-m-d");
+        $params["Date"] = ""; //date("Y-m-d");
         //$results = $soap->GetCustomers();
         $response = $soap->__soapCall("GetCustomers", array($params));
         print_r($response);
@@ -350,24 +351,41 @@ class CustomerController extends Main {
         if ($response->GetCustomersResult->CustomerDetails) {
             echo count($response->GetCustomersResult->CustomerDetails);
             foreach ($response->GetCustomersResult->CustomerDetails as $megasoft) {
-                $customer = Mage::getModel('b2b/customer')->load($megasoft->CustomerId, "reference");
-                if ($customer->id == 0) {
-                    $customer = Mage::getModel('b2b/customer');
-                    $customer->reference = $megasoft->CustomerId;
+                //$customer = Mage::getModel('b2b/customer')->load($megasoft->CustomerId, "reference");
+                $data = (array) $data;
+                $entity = $this->getDoctrine()
+                        ->getRepository($this->repository)
+                        ->findOneBy(array("reference" => (int) $data["CustomerId"]));
+                $dt = new \DateTime("now");
+                if (!$entity) {
+                    $entity = new Customer();
+                    $entity->setTs($dt);
+                    $entity->setCreated($dt);
+                    $entity->setModified($dt);
+                } else {
+                    //continue;
+                    //$entity->setRepositories();                
                 }
-                echo ".";
-                $customer->code = $megasoft->CustomerCode;
-                $customer->name = $megasoft->CustomerName;
-                $customer->afm = $megasoft->CustomerAfm;
-                $customer->email = $megasoft->CustomerEmail;
-                $customer->address = $megasoft->CustomerAddress;
-                $customer->city = $megasoft->CustomerCity;
-                $customer->zip = $megasoft->CustomerZip;
-                $customer->phone1 = $megasoft->CustomerPhone1;
-                $customer->phone2 = $megasoft->CustomerPhone2;
-                $customer->save();
-                $customer->updateCustomer();
-                //if ($i++ > 10) return;
+                $params["table"] = "megasoft_customer";
+                $q[] = "`customer_code` = '" . addslashes($data["CustomerCode"]) . "'";
+                $q[] = "`customer_name` = '" . addslashes($data["CustomerName"]) . "'";
+                $q[] = "`customer_afm` = '" . addslashes($data["CustomerAfm"]) . "'";
+                $q[] = "`customer_email` = '" . addslashes($data["CustomerEmail"]) . "'";
+                $q[] = "`customer_address` = '" . addslashes($data["CustomerAddress"]) . "'";
+                $q[] = "`customer_zip` = '" . addslashes($data["CustomerZip"]) . "'";
+                $q[] = "`customer_phone1` = '" . addslashes($data["CustomerPhone1"]) . "'";
+                $q[] = "`customer_phone2` = '" . addslashes($data["CustomerPhone2"]) . "'";
+                if (@$entity->getId() == 0) {
+                    $q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
+                    $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
+                    echo $sql . "<BR>";
+                    $em->getConnection()->exec($sql);
+                } else {
+                    $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
+                    echo $sql . "<BR>";
+                    $em->getConnection()->exec($sql);
+                }
+
             }
         }
     }
