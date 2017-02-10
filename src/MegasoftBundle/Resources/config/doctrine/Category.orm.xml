@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="MegasoftBundle\Entity\Category" repository-class="MegasoftBundle\Entity\CategoryRepository" table="megasoft_category">
+        <indexes>
+            <index name="parent" columns="parent"/>
+            <index name="sortcode" columns="sortcode"/>
+        </indexes>
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="parent" type="integer" column="parent" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="weight" type="integer" column="weight" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="name" type="string" column="name" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>        
+        <field name="sortcode" type="integer" column="sortcode" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>    
+        <field name="ts" type="datetime" column="ts" nullable="true">
+            <options>
+        
+            </options>
+        </field>
+        <field name="actioneer" type="integer" column="actioneer" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="created" type="datetime" column="created" nullable="false"/>
+        <field name="modified" type="datetime" column="modified" nullable="false"/>
+    </entity>
+</doctrine-mapping>
