@@ -599,8 +599,8 @@ class ProductController extends Main {
          * 
          */
         
-        $cccPriceUpd = $entity->getCccPriceUpd() ? "1" : "0";
-        $entity->setCccPriceUpd($cccPriceUpd);
+        //$cccPriceUpd = $entity->getCccPriceUpd() ? "1" : "0";
+        //$entity->setCccPriceUpd($cccPriceUpd);
 
         $megasoftSuppliers = $this->getDoctrine()
                         ->getRepository('MegasoftBundle:MegasoftSupplier')->findAll();
@@ -642,7 +642,7 @@ class ProductController extends Main {
 
         //$fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "className" => "col-md-2", "required" => false);        
         //$fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "required" => false, "className" => "col-md-2", 'type' => "select", 'dataarray' => $itemMtrsup);
-        $fields["cccRef"] = array("label" => "Κωδικός Προμηθευτή", "className" => "col-md-2", "required" => false);
+        //$fields["cccRef"] = array("label" => "Κωδικός Προμηθευτή", "className" => "col-md-2", "required" => false);
 
 
         $fields["itemPricew"] = array("label" => "Τιμή Χοδρικής", "className" => "col-md-2", "required" => false);
