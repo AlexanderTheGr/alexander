@@ -265,6 +265,7 @@ class ProductController extends Main {
 
 
         //if ($product->getErpSupplier() != '' AND ! $product->getSupplierId()) {
+        /*
         if ($product->getErpSupplier() != '') {    
             $sup = trim(strtoupper($product->getErpSupplier()));
             $MegasoftSupplier = $this->getDoctrine()->getRepository("MegasoftBundle:MegasoftSupplier")
@@ -295,6 +296,8 @@ class ProductController extends Main {
             //$product->setItemMtrmanfctr($MegasoftSupplier->getId());
             $product->setSupplierId($MegasoftSupplier);
         }
+         * 
+         */
 
         $erpCode = $this->clearCode($product->getSupplierCode()) . "-" . $product->getSupplierId()->getCode();
         $product->setErpCode($erpCode);
