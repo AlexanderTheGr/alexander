@@ -671,7 +671,7 @@ class ProductController extends Main {
             $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
             $dtparams[] = array("name" => "Title", "index" => 'title');
             $dtparams[] = array("name" => "Code", "index" => 'erpCode');
-            $dtparams[] = array("name" => "Price", "index" => 'itemPricew01');
+            //$dtparams[] = array("name" => "Price", "index" => 'itemPricew');
             $params['dtparams'] = $dtparams;
             $params['id'] = $dtparams;
             $params['url'] = '/megasoft/product/getrelation/' . $id;
