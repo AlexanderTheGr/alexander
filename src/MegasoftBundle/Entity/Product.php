@@ -196,7 +196,7 @@ class Product extends Entity {
     /**
      * @var integer
      */
-    private $id;
+    var $id;
 
     /**
      * Set reference
