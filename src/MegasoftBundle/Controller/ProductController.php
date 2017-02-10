@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Controller\Main as Main;
 use MegasoftBundle\Entity\Product as Product;
+use MegasoftBundle\Entity\Productcategory as Productcategory;
 use AppBundle\Entity\Tecdoc as Tecdoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
