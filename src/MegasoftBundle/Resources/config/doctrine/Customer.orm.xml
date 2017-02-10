@@ -141,7 +141,5 @@
             <join-column name="customergroup" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>            
         </many-to-one> 
         
-        
-        <one-to-many field="addresses" target-entity="Customeraddress" mapped-by="Customer" />
     </entity>
 </doctrine-mapping>
