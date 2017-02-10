@@ -9,15 +9,62 @@ use AppBundle\Entity\Entity;
 class Customergroup extends Entity {
 
     var $repositories = array();
-    var $uniques = array();
-    
+
     public function __construct() {
+        //$this->customergrouprules = new \Doctrine\Common\Collections\ArrayCollection();
         $this->setRepositories();
     }
 
     public function getField($field) {
 
         return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
+
+    public function setRepositories() {
+        //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:TecdocSupplier';
+        $this->types['tecdocSupplierId'] = 'object';
+        //$this->tecdocSupplierId = new \SoftoneBundle\Entity\TecdocSupplier;
+    }
+
+    public function getRepository() {
+        return $this->repository;
+    }
+
+    public function getRepositories($repo) {
+        //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:TecdocSupplier';
+        return $this->repositories[$repo];
+    }
+
+    public function gettype($field) {
+        $this->types['tecdocSupplierId'] = 'object';
+        if (@$this->types[$field] != '') {
+            return @$this->types[$field];
+        }
+        if (gettype($field) != NULL) {
+            return gettype($this->$field);
+        }
+        return 'string';
+    }
+
+    function createName($str) {
+        $strArr = explode("_", $str);
+        $i = 0;
+        $b = "";
+        foreach ($strArr as $a) {
+            $b .= ucfirst($a);
+        }
+        $strArr = explode(".", $b);
+        $i = 0;
+        $b = "";
+        foreach ($strArr as $a) {
+            $b .= ucfirst($a);
+        }
+        return $b;
     }
 
     /**
@@ -63,9 +110,7 @@ class Customergroup extends Entity {
     /**
      * Constructor
      */
-    public function __construct() {
-        $this->customergrouprules = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+
 
     /**
      * Set title
