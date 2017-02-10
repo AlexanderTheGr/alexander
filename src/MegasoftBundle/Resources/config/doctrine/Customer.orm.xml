@@ -4,7 +4,6 @@
         <indexes>
             <index name="user_id" columns="actioneer"/>
             <index name="customer_code" columns="customer_code"/>
-            <index name="route" columns="route"/>
         </indexes>
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
