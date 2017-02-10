@@ -52,7 +52,7 @@ class Product extends Entity {
 
     public function getRepositories($repo) {
         $this->repositories['tecdocSupplierId'] = 'MegasoftBundle:TecdocSupplier';
-       // $this->repositories['supplierId'] = 'MegasoftBundle:MegasoftSupplier';
+        // $this->repositories['supplierId'] = 'MegasoftBundle:MegasoftSupplier';
         $this->repositories['productSale'] = 'MegasoftBundle:ProductSale';
         //$this->repositories['mtrsup'] = 'MegasoftBundle:Supplier';
 
@@ -61,9 +61,9 @@ class Product extends Entity {
 
     public function gettype($field) {
         $this->types['tecdocSupplierId'] = 'object';
-      //  $this->types['supplierId'] = 'object';
+        //  $this->types['supplierId'] = 'object';
         $this->types['productSale'] = 'object';
-      //  $this->types['mtrsup'] = 'object';
+        //  $this->types['mtrsup'] = 'object';
         if (@$this->types[$field] != '') {
             return @$this->types[$field];
         }
@@ -740,7 +740,6 @@ class Product extends Entity {
      */
     private $tecdocSupplierId;
 
-
     /**
      * Set tecdocSupplierId
      *
@@ -748,8 +747,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setTecdocSupplierId(\MegasoftBundle\Entity\TecdocSupplier $tecdocSupplierId = null)
-    {
+    public function setTecdocSupplierId(\MegasoftBundle\Entity\TecdocSupplier $tecdocSupplierId = null) {
         $this->tecdocSupplierId = $tecdocSupplierId;
 
         return $this;
@@ -760,10 +758,10 @@ class Product extends Entity {
      *
      * @return \MegasoftBundle\Entity\TecdocSupplier
      */
-    public function getTecdocSupplierId()
-    {
+    public function getTecdocSupplierId() {
         return $this->tecdocSupplierId;
     }
+
     /**
      * @var \MegasoftBundle\Entity\Supplier
      */
@@ -774,9 +772,6 @@ class Product extends Entity {
      */
     private $productSale;
 
-
-
-
     /**
      * Set productSale
      *
@@ -784,8 +779,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setProductSale(\MegasoftBundle\Entity\ProductSale $productSale = null)
-    {
+    public function setProductSale(\MegasoftBundle\Entity\ProductSale $productSale = null) {
         $this->productSale = $productSale;
 
         return $this;
@@ -796,8 +790,150 @@ class Product extends Entity {
      *
      * @return \MegasoftBundle\Entity\ProductSale
      */
-    public function getProductSale()
-    {
+    public function getProductSale() {
         return $this->productSale;
     }
+
+    function updatetecdoc($tecdoc = false, $forceupdate = false) {
+
+        //$data = array("service" => "login", 'username' => 'dev', 'password' => 'dev', 'appId' => '2000');
+        if (!$this->getTecdocSupplierId())
+            return;
+        if ($this->getTecdocSupplierId() == null AND $forceupdate == false)
+            return;
+
+        $this->setTecdocArticleId($out->articleId);
+        $this->setTecdocArticleName($out->articleName);
+
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+
+        //$data_string = json_encode($data);
+        $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
+        if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\webb') {
+            $fields = array(
+                'action' => 'updateTecdoc',
+                'tecdoc_code' => $this->tecdocCode,
+                'tecdoc_supplier_id' => $this->getTecdocSupplierId()->getId(),
+            );
+            $fields_string = '';
+            foreach ($fields as $key => $value) {
+                @$fields_string .= $key . '=' . $value . '&';
+            }
+            rtrim($fields_string, '&');
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, count($fields));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+
+
+            $out = json_decode(curl_exec($ch));
+
+            // print_r($fields);
+            //echo $out;
+            //echo 'sssssssssss';
+        } else {
+
+            $postparams = array(
+                "articleNumber" => $this->tecdocCode,
+                "brandno" => $this->getTecdocSupplierId()->getId()
+            );
+            //if (!$tecdoc)
+            $tecdoc = new Tecdoc();
+
+            $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($postparams);
+            $tectdoccode = $this->tecdocCode;
+            if (count($articleDirectSearchAllNumbers->data->array) == 0) {
+                $articleId = $tecdoc->getCorrectArtcleNr($tectdoccode, $postparams["brandno"]);
+                if ($article != $tectdoccode) {
+                    $params = array(
+                        "articleNumber" => $articleId,
+                        "brandno" => $postparams["brandno"]
+                    );
+                    $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($params);
+                }
+            }
+
+            if (count($articleDirectSearchAllNumbers->data->array) == 0) {
+                $articleId = $tecdoc->getCorrectArtcleNr2(strtolower($tectdoccode), $postparams["brandno"]);
+                if ($article != strtolower($tectdoccode)) {
+                    $params = array(
+                        "articleNumber" => $articleId,
+                        "brandno" => $postparams["brandno"]
+                    );
+                    $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($params);
+                }
+            }
+
+            $out = $articleDirectSearchAllNumbers->data->array[0];
+
+            //print_r($out);
+        }
+
+
+
+        try {
+            //$webserviceProduct = WebserviceProduct::model()->findByAttributes(array('product' =>  $this->id,"webservice"=>$this->webservice));
+            //$sql = "Delete from SoftoneBundle:WebserviceProduct p where p.product = '" . $this->id . "'";
+            //$em->createQuery($sql)->getResult();
+            //$em->execute();
+            if (@$out->articleId) {
+                $this->setTecdocArticleId($out->articleId);
+                $this->setTecdocArticleName($out->articleName);
+                //$this->setTecdocGenericArticleId($out->articleName);
+
+                $cats = $tecdoc->getTreeForArticle($out->articleId);
+
+                //print_r((array) $cats);
+                //echo "<BR>";
+
+                $params = array(
+                    "articleId" => $out->articleId
+                );
+                $articleLinkedAllLinkingTarget = $tecdoc->getArticleLinkedAllLinkingTarget($params);
+                $cars = array();
+                $linkingTargetId = 0;
+
+
+                foreach ($articleLinkedAllLinkingTarget->data->array as $v) {
+                    if ($linkingTargetId == 0)
+                        $linkingTargetId = $v->linkingTargetId;
+                    $cars[] = $v->linkingTargetId;
+                    //break;
+                }
+                $categories2 = array();
+                foreach ($cats as $cat) {
+                    $categories2[] = $cat->tree_id;
+                }
+                $categories = $this->checkForUniqueCategory($out, $cats, $tecdoc, $linkingTargetId);
+                if (count($categories) == 0) {
+                    $categories = $categories2;
+                }
+
+                //print_r($categories);
+                //print_r($cars);
+                $this->setCats($categories);
+                $this->setCars($cars);
+                /*
+                  $em->persist($this);
+                  $em->flush();
+                 * 
+                 */
+                $sql = "update `softone_product` set tecdoc_generic_article_id = '" . $out->genericArticleId . "', tecdoc_article_name = '" . $out->articleName . "', tecdoc_article_id = '" . $out->articleId . "', cars = '" . serialize($cars) . "', cats = '" . serialize($categories) . "' where id = '" . $this->id . "'";
+                $em->getConnection()->exec($sql);
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            exit;
+        }
+        $tecdoc = null;
+        unset($tecdoc);
+        //echo $result;
+    }
+
 }
