@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="MegasoftBundle\Entity\Route" repository-class="MegasoftBundle\Entity\RouteRepository" table="megasoft_route">
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="route" type="string" column="route" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="schedule" type="string" column="schedule" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="status" type="integer" column="status" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="actioneer" type="integer" column="actioneer" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        
+        <field name="ts" type="datetime" column="ts" nullable="true">
+            <options>
+                
+            </options>
+        </field>        
+        <field name="created" type="datetime" column="created" nullable="true"/>
+        <field name="modified" type="datetime" column="modified" nullable="true"/>
+        <one-to-many field="customers" target-entity="Customer" mapped-by="route" />
+        <one-to-many field="orders" target-entity="Order" mapped-by="Order" />
+    </entity>
+</doctrine-mapping>
