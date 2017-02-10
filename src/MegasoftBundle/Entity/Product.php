@@ -924,7 +924,7 @@ class Product extends Entity {
                   $em->flush();
                  * 
                  */
-                $sql = "update `softone_product` set tecdoc_generic_article_id = '" . $out->genericArticleId . "', tecdoc_article_name = '" . $out->articleName . "', tecdoc_article_id = '" . $out->articleId . "', cars = '" . serialize($cars) . "', cats = '" . serialize($categories) . "' where id = '" . $this->id . "'";
+                $sql = "update `megasoft_product` set tecdoc_generic_article_id = '" . $out->genericArticleId . "', tecdoc_article_name = '" . $out->articleName . "', tecdoc_article_id = '" . $out->articleId . "', cars = '" . serialize($cars) . "', cats = '" . serialize($categories) . "' where id = '" . $this->id . "'";
                 $em->getConnection()->exec($sql);
             }
         } catch (Exception $e) {
@@ -956,4 +956,72 @@ class Product extends Entity {
         }
         return $categories;
     }
+    function setProductFreesearch() {
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        if ($this->getSupplierId())
+            $this->erpSupplier = $this->getSupplierId()->getTitle();
+
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $dataindexarr = array();
+
+        $dataindexarr[] = $this->itemCode;
+        $dataindexarr[] = $this->itemApvcode;
+        $dataindexarr[] = $this->itemCode1;
+        $dataindexarr[] = $this->itemCode2;
+
+        $dataindexarr[] = $this->title;
+        $dataindexarr[] = $this->itemName;
+        $dataindexarr[] = $this->itemName1;
+
+        $dataindexarr[] = strtolower($this->greeklish($this->title));
+        $dataindexarr[] = strtolower($this->greeklish($this->itemName));
+        $dataindexarr[] = strtolower($this->greeklish($this->itemName1));
+        $dataindexarr[] = strtolower($this->greeklish($this->erpSupplier));
+
+        //$article_id = $this->_webserviceProducts_[11632]->article_id;
+        /*
+          if (@$article_id > 0) {
+          $efarmoges = unserialize($this->efarmoges($article_id));
+          //print_r($efarmoges);
+          $dataindexarr[] = $this->_webserviceProducts_[11632]->article_name;
+          $dataindexarr[] = strtolower($this->greeklish($this->_webserviceProducts_[11632]->article_name));
+
+          foreach ($efarmoges as $efarmogi) {
+          //$sql = "replace autoparts_tecdoc_product_linking_model_type set link_id = '" . $v->articleLinkId . "', product='" . $model->getId() . "', model_type = '" . $v->linkingTargetId . "'";
+          //$write->query($sql);
+          $brandmodeltype = BrandModelType::model()->findByPk($efarmogi);
+          $brandmodel = $brandmodeltype->_brandModel_;
+          $brand = $brandmodel->_brand_;
+
+          $yearfrom = (int) substr($brandmodel->year_from, 0, 4);
+          $yearto = (int) substr($brandmodel->year_to, 0, 4);
+          //echo $yearfrom." - ".$yearto."<BR>";
+          $engines = explode("|", $brandmodeltype->engine);
+          foreach ($engines as $engine) {
+          $dataindexarr[] = $engine;
+          }
+          if ($yearto) {
+          for ($year = $yearfrom; $year <= $yearto; $year++) {
+          $dataindexarr[] = $year;
+          //echo $year;
+          }
+          } else {
+          $dataindexarr[] = $yearfrom;
+          }
+          $dataindexarr[] = $brand->brand;
+          $dataindexarr[] = $brandmodel->brand_model;
+          $dataindexarr[] = $brandmodeltype->brand_model_type;
+          }
+          }
+         */
+        $data_index = array_filter(array_unique($dataindexarr));
+        $dataindex = addslashes(implode("|", $data_index));
+        $sql = "replace megasoft_product_freesearch set id = '" . $this->id . "', data_index='" . $dataindex . "'";
+        $em->getConnection()->exec($sql);
+        $sql = "replace megasoft_product_search set id = '" . $this->id . "',erp_code='" . $this->erpCode . "',tecdoc_code='" . $this->tecdocCode . "',supplier_code='" . $this->supplierCode . "'";
+        $em->getConnection()->exec($sql);
+    }    
 }
