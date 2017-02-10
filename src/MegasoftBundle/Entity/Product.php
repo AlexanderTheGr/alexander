@@ -935,5 +935,25 @@ class Product extends Entity {
         unset($tecdoc);
         //echo $result;
     }
+    function checkForUniqueCategory($article, $cats, $tecdoc, $linkingTargetId) {
+        if ($cats <= 2)
+            return array();
+        $categories = array();
+        foreach ($cats as $c) {
 
+            $params = array(
+                "assemblyGroupNodeId" => (int) $c->tree_id,
+                "linkingTargetId" => (int) $linkingTargetId,
+            );
+            $articles = $tecdoc->getArticleIds($params);
+            $getArticleIds = array();
+            foreach ($articles->data->array as $v) {
+                $getArticleIds[] = $v->articleId;
+            }
+            if (in_array($article->articleId, $getArticleIds)) {
+                $categories[] = $c->tree_id;
+            }
+        }
+        return $categories;
+    }
 }
