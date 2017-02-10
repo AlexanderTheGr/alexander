@@ -3,6 +3,8 @@
 namespace MegasoftBundle\Entity;
 
 
+use Doctrine\ORM\Mapping as ORM;
+
 use AppBundle\Entity\Entity;
 
 /**
@@ -212,12 +214,7 @@ class Customer extends Entity {
      */
     private $customergroup;
 
-    /**
-     * Constructor
-     */
-    public function __construct() {
-        $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+
 
     /**
      * Set reference
