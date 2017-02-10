@@ -110,4 +110,3 @@ class Vat
         return $this->id;
     }
 }
-
