@@ -367,6 +367,7 @@ class CustomerController extends Main {
                     //$entity->setRepositories();                
                 }
                 $params["table"] = "megasoft_customer";
+                $q = array();
                 $q[] = "`customer_code` = '" . addslashes($data["CustomerCode"]) . "'";
                 $q[] = "`customer_name` = '" . addslashes($data["CustomerName"]) . "'";
                 $q[] = "`customer_afm` = '" . addslashes($data["CustomerAfm"]) . "'";
@@ -376,7 +377,7 @@ class CustomerController extends Main {
                 $q[] = "`customer_phone1` = '" . addslashes($data["CustomerPhone1"]) . "'";
                 $q[] = "`customer_phone2` = '" . addslashes($data["CustomerPhone2"]) . "'";
                 if (@$entity->getId() == 0) {
-                    $q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
+                    $q[] = "`reference` = '" . addslashes($data["CustomerId"]) . "'";
                     $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
                     echo $sql . "<BR>";
                     $em->getConnection()->exec($sql);
