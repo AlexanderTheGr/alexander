@@ -302,12 +302,12 @@ class ProductController extends Main {
         $erpCode = $this->clearCode($product->getSupplierCode()) . "-" . $product->getSupplierId()->getCode();
         $product->setErpCode($erpCode);
         $product->setItemCode($product->getErpCode());
-        if ($product->getTecdocSupplierId())
-            $product->setItemMtrmark($product->getTecdocSupplierId()->getId());
+        //if ($product->getTecdocSupplierId())
+        //    $product->setItemMtrmark($product->getTecdocSupplierId()->getId());
 
-        $product->setItemMtrmanfctr($product->getSupplierId()->getId());
-        $product->setItemApvcode($product->getTecdocCode());
-        $product->setItemName($product->getTitle());
+        //$product->setItemMtrmanfctr($product->getSupplierId()->getId());
+        //$product->setItemApvcode($product->getTecdocCode());
+        //$product->setItemName($product->getTitle());
 
         //$product->reference = 2350;
         @$this->flushpersist($product);
