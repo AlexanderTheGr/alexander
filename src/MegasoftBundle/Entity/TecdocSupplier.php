@@ -2,11 +2,26 @@
 
 namespace MegasoftBundle\Entity;
 
+
+use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\Entity;
+
 /**
  * TecdocSupplier
+ *
+ * @ORM\Table(name="tecdoc_supplier")
+ * @ORM\Entity
  */
-class TecdocSupplier
-{
+class TecdocSupplier extends Entity {
+
+    public function getField($field) {
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
     /**
      * @var string
      */
