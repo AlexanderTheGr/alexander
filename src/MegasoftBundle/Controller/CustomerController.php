@@ -378,6 +378,8 @@ class CustomerController extends Main {
                 $q[] = "`customer_phone2` = '" . addslashes($data["CustomerPhone2"]) . "'";
                 if (@$entity->getId() == 0) {
                     $q[] = "`reference` = '" . addslashes($data["CustomerId"]) . "'";
+                    $q[] = "`customergroup` = '1'";
+                    
                     $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
                     echo $sql . "<BR>";
                     $em->getConnection()->exec($sql);
