@@ -589,12 +589,16 @@ class ProductController extends Main {
         $entity->updatetecdoc();
         $dataarray[] = array("value" => "0", "name" => "Oxi");
         $dataarray[] = array("value" => "1", "name" => "Ναι");
+        /*
         $suppliers = $this->getDoctrine()
                         ->getRepository('MegasoftBundle:Supplier')->findAll();
         $itemMtrsup = array();
         foreach ($suppliers as $supplier) {
             $itemMtrsup[] = array("value" => (string) $supplier->getReference(), "name" => $supplier->getSupplierName()); // $supplier->getSupplierName();
         }
+         * 
+         */
+        
         $cccPriceUpd = $entity->getCccPriceUpd() ? "1" : "0";
         $entity->setCccPriceUpd($cccPriceUpd);
 
@@ -637,7 +641,7 @@ class ProductController extends Main {
         $fields["reserved"] = array("label" => "Δεσμευμενα", "className" => "col-md-1", "required" => false);
 
         //$fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "className" => "col-md-2", "required" => false);        
-        $fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "required" => false, "className" => "col-md-2", 'type' => "select", 'dataarray' => $itemMtrsup);
+        //$fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "required" => false, "className" => "col-md-2", 'type' => "select", 'dataarray' => $itemMtrsup);
         $fields["cccRef"] = array("label" => "Κωδικός Προμηθευτή", "className" => "col-md-2", "required" => false);
 
 
