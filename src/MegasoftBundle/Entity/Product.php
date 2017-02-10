@@ -1023,5 +1023,9 @@ class Product extends Entity {
         $em->getConnection()->exec($sql);
         $sql = "replace megasoft_product_search set id = '" . $this->id . "',erp_code='" . $this->erpCode . "',tecdoc_code='" . $this->tecdocCode . "',supplier_code='" . $this->supplierCode . "'";
         $em->getConnection()->exec($sql);
-    }    
+    }  
+    
+    function toMegasoft() {
+        
+    }
 }
