@@ -299,9 +299,9 @@ class ProductController extends Main {
          * 
          */
 
-        $erpCode = $this->clearCode($product->getSupplierCode()) . "-" . $product->getSupplierId()->getCode();
-        $product->setErpCode($erpCode);
-        $product->setItemCode($product->getErpCode());
+        //$erpCode = $this->clearCode($product->getSupplierCode()) . "-" . $product->getSupplierId()->getCode();
+        //$product->setErpCode($erpCode);
+        //$product->setItemCode($product->getErpCode());
         //if ($product->getTecdocSupplierId())
         //    $product->setItemMtrmark($product->getTecdocSupplierId()->getId());
 
