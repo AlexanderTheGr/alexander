@@ -255,4 +255,3 @@ class Category
         return $this->id;
     }
 }
-
