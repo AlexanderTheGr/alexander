@@ -1317,8 +1317,9 @@ class OrderController extends Main {
         foreach ($results as $data) {
             $arr[] = $data["id"];
         }
-        $this->q_and[] = $this->prefix . ".id in (" . implode(",", $arr) . ")";
-
+        if (count($arr) > 0) {
+            $this->q_and[] = $this->prefix . ".id in (" . implode(",", $arr) . ")";
+        }
         $json = $this->datatable();
 
 
