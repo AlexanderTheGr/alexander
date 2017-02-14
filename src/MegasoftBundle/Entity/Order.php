@@ -201,12 +201,6 @@ class Order extends Entity {
      */
     private $customer;
 
-    /**
-     * Constructor
-     */
-    public function __construct() {
-        $this->items = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Set reference
