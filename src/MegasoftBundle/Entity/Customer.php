@@ -771,36 +771,8 @@ class Customer extends Entity {
         return $this->id;
     }
 
-    /**
-     * Add address
-     *
-     * @param \MegasoftBundle\Entity\Customeraddress $address
-     *
-     * @return Customer
-     */
-    public function addAddress(\MegasoftBundle\Entity\Customeraddress $address) {
-        $this->addresses[] = $address;
+    
 
-        return $this;
-    }
-
-    /**
-     * Remove address
-     *
-     * @param \MegasoftBundle\Entity\Customeraddress $address
-     */
-    public function removeAddress(\MegasoftBundle\Entity\Customeraddress $address) {
-        $this->addresses->removeElement($address);
-    }
-
-    /**
-     * Get addresses
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getAddresses() {
-        return $this->addresses;
-    }
 
     /**
      * Set customergroup
