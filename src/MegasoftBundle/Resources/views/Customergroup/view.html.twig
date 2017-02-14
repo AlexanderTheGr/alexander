@@ -161,7 +161,7 @@
                 data.rule = result;
                 $("#loaderer").show();
                 $dialog.customergrouprule.dialog("close");
-                $.post("/customergroup/saverule", data, function (result) {
+                $.post("/megasoft/customergroup/saverule", data, function (result) {
                 $("#loaderer").hide();
                         if (ref == 0) {
                 rules_basics[result.id] = rules_basics[ref];
