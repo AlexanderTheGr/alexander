@@ -27,13 +27,13 @@ class Customer extends Entity {
     }
 
     public function setRepositories() {
-        $this->repositories['customergroup'] = 'SoftoneBundle:Customergroup';
-        //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:SoftoneSupplier';
+        $this->repositories['customergroup'] = 'MegasoftBundle:Customergroup';
+        //$this->repositories['tecdocSupplierId'] = 'MegasoftBundle:MegasoftSupplier';
         $this->types['customergroup'] = 'object';
         //$this->types['supplierId'] = 'object';
-        //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:TecdocSupplier';
+        //$this->repositories['tecdocSupplierId'] = 'MegasoftBundle:TecdocSupplier';
         //$this->types['tecdocSupplierId'] = 'object';
-        //$this->tecdocSupplierId = new \SoftoneBundle\Entity\TecdocSupplier;
+        //$this->tecdocSupplierId = new \MegasoftBundle\Entity\TecdocSupplier;
     }
 
     public function getRepository() {
@@ -41,7 +41,7 @@ class Customer extends Entity {
     }
 
     public function getRepositories($repo) {
-        $this->repositories['customergroup'] = 'SoftoneBundle:Customergroup';
+        $this->repositories['customergroup'] = 'MegasoftBundle:Customergroup';
         return $this->repositories[$repo];
     }
 
@@ -807,7 +807,7 @@ class Customer extends Entity {
             $kernel = $kernel->getKernel();
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
-        $grouprules = $em->getRepository('SoftoneBundle:Customerrule')->findBy(array("customer" => $this), array('sortorder' => 'ASC'));
+        $grouprules = $em->getRepository('MegasoftBundle:Customerrule')->findBy(array("customer" => $this), array('sortorder' => 'ASC'));
         foreach ((array) $grouprules as $grouprule) {
             $this->rules[] = $grouprule;
         }
