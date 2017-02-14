@@ -6,8 +6,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Setting as Setting;
+use AppBundle\Controller\Main as Main;
 
-class DefaultController extends Controller {
+class DefaultController extends Main {
 
     /**
      * @Route("/", name="homepage")
