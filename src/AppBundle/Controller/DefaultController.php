@@ -96,7 +96,7 @@ class DefaultController extends Main {
      */
     public function erpprefix() {
         return $this->render('default/erpprefix.html.twig', array(
-                    'erpprefix' => $this->getSetting("AppBundle:Erp:erpprefix") ?  $this->getSetting("AppBundle:Erp:erp") : $this->setSetting("AppBundle:Erp:erp", ""),
+                    'erpprefix' => $this->getSetting("AppBundle:Erp:erpprefix") ?  $this->getSetting("AppBundle:Erp:erpprefix") : $this->setSetting("AppBundle:Erp:erpprefix", ""),
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));        
         //return  $this->getSetting("AppBundle:Erp:erpprefix") ?  $this->getSetting("AppBundle:Erp:erp") : $this->setSetting("AppBundle:Erp:erp", "");
