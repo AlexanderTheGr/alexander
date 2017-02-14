@@ -90,10 +90,10 @@ class DefaultController extends Controller {
         ));
     }
     /**
-     * @Route("/erp", name="alerts")
+     * @Route("/erpprefix", name="erpprefix")
      */
-    public function erp() {
-        return $this->setSetting("AppBundle:Erp:erp", "erp");
+    public function erpprefix() {
+        return  $this->getSetting("AppBundle:Erp:erpprefix") ?  $this->getSetting("AppBundle:Erp:erp") : $this->setSetting("AppBundle:Erp:erp", "");
     }
     function getSetting($path) {
         $em = $this->getDoctrine()->getManager();
