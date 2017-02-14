@@ -95,7 +95,7 @@ class DefaultController extends Main {
      * @Route("/erpprefix", name="erpprefix")
      */
     public function erpprefix() {
-        return $this->render('default/alerts.html.twig', array(
+        return $this->render('default/erpprefix.html.twig', array(
                     'erpprefix' => $this->getSetting("AppBundle:Erp:erpprefix") ?  $this->getSetting("AppBundle:Erp:erp") : $this->setSetting("AppBundle:Erp:erp", ""),
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));        
