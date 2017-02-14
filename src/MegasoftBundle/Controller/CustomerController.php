@@ -83,7 +83,7 @@ class CustomerController extends Main {
                 $productsaleArr[$productsale->getId()] = $productsale->getTitle();
             }
             $productsalejson = json_encode($productsaleArr);
-
+            
             $suppliers = $this->getDoctrine()->getRepository("MegasoftBundle:MegasoftSupplier")->findAll();
             $supplierArr = array();
             foreach ($suppliers as $supplier) {
