@@ -2,9 +2,15 @@
 
 namespace MegasoftBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Entity;
+use MegasoftBundle\Entity\Megasoft as Megasoft;
+
 /**
  * Customergroup
+ *
+ * @ORM\Table(name="customergroup")
+ * @ORM\Entity
  */
 class Customergroup extends Entity {
 
@@ -26,9 +32,9 @@ class Customergroup extends Entity {
     }
 
     public function setRepositories() {
-        //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:TecdocSupplier';
+        //$this->repositories['tecdocSupplierId'] = 'MegasoftBundle:TecdocSupplier';
         $this->types['tecdocSupplierId'] = 'object';
-        //$this->tecdocSupplierId = new \SoftoneBundle\Entity\TecdocSupplier;
+        //$this->tecdocSupplierId = new \MegasoftBundle\Entity\TecdocSupplier;
     }
 
     public function getRepository() {
@@ -36,7 +42,7 @@ class Customergroup extends Entity {
     }
 
     public function getRepositories($repo) {
-        //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:TecdocSupplier';
+        //$this->repositories['tecdocSupplierId'] = 'MegasoftBundle:TecdocSupplier';
         return $this->repositories[$repo];
     }
 
@@ -69,48 +75,26 @@ class Customergroup extends Entity {
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255, nullable=false)
      */
-    private $title;
+    protected $title;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="base_price", type="string", length=255, nullable=false)
      */
-    private $basePrice;
-
-    /**
-     * @var \DateTime
-     */
-    private $ts;
+    protected $basePrice;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $actioneer;
-
-    /**
-     * @var \DateTime
-     */
-    private $created;
-
-    /**
-     * @var \DateTime
-     */
-    private $modified;
-
-    /**
-     * @var integer
-     */
-    private $id;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $customergrouprules;
-
-    /**
-     * Constructor
-     */
-
+    protected $id;
 
     /**
      * Set title
@@ -155,6 +139,35 @@ class Customergroup extends Entity {
     public function getBasePrice() {
         return $this->basePrice;
     }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId() {
+        return $this->id;
+    }
+
+    /**
+     * @var \DateTime
+     */
+    private $ts;
+
+    /**
+     * @var integer
+     */
+    private $actioneer;
+
+    /**
+     * @var \DateTime
+     */
+    private $created;
+
+    /**
+     * @var \DateTime
+     */
+    private $modified;
 
     /**
      * Set ts
@@ -245,13 +258,9 @@ class Customergroup extends Entity {
     }
 
     /**
-     * Get id
-     *
-     * @return integer
+     * @var \Doctrine\Common\Collections\Collection
      */
-    public function getId() {
-        return $this->id;
-    }
+    private $customergrouprules;
 
     /**
      * Add customergrouprule
@@ -262,7 +271,6 @@ class Customergroup extends Entity {
      */
     public function addCustomergrouprule(\MegasoftBundle\Entity\Customergrouprule $customergrouprule) {
         $this->customergrouprules[] = $customergrouprule;
-
         return $this;
     }
 
@@ -283,5 +291,25 @@ class Customergroup extends Entity {
     public function getCustomergrouprules() {
         return $this->customergrouprules;
     }
-
+    
+    private $rules = array();
+    public function loadCustomergrouprules() {
+        //if ($this->reference)
+        if (count($this->rules) > 0) return $this;
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');        
+        $grouprules = $em->getRepository('MegasoftBundle:Customergrouprule')->findBy(array("group"=>$this),array('sortorder' => 'ASC'));
+        foreach ((array)$grouprules as $grouprule) {
+            $this->rules[] = $grouprule;
+            
+        }
+  
+        return $this;
+    }
+    public function getRules() {
+        return $this->rules;
+    }
 }
