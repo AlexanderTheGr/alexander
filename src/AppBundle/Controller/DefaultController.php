@@ -89,5 +89,47 @@ class DefaultController extends Controller {
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
+    /**
+     * @Route("/erp", name="alerts")
+     */
+    public function erp() {
+        return $this->setSetting("AppBundle:Erp:erp", "erp");
+    }
+    function getSetting($path) {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('AppBundle:Setting');
+        $setting = $repository->findOneBy(
+                array('path' => $path)
+        );
+        if (!$setting) {
+            $dt = new \DateTime("now");
+            $setting = new Setting;
+            $setting->setTs($dt);
+            $setting->setCreated($dt);
+            $setting->setModified($dt);
+            $setting->setPath($path);
+            $this->flushpersist($setting);
+        }
+        return $setting->getValue();
+    }
 
+    function setSetting($path, $value) {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('AppBundle:Setting');
+        $setting = $repository->findOneBy(
+                array('path' => $path)
+        );
+        if (!$setting) {
+            $dt = new \DateTime("now");
+            $setting = new Setting;
+            $setting->setTs($dt);
+            $setting->setCreated($dt);
+            $setting->setModified($dt);
+            $setting->setPath($path);
+            $this->flushpersist($setting);
+        }
+        $setting->setValue($value);
+        $this->flushpersist($setting);
+        return $setting->getValue();
+    }    
 }
