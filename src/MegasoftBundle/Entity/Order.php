@@ -2,14 +2,63 @@
 
 namespace MegasoftBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\Entity;
+
 /**
+
+
+  /**
  * Order
+ *
+ * @ORM\Table(name="order", indexes={@ORM\Index(name="user_id", columns={"actioneer"}), @ORM\Index(name="customer", columns={"customer"}), @ORM\Index(name="status", columns={"status"}), @ORM\Index(name="store", columns={"store"}), @ORM\Index(name="route", columns={"route"})})
+ * @ORM\Entity
  */
-class Order
-{
-    /**
-     * @var integer
-     */
+class Order extends Entity {
+
+    private $repository = 'MegasoftBundle:Order';
+    private $types = array();
+    var $repositories = array();
+    var $uniques = array();
+
+    public function __construct() {
+        $this->repositories['route'] = 'MegasoftBundle:Route';
+        $this->repositories['customer'] = 'MegasoftBundle:Customer';
+        $this->types['route'] = 'object';
+        $this->route = new \MegasoftBundle\Entity\Route;
+        $this->items = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function getField($field) {
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
+
+    public function getRepository() {
+        return $this->repository;
+    }
+
+    public function getRepositories($repo) {
+        $this->repositories['route'] = 'MegasoftBundle:Route';
+        $this->repositories['customer'] = 'MegasoftBundle:Customer';
+        return $this->repositories[$repo];
+    }
+
+    public function gettype($field) {
+        $this->types['route'] = 'object';
+        if (@$this->types[$field] != '') {
+            return @$this->types[$field];
+        }
+        if (gettype($field) != NULL) {
+            return gettype($this->$field);
+        }
+        return 'string';
+    }
+
     private $reference = '0';
 
     /**
@@ -155,8 +204,7 @@ class Order
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->items = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -167,8 +215,7 @@ class Order
      *
      * @return Order
      */
-    public function setReference($reference)
-    {
+    public function setReference($reference) {
         $this->reference = $reference;
 
         return $this;
@@ -179,8 +226,7 @@ class Order
      *
      * @return integer
      */
-    public function getReference()
-    {
+    public function getReference() {
         return $this->reference;
     }
 
@@ -191,8 +237,7 @@ class Order
      *
      * @return Order
      */
-    public function setStore($store)
-    {
+    public function setStore($store) {
         $this->store = $store;
 
         return $this;
@@ -203,8 +248,7 @@ class Order
      *
      * @return integer
      */
-    public function getStore()
-    {
+    public function getStore() {
         return $this->store;
     }
 
@@ -215,8 +259,7 @@ class Order
      *
      * @return Order
      */
-    public function setCustomerName($customerName)
-    {
+    public function setCustomerName($customerName) {
         $this->customerName = $customerName;
 
         return $this;
@@ -227,8 +270,7 @@ class Order
      *
      * @return string
      */
-    public function getCustomerName()
-    {
+    public function getCustomerName() {
         return $this->customerName;
     }
 
@@ -239,8 +281,7 @@ class Order
      *
      * @return Order
      */
-    public function setCustomerName2($customerName2)
-    {
+    public function setCustomerName2($customerName2) {
         $this->customerName2 = $customerName2;
 
         return $this;
@@ -251,8 +292,7 @@ class Order
      *
      * @return string
      */
-    public function getCustomerName2()
-    {
+    public function getCustomerName2() {
         return $this->customerName2;
     }
 
@@ -263,8 +303,7 @@ class Order
      *
      * @return Order
      */
-    public function setTfprms($tfprms)
-    {
+    public function setTfprms($tfprms) {
         $this->tfprms = $tfprms;
 
         return $this;
@@ -275,8 +314,7 @@ class Order
      *
      * @return integer
      */
-    public function getTfprms()
-    {
+    public function getTfprms() {
         return $this->tfprms;
     }
 
@@ -287,8 +325,7 @@ class Order
      *
      * @return Order
      */
-    public function setFprms($fprms)
-    {
+    public function setFprms($fprms) {
         $this->fprms = $fprms;
 
         return $this;
@@ -299,8 +336,7 @@ class Order
      *
      * @return integer
      */
-    public function getFprms()
-    {
+    public function getFprms() {
         return $this->fprms;
     }
 
@@ -311,8 +347,7 @@ class Order
      *
      * @return Order
      */
-    public function setInsdate($insdate)
-    {
+    public function setInsdate($insdate) {
         $this->insdate = $insdate;
 
         return $this;
@@ -323,8 +358,7 @@ class Order
      *
      * @return \DateTime
      */
-    public function getInsdate()
-    {
+    public function getInsdate() {
         return $this->insdate;
     }
 
@@ -335,8 +369,7 @@ class Order
      *
      * @return Order
      */
-    public function setSeriesnum($seriesnum)
-    {
+    public function setSeriesnum($seriesnum) {
         $this->seriesnum = $seriesnum;
 
         return $this;
@@ -347,8 +380,7 @@ class Order
      *
      * @return integer
      */
-    public function getSeriesnum()
-    {
+    public function getSeriesnum() {
         return $this->seriesnum;
     }
 
@@ -359,8 +391,7 @@ class Order
      *
      * @return Order
      */
-    public function setSeries($series)
-    {
+    public function setSeries($series) {
         $this->series = $series;
 
         return $this;
@@ -371,8 +402,7 @@ class Order
      *
      * @return integer
      */
-    public function getSeries()
-    {
+    public function getSeries() {
         return $this->series;
     }
 
@@ -383,8 +413,7 @@ class Order
      *
      * @return Order
      */
-    public function setFincode($fincode)
-    {
+    public function setFincode($fincode) {
         $this->fincode = $fincode;
 
         return $this;
@@ -395,8 +424,7 @@ class Order
      *
      * @return string
      */
-    public function getFincode()
-    {
+    public function getFincode() {
         return $this->fincode;
     }
 
@@ -407,8 +435,7 @@ class Order
      *
      * @return Order
      */
-    public function setExpn($expn)
-    {
+    public function setExpn($expn) {
         $this->expn = $expn;
 
         return $this;
@@ -419,8 +446,7 @@ class Order
      *
      * @return string
      */
-    public function getExpn()
-    {
+    public function getExpn() {
         return $this->expn;
     }
 
@@ -431,8 +457,7 @@ class Order
      *
      * @return Order
      */
-    public function setDisc1prc($disc1prc)
-    {
+    public function setDisc1prc($disc1prc) {
         $this->disc1prc = $disc1prc;
 
         return $this;
@@ -443,8 +468,7 @@ class Order
      *
      * @return string
      */
-    public function getDisc1prc()
-    {
+    public function getDisc1prc() {
         return $this->disc1prc;
     }
 
@@ -455,8 +479,7 @@ class Order
      *
      * @return Order
      */
-    public function setComments($comments)
-    {
+    public function setComments($comments) {
         $this->comments = $comments;
 
         return $this;
@@ -467,8 +490,7 @@ class Order
      *
      * @return string
      */
-    public function getComments()
-    {
+    public function getComments() {
         return $this->comments;
     }
 
@@ -479,8 +501,7 @@ class Order
      *
      * @return Order
      */
-    public function setFullytrans($fullytrans)
-    {
+    public function setFullytrans($fullytrans) {
         $this->fullytrans = $fullytrans;
 
         return $this;
@@ -491,8 +512,7 @@ class Order
      *
      * @return boolean
      */
-    public function getFullytrans()
-    {
+    public function getFullytrans() {
         return $this->fullytrans;
     }
 
@@ -503,8 +523,7 @@ class Order
      *
      * @return Order
      */
-    public function setTrdbranch($trdbranch)
-    {
+    public function setTrdbranch($trdbranch) {
         $this->trdbranch = $trdbranch;
 
         return $this;
@@ -515,8 +534,7 @@ class Order
      *
      * @return integer
      */
-    public function getTrdbranch()
-    {
+    public function getTrdbranch() {
         return $this->trdbranch;
     }
 
@@ -527,8 +545,7 @@ class Order
      *
      * @return Order
      */
-    public function setRemarks($remarks)
-    {
+    public function setRemarks($remarks) {
         $this->remarks = $remarks;
 
         return $this;
@@ -539,8 +556,7 @@ class Order
      *
      * @return string
      */
-    public function getRemarks()
-    {
+    public function getRemarks() {
         return $this->remarks;
     }
 
@@ -551,8 +567,7 @@ class Order
      *
      * @return Order
      */
-    public function setNoorder($noorder)
-    {
+    public function setNoorder($noorder) {
         $this->noorder = $noorder;
 
         return $this;
@@ -563,8 +578,7 @@ class Order
      *
      * @return boolean
      */
-    public function getNoorder()
-    {
+    public function getNoorder() {
         return $this->noorder;
     }
 
@@ -575,8 +589,7 @@ class Order
      *
      * @return Order
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->status = $status;
 
         return $this;
@@ -587,8 +600,7 @@ class Order
      *
      * @return integer
      */
-    public function getStatus()
-    {
+    public function getStatus() {
         return $this->status;
     }
 
@@ -599,8 +611,7 @@ class Order
      *
      * @return Order
      */
-    public function setIsnew($isnew)
-    {
+    public function setIsnew($isnew) {
         $this->isnew = $isnew;
 
         return $this;
@@ -611,8 +622,7 @@ class Order
      *
      * @return boolean
      */
-    public function getIsnew()
-    {
+    public function getIsnew() {
         return $this->isnew;
     }
 
@@ -623,8 +633,7 @@ class Order
      *
      * @return Order
      */
-    public function setActioneer($actioneer)
-    {
+    public function setActioneer($actioneer) {
         $this->actioneer = $actioneer;
 
         return $this;
@@ -635,8 +644,7 @@ class Order
      *
      * @return integer
      */
-    public function getActioneer()
-    {
+    public function getActioneer() {
         return $this->actioneer;
     }
 
@@ -647,8 +655,7 @@ class Order
      *
      * @return Order
      */
-    public function setTs($ts)
-    {
+    public function setTs($ts) {
         $this->ts = $ts;
 
         return $this;
@@ -659,8 +666,7 @@ class Order
      *
      * @return \DateTime
      */
-    public function getTs()
-    {
+    public function getTs() {
         return $this->ts;
     }
 
@@ -671,8 +677,7 @@ class Order
      *
      * @return Order
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -683,8 +688,7 @@ class Order
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -695,8 +699,7 @@ class Order
      *
      * @return Order
      */
-    public function setModified($modified)
-    {
+    public function setModified($modified) {
         $this->modified = $modified;
 
         return $this;
@@ -707,8 +710,7 @@ class Order
      *
      * @return \DateTime
      */
-    public function getModified()
-    {
+    public function getModified() {
         return $this->modified;
     }
 
@@ -717,8 +719,7 @@ class Order
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -729,8 +730,7 @@ class Order
      *
      * @return Order
      */
-    public function addItem(\MegasoftBundle\Entity\Orderitem $item)
-    {
+    public function addItem(\MegasoftBundle\Entity\Orderitem $item) {
         $this->items[] = $item;
 
         return $this;
@@ -741,8 +741,7 @@ class Order
      *
      * @param \MegasoftBundle\Entity\Orderitem $item
      */
-    public function removeItem(\MegasoftBundle\Entity\Orderitem $item)
-    {
+    public function removeItem(\MegasoftBundle\Entity\Orderitem $item) {
         $this->items->removeElement($item);
     }
 
@@ -751,8 +750,7 @@ class Order
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getItems()
-    {
+    public function getItems() {
         return $this->items;
     }
 
@@ -763,8 +761,7 @@ class Order
      *
      * @return Order
      */
-    public function setVat(\MegasoftBundle\Entity\Vat $vat = null)
-    {
+    public function setVat(\MegasoftBundle\Entity\Vat $vat = null) {
         $this->vat = $vat;
 
         return $this;
@@ -775,8 +772,7 @@ class Order
      *
      * @return \MegasoftBundle\Entity\Vat
      */
-    public function getVat()
-    {
+    public function getVat() {
         return $this->vat;
     }
 
@@ -787,8 +783,7 @@ class Order
      *
      * @return Order
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
-    {
+    public function setUser(\AppBundle\Entity\User $user = null) {
         $this->user = $user;
 
         return $this;
@@ -799,8 +794,7 @@ class Order
      *
      * @return \AppBundle\Entity\User
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 
@@ -811,8 +805,7 @@ class Order
      *
      * @return Order
      */
-    public function setRoute(\MegasoftBundle\Entity\Route $route = null)
-    {
+    public function setRoute(\MegasoftBundle\Entity\Route $route = null) {
         $this->route = $route;
 
         return $this;
@@ -823,8 +816,7 @@ class Order
      *
      * @return \MegasoftBundle\Entity\Route
      */
-    public function getRoute()
-    {
+    public function getRoute() {
         return $this->route;
     }
 
@@ -835,8 +827,7 @@ class Order
      *
      * @return Order
      */
-    public function setCustomer(\MegasoftBundle\Entity\Customer $customer = null)
-    {
+    public function setCustomer(\MegasoftBundle\Entity\Customer $customer = null) {
         $this->customer = $customer;
 
         return $this;
@@ -847,8 +838,8 @@ class Order
      *
      * @return \MegasoftBundle\Entity\Customer
      */
-    public function getCustomer()
-    {
+    public function getCustomer() {
         return $this->customer;
     }
+
 }
