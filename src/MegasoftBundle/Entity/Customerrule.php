@@ -2,11 +2,12 @@
 
 namespace MegasoftBundle\Entity;
 
+use AppBundle\Entity\Repository;
 /**
  * Customerrule
  */
-class Customerrule
-{
+class Customerrule extends Repository {
+
     /**
      * @var string
      */
@@ -42,7 +43,6 @@ class Customerrule
      */
     private $customer;
 
-
     /**
      * Set val
      *
@@ -50,8 +50,7 @@ class Customerrule
      *
      * @return Customerrule
      */
-    public function setVal($val)
-    {
+    public function setVal($val) {
         $this->val = $val;
 
         return $this;
@@ -62,8 +61,7 @@ class Customerrule
      *
      * @return string
      */
-    public function getVal()
-    {
+    public function getVal() {
         return $this->val;
     }
 
@@ -74,8 +72,7 @@ class Customerrule
      *
      * @return Customerrule
      */
-    public function setPrice($price)
-    {
+    public function setPrice($price) {
         $this->price = $price;
 
         return $this;
@@ -86,8 +83,7 @@ class Customerrule
      *
      * @return string
      */
-    public function getPrice()
-    {
+    public function getPrice() {
         return $this->price;
     }
 
@@ -98,8 +94,7 @@ class Customerrule
      *
      * @return Customerrule
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
 
         return $this;
@@ -110,8 +105,7 @@ class Customerrule
      *
      * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -122,8 +116,7 @@ class Customerrule
      *
      * @return Customerrule
      */
-    public function setSortorder($sortorder)
-    {
+    public function setSortorder($sortorder) {
         $this->sortorder = $sortorder;
 
         return $this;
@@ -134,8 +127,7 @@ class Customerrule
      *
      * @return integer
      */
-    public function getSortorder()
-    {
+    public function getSortorder() {
         return $this->sortorder;
     }
 
@@ -146,8 +138,7 @@ class Customerrule
      *
      * @return Customerrule
      */
-    public function setRule($rule)
-    {
+    public function setRule($rule) {
         $this->rule = $rule;
 
         return $this;
@@ -158,8 +149,7 @@ class Customerrule
      *
      * @return string
      */
-    public function getRule()
-    {
+    public function getRule() {
         return $this->rule;
     }
 
@@ -168,8 +158,7 @@ class Customerrule
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -180,8 +169,7 @@ class Customerrule
      *
      * @return Customerrule
      */
-    public function setCustomer(\MegasoftBundle\Entity\Customer $customer = null)
-    {
+    public function setCustomer(\MegasoftBundle\Entity\Customer $customer = null) {
         $this->customer = $customer;
 
         return $this;
@@ -192,9 +180,8 @@ class Customerrule
      *
      * @return \MegasoftBundle\Entity\Customer
      */
-    public function getCustomer()
-    {
+    public function getCustomer() {
         return $this->customer;
     }
-}
 
+}
