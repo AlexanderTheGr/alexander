@@ -793,7 +793,7 @@ class Customer extends Entity {
         return $this->customergroup;
     }
 
-    function toMagento() {
+    function toMegasoft() {
         
     }
 
