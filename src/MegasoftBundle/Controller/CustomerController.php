@@ -259,17 +259,9 @@ class CustomerController extends Main {
         //$fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'MegasoftBundle:MegasoftSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
         $fields["customerVatsts"] = array("label" => "ΦΠΑ", "required" => true, "className" => "col-md-6", 'type' => "select", 'dataarray' => $vatsts);
 
-        $priceField[] = array("value" => "itemPricer", "name" => "Λιανική");
-        $priceField[] = array("value" => "itemPricew", "name" => "Χονδρική");
+        $priceField[] = array("value" => "store_retail_price", "name" => "Λιανική");
+        $priceField[] = array("value" => "store_wholesale_price", "name" => "Χονδρική");
 
-        $priceField[] = array("value" => "itemPricer01", "name" => "Λιανική 1");
-        $priceField[] = array("value" => "itemPricew01", "name" => "Χονδρική 1");
-
-        $priceField[] = array("value" => "itemPricer02", "name" => "Λιανική 2");
-        $priceField[] = array("value" => "itemPricew02", "name" => "Χονδρική 2");
-
-        $priceField[] = array("value" => "itemPricer03", "name" => "Λιανική 3");
-        $priceField[] = array("value" => "itemPricew03", "name" => "Χονδρική 3");
 
 
         $fields["priceField"] = array("label" => "Κατάλογος", "className" => "col-md-6", 'type' => "select", "required" => true, 'dataarray' => $priceField);
