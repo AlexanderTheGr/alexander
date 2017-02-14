@@ -2,11 +2,10 @@
 
 namespace MegasoftBundle\Entity;
 
-use AppBundle\Entity\Repository;
 /**
  * Customerrule
  */
-class Customerrule extends Repository {
+class Customerrule {
 
     /**
      * @var string
