@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <entity name="MegasoftBundle\Entity\Customerrule" repository-class="MegasoftBundle\Entity\CustomerruleRepository" table="megasoft_customerrule">
+    <entity name="SoftoneBundle\Entity\Customerrule" repository-class="SoftoneBundle\Entity\CustomerruleRepository" table="softone_customerrule">
         <indexes>
             <index name="customer" columns="customer"/>
         </indexes>
