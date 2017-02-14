@@ -15,7 +15,7 @@ use EdiBundle\Entity\EdiItem;
 use EdiBundle\Entity\Edi;
 use MegasoftBundle\Entity\Reportmodel as Reportmodel;
 
-class OrderController extends \MegasoftBundle\Controller\MegasoftController {
+class OrderController extends Main {
 
     var $repository = 'MegasoftBundle:Order';
     var $newentity = '';
