@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{{ render(controller('MegasoftBundle:Order:datatable', { 'ctrl': ctrl,'app':app,'url':url })) }}
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{  asset('assets/js/libs/megasoft/megasoftiorder.js') }}"></script>    
+<script>$(".{{ctrl}}").alexDataTable("{{app}}", "{{ctrl}}", "{{url}}", "{{view}}");</script>
+{% endblock %}

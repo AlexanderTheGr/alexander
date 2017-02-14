@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <div class="gui-controls" style="text-align: right">
+
+        <button data-id="{{order}}" class="btn ink-reaction btn-raised ink-reaction btn-success savemegasoft">
+            <div class="gui-icon"><i class="md md-send"></i></div>
+            <span class="title">Αποστολή Για Τιμολόγιση</span>
+        </button>
+        <button class="btn ink-reaction btn-raised ink-reaction btn-success saveroute">
+            <div class="gui-icon"><i class="fa fa-truck"></i></div>
+            <span class="title">Αποστολή σε Δρομολόγιο</span>
+        </button>   
+
+
+        <button class="saveorder btn btn-success btn-raised  ink-reaction save_model_Order">
+            <div class="gui-icon"><i class="md md-save"></i></div>
+            <span class="title">Αποθήκευση</span>
+        </button>
+
+        <button class="btn ink-reaction btn-raised ink-reaction btn-danger delete_model_Order">
+            <div class="gui-icon"><i class="md md-delete"></i></div>
+            <span class="title">Διαγραφή</span>
+        </button>
+
+        <button style="float:left {{displaynone}}"  class="apestaleni btn btn-raised ink-reaction btn-success">
+            <div class="gui-icon"><i class="md md-cloud"></i></div>
+            <span class="title">Απεσταλμένη</span>
+        </button>
+            
+        <button class="btn ink-reaction btn-raised ink-reaction return_to_main_Order">
+            <div class="gui-icon"><i class="md md-keyboard-return"></i></div>
+            <span class="title">Επιστροφή</span>
+        </button>
+        <button ref="1127113" class="btn btn-raised ink-reaction printarea">
+            <div class="gui-icon"><i class="md md-print"></i></div>
+            <span class="title">Εκτύπωση</span>
+        </button>
+    </div>    
+
+    {{ render(controller('MegasoftBundle:Order:content', { 'ctrl': ctrl,'app':app,'url':url,'content':content }) ) }}
+    
+    
+    <div style='display:none' id='printarea'>
+        {{printarea | raw}}
+    </div>
+    
+{% endblock %}
+{% block stylesheets %}
+{% endblock %}
+{% block javascripts %}
+    <script src="{{  asset('assets/js/libs/megasoft/megasoftiorder.js') }}"></script>
+    <script src="{{  asset('assets/js/libs/megasoft/jquery.printElement.min.js') }}"></script> 
+    <script>
+    $(".{{ctrl}}").alexTabs("{{app}}", "{{ctrl}}", "{{url}}", "{{content|json_encode()}}");
+    
+    jQuery('.printarea').click(function(){
+        var data = {}
+        jQuery.post("/order/print/{{order}}", data, function (result) {
+            jQuery('#printarea').html(result);
+            jQuery('#printarea').show();
+            jQuery('#printarea').printElement();       
+            setTimeout(function () {
+                jQuery('#printarea').hide(); 
+            }, 10000)
+        })
+    })    
+    </script>
+ 
+{% endblock %}

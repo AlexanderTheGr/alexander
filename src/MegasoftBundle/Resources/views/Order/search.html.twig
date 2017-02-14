@@ -1,0 +1,176 @@
+{% block body %}
+    <div>   
+        <div class="" style="float:left;  width: 100%; margin: 0; padding: 0"> 
+            <div class="col-lg-6 ">
+                <div class="col-lg-12 ">
+                    <div class="height-2 form" style="float:left;  width: 100%; margin: 0; padding: 0">
+                        <input id="productfreesearch" class='form-control productfreesearch' placeholder="Ελεύθερη Αναζήτηση" type="text">  
+                        <input id="productitem" class='form-control productitem' placeholder="Αναζήτηση με Κωδικό" type="text">        
+                    </div> 
+                </div>
+                <div class="col-lg-12 ">
+
+
+                    <div class="panel-group" id="accordion5">
+                        <div class="card panel">
+                            <div class="card-head style-info card-head collapsed" data-toggle="collapse" data-parent="#accordion5" data-target="#accordion5-1">
+                                <header>
+                                    <i class="fa fa-automobile"></i> Αναζήτηση με Όχημα
+                                </header>
+                                <div class="tools">
+
+                                    <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+                                </div>
+                            </div>
+                            <div id="accordion5-1" class="collapse">
+                                <div class="card-body">
+                                    <div class='plaisio'>
+                                        <select style="width:100%" name="brand_id" class="brand-select" class="brand-select" title="" onchange="">
+                                            <option value="0">Επιλέξτε Μάρκα</option>
+                                            {% for brand in brands %}
+                                                <option value="{{brand.id}}">{{brand.brand}}</option>
+                                            {% endfor %}    
+                                        </select>
+                                    </div>
+                                    <div class='plaisio'>
+                                        <select style="width:100%" name="brand_model_id" class="brand_model-select inactive" class="brand_model-select" title="" onchange="">
+
+                                        </select>   
+                                    </div>
+                                    <div class='plaisio'>
+                                        <select  style="width:100%" name="brand_model_type_id" class="brand_model_type-select inactive" class="brand_model-select" title="" onchange="">
+                                        </select>  
+                                    </div>
+                                    <button type="btn" id="gogo" title="Αναζήτηση" class="gogo button"><span><span>Αναζήτηση</span></span></button>                  
+                                </div>
+                            </div>
+                        </div><!--end .panel -->
+                        <div class="card panel">
+                            <div class="card-head style-info card-head collapsed" data-toggle="collapse" data-parent="#accordion5" data-target="#accordion5-3">
+                                <header>
+                                    <i class="fa fa-cogs"></i> Αναζήτηση με Κινητήρα
+                                </header>
+                                <div class="tools">
+                                    <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+                                </div>
+                            </div>
+                            <div id="accordion5-3" class="collapse">
+                                <div class="card-body">
+                                    Παρακαλώ πληκτρολογήστε τον κωδικό του Κινητήρα<BR>
+                                    Π.χ. AR32310<BR>
+                                    <input class="form-control" placeholder="Γράψτε τον Κωδικό" id="searchmotor" type="text" name="s" value="" class="searchmotor input-text" maxlength="" />
+
+                                </div>
+                            </div>
+                        </div><!--end .panel -->
+                        <div class="card panel">
+                            <div class="card-head style-info card-head collapsed" data-toggle="collapse" data-parent="#accordion5" data-target="#accordion5-2">
+                                <header>
+                                    <i class="fa fa-cogs"></i> Ιστορικό Αναζήτησεων
+                                </header>
+                                <div class="tools">
+                                    <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+                                </div>
+                            </div>
+                            <div id="accordion5-2" class="collapse">
+                                <div class="card-body">
+                                    {{history | raw}}
+                                </div>
+                            </div>
+                        </div>                        
+
+                    </div>                
+
+                </div>    
+            </div>
+            <div class="col-lg-6 ">
+                <div class='categories'></div>    
+            </div>
+        </div>    
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        jQuery(".brand-select").chosen({width: '100%'});
+        jQuery(".brand_model-select").chosen({width: '100%'});
+        jQuery(".brand_model_type-select").chosen({width: '100%'});
+        order = '{{order}}';
+
+        jQuery(".brand-select").change(function () {
+            var data = {};
+            data.brand = jQuery(this).val();
+
+            jQuery("#productfreesearch").val("");
+            jQuery("#productitem").val("");
+            var group_name = "";
+            jQuery('.brand_model-select').text("");
+            jQuery('.brand_model_type-select').text("");
+
+            jQuery('.brand_model-select').addClass("inactive");
+            jQuery('.brand_model_type-select').addClass("inactive");
+            jQuery('.search-form button.button span').removeClass("active");
+            jQuery(".brand-select").trigger("chosen:updated");
+            jQuery(".brand_model-select").trigger("chosen:updated");
+            jQuery(".brand_model_type-select").trigger("chosen:updated");
+            jQuery.post("/order/getmodels", data, function (json) {
+                if (json) {
+                    jQuery('.brand_model-select').removeClass("inactive");
+                }
+                jQuery('.brand_model-select').text("");
+                jQuery('.brand_model_type-select').text("");
+                var sop = "";
+                var a = 0;
+                jQuery.each(json, function (i, optionHtml) {
+                    jQuery('.brand_model-select').append(jQuery('<option>').text(optionHtml.name).attr('value', optionHtml.id));
+                });
+                jQuery(".brand-select").trigger("chosen:updated");
+                jQuery(".brand_model-select").trigger("chosen:updated");
+                jQuery(".brand_model_type-select").trigger("chosen:updated");
+
+            });
+        });
+        jQuery(".brand_model-select").change(function () {
+            var data = {};
+            data.brand = jQuery(".brand-select").val();
+            data.model = jQuery(this).val();
+            var motor_type = "";
+            var sop = "";
+            jQuery('.brand_model_type-select').addClass("inactive");
+            jQuery('.search-form button.button span').removeClass("active");
+            jQuery.post("/order/getmodeltypes", data, function (json) {
+                if (json) {
+                    jQuery('.brand_model_type-select').removeClass("inactive");
+                }
+                jQuery('.brand_model_type-select').text("");
+                var a = 0;
+                jQuery.each(json, function (i, optionHtml) {
+                    jQuery('.brand_model_type-select').append(jQuery('<option>').text(optionHtml.name).attr('value', optionHtml.id));
+                });
+                jQuery(".brand-select").trigger("chosen:updated");
+                jQuery(".brand_model-select").trigger("chosen:updated");
+                jQuery(".brand_model_type-select").trigger("chosen:updated");
+            })
+        });
+        
+        
+        jQuery(".modelhistory").click(function () {
+            asdda(jQuery(this).attr("data-order"), jQuery(this).attr("data-ref"), jQuery(this).text());
+        });
+        jQuery(".gogo").click(function () {
+            var cartext = $(".brand-select option:selected").text() + ' ' + $(".brand_model-select option:selected").text() + ' ' + $(".brand_model_type-select option:selected").text();
+            asdda('{{order}}', jQuery(".brand_model_type-select").val(), cartext)
+        });
+        jQuery(".subcategoriesli").live('click', function () {
+            var data = {};
+            b=true;
+            data.car = jQuery(".brand_model_type-select").val();
+            data.order = '{{order}}';
+            data.all = jQuery(this).attr('data-all');
+            $("#loaderer").show();
+            asdf2(data);
+        });
+
+    </script>
+{% endblock %}
+

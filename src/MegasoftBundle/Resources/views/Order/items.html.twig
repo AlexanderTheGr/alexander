@@ -1,0 +1,27 @@
+{% block body %}
+
+    <div class="orderitemstable style-primary-light">
+        <table class="table-striped">
+            <thead>
+            <tr>
+                <td>ID</td>
+                <td>Code</td>
+                <td>Title</td>
+                <td>Qty</td>
+                <td>Price</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in content %}
+                <tr>
+                    {% for f in row %}
+                        <td>{{f}}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+{% endblock %}
