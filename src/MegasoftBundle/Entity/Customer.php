@@ -771,9 +771,6 @@ class Customer extends Entity {
         return $this->id;
     }
 
-    
-
-
     /**
      * Set customergroup
      *
@@ -794,6 +791,10 @@ class Customer extends Entity {
      */
     public function getCustomergroup() {
         return $this->customergroup;
+    }
+
+    function toMagento() {
+        
     }
 
     private $rules = array();
