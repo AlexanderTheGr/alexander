@@ -2,9 +2,7 @@
 
 namespace MegasoftBundle\Entity;
 
-
 use Doctrine\ORM\Mapping as ORM;
-
 use AppBundle\Entity\Entity;
 
 /**
@@ -213,8 +211,6 @@ class Customer extends Entity {
      * @var \MegasoftBundle\Entity\Customergroup
      */
     private $customergroup;
-
-
 
     /**
      * Set reference
@@ -826,6 +822,29 @@ class Customer extends Entity {
      */
     public function getCustomergroup() {
         return $this->customergroup;
+    }
+
+    private $rules = array();
+
+    public function loadCustomerrules() {
+        //if ($this->reference)
+        if (count($this->rules) > 0)
+            return $this;
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $grouprules = $em->getRepository('SoftoneBundle:Customerrule')->findBy(array("customer" => $this), array('sortorder' => 'ASC'));
+        foreach ((array) $grouprules as $grouprule) {
+            $this->rules[] = $grouprule;
+        }
+
+        return $this;
+    }
+
+    public function getRules() {
+        return $this->rules;
     }
 
 }
