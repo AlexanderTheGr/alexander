@@ -109,9 +109,7 @@ class CustomerController extends Main {
             $categoryjson = json_encode($categoriesArr);
             $grouprules = $entity->loadCustomerrules()->getRules();
             $rules = array();
-            echo ".";
             foreach ($grouprules as $grouprule) {
-                echo ".";
                 if ($grouprule->getCustomer()->getId() == $id) {
                     $rules[$grouprule->getId()]["rule"] = $grouprule->getRule();
                     $rules[$grouprule->getId()]["val"] = $grouprule->getVal();
