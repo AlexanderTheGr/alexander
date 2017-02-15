@@ -1120,5 +1120,25 @@ class Product extends Entity {
         }
         $descrption .= "</ul>";
         return $descrption;
+    }   
+    function getApothiki() {
+        $qty = $this->qty - $this->reserved;
+        return $this->qty . ' / <span class="text-lg text-bold text-accent-dark">' . ($qty) . '</span>';
+    }
+
+    function getTick($order) {
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $orderItem = $em->getRepository("SoftoneBundle:Orderitem")
+                ->findOneBy(array("order" => $order, "product" => $this));
+
+        //if (@$orderItem->id == 0) {
+        $display = @$orderItem->id == 0 ? "display:none" : "display:block";
+        //}
+
+        return '<img width="20" style="width:20px; max-width:20px; ' . $display . '" class="tick_' . $this->id . '" src="/assets/img/tick.png">';
     }    
 }
