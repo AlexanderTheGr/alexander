@@ -243,5 +243,15 @@ class Orderitem {
     public function getOrder() {
         return $this->order;
     }
-
+    public function getLinevalQty() {
+        return number_format($this->lineval / $this->qty, 2, '.', '');
+        //return $this->lineval / $this->qty;
+    }  
+    public function deleteitem() {
+        return '<a style="font-size:20px; color:red; cursor: pointer" data-id="'.$this->id.'" class="deleteitem"><i class="md md-delete"></i></a>';
+    }
+    public function getProductApothiki() {
+        return $this->getProduct()->getApothiki();
+        //return $this->lineval / $this->qty;
+    } 
 }
