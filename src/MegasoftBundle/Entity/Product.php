@@ -1125,7 +1125,40 @@ class Product extends Entity {
         $qty = $this->qty - $this->reserved;
         return $this->qty . ' / <span class="text-lg text-bold text-accent-dark">' . ($qty) . '</span>';
     }
+    function getDiscount(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
+        $rules = $customer->loadCustomerrules()->getRules();
+        $sortorder = 0;
+        $discount = 0;
+        $price = 0;
+        $ruled = false;
+        foreach ((array) $rules as $rule) {
+            if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
+                $sortorder = $rule->getSortorder();
+                $discount = $rule->getVal();
+                $price = $rule->getPrice();
+                $ruled = true;
+            }
+        }
 
+        if (!$ruled) {
+            $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
+            $sortorder = 0;
+            foreach ($rules as $rule) {
+                if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
+                    $sortorder = $rule->getSortorder();
+                    $discount = $rule->getVal();
+                    $price = $rule->getPrice();
+                }
+            }
+        }
+
+        $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
+        $price = $price > 0 ? $price : $this->$pricefield;
+        $discountedPrice = $this->$pricefield * (1 - $discount / 100 );
+        //$finalprice = $discount > 0 ? $discountedPrice : $price;
+
+        return number_format($price * $vat, 2, '.', '') . " (" . (float) $discount . "%)";
+    }
     function getTick($order) {
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
