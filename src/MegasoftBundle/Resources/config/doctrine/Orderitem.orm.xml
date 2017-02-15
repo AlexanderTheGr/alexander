@@ -17,7 +17,7 @@
     </field>
     <field name="price" type="decimal" column="price" precision="10" scale="2" nullable="false"/>
     <field name="disc1prc" type="decimal" column="disc1prc" precision="10" scale="2" nullable="false"/>
-    <field name="finalprice" type="decimal" column="finalprice" precision="10" scale="2" nullable="false"/>
+    <field name="lineval" type="decimal" column="lineval" precision="10" scale="2" nullable="false"/>
     <field name="store" type="integer" column="store" nullable="false">
       <options>
         <option name="unsigned"/>
