@@ -1125,7 +1125,7 @@ class Product extends Entity {
         $qty = $this->qty - $this->reserved;
         return $this->qty . ' / <span class="text-lg text-bold text-accent-dark">' . ($qty) . '</span>';
     }
-    function getDiscount(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
+    function getDiscount(\MegasoftBundle\Entity\Customer $customer, $vat = 1) {
         $rules = $customer->loadCustomerrules()->getRules();
         $sortorder = 0;
         $discount = 0;
