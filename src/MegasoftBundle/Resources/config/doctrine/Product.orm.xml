@@ -169,7 +169,17 @@
                 <cascade-remove />
             </cascade>
             <join-column name="product_sale" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>            
-        </many-to-one>             
+        </many-to-one>   
+        <many-to-one
+            field="supplier"
+            target-entity="MegasoftSupplier"
+            inversed-by="MegasoftSuppliers"
+            join-column="supplier">
+            <cascade>
+                <cascade-remove />
+            </cascade>
+            <join-column name="supplier" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>            
+        </many-to-one>                   
     </entity>
 </doctrine-mapping>
 
