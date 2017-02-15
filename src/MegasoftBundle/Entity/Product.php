@@ -1045,5 +1045,80 @@ class Product extends Entity {
         <span class="text-sm tecdocArticleName text-info">' . $this->tecdocArticleName . '</span>';
 
         return $out;
+    }
+    public function getEditLink() {
+        $out = '<a target="_blank" title="' . $this->title . '" class="" car="" data-articleId="' . $this->tecdocArticleId . '" ref="' . $this->id . '" href="/product/view/' . $this->id . '">Edit</a>';
+        return $out;
+    }
+    
+    public function getForOrderSupplier() {
+
+
+        $tecdoc = $this->getTecdocSupplierId() ? $this->getTecdocSupplierId()->getSupplier() : "";
+        $ti = $this->getSupplierId() ? $this->getSupplierId()->getTitle() : "";
+
+        $out = '<a target="_blank" title="' . $ti . '"  class="" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $ti . '</a>
+        <br>
+        <span class="text-sm text-info">' . $tecdoc . '</span>';
+
+        return $out;
+    }
+
+    function getArticleAttributes() {
+        //return "";
+        $tecdoc = new Tecdoc();
+
+        $attributs = $tecdoc->getAssignedArticlesByIds(
+                array(
+                    "articleId" => $this->tecdocArticleId,
+                    "linkingTargetId" => (string) $linkingTargetId
+        ));
+        $arr = array();
+        $descrption .= "<ul class='product_attributes' style='max-height: 100px; overflow: hidden;'>";
+        $attributes = array();
+        foreach ($attributs->data->array[0]->articleAttributes->array as $attribute) {
+            if (!$attributes[$attribute->attrId]) {
+                $attributes[$attribute->attrId][] = trim(str_replace("[" . $attribute->attrUnit . "]", "", $attribute->attrName)) . ": " . $attribute->attrValue . $attribute->attrUnit;
+            } else {
+                $attributes[$attribute->attrId][] = $attribute->attrValue . $attribute->attrUnit;
+            }
+        }
+        foreach ($attributes as $attrId => $attribute) {
+            //if (!in_array($attribute->attrId, $arr)) {
+            $arr[$attrId] = $attribute->attrId;
+            $descrption .= "<li class='attr_" . $attrId . "'>" . implode(" / ", $attribute) . "</li>";
+            //}
+        }
+        $descrption .= "</ul>";
+        return $descrption;
+    }
+
+    function getArticleAttributes2($linkingTargetId) {
+        //return "";
+        $tecdoc = new Tecdoc();
+
+        $attributs = $tecdoc->getAssignedArticlesByIds(
+                array(
+                    "articleId" => $this->tecdocArticleId,
+                    "linkingTargetId" => (string) $linkingTargetId
+        ));
+        $arr = array();
+        $descrption .= "<ul class='product_attributes' style='max-height: 100px; overflow: hidden;'>";
+        $attributes = array();
+        foreach ($attributs->data->array[0]->articleAttributes->array as $attribute) {
+            if (!$attributes[$attribute->attrId]) {
+                $attributes[$attribute->attrId][] = trim(str_replace("[" . $attribute->attrUnit . "]", "", $attribute->attrName)) . ": " . $attribute->attrValue . $attribute->attrUnit;
+            } else {
+                $attributes[$attribute->attrId][] = $attribute->attrValue . $attribute->attrUnit;
+            }
+        }
+        foreach ($attributes as $attrId => $attribute) {
+            //if (!in_array($attribute->attrId, $arr)) {
+            $arr[$attrId] = $attribute->attrId;
+            $descrption .= "<li class='attr_" . $attrId . "'>" . implode(" / ", $attribute) . "</li>";
+            //}
+        }
+        $descrption .= "</ul>";
+        return $descrption;
     }    
 }
