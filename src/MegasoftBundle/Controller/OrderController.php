@@ -1061,7 +1061,7 @@ class OrderController extends Main {
     }
 
     function getBrands() {
-        $repository = $this->getDoctrine()->getRepository('MegasoftBundle:Brand');
+        $repository = $this->getDoctrine()->getRepository('SoftoneBundle:Brand');
         $brands = $repository->findAll(array(), array('brand' => 'ASC'));
         return $brands;
     }
