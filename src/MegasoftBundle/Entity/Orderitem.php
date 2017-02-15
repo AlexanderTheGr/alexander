@@ -5,8 +5,15 @@ namespace MegasoftBundle\Entity;
 /**
  * Orderitem
  */
-class Orderitem
-{
+class Orderitem {
+    public function getField($field) {
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
     /**
      * @var integer
      */
@@ -52,7 +59,6 @@ class Orderitem
      */
     private $order;
 
-
     /**
      * Set qty
      *
@@ -60,8 +66,7 @@ class Orderitem
      *
      * @return Orderitem
      */
-    public function setQty($qty)
-    {
+    public function setQty($qty) {
         $this->qty = $qty;
 
         return $this;
@@ -72,8 +77,7 @@ class Orderitem
      *
      * @return integer
      */
-    public function getQty()
-    {
+    public function getQty() {
         return $this->qty;
     }
 
@@ -84,8 +88,7 @@ class Orderitem
      *
      * @return Orderitem
      */
-    public function setPrice($price)
-    {
+    public function setPrice($price) {
         $this->price = $price;
 
         return $this;
@@ -96,8 +99,7 @@ class Orderitem
      *
      * @return string
      */
-    public function getPrice()
-    {
+    public function getPrice() {
         return $this->price;
     }
 
@@ -108,8 +110,7 @@ class Orderitem
      *
      * @return Orderitem
      */
-    public function setDisc1prc($disc1prc)
-    {
+    public function setDisc1prc($disc1prc) {
         $this->disc1prc = $disc1prc;
 
         return $this;
@@ -120,8 +121,7 @@ class Orderitem
      *
      * @return string
      */
-    public function getDisc1prc()
-    {
+    public function getDisc1prc() {
         return $this->disc1prc;
     }
 
@@ -132,8 +132,7 @@ class Orderitem
      *
      * @return Orderitem
      */
-    public function setLineval($lineval)
-    {
+    public function setLineval($lineval) {
         $this->lineval = $lineval;
 
         return $this;
@@ -144,8 +143,7 @@ class Orderitem
      *
      * @return string
      */
-    public function getLineval()
-    {
+    public function getLineval() {
         return $this->lineval;
     }
 
@@ -156,8 +154,7 @@ class Orderitem
      *
      * @return Orderitem
      */
-    public function setStore($store)
-    {
+    public function setStore($store) {
         $this->store = $store;
 
         return $this;
@@ -168,8 +165,7 @@ class Orderitem
      *
      * @return integer
      */
-    public function getStore()
-    {
+    public function getStore() {
         return $this->store;
     }
 
@@ -180,8 +176,7 @@ class Orderitem
      *
      * @return Orderitem
      */
-    public function setChk($chk)
-    {
+    public function setChk($chk) {
         $this->chk = $chk;
 
         return $this;
@@ -192,8 +187,7 @@ class Orderitem
      *
      * @return boolean
      */
-    public function getChk()
-    {
+    public function getChk() {
         return $this->chk;
     }
 
@@ -202,8 +196,7 @@ class Orderitem
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -214,8 +207,7 @@ class Orderitem
      *
      * @return Orderitem
      */
-    public function setProduct(\MegasoftBundle\Entity\Product $product = null)
-    {
+    public function setProduct(\MegasoftBundle\Entity\Product $product = null) {
         $this->product = $product;
 
         return $this;
@@ -226,8 +218,7 @@ class Orderitem
      *
      * @return \MegasoftBundle\Entity\Product
      */
-    public function getProduct()
-    {
+    public function getProduct() {
         return $this->product;
     }
 
@@ -238,8 +229,7 @@ class Orderitem
      *
      * @return Orderitem
      */
-    public function setOrder(\MegasoftBundle\Entity\Order $order = null)
-    {
+    public function setOrder(\MegasoftBundle\Entity\Order $order = null) {
         $this->order = $order;
 
         return $this;
@@ -250,8 +240,8 @@ class Orderitem
      *
      * @return \MegasoftBundle\Entity\Order
      */
-    public function getOrder()
-    {
+    public function getOrder() {
         return $this->order;
     }
+
 }
