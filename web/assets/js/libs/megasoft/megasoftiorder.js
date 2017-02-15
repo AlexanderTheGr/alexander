@@ -85,8 +85,8 @@ setTimeout(function () {
             orderid = customerNameArr[3];
             if (SoftoneBundleOrdercustomerName == 'SoftoneBundleOrdercustomerName') {
                 customerName = this;
-                var $elem = jQuery(customerName).autocomplete({
-                    source: "/customer/autocompletesearch",
+                var $elem = jQuery(".customerName").autocomplete({
+                    source: "/megasoft/customer/autocompletesearch",
                     method: "POST",
                     minLength: 2,
                     select: function (event, ui) {
