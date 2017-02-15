@@ -25,7 +25,7 @@ class Orderitem
     /**
      * @var string
      */
-    private $finalprice;
+    private $lineval;
 
     /**
      * @var integer
@@ -116,7 +116,7 @@ class Orderitem
     }
 
     /**
-     * Get discount
+     * Get disc1prc
      *
      * @return string
      */
@@ -126,27 +126,27 @@ class Orderitem
     }
 
     /**
-     * Set finalprice
+     * Set lineval
      *
-     * @param string $finalprice
+     * @param string $lineval
      *
      * @return Orderitem
      */
-    public function setFinalprice($finalprice)
+    public function setLineval($lineval)
     {
-        $this->finalprice = $finalprice;
+        $this->lineval = $lineval;
 
         return $this;
     }
 
     /**
-     * Get finalprice
+     * Get lineval
      *
      * @return string
      */
-    public function getFinalprice()
+    public function getLineval()
     {
-        return $this->finalprice;
+        return $this->lineval;
     }
 
     /**
