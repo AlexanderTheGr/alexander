@@ -521,7 +521,7 @@ class OrderController extends Main {
 
             if ($this->clearstring($dt_search["value"]) != "") {
 
-                $megasoft = new Megasoft();
+                //$megasoft = new Megasoft();
                 $recordsTotal = $em->getRepository($this->repository)->recordsTotal();
 
                 foreach ($this->fields as $index => $field) {
