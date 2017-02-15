@@ -94,7 +94,7 @@ setTimeout(function () {
                         data.id = customerNameArr[3];
                         data.customer = ui.item.id;
                         data.customerName = ui.item.label;
-                        $.post("/order/saveCustomer", data, function (result) {
+                        $.post("/megasoft/order/saveCustomer", data, function (result) {
                             if (result.returnurl) {
                                 location.href = result.returnurl;
                             }
