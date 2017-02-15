@@ -134,8 +134,8 @@ class ProductController extends Main {
 
         $productsale = $this->getDoctrine()
                         ->getRepository('MegasoftBundle:Productsale')->find(1);
-        $product->setItemPricew("0.00");
-        $product->setItemPricer("0.00");
+        $product->setStoreWholeSalePrice("0.00");
+        $product->setStoreRetailPrice("0.00");
         $product->setItemMarkupw("0.00");
         $product->setItemMarkupr("0.00");
         $product->setProductSale($productsale);
@@ -547,7 +547,7 @@ class ProductController extends Main {
       ->find($id);
 
       $fields["erpCode"] = array("label" => "Erp Code");
-      $fields["itemPricew01"] = array("label" => "Price Name");
+      $fields["storeWholeSalePrice01"] = array("label" => "Price Name");
 
       $forms = $this->getFormLyFields($entity, $fields);
 
@@ -568,8 +568,8 @@ class ProductController extends Main {
             $productsale = $this->getDoctrine()
                             ->getRepository('MegasoftBundle:Productsale')->find(1);
             $entity = new Product;
-            $entity->setItemPricew("0.00");
-            $entity->setItemPricer("0.00");
+            $entity->setStoreWholeSalePrice("0.00");
+            $entity->setStoreRetailPrice("0.00");
             $entity->setItemMarkupw("0.00");
             $entity->setItemMarkupr("0.00");
             $entity->setProductSale($productsale);
@@ -651,8 +651,8 @@ class ProductController extends Main {
         //$fields["cccRef"] = array("label" => "Κωδικός Προμηθευτή", "className" => "col-md-2", "required" => false);
 
 
-        $fields["itemPricew"] = array("label" => "Τιμή Χοδρικής", "className" => "col-md-2", "required" => false);
-        $fields["itemPricer"] = array("label" => "Τιμή Λιανικής", "className" => "col-md-2", "required" => false);
+        $fields["storeWholeSalePrice"] = array("label" => "Τιμή Χοδρικής", "className" => "col-md-2", "required" => false);
+        $fields["storeRetailPrice"] = array("label" => "Τιμή Λιανικής", "className" => "col-md-2", "required" => false);
 
         $fields["itemMarkupw"] = array("label" => "Markup Χοδρικής", "className" => "col-md-2", "required" => false);
         $fields["itemMarkupr"] = array("label" => "Markup Λιανικής", "className" => "col-md-2", "required" => false);
@@ -675,7 +675,7 @@ class ProductController extends Main {
             $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
             $dtparams[] = array("name" => "Title", "index" => 'title');
             $dtparams[] = array("name" => "Code", "index" => 'erpCode');
-            //$dtparams[] = array("name" => "Price", "index" => 'itemPricew');
+            //$dtparams[] = array("name" => "Price", "index" => 'storeWholeSalePrice');
             $params['dtparams'] = $dtparams;
             $params['id'] = $dtparams;
             $params['url'] = '/megasoft/product/getrelation/' . $id;
@@ -786,8 +786,8 @@ class ProductController extends Main {
         $fields[] = array("name" => "Προσφορά", "index" => 'productSale:title', 'type' => 'select', 'object' => 'ProductSale');
         //$fields[] = array("name" => "Ράφι", "index" => 'itemMtrplace');
         //$fields[] = array("name" => "Συνχρ.", "index" => 'cccPriceUpd', 'method' => 'yesno');
-        // $fields[] = array("name" => "Λιανική", "index" => 'itemPricer');
-        // $fields[] = array("name" => "Χονδρική", "index" => 'itemPricew');
+        // $fields[] = array("name" => "Λιανική", "index" => 'storeRetailPrice');
+        // $fields[] = array("name" => "Χονδρική", "index" => 'storeWholeSalePrice');
         // $fields[] = array("name" => "Αποθηκη", "function" => 'getApothiki', 'search' => 'text');
         // $fields[] = array("name" => "", "function" => 'getEditLink', 'search' => 'text');
         $this->setSetting("MegasoftBundle:Product:getdatatable", serialize($fields));
@@ -1165,34 +1165,34 @@ class ProductController extends Main {
                         //    exit;
                         //continue;
                         if ($ediediitem) {
-                            $itemPricew = $ediediitem->getEdiMarkupPrice("itemPricew");
-                            $itemPricer = $ediediitem->getEdiMarkupPrice("itemPricer");
-                            if ($newcccref OR round($itemPricew, 2) != round($product->getItemPricew(), 2) OR round($itemPricer, 2) != round($product->getItemPricer(), 2)) {
-                                //echo $ediedi->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplier()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediediitem->getWholesaleprice() . " -- " . $ediediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
+                            $storeWholeSalePrice = $ediediitem->getEdiMarkupPrice("storeWholeSalePrice");
+                            $storeRetailPrice = $ediediitem->getEdiMarkupPrice("storeRetailPrice");
+                            if ($newcccref OR round($storeWholeSalePrice, 2) != round($product->getStoreWholeSalePrice(), 2) OR round($storeRetailPrice, 2) != round($product->getStoreRetailPrice(), 2)) {
+                                //echo $ediedi->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplier()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediediitem->getWholesaleprice() . " -- " . $ediediitem->getEdiMarkupPrice("storeWholeSalePrice") . " -- " . $product->getStoreWholeSalePrice() . "<BR>";
                                 //if ($i++ > 15)
                                 //    exit;
-                                if ($itemPricew > 0.01 AND $product->getReference() > 0) {
+                                if ($storeWholeSalePrice > 0.01 AND $product->getReference() > 0) {
                                     $color = '';
-                                    if ($itemPricew == $itemPricer) {
+                                    if ($storeWholeSalePrice == $storeRetailPrice) {
                                         $color = 'red';
                                     }
                                     echo "<div style='color:" . $color . "'>";
-                                    echo $ediedi->getName() . " " . $ediediitem->getWholesaleprice() . " -- " . $product->getItemCode() . " itemPricew:(" . $itemPricew . "/" . $product->getItemPricew() . ") itemPricer:(" . $itemPricer . "/" . $product->getItemPricer() . ")<BR>";
+                                    echo $ediedi->getName() . " " . $ediediitem->getWholesaleprice() . " -- " . $product->getItemCode() . " storeWholeSalePrice:(" . $storeWholeSalePrice . "/" . $product->getStoreWholeSalePrice() . ") storeRetailPrice:(" . $storeRetailPrice . "/" . $product->getStoreRetailPrice() . ")<BR>";
 
                                     $product->setCccPriceUpd(1);
-                                    $product->setItemPricew($itemPricew);
-                                    $product->setItemPricer($itemPricer);
+                                    $product->setStoreWholeSalePrice($storeWholeSalePrice);
+                                    $product->setStoreRetailPrice($storeRetailPrice);
                                     //
                                     //echo $product->id." ".$product->erp_code." --> ".$qty." -- ".$product->getApothema()."<BR>";
-                                    $sql = "update megasoft_product set item_pricew = '" . $itemPricew . "', item_pricer = '" . $itemPricer . "', item_cccpriceupd = 1, item_cccref = '" . $product->getCccRef() . "'   where id = '" . $product->getId() . "'";
+                                    $sql = "update megasoft_product set item_pricew = '" . $storeWholeSalePrice . "', item_pricer = '" . $storeRetailPrice . "', item_cccpriceupd = 1, item_cccref = '" . $product->getCccRef() . "'   where id = '" . $product->getId() . "'";
                                     echo $sql . "<BR>";
                                     $em->getConnection()->exec($sql);
                                     //$this->flushpersist($product);
                                     //$product->toMegasoft();
                                     if ($newcccref)
-                                        $sql = "UPDATE MTRL SET CCCREF='" . $product->getCccRef() . "', CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
+                                        $sql = "UPDATE MTRL SET CCCREF='" . $product->getCccRef() . "', CCCPRICEUPD=1, PRICEW = " . $storeWholeSalePrice . ", PRICER = " . $storeRetailPrice . "  WHERE MTRL = " . $product->getReference();
                                     else
-                                        $sql = "UPDATE MTRL SET CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
+                                        $sql = "UPDATE MTRL SET CCCPRICEUPD=1, PRICEW = " . $storeWholeSalePrice . ", PRICER = " . $storeRetailPrice . "  WHERE MTRL = " . $product->getReference();
 
                                     $params["fSQL"] = $sql;
                                     $datas = $megasoft->createSql($params);
@@ -1201,7 +1201,7 @@ class ProductController extends Main {
                                     echo "</div>";
                                 }
                             } else {
-                                //echo "<span style='color:red'>".$product->getItemCode()." -- ".$product->getSupplier()->getTitle()." -- " . $product->getItemCode2() . " ".$ediediitem->getWholesaleprice() . " -- ".$ediediitem->getEdiMarkupPrice("itemPricew")." -- " . $product->getItemPricew() . "</span><BR>";
+                                //echo "<span style='color:red'>".$product->getItemCode()." -- ".$product->getSupplier()->getTitle()." -- " . $product->getItemCode2() . " ".$ediediitem->getWholesaleprice() . " -- ".$ediediitem->getEdiMarkupPrice("storeWholeSalePrice")." -- " . $product->getStoreWholeSalePrice() . "</span><BR>";
                             }
                         } else {
                             //echo "<span style='color:red'>".$product->getItemCode().";".$product->getSupplier()->getTitle().";" . $product->getItemCode2() . "</span><BR>";
