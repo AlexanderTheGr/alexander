@@ -380,7 +380,7 @@ class OrderController extends Main {
         $dtparams[] = array("name" => "Τιμή Καταλόγου", "index" => $priceField, 'search' => 'text');
 
 
-        //$dtparams[] = array("name" => "Τελική Τιμη", "index" => $priceField, 'search' => 'text');
+        $dtparams[] = array("name" => "Τελική Τιμη", "index" => $priceField, 'search' => 'text');
 
         //$dtparams[] = array("name" => "Κωδ. Συσχετισης", "index" => "sisxetisi", 'search' => 'text');
 
