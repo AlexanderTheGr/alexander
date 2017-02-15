@@ -180,7 +180,7 @@ class Customergrouprule {
             if ($MegasoftSupplier)
                 $supplier = $MegasoftSupplier->getId();
         } else {
-            //$supplier = $product->getSupplierId() ? $product->getSupplierId()->getId() : 0;
+            //$supplier = $product->getSupplier() ? $product->getSupplier()->getId() : 0;
             $supplier = 0;
             if ($product->getProductsale()) {
                 $productsale = $product->getProductsale()->getId();

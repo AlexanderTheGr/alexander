@@ -961,8 +961,8 @@ class Product extends Entity {
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
         }
-        //if ($this->getSupplierId())
-        //    $this->erpSupplier = $this->getSupplierId()->getTitle();
+        //if ($this->getSupplier())
+        //    $this->erpSupplier = $this->getSupplier()->getTitle();
 
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         $dataindexarr = array();
@@ -1055,7 +1055,7 @@ class Product extends Entity {
 
 
         $tecdoc = $this->getTecdocSupplierId() ? $this->getTecdocSupplierId()->getSupplier() : "";
-        //$ti = $this->getSupplierId() ? $this->getSupplierId()->getTitle() : "";
+        //$ti = $this->getSupplier() ? $this->getSupplier()->getTitle() : "";
         $ti = $this->erpSupplier;
         $out = '<a target="_blank" title="' . $ti . '"  class="" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $ti . '</a>
         <br>
