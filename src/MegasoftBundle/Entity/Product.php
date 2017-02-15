@@ -1028,4 +1028,22 @@ class Product extends Entity {
     function toMegasoft() {
         
     }
+    public function getForOrderCode() {
+
+        $out = '<a title="' . $this->title . '" class="product_info" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
+        <br>
+        <span class="text-sm text-info">' . $this->erpCode . '</span>';
+
+        return $out;
+    }
+
+    public function getForOrderTitle() {
+
+
+        $out = '<a target="_blank" title="' . $this->title . '" class="" car="" data-articleId="' . $this->tecdocArticleId . '" ref="' . $this->id . '" href="/product/view/' . $this->id . '">' . $this->title . '</a>
+        <br>
+        <span class="text-sm tecdocArticleName text-info">' . $this->tecdocArticleName . '</span>';
+
+        return $out;
+    }    
 }
