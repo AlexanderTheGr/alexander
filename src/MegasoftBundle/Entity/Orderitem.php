@@ -20,7 +20,7 @@ class Orderitem
     /**
      * @var string
      */
-    private $discount;
+    private $disc1prc;
 
     /**
      * @var string
@@ -108,9 +108,9 @@ class Orderitem
      *
      * @return Orderitem
      */
-    public function setDiscount($discount)
+    public function setDisc1prc($disc1prc)
     {
-        $this->discount = $discount;
+        $this->disc1prc = $disc1prc;
 
         return $this;
     }
@@ -120,9 +120,9 @@ class Orderitem
      *
      * @return string
      */
-    public function getDiscount()
+    public function getDisc1prc()
     {
-        return $this->discount;
+        return $this->disc1prc;
     }
 
     /**
