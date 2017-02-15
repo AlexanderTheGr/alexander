@@ -1154,7 +1154,7 @@ class Product extends Entity {
         }
 
         //loadCustomerrules
-        $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
+        $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "storeWholeSalePrice";
         $price = $price > 0 ? $price : $this->$pricefield;
         $discountedPrice = $this->$pricefield * (1 - $discount / 100 );
         $finalprice = $discount > 0 ? $discountedPrice : $price;
@@ -1188,7 +1188,7 @@ class Product extends Entity {
                 }
             }
         }
-        //$pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
+        //$pricefield = $customer->getPriceField() ? $customer->getPriceField() : "storeWholeSalePrice";
         //$price = $price > 0 ? $price : $this->$pricefield;
         //$discountedPrice = $this->$pricefield * (1 - $discount / 100 );
         //$finalprice = $discount > 0 ? $discountedPrice : $price;
@@ -1200,7 +1200,7 @@ class Product extends Entity {
         return $this->itemMtrplace;
     }
     function getGroupedPrice(\MegasoftBundle\Entity\Customer $customer, $vat = 1) {
-        $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
+        $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "storeWholeSalePrice";
         return number_format($this->$pricefield * $vat, 2, '.', '');
     }    
     function getDiscount(\MegasoftBundle\Entity\Customer $customer, $vat = 1) {
@@ -1230,7 +1230,7 @@ class Product extends Entity {
             }
         }
 
-        $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
+        $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "storeWholeSalePrice";
         $price = $price > 0 ? $price : $this->$pricefield;
         $discountedPrice = $this->$pricefield * (1 - $discount / 100 );
         //$finalprice = $discount > 0 ? $discountedPrice : $price;
