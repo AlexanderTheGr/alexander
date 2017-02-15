@@ -1028,10 +1028,8 @@ class OrderController extends Main {
     }
 
     function getTabContentSearch($order) {
-
+        /*
         $repormodels = $this->getDoctrine()->getRepository('MegasoftBundle:Reportmodel')->findBy(array('customerId' => $order->getCustomer()->getId()), array('ts' => 'DESC'));
-
-
         $history = "<ul>";
         foreach ($repormodels as $repormodel) {
             if ($i++ > 15)
@@ -1053,10 +1051,11 @@ class OrderController extends Main {
             $history .= "<li class='modelhistory' style='cursor:pointer' data-order='" . $order->getId() . "' data-ref='" . $repormodel->getModel() . "'>" . $brand->getBrand() . " " . $brandsmodel->getBrandModel() . " " . $year . " " . $brandModelType->getBrandModelType() . " " . $brandModelType->getEngine() . "</li>";
         }
         $history .= "</ul>";
+        */
         $response = $this->get('twig')->render('MegasoftBundle:Order:search.html.twig', array(
             'brands' => $this->getBrands(),
             'order' => $order->getId(),
-            'history' => $history
+            //'history' => $history
         ));
         return str_replace("\n", "", htmlentities($response));
     }
