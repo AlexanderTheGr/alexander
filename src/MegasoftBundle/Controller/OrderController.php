@@ -1028,7 +1028,9 @@ class OrderController extends Main {
     }
 
     function getTabContentSearch($order) {
+        $history = '';
         /*
+         * 
         $repormodels = $this->getDoctrine()->getRepository('MegasoftBundle:Reportmodel')->findBy(array('customerId' => $order->getCustomer()->getId()), array('ts' => 'DESC'));
         $history = "<ul>";
         foreach ($repormodels as $repormodel) {
@@ -1055,7 +1057,7 @@ class OrderController extends Main {
         $response = $this->get('twig')->render('MegasoftBundle:Order:search.html.twig', array(
             'brands' => $this->getBrands(),
             'order' => $order->getId(),
-            //'history' => $history
+            'history' => $history
         ));
         return str_replace("\n", "", htmlentities($response));
     }
