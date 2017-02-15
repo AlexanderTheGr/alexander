@@ -312,7 +312,7 @@ class OrderController extends Main {
         $dtparams[] = array("name" => "Είδος", "index" => 'product:title');
         $dtparams[] = array("name" => "Κωδικός Είδους", "index" => 'product:erpCode');
         $dtparams[] = array("name" => "Ράφι", "index" => 'product:itemMtrplace');
-        //$dtparams[] = array("name" => "Supplier", "index" => 'product:supplierId:title');
+        //$dtparams[] = array("name" => "Supplier", "index" => 'product:supplier:title');
         $dtparams[] = array("name" => "Supplier", "index" => 'erpSupplier');
         $dtparams[] = array("name" => "Αποθηκη", "function" => 'getProductApothiki', 'search' => 'text');
         $dtparams[] = array("name" => "Qty", "input" => "text", "index" => 'qty');
@@ -572,7 +572,7 @@ class OrderController extends Main {
                     $supplier = $this->getDoctrine()
                                     ->getRepository('MegasoftBundle:MegasoftSupplier')->find($dt_columns[3]["search"]["value"]);
                     if ($supplier)
-                        $qsupplier = " p.supplierId = '" . $supplier->getId() . "' AND ";
+                        $qsupplier = " p.supplier = '" . $supplier->getId() . "' AND ";
                 }
                 $qtitle = "";
                 if ($dt_columns[2]["search"]["value"] != '') {

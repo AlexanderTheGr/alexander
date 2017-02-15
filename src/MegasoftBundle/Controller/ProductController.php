@@ -609,7 +609,7 @@ class ProductController extends Main {
         $megasoftSuppliers = $this->getDoctrine()
                         ->getRepository('MegasoftBundle:MegasoftSupplier')->findAll();
         foreach ($megasoftSuppliers as $megasoftSupplier) {
-            $supplierId[] = array("value" => (string) $megasoftSupplier->getId(), "name" => $megasoftSupplier->getTitle() . " (" . $megasoftSupplier->getCode() . ")");
+            $supplier[] = array("value" => (string) $megasoftSupplier->getId(), "name" => $megasoftSupplier->getTitle() . " (" . $megasoftSupplier->getCode() . ")");
         }
          * 
          */
@@ -631,9 +631,9 @@ class ProductController extends Main {
         $fields["tecdocCode"] = array("label" => "Tecdoc Code", "required" => false, "className" => "col-md-6");
 
 
-        //$fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'MegasoftBundle:MegasoftSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
+        //$fields["supplier"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'MegasoftBundle:MegasoftSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
 
-        //$fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'dataarray' => $supplierId);
+        //$fields["supplier"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'dataarray' => $supplier);
 
         $fields["erpSupplier"] = array("label" => "New Supplier", "required" => false, "className" => "col-md-3");
 
@@ -782,7 +782,7 @@ class ProductController extends Main {
         $fields[] = array("name" => "ID", "index" => 'id', "active" => "active");
         $fields[] = array("name" => "Title", "index" => 'title');
         $fields[] = array("name" => "Code", "index" => 'erpCode');
-        //$fields[] = array("name" => "Supplier", "index" => 'supplierId:title', 'type' => 'select', 'object' => 'MegasoftSupplier');
+        //$fields[] = array("name" => "Supplier", "index" => 'supplier:title', 'type' => 'select', 'object' => 'MegasoftSupplier');
         $fields[] = array("name" => "Προσφορά", "index" => 'productSale:title', 'type' => 'select', 'object' => 'ProductSale');
         //$fields[] = array("name" => "Ράφι", "index" => 'itemMtrplace');
         //$fields[] = array("name" => "Συνχρ.", "index" => 'cccPriceUpd', 'method' => 'yesno');
