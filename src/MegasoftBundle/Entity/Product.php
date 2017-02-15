@@ -1196,6 +1196,9 @@ class Product extends Entity {
         //return number_format($price * $vat, 2, '.', '') . " (" . (float) $discount . "%)";
     }   
     var $itemMtrplace = '';
+    function getItemMtrplace() {
+        return $this->itemMtrplace;
+    }
     function getGroupedPrice(\MegasoftBundle\Entity\Customer $customer, $vat = 1) {
         $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
         return number_format($this->$pricefield * $vat, 2, '.', '');
