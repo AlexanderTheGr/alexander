@@ -47,7 +47,7 @@ class Orderitem {
     /**
      * @var integer
      */
-    private $id;
+    var $id;
 
     /**
      * @var \MegasoftBundle\Entity\Product
