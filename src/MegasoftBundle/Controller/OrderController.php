@@ -406,7 +406,7 @@ class OrderController extends Main {
         $dtparams = array();
         $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
         $dtparams[] = array("name" => "Edi", "index" => 'Edi:name', 'search' => 'select', 'type' => 'select');
-        $dtparams[] = array("name" => "Item Code", "index" => 'itemCode', 'search' => 'text');
+        $dtparams[] = array("name" => "Item Code", "index" => 'erpCode', 'search' => 'text');
         $dtparams[] = array("name" => "Brand", "index" => 'brand', 'search' => 'text');
         $dtparams[] = array("name" => "Part No", "index" => 'partno', 'search' => 'text');
         $dtparams[] = array("name" => "Description", "index" => 'description', 'search' => 'text');
@@ -564,7 +564,7 @@ class OrderController extends Main {
                     $sqlearch = "Select o.id from MegasoftBundle:ProductFreesearch o where " . $like . "";
                 } else {
                     $search[1] = $this->clearstring($search[1]);
-                    $sqlearch = "Select o.id from MegasoftBundle:ProductSearch o where o.itemCode like '%" . $search[1] . "%' OR o.erpCode like '%" . $search[1] . "%' OR o.supplierCode like '%" . $search[1] . "%'";
+                    $sqlearch = "Select o.id from MegasoftBundle:ProductSearch o where o.erpCode like '%" . $search[1] . "%' OR o.erpCode like '%" . $search[1] . "%' OR o.supplierCode like '%" . $search[1] . "%'";
                 }
                 $qsupplier = "";
                 if ($dt_columns[3]["search"]["value"] > 3) {
@@ -1395,7 +1395,7 @@ class OrderController extends Main {
                 if ($item->getProduct()) {
                     $items = array();
                     $items["id"] = $item->getId();
-                    $items["Code"] = $item->getProduct()->getItemCode();
+                    $items["Code"] = $item->getProduct()->getErpCode();
                     $items["Title"] = $item->getProduct()->getTitle();
                     $items["Qty"] = $item->getQty();
                     $items["Price"] = $item->getLineval();
