@@ -722,7 +722,8 @@ class OrderController extends Main {
                 ;
                 $json[7] = $obj->getDiscount($customer, $vat);
                 $json[8] = $obj->getGroupedDiscountPrice($customer, $vat); //str_replace($obj->$priceField, $obj->getGroupedDiscountPrice($customer), $json[5]);
-                $json[9] = 1;
+                $json[9] = $obj->getSisxetisi();
+                $json[10] = $obj->getApothiki();
                 //$json[6] = str_replace("value='---'", "value='1'", $json[6]);
                 $jsonarrnoref[$result["id"]] = $json;
             }
