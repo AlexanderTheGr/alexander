@@ -150,11 +150,12 @@ class OrderController extends Main {
             $entity->setCustomer($customer);
             $user = $this->get('security.token_storage')->getToken()->getUser();
             $entity->setUser($user);
-            
+            /*
             $vat = $this->getDoctrine()
                     ->getRepository("MegasoftBundle:Vat")
                     ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
-            $entity->setVat($vat);
+            //$entity->setVat($vat);
+            */
             $entity->setCustomerName($customer->getCustomerName() . " (" . $customer->getCustomerAfm() . " - " . $customer->getCustomerCode() . ")");
             $route = $this->getDoctrine()
                     ->getRepository("MegasoftBundle:Route")
@@ -247,13 +248,13 @@ class OrderController extends Main {
 
         //$this->setSetting("MegasoftBundle:Product:Vat", 1310);
         $vatid = $this->getSetting("MegasoftBundle:Product:Vat");
-
+        /*
         $vat = $this->getDoctrine()
                 ->getRepository("MegasoftBundle:Vat")
                 ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
 
         $order->setVat($vat);
-
+        */
         $route = $this->getDoctrine()
                 ->getRepository("MegasoftBundle:Route")
                 ->find(1);
