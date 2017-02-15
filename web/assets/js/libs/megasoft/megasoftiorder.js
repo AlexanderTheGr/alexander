@@ -81,11 +81,11 @@ setTimeout(function () {
         var customerName = jQuery(this).attr("id");
         if (customerName != undefined) {
             var customerNameArr = customerName.split(":");
-            var SoftoneBundleOrdercustomerName = customerNameArr[0] + customerNameArr[1] + customerNameArr[2];
+            var MegasoftBundleOrdercustomerName = customerNameArr[0] + customerNameArr[1] + customerNameArr[2];
             orderid = customerNameArr[3];
-            if (SoftoneBundleOrdercustomerName == 'SoftoneBundleOrdercustomerName') {
+            if (MegasoftBundleOrdercustomerName == 'MegasoftBundleOrdercustomerName') {
                 customerName = this;
-                var $elem = jQuery(".customerName").autocomplete({
+                var $elem = jQuery(customerName).autocomplete({
                     source: "/megasoft/customer/autocompletesearch",
                     method: "POST",
                     minLength: 2,
@@ -109,11 +109,11 @@ setTimeout(function () {
 
 
 
-jQuery(".savesoftone").live('click', function (e) {
+jQuery(".savemegasoft").live('click', function (e) {
     var data = {}
     data.id = jQuery(this).attr('data-id');
     $("#loaderer").show();
-    $.post("/order/saveSoftone", data, function (result) {
+    $.post("/megasoft/order/saveMegasoft", data, function (result) {
         $("#loaderer").hide();
         var json = angular.fromJson(result);
         if (json.error) {
@@ -140,7 +140,7 @@ jQuery(".EdiSendOrder").live('click', function (e) {
     })
 })
 
-jQuery(".SoftoneBundleOrderitemQty").live('keyup', function (e) {
+jQuery(".MegasoftBundleOrderitemQty").live('keyup', function (e) {
     if (e.keyCode == 13) {
         var data = {}
         data.id = jQuery(this).attr('data-id');
@@ -181,7 +181,7 @@ jQuery(".deleteitem").live('click', function (e) {
 
 })
 
-jQuery(".SoftoneBundleOrderitemQty").live('keyup', function (e) {
+jQuery(".MegasoftBundleOrderitemQty").live('keyup', function (e) {
     if (e.keyCode == 13) {
         var data = {}
         data.id = jQuery(this).attr('data-id');
@@ -199,7 +199,7 @@ jQuery(".SoftoneBundleOrderitemQty").live('keyup', function (e) {
         })
     }
 })
-jQuery(".SoftoneBundleOrderitemDisc1prc").live('keyup', function (e) {
+jQuery(".MegasoftBundleOrderitemDisc1prc").live('keyup', function (e) {
     if (e.keyCode == 13) {
         var data = {}
         data.id = jQuery(this).attr('data-id');
@@ -217,7 +217,7 @@ jQuery(".SoftoneBundleOrderitemDisc1prc").live('keyup', function (e) {
         })
     }
 })
-jQuery(".SoftoneBundleOrderitemDisc1prc").live('keyup', function (e) {
+jQuery(".MegasoftBundleOrderitemDisc1prc").live('keyup', function (e) {
     if (e.keyCode == 13) {
         var data = {}
         data.id = jQuery(this).attr('data-id');
@@ -235,7 +235,7 @@ jQuery(".SoftoneBundleOrderitemDisc1prc").live('keyup', function (e) {
         })
     }
 })
-jQuery(".SoftoneBundleOrderitemLineval").live('keyup', function (e) {
+jQuery(".MegasoftBundleOrderitemLineval").live('keyup', function (e) {
     if (e.keyCode == 13) {
         var data = {}
         data.id = jQuery(this).attr('data-id');
@@ -254,7 +254,7 @@ jQuery(".SoftoneBundleOrderitemLineval").live('keyup', function (e) {
     }
 })
 
-jQuery(".SoftoneBundleOrderitemPrice").live('keyup', function (e) {
+jQuery(".MegasoftBundleOrderitemPrice").live('keyup', function (e) {
     if (e.keyCode == 13) {
         var data = {}
         data.id = jQuery(this).attr('data-id');
@@ -293,12 +293,12 @@ jQuery(".livevalqty").live('keyup', function (e) {
 
 
 
-jQuery(".SoftoneBundleProductQty").live('keyup', function (e) {
+jQuery(".MegasoftBundleProductQty").live('keyup', function (e) {
     if (e.keyCode == 13) {
         var data = {}
         data.order = orderid;
         data.item = jQuery(this).attr('data-id');
-        data.price = jQuery("#SoftoneBundleProductItemPricew01_" + data.item).val();
+        data.price = jQuery("#MegasoftBundleProductItemPricew01_" + data.item).val();
         data.qty = jQuery(this).val();
         $("#loaderer").show();
         $.post("/order/addorderitem/", data, function (result) {
@@ -344,7 +344,7 @@ function asdf(obj, search) {
     var table2 = dt_tables["ctrlgetoffcanvases2"];
     table2.fnFilter('');
     setTimeout(function () {
-        jQuery(".SoftoneBundleProductQty").val(1);
+        jQuery(".MegasoftBundleProductQty").val(1);
 
     }, 1000)
     //})
@@ -365,7 +365,7 @@ function asdf2(obj) {
     table2.fnFilter(obj.all);
     //$(".offcanvas-search").click();
     setTimeout(function () {
-        jQuery(".SoftoneBundleProductQty").val(1);
+        jQuery(".MegasoftBundleProductQty").val(1);
     }, 1000)
     //})
 }
@@ -419,10 +419,10 @@ function fororder(order) {
 }
 
 
-jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .SoftoneBundleProductEdi').live("keyup", function (e) {
+jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .MegasoftBundleProductEdi').live("keyup", function (e) {
     if (e.keyCode == 13) {
         var data = {};
-        if (jQuery(this).attr('class') == 'SoftoneBundleProductEdi') {
+        if (jQuery(this).attr('class') == 'MegasoftBundleProductEdi') {
             data.product = jQuery(this).attr('data-id');
             var store = data.product;
         } else {
