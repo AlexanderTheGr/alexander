@@ -636,7 +636,7 @@ class OrderController extends Main {
                                 ORDER BY ' . $this->orderBy;
                 }
 
-                //echo $sql;
+                echo $sql;
                 //exit;
 
                 $sql = str_replace("p.*,", "", $sql);
