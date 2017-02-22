@@ -545,7 +545,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $recordsTotal = $em->getRepository($this->repository)->recordsTotal();
 
                 foreach ($this->fields as $index => $field) {
-                    if (@$field["index"]) {
+                    if (@$field["indoex"]) {
                         $fields[] = $field["index"];
                         $field_relation = explode(":", $field["index"]);
                         if (count($field_relation) == 1) {
@@ -914,11 +914,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $objectArr[0]["TRDR"] = $customer->getReference();
         $objectArr[0]["SERIESNUM"] = $order->getId();
         $objectArr[0]["FINCODE"] = $order->getFincode();
-        $objectArr[0]["PAYMENT"] = 1000;
+        $objectArr[0]["PAYMENT"] = $customer->getCustomerPayment() > 0 ? $customer->getCustomerPayment() : 1003;
         //$objectArr[0]["TFPRMS"] = $model->tfprms;
         //$objectArr[0]["FPRMS"] = $model->fprms;
         $objectArr[0]["SERIES"] = 7021; //$model->series;
         $objectArr[0]["VATSTS"] = $customer->getCustomerVatsts();
+        $objectArr[0]["COMMENTS"] = $order->getRemarks();//$customer->getCustomerPayment() > 0 ? $customer->getCustomerPayment() : 1003; // Mage::app()->getRequest()->getParam('comments');
+        $objectArr[0]["REMARKS"] = $order->getRemarks();
         //$objectArr[0]["DISC1PRC"] = 10;   
         $dataOut[$object] = (array) $objectArr;
 
