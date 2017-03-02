@@ -1216,4 +1216,34 @@ class Customer extends Entity {
         return $this->rules;
     }
 
+    /**
+     * @var boolean
+     */
+    private $customerIsactive = '1';
+
+
+    /**
+     * Set customerIsactive
+     *
+     * @param boolean $customerIsactive
+     *
+     * @return Customer
+     */
+    public function setCustomerIsactive($customerIsactive)
+    {
+        $this->customerIsactive = $customerIsactive;
+
+        return $this;
+    }
+    
+
+    /**
+     * Get customerIsactive
+     *
+     * @return boolean
+     */
+    public function getCustomerIsactive()
+    {
+        return $this->customerIsactive;
+    }
 }
