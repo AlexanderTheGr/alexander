@@ -631,7 +631,29 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
                 //$tecdoc_article = '';
 
-                $this->orderBy = "p.qty desc";
+
+		$dir = $dt_order[0]["dir"] != '' ? $dt_order[0]["dir"] : 'desc';
+		
+		if ($dt_order[0]["column"] == 9) {
+			$this->orderBy = "p.sisxetisi ".$dir;
+		} elseif ($dt_order[0]["column"] == 3) {
+		    $softoneSuppliers = $this->getDoctrine()
+                        ->getRepository('SoftoneBundle:SoftoneSupplier')->findAll();
+		        foreach ($softoneSuppliers as $softoneSupplier) {
+		            $supplierIds[strtoupper($softoneSupplier->getTitle())] =  $softoneSupplier->getId();
+		        }
+		        if ($dir == 'asc')
+		        ksort($supplierIds);
+		        else 
+		        krsort($supplierIds);
+			$this->orderBy = 'FIELD(p.supplierId, '.implode(",",$supplierIds).')';
+		} else {
+                	$this->orderBy = "p.qty desc";
+                }
+                
+                
+               // $this->orderBy = "p.qty ".$dir;
+                
                 if (count((array) $articleIds)) {
                     $tecdoc_article = 'p.tecdocArticleId in (' . implode(",", $articleIds) . ') OR ';
                     if ($search[1])
@@ -738,11 +760,15 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                  * 
                  */
                 $json[4] = $obj->getArticleAttributes2($articleIds2["linkingTargetId"]);
-                $json[6] = number_format($json[6] * $vat, 2, '.', '');
+                $json[6] = number_format($obj->getItemPricer() * $vat, 2, '.', '');
                 ;
                 $json[7] = $obj->getDiscount($customer, $vat);
                 $json[8] = $obj->getGroupedDiscountPrice($customer, $vat); //str_replace($obj->$priceField, $obj->getGroupedDiscountPrice($customer), $json[5]);
                 //$json[6] = str_replace("value='---'", "value='1'", $json[6]);
+                $json[9] = $obj->getSisxetisi();
+                $json[10] = $obj->getApothiki();
+                $json[11] = '<input data-id="'.$obj->getId().'" data-rep="SoftoneBundle:Product" data-ref="'.$obj->getId().'" id="SoftoneBundleProductQty_'.$obj->getId().'" class="SoftoneBundleProductQty" type="text" value="1">';
+                $json[12] = '<img width="20" style="width:20px; max-width:20px; display:none" class="tick_'.$obj->getId().'" src="/assets/img/tick.png">';
                 $jsonarrnoref[$result["id"]] = $json;
             }
 
