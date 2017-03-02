@@ -1165,6 +1165,46 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     /**
+     * @Route("/product/product/freeserach")
+     */
+    public function getFreeSearchAction($funct = false) {
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $em->createQuery(
+                "SELECT  p.id
+                    FROM " . $this->repository . " p"
+        );
+        /*
+          $query = $em->createQuery(
+          "SELECT  p.id
+          FROM " . $this->repository . " p, EdiBundle:Edi e
+          where
+          e.id = p.Edi AND p.dlnr > 0 order by p.id asc"
+          );
+         * 
+         */
+
+        $results = $query->getResult();
+        echo count($results);
+        $i = 0;
+        $tecdoc = new Tecdoc();
+		echo "<BR>";
+        foreach ($results as $result) {
+            //if ($result["id"] > 41170) {
+			echo $result["id"] . "<BR>";
+            $ediediitem = $em->getRepository($this->repository)->find($result["id"]);
+            //$ediediitem->tecdoc = $tecdoc;
+            $ediediitem->setProductFreesearch();
+            unset($ediediitem);
+            //echo $result["id"] . "<BR>";
+            //if ($i++ > 30) exit;
+            // }
+        }
+        exit;
+    }	
+	
+	
+    /**
      * @Route("/product/product/synchronize")
      */
     public function synchronizeAction($funct = false) {
@@ -1259,14 +1299,18 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                         $sql = "UPDATE MTRL SET CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
 
                                     $params["fSQL"] = $sql;
-                                    $datas = $softone->createSql($params);
+                                    $product->toSoftone();
+                                    //$softone = new Softone();
+                                    //$datas = $softone->createSql($params);
+                                    //unset($softone);
                                     echo $sql . "<BR>";
+                                    //sleep(5);
 
                                     echo "</div>";
                                 }
                             } else {
                                 //echo "<span style='color:red'>".$product->getItemCode()." -- ".$product->getSupplierId()->getTitle()." -- " . $product->getItemCode2() . " ".$ediediitem->getWholesaleprice() . " -- ".$ediediitem->getEdiMarkupPrice("itemPricew")." -- " . $product->getItemPricew() . "</span><BR>";
-                            }
+                           }
                         } else {
                             //echo "<span style='color:red'>".$product->getItemCode().";".$product->getSupplierId()->getTitle().";" . $product->getItemCode2() . "</span><BR>";
                         }
@@ -1307,7 +1351,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      */
     function retrieveSoftoneDataAction($params = array()) {
         $allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
-        $allowedipsArr = explode(",", $allowedips);
+        $allowedipsArr = explode(",", $allowedips);		echo $_SERVER["REMOTE_ADDR"];
         if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
             set_time_limit(100000);
             ini_set('memory_limit', '2256M');
@@ -1317,10 +1361,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             echo $this->retrieveMtrl();
             file_put_contents("retrieveSoftone.txt", $allowedipsArr);
             //echo $this->retrieveApothema();
-            return new Response(
-                    "", 200
-            );
-        }
+        }		return new Response(				"", 200		);		
     }
 
     /**
