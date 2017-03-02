@@ -126,6 +126,11 @@
             </options>
         </field>
         
+        <field name="customerIsactive" type="boolean" column="customer_isactive" nullable="true">
+            <options>
+                <option name="default">1</option>
+            </options>
+        </field>          
         
         <field name="customerInsdate" type="datetime" column="customer_insdate" nullable="true"/>
         <field name="customerUpddate" type="datetime" column="customer_upddate" nullable="true"/>
