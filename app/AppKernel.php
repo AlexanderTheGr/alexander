@@ -21,7 +21,7 @@ class AppKernel extends Kernel {
             new AccessBundle\AccessBundle(),
             new EdiBundle\EdiBundle(),
             new AdminBundle\AdminBundle(),
-            new MegasoftBundle\MegasoftBundle(),
+            //new MegasoftBundle\MegasoftBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
