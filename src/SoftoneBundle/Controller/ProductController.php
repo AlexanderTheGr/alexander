@@ -922,7 +922,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $data = (array) $data;
             $SoftoneSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")->find($data["MTRMANFCTR"]);
             if ($SoftoneSupplier->id == 0) {
-                $sql = "Insert softone_softone_supplier SET id = '" . $data["MTRMANFCTR"] . "', title = '" . $data["NAME"] . "', code = '" . $data["CODE"] . "'";
+                $sql = "Insert softone_softone_supplier SET id = '" . $data["MTRMANFCTR"] . "', title = '" . addslashes($data["NAME"]) . "', code = '" . $data["CODE"] . "'";
                 $this->getDoctrine()->getConnection()->exec($sql);
             }
         }
