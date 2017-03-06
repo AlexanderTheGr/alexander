@@ -937,7 +937,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $params["object"] = 'SoftoneBundle\Entity\Product';
             $params["filter"] = 'WHERE M.SODTYPE=51 ' . $where;
             $params["relation"] = array();
-            $params["extra"] = array("cccRef" => "cccRef", "cccWebUpd" => "cccWebUpd", "cccPriceUpd" => "cccPriceUpd");
+            $params["extra"] = array(); //;array("cccRef" => "cccRef", "cccWebUpd" => "cccWebUpd", "cccPriceUpd" => "cccPriceUpd");
             $params["extrafunction"] = array();
             //$params["extra"]["CCCFXRELTDCODE"] = "CCCFXRELTDCODE";
             //$params["extra"]["CCCFXRELBRAND"] = "CCCFXRELBRAND";
