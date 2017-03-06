@@ -1228,8 +1228,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                          * 
                          */
                         //$this->clearstring($search);
-                        //if ($product->getItemCode2() != '333114') continue;
-                       
+                        //if ($product->getItemCode() != '801985-21') continue;
+						//echo $product->getItemCode();
+					   
                         $ediediitem = false;
                         $newcccref = false;
                         $code = trim($this->clearstring($product->getCccRef()));
@@ -1270,7 +1271,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         if ($ediediitem) {
                             $itemPricew = $ediediitem->getEdiMarkupPrice("itemPricew");
                             $itemPricer = $ediediitem->getEdiMarkupPrice("itemPricer");
-                            if ($newcccref OR round($itemPricew, 2) != round($product->getItemPricew(), 2) OR round($itemPricer, 2) != round($product->getItemPricer(), 2)) {
+                            //if ($newcccref OR round($itemPricew, 2) != round($product->getItemPricew(), 2) OR round($itemPricer, 2) != round($product->getItemPricer(), 2)) {
                                 //echo $ediedi->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediediitem->getWholesaleprice() . " -- " . $ediediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
                                 //if ($i++ > 15)
                                 //    exit;
@@ -1308,9 +1309,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
                                     echo "</div>";
                                 }
-                            } else {
+                            //} else {
                                 //echo "<span style='color:red'>".$product->getItemCode()." -- ".$product->getSupplierId()->getTitle()." -- " . $product->getItemCode2() . " ".$ediediitem->getWholesaleprice() . " -- ".$ediediitem->getEdiMarkupPrice("itemPricew")." -- " . $product->getItemPricew() . "</span><BR>";
-                           }
+                            //}
                         } else {
                             //echo "<span style='color:red'>".$product->getItemCode().";".$product->getSupplierId()->getTitle().";" . $product->getItemCode2() . "</span><BR>";
                         }
