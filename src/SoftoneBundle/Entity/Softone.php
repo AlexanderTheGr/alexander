@@ -323,12 +323,13 @@ class Softone extends Entity {
                 'content' => $data_string,
             ),
         )));
-        echo $result;
+
         if (@$result1 = gzdecode($result)) {
             $result = iconv("ISO-8859-7", "UTF-8", $result1);
         } else {
             $result = iconv("ISO-8859-7", "UTF-8", $result);
         }
+        echo $result;
         $result = str_replace("	", "", $result);
         return json_decode($result);
     }
