@@ -910,6 +910,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
     function retrieveMtrmanfctr() {
         $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M ";
+        print_r($params);
         $softone = new Softone();
         $datas = $softone->createSql($params);
         echo "SSSSS";
