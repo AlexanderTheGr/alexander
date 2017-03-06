@@ -991,7 +991,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //return;
         $softone = new Softone();
         $datas = $softone->createSql($params);
-        //print_r($datas);
+        print_r($datas);
 
 
 
