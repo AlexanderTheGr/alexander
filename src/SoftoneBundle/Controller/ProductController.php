@@ -927,7 +927,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $params = unserialize($this->getSetting("SoftoneBundle:Product:retrieveMtrl"));
         
         
-        //$extra["foxline"] = array();  
+        $extra["foxline"] = array("CCCFXRELTDCODE" => "CCCFXRELTDCODE", "CCCFXRELBRAND" => "CCCFXRELBRAND");  
         
         if (count($params) > 0) {
             if ($MTRL > 0) {
@@ -941,7 +941,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $params["object"] = 'SoftoneBundle\Entity\Product';
             $params["filter"] = 'WHERE M.SODTYPE=51 ' . $where;
             $params["relation"] = array();
-            $params["extra"] = $this->getSetting("SoftoneBundle:Softone:merchant") ? array() : array("cccRef" => "cccRef", "cccWebUpd" => "cccWebUpd", "cccPriceUpd" => "cccPriceUpd");
+            $params["extra"] = $this->getSetting("SoftoneBundle:Softone:merchant") ? $extra[$this->getSetting("SoftoneBundle:Softone:merchant")] : array("cccRef" => "cccRef", "cccWebUpd" => "cccWebUpd", "cccPriceUpd" => "cccPriceUpd");
             $params["extrafunction"] = array();
             //$params["extra"]["CCCFXRELTDCODE"] = "CCCFXRELTDCODE";
             //$params["extra"]["CCCFXRELBRAND"] = "CCCFXRELBRAND";
