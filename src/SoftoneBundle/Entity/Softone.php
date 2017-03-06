@@ -341,7 +341,7 @@ class Softone extends Entity {
             "DateH" => $params["DateH"]
         );
         //return $this->doRequest($params, "http://bsautospare.oncloud.gr/s1services/JS/SiteData.Items/getManufactures");
-        $requerstUrl = "http://bsautospare.oncloud.gr/s1services/JS/SiteData.Items/getManufactures";
+        $requerstUrl = $this->requerstUrl."/JS/SiteData.Items/getManufactures";
         ini_set('memory_limit', '2048M');
         $data_string = json_encode($params);
 		
