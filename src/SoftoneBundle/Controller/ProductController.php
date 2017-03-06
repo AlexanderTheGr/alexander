@@ -911,7 +911,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     function retrieveMtrmanfctr() {
         $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M ";
         $softone = new Softone();
-        $datas = $softone->getManufactures($params);
+        if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
+            $datas = $softone->getManufactures($params);
+        } else {
+            $datas = $softone->createSql($params);
+        }
         print_r($datas);
         exit;
         foreach ((array) $datas->data as $data) {
@@ -927,10 +931,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     function retrieveMtrl($MTRL = 0) {
         $MTRL = 421443;
         $params = unserialize($this->getSetting("SoftoneBundle:Product:retrieveMtrl"));
-        
-        
-        $extra["foxline"] = array("CCCFXRELTDCODE" => "CCCFXRELTDCODE", "CCCFXRELBRAND" => "CCCFXRELBRAND");  
-        
+
+
+        $extra["foxline"] = array("CCCFXRELTDCODE" => "CCCFXRELTDCODE", "CCCFXRELBRAND" => "CCCFXRELBRAND");
+
         if (count($params) > 0) {
             if ($MTRL > 0) {
                 $where = ' AND MTRL = ' . $MTRL;
@@ -971,14 +975,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $itemfield = array();
         $itemfield[] = "M." . $params["softone_table"];
-        
+
         /*
-        $special[] = "CCCREF";
-        $special[] = "CCCWEBUPD";
-        $special[] = "CCCPRICEUPD";
-        */
+          $special[] = "CCCREF";
+          $special[] = "CCCWEBUPD";
+          $special[] = "CCCPRICEUPD";
+         */
         //,M.CCCWEBUPD,M.CCCPRICEUPD
-        
+
         foreach ($fields as $field) {
             $ffield = " " . $field;
             if (strpos($ffield, $params["softone_object"]) == true) {
@@ -999,10 +1003,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //echo $params["fSQL"];
         //$params["fSQL"] = 'SELECT M.* FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
         //$params["fSQL"] = "SELECT VARCHAR02, MTRL FROM MTREXTRA WHERE VARCHAR02 != ''";
-        
-        
         //$sql = "SELECT M.MTRL,M.INSDATE,M.UPDDATE,M.ISACTIVE,M.VAT,M.MTRMANFCTR,M.MTRMARK,M.REMARKS,M.MARKUPW,M.MARKUPR,M.PRICER,M.PRICEW,M.PRICEW01,M.PRICEW02,M.PRICEW03,M.PRICEW04,M.PRICEW05,M.PRICER01,M.PRICER02,M.PRICER03,M.PRICER04,M.PRICER05,M.NAME,M.NAME1,M.CODE,M.CODE1,M.CODE2,M.APVCODE,M.MTRPLACE,M.MTRSUP,M.MTRCATEGORY,M.MTRGROUP FROM MTRL M WHERE M.SODTYPE=51 AND MTRL = 421443";
-        
+
         echo "<BR>";
         echo $params["fSQL"];
         echo "<BR>";
@@ -1087,13 +1089,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 }
             }
 
-            
-            
+
+
             if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
                 //$extra["foxline"] = array("CCCFXRELTDCODE" => "CCCFXRELTDCODE", "CCCFXRELBRAND" => "CCCFXRELBRAND"); 
                 $q[] = "`" . strtolower($params["softone_object"] . "_apvcode") . "` = '" . addslashes($data["CCCFXRELTDCODE"]) . "'";
                 $q[] = "`" . strtolower($params["softone_object"] . "_mtrmark") . "` = '" . addslashes($data["CCCFXRELBRAND"]) . "'";
-            } else {  
+            } else {
                 $q[] = "`" . strtolower($params["softone_object"] . "_cccpriceupd") . "` = '" . addslashes($data["CCCPRICEUPD"]) . "'";
                 $q[] = "`" . strtolower($params["softone_object"] . "_cccwebupd") . "` = '" . addslashes($data["CCCWEBUPD"]) . "'";
                 $q[] = "`" . strtolower($params["softone_object"] . "_cccref") . "` = '" . addslashes($data["CCCREF"]) . "'";
