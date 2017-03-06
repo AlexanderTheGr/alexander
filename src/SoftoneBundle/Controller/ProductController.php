@@ -1000,9 +1000,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         echo "<BR>";
         echo $params["fSQL"];
         echo "<BR>";
-        return;
+        //return;
         $softone = new Softone();
-        //$datas = $softone->createSql($params);
+        $datas = $softone->createSql($params);
         print_r($datas);
 
 
