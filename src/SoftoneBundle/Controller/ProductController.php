@@ -1086,6 +1086,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             }
 
             
+            
             if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
                 //$extra["foxline"] = array("CCCFXRELTDCODE" => "CCCFXRELTDCODE", "CCCFXRELBRAND" => "CCCFXRELBRAND"); 
                 $q[] = "`" . strtolower($params["softone_object"] . "_apvcode") . "` = '" . addslashes($data["CCCFXRELTDCODE"]) . "'";
