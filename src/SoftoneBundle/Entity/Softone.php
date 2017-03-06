@@ -125,6 +125,8 @@ class Softone extends Entity {
             "OBJECT" => "Items",
 			"fSQL"=> $params["fSQL"]
         );
+        echo $this->doRequest($params,$this->requerstUrl."/JS/SiteData.Items/createSql");
+        exit;
         return $this->doRequest($params,$this->requerstUrl."/JS/SiteData.Items/createSql");
     }
     
@@ -329,7 +331,6 @@ class Softone extends Entity {
         } else {
             $result = iconv("ISO-8859-7", "UTF-8", $result);
         }
-        echo $result;
         $result = str_replace("	", "", $result);
         return json_decode($result);
     }
