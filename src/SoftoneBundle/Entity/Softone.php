@@ -331,7 +331,41 @@ class Softone extends Entity {
         $result = str_replace("	", "", $result);
         return json_decode($result);
     }
-
+    
+    function getManufactures($params = array()) {
+        $params = array(
+            "clientID" => $this->authenticateClientID,
+            "appId" => $this->appId,
+            "OBJECT" => "Items",
+            "DateL" => $params["DateL"],
+            "DateH" => $params["DateH"]
+        );
+        //return $this->doRequest($params, "http://bsautospare.oncloud.gr/s1services/JS/SiteData.Items/getManufactures");
+        $requerstUrl = "http://bsautospare.oncloud.gr/s1services/JS/SiteData.Items/getManufactures";
+        ini_set('memory_limit', '2048M');
+        $data_string = json_encode($params);
+		
+        $result = @file_get_contents($requerstUrl, null, stream_context_create(array(
+            'http' => array(
+                'method' => 'POST',
+                'header' =>
+                'Content-Type: application/json' . "\r\n"
+                . 'Content-Length: ' . strlen($data_string) . "\r\n",
+                'content' => $data_string,
+            ),
+        )));
+   
+        if (@$result1 = gzdecode($result)) {
+            //$result = iconv("ISO-8859-7", "UTF-8", $result1);
+            $result = $result1;
+        } else {
+            //$result = iconv("ISO-8859-7", "UTF-8", $result);
+            $result = $result;
+        }
+        $result =  iconv("WINDOWS-1252", "UTF-8", $result);
+        return json_decode($result);        
+    }
+    
     function retrieveColumns($obj, $list = "") {
         $result = $this->getBrowserInfo($obj, $list);
         $out = array();
