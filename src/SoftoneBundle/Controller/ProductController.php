@@ -924,11 +924,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     function retrieveMtrl($MTRL = 0) {
+        $MTRL = 421443;
         $params = unserialize($this->getSetting("SoftoneBundle:Product:retrieveMtrl"));
         if (count($params) > 0) {
             if ($MTRL > 0) {
                 $where = ' AND MTRL = ' . $MTRL;
             }
+
             $params["softone_object"] = "item";
             $params["repository"] = 'SoftoneBundle:Product';
             $params["softone_table"] = 'MTRL';
@@ -1008,8 +1010,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
-            //print_r($data);
-            //exit;
+            print_r($data);
+            exit;
             $entity = $this->getDoctrine()
                     ->getRepository($params["repository"])
                     ->findOneBy(array("reference" => (int) $data[$params["softone_table"]]));
