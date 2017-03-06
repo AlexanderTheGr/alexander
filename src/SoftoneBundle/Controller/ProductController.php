@@ -134,7 +134,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $product->setSupplierId($SoftoneSupplier);
         $product->setItemName($asd->genericArticleName);
         $product->setTecdocArticleId($asd->articleId);
-        
+
         $productsale = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:Productsale')->find(1);
         $product->setItemPricew("0.00");
@@ -142,7 +142,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $product->setItemMarkupw("0.00");
         $product->setItemMarkupr("0.00");
         $product->setProductSale($productsale);
-        
+
         //$product->setItemCode($this->partno);
         $product->setItemApvcode($asd->articleNo);
         $product->setErpSupplier($asd->brand);
@@ -333,7 +333,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
 
         //print_r($this->error);
-        
         //echo $product->id;
         if (count($this->error[$this->repository])) {
             $json = json_encode(array("error" => 1, "id" => (int) $product->id, 'unique' => $this->error[$this->repository]));
@@ -636,10 +635,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
 
         $fields["itemMtrplace"] = array("label" => "Ράφι", "className" => "col-md-1", "required" => false);
-        
+
         $fields["qty"] = array("label" => "Αποθήκη", "className" => "col-md-1", "required" => false);
         $fields["reserved"] = array("label" => "Δεσμευμενα", "className" => "col-md-1", "required" => false);
-        
+
         //$fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "className" => "col-md-2", "required" => false);        
         $fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "required" => false, "className" => "col-md-2", 'type' => "select", 'dataarray' => $itemMtrsup);
         $fields["cccRef"] = array("label" => "Κωδικός Προμηθευτή", "className" => "col-md-2", "required" => false);
@@ -833,10 +832,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 continue;
             $brandModel = $this->getDoctrine()->getRepository('SoftoneBundle:BrandModel')->find($brandModelType->getBrandModel());
             if (!$brandModel)
-                continue;              
+                continue;
             $brand = $this->getDoctrine()->getRepository('SoftoneBundle:Brand')->find($brandModel->getBrand());
             if (!$brand)
-                continue;            
+                continue;
             $egarmoges .= '<li>' . $brand->getBrand() . ' ' . $brandModel->getBrandModel() . ' ' . $brandModelType->getBrandModelType() . '</li>';
         }
         $egarmoges .= '</ul>';
@@ -1190,10 +1189,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         echo count($results);
         $i = 0;
         $tecdoc = new Tecdoc();
-		echo "<BR>";
+        echo "<BR>";
         foreach ($results as $result) {
             //if ($result["id"] > 41170) {
-			echo $result["id"] . "<BR>";
+            echo $result["id"] . "<BR>";
             $ediediitem = $em->getRepository($this->repository)->find($result["id"]);
             //$ediediitem->tecdoc = $tecdoc;
             $ediediitem->setProductFreesearch();
@@ -1203,9 +1202,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             // }
         }
         exit;
-    }	
-	
-	
+    }
+
     /**
      * @Route("/product/product/synchronize")
      */
@@ -1231,8 +1229,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                          */
                         //$this->clearstring($search);
                         //if ($product->getItemCode() != '801985-21') continue;
-						//echo $product->getItemCode();
-					   
+                        //echo $product->getItemCode();
+
                         $ediediitem = false;
                         $newcccref = false;
                         $code = trim($this->clearstring($product->getCccRef()));
@@ -1274,45 +1272,44 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                             $itemPricew = $ediediitem->getEdiMarkupPrice("itemPricew");
                             $itemPricer = $ediediitem->getEdiMarkupPrice("itemPricer");
                             //if ($newcccref OR round($itemPricew, 2) != round($product->getItemPricew(), 2) OR round($itemPricer, 2) != round($product->getItemPricer(), 2)) {
-                                //echo $ediedi->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediediitem->getWholesaleprice() . " -- " . $ediediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
-                                //if ($i++ > 15)
-                                //    exit;
-                                if ($itemPricew > 0.01 AND $product->getReference() > 0) {
-                                    $color = '';
-                                    if ($itemPricew == $itemPricer) {
-                                        $color = 'red';
-                                    }
-                                    echo "<div style='color:" . $color . "'>";
-                                    echo $ediedi->getName() . " " . $ediediitem->getWholesaleprice() . " -- " . $product->getItemCode() . " itemPricew:(" . $itemPricew . "/" . $product->getItemPricew() . ") itemPricer:(" . $itemPricer . "/" . $product->getItemPricer() . ")<BR>";
-
-                                    $product->setCccPriceUpd(1);
-                                    $product->setItemPricew($itemPricew);
-                                    $product->setItemPricer($itemPricer);
-                                    //
-                                    //echo $product->id." ".$product->erp_code." --> ".$qty." -- ".$product->getApothema()."<BR>";
-                                    $sql = "update softone_product set item_pricew = '".$itemPricew."', item_pricer = '".$itemPricer."', item_cccpriceupd = 1, item_cccref = '".$product->getCccRef()."'   where id = '" . $product->getId() . "'";
-                                    echo $sql . "<BR>";
-                                    $em->getConnection()->exec($sql);
-                                    //$this->flushpersist($product);
-                                    
-                                    //$product->toSoftone();
-                                    if ($newcccref)
-                                        $sql = "UPDATE MTRL SET CCCREF='" . $product->getCccRef() . "', CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
-                                    else
-                                        $sql = "UPDATE MTRL SET CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
-
-                                    $params["fSQL"] = $sql;
-                                    $product->toSoftone();
-                                    //$softone = new Softone();
-                                    //$datas = $softone->createSql($params);
-                                    //unset($softone);
-                                    echo $sql . "<BR>";
-                                    //sleep(5);
-
-                                    echo "</div>";
+                            //echo $ediedi->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediediitem->getWholesaleprice() . " -- " . $ediediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
+                            //if ($i++ > 15)
+                            //    exit;
+                            if ($itemPricew > 0.01 AND $product->getReference() > 0) {
+                                $color = '';
+                                if ($itemPricew == $itemPricer) {
+                                    $color = 'red';
                                 }
+                                echo "<div style='color:" . $color . "'>";
+                                echo $ediedi->getName() . " " . $ediediitem->getWholesaleprice() . " -- " . $product->getItemCode() . " itemPricew:(" . $itemPricew . "/" . $product->getItemPricew() . ") itemPricer:(" . $itemPricer . "/" . $product->getItemPricer() . ")<BR>";
+
+                                $product->setCccPriceUpd(1);
+                                $product->setItemPricew($itemPricew);
+                                $product->setItemPricer($itemPricer);
+                                //
+                                //echo $product->id." ".$product->erp_code." --> ".$qty." -- ".$product->getApothema()."<BR>";
+                                $sql = "update softone_product set item_pricew = '" . $itemPricew . "', item_pricer = '" . $itemPricer . "', item_cccpriceupd = 1, item_cccref = '" . $product->getCccRef() . "'   where id = '" . $product->getId() . "'";
+                                echo $sql . "<BR>";
+                                $em->getConnection()->exec($sql);
+                                //$this->flushpersist($product);
+                                //$product->toSoftone();
+                                if ($newcccref)
+                                    $sql = "UPDATE MTRL SET CCCREF='" . $product->getCccRef() . "', CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
+                                else
+                                    $sql = "UPDATE MTRL SET CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
+
+                                $params["fSQL"] = $sql;
+                                $product->toSoftone();
+                                //$softone = new Softone();
+                                //$datas = $softone->createSql($params);
+                                //unset($softone);
+                                echo $sql . "<BR>";
+                                //sleep(5);
+
+                                echo "</div>";
+                            }
                             //} else {
-                                //echo "<span style='color:red'>".$product->getItemCode()." -- ".$product->getSupplierId()->getTitle()." -- " . $product->getItemCode2() . " ".$ediediitem->getWholesaleprice() . " -- ".$ediediitem->getEdiMarkupPrice("itemPricew")." -- " . $product->getItemPricew() . "</span><BR>";
+                            //echo "<span style='color:red'>".$product->getItemCode()." -- ".$product->getSupplierId()->getTitle()." -- " . $product->getItemCode2() . " ".$ediediitem->getWholesaleprice() . " -- ".$ediediitem->getEdiMarkupPrice("itemPricew")." -- " . $product->getItemPricew() . "</span><BR>";
                             //}
                         } else {
                             //echo "<span style='color:red'>".$product->getItemCode().";".$product->getSupplierId()->getTitle().";" . $product->getItemCode2() . "</span><BR>";
@@ -1354,17 +1351,18 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      */
     function retrieveSoftoneDataAction($params = array()) {
         $allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
-        $allowedipsArr = explode(",", $allowedips);		echo $_SERVER["REMOTE_ADDR"];
+        $allowedipsArr = explode(",", $allowedips);
+        echo $_SERVER["REMOTE_ADDR"];
         if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
             set_time_limit(100000);
             ini_set('memory_limit', '2256M');
 
-            echo $this->retrieveMtrcategory();
-            echo $this->retrieveMtrmanfctr();
+            //echo $this->retrieveMtrcategory();
+            //echo $this->retrieveMtrmanfctr();
             echo $this->retrieveMtrl();
             file_put_contents("retrieveSoftone.txt", $allowedipsArr);
             //echo $this->retrieveApothema();
-        }		return new Response(				"", 200		);		
+        } return new Response("", 200);
     }
 
     /**
