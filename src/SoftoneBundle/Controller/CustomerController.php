@@ -383,8 +383,8 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
         $softone = new Softone();
         $datas = $softone->createSql($params);
-        //print_r($datas);
-        ///return;
+		//print_r($datas);
+        //return;
         ///exit;
         $em = $this->getDoctrine()->getManager();
         foreach ((array) $datas->data as $data) {
