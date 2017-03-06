@@ -1382,7 +1382,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             ini_set('memory_limit', '2256M');
 
             //echo $this->retrieveMtrcategory();
-            //echo $this->retrieveMtrmanfctr();
+            echo $this->retrieveMtrmanfctr();
             echo $this->retrieveMtrl();
             file_put_contents("retrieveSoftone.txt", $allowedipsArr);
             //echo $this->retrieveApothema();
