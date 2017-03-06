@@ -125,8 +125,7 @@ class Softone extends Entity {
             "OBJECT" => "Items",
 			"fSQL"=> $params["fSQL"]
         );
-        echo $this->doRequest($params,$this->requerstUrl."/JS/SiteData.Items/createSql");
-        exit;
+
         return $this->doRequest($params,$this->requerstUrl."/JS/SiteData.Items/createSql");
     }
     
@@ -327,6 +326,9 @@ class Softone extends Entity {
         )));
 
         if (@$result1 = gzdecode($result)) {
+            
+            echo $result;
+            
             $result = iconv("ISO-8859-7", "UTF-8", $result1);
         } else {
             $result = iconv("ISO-8859-7", "UTF-8", $result);
