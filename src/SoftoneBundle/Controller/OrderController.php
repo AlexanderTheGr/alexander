@@ -760,8 +760,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                  * 
                  */
                 $json[4] = $obj->getArticleAttributes2($articleIds2["linkingTargetId"]);
-                $json[6] = number_format($obj->getItemPricer() * $vat, 2, '.', '');
-                ;
+                
+                if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
+                    $json[6] = number_format($obj->getItemPricer02() * $vat, 2, '.', '');
+                } else {
+                    $json[6] = number_format($obj->getItemPricer() * $vat, 2, '.', '');
+                }
+                
                 $json[7] = $obj->getDiscount($customer, $vat);
                 $json[8] = $obj->getGroupedDiscountPrice($customer, $vat); //str_replace($obj->$priceField, $obj->getGroupedDiscountPrice($customer), $json[5]);
                 //$json[6] = str_replace("value='---'", "value='1'", $json[6]);
