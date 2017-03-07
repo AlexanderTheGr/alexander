@@ -762,7 +762,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $json[4] = $obj->getArticleAttributes2($articleIds2["linkingTargetId"]);
                 
                 if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
-                    $json[6] = number_format($obj->getItemPricer02() * $vat, 2, '.', '');
+                    $json[6] = number_format($obj->getItemPricew02() * $vat, 2, '.', '');
                 } else {
                     $json[6] = number_format($obj->getItemPricer() * $vat, 2, '.', '');
                 }
