@@ -2009,6 +2009,7 @@ class Product extends Entity {
     function toSoftone() {
 
         //if ($this->reference)
+        $vat = 1.24;
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
@@ -2097,7 +2098,13 @@ class Product extends Entity {
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             @$dataOut["ITEEXTRA"][0] = array("varchar05" => $this->cccRef, "VARCHAR02" => $this->sisxetisi);
             $objectArr2["CCCFXRELTDCODE"] = $this->tecdocCode;
-            $objectArr2["CCCFXRELBRAND"] = $this->itemMtrmark;           
+            $objectArr2["CCCFXRELBRAND"] = $this->itemMtrmark; 
+            
+            $objectArr2["PRICER02"] = $this->pricew02*$vat; 
+            $objectArr2["PRICER01"] = $this->pricew01*$vat; 
+            $objectArr2["PRICER04"] = $this->pricew04*$vat; 
+            //$objectArr2["CCCFXRELBRAND"] = $this->itemMtrmark; 
+            
         } else {
             $objectArr2["CCCREF"] = $this->cccRef;
             @$dataOut["ITEEXTRA"][0] = array("VARCHAR02" => $this->sisxetisi);
