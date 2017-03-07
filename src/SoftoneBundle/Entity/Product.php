@@ -2066,9 +2066,11 @@ class Product extends Entity {
                 $zoominfo = $data["zoominfo"];
                 $info = explode(";", $zoominfo);
                 $this->reference = $info[1];
-				
-				if ($data["MTRMANFCTR"]!=$this->itemMtrmanfctr) $op = true;
-				if ($data["MTRMARK"]!=$this->itemMtrmark) $op = true;
+
+                if ($data["MTRMANFCTR"] != $this->itemMtrmanfctr)
+                    $op = true;
+                if ($data["MTRMARK"] != $this->itemMtrmark)
+                    $op = true;
                 break;
             }
             $data = $softone->getData($object, $this->reference);
@@ -2086,21 +2088,21 @@ class Product extends Entity {
         $objectArr2["MTRUNIT1"] = 101;
         $objectArr2["VAT"] = 1410;
         $objectArr2["CODE2"] = $this->supplierCode;
-        
+
         $objectArr2["REMARKS"] = $this->itemRemarks;
         $objectArr2["MTRMARK"] = $this->itemMtrmark;
         $objectArr2["MTRMANFCTR"] = $this->itemMtrmanfctr > 0 ? $this->itemMtrmanfctr : $this->getSupplierId()->getId();
-        $objectArr2["ISACTIVE"] = (int)$this->itemIsactive;
+        $objectArr2["ISACTIVE"] = (int) $this->itemIsactive;
         $objectArr[0] = $objectArr2;
         $dataOut[$object] = (array) $objectArr;
-        
-        
-        
-        
+
+
+
+
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
-            @$dataOut["ITEEXTRA"][0] = array("varchar05" => $this->sisxetisi,"VARCHAR02" => $this->sisxetisi);
+            @$dataOut["ITEEXTRA"][0] = array("varchar05" => $this->cccRef, "VARCHAR02" => $this->sisxetisi);
         } else {
-            $objectArr2["CCCREF"] = $this->cccRef;  
+            $objectArr2["CCCREF"] = $this->cccRef;
             @$dataOut["ITEEXTRA"][0] = array("VARCHAR02" => $this->sisxetisi);
         }
         //print_r(@$dataOut);
@@ -2108,22 +2110,22 @@ class Product extends Entity {
         $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
         //print_r($out);
 
-	
+
         if (@$out->id > 0) {
-			$op = false;
-			if ($this->reference) {
-				$op = true;
-			}		
+            $op = false;
+            if ($this->reference) {
+                $op = true;
+            }
             $this->reference = $out->id;
             $em->persist($this);
             $em->flush();
             //$this->itemMtrmark = $this->itemMtrmark > 0 ? $this->itemMtrmark : 1000;
             $this->itemMtrmanfctr = $this->itemMtrmanfctr > 0 ? $this->itemMtrmanfctr : 1000;
-			$params["fSQL"] = "UPDATE MTRL SET MTRMANFCTR=" . $this->getSupplierId()->getId() . " , MTRMARK=" . $this->itemMtrmark . " WHERE MTRL = " . $this->reference;
-			//echo $params["fSQL"]."\n";
-			if (!$op) {
-				$softone->createSql($params);
-			}
+            $params["fSQL"] = "UPDATE MTRL SET MTRMANFCTR=" . $this->getSupplierId()->getId() . " , MTRMARK=" . $this->itemMtrmark . " WHERE MTRL = " . $this->reference;
+            //echo $params["fSQL"]."\n";
+            if (!$op) {
+                $softone->createSql($params);
+            }
             //print_r($softone->createSql($params));
         }
     }
@@ -2633,12 +2635,11 @@ class Product extends Entity {
         return $out;
     }
 
-    
     public function getEditLink() {
         $out = '<a target="_blank" title="' . $this->title . '" class="" car="" data-articleId="' . $this->tecdocArticleId . '" ref="' . $this->id . '" href="/product/view/' . $this->id . '">Edit</a>';
         return $out;
     }
-    
+
     public function getForOrderSupplier() {
 
 
