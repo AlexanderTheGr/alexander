@@ -2090,21 +2090,25 @@ class Product extends Entity {
         $objectArr2["CODE2"] = $this->supplierCode;
 
         $objectArr2["REMARKS"] = $this->itemRemarks;
-        $objectArr2["MTRMARK"] = $this->itemMtrmark;
+        
         $objectArr2["MTRMANFCTR"] = $this->itemMtrmanfctr > 0 ? $this->itemMtrmanfctr : $this->getSupplierId()->getId();
         $objectArr2["ISACTIVE"] = (int) $this->itemIsactive;
+        
+        if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
+            @$dataOut["ITEEXTRA"][0] = array("varchar05" => $this->cccRef, "VARCHAR02" => $this->sisxetisi);
+            $objectArr2["CCCFXRELTDCODE"] = $this->tecdocCode;
+            $objectArr2["CCCFXRELBRAND"] = $this->itemMtrmark;           
+        } else {
+            $objectArr2["CCCREF"] = $this->cccRef;
+            @$dataOut["ITEEXTRA"][0] = array("VARCHAR02" => $this->sisxetisi);
+            $objectArr2["MTRMARK"] = $this->itemMtrmark;
+        }        
+        
         $objectArr[0] = $objectArr2;
         $dataOut[$object] = (array) $objectArr;
 
 
 
-
-        if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
-            @$dataOut["ITEEXTRA"][0] = array("varchar05" => $this->cccRef, "VARCHAR02" => $this->sisxetisi);
-        } else {
-            $objectArr2["CCCREF"] = $this->cccRef;
-            @$dataOut["ITEEXTRA"][0] = array("VARCHAR02" => $this->sisxetisi);
-        }
         //print_r(@$dataOut);
 
         $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
