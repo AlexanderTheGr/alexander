@@ -1791,7 +1791,6 @@ class Product extends Entity {
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 
 
-
             $out = json_decode(curl_exec($ch));
 
             // print_r($fields);
