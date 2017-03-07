@@ -156,6 +156,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $product->setItemUpddate($dt);
         $product->setCreated($dt);
         $product->setModified($dt);
+        $product->setItemCode2($asd->articleNo);
         @$this->flushpersist($product);
 
         $product->updatetecdoc();
