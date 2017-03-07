@@ -271,6 +271,9 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $priceField[] = array("value" => "itemPricer03", "name" => "Λιανική 3");
         $priceField[] = array("value" => "itemPricew03", "name" => "Χονδρική 3");
 
+        $priceField[] = array("value" => "itemPricer04", "name" => "Λιανική 4");
+        $priceField[] = array("value" => "itemPricew04", "name" => "Χονδρική 4");
+        
 
         $fields["priceField"] = array("label" => "Κατάλογος", "className" => "col-md-6", 'type' => "select", "required" => true, 'dataarray' => $priceField);
 
