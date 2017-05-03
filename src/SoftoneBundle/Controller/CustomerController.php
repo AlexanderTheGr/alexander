@@ -180,7 +180,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
                     $json, 200, array('Content-Type' => 'application/json')
             );
         } else {
-            $json = json_encode(array("opssss"));
+            $json = json_encode(array("opssss",$_SERVER["REMOTE_ADDR"]));
             return new Response(
                     $json, 200, array('Content-Type' => 'application/json')
             );
@@ -232,7 +232,13 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             $entity->setField("customerCode", str_pad($customerCode, 7, "0", STR_PAD_LEFT));
             $this->newentity[$this->repository] = $entity;
             $entity->setCustomerVatsts(1);
-            $entity->setPriceField("itemPricer");
+			$customergroup = $this->getDoctrine()->getRepository("SoftoneBundle:Customergroup")->find(1);
+            $entity->setCustomergroup($customergroup);
+			if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
+				$entity->setPriceField("itemPricew02");
+			} else {
+				$entity->setPriceField("itemPricer");
+			}
             $code = $this->getSetting("SoftoneBundle:Customer:CodeIncrement");
         }
         $vats = $this->getDoctrine()
@@ -259,22 +265,39 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         //$fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
         $fields["customerVatsts"] = array("label" => "ΦΠΑ", "required" => true, "className" => "col-md-6", 'type' => "select", 'dataarray' => $vatsts);
 
-        $priceField[] = array("value" => "itemPricer", "name" => "Λιανική");
-        $priceField[] = array("value" => "itemPricew", "name" => "Χονδρική");
+		if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
+			//$priceField[] = array("value" => "itemPricer", "name" => "Λιανική");
+			//$priceField[] = array("value" => "itemPricew", "name" => "Χονδρική");
 
-        $priceField[] = array("value" => "itemPricer01", "name" => "Λιανική 1");
-        $priceField[] = array("value" => "itemPricew01", "name" => "Χονδρική 1");
+			$priceField[] = array("value" => "itemPricer01", "name" => "Χονδρικής με ΦΠΑ");
+			$priceField[] = array("value" => "itemPricew01", "name" => "Χονδρικής");
 
-        $priceField[] = array("value" => "itemPricer02", "name" => "Λιανική 2");
-        $priceField[] = array("value" => "itemPricew02", "name" => "Χονδρική 2");
+			$priceField[] = array("value" => "itemPricer02", "name" => "Λιανικής με ΦΠΑ");
+			$priceField[] = array("value" => "itemPricew02", "name" => "Λιανικής");
 
-        $priceField[] = array("value" => "itemPricer03", "name" => "Λιανική 3");
-        $priceField[] = array("value" => "itemPricew03", "name" => "Χονδρική 3");
+			$priceField[] = array("value" => "itemPricer03", "name" => "Ειδικη Τιμή με ΦΠΑ");
+			$priceField[] = array("value" => "itemPricew03", "name" => "Ειδικη Τιμή");
 
-        $priceField[] = array("value" => "itemPricer04", "name" => "Λιανική 4");
-        $priceField[] = array("value" => "itemPricew04", "name" => "Χονδρική 4");
-        
+			$priceField[] = array("value" => "itemPricer04", "name" => "Eshop με ΦΠΑ");
+			$priceField[] = array("value" => "itemPricew04", "name" => "Eshop");		
+		} else {
+			$priceField[] = array("value" => "itemPricer", "name" => "Λιανική");
+			$priceField[] = array("value" => "itemPricew", "name" => "Χονδρική");
 
+			$priceField[] = array("value" => "itemPricer01", "name" => "Λιανική 1");
+			$priceField[] = array("value" => "itemPricew01", "name" => "Χονδρική 1");
+
+			$priceField[] = array("value" => "itemPricer02", "name" => "Λιανική 2");
+			$priceField[] = array("value" => "itemPricew02", "name" => "Χονδρική 2");
+
+			$priceField[] = array("value" => "itemPricer03", "name" => "Λιανική 3");
+			$priceField[] = array("value" => "itemPricew03", "name" => "Χονδρική 3");
+
+			$priceField[] = array("value" => "itemPricer04", "name" => "Λιανική 4");
+			$priceField[] = array("value" => "itemPricew04", "name" => "Χονδρική 4");		
+		}
+
+		
         $fields["priceField"] = array("label" => "Κατάλογος", "className" => "col-md-6", 'type' => "select", "required" => true, 'dataarray' => $priceField);
 
         $forms = $this->getFormLyFields($entity, $fields);
@@ -475,6 +498,10 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             //if (@$i++ > 1500)
             //    break;
         }
+		if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
+			$sql = 'update `softone_customer` set customergroup = 1 where customergroup is null';
+			$this->getDoctrine()->getConnection()->exec($sql);		
+		}
     }
 
     /**

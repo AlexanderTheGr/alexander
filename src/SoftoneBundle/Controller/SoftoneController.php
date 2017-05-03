@@ -70,7 +70,7 @@ class SoftoneController extends  Main {
                 $entity->setModified($dt);
                 
             } else {
-                continue;
+                //continue;
                 //$entity->setRepositories();                
             }
             
@@ -107,21 +107,23 @@ class SoftoneController extends  Main {
                     //$entity->setField($baz, $val);
                 }
             }
-            $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
-            echo $sql."<BR>";
-            $em->getConnection()->exec($sql);            
-            /*
+        
+ 
+ 
             @$entity_id = (int) $entity->id;
-            //if (@$entity_id > 0) {
+            if (@$entity_id > 0) {
                 $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity_id . "'";
-                echo $sql."<BR>";
+                //echo $sql."<BR>";
                 $em->getConnection()->exec($sql);
                 foreach ($params["extrafunction"] as $field => $func) {
                     //$entity->$func();
                 }                
-            //}
-             * 
-             */
+            } else {
+				$sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
+				//echo $sql."<BR>";
+				$em->getConnection()->exec($sql);    			
+			}
+    
             $entity = null;
             //if (@$i++ > 1500)
             //    break;

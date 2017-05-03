@@ -17,7 +17,7 @@ class SupplierController extends \SoftoneBundle\Controller\SoftoneController  {
     public function indexAction() {
 
         return $this->render('supplier/index.html.twig', array(
-                    'pagename' => 'Suppliers',
+                    'pagename' => 'Προμηθευτές',
                     'url' => '/supplier/getdatatable',
                     'view' => '/supplier/view',
                     'ctrl' => $this->generateRandomString(),
