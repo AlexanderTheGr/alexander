@@ -192,7 +192,7 @@ table.dataTable tbody tr {
 .offcanvas-body  table.dataTable thead .sorting_desc_disabled {
     position: relative;
     cursor: pointer;
-    display: none;
+    /*display: none;*/
 }
 .productcategory {
     list-style: none;
