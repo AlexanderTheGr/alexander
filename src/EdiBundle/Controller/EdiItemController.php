@@ -353,13 +353,14 @@ class EdiItemController extends Main {
         $tecdoc = new Tecdoc();
         foreach ($results as $result) {
             //if ($result["id"] > 356633) {
+			if ($result["id"] > 1087367) continue;
             $ediediitem = $em->getRepository($this->repository)->find($result["id"]);
             $ediediitem->tecdoc = $tecdoc;
             $ediediitem->updatetecdoc();
             unset($ediediitem);
             echo $result["id"] . "<BR>";
-            if ($i++ > 3000)
-                exit;
+            //if ($i++ > 3000)
+            //    exit;
             //}
         }
         exit;
@@ -712,7 +713,8 @@ class EdiItemController extends Main {
                     $xml = $response->GetAvailabilityResult->any;
                     $xml = simplexml_load_string($xml);
                     $AvailabilityDetailsHtml = "<select data-id='" . $entity->getId() . "' class='edistore' id='store_" . $entity->getId() . "' style=''>";
-                    foreach ($xml->Item->AvailabilityDetails as $details) {
+					$asd = (array)$xml->Item;
+                    foreach ((array)$asd["AvailabilityDetails"] as $details) {
                         if ($details->IsAvailable == 'Y') {
                             $selected = (int) $xml->Item->Header->SUGGESTED_STORE == (int) $details->StoreNo ? "selected" : "";
                             $AvailabilityDetailsHtml .= "<option " . $selected . " value='" . $details->StoreNo . "' style='color:green'>" . $details->StoreNo . "</option>";
@@ -891,8 +893,11 @@ class EdiItemController extends Main {
                     ->findOneBy(array('Edi' => $edi, 'itemCode' => $jsonarr["itemcode"]));
             if ($ediItem) {
                 //$jsonarr["itemcode"] = $itemcode;
-                $jsonarr["markupr"] = (double) $ediItem->getEdiMarkup("itemPricer");
-                $jsonarr["markupw"] = (double) $ediItem->getEdiMarkup("itemPricew");
+				$pricer = $jsonarr["pricer"] != '' ? $jsonarr["pricer"] : "itemPricer";
+				$pricew = $jsonarr["pricew"] != '' ? $jsonarr["pricew"] : "itemPricew";
+				
+                $jsonarr["markupr"] = (double) $ediItem->getEdiMarkup($pricer);
+                $jsonarr["markupw"] = (double) $ediItem->getEdiMarkup($pricew);
             }
         }
         $json = json_encode($jsonarr);
