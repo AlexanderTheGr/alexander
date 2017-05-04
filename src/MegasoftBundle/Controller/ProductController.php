@@ -931,6 +931,7 @@ class ProductController extends Main {
 
     function retrieveProduct($params = array()) {
         $login = "W600-K78438624F8";
+        $login = $this->getSetting("MegasoftBundle:Webservice:Login");//"demo-fastweb-megasoft";
         $em = $this->getDoctrine()->getManager();
         $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
         /*
