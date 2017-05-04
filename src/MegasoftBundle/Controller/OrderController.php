@@ -922,6 +922,13 @@ class OrderController extends Main {
         $result = $soap->__soapCall("InsertOrder", array($params));
         //echo $JsonStrWeb;
         print_r($result);
+        
+        
+        if (@$result->InsertOrderResult > 0) {
+            $order->setReference($result->InsertOrderResult);
+            $this->flushpersist($order);
+        }        
+        
         exit;
         //print_r($result);
         //echo ".";
