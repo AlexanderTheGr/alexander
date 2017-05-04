@@ -142,7 +142,6 @@ class SupplierController extends Main {
                 $q[] = "`supplier_name` = '" . addslashes($data["SupplierName"]) . "'";
                 $q[] = "`supplier_afm` = '" . addslashes($data["SupplierAfm"]) . "'";
                 $q[] = "`supplier_city` = '" . addslashes($data["SupplierCity"]) . "'";
-                $q[] = "`supplier_email` = '" . addslashes($data["SupplierEmail"]) . "'";
                 $q[] = "`supplier_address` = '" . addslashes($data["SupplierAddress"]) . "'";
                 $q[] = "`supplier_zip` = '" . addslashes($data["SupplierZip"]) . "'";
                 $q[] = "`supplier_phone1` = '" . addslashes($data["SupplierPhone1"]) . "'";
