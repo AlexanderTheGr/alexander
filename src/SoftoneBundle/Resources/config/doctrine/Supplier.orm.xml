@@ -52,7 +52,7 @@
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="supplierWebpage" type="string" column="supplier_webpage" length="255" nullable="false">
+        <field name="supplierSite" type="string" column="supplier_site" length="255" nullable="false">
             <options>
                 <option name="fixed"/>
             </options>
