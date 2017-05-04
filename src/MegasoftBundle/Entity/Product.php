@@ -1026,8 +1026,18 @@ class Product extends Entity {
     }  
     
     function toMegasoft() {
-        
+        $login = $this->getSetting("MegasoftBundle:Webservice:Login");//"demo-fastweb-megasoft";
+        $em = $this->getDoctrine()->getManager();
+        $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
+        /*
+          $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
+          $headerbody = array('Login' => "alexander", 'Date' => "2016-10-10");
+          $header = new SOAPHeader($ns,"AuthHeader",$headerbody);
+          $soap->__setSoapHeaders($header);
+         */
+        $params["Login"] = $login;        
     }
+    
     public function getForOrderCode() {
 
         $out = '<a title="' . $this->title . '" class="product_info" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
