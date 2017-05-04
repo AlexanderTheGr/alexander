@@ -929,29 +929,8 @@ class OrderController extends Main {
             $this->flushpersist($order);
         }        
         
-        exit;
-        //print_r($result);
-        //echo ".";
-        //json_encode
-        /*
-        if ($result) {
-            $order->addStatusToHistory($order->getStatus(), json_encode($result), false);
-            $order->save();
-        } else {
-            $order->addStatusToHistory($order->getStatus(), json_encode($result) . "[Failed]", false);
-            $order->save();
-        }
-        if (Mage::app()->getRequest()->getParam('comments') != "") {
-            $order->addStatusToHistory($order->getStatus(), $JsonStrWeb . Mage::app()->getRequest()->getParam('comments'), false);
-            $order->save();
-        }
-        */
-        //return $result->GetStockResult;        
 
-
-
-
-        $json = json_encode($out);
+        $json = json_encode($result);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
