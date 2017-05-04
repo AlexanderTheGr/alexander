@@ -2,11 +2,37 @@
 
 namespace MegasoftBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\Entity;
+use AppBundle\Entity\Tecdoc as Tecdoc;
+use SoftoneBundle\Entity\Softone as Softone;
+use SoftoneBundle\Entity\TecdocSupplier as TecdocSupplier;
+
 /**
- * Supplier
+ * Product
+ *
+ * @ORM\Entity(repositoryClass="SoftoneBundle\Entity\ProductRepository")
  */
-class Supplier
-{
+class Supplier extends Entity {
+
+    var $repositories = array();
+    var $uniques = array();
+
+    public function __construct() {
+        $this->setRepositories();
+    }
+
+    public function getField($field) {
+
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
+
     /**
      * @var integer
      */
@@ -87,7 +113,6 @@ class Supplier
      */
     private $id;
 
-
     /**
      * Set reference
      *
@@ -95,8 +120,7 @@ class Supplier
      *
      * @return Supplier
      */
-    public function setReference($reference)
-    {
+    public function setReference($reference) {
         $this->reference = $reference;
 
         return $this;
@@ -107,8 +131,7 @@ class Supplier
      *
      * @return integer
      */
-    public function getReference()
-    {
+    public function getReference() {
         return $this->reference;
     }
 
@@ -119,8 +142,7 @@ class Supplier
      *
      * @return Supplier
      */
-    public function setSupplierCode($supplierCode)
-    {
+    public function setSupplierCode($supplierCode) {
         $this->supplierCode = $supplierCode;
 
         return $this;
@@ -131,8 +153,7 @@ class Supplier
      *
      * @return string
      */
-    public function getSupplierCode()
-    {
+    public function getSupplierCode() {
         return $this->supplierCode;
     }
 
@@ -143,8 +164,7 @@ class Supplier
      *
      * @return Supplier
      */
-    public function setSupplierName($supplierName)
-    {
+    public function setSupplierName($supplierName) {
         $this->supplierName = $supplierName;
 
         return $this;
@@ -155,8 +175,7 @@ class Supplier
      *
      * @return string
      */
-    public function getSupplierName()
-    {
+    public function getSupplierName() {
         return $this->supplierName;
     }
 
@@ -167,8 +186,7 @@ class Supplier
      *
      * @return Supplier
      */
-    public function setSupplierAfm($supplierAfm)
-    {
+    public function setSupplierAfm($supplierAfm) {
         $this->supplierAfm = $supplierAfm;
 
         return $this;
@@ -179,8 +197,7 @@ class Supplier
      *
      * @return string
      */
-    public function getSupplierAfm()
-    {
+    public function getSupplierAfm() {
         return $this->supplierAfm;
     }
 
@@ -191,8 +208,7 @@ class Supplier
      *
      * @return Supplier
      */
-    public function setSupplierAddress($supplierAddress)
-    {
+    public function setSupplierAddress($supplierAddress) {
         $this->supplierAddress = $supplierAddress;
 
         return $this;
@@ -203,8 +219,7 @@ class Supplier
      *
      * @return string
      */
-    public function getSupplierAddress()
-    {
+    public function getSupplierAddress() {
         return $this->supplierAddress;
     }
 
@@ -215,8 +230,7 @@ class Supplier
      *
      * @return Supplier
      */
-    public function setSupplierZip($supplierZip)
-    {
+    public function setSupplierZip($supplierZip) {
         $this->supplierZip = $supplierZip;
 
         return $this;
@@ -227,8 +241,7 @@ class Supplier
      *
      * @return string
      */
-    public function getSupplierZip()
-    {
+    public function getSupplierZip() {
         return $this->supplierZip;
     }
 
@@ -239,8 +252,7 @@ class Supplier
      *
      * @return Supplier
      */
-    public function setSupplierCity($supplierCity)
-    {
+    public function setSupplierCity($supplierCity) {
         $this->supplierCity = $supplierCity;
 
         return $this;
@@ -251,8 +263,7 @@ class Supplier
      *
      * @return string
      */
-    public function getSupplierCity()
-    {
+    public function getSupplierCity() {
         return $this->supplierCity;
     }
 
@@ -263,8 +274,7 @@ class Supplier
      *
      * @return Supplier
      */
-    public function setSupplierPhone01($supplierPhone01)
-    {
+    public function setSupplierPhone01($supplierPhone01) {
         $this->supplierPhone01 = $supplierPhone01;
 
         return $this;
@@ -275,8 +285,7 @@ class Supplier
      *
      * @return string
      */
-    public function getSupplierPhone01()
-    {
+    public function getSupplierPhone01() {
         return $this->supplierPhone01;
     }
 
@@ -287,8 +296,7 @@ class Supplier
      *
      * @return Supplier
      */
-    public function setSupplierPhone02($supplierPhone02)
-    {
+    public function setSupplierPhone02($supplierPhone02) {
         $this->supplierPhone02 = $supplierPhone02;
 
         return $this;
@@ -299,8 +307,7 @@ class Supplier
      *
      * @return string
      */
-    public function getSupplierPhone02()
-    {
+    public function getSupplierPhone02() {
         return $this->supplierPhone02;
     }
 
@@ -311,8 +318,7 @@ class Supplier
      *
      * @return Supplier
      */
-    public function setSupplierSite($supplierSite)
-    {
+    public function setSupplierSite($supplierSite) {
         $this->supplierSite = $supplierSite;
 
         return $this;
@@ -323,8 +329,7 @@ class Supplier
      *
      * @return string
      */
-    public function getSupplierSite()
-    {
+    public function getSupplierSite() {
         return $this->supplierSite;
     }
 
@@ -335,8 +340,7 @@ class Supplier
      *
      * @return Supplier
      */
-    public function setTs($ts)
-    {
+    public function setTs($ts) {
         $this->ts = $ts;
 
         return $this;
@@ -347,8 +351,7 @@ class Supplier
      *
      * @return \DateTime
      */
-    public function getTs()
-    {
+    public function getTs() {
         return $this->ts;
     }
 
@@ -359,8 +362,7 @@ class Supplier
      *
      * @return Supplier
      */
-    public function setActioneer($actioneer)
-    {
+    public function setActioneer($actioneer) {
         $this->actioneer = $actioneer;
 
         return $this;
@@ -371,8 +373,7 @@ class Supplier
      *
      * @return integer
      */
-    public function getActioneer()
-    {
+    public function getActioneer() {
         return $this->actioneer;
     }
 
@@ -383,8 +384,7 @@ class Supplier
      *
      * @return Supplier
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -395,8 +395,7 @@ class Supplier
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -407,8 +406,7 @@ class Supplier
      *
      * @return Supplier
      */
-    public function setModified($modified)
-    {
+    public function setModified($modified) {
         $this->modified = $modified;
 
         return $this;
@@ -419,8 +417,7 @@ class Supplier
      *
      * @return \DateTime
      */
-    public function getModified()
-    {
+    public function getModified() {
         return $this->modified;
     }
 
@@ -431,8 +428,7 @@ class Supplier
      *
      * @return Supplier
      */
-    public function setFlatData($flatData)
-    {
+    public function setFlatData($flatData) {
         $this->flatData = $flatData;
 
         return $this;
@@ -443,8 +439,7 @@ class Supplier
      *
      * @return string
      */
-    public function getFlatData()
-    {
+    public function getFlatData() {
         return $this->flatData;
     }
 
@@ -453,9 +448,8 @@ class Supplier
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
-}
 
+}
