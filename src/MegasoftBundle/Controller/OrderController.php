@@ -892,19 +892,7 @@ class OrderController extends Main {
         $login = $this->getSetting("MegasoftBundle:Webservice:Login");
         //{"customerid":1,"orderno":"B2B00001","comments":"Ayti eimai mia test paraggelia","items":[{"storeid":3,"price":10.35,"qty":4},{"storeid":7,"price":14.35,"qty":7}]}
        
-        
-        foreach ($order->getItems() as $item) {
-            //$dataOut["ITELINES"][] = array("QTY1" => $item->getQty(), "VAT" => $vat, "LINENUM" => $item->getLineval(), "MTRL" => $item->getProduct()->getReference());
-            $dataOut["ITELINES"][] = array(
-                "VAT" => $vatsst,
-                "QTY1" => $item->getQty(),
-                "LINENUM" => $k++,
-                "MTRL" => $item->getProduct()->getReference(),
-                "PRICE" => $item->getPrice() / $vat,
-                "LINEVAL" => $item->getLineval() / $vat,
-                "DISC1PRC" => $item->getDisc1prc()
-            );
-        }        
+               
         
         foreach ($order->getItems() as $item) {
             $item1["storeid"] = $item->getProduct()->getReference();
