@@ -954,7 +954,8 @@ class ProductController extends Main {
             $StoreDetails = $response->GetProductsResult->StoreDetails;
         }
 
-
+        print_r($StoreDetails);
+        exit;
 
         foreach ($StoreDetails as $data) {
             $data = (array) $data;
