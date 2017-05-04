@@ -2,6 +2,8 @@
 
 namespace MegasoftBundle\Entity;
 
+use AppBundle\Entity\Repository;
+
 /**
  * SupplierRepository
  *
