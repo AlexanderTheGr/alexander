@@ -37,11 +37,13 @@
                 <option name="fixed"/>
             </options>
         </field>
+        
         <field name="supplierCity" type="string" column="supplier_city" length="255" nullable="false">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
+        
         <field name="supplierPhone01" type="string" column="supplier_phone01" length="255" nullable="false">
             <options>
                 <option name="fixed"/>
