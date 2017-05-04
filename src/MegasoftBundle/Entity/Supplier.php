@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Entity;
 use AppBundle\Entity\Tecdoc as Tecdoc;
 use SoftoneBundle\Entity\Softone as Softone;
-use SoftoneBundle\Entity\TecdocSupplier as TecdocSupplier;
+
 
 /**
  * Product
