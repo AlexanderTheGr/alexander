@@ -325,8 +325,11 @@ class CustomerController extends Main {
     public function getMegasoft() {
         //return;
         $login = "W600-K78438624F8";
+        $login = $this->getSetting("MegasoftBundle:Webservice:Login");
         $em = $this->getDoctrine()->getManager();
+        //http://wsprisma.megasoft.gr/mgsft_ws.asmx
         $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
+        
         /*
           $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
           $headerbody = array('Login' => "alexander", 'Date' => "2016-10-10");
