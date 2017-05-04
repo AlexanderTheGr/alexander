@@ -144,8 +144,8 @@ class SupplierController extends Main {
                 $q[] = "`supplier_city` = '" . addslashes($data["SupplierCity"]) . "'";
                 $q[] = "`supplier_address` = '" . addslashes($data["SupplierAddress"]) . "'";
                 $q[] = "`supplier_zip` = '" . addslashes($data["SupplierZip"]) . "'";
-                $q[] = "`supplier_phone1` = '" . addslashes($data["SupplierPhone1"]) . "'";
-                $q[] = "`supplier_phone2` = '" . addslashes($data["SupplierPhone2"]) . "'";
+                $q[] = "`supplier_phone01` = '" . addslashes($data["SupplierPhone01"]) . "'";
+                $q[] = "`supplier_phone02` = '" . addslashes($data["SupplierPhone02"]) . "'";
                 if (@$entity->getId() == 0) {
                     $q[] = "`reference` = '" . addslashes($data["SupplierId"]) . "'";
                     $q[] = "`suppliergroup` = '1'";
