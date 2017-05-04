@@ -921,7 +921,7 @@ class OrderController extends Main {
         print_r($params);
         $result = $soap->__soapCall("InsertOrder", array($params));
         //echo $JsonStrWeb;
-        echo $result;
+        print_r($result);
         exit;
         //print_r($result);
         //echo ".";
