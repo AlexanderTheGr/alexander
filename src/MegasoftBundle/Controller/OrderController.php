@@ -918,10 +918,10 @@ class OrderController extends Main {
         $params["Login"] = $login;
         $params["JsonStrWeb"] = $JsonStrWeb;
         //$results = $soap->GetCustomers();
-        print_r($params);
+        //print_r($params);
         $result = $soap->__soapCall("InsertOrder", array($params));
         //echo $JsonStrWeb;
-        print_r($result);
+        //print_r($result);
         
         
         if (@$result->InsertOrderResult > 0) {
