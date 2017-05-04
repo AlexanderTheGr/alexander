@@ -3,7 +3,6 @@
 namespace MegasoftBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Entity;
 use AppBundle\Entity\Tecdoc as Tecdoc;
 use SoftoneBundle\Entity\Softone as Softone;
