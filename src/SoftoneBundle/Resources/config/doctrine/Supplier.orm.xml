@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <entity name="MegasoftBundle\Entity\Supplier" repository-class="MegasoftBundle\Entity\SupplierRepository" table="megasoft_supplier">
+    <entity name="SoftoneBundle\Entity\Supplier" repository-class="SoftoneBundle\Entity\SupplierRepository" table="softone_supplier">
         <indexes>
             <index name="reference" columns="reference"/>
         </indexes>
@@ -32,6 +32,11 @@
                 <option name="fixed"/>
             </options>
         </field>
+        <field name="supplierDistrict" type="string" column="supplier_district" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
         <field name="supplierZip" type="string" column="supplier_zip" length="255" nullable="false">
             <options>
                 <option name="fixed"/>
@@ -52,12 +57,18 @@
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="supplierSite" type="string" column="supplier_site" length="255" nullable="false">
+        <field name="supplierFax" type="string" column="supplier_fax" length="255" nullable="false">
             <options>
                 <option name="fixed"/>
             </options>
         </field>
-
+        <field name="supplierWebpage" type="string" column="supplier_webpage" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <field name="supplierUpddate" type="datetime" column="supplier_upddate" nullable="false"/>
+        <field name="supplierInsdate" type="datetime" column="supplier_insdate" nullable="false"/>
         <field name="ts" type="datetime" column="ts" nullable="false">
             <options>
         
