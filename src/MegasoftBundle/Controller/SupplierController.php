@@ -5,6 +5,7 @@ namespace MegasoftBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use MegasoftBundle\Entity\Supplier as Supplier;
 use AppBundle\Controller\Main as Main;
 
 class SupplierController extends Main {
@@ -90,23 +91,76 @@ class SupplierController extends Main {
      * @Route("/megasoft/supplier/retrieve")
      */    
     function retrieveSupplier() {
-        $where = '';
-        $params["softone_object"] = 'supplier';
-        $params["repository"] = 'MegasoftBundle:Supplier';
-        $params["softone_table"] = 'TRDR';
-        $params["table"] = 'softone_supplier';
-        $params["object"] = 'MegasoftBundle\Entity\Supplier';
-        $params["filter"] = '';
-        $params["filter"] = 'WHERE M.SODTYPE=12 ' . $where;
-        $params["relation"] = array();
-        $params["extra"] = array();
-        $params["extrafunction"] = array();
-        $this->setSetting("MegasoftBundle:Supplier:retrieveSupplier", serialize($params));
-
-        $params = unserialize($this->getSetting("MegasoftBundle:Supplier:retrieveSupplier"));
-        $this->retrieve($params);
+        $this->getMegasoft();
         return new Response(
                 json_encode(array()), 200, array('Content-Type' => 'application/json')
         );        
     }
+    
+    public function getMegasoft() {
+        //return;
+        $login = "W600-K78438624F8";
+        $login = $this->getSetting("MegasoftBundle:Webservice:Login");
+        $em = $this->getDoctrine()->getManager();
+        //http://wsprisma.megasoft.gr/mgsft_ws.asmx
+        $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
+        
+        /*
+          $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
+          $headerbody = array('Login' => "alexander", 'Date' => "2016-10-10");
+          $header = new SOAPHeader($ns,"AuthHeader",$headerbody);
+          $soap->__setSoapHeaders($header);
+         */
+
+        $params["Login"] = $login;
+        $params["Date"] = ""; //date("Y-m-d");
+        //$results = $soap->GetSuppliers();
+        $response = $soap->__soapCall("GetSuppliers", array($params));
+        //print_r($response);
+        //exit;
+        if ($response->GetSuppliersResult->SupplierDetails) {
+            echo count($response->GetSuppliersResult->SupplierDetails);
+            foreach ($response->GetSuppliersResult->SupplierDetails as $megasoft) {
+                //$supplier = Mage::getModel('b2b/supplier')->load($megasoft->SupplierId, "reference");
+                $data = (array) $megasoft;
+                $entity = $this->getDoctrine()
+                        ->getRepository($this->repository)
+                        ->findOneBy(array("reference" => (int) $data["SupplierId"]));
+                $dt = new \DateTime("now");
+                if (!$entity) {
+                    $entity = new Supplier();
+                    $entity->setTs($dt);
+                    $entity->setCreated($dt);
+                    $entity->setModified($dt);
+                } else {
+                    //continue;
+                    //$entity->setRepositories();                
+                }
+                $params["table"] = "megasoft_supplier";
+                $q = array();
+                $q[] = "`supplier_code` = '" . addslashes($data["SupplierCode"]) . "'";
+                $q[] = "`supplier_name` = '" . addslashes($data["SupplierName"]) . "'";
+                $q[] = "`supplier_afm` = '" . addslashes($data["SupplierAfm"]) . "'";
+                $q[] = "`supplier_city` = '" . addslashes($data["SupplierCity"]) . "'";
+                $q[] = "`supplier_email` = '" . addslashes($data["SupplierEmail"]) . "'";
+                $q[] = "`supplier_address` = '" . addslashes($data["SupplierAddress"]) . "'";
+                $q[] = "`supplier_zip` = '" . addslashes($data["SupplierZip"]) . "'";
+                $q[] = "`supplier_phone1` = '" . addslashes($data["SupplierPhone1"]) . "'";
+                $q[] = "`supplier_phone2` = '" . addslashes($data["SupplierPhone2"]) . "'";
+                if (@$entity->getId() == 0) {
+                    $q[] = "`reference` = '" . addslashes($data["SupplierId"]) . "'";
+                    $q[] = "`suppliergroup` = '1'";
+                    
+                    $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
+                    echo $sql . "<BR>";
+                    $em->getConnection()->exec($sql);
+                } else {
+                    $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
+                    echo $sql . "<BR>";
+                    $em->getConnection()->exec($sql);
+                }
+
+            }
+        }
+    }    
 }
