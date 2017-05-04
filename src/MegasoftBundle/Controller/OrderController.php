@@ -878,7 +878,7 @@ class OrderController extends Main {
     function saveMegasoft(Request $request) {
         $vat = 1.24;
         $id = $request->request->get("id");
-        $megasoft = new Megasoft();
+        //$megasoft = new Megasoft();
         $object = "SALDOC";
         $order = $this->getDoctrine()
                 ->getRepository("MegasoftBundle:Order")
