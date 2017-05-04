@@ -148,7 +148,7 @@ class SupplierController extends Main {
                 $q[] = "`supplier_phone02` = '" . addslashes($data["SupplierPhone02"]) . "'";
                 if (@$entity->getId() == 0) {
                     $q[] = "`reference` = '" . addslashes($data["SupplierId"]) . "'";
-                    $q[] = "`suppliergroup` = '1'";
+                    //$q[] = "`suppliergroup` = '1'";
                     
                     $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
                     echo $sql . "<BR>";
