@@ -2,173 +2,91 @@
 
 namespace MegasoftBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Supplier
- *
- * @ORM\Table(name="supplier", indexes={@ORM\Index(name="reference", columns={"reference"})})
- * @ORM\Entity
  */
-class Supplier {
+class Supplier
+{
+    /**
+     * @var integer
+     */
+    private $reference;
 
-    public function getField($field) {
-        return $this->$field;
-    }
+    /**
+     * @var string
+     */
+    private $supplierCode;
 
-    public function setField($field, $val) {
-        $this->$field = $val;
-        return $val;
-    }
+    /**
+     * @var string
+     */
+    private $supplierName;
+
+    /**
+     * @var string
+     */
+    private $supplierAfm;
+
+    /**
+     * @var string
+     */
+    private $supplierAddress;
+
+    /**
+     * @var string
+     */
+    private $supplierZip;
+
+    /**
+     * @var string
+     */
+    private $supplierCity;
+
+    /**
+     * @var string
+     */
+    private $supplierPhone01;
+
+    /**
+     * @var string
+     */
+    private $supplierPhone02;
+
+    /**
+     * @var string
+     */
+    private $supplierSite;
+
+    /**
+     * @var \DateTime
+     */
+    private $ts;
 
     /**
      * @var integer
-     *
-     * @ORM\Column(name="reference", type="integer", nullable=false)
      */
-    protected $reference;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="supplier_code", type="string", length=255, nullable=false)
-     */
-    protected $supplierCode;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="supplier_trdr_supfindata_lbal", type="string", length=255, nullable=false)
-     */
-    protected $supplierTrdrSupfindataLbal;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="supplier_name", type="string", length=255, nullable=false)
-     */
-    protected $supplierName;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="supplier_afm", type="string", length=255, nullable=false)
-     */
-    protected $supplierAfm;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="supplier_address", type="string", length=255, nullable=false)
-     */
-    protected $supplierAddress;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="supplier_district", type="string", length=255, nullable=false)
-     */
-    protected $supplierDistrict;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="supplier_zip", type="string", length=255, nullable=false)
-     */
-    protected $supplierZip;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="supplier_city", type="string", length=255, nullable=false)
-     */
-    protected $supplierCity;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="supplier_phone01", type="string", length=255, nullable=false)
-     */
-    protected $supplierPhone01;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="supplier_phone02", type="string", length=255, nullable=false)
-     */
-    protected $supplierPhone02;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="supplier_fax", type="string", length=255, nullable=false)
-     */
-    protected $supplierFax;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="supplier_webpage", type="string", length=255, nullable=false)
-     */
-    protected $supplierWebpage;
+    private $actioneer;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="supplier_upddate", type="datetime", nullable=false)
      */
-    protected $supplierUpddate;
+    private $created;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="supplier_insdate", type="datetime", nullable=false)
      */
-    protected $supplierInsdate;
+    private $modified;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="ts", type="datetime", nullable=false)
+     * @var string
      */
-    protected $ts = 'CURRENT_TIMESTAMP';
+    private $flatData;
 
     /**
      * @var integer
-     *
-     * @ORM\Column(name="actioneer", type="integer", nullable=false)
      */
-    protected $actioneer;
+    private $id;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created", type="datetime", nullable=false)
-     */
-    protected $created;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="modified", type="datetime", nullable=false)
-     */
-    protected $modified;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="flat_data", type="text", length=65535, nullable=false)
-     */
-    protected $flatData;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    protected $id;
 
     /**
      * Set reference
@@ -177,7 +95,8 @@ class Supplier {
      *
      * @return Supplier
      */
-    public function setReference($reference) {
+    public function setReference($reference)
+    {
         $this->reference = $reference;
 
         return $this;
@@ -188,7 +107,8 @@ class Supplier {
      *
      * @return integer
      */
-    public function getReference() {
+    public function getReference()
+    {
         return $this->reference;
     }
 
@@ -199,7 +119,8 @@ class Supplier {
      *
      * @return Supplier
      */
-    public function setSupplierCode($supplierCode) {
+    public function setSupplierCode($supplierCode)
+    {
         $this->supplierCode = $supplierCode;
 
         return $this;
@@ -210,30 +131,9 @@ class Supplier {
      *
      * @return string
      */
-    public function getSupplierCode() {
+    public function getSupplierCode()
+    {
         return $this->supplierCode;
-    }
-
-    /**
-     * Set supplierTrdrSupfindataLbal
-     *
-     * @param string $supplierTrdrSupfindataLbal
-     *
-     * @return Supplier
-     */
-    public function setSupplierTrdrSupfindataLbal($supplierTrdrSupfindataLbal) {
-        $this->supplierTrdrSupfindataLbal = $supplierTrdrSupfindataLbal;
-
-        return $this;
-    }
-
-    /**
-     * Get supplierTrdrSupfindataLbal
-     *
-     * @return string
-     */
-    public function getSupplierTrdrSupfindataLbal() {
-        return $this->supplierTrdrSupfindataLbal;
     }
 
     /**
@@ -243,7 +143,8 @@ class Supplier {
      *
      * @return Supplier
      */
-    public function setSupplierName($supplierName) {
+    public function setSupplierName($supplierName)
+    {
         $this->supplierName = $supplierName;
 
         return $this;
@@ -254,7 +155,8 @@ class Supplier {
      *
      * @return string
      */
-    public function getSupplierName() {
+    public function getSupplierName()
+    {
         return $this->supplierName;
     }
 
@@ -265,7 +167,8 @@ class Supplier {
      *
      * @return Supplier
      */
-    public function setSupplierAfm($supplierAfm) {
+    public function setSupplierAfm($supplierAfm)
+    {
         $this->supplierAfm = $supplierAfm;
 
         return $this;
@@ -276,7 +179,8 @@ class Supplier {
      *
      * @return string
      */
-    public function getSupplierAfm() {
+    public function getSupplierAfm()
+    {
         return $this->supplierAfm;
     }
 
@@ -287,7 +191,8 @@ class Supplier {
      *
      * @return Supplier
      */
-    public function setSupplierAddress($supplierAddress) {
+    public function setSupplierAddress($supplierAddress)
+    {
         $this->supplierAddress = $supplierAddress;
 
         return $this;
@@ -298,30 +203,9 @@ class Supplier {
      *
      * @return string
      */
-    public function getSupplierAddress() {
+    public function getSupplierAddress()
+    {
         return $this->supplierAddress;
-    }
-
-    /**
-     * Set supplierDistrict
-     *
-     * @param string $supplierDistrict
-     *
-     * @return Supplier
-     */
-    public function setSupplierDistrict($supplierDistrict) {
-        $this->supplierDistrict = $supplierDistrict;
-
-        return $this;
-    }
-
-    /**
-     * Get supplierDistrict
-     *
-     * @return string
-     */
-    public function getSupplierDistrict() {
-        return $this->supplierDistrict;
     }
 
     /**
@@ -331,7 +215,8 @@ class Supplier {
      *
      * @return Supplier
      */
-    public function setSupplierZip($supplierZip) {
+    public function setSupplierZip($supplierZip)
+    {
         $this->supplierZip = $supplierZip;
 
         return $this;
@@ -342,7 +227,8 @@ class Supplier {
      *
      * @return string
      */
-    public function getSupplierZip() {
+    public function getSupplierZip()
+    {
         return $this->supplierZip;
     }
 
@@ -353,7 +239,8 @@ class Supplier {
      *
      * @return Supplier
      */
-    public function setSupplierCity($supplierCity) {
+    public function setSupplierCity($supplierCity)
+    {
         $this->supplierCity = $supplierCity;
 
         return $this;
@@ -364,7 +251,8 @@ class Supplier {
      *
      * @return string
      */
-    public function getSupplierCity() {
+    public function getSupplierCity()
+    {
         return $this->supplierCity;
     }
 
@@ -375,7 +263,8 @@ class Supplier {
      *
      * @return Supplier
      */
-    public function setSupplierPhone01($supplierPhone01) {
+    public function setSupplierPhone01($supplierPhone01)
+    {
         $this->supplierPhone01 = $supplierPhone01;
 
         return $this;
@@ -386,7 +275,8 @@ class Supplier {
      *
      * @return string
      */
-    public function getSupplierPhone01() {
+    public function getSupplierPhone01()
+    {
         return $this->supplierPhone01;
     }
 
@@ -397,7 +287,8 @@ class Supplier {
      *
      * @return Supplier
      */
-    public function setSupplierPhone02($supplierPhone02) {
+    public function setSupplierPhone02($supplierPhone02)
+    {
         $this->supplierPhone02 = $supplierPhone02;
 
         return $this;
@@ -408,96 +299,33 @@ class Supplier {
      *
      * @return string
      */
-    public function getSupplierPhone02() {
+    public function getSupplierPhone02()
+    {
         return $this->supplierPhone02;
     }
 
     /**
-     * Set supplierFax
+     * Set supplierSite
      *
-     * @param string $supplierFax
+     * @param string $supplierSite
      *
      * @return Supplier
      */
-    public function setSupplierFax($supplierFax) {
-        $this->supplierFax = $supplierFax;
+    public function setSupplierSite($supplierSite)
+    {
+        $this->supplierSite = $supplierSite;
 
         return $this;
     }
 
     /**
-     * Get supplierFax
+     * Get supplierSite
      *
      * @return string
      */
-    public function getSupplierFax() {
-        return $this->supplierFax;
-    }
-
-    /**
-     * Set supplierWebpage
-     *
-     * @param string $supplierWebpage
-     *
-     * @return Supplier
-     */
-    public function setSupplierWebpage($supplierWebpage) {
-        $this->supplierWebpage = $supplierWebpage;
-
-        return $this;
-    }
-
-    /**
-     * Get supplierWebpage
-     *
-     * @return string
-     */
-    public function getSupplierWebpage() {
-        return $this->supplierWebpage;
-    }
-
-    /**
-     * Set supplierUpddate
-     *
-     * @param \DateTime $supplierUpddate
-     *
-     * @return Supplier
-     */
-    public function setSupplierUpddate($supplierUpddate) {
-        $this->supplierUpddate = $supplierUpddate;
-
-        return $this;
-    }
-
-    /**
-     * Get supplierUpddate
-     *
-     * @return \DateTime
-     */
-    public function getSupplierUpddate() {
-        return $this->supplierUpddate;
-    }
-
-    /**
-     * Set supplierInsdate
-     *
-     * @param \DateTime $supplierInsdate
-     *
-     * @return Supplier
-     */
-    public function setSupplierInsdate($supplierInsdate) {
-        $this->supplierInsdate = $supplierInsdate;
-
-        return $this;
-    }
-
-    /**
-     * Get supplierInsdate
-     *
-     * @return \DateTime
-     */
-    public function getSupplierInsdate() {
-        return $this->supplierInsdate;
+    public function getSupplierSite()
+    {
+        return $this->supplierSite;
     }
 
     /**
@@ -507,7 +335,8 @@ class Supplier {
      *
      * @return Supplier
      */
-    public function setTs($ts) {
+    public function setTs($ts)
+    {
         $this->ts = $ts;
 
         return $this;
@@ -518,7 +347,8 @@ class Supplier {
      *
      * @return \DateTime
      */
-    public function getTs() {
+    public function getTs()
+    {
         return $this->ts;
     }
 
@@ -529,7 +359,8 @@ class Supplier {
      *
      * @return Supplier
      */
-    public function setActioneer($actioneer) {
+    public function setActioneer($actioneer)
+    {
         $this->actioneer = $actioneer;
 
         return $this;
@@ -540,7 +371,8 @@ class Supplier {
      *
      * @return integer
      */
-    public function getActioneer() {
+    public function getActioneer()
+    {
         return $this->actioneer;
     }
 
@@ -551,7 +383,8 @@ class Supplier {
      *
      * @return Supplier
      */
-    public function setCreated($created) {
+    public function setCreated($created)
+    {
         $this->created = $created;
 
         return $this;
@@ -562,7 +395,8 @@ class Supplier {
      *
      * @return \DateTime
      */
-    public function getCreated() {
+    public function getCreated()
+    {
         return $this->created;
     }
 
@@ -573,7 +407,8 @@ class Supplier {
      *
      * @return Supplier
      */
-    public function setModified($modified) {
+    public function setModified($modified)
+    {
         $this->modified = $modified;
 
         return $this;
@@ -584,7 +419,8 @@ class Supplier {
      *
      * @return \DateTime
      */
-    public function getModified() {
+    public function getModified()
+    {
         return $this->modified;
     }
 
@@ -595,7 +431,8 @@ class Supplier {
      *
      * @return Supplier
      */
-    public function setFlatData($flatData) {
+    public function setFlatData($flatData)
+    {
         $this->flatData = $flatData;
 
         return $this;
@@ -606,7 +443,8 @@ class Supplier {
      *
      * @return string
      */
-    public function getFlatData() {
+    public function getFlatData()
+    {
         return $this->flatData;
     }
 
@@ -615,8 +453,9 @@ class Supplier {
      *
      * @return integer
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
-
 }
+
