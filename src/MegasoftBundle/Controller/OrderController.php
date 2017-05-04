@@ -20,8 +20,6 @@ class OrderController extends Main {
     var $repository = 'MegasoftBundle:Order';
     var $newentity = '';
 
-
-
     /**
      * @Route("/megasoft/order/order")
      */
@@ -90,7 +88,7 @@ class OrderController extends Main {
         $items = array();
         foreach ($order->getItems() as $item) {
             $product = $item->getProduct();
-            $items[$product->getItemMtrplace()."-".$product->getId()] = $item;
+            $items[$product->getItemMtrplace() . "-" . $product->getId()] = $item;
         }
         ksort($items);
         foreach ($items as $item) {
@@ -151,11 +149,11 @@ class OrderController extends Main {
             $user = $this->get('security.token_storage')->getToken()->getUser();
             $entity->setUser($user);
             /*
-            $vat = $this->getDoctrine()
-                    ->getRepository("MegasoftBundle:Vat")
-                    ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
-            //$entity->setVat($vat);
-            */
+              $vat = $this->getDoctrine()
+              ->getRepository("MegasoftBundle:Vat")
+              ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
+              //$entity->setVat($vat);
+             */
             $entity->setCustomerName($customer->getCustomerName() . " (" . $customer->getCustomerAfm() . " - " . $customer->getCustomerCode() . ")");
             $route = $this->getDoctrine()
                     ->getRepository("MegasoftBundle:Route")
@@ -249,12 +247,12 @@ class OrderController extends Main {
         //$this->setSetting("MegasoftBundle:Product:Vat", 1310);
         $vatid = $this->getSetting("MegasoftBundle:Product:Vat");
         /*
-        $vat = $this->getDoctrine()
-                ->getRepository("MegasoftBundle:Vat")
-                ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
+          $vat = $this->getDoctrine()
+          ->getRepository("MegasoftBundle:Vat")
+          ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
 
-        $order->setVat($vat);
-        */
+          $order->setVat($vat);
+         */
         $route = $this->getDoctrine()
                 ->getRepository("MegasoftBundle:Route")
                 ->find(1);
@@ -888,31 +886,13 @@ class OrderController extends Main {
         $customer = $this->getDoctrine()
                 ->getRepository("MegasoftBundle:Customer")
                 ->find($order->getCustomer());
-        if ($order->getVat())
-            $vatsst = $id > 0 ? $order->getVat()->getVatsts() : $this->getSetting("MegasoftBundle:Product:Vat");
-        else
-            $vatsst = 1410; //$this->getSetting("MegasoftBundle:Product:Vat");
 
-        if ($order->getReference() > 0) {
-            $data = $megasoft->delData($object, (int) $order->getReference());
-        }
-        $objectArr = array();
-        $objectArr[0]["TRDR"] = $customer->getReference();
-        $objectArr[0]["SERIESNUM"] = $order->getId();
-        $objectArr[0]["FINCODE"] = $order->getFincode();
-        $objectArr[0]["PAYMENT"] = 1000;
-        //$objectArr[0]["TFPRMS"] = $model->tfprms;
-        //$objectArr[0]["FPRMS"] = $model->fprms;
-        $objectArr[0]["SERIES"] = 7021; //$model->series;
-        $objectArr[0]["VATSTS"] = $customer->getCustomerVatsts();
-        //$objectArr[0]["DISC1PRC"] = 10;   
-        $dataOut[$object] = (array) $objectArr;
-
-
-        $dataOut["ITELINES"] = array();
-
-        $k = 0;
-        //print_r($dataOut);
+        
+        $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
+        $login = $this->getSetting("MegasoftBundle:Webservice:Login");
+        //{"customerid":1,"orderno":"B2B00001","comments":"Ayti eimai mia test paraggelia","items":[{"storeid":3,"price":10.35,"qty":4},{"storeid":7,"price":14.35,"qty":7}]}
+       
+        
         foreach ($order->getItems() as $item) {
             //$dataOut["ITELINES"][] = array("QTY1" => $item->getQty(), "VAT" => $vat, "LINENUM" => $item->getLineval(), "MTRL" => $item->getProduct()->getReference());
             $dataOut["ITELINES"][] = array(
@@ -924,31 +904,57 @@ class OrderController extends Main {
                 "LINEVAL" => $item->getLineval() / $vat,
                 "DISC1PRC" => $item->getDisc1prc()
             );
+        }        
+        
+        foreach ($order->getItems() as $item) {
+            $item1["storeid"] = $item->getProduct()->getReference();
+            $item1["qty"] = $item->getQty();
+            $item1["price"] = $item->getPrice() / $vat;
+            $items[] = $item1;
         }
 
-        $locateinfo = "MTRL,NAME,PRICE,QTY1,VAT;ITELINES:DISC1PRC,ITELINES:LINEVAL,MTRL,MTRL_ITEM_CODE,MTRL_ITEM_CODE1,MTRL_ITEM_NAME,MTRL_ITEM_NAME1,PRICE,QTY1;SALDOC:BUSUNITS,EXPN,TRDR,MTRL,PRICE,QTY1,VAT";
-        //print_r($dataOut);
-        $out = $megasoft->setData((array) $dataOut, $object, (int) 0);
-        //print_r($out);
+        
+        //$comments = str_replace("\n", " ", Mage::app()->getRequest()->getParam('comments'));
+        //$comments = str_replace("*", "", $comments);
+        //$comments = str_replace(">", "", $comments);
+        ///$comments = str_replace("<", "", $comments);
+        //$comments = str_replace("@", "", $comments);
+        $comments = '';
 
-        if (@$out->id > 0) {
-            if ($order->getReference() == 0) {
-                foreach ($order->getItems() as $item) {
-                    $product = $item->getProduct();
-                    if ($product) {
-                        $reserved = (int) $product->getReserved();
-                        $reserved += $item->getQty();
-                        $product->setReserved($reserved);
-                        $this->flushpersist($product);
-                        echo "\n(" . $reserved . ")\n";
-                    }
-                }
-            }
+        $orderArr["items"] = $items;
+        $orderArr["customerid"] = $customer->getReference();
+        $orderArr["orderno"] = $order->getFincode();
+        $orderArr["comments"] = $comments;
+        $JsonStrWeb = json_encode($orderArr);
 
-            $order->setReference($out->id);
-            $this->flushpersist($order);
+        $params["Login"] = $login;
+        $params["JsonStrWeb"] = $JsonStrWeb;
+        //$results = $soap->GetCustomers();
+        print_r($params);
+        $result = $soap->__soapCall("InsertOrder", array($params));
+        //echo $JsonStrWeb;
+        echo $result;
+        exit;
+        //print_r($result);
+        //echo ".";
+        //json_encode
+        /*
+        if ($result) {
+            $order->addStatusToHistory($order->getStatus(), json_encode($result), false);
+            $order->save();
+        } else {
+            $order->addStatusToHistory($order->getStatus(), json_encode($result) . "[Failed]", false);
+            $order->save();
         }
-        //exit;
+        if (Mage::app()->getRequest()->getParam('comments') != "") {
+            $order->addStatusToHistory($order->getStatus(), $JsonStrWeb . Mage::app()->getRequest()->getParam('comments'), false);
+            $order->save();
+        }
+        */
+        //return $result->GetStockResult;        
+
+
+
 
         $json = json_encode($out);
         return new Response(
@@ -1037,29 +1043,29 @@ class OrderController extends Main {
         $history = '';
         /*
          * 
-        $repormodels = $this->getDoctrine()->getRepository('MegasoftBundle:Reportmodel')->findBy(array('customerId' => $order->getCustomer()->getId()), array('ts' => 'DESC'));
-        $history = "<ul>";
-        foreach ($repormodels as $repormodel) {
-            if ($i++ > 15)
-                break;
-            $brandModelType = $this->getDoctrine()
-                    ->getRepository('MegasoftBundle:BrandModelType')
-                    ->find($repormodel->getModel());
-            $brandsmodel = $this->getDoctrine()
-                    ->getRepository('MegasoftBundle:BrandModel')
-                    ->find($brandModelType->getBrandModel());
-            $brand = $this->getDoctrine()
-                    ->getRepository('MegasoftBundle:Brand')
-                    ->find($brandsmodel->getBrand());
+          $repormodels = $this->getDoctrine()->getRepository('MegasoftBundle:Reportmodel')->findBy(array('customerId' => $order->getCustomer()->getId()), array('ts' => 'DESC'));
+          $history = "<ul>";
+          foreach ($repormodels as $repormodel) {
+          if ($i++ > 15)
+          break;
+          $brandModelType = $this->getDoctrine()
+          ->getRepository('MegasoftBundle:BrandModelType')
+          ->find($repormodel->getModel());
+          $brandsmodel = $this->getDoctrine()
+          ->getRepository('MegasoftBundle:BrandModel')
+          ->find($brandModelType->getBrandModel());
+          $brand = $this->getDoctrine()
+          ->getRepository('MegasoftBundle:Brand')
+          ->find($brandsmodel->getBrand());
 
-            $yearfrom = substr($brandsmodel->getYearFrom(), 4, 2) . "/" . substr($brandsmodel->getYearFrom(), 0, 4);
-            $yearto = substr($brandsmodel->getYearTo(), 4, 2) . "/" . substr($brandsmodel->getYearTo(), 0, 4);
-            $yearto = $yearto == 0 ? 'Today' : $yearto;
-            $year = $yearfrom . " - " . $yearto;
-            $history .= "<li class='modelhistory' style='cursor:pointer' data-order='" . $order->getId() . "' data-ref='" . $repormodel->getModel() . "'>" . $brand->getBrand() . " " . $brandsmodel->getBrandModel() . " " . $year . " " . $brandModelType->getBrandModelType() . " " . $brandModelType->getEngine() . "</li>";
-        }
-        $history .= "</ul>";
-        */
+          $yearfrom = substr($brandsmodel->getYearFrom(), 4, 2) . "/" . substr($brandsmodel->getYearFrom(), 0, 4);
+          $yearto = substr($brandsmodel->getYearTo(), 4, 2) . "/" . substr($brandsmodel->getYearTo(), 0, 4);
+          $yearto = $yearto == 0 ? 'Today' : $yearto;
+          $year = $yearfrom . " - " . $yearto;
+          $history .= "<li class='modelhistory' style='cursor:pointer' data-order='" . $order->getId() . "' data-ref='" . $repormodel->getModel() . "'>" . $brand->getBrand() . " " . $brandsmodel->getBrandModel() . " " . $year . " " . $brandModelType->getBrandModelType() . " " . $brandModelType->getEngine() . "</li>";
+          }
+          $history .= "</ul>";
+         */
         $response = $this->get('twig')->render('MegasoftBundle:Order:search.html.twig', array(
             'brands' => $this->getBrands(),
             'order' => $order->getId(),
@@ -1157,9 +1163,9 @@ class OrderController extends Main {
 
             $year = $yearfrom . " " . $yearto;
             if ($brandsmodeltype->getEngine() != "") {
-                $o["name"] = $brandsmodeltype->getBrandModelType() . " ".$brandsmodeltype->getPowerHp() . "ps (" . $brandsmodeltype->getEngine() . ")";
+                $o["name"] = $brandsmodeltype->getBrandModelType() . " " . $brandsmodeltype->getPowerHp() . "ps (" . $brandsmodeltype->getEngine() . ")";
             } else {
-                $o["name"] = $brandsmodeltype->getBrandModelType(). " ".$brandsmodeltype->getPowerHp() . "ps";
+                $o["name"] = $brandsmodeltype->getBrandModelType() . " " . $brandsmodeltype->getPowerHp() . "ps";
             }
             $out[] = $o;
         }
@@ -1707,7 +1713,7 @@ class OrderController extends Main {
         $user = $this->getDoctrine()
                 ->getRepository("AppBundle:User")
                 ->find(2);
-        
+
 
         $entity = $this->getDoctrine()
                 ->getRepository("MegasoftBundle:Order")
