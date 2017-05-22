@@ -1272,35 +1272,7 @@ class Product extends Entity {
 
         return '<img width="20" style="width:20px; max-width:20px; ' . $display . '" class="tick_' . $this->id . '" src="/assets/img/tick.png">';
     }    
-    /**
-     * @var \MegasoftBundle\Entity\Supplier
-     */
-    private $supplier;
 
-
-    /**
-     * Set supplier
-     *
-     * @param \MegasoftBundle\Entity\Supplier $supplier
-     *
-     * @return Product
-     */
-    public function setSupplier(\MegasoftBundle\Entity\Supplier $supplier = null)
-    {
-        $this->supplier = $supplier;
-
-        return $this;
-    }
-
-    /**
-     * Get supplier
-     *
-     * @return \MegasoftBundle\Entity\Supplier
-     */
-    public function getSupplier()
-    {
-        return $this->supplier;
-    }
     /**
      * @var \MegasoftBundle\Entity\Manufacturer
      */
@@ -1358,5 +1330,34 @@ class Product extends Entity {
     public function getRemarks()
     {
         return $this->remarks;
+    }
+    /**
+     * @var \MegasoftBundle\Entity\Supplier
+     */
+    private $supplier;
+
+
+    /**
+     * Set supplier
+     *
+     * @param \MegasoftBundle\Entity\Supplier $supplier
+     *
+     * @return Product
+     */
+    public function setSupplier(\MegasoftBundle\Entity\Supplier $supplier = null)
+    {
+        $this->supplier = $supplier;
+
+        return $this;
+    }
+
+    /**
+     * Get supplier
+     *
+     * @return \MegasoftBundle\Entity\Supplier
+     */
+    public function getSupplier()
+    {
+        return $this->supplier;
     }
 }
