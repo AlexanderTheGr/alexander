@@ -916,6 +916,7 @@ class ProductController extends Main {
     }
 
     function retrieveMtrmanfctr() {
+        return;
         $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M ";
         $megasoft = new Megasoft();
         $datas = $megasoft->createSql($params);
@@ -941,11 +942,26 @@ class ProductController extends Main {
           $soap->__setSoapHeaders($header);
          */
         $params["Login"] = $login;
+        
+        $response = $soap->__soapCall("GetManufacturers", array($params));
+        
+        
+
+        //exit;	
+        if (count($response->ArrayOfManufacturerDetails->ManufacturerDetails) == 1) {
+            $StoreDetails[] = $response->ArrayOfManufacturerDetails->ManufacturerDetails;
+        } elseif (count($response->ArrayOfManufacturerDetails->ManufacturerDetails) > 1) {
+            $StoreDetails = $response->ArrayOfManufacturerDetails->ManufacturerDetails;
+        }
+        
+        print_r($StoreDetails);
+        exit;
+        
         //$params["Date"] = date("Y-m-d");
         $params["ParticipateInEshop"] = 1;
         //$results = $soap->GetCustomers();
-        $response = $soap->__soapCall("GetProducts", array($params));
-
+        $response = $soap->__soapCall("GetProducts", array($params));        
+        
         //echo count($response->GetProductsResult->StoreDetails);
         //exit;	
         if (count($response->GetProductsResult->StoreDetails) == 1) {
