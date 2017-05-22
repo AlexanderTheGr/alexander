@@ -977,7 +977,7 @@ class ProductController extends Main {
         //exit;
         //$params["Date"] = "2017-05-10";
         $params["ParticipateInEshop"] = 1;
-        
+
         //$results = $soap->GetCustomers();
         $response = $soap->__soapCall("GetProducts", array($params));
 
@@ -995,8 +995,8 @@ class ProductController extends Main {
         foreach ($StoreDetails as $data) {
             $data = (array) $data;
 
-            print_r($data);
-            
+            //print_r($data);
+
             $entity = $this->getDoctrine()
                     ->getRepository($this->repository)
                     ->findOneBy(array("reference" => (int) $data["StoreId"]));
@@ -1049,7 +1049,7 @@ class ProductController extends Main {
             //$this->flushpersist($entity);
             $manufacturer = $this->getDoctrine()
                     ->getRepository("MegasoftBundle:Manufacturer")
-                    ->findOneBy(array("code" =>  $data["SupplierId"]));
+                    ->findOneBy(array("code" => $data["SupplierId"]));
 
 
             $params["table"] = "megasoft_product";
@@ -1079,6 +1079,14 @@ class ProductController extends Main {
                 $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
                 echo $sql . "<BR>";
                 $em->getConnection()->exec($sql);
+            }
+            $entity = $this->getDoctrine()
+                    ->getRepository($this->repository)
+                    ->findOneBy(array("reference" => (int) $data["StoreId"]));
+            if (@$entity->id > 0) {
+                $entity->tecdoc = $tecdoc;
+                $entity->updatetecdoc();
+                $entity->setProductFreesearch();
             }
             //exit;
         }
