@@ -975,7 +975,7 @@ class ProductController extends Main {
         }
 
         //exit;
-        $params["Date"] = "2017-05-10";
+        //$params["Date"] = "2017-05-10";
         $params["ParticipateInEshop"] = 1;
         
         //$results = $soap->GetCustomers();
