@@ -981,7 +981,8 @@ class ProductController extends Main {
         //$results = $soap->GetCustomers();
         $response = $soap->__soapCall("GetProducts", array($params));
 
-        //echo count($response->GetProductsResult->StoreDetails);
+        echo count($response->GetProductsResult->StoreDetails);
+        echo "<BR>";
         //exit;	
         if (count($response->GetProductsResult->StoreDetails) == 1) {
             $StoreDetails[] = $response->GetProductsResult->StoreDetails;
