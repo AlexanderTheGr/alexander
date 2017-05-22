@@ -995,6 +995,8 @@ class ProductController extends Main {
         foreach ($StoreDetails as $data) {
             $data = (array) $data;
 
+            print_r($data);
+            
             $entity = $this->getDoctrine()
                     ->getRepository($this->repository)
                     ->findOneBy(array("reference" => (int) $data["StoreId"]));
