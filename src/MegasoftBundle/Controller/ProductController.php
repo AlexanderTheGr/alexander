@@ -977,7 +977,6 @@ class ProductController extends Main {
         //exit;
         //$params["Date"] = "2017-05-10";
         //$params["ParticipateInEshop"] = 0;
-
         //$results = $soap->GetCustomers();
         $response = $soap->__soapCall("GetProducts", array($params));
 
@@ -1051,7 +1050,9 @@ class ProductController extends Main {
             $manufacturer = $this->getDoctrine()
                     ->getRepository("MegasoftBundle:Manufacturer")
                     ->findOneBy(array("code" => $data["SupplierId"]));
-
+            $supplier = $this->getDoctrine()
+                    ->getRepository("MegasoftBundle:Supplier")
+                    ->findOneBy(array("reference" => $data["mtrsup"]));
 
             $params["table"] = "megasoft_product";
             $q = array();
@@ -1067,15 +1068,17 @@ class ProductController extends Main {
                 $q[] = "`erp_supplier` = '" . $manufacturer->getTitle() . "'";
             } else {
                 $q[] = "`manufacturer` = NULL";
-                $q[] = "`erp_supplier` = ''";               
-                
+                $q[] = "`erp_supplier` = ''";
             }
             $q[] = "`tecdoc_supplier_id` = '" . addslashes($data["fwSupplierId"]) . "'";
             $q[] = "`tecdoc_code` = '" . addslashes($data["fwCode"]) . "'";
             $q[] = "`title` = '" . addslashes($data["StoreDescr"]) . "'";
             $q[] = "`remarks` = '" . addslashes($data["remarks"]) . "'";
-            $q[] = "`remarks` = '" . addslashes($data["remarks"]) . "'";
+            if ($supplier)
+                $q[] = "`supplier` = '" . $supplier->getId() . "'";
+            
             $q[] = "`product_sale` = '1'";
+            
             if (@$entity->getId() == 0) {
                 //$q[] = "`reference` = '" . $data[$params["megasoft_table"]] . "'";
                 $q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
