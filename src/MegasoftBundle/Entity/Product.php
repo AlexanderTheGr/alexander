@@ -1330,4 +1330,33 @@ class Product extends Entity {
     {
         return $this->manufacturer;
     }
+    /**
+     * @var string
+     */
+    private $remarks;
+
+
+    /**
+     * Set remarks
+     *
+     * @param string $remarks
+     *
+     * @return Product
+     */
+    public function setRemarks($remarks)
+    {
+        $this->remarks = $remarks;
+
+        return $this;
+    }
+
+    /**
+     * Get remarks
+     *
+     * @return string
+     */
+    public function getRemarks()
+    {
+        return $this->remarks;
+    }
 }
