@@ -591,13 +591,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 if ($search[0] == 'productfreesearch') {
                     $garr = explode(" ", $search[1]);
                     foreach ($garr as $d) {
-                        $likearr[] = "o.dataIndex like '%" . $d . "%'";
+                        $likearr[] = "so.dataIndex like '%" . $d . "%'";
                     }
                     $like = implode(" AND ", $likearr);
-                    $sqlearch = "Select o.id from SoftoneBundle:ProductFreesearch o where " . $like . "";
+                    $sqlearch = "Select so.id from SoftoneBundle:ProductFreesearch so where " . $like . "";
                 } else {
                     $search[1] = $this->clearstring($search[1]);
-                    $sqlearch = "Select o.id from SoftoneBundle:ProductSearch o where o.itemCode like '%" . $search[1] . "%' OR o.itemCode1 like '%" . $search[1] . "%' OR o.itemCode2 like '%" . $search[1] . "%'";
+                    $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
                 }
                 $qsupplier = "";
                 if ($dt_columns[3]["search"]["value"] > 3) {
@@ -665,8 +665,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 	$this->orderBy = "p.qty desc";
                 }
                 
-                
-               // $this->orderBy = "p.qty ".$dir;
+                // 6979111727
+                // $this->orderBy = "p.qty ".$dir;
                 
                 if (count((array) $articleIds)) {
                     $tecdoc_article = 'p.tecdocArticleId in (' . implode(",", $articleIds) . ') OR ';
@@ -675,24 +675,43 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     else
                     //$tecdoc_article2 = " p.id in (Select k.product FROM SoftoneBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . ")) OR ";
                         $tecdoc_article2 = "";
+						
                     $sql2 = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
                                 where ' . $qsupplier . ' (p.erpCode like "%' . $search[1] . '%" OR ' . $tecdoc_article . $tecdoc_article2 . ' ' . $sisxetisi . ')
                                 ORDER BY ' . $this->orderBy;
-
+					
+					if ($search[1] != '') {			
+						$sqlearch2 = "p.id in (Select o.id from SoftoneBundle:ProductSearch o where o.search like '%" . $search[1] . "%') OR ";
+					}
+					$hasArticleIds = true;
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where p.itemIsactive = 1 AND (' . $qsupplier . ' (' . $tecdoc_article . $tecdoc_article2 . ' ' . $sisxetisi . '))
+                                where p.itemIsactive = 1 AND (' . $qsupplier . '  (' . $tecdoc_article .$sqlearch2. $tecdoc_article2 . ' ' . $sisxetisi . ') )
                                 ORDER BY ' . $this->orderBy;
+								
+					if ($search[0] == 'productfreesearch') {
+						
+						$sql = 'SELECT  ' . $this->select . ', p.reference, p.id
+									FROM ' . $this->repository . ' ' . $this->prefix . '
+									where p.itemIsactive = 1 AND (' . $qsupplier . '  (' . $tecdoc_article .$sqlearch2. $tecdoc_article2 . ' ' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . ') )
+									ORDER BY ' . $this->orderBy;
+					}								
+								
                 } else {
+					$hasArticleIds = false;
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
                                 where p.itemIsactive = 1 AND (' . $qsupplier . ' (' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . '))
                                 ORDER BY ' . $this->orderBy;
+									
                 }
+				if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
+					//echo $sql;
+					//exit;				
+				}
 
-                //echo $sql;
-                //exit;
+
 
                 $sql = str_replace("p.*,", "", $sql);
                 //$sql = str_replace("ORDER BY p.qty asc","",$sql);
@@ -712,6 +731,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                   //exit;
                  */
                 $results = $query->getResult();
+				
+				
+				//$articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
+				
+				
             }
             $data["fields"] = $this->fields;
 
