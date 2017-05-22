@@ -231,13 +231,14 @@ class Customerrule {
         foreach ($rule["rules"] as $rl) {
 
             if (count($rl["rules"])) {
-                $out = $this->rulesLoop($rl, $catsEp, $supplier, $code);
+                $out = $this->rulesLoop($rl, $catsEp, $supplier, $code,$productsale);
                 if ($rule["condition"] == "OR" AND $out == true) {
                     return true;
                 }
                 if ($rule["condition"] == "AND" AND $out == false) {
                     return false;
                 }
+				
             }
             if ($rule["condition"] == "OR") {
                 $out = false;

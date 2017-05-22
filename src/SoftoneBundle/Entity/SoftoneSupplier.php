@@ -35,6 +35,7 @@ class SoftoneSupplier extends Entity {
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
      */
     protected $title;
+	
 
     /**
      * @var integer
@@ -88,7 +89,7 @@ class SoftoneSupplier extends Entity {
     public function getTitle() {
         return $this->title;
     }
-
+// 210 9019666
     /**
      * Get id
      *
@@ -100,13 +101,14 @@ class SoftoneSupplier extends Entity {
     
     
     function toSoftone() {
+		$company = $this->getSetting("SoftoneBundle:Softone:company") > 0 ? $this->getSetting("SoftoneBundle:Softone:company") : 1;
         $softone = new Softone();
-        $params["fSQL"] = "SELECT * FROM MTRMANFCTR where MTRMANFCTR = ".$this->id." AND COMPANY = 1001";
+        $params["fSQL"] = "SELECT * FROM MTRMANFCTR where MTRMANFCTR = ".$this->id." AND COMPANY = '".$company."'";
         $datas = $softone->createSql($params); 
         //print_r($datas);
-
+		//return;
         if (@count($datas->data)) return;
-        $params["fSQL"] = 'Insert INTO MTRMANFCTR (MTRMANFCTR,NAME,CODE,COMPANY) VALUES ('.$this->id.',\''.$this->title.'\', \''.$this->code.'\',1001)';
+        $params["fSQL"] = 'Insert INTO MTRMANFCTR (MTRMANFCTR,NAME,CODE,COMPANY) VALUES ('.$this->id.',\''.$this->title.'\', \''.$this->code.'\','.$company.')';
         $softone->createSql($params);       
     }
 

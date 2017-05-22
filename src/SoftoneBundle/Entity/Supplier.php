@@ -168,7 +168,7 @@ class Supplier {
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    var $id;
 
     /**
      * Set reference
