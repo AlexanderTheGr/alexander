@@ -958,10 +958,11 @@ class ProductController extends Main {
         
         foreach ($ManufacturerDetails as $data) {
             $data = (array) $data;
+            /*
             $entity = $this->getDoctrine()
                     ->getRepository("MegasoftBundle:Manufacturer")
                     ->findOneBy(array("reference" => (int) $data["ManufacturerID"]));            
-            
+            */
             if (@$entity->getId() == 0) {
                 //$q[] = "`reference` = '" . $data[$params["megasoft_table"]] . "'";
                 $sql = "insert megasoft_manufacturer set id = '".$data["ManufacturerID"]."', code = '".$data["ManufacturerCode"]."', title = '".$data["ManufacturerName"]."'";
