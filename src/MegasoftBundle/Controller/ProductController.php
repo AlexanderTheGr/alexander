@@ -1049,7 +1049,7 @@ class ProductController extends Main {
             //$this->flushpersist($entity);
             $manufacturer = $this->getDoctrine()
                     ->getRepository("MegasoftBundle:Manufacturer")
-                    ->findOneBy(array("code" => (int) $data["ManufacturerCode"]));
+                    ->findOneBy(array("code" => (int) $data["SupplierId"]));
 
 
             $params["table"] = "megasoft_product";
