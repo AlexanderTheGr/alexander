@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Controller\Main as Main;
 use MegasoftBundle\Entity\Product as Product;
+use MegasoftBundle\Entity\Manufacturer as Manufacturer;
 use MegasoftBundle\Entity\Productcategory as Productcategory;
 use AppBundle\Entity\Tecdoc as Tecdoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -958,11 +959,10 @@ class ProductController extends Main {
         
         foreach ($ManufacturerDetails as $data) {
             $data = (array) $data;
-            /*
+            
             $entity = $this->getDoctrine()
                     ->getRepository("MegasoftBundle:Manufacturer")
                     ->findOneBy(array("reference" => (int) $data["ManufacturerID"]));            
-            */
             
             if (@$entity->getId() == 0) {
                 //$q[] = "`reference` = '" . $data[$params["megasoft_table"]] . "'";
