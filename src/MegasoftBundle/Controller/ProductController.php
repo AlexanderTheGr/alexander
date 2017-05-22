@@ -1061,8 +1061,10 @@ class ProductController extends Main {
             $q[] = "`store_wholesale_price` = '" . addslashes($data["StoreWholeSalePrice"]) . "'";
             $q[] = "`qty` = '" . addslashes($data["StoreStock"]) . "'";
             $q[] = "`supplier_code` = '" . addslashes($data["SupplierCode"]) . "'";
-            if ($manufacturer)
+            if ($manufacturer) {
                 $q[] = "`manufacturer` = '" . $manufacturer->getId() . "'";
+                $q[] = "`erp_supplier` = '" . $manufacturer->getTitle() . "'";
+            }
             $q[] = "`tecdoc_supplier_id` = '" . addslashes($data["fwSupplierId"]) . "'";
             $q[] = "`tecdoc_code` = '" . addslashes($data["fwCode"]) . "'";
             $q[] = "`title` = '" . addslashes($data["StoreDescr"]) . "'";
