@@ -948,10 +948,10 @@ class ProductController extends Main {
         
 
         //exit;	
-        if (count($response->ArrayOfManufacturerDetails->ManufacturerDetails) == 1) {
-            $StoreDetails[] = $response->ArrayOfManufacturerDetails->ManufacturerDetails;
-        } elseif (count($response->ArrayOfManufacturerDetails->ManufacturerDetails) > 1) {
-            $StoreDetails = $response->ArrayOfManufacturerDetails->ManufacturerDetails;
+        if (count($response->GetManufacturersResult->ManufacturerDetails) == 1) {
+            $StoreDetails[] = $response->GetManufacturersResult->ManufacturerDetails;
+        } elseif (count($response->GetManufacturersResult->ManufacturerDetails) > 1) {
+            $StoreDetails = $response->GetManufacturersResult->ManufacturerDetails;
         }
         
         print_r($StoreDetails);
