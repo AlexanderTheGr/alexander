@@ -1084,11 +1084,11 @@ class ProductController extends Main {
                 $q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
 
                 $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
-                //echo $sql . "<BR>";
+                echo $sql . "<BR>";
                 $em->getConnection()->exec($sql);
             } else {
                 $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
-                //echo $sql . "<BR>";
+                echo $sql . "<BR>";
                 $em->getConnection()->exec($sql);
             }
             $entity = $this->getDoctrine()
