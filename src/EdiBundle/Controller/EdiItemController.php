@@ -182,7 +182,7 @@ class EdiItemController extends Main {
                     FROM " . $this->repository . " p, EdiBundle:Edi e
                     where 
                         e.id = p.Edi AND p.partno != '' AND
-                        (p.partno = '" . $search[1] . "' OR p.itemCode = '" . $search[1] . "' OR p.tecdocArticleId in (" . implode(",", $articleIds) . ")) "
+                        (p.artNr = '" . $search[1] . "' OR p.partno = '" . $search[1] . "' OR p.itemCode = '" . $search[1] . "' OR p.tecdocArticleId in (" . implode(",", $articleIds) . ")) "
             );
         } else {
             $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[0])));
@@ -441,7 +441,7 @@ class EdiItemController extends Main {
                 $edi = $dt_columns[1]["search"]["value"];
 
                 //$edi = $em->getRepository("EdiBundle:Edi")->find(1);
-                $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".partno != '' AND ((" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
+                $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".partno != '' AND ((" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".artNr = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
                 /*
                   if ($search[1]) {
                   $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND ((" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
@@ -625,7 +625,30 @@ class EdiItemController extends Main {
             $entity = $this->getDoctrine()
                     ->getRepository($this->repository)
                     ->find($json[0]);
-            if ($entity->getEdi()->getFunc() == 'getEdiPartMaster') { // is viakar, liakopoulos
+            if ($entity->getEdi()->getFunc() == 'getGbgEdiPartMaster') { // is viakar, liakopoulos
+
+				$zip = new \ZipArchive;
+				if ($zip->open('/home2/partsbox/OUTOFSTOCK_ATH.ZIP') === TRUE) {
+					$zip->extractTo('/home2/partsbox/');
+					$zip->close();
+					$file = "/home2/partsbox/OUTOFSTOCK_ATH.txt";
+					$availability = false;
+					if (($handle = fopen($file, "r")) !== FALSE) {
+					//echo 'sss';
+						while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
+							if ($data[0] == $entity->getItemcode()) {
+								if ($data[1] == 1) 
+								$availability = true;
+								break;
+							}
+						}
+					}
+				}
+
+                $entities[$entity->getItemcode()] = $entity;	
+				@$jsonarr[$key]['6'] = $entity->getDiscount($customer, $vat);
+				@$jsonarr[$key]['DT_RowClass'] .=  $availability ? ' text-success ' : ' text-danger ';
+            } elseif ($entity->getEdi()->getFunc() == 'getEdiPartMaster') { // is viakar, liakopoulos
                 if (@!$datas[$entity->getEdi()->getId()][$k]) {
                     $datas[$entity->getEdi()->getId()][$k]['ApiToken'] = $entity->getEdi()->getToken();
                     $datas[$entity->getEdi()->getId()][$k]['Items'] = array();
@@ -636,6 +659,7 @@ class EdiItemController extends Main {
 
                 $ands[$entity->getItemcode()] = $key;
                 $entities[$entity->getItemcode()] = $entity;
+				
             } elseif ($entity->getEdi()->getFunc() == 'getFibaEdiPartMaster') {
                 $AvailabilityDetailsHtml = '';
                 $entity->setFibaSoap();
@@ -898,6 +922,12 @@ class EdiItemController extends Main {
 				
                 $jsonarr["markupr"] = (double) $ediItem->getEdiMarkup($pricer);
                 $jsonarr["markupw"] = (double) $ediItem->getEdiMarkup($pricew);
+                $jsonarr["rules"] = $ediItem->getRulesss($pricew);
+				
+                $jsonarr["pricer"] = $pricer;
+                $jsonarr["pricew"] = $pricew;
+				
+                $jsonarr["edi"] = $edi->getId();
             }
         }
         $json = json_encode($jsonarr);

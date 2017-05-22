@@ -1159,6 +1159,31 @@ class EdiItem extends Entity {
         return $price > 0 ? $price : $markupedPrice;
     }
 
+    function getRulesss($pricefield = false) {
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        //$ediitem->tecdoc = new Tecdoc();
+
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+		
+		$rules = $this->getEdi()->loadEdirules($pricefield)->getRules();
+		//return (array)$rules;
+		$rules2 = array();
+		foreach ($rules as $rule) {
+				//$rule->validateRule($this);
+			//if ($rule->validateRule($this)) {
+				$SoftoneSupplier = $em->getRepository("SoftoneBundle:SoftoneSupplier")->findOneBy(array('title' => $this->getBrand()));
+				if ($SoftoneSupplier) {
+					$supplier = $SoftoneSupplier->getId();	
+				}
+				$rules2[] = $supplier;
+				$rules2[] = $rule->validateRule($this);
+			//}
+		}
+		return (array)$rules2;
+	}
     function getEdiMarkup($pricefield = false) {
 
         $rules = $this->getEdi()->loadEdirules($pricefield)->getRules();
