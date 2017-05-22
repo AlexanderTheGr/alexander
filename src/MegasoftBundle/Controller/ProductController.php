@@ -964,7 +964,7 @@ class ProductController extends Main {
                     ->getRepository("MegasoftBundle:Manufacturer")
                     ->find((int) $data["ManufacturerID"]);            
             
-            if (@$entity->getId() == 0) {
+            if (!$entity) {
                 //$q[] = "`reference` = '" . $data[$params["megasoft_table"]] . "'";
                 $sql = "insert megasoft_manufacturer set id = '".$data["ManufacturerID"]."', code = '".$data["ManufacturerCode"]."', title = '".$data["ManufacturerName"]."'";
                 echo $sql . "<BR>";
