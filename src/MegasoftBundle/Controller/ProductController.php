@@ -979,7 +979,7 @@ class ProductController extends Main {
             
         }
         
-        exit;
+        //exit;
         
         //$params["Date"] = date("Y-m-d");
         $params["ParticipateInEshop"] = 1;
@@ -994,8 +994,8 @@ class ProductController extends Main {
             $StoreDetails = $response->GetProductsResult->StoreDetails;
         }
 
-        print_r($StoreDetails);
-        exit;
+       // print_r($StoreDetails);
+        //exit;
 
         foreach ($StoreDetails as $data) {
             $data = (array) $data;
@@ -1050,6 +1050,11 @@ class ProductController extends Main {
              * 
              */
             //$this->flushpersist($entity);
+            $manufacturer = $this->getDoctrine()
+                    ->getRepository("MegasoftBundle:Manufacturer")
+                    ->findOneBy(array("code" => (int) $data["ManufacturerCode"]));            
+            
+            
             $params["table"] = "megasoft_product";
             $q = array();
             //$q[] =
@@ -1059,7 +1064,7 @@ class ProductController extends Main {
             $q[] = "`store_wholesale_price` = '" . addslashes($data["StoreWholeSalePrice"]) . "'";
             $q[] = "`qty` = '" . addslashes($data["StoreStock"]) . "'";
             $q[] = "`supplier_code` = '" . addslashes($data["SupplierCode"]) . "'";
-            $q[] = "`erp_supplier` = '" . addslashes($data["SupplierId"]) . "'";
+            $q[] = "`manufacturer` = '" . $manufacturer->getId() . "'";
             $q[] = "`tecdoc_supplier_id` = '" . addslashes($data["fwSupplierId"]) . "'";
             $q[] = "`tecdoc_code` = '" . addslashes($data["fwCode"]) . "'";
             $q[] = "`title` = '" . addslashes($data["StoreDescr"]) . "'";
@@ -1070,14 +1075,15 @@ class ProductController extends Main {
                 
                 $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
                 echo $sql . "<BR>";
-                $em->getConnection()->exec($sql);
+                //$em->getConnection()->exec($sql);
             } else {
                 $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
                 echo $sql . "<BR>";
-                $em->getConnection()->exec($sql);
+                //$em->getConnection()->exec($sql);
             }
             //exit;
         }
+        exit;
     }
 
     /**
