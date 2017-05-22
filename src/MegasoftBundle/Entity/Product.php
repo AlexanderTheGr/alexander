@@ -1273,7 +1273,7 @@ class Product extends Entity {
         return '<img width="20" style="width:20px; max-width:20px; ' . $display . '" class="tick_' . $this->id . '" src="/assets/img/tick.png">';
     }    
     /**
-     * @var \MegasoftBundle\Entity\MegasoftSupplier
+     * @var \MegasoftBundle\Entity\Supplier
      */
     private $supplier;
 
@@ -1281,11 +1281,11 @@ class Product extends Entity {
     /**
      * Set supplier
      *
-     * @param \MegasoftBundle\Entity\MegasoftSupplier $supplier
+     * @param \MegasoftBundle\Entity\Supplier $supplier
      *
      * @return Product
      */
-    public function setSupplier(\MegasoftBundle\Entity\MegasoftSupplier $supplier = null)
+    public function setSupplier(\MegasoftBundle\Entity\Supplier $supplier = null)
     {
         $this->supplier = $supplier;
 
@@ -1295,7 +1295,7 @@ class Product extends Entity {
     /**
      * Get supplier
      *
-     * @return \MegasoftBundle\Entity\MegasoftSupplier
+     * @return \MegasoftBundle\Entity\Supplier
      */
     public function getSupplier()
     {
