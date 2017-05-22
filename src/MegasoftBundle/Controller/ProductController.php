@@ -1064,6 +1064,10 @@ class ProductController extends Main {
             if ($manufacturer) {
                 $q[] = "`manufacturer` = '" . $manufacturer->getId() . "'";
                 $q[] = "`erp_supplier` = '" . $manufacturer->getTitle() . "'";
+            } else {
+                $q[] = "`manufacturer` = NULL";
+                $q[] = "`erp_supplier` = ''";               
+                
             }
             $q[] = "`tecdoc_supplier_id` = '" . addslashes($data["fwSupplierId"]) . "'";
             $q[] = "`tecdoc_code` = '" . addslashes($data["fwCode"]) . "'";
