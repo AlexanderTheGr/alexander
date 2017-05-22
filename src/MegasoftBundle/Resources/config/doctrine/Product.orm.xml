@@ -180,12 +180,22 @@
             field="manufacturer"
             target-entity="Manufacturer"
             inversed-by="Manufacturers"
+            join-column="manufacturer">
+            <cascade>
+                <cascade-remove />
+            </cascade>
+            <join-column name="manufacturer" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>            
+        </many-to-one>     
+        <many-to-one
+            field="supplier"
+            target-entity="Supplier"
+            inversed-by="Suppliers"
             join-column="supplier">
             <cascade>
                 <cascade-remove />
             </cascade>
             <join-column name="manufacturer" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>            
-        </many-to-one>                   
+        </many-to-one>                           
     </entity>
 </doctrine-mapping>
 
