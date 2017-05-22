@@ -1089,7 +1089,7 @@ class ProductController extends Main {
             $entity = $this->getDoctrine()
                     ->getRepository($this->repository)
                     ->findOneBy(array("reference" => (int) $data["StoreId"]));
-            if (@$entity->id > 0) {
+            if ($entity) {
                 $entity->tecdoc = $tecdoc;
                 $entity->updatetecdoc();
                 $entity->setProductFreesearch();
