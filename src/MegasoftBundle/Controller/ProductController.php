@@ -949,12 +949,34 @@ class ProductController extends Main {
 
         //exit;	
         if (count($response->GetManufacturersResult->ManufacturerDetails) == 1) {
-            $StoreDetails[] = $response->GetManufacturersResult->ManufacturerDetails;
+            $ManufacturerDetails[] = $response->GetManufacturersResult->ManufacturerDetails;
         } elseif (count($response->GetManufacturersResult->ManufacturerDetails) > 1) {
-            $StoreDetails = $response->GetManufacturersResult->ManufacturerDetails;
+            $ManufacturerDetails = $response->GetManufacturersResult->ManufacturerDetails;
         }
         
-        print_r($StoreDetails);
+        //print_r($StoreDetails);
+        
+        foreach ($ManufacturerDetails as $data) {
+            $data = (array) $data;
+            $entity = $this->getDoctrine()
+                    ->getRepository("MegasoftBundle:Manufacturer")
+                    ->findOneBy(array("reference" => (int) $data["ManufacturerID"]));            
+            
+            if (@$entity->getId() == 0) {
+                //$q[] = "`reference` = '" . $data[$params["megasoft_table"]] . "'";
+                $sql = "insert megasoft_manufacturer set id = '".$data["ManufacturerID"]."', code = '".$data["ManufacturerCode"]."', title = '".$data["ManufacturerName"]."'";
+                echo $sql . "<BR>";
+                //$em->getConnection()->exec($sql);
+            } else {
+                $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
+                $sql = "update megasoft_manufacturer set code = '".$data["ManufacturerCode"]."', title = '".$data["ManufacturerName"]."' where id = '" . $entity->getId() . "'";
+                echo $sql . "<BR>";
+                //$em->getConnection()->exec($sql);
+            }            
+            
+            
+        }
+        
         exit;
         
         //$params["Date"] = date("Y-m-d");
