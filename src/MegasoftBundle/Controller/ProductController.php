@@ -962,7 +962,7 @@ class ProductController extends Main {
             
             $entity = $this->getDoctrine()
                     ->getRepository("MegasoftBundle:Manufacturer")
-                    ->findOneBy(array("reference" => (int) $data["ManufacturerID"]));            
+                    ->find((int) $data["ManufacturerID"]);            
             
             if (@$entity->getId() == 0) {
                 //$q[] = "`reference` = '" . $data[$params["megasoft_table"]] . "'";
