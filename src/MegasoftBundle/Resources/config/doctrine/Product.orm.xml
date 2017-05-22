@@ -194,7 +194,7 @@
             <cascade>
                 <cascade-remove />
             </cascade>
-            <join-column name="manufacturer" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>            
+            <join-column name="supplier" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>            
         </many-to-one>                           
     </entity>
 </doctrine-mapping>
