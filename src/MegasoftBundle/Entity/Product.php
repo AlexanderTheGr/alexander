@@ -1029,6 +1029,16 @@ class Product extends Entity {
         $login = $this->getSetting("MegasoftBundle:Webservice:Login");//"demo-fastweb-megasoft";
         $em = $this->getDoctrine()->getManager();
         $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
+        
+        
+        $data["StoreId"] = "";
+        $data["StoreDescr"] = $this->title;
+        $data["fwCode"] = $this->tecdocCode;
+        $data["fwSupplierId"] = $this->tecdocArticleId;
+        $data["SupplierId"] = $this->erpSupplier;
+        
+        $response = $soap->__soapCall("GetProducts", array($params));
+        
         /*
           $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
           $headerbody = array('Login' => "alexander", 'Date' => "2016-10-10");
@@ -1290,5 +1300,34 @@ class Product extends Entity {
     public function getSupplier()
     {
         return $this->supplier;
+    }
+    /**
+     * @var \MegasoftBundle\Entity\Manufacturer
+     */
+    private $manufacturer;
+
+
+    /**
+     * Set manufacturer
+     *
+     * @param \MegasoftBundle\Entity\Manufacturer $manufacturer
+     *
+     * @return Product
+     */
+    public function setManufacturer(\MegasoftBundle\Entity\Manufacturer $manufacturer = null)
+    {
+        $this->manufacturer = $manufacturer;
+
+        return $this;
+    }
+
+    /**
+     * Get manufacturer
+     *
+     * @return \MegasoftBundle\Entity\Manufacturer
+     */
+    public function getManufacturer()
+    {
+        return $this->manufacturer;
     }
 }

@@ -81,4 +81,3 @@ class Manufacturer
         return $this->id;
     }
 }
-
