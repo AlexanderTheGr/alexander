@@ -579,6 +579,7 @@ class Main extends Controller {
                     $results = $em->getRepository($datasource["repository"])->findAll();
                     $seloptions = array();
                     $asd = (count($results) == 2) ? '0' : NULL;
+                    echo count($results).",";
                     foreach (@(array) $results as $data) {
                         $suffix = $datasource['suffix'] ? " (" . $data->getField($datasource['suffix']) . ")" : "";
                         $seloptions[] = array("name" => $data->getField($datasource['name']) . $suffix, "value" => $data->getField($datasource['value']));
