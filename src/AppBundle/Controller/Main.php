@@ -592,7 +592,8 @@ class Main extends Controller {
                     foreach (@(array) $options["dataarray"] as $data) {
                         $seloptions[] = array("name" => $data ["name"] . " (" . $data ["value"] . ")", "value" => $data ["value"]);
                     }
-                    print_r($seloptions);
+                    //print_r($seloptions);
+                    $asd = (count($seloptions) == 2) ? '0' : NULL;
                     //echo $field."-->(".$entity->getField($field).")";
                     //$asd = $entity->getField($field) ? $entity->getField($field) : "0";
                     $defaultValue = $entity->getField($field) != '' ? (string) $entity->getField($field) : $asd;
