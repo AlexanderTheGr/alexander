@@ -1418,4 +1418,62 @@ class Product extends Entity {
     {
         return $this->place;
     }
+    /**
+     * @var string
+     */
+    private $barcode;
+
+    /**
+     * @var boolean
+     */
+    private $webupd = '0';
+
+
+    /**
+     * Set barcode
+     *
+     * @param string $barcode
+     *
+     * @return Product
+     */
+    public function setBarcode($barcode)
+    {
+        $this->barcode = $barcode;
+
+        return $this;
+    }
+
+    /**
+     * Get barcode
+     *
+     * @return string
+     */
+    public function getBarcode()
+    {
+        return $this->barcode;
+    }
+
+    /**
+     * Set webupd
+     *
+     * @param boolean $webupd
+     *
+     * @return Product
+     */
+    public function setWebupd($webupd)
+    {
+        $this->webupd = $webupd;
+
+        return $this;
+    }
+
+    /**
+     * Get webupd
+     *
+     * @return boolean
+     */
+    public function getWebupd()
+    {
+        return $this->webupd;
+    }
 }
