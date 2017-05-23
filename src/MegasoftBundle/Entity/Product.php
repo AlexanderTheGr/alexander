@@ -13,6 +13,7 @@ use MegasoftBundle\Entity\TecdocSupplier as TecdocSupplier;
  *
  * @ORM\Entity(repositoryClass="MegasoftBundle\Entity\ProductRepository")
  */
+
 class Product extends Entity {
 
     var $repositories = array();
