@@ -835,5 +835,11 @@ class Order extends Entity {
     public function getCustomer() {
         return $this->customer;
     }
-
+    function getTotal() {
+        $total = 0;
+        foreach ($this->getItems() as $item) {
+            @$total += $item->getLineval();
+        }
+        return $total;
+    }
 }
