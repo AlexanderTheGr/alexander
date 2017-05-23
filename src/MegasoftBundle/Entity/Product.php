@@ -1360,4 +1360,33 @@ class Product extends Entity {
     {
         return $this->supplier;
     }
+    /**
+     * @var string
+     */
+    private $supref;
+
+
+    /**
+     * Set supref
+     *
+     * @param string $supref
+     *
+     * @return Product
+     */
+    public function setSupref($supref)
+    {
+        $this->supref = $supref;
+
+        return $this;
+    }
+
+    /**
+     * Get supref
+     *
+     * @return string
+     */
+    public function getSupref()
+    {
+        return $this->supref;
+    }
 }
