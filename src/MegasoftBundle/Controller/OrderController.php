@@ -435,7 +435,7 @@ class OrderController extends Main {
         $itemMtrsup = "<select id='classtitem'>";
         $itemMtrsup .= "<option value=0>Select</option>";
         foreach ($suppliers as $supplier) {
-            $itemMtrsup .= "<option value='" . $supplier->getId() . "'>" . $supplier->getTitle() . "</option>"; //array("value" => (string) $supplier->getReference(), "name" => $supplier->getSupplierName()); // $supplier->getSupplierName();
+            $itemMtrsup .= "<option value='" . $supplier->getId() . "'>" . $supplier->getSupplierName() . "</option>"; //array("value" => (string) $supplier->getReference(), "name" => $supplier->getSupplierName()); // $supplier->getSupplierName();
         }
         $itemMtrsup .= "</select>";
 
