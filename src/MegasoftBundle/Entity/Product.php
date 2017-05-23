@@ -1476,4 +1476,62 @@ class Product extends Entity {
     {
         return $this->webupd;
     }
+    /**
+     * @var boolean
+     */
+    private $priceupd = '0';
+
+    /**
+     * @var boolean
+     */
+    private $active = '1';
+
+
+    /**
+     * Set priceupd
+     *
+     * @param boolean $priceupd
+     *
+     * @return Product
+     */
+    public function setPriceupd($priceupd)
+    {
+        $this->priceupd = $priceupd;
+
+        return $this;
+    }
+
+    /**
+     * Get priceupd
+     *
+     * @return boolean
+     */
+    public function getPriceupd()
+    {
+        return $this->priceupd;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     *
+     * @return Product
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
 }
