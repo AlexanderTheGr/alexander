@@ -98,9 +98,9 @@ class OrderController extends Main {
             $product = $item->getProduct();
             if (!$product)
                 continue;
-            $ti = $product->getSupplier() ? $product->getSupplier()->getSupplierName() : "";
+            $ti = $product->getSupplier() ? $product->getManufacturer()->getTitle() : "";
 
-            $supplier = $item->getProduct()->getSupplier() ? $item->getProduct()->getSupplier()->getTitle() : '';
+            $supplier = $item->getProduct()->getSupplier() ? $item->getProduct()->getManufacturer()->getTitle() : '';
             $html .= "<tr>";
             $html .= "<td>" . $product->getTitle() . "</td>";
             $html .= "<td>" . $product->getErpCode() . "</td>";
