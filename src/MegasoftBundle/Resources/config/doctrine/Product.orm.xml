@@ -116,6 +116,8 @@
                 <option name="unsigned"/>
             </options>
         </field>
+        
+        
               
         <field name="qty" type="integer" column="qty" nullable="true">
             <options>
@@ -145,13 +147,25 @@
                 <option name="fixed"/>
             </options>
         </field> 
-          
+        
+        <field name="barcode" type="string" column="barcode" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field> 
+                    
         <field name="place" type="string" column="place" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
-        </field>                
-        
+        </field>   
+                     
+        <field name="webupd" type="boolean" column="webupd" nullable="false">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>    
+                
         <field name="ts" type="datetime" column="ts" nullable="true">
             <options>
                 
