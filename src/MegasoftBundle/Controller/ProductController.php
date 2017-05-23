@@ -1078,6 +1078,10 @@ class ProductController extends Main {
             $q[] = "`remarks` = '" . addslashes($data["remarks"]) . "'";
             $q[] = "`supref` = '" . addslashes($data["supref"]) . "'";
             $q[] = "`place` = '" . addslashes($data["place"]) . "'";
+            $q[] = "`sisxetisi` = '" . addslashes($data["sisxetisi"]) . "'";
+            $q[] = "`barcode` = '" . addslashes($data["barcode"]) . "'";
+            $q[] = "`webupd` = '" . addslashes($data["webupd"]) . "'";
+            
             if ($supplier)
                 $q[] = "`supplier` = '" . $supplier->getId() . "'";
 
