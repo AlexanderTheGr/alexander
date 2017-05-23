@@ -635,17 +635,17 @@ class ProductController extends Main {
         //$fields["supplier"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'MegasoftBundle:MegasoftSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
         //$fields["supplier"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'dataarray' => $supplier);
 
-        $fields["erpSupplier"] = array("label" => "New Supplier", "required" => false, "className" => "col-md-3");
-
         
         $fields["manufacturer"] = array("label" => "Προμηθευτής", "required" => false, "className" => "col-md-2", 'type' => "select", 'datasource' => array('repository' => 'MegasoftBundle:Manufacturer', 'name' => 'title', 'value' => 'id', 'suffix' => 'id'));
 
+        $fields["erpSupplier"] = array("label" => "New Supplier", "required" => false, "className" => "col-md-3");        
+        
         $fields["supplierCode"] = array("label" => "Supplier Code", "className" => "col-md-3", "required" => true);
 
 
         $fields["place"] = array("label" => "Ράφι", "className" => "col-md-1", "required" => false);
 
-        $fields["qty"] = array("label" => "Αποθήκη", "className" => "col-md-1", "required" => false);
+        $fields["qty"] = array("label" => "Αποθήκη", "className" => "col-md-2", "required" => false);
         //$fields["reserved"] = array("label" => "Δεσμευμενα", "className" => "col-md-3", "required" => false);
 
         //$fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "className" => "col-md-2", "required" => false);        
