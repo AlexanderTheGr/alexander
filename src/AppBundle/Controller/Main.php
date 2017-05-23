@@ -578,8 +578,6 @@ class Main extends Controller {
                     $datasource = $options["datasource"];
                     $results = $em->getRepository($datasource["repository"])->findAll();
                     $seloptions = array();
-                    $asd = (count($results) == 2) ? '0' : NULL;
-                    echo count($results).",";
                     
                     foreach (@(array) $results as $data) {
                         $suffix = $datasource['suffix'] ? " (" . $data->getField($datasource['suffix']) . ")" : "";
@@ -589,6 +587,7 @@ class Main extends Controller {
                 }
                 if ($options["dataarray"]) {
                     $seloptions = array();
+                    $asd = (count($results) == 2) ? '0' : NULL;
                     foreach (@(array) $options["dataarray"] as $data) {
                         $seloptions[] = array("name" => $data ["name"] . " (" . $data ["value"] . ")", "value" => $data ["value"]);
                     }
