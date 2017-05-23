@@ -1061,7 +1061,7 @@ class ProductController extends Main {
             $params["table"] = "megasoft_product";
             $q = array();
             //$q[] =
-            //$q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
+            $q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
             $q[] = "`erp_code` = '" . addslashes($data["StoreKwd"]) . "'";
             $q[] = "`store_retail_price` = '" . addslashes($data["StoreRetailPrice"]) . "'";
             $q[] = "`store_wholesale_price` = '" . addslashes($data["StoreWholeSalePrice"]) . "'";
@@ -1091,7 +1091,7 @@ class ProductController extends Main {
 
             if (@$entity->getId() == 0) {
                 //$q[] = "`reference` = '" . $data[$params["megasoft_table"]] . "'";
-                $q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
+                //$q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
 
                 $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
                 echo $sql . "<BR>";
