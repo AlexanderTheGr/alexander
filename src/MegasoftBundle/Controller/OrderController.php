@@ -635,12 +635,13 @@ class OrderController extends Main {
                 }
 
                 
-                echo $sql;
-                exit;
+                //echo $sql;
+                //exit;
 
                 $sql = str_replace("p.*,", "", $sql);
                 //$sql = str_replace("ORDER BY p.qty asc","",$sql);
-
+                $results = array();
+                /*
                 $query = $em->createQuery(
                                 $sql
                         )
@@ -655,7 +656,8 @@ class OrderController extends Main {
                   ORDER BY ' . $this->orderBy;
                   //exit;
                  */
-                $results = $query->getResult();
+                //$results = $query->getResult();
+                
             }
             $data["fields"] = $this->fields;
 
