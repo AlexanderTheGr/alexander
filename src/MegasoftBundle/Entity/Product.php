@@ -1028,7 +1028,7 @@ class Product extends Entity {
         //$em = $this->getDoctrine()->getManager();
         $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
         
-        
+        if ($this->reference > 0)
         $data["StoreId"] = $this->reference;
         $data["StoreDescr"] = $this->title;
         $data["StoreKwd"] = $this->erpCode;
@@ -1055,9 +1055,9 @@ class Product extends Entity {
         
         $params["Login"] = $login;   
         $params["JsonStrWeb"] = json_encode($data);  
-        //print_r($params);
+        print_r($params);
         return $soap->__soapCall("SetProduct", array($params));
-        //print_r($response);
+        print_r($response);
         //exit;
     }
     
