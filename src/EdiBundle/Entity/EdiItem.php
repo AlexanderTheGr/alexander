@@ -601,7 +601,7 @@ class EdiItem extends Entity {
                 //print_r($categories);
                 //print_r($cars);
 
-                $sql = "update partsbox_db.edi_item set tecdoc_generic_article_id = '" . $out->genericArticleId . "', tecdoc_article_name = '" . $out->articleName . "', tecdoc_article_id = '" . $out->articleId . "', cars = '" . serialize($cars) . "', cats = '" . serialize($categories) . "' where id = '" . $this->id . "'";
+                $sql = "update partsbox_db.edi_item set tecdoc_generic_article_id = '" . $out->genericArticleId . "', tecdoc_article_name = '" . addslashes($out->articleName) . "', tecdoc_article_id = '" . $out->articleId . "', cars = '" . serialize($cars) . "', cats = '" . serialize($categories) . "' where id = '" . $this->id . "'";
                 //echo $sql."<BR>";
                 $em->getConnection()->exec($sql);
 
