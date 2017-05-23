@@ -1033,8 +1033,9 @@ class Product extends Entity {
         
         $data["StoreId"] = $this->reference;
         $data["StoreDescr"] = $this->title;
-        if ($this->reference == 0)
-        $data["StoreKwd"] = $this->erpCode;
+        if ($this->reference == 0) {
+            $data["StoreKwd"] = $this->erpCode;
+        }
         $data["StoreRetailPrice"] = $this->storeRetailPrice;
         
         $data["StoreWholeSalePrice"] = $this->storeWholeSalePrice;        
@@ -1061,7 +1062,7 @@ class Product extends Entity {
         $params["jsonstrweb"] = json_encode($data);   
         $response = $soap->__soapCall("setProduct", array($params));
         echo $response;
-        exit;
+        //exit;
     }
     
     public function getForOrderCode() {
