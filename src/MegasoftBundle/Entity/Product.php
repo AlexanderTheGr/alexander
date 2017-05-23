@@ -1035,8 +1035,8 @@ class Product extends Entity {
         $data["StoreDescr"] = $this->title;
         if ($this->reference == 0)
         $data["StoreKwd"] = $this->erpCode;
-        
         $data["StoreRetailPrice"] = $this->storeRetailPrice;
+        
         $data["StoreWholeSalePrice"] = $this->storeWholeSalePrice;        
         $data["SupplierCode"] = $this->supplierCode;
         $data["SupplierId"] = $this->getManufacturer()->getCode();
@@ -1049,18 +1049,19 @@ class Product extends Entity {
         $data["supref"] = $this->supref;
         $data["mtrsup"] = $this->getSupplier()->getReference();
         $data["sisxetisi"] = $this->sisxetisi;
-        
-        $response = $soap->__soapCall("GetProducts", array($params));
-        
+
         /*
           $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
           $headerbody = array('Login' => "alexander", 'Date' => "2016-10-10");
           $header = new SOAPHeader($ns,"AuthHeader",$headerbody);
           $soap->__setSoapHeaders($header);
          */
+        
         $params["Login"] = $login;   
         $params["jsonstrweb"] = json_encode($data);   
-        $response = $soap->__soapCall("GetProducts", array($params));
+        $response = $soap->__soapCall("setProduct", array($params));
+        echo $response;
+        exit;
     }
     
     public function getForOrderCode() {
