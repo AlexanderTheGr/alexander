@@ -1032,14 +1032,15 @@ class Product extends Entity {
         
         
         $data["StoreId"] = $this->reference;
-        $data["StoreDescr"] = $this->title;
+        //$data["StoreDescr"] = $this->title;
         if ($this->reference == 0) {
             $data["StoreKwd"] = $this->erpCode;
         }
         $data["StoreRetailPrice"] = $this->storeRetailPrice;
-        
-        $data["StoreWholeSalePrice"] = $this->storeWholeSalePrice;        
+        $data["StoreWholeSalePrice"] = $this->storeWholeSalePrice;   
+        /*
         $data["SupplierCode"] = $this->supplierCode;
+        
         $data["SupplierId"] = $this->getManufacturer()->getCode();
         $data["fwSupplierId"] = $this->getTecdocSupplierId()->getId();
         $data["fwCode"] = $this->tecdocCode;
@@ -1050,7 +1051,7 @@ class Product extends Entity {
         $data["supref"] = $this->supref;
         $data["mtrsup"] = $this->getSupplier()->getReference();
         $data["sisxetisi"] = $this->sisxetisi;
-
+        */
         /*
           $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
           $headerbody = array('Login' => "alexander", 'Date' => "2016-10-10");
