@@ -1,12 +1,55 @@
 <?php
 
 namespace MegasoftBundle\Entity;
+use AppBundle\Entity\Entity;
+use AppBundle\Entity\Tecdoc as Tecdoc;
+use MegasoftBundle\Entity\TecdocSupplier as TecdocSupplier;
 
 /**
  * Manufacturer
  */
-class Manufacturer
-{
+class Manufacturer extends Entity {
+
+    var $repositories = array();
+    var $uniques = array();
+
+    public function setRepositories() {
+
+        //$this->tecdocSupplierId = new \SoftoneBundle\Entity\TecdocSupplier;
+    }
+
+    public function getRepository() {
+        return $this->repository;
+    }
+
+    public function getRepositories($repo) {
+
+        return $this->repositories[$repo];
+    }
+
+    public function gettype($field) {
+        if (@$this->types[$field] != '') {
+            return @$this->types[$field];
+        }
+        if (gettype($field) != NULL) {
+            return gettype($this->$field);
+        }
+        return 'string';
+    }
+    
+    public function __construct() {
+        $this->setRepositories();
+    }
+
+    public function getField($field) {
+
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
     /**
      * @var string
      */
