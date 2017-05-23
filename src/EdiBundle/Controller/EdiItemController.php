@@ -596,9 +596,18 @@ class EdiItemController extends Main {
         //return $jsonarr;
         $datas = array();
         //print_r($jsonarr);
-        $order = $this->getDoctrine()
-                ->getRepository("SoftoneBundle:Order")
-                ->find($id);
+        
+        if ($this->getSetting("AppBundle:Erp:erpprefix") == '/megasoft') {
+            $order = $this->getDoctrine()
+                    ->getRepository("MegasoftBundle:Order")
+                    ->find($id);               
+            
+        } else {
+            $order = $this->getDoctrine()
+                    ->getRepository("SoftoneBundle:Order")
+                    ->find($id);                        
+        } 
+        
         $customer = $order->getCustomer();
         $request = Request::createFromGlobals();
         $dt_columns = $request->request->get("columns");
