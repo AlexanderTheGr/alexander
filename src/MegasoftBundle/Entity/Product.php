@@ -52,7 +52,7 @@ class Product extends Entity {
 
     public function getRepositories($repo) {
         $this->repositories['tecdocSupplierId'] = 'MegasoftBundle:TecdocSupplier';
-        $this->repositories['supplier'] = 'MegasoftBundle:MegasoftSupplier';
+        $this->repositories['supplier'] = 'MegasoftBundle:Supplier';
         $this->repositories['productSale'] = 'MegasoftBundle:ProductSale';
         //$this->repositories['mtrsup'] = 'MegasoftBundle:Supplier';
 
@@ -1059,7 +1059,8 @@ class Product extends Entity {
          */
         
         $params["Login"] = $login;   
-        $params["jsonstrweb"] = json_encode($data);   
+        $params["jsonstrweb"] = json_encode($data);  
+        
         $response = $soap->__soapCall("setProduct", array($params));
         echo $response;
         //exit;
