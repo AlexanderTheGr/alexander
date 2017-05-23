@@ -1059,7 +1059,7 @@ class Product extends Entity {
          */
         
         $params["Login"] = $login;   
-        $params["jsonstrweb"] = json_encode($data);  
+        $params["JsonStrWeb"] = json_encode($data);  
         print_r($params);
         $response = $soap->__soapCall("SetProduct", array($params));
         print_r($response);
