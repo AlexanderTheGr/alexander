@@ -166,6 +166,18 @@
             </options>
         </field>    
                 
+        <field name="priceupd" type="boolean" column="priceupd" nullable="false">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>      
+        <field name="active" type="boolean" column="active" nullable="false">
+            <options>
+                <option name="default">1</option>
+            </options>
+        </field>          
+                                
+                
         <field name="ts" type="datetime" column="ts" nullable="true">
             <options>
                 
