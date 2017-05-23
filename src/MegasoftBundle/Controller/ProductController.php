@@ -1003,7 +1003,7 @@ class ProductController extends Main {
 
             $entity = $this->getDoctrine()
                     ->getRepository($this->repository)
-                    ->findOneBy(array("erpCode" => (int) $data["StoreKwd"]));
+                    ->findOneBy(array("erpCode" => $data["StoreKwd"]));
 
 
             $dt = new \DateTime("now");
