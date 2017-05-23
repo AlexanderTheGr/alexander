@@ -41,7 +41,7 @@ class Product extends Entity {
         $this->types['supplier'] = 'object';
         $this->types['productSale'] = 'object';
 
-        $this->uniques = array("erpCode", "itemCode");
+        $this->uniques = array("erpCode");
 
         //$this->tecdocSupplierId = new \MegasoftBundle\Entity\TecdocSupplier;
     }
@@ -957,6 +957,7 @@ class Product extends Entity {
         return $categories;
     }
     function setProductFreesearch() {
+        return;
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
@@ -967,18 +968,15 @@ class Product extends Entity {
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         $dataindexarr = array();
 
-        $dataindexarr[] = $this->itemCode;
+        $dataindexarr[] = $this->erpCode;
         $dataindexarr[] = $this->itemApvcode;
-        $dataindexarr[] = $this->itemCode1;
-        $dataindexarr[] = $this->itemCode2;
+        $dataindexarr[] = $this->barcode;
+        $dataindexarr[] = $this->supplierCode;
 
         $dataindexarr[] = $this->title;
-        $dataindexarr[] = $this->itemName;
-        $dataindexarr[] = $this->itemName1;
+
 
         $dataindexarr[] = strtolower($this->greeklish($this->title));
-        $dataindexarr[] = strtolower($this->greeklish($this->itemName));
-        $dataindexarr[] = strtolower($this->greeklish($this->itemName1));
         $dataindexarr[] = strtolower($this->greeklish($this->erpSupplier));
 
         //$article_id = $this->_webserviceProducts_[11632]->article_id;
