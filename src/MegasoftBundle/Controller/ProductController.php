@@ -71,6 +71,7 @@ class ProductController extends Main {
      * @Route("/megasoft/product/createProduct")
      */
     public function createProductAction(Request $request) {
+        return;
         $json = json_encode(array("ok"));
 
 
@@ -1178,6 +1179,7 @@ class ProductController extends Main {
      * @Route("/megasoft/product/product/synchronize")
      */
     public function synchronizeAction($funct = false) {
+        return;
         $megasoft = new Megasoft();
         $em = $this->getDoctrine()->getManager();
         $ediedis = $this->getDoctrine()->getRepository('EdiBundle:Edi')->findAll();
