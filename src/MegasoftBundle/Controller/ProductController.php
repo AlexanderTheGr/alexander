@@ -1073,6 +1073,7 @@ class ProductController extends Main {
             $q[] = "`tecdoc_code` = '" . addslashes($data["fwCode"]) . "'";
             $q[] = "`title` = '" . addslashes($data["StoreDescr"]) . "'";
             $q[] = "`remarks` = '" . addslashes($data["remarks"]) . "'";
+            $q[] = "`supref` = '" . addslashes($data["supref"]) . "'";
             if ($supplier)
                 $q[] = "`supplier` = '" . $supplier->getId() . "'";
 
