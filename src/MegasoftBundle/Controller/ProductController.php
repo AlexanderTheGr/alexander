@@ -638,7 +638,7 @@ class ProductController extends Main {
 
 
 
-        $fields["itemMtrplace"] = array("label" => "Ράφι", "className" => "col-md-1", "required" => false);
+        $fields["place"] = array("label" => "Ράφι", "className" => "col-md-1", "required" => false);
 
         $fields["qty"] = array("label" => "Αποθήκη", "className" => "col-md-1", "required" => false);
         $fields["reserved"] = array("label" => "Δεσμευμενα", "className" => "col-md-3", "required" => false);
@@ -1077,6 +1077,7 @@ class ProductController extends Main {
             $q[] = "`title` = '" . addslashes($data["StoreDescr"]) . "'";
             $q[] = "`remarks` = '" . addslashes($data["remarks"]) . "'";
             $q[] = "`supref` = '" . addslashes($data["supref"]) . "'";
+            $q[] = "`place` = '" . addslashes($data["place"]) . "'";
             if ($supplier)
                 $q[] = "`supplier` = '" . $supplier->getId() . "'";
 
