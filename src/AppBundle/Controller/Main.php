@@ -588,6 +588,7 @@ class Main extends Controller {
                 if ($options["dataarray"]) {
                     $seloptions = array();
                     $asd = (count($results) == 2) ? '0' : NULL;
+                    print_r($results);
                     foreach (@(array) $options["dataarray"] as $data) {
                         $seloptions[] = array("name" => $data ["name"] . " (" . $data ["value"] . ")", "value" => $data ["value"]);
                     }
