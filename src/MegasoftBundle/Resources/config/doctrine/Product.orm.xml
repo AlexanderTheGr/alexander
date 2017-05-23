@@ -144,7 +144,13 @@
             <options>
                 <option name="fixed"/>
             </options>
-        </field>        
+        </field> 
+          
+        <field name="place" type="string" column="place" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>                
         
         <field name="ts" type="datetime" column="ts" nullable="true">
             <options>
