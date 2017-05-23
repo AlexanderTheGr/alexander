@@ -1079,8 +1079,8 @@ class ProductController extends Main {
             $q[] = "`supref` = '" . addslashes($data["supref"]) . "'";
             $q[] = "`place` = '" . addslashes($data["place"]) . "'";
             $q[] = "`sisxetisi` = '" . addslashes($data["sisxetisi"]) . "'";
-            $q[] = "`barcode` = " . addslashes($data["barcode"]) . "";
-            $q[] = "`webupd` = '" . addslashes($data["webupd"]) . "'";
+            $q[] = "`webupd` = '" . ($data["webupd"] == 'True' ? 1 : 0) . "'";
+            $q[] = "`barcode` = '" . addslashes($data["barcode"]) . "'";
             
             if ($supplier)
                 $q[] = "`supplier` = '" . $supplier->getId() . "'";
