@@ -590,9 +590,9 @@ class Main extends Controller {
                     foreach (@(array) $options["dataarray"] as $data) {
                         $seloptions[] = array("name" => $data ["name"] . " (" . $data ["value"] . ")", "value" => $data ["value"]);
                     }
-                    //echo $field."-->(".$entity->getField($field).")";
+                    echo $field."-->(".$entity->getField($field).")";
                     $defaultValue = $entity->getField($field) != '' ? (string) $entity->getField($field) : NULL;
-                    //$defaultValue = "1";
+                    $defaultValue = "1";
                 }
                 /*
                   if (@$options["required"] == '') {
