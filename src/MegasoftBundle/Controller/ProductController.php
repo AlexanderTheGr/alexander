@@ -597,7 +597,7 @@ class ProductController extends Main {
                         ->getRepository('MegasoftBundle:Supplier')->findAll();
         $itemMtrsup = array();
         foreach ($suppliers as $supplier) {
-            $itemMtrsup[] = array("value" => (string) $supplier->getReference(), "name" => $supplier->getSupplierName()); // $supplier->getSupplierName();
+            $itemMtrsup[] = array("value" => (string) $supplier->getId(), "name" => $supplier->getSupplierName()); // $supplier->getSupplierName();
         }
 
 
