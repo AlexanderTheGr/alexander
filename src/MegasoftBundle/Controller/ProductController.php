@@ -644,7 +644,10 @@ class ProductController extends Main {
         $fields["reserved"] = array("label" => "Δεσμευμενα", "className" => "col-md-3", "required" => false);
 
         //$fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "className" => "col-md-2", "required" => false);        
-        $fields["supplier"] = array("label" => "Συνήθης προμηθευτής", "required" => false, "className" => "col-md-2", 'type' => "select", 'dataarray' => $itemMtrsup);
+        //$fields["supplier"] = array("label" => "Συνήθης προμηθευτής", "required" => false, "className" => "col-md-2", 'type' => "select", 'dataarray' => $itemMtrsup);
+        
+        $fields["supplier"] = array("label" => "Προμηθευτής", "required" => false, "className" => "col-md-2", 'type' => "select", 'datasource' => array('repository' => 'MegasoftBundle:Supplier', 'name' => 'supplier', 'value' => 'id', 'suffix' => 'id'));
+        
         $fields["supref"] = array("label" => "Κωδικός Προμηθευτή", "className" => "col-md-2", "required" => false);
 
 
