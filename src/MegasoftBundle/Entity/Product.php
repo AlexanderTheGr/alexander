@@ -34,7 +34,6 @@ class Product extends Entity {
 
     public function setRepositories() {
         $this->repositories['tecdocSupplierId'] = 'MegasoftBundle:TecdocSupplier';
-
         $this->repositories['productSale'] = 'MegasoftBundle:ProductSale';
 
         $this->types['tecdocSupplierId'] = 'object';
@@ -52,9 +51,9 @@ class Product extends Entity {
 
     public function getRepositories($repo) {
         $this->repositories['tecdocSupplierId'] = 'MegasoftBundle:TecdocSupplier';
-        $this->repositories['supplier'] = 'MegasoftBundle:Supplier';
+        $this->repositories['manufacturer'] = 'MegasoftBundle:Manufacturer';
         $this->repositories['productSale'] = 'MegasoftBundle:ProductSale';
-        //$this->repositories['mtrsup'] = 'MegasoftBundle:Supplier';
+        $this->repositories['supplier'] = 'MegasoftBundle:Supplier';
 
         return $this->repositories[$repo];
     }
