@@ -35,12 +35,14 @@ class Product extends Entity {
 
     public function setRepositories() {
         $this->repositories['tecdocSupplierId'] = 'MegasoftBundle:TecdocSupplier';
+        $this->repositories['manufacturer'] = 'MegasoftBundle:Manufacturer';
         $this->repositories['productSale'] = 'MegasoftBundle:ProductSale';
+        $this->repositories['supplier'] = 'MegasoftBundle:Supplier';
 
         $this->types['tecdocSupplierId'] = 'object';
         $this->types['supplier'] = 'object';
         $this->types['productSale'] = 'object';
-
+        $this->types['manufacturer'] = 'object';
         $this->uniques = array("erpCode");
 
         //$this->tecdocSupplierId = new \MegasoftBundle\Entity\TecdocSupplier;
@@ -62,6 +64,7 @@ class Product extends Entity {
     public function gettype($field) {
         $this->types['tecdocSupplierId'] = 'object';
         $this->types['supplier'] = 'object';
+        $this->types['manufacturer'] = 'object';
         $this->types['productSale'] = 'object';
         //  $this->types['mtrsup'] = 'object';
         if (@$this->types[$field] != '') {
