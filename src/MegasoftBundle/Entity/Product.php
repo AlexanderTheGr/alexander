@@ -1032,7 +1032,7 @@ class Product extends Entity {
         
         
         $data["StoreId"] = $this->reference;
-        //$data["StoreDescr"] = $this->title;
+        $data["StoreDescr"] = $this->title;
         //if ($this->reference == 0) {
             $data["StoreKwd"] = $this->erpCode;
         //}
