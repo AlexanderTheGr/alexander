@@ -430,7 +430,7 @@ class OrderController extends Main {
 
 
         $suppliers = $this->getDoctrine()
-                        ->getRepository('MegasoftBundle:MegasoftSupplier')->findAll();
+                        ->getRepository('MegasoftBundle:Supplier')->findAll();
         $tecdocArticleName = "<div style='float:left'id='tecdocArticleName'></div>";
         $itemMtrsup = "<select id='classtitem'>";
         $itemMtrsup .= "<option value=0>Select</option>";
