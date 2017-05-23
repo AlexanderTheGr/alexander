@@ -140,6 +140,12 @@
             </options>
         </field>
         
+        <field name="supref" type="string" column="supref" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>        
+        
         <field name="ts" type="datetime" column="ts" nullable="true">
             <options>
                 
