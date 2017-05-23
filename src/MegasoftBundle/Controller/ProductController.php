@@ -637,14 +637,16 @@ class ProductController extends Main {
 
         $fields["erpSupplier"] = array("label" => "New Supplier", "required" => false, "className" => "col-md-3");
 
-        $fields["supplierCode"] = array("label" => "Supplier Code", "className" => "col-md-3", "required" => true);
+        
+        $fields["manufacturer"] = array("label" => "Προμηθευτής", "required" => false, "className" => "col-md-2", 'type' => "select", 'datasource' => array('repository' => 'MegasoftBundle:Manufacturer', 'name' => 'title', 'value' => 'id', 'suffix' => 'id'));
 
+        $fields["supplierCode"] = array("label" => "Supplier Code", "className" => "col-md-3", "required" => true);
 
 
         $fields["place"] = array("label" => "Ράφι", "className" => "col-md-1", "required" => false);
 
         $fields["qty"] = array("label" => "Αποθήκη", "className" => "col-md-1", "required" => false);
-        $fields["reserved"] = array("label" => "Δεσμευμενα", "className" => "col-md-3", "required" => false);
+        //$fields["reserved"] = array("label" => "Δεσμευμενα", "className" => "col-md-3", "required" => false);
 
         //$fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "className" => "col-md-2", "required" => false);        
         //$fields["supplier"] = array("label" => "Συνήθης προμηθευτής", "required" => false, "className" => "col-md-2", 'type' => "select", 'dataarray' => $itemMtrsup);
@@ -657,11 +659,11 @@ class ProductController extends Main {
         $fields["storeWholeSalePrice"] = array("label" => "Τιμή Χοδρικής", "className" => "col-md-2", "required" => false);
         $fields["storeRetailPrice"] = array("label" => "Τιμή Λιανικής", "className" => "col-md-2", "required" => false);
 
-        $fields["itemMarkupw"] = array("label" => "Markup Χοδρικής", "className" => "col-md-2", "required" => false);
-        $fields["itemMarkupr"] = array("label" => "Markup Λιανικής", "className" => "col-md-2", "required" => false);
+        //$fields["itemMarkupw"] = array("label" => "Markup Χοδρικής", "className" => "col-md-2", "required" => false);
+        //$fields["itemMarkupr"] = array("label" => "Markup Λιανικής", "className" => "col-md-2", "required" => false);
 
 
-        $fields["itemRemarks"] = array("label" => "Remarks", "required" => false, 'type' => "textarea", "className" => "col-md-6 col-sm-6");
+        $fields["remarks"] = array("label" => "Remarks", "required" => false, 'type' => "textarea", "className" => "col-md-6 col-sm-6");
         $fields["sisxetisi"] = array("label" => "Κωδικός Συσχέτισης", "className" => "col-md-6", "required" => false);
 
 
