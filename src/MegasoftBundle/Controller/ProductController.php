@@ -322,6 +322,7 @@ class ProductController extends Main {
         //$product = $this->newentity[$this->repository];
         $product->updatetecdoc(false, true);
         $product->toMegasoft();
+        /*
         if ($product->getSisxetisi() != '') {
             $sproducts = $this->getDoctrine()
                     ->getRepository($this->repository)
@@ -331,7 +332,7 @@ class ProductController extends Main {
                     $sproduct->toMegasoft();
             }
         }
-
+        */
         //print_r($this->error);
         //echo $product->id;
         if (count($this->error[$this->repository])) {
