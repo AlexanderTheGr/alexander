@@ -1027,7 +1027,7 @@ class Product extends Entity {
     
     function toMegasoft() {
         $login = $this->getSetting("MegasoftBundle:Webservice:Login");//"demo-fastweb-megasoft";
-        $em = $this->getDoctrine()->getManager();
+        //$em = $this->getDoctrine()->getManager();
         $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
         
         
