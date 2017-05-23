@@ -1389,4 +1389,33 @@ class Product extends Entity {
     {
         return $this->supref;
     }
+    /**
+     * @var string
+     */
+    private $place;
+
+
+    /**
+     * Set place
+     *
+     * @param string $place
+     *
+     * @return Product
+     */
+    public function setPlace($place)
+    {
+        $this->place = $place;
+
+        return $this;
+    }
+
+    /**
+     * Get place
+     *
+     * @return string
+     */
+    public function getPlace()
+    {
+        return $this->place;
+    }
 }
