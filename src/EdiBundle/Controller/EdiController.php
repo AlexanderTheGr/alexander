@@ -54,7 +54,7 @@ class EdiController extends Main {
         $suppliers = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")->findAll();
         $supplierArr = array();
         foreach ($suppliers as $supplier) {
-			$title = str_replace("'","",$supplier->getTitle());
+            $title = str_replace("'", "", $supplier->getTitle());
             $supplierArr[$supplier->getId()] = $title;
         }
         $supplierjson = json_encode($supplierArr);
@@ -124,12 +124,12 @@ class EdiController extends Main {
                         ->getRepository('SoftoneBundle:Supplier')->findAll();
         $itemMtrsup = array();
         foreach ($suppliers as $supplier) {
-			$title = str_replace("'","",$supplier->getSupplierName());
-			$title = str_replace("\"","",$title);
+            $title = str_replace("'", "", $supplier->getSupplierName());
+            $title = str_replace("\"", "", $title);
             $itemMtrsup[] = array("value" => (string) $supplier->getReference(), "name" => $title); // $supplier->getSupplierName();
         }
-		//print_r($itemMtrsup);
-		//exit;
+        //print_r($itemMtrsup);
+        //exit;
 
         $fields["name"] = array("label" => "Name");
         $fields["token"] = array("label" => "Token");
@@ -286,102 +286,101 @@ class EdiController extends Main {
         return 'http://zerog.gr/edi/fw.ashx?method=getinventoryfile&apiToken=' . $apiToken;
     }
 
-    
     /**
      * @Route("/edi/edi/getPartMaster")
      */
     public function getPartMasterAction() {
-	    $allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
-        $allowedipsArr = explode(",", $allowedips);
-        if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {		
-			$this->createSelect(array($this->prefix . ".id", $this->prefix . ".token", $this->prefix . ".func", $this->prefix . ".id"));
-			$collection = $this->collection($this->repository);
-			$i = 0;
-			foreach ($collection as $entity) {
-				//if ($i++ <= 1) continue;
-				if ($entity["id"] == 1) {
-					$func = $entity["func"];
-					$this->$func($entity);
-				}
-			}
-		}
+        //$allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
+        //$allowedipsArr = explode(",", $allowedips);
+        if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
+            $this->createSelect(array($this->prefix . ".id", $this->prefix . ".token", $this->prefix . ".func", $this->prefix . ".id"));
+            $collection = $this->collection($this->repository);
+            $i = 0;
+            foreach ($collection as $entity) {
+                //if ($i++ <= 1) continue;
+                if ($entity["id"] == 1) {
+                    $func = $entity["func"];
+                    $this->$func($entity);
+                }
+            }
+        }
         exit;
     }
 
-	public function getGbgEdiPartMaster($entity) {
-		//return;
-		$em = $this->getDoctrine()->getManager();
-		$zip = new \ZipArchive;
-		if ($zip->open('/home2/partsbox/PRICELIST_07413.ZIP') === TRUE) {
-			$zip->extractTo('/home2/partsbox/');
-			$zip->close();
-			$file = "/home2/partsbox/PRICELIST_07413.txt";
-			if (($handle = fopen($file, "r")) !== FALSE) {
-				//echo 'sss';
-				while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
+    public function getGbgEdiPartMaster($entity) {
+        //return;
+        $em = $this->getDoctrine()->getManager();
+        $zip = new \ZipArchive;
+        if ($zip->open('/home2/partsbox/PRICELIST_07413.ZIP') === TRUE) {
+            $zip->extractTo('/home2/partsbox/');
+            $zip->close();
+            $file = "/home2/partsbox/PRICELIST_07413.txt";
+            if (($handle = fopen($file, "r")) !== FALSE) {
+                //echo 'sss';
+                while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
 
-					if ($data[0] != '') {
-						//echo $data[0]."<BR>";
-						
-						$data[8] = str_replace(",",'.',$data[8]);						
-						$data[2] = iconv( "ISO-8859-7", "UTF-8",$data[2]);
-						$sql = "insert autoparts_fanopoiia_product set 
-							sku = '".$data[0]."', 
-							code2 = '".$data[1]."', 
-							title = '".$data[2]."', 
-							side = '".$data[4]."', 
-							model_id = '".$data[5]."', 
-							brand = '".$data[6]."', 
-							model = '".$data[7]."', 
-							price = '".$data[8]."'";
-								
-						if (@!$ediedis[$entity["id"]]) {
-							$ediedi = $this->getDoctrine()
-									->getRepository('EdiBundle:Edi')
-									->findOneById($entity["id"]);
-							$ediedis[$entity["id"]] = $ediedi;
-						}
-						$ediedi = $ediedis[$entity["id"]];
-						$ediediitem = $this->getDoctrine()
-								->getRepository('EdiBundle:EdiItem')
-								->findOneBy(array("itemCode" => $data[0], "Edi" => $ediedi));
+                    if ($data[0] != '') {
+                        //echo $data[0]."<BR>";
 
-						$q = array();
-						$q[] = "`itemcode` = '" . $data[0] . "'";
-						$q[] = "`partno` = '" . $data[0] . "'";
-						$q[] = "`brand` = 'GBG'";
-						$q[] = "`description` = '" . $data[2] . "'";
-						$q[] = "`wholesaleprice` = '" . $data[8] . "'";
-						$q[] = "`dlnr` = '0'";
-						$q[] = "`artnr` = '" . $data[1] . "'";
+                        $data[8] = str_replace(",", '.', $data[8]);
+                        $data[2] = iconv("ISO-8859-7", "UTF-8", $data[2]);
+                        $sql = "insert autoparts_fanopoiia_product set 
+							sku = '" . $data[0] . "', 
+							code2 = '" . $data[1] . "', 
+							title = '" . $data[2] . "', 
+							side = '" . $data[4] . "', 
+							model_id = '" . $data[5] . "', 
+							brand = '" . $data[6] . "', 
+							model = '" . $data[7] . "', 
+							price = '" . $data[8] . "'";
 
-								
-						@$ediedi_id = (int) $ediediitem->id;
-						if (@$ediedi_id == 0) {
-							$sql = "replace partsbox_db.edi_item set id = '" . $ediedi_id . "', edi='" . $entity["id"] . "', " . implode(",", $q);
-							echo $sql . "<BR>";
-							$em->getConnection()->exec($sql);
-							/*
-							  $ediediitem = $this->getDoctrine()
-							  ->getRepository('EdiBundle:EdiItem')
-							  ->findOneBy(array("itemCode" => $attributes["itemcode"], "Edi" => $ediedi));
-							 */
-							//$ediediitem->tecdoc = $tecdoc;
-							//$ediediitem->updatetecdoc();
-							//if ($i++ > 60) return;
-						} else {
-							$sql = "update partsbox_db.edi_item set " . implode(",", $q) . " where id = '" . $ediedi_id . "'";
-							echo $sql . "<BR>";
-							//$em->getConnection()->exec($sql);
-						}							
-						//if ($i++ > 100) return;	
-					}
-				}
-			}
-			//$this->_redirect('*/*/');
-		}
-	}
-	
+                        if (@!$ediedis[$entity["id"]]) {
+                            $ediedi = $this->getDoctrine()
+                                    ->getRepository('EdiBundle:Edi')
+                                    ->findOneById($entity["id"]);
+                            $ediedis[$entity["id"]] = $ediedi;
+                        }
+                        $ediedi = $ediedis[$entity["id"]];
+                        $ediediitem = $this->getDoctrine()
+                                ->getRepository('EdiBundle:EdiItem')
+                                ->findOneBy(array("itemCode" => $data[0], "Edi" => $ediedi));
+
+                        $q = array();
+                        $q[] = "`itemcode` = '" . $data[0] . "'";
+                        $q[] = "`partno` = '" . $data[0] . "'";
+                        $q[] = "`brand` = 'GBG'";
+                        $q[] = "`description` = '" . $data[2] . "'";
+                        $q[] = "`wholesaleprice` = '" . $data[8] . "'";
+                        $q[] = "`dlnr` = '0'";
+                        $q[] = "`artnr` = '" . $data[1] . "'";
+
+
+                        @$ediedi_id = (int) $ediediitem->id;
+                        if (@$ediedi_id == 0) {
+                            $sql = "replace partsbox_db.edi_item set id = '" . $ediedi_id . "', edi='" . $entity["id"] . "', " . implode(",", $q);
+                            echo $sql . "<BR>";
+                            $em->getConnection()->exec($sql);
+                            /*
+                              $ediediitem = $this->getDoctrine()
+                              ->getRepository('EdiBundle:EdiItem')
+                              ->findOneBy(array("itemCode" => $attributes["itemcode"], "Edi" => $ediedi));
+                             */
+                            //$ediediitem->tecdoc = $tecdoc;
+                            //$ediediitem->updatetecdoc();
+                            //if ($i++ > 60) return;
+                        } else {
+                            $sql = "update partsbox_db.edi_item set " . implode(",", $q) . " where id = '" . $ediedi_id . "'";
+                            echo $sql . "<BR>";
+                            //$em->getConnection()->exec($sql);
+                        }
+                        //if ($i++ > 100) return;	
+                    }
+                }
+            }
+            //$this->_redirect('*/*/');
+        }
+    }
+
     public function getFibaEdiPartMaster($entity) {
         //echo $this->getPartMaster();
         //return;
@@ -416,12 +415,12 @@ class EdiController extends Main {
                     $attributes[$attrs[$key]] = trim(addslashes($val));
                 }
 
-                
+
                 print_r($attributes);
                 //if ($i++ > 10)
                 //    break;
                 //continue;
-                
+
                 echo ($i++) . "<BR>";
                 //if ($i < 271341) continue;
                 //if ($key == 'similardlnr' OR $key = 'similarartnr' ) continue;
@@ -479,7 +478,6 @@ class EdiController extends Main {
         }
     }
 
-    
     public function getComlineEdiPartMaster($entity) {
         //echo $this->getPartMaster();
         //return;
@@ -514,12 +512,12 @@ class EdiController extends Main {
                     $attributes[$attrs[$key]] = trim(addslashes($val));
                 }
 
-                
+
                 print_r($attributes);
                 //if ($i++ > 10)
                 //    break;
                 //continue;
-                
+
                 echo ($i++) . "<BR>";
                 //if ($i < 271341) continue;
                 //if ($key == 'similardlnr' OR $key = 'similarartnr' ) continue;
@@ -613,7 +611,7 @@ class EdiController extends Main {
                 }
 
                 echo ($i++) . "<BR>";
-				//if ($i==10) exit;
+                //if ($i==10) exit;
                 //if ($i < 83701) continue;
                 //if ($key == 'similardlnr' OR $key = 'similarartnr' ) continue;
 
@@ -665,7 +663,7 @@ class EdiController extends Main {
                 } else {
                     $sql = "update partsbox_db.edi_item set " . implode(",", $q) . " where id = '" . $ediedi_id . "'";
                     //echo $sql . "<BR>";
-					echo ".";
+                    echo ".";
                     $em->getConnection()->exec($sql);
                 }
             }
@@ -674,16 +672,15 @@ class EdiController extends Main {
 
     public function getEltrekaPartMaster($entity) {
         //return;
-		echo 'ssss';
-		//exit;
+        echo 'ssss';
+        //exit;
         set_time_limit(100000);
-		
+
         $eltrekaedi = new Eltrekaedi();
         $file = $eltrekaedi->getPartMasterFile();
         echo $file;
-		//exit;
-		// 801086
-		
+        //exit;
+        // 801086
         //exit;
         //$file = 'http://195.144.16.7/EltrekkaEDI/Temp/Parts/13NADFL4.txt';
         $em = $this->getDoctrine()->getManager();
@@ -698,8 +695,8 @@ class EdiController extends Main {
                 foreach ($data as $key => $val) {
                     $attributes[$attrs[$key]] = trim(addslashes($val));
                 }
-				
-				//if ($attributes["partno"] != 'SC290959') continue;
+
+                //if ($attributes["partno"] != 'SC290959') continue;
                 //print_r($attributes);
                 $attributes["wholeprice"] = str_replace(",", ".", $attributes["wholeprice"]);
                 $attributes["retailprice"] = str_replace(",", ".", $attributes["retailprice"]);
@@ -715,9 +712,9 @@ class EdiController extends Main {
                     $ediedis[$entity["id"]] = $ediedi;
                 }
                 $ediedi = $ediedis[$entity["id"]];
-				
-				
-				
+
+
+
                 $ediediitem = $this->getDoctrine()
                         ->getRepository('EdiBundle:EdiItem')
                         ->findOneBy(array("itemCode" => $attributes["partno"], "Edi" => $ediedi));
@@ -853,7 +850,7 @@ class EdiController extends Main {
         $sql = "UPDATE  partsbox_db.edi_item SET brand = 'COOPERSFIAAM FILTERS', updated = 1 WHERE  brand LIKE 'FIAAM'";
         $em->getConnection()->exec($sql);
         $sql = "UPDATE  partsbox_db.edi_item SET brand = 'COOPERSFIAAM FILTERS', updated = 1 WHERE  brand LIKE 'CoopersFiaam'";
-        $em->getConnection()->exec($sql);		
+        $em->getConnection()->exec($sql);
     }
 
     /**
