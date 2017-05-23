@@ -1031,11 +1031,24 @@ class Product extends Entity {
         $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
         
         
-        $data["StoreId"] = "";
+        $data["StoreId"] = $this->reference;
         $data["StoreDescr"] = $this->title;
+        if ($this->reference == 0)
+        $data["StoreKwd"] = $this->erpCode;
+        
+        $data["StoreRetailPrice"] = $this->storeRetailPrice;
+        $data["StoreWholeSalePrice"] = $this->storeWholeSalePrice;        
+        $data["SupplierCode"] = $this->supplierCode;
+        $data["SupplierId"] = $this->getManufacturer()->getCode();
+        $data["fwSupplierId"] = $this->getTecdocSupplierId()->getId();
         $data["fwCode"] = $this->tecdocCode;
-        $data["fwSupplierId"] = $this->tecdocArticleId;
-        $data["SupplierId"] = $this->erpSupplier;
+        $data["barcode"] = $this->barcode;
+        $data["place"] = $this->place;
+        $data["remarks"] = $this->remarks;
+        $data["webupd"] = $this->webupd == 1 ? 'True' : 'False';
+        $data["supref"] = $this->supref;
+        $data["mtrsup"] = $this->getSupplier()->getReference();
+        $data["sisxetisi"] = $this->sisxetisi;
         
         $response = $soap->__soapCall("GetProducts", array($params));
         
@@ -1045,7 +1058,9 @@ class Product extends Entity {
           $header = new SOAPHeader($ns,"AuthHeader",$headerbody);
           $soap->__setSoapHeaders($header);
          */
-        $params["Login"] = $login;        
+        $params["Login"] = $login;   
+        $params["jsonstrweb"] = json_encode($data);   
+        $response = $soap->__soapCall("GetProducts", array($params));
     }
     
     public function getForOrderCode() {
