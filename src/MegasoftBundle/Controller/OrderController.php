@@ -634,8 +634,8 @@ class OrderController extends Main {
                                 ORDER BY ' . $this->orderBy;
                 }
 
-                //echo $sql;
-                //exit;
+                echo $sql;
+                exit;
 
                 $sql = str_replace("p.*,", "", $sql);
                 //$sql = str_replace("ORDER BY p.qty asc","",$sql);
