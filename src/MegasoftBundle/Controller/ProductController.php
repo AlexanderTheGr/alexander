@@ -979,7 +979,7 @@ class ProductController extends Main {
         }
 
         //exit;
-        //$params["Date"] = "2017-05-10";
+        $params["Date"] = "2017-05-23";
         //$params["ParticipateInEshop"] = 0;
         //$results = $soap->GetCustomers();
         $response = $soap->__soapCall("GetProducts", array($params));
@@ -1003,7 +1003,7 @@ class ProductController extends Main {
 
             $entity = $this->getDoctrine()
                     ->getRepository($this->repository)
-                    ->findOneBy(array("reference" => (int) $data["StoreId"]));
+                    ->findOneBy(array("erp_code" => (int) $data["StoreKwd"]));
 
 
             $dt = new \DateTime("now");
@@ -1017,9 +1017,6 @@ class ProductController extends Main {
                 //continue;
                 //$entity->setRepositories();                
             }
-
-
-
 
 
 
