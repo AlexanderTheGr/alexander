@@ -271,7 +271,7 @@ class Main extends Controller {
             $field_order = explode(":", $field["index"]);
             if (@$field["method"] == "yesno") {
                 $field["content"] = '<select class="style-primary-bright form-control search_init">';
-                $field["content"] .= '<option value="">All</option>';
+                //$field["content"] .= '<option value="">All</option>';
 
                 $field["content"] .= '<option value="0">NO</option>';
                 $field["content"] .= '<option value="1">YES</option>';
