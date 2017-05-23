@@ -292,7 +292,7 @@ class EdiController extends Main {
     public function getPartMasterAction() {
         //$allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
         //$allowedipsArr = explode(",", $allowedips);
-        if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
+        //if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
             $this->createSelect(array($this->prefix . ".id", $this->prefix . ".token", $this->prefix . ".func", $this->prefix . ".id"));
             $collection = $this->collection($this->repository);
             $i = 0;
@@ -303,7 +303,7 @@ class EdiController extends Main {
                     $this->$func($entity);
                 }
             }
-        }
+        //}
         exit;
     }
 
