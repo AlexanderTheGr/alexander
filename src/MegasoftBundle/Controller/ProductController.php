@@ -641,7 +641,7 @@ class ProductController extends Main {
         $fields["itemMtrplace"] = array("label" => "Ράφι", "className" => "col-md-1", "required" => false);
 
         $fields["qty"] = array("label" => "Αποθήκη", "className" => "col-md-1", "required" => false);
-        $fields["reserved"] = array("label" => "Δεσμευμενα", "className" => "col-md-1", "required" => false);
+        $fields["reserved"] = array("label" => "Δεσμευμενα", "className" => "col-md-3", "required" => false);
 
         //$fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "className" => "col-md-2", "required" => false);        
         $fields["mtrsup"] = array("label" => "Συνήθης προμηθευτής", "required" => false, "className" => "col-md-2", 'type' => "select", 'dataarray' => $itemMtrsup);
