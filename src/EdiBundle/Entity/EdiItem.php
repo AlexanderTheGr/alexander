@@ -670,7 +670,7 @@ class EdiItem extends Entity {
         $statement->execute();
         $max = $statement->fetch();
         if ($tecdocSupplier)
-        $manufacturerCode = $tecdocSupplier ? $tecdocSupplier->id :  $max["max"];
+        $manufacturerCode = $tecdocSupplier ? $tecdocSupplier->getId() :  $max["max"];
         
         $data["ManufacturerCode"] = $manufacturerCode;
         $data["ManufacturerName"] = $this->fixsuppliers($this->brand);
