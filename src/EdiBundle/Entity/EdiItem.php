@@ -669,7 +669,7 @@ class EdiItem extends Entity {
         $statement = $connection->prepare($sql);
         $statement->execute();
         $max = $statement->fetch();
-        if ($tecdocSupplier)
+        //if ($tecdocSupplier)
         $manufacturerCode = $tecdocSupplier ? $tecdocSupplier->getId() :  $max["max"];
         
         $data["ManufacturerCode"] = $manufacturerCode;
