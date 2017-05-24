@@ -231,6 +231,7 @@ class ProductController extends Main {
         }
         $manufacturer = $this->getDoctrine()->getRepository("MegasoftBundle:Manufacturer")
                 ->findOneBy(array('title' => $brand));
+        
         return $manufacturer;
     }
 
