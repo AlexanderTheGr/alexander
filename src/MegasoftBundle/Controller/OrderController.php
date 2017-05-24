@@ -582,19 +582,19 @@ class OrderController extends Main {
                 if (count((array) $articleIds)) {
                     if ($search[1]) {
                         $tecdoc_article = "poi.tecdocArticleId in (" . implode(",", $articleIds) . ") OR poi.erpCode like '%" . $search[1] . "%'";
-                        $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM MegasoftBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ") OR koo.erpCode like '%" . $search[1] . "%' OR koo.tecdocCode like '%" . $search[0] . "%' OR koo.erpCode like '%" . $search[1] . "%' OR koo.supplierCode like '%" . $search[1] . "%'))";
+                        $sisxetisi = "(".$this->prefix . ".sisxetisi AND ".$this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM MegasoftBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ") OR koo.erpCode like '%" . $search[1] . "%' OR koo.tecdocCode like '%" . $search[0] . "%' OR koo.erpCode like '%" . $search[1] . "%' OR koo.supplierCode like '%" . $search[1] . "%')))";
                     } elseif ($search[0]) {
                         if (strlen($search[0]) > 250)
                             $search[0] = '|||||';
                         $tecdoc_article = "poi.tecdocArticleId in (" . implode(",", $articleIds) . ") OR poi.erpCode like '%" . $search[0] . "%'";
-                        $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM MegasoftBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ") OR koo.erpCode like '%" . $search[0] . "%' OR koo.tecdocCode like '%" . $search[0] . "%' OR koo.erpCode like '%" . $search[0] . "%' OR koo.supplierCode like '%" . $search[0] . "%'))";
+                        $sisxetisi = "(".$this->prefix . ".sisxetisi AND ".$this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM MegasoftBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ") OR koo.erpCode like '%" . $search[0] . "%' OR koo.tecdocCode like '%" . $search[0] . "%' OR koo.erpCode like '%" . $search[0] . "%' OR koo.supplierCode like '%" . $search[0] . "%')))";
                     } else {
                         $tecdoc_article = "poi.tecdocArticleId in (" . implode(",", $articleIds) . ")";
-                        $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM MegasoftBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ")";
+                        $sisxetisi = "(".$this->prefix . ".sisxetisi AND ".$this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM MegasoftBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . "))";
                     }
                 } else {
                     $this->createWhere();
-                    $sisxetisi = $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM MegasoftBundle:Product koo where koo.sisxetisi != '' AND (koo.erpCode like '%" . $search[1] . "%' OR koo.tecdocCode like '%" . $search[0] . "%' OR koo.erpCode like '%" . $search[1] . "%' OR koo.supplierCode like '%" . $search[1] . "%'))";
+                    $sisxetisi = " (".$this->prefix . ".sisxetisi != '' AND ".$this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM MegasoftBundle:Product koo where koo.sisxetisi != '' AND (koo.erpCode like '%" . $search[1] . "%' OR koo.tecdocCode like '%" . $search[0] . "%' OR koo.erpCode like '%" . $search[1] . "%' OR koo.supplierCode like '%" . $search[1] . "%')))";
                 }
                 //echo  $sql;
                 //$this->q_or[] = $this->prefix . ".id in  (Select k.product FROM MegasoftBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
