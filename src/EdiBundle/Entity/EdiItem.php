@@ -648,7 +648,107 @@ class EdiItem extends Entity {
     }
 
     public function toErp() {
-        $this->toSoftoneErp();
+        //$this->toSoftoneErp();
+        $this->toMegasoftErp();
+    }
+
+    private function createManufacturer() {
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $tecdocSupplier = $em->getRepository("MegasoftBundle:TecdocSupplier")
+                ->findOneBy(array('supplier' => $this->fixsuppliers($this->brand)));
+        $login = $this->getSetting("MegasoftBundle:Webservice:Login"); //"demo-fastweb-megasoft";
+        $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
+        
+        
+        $sql = "Select max(id) as max from megasoft_manufacturer";
+        $connection = $em->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $max = $statement->fetch();
+        $manufacturerCode = $tecdocSupplier ? $tecdocSupplier->id :  $max["max"];
+        
+        $data["ManufacturerCode"] = $manufacturerCode;
+        $data["ManufacturerName"] = $this->fixsuppliers($this->brand);
+        $params["Login"] = $login;
+        $params["JsonStrWeb"] = json_encode($data);
+        $soap->__soapCall("SetManufacturer", array($params));
+        unset($params["JsonStrWeb"]);
+
+        $response = $soap->__soapCall("GetManufacturers", array($params));
+        if (count($response->GetManufacturersResult->ManufacturerDetails) == 1) {
+            $ManufacturerDetails[] = $response->GetManufacturersResult->ManufacturerDetails;
+        } elseif (count($response->GetManufacturersResult->ManufacturerDetails) > 1) {
+            $ManufacturerDetails = $response->GetManufacturersResult->ManufacturerDetails;
+        }
+        foreach ($ManufacturerDetails as $data) {
+            $data = (array) $data;
+            $entity = $this->getDoctrine()
+                    ->getRepository("MegasoftBundle:Manufacturer")
+                    ->find((int) $data["ManufacturerID"]);
+            if (!$entity) {
+                //$q[] = "`reference` = '" . $data[$params["megasoft_table"]] . "'";
+                $sql = "insert megasoft_manufacturer set id = '" . $data["ManufacturerID"] . "', code = '" . $data["ManufacturerCode"] . "', title = '" . $data["ManufacturerName"] . "'";
+                //echo $sql . "<BR>";
+                $em->getConnection()->exec($sql);
+            } else {
+                //$sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
+                //$sql = "update megasoft_manufacturer set code = '" . $data["ManufacturerCode"] . "', title = '" . $data["ManufacturerName"] . "' where id = '" . $entity->getId() . "'";
+                //echo $sql . "<BR>";
+                //$em->getConnection()->exec($sql);
+            }
+        }
+        $manufacturer = $em->getRepository("MegasoftBundle:Manufacturer")
+                ->findOneBy(array('title' => $this->fixsuppliers($this->brand)));
+        return $manufacturer;
+    }
+
+    private function toMegasoftErp() {
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $this->updatetecdoc();
+
+        $manufacturer = $em->getRepository("MegasoftBundle:Manufacturer")
+                ->findOneBy(array('title' => $this->fixsuppliers($this->brand)));
+        if (!$manufacturer) {
+            $manufacturer = $this->createManufacturer();
+        } else {
+            echo $manufacturer->getTitle();
+            
+        }
+        $tecdocSupplier = $em->getRepository("MegasoftBundle:TecdocSupplier")->find($this->dlnr);
+
+
+        $sql = "Select id from softone_product where replace(replace(replace(replace(replace(`supref`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $this->clearstring($this->itemCode) . "' AND edi_id = '" . $this->getEdi()->getId() . "'";
+        //echo $sql . "<BR>";
+        $connection = $em->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $data = $statement->fetch();
+        $product = false;
+        if ($data["id"] > 0)
+            $product = $em->getRepository("MegasoftBundle:Product")->find($data["id"]);
+
+        if (!$product) {
+            $erpCode = $this->clearCode($this->partno) . "-" . $manufacturer->getCode();
+            $product = $em->getRepository("MegasoftBundle:Product")->findOneBy(array("erpCode" => $erpCode));
+        }
+        $supplier = $em->getRepository("MegasoftBundle:Supplier")->find($this->getEdi()->getItemMtrsup());
+        if ($product) {
+            $product->setSupref($this->itemCode);
+            $product->setEdiId($this->getEdi()->getId());
+            if ($supplier)
+                $product->setSupplier($supplier);
+            $em->persist($product);
+            $em->flush();
+            $product->toMegasoft();
+        }
     }
 
     private function toSoftoneErp() {
@@ -1312,6 +1412,7 @@ class EdiItem extends Entity {
             }
         }
     }
+
     //function getGroupedDiscountPrice(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
     function getGroupedDiscountPrice($customer, $vat = 1) {
         $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
