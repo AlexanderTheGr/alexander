@@ -13,7 +13,6 @@ use MegasoftBundle\Entity\TecdocSupplier as TecdocSupplier;
  *
  * @ORM\Entity(repositoryClass="MegasoftBundle\Entity\ProductRepository")
  */
-
 class Product extends Entity {
 
     var $repositories = array();
@@ -938,6 +937,7 @@ class Product extends Entity {
         unset($tecdoc);
         //echo $result;
     }
+
     function checkForUniqueCategory($article, $cats, $tecdoc, $linkingTargetId) {
         if ($cats <= 2)
             return array();
@@ -959,6 +959,7 @@ class Product extends Entity {
         }
         return $categories;
     }
+
     function setProductFreesearch() {
         return;
         global $kernel;
@@ -1024,22 +1025,24 @@ class Product extends Entity {
         $em->getConnection()->exec($sql);
         $sql = "replace megasoft_product_search set id = '" . $this->id . "',erp_code='" . $this->erpCode . "',tecdoc_code='" . $this->tecdocCode . "',supplier_code='" . $this->supplierCode . "'";
         $em->getConnection()->exec($sql);
-    }  
-    
+    }
+
     function toMegasoft() {
-        $login = $this->getSetting("MegasoftBundle:Webservice:Login");//"demo-fastweb-megasoft";
+        $login = $this->getSetting("MegasoftBundle:Webservice:Login"); //"demo-fastweb-megasoft";
         //$em = $this->getDoctrine()->getManager();
         $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
-        
+
         if ($this->reference > 0)
-        $data["StoreId"] = $this->reference;
+            $data["StoreId"] = $this->reference;
         $data["StoreDescr"] = $this->title;
         $data["StoreKwd"] = $this->erpCode;
         $data["StoreRetailPrice"] = $this->storeRetailPrice;
-        $data["StoreWholeSalePrice"] = $this->storeWholeSalePrice;   
+        $data["StoreWholeSalePrice"] = $this->storeWholeSalePrice;
         $data["SupplierCode"] = $this->supplierCode;
-        $data["SupplierId"] = $this->getManufacturer()->getCode();
-        $data["fwSupplierId"] = $this->getTecdocSupplierId()->getId();
+        if ($this->getManufacturer())
+            $data["SupplierId"] = $this->getManufacturer()->getCode();
+        if ($this->getTecdocSupplierId())
+            $data["fwSupplierId"] = $this->getTecdocSupplierId()->getId();
         $data["fwCode"] = $this->tecdocCode;
         $data["barcode"] = $this->barcode;
         $data["place"] = $this->place;
@@ -1048,22 +1051,22 @@ class Product extends Entity {
         $data["supref"] = $this->supref;
         $data["mtrsup"] = $this->getSupplier()->getReference();
         $data["sisxetisi"] = $this->sisxetisi;
-        
+
         /*
           $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
           $headerbody = array('Login' => "alexander", 'Date' => "2016-10-10");
           $header = new SOAPHeader($ns,"AuthHeader",$headerbody);
           $soap->__setSoapHeaders($header);
          */
-        
-        $params["Login"] = $login;   
-        $params["JsonStrWeb"] = json_encode($data);  
+
+        $params["Login"] = $login;
+        $params["JsonStrWeb"] = json_encode($data);
         print_r($params);
         return $soap->__soapCall("SetProduct", array($params));
         print_r($response);
         //exit;
     }
-    
+
     public function getForOrderCode() {
 
         $out = '<a title="' . $this->title . '" class="product_info" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
@@ -1082,14 +1085,15 @@ class Product extends Entity {
 
         return $out;
     }
+
     public function getEditLink() {
         $out = '<a target="_blank" title="' . $this->title . '" class="" car="" data-articleId="' . $this->tecdocArticleId . '" ref="' . $this->id . '" href="/product/view/' . $this->id . '">Edit</a>';
         return $out;
     }
-    
+
     public function getForOrderSupplier() {
 
-        return "";    
+        return "";
         $tecdoc = $this->getTecdocSupplierId() ? $this->getTecdocSupplierId()->getSupplier() : "";
         //$ti = $this->getSupplier() ? $this->getSupplier()->getTitle() : "";
         $ti = $this->erpSupplier;
@@ -1156,12 +1160,13 @@ class Product extends Entity {
         }
         $descrption .= "</ul>";
         return $descrption;
-    }   
+    }
+
     function getApothiki() {
         $qty = $this->qty - $this->reserved;
         return $this->qty . ' / <span class="text-lg text-bold text-accent-dark">' . ($qty) . '</span>';
     }
-    
+
     function getGroupedDiscountPrice(\MegasoftBundle\Entity\Customer $customer, $vat = 1) {
         $rules = $customer->loadCustomerrules()->getRules();
         $sortorder = 0;
@@ -1230,15 +1235,19 @@ class Product extends Entity {
         //$finalprice = $discount > 0 ? $discountedPrice : $price;
         return (float) $discount;
         //return number_format($price * $vat, 2, '.', '') . " (" . (float) $discount . "%)";
-    }   
+    }
+
     var $itemMtrplace = '';
+
     function getItemMtrplace() {
         return $this->itemMtrplace;
     }
+
     function getGroupedPrice(\MegasoftBundle\Entity\Customer $customer, $vat = 1) {
         $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "storeWholeSalePrice";
         return number_format($this->$pricefield * $vat, 2, '.', '');
-    }    
+    }
+
     function getDiscount(\MegasoftBundle\Entity\Customer $customer, $vat = 1) {
         $rules = $customer->loadCustomerrules()->getRules();
         $sortorder = 0;
@@ -1273,6 +1282,7 @@ class Product extends Entity {
 
         return number_format($price * $vat, 2, '.', '') . " (" . (float) $discount . "%)";
     }
+
     function getTick($order) {
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
@@ -1287,13 +1297,12 @@ class Product extends Entity {
         //}
 
         return '<img width="20" style="width:20px; max-width:20px; ' . $display . '" class="tick_' . $this->id . '" src="/assets/img/tick.png">';
-    }    
+    }
 
     /**
      * @var \MegasoftBundle\Entity\Manufacturer
      */
     private $manufacturer;
-
 
     /**
      * Set manufacturer
@@ -1302,8 +1311,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setManufacturer(\MegasoftBundle\Entity\Manufacturer $manufacturer = null)
-    {
+    public function setManufacturer(\MegasoftBundle\Entity\Manufacturer $manufacturer = null) {
         $this->manufacturer = $manufacturer;
 
         return $this;
@@ -1314,15 +1322,14 @@ class Product extends Entity {
      *
      * @return \MegasoftBundle\Entity\Manufacturer
      */
-    public function getManufacturer()
-    {
+    public function getManufacturer() {
         return $this->manufacturer;
     }
+
     /**
      * @var string
      */
     private $remarks;
-
 
     /**
      * Set remarks
@@ -1331,8 +1338,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setRemarks($remarks)
-    {
+    public function setRemarks($remarks) {
         $this->remarks = $remarks;
 
         return $this;
@@ -1343,15 +1349,14 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getRemarks()
-    {
+    public function getRemarks() {
         return $this->remarks;
     }
+
     /**
      * @var \MegasoftBundle\Entity\Supplier
      */
     private $supplier;
-
 
     /**
      * Set supplier
@@ -1360,8 +1365,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setSupplier(\MegasoftBundle\Entity\Supplier $supplier = null)
-    {
+    public function setSupplier(\MegasoftBundle\Entity\Supplier $supplier = null) {
         $this->supplier = $supplier;
 
         return $this;
@@ -1372,15 +1376,14 @@ class Product extends Entity {
      *
      * @return \MegasoftBundle\Entity\Supplier
      */
-    public function getSupplier()
-    {
+    public function getSupplier() {
         return $this->supplier;
     }
+
     /**
      * @var string
      */
     private $supref;
-
 
     /**
      * Set supref
@@ -1389,8 +1392,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setSupref($supref)
-    {
+    public function setSupref($supref) {
         $this->supref = $supref;
 
         return $this;
@@ -1401,15 +1403,14 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getSupref()
-    {
+    public function getSupref() {
         return $this->supref;
     }
+
     /**
      * @var string
      */
     private $place;
-
 
     /**
      * Set place
@@ -1418,8 +1419,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setPlace($place)
-    {
+    public function setPlace($place) {
         $this->place = $place;
 
         return $this;
@@ -1430,10 +1430,10 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getPlace()
-    {
+    public function getPlace() {
         return $this->place;
     }
+
     /**
      * @var string
      */
@@ -1444,7 +1444,6 @@ class Product extends Entity {
      */
     private $webupd = '0';
 
-
     /**
      * Set barcode
      *
@@ -1452,8 +1451,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setBarcode($barcode)
-    {
+    public function setBarcode($barcode) {
         $this->barcode = $barcode;
 
         return $this;
@@ -1464,8 +1462,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getBarcode()
-    {
+    public function getBarcode() {
         return $this->barcode;
     }
 
@@ -1476,8 +1473,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setWebupd($webupd)
-    {
+    public function setWebupd($webupd) {
         $this->webupd = $webupd;
 
         return $this;
@@ -1488,10 +1484,10 @@ class Product extends Entity {
      *
      * @return boolean
      */
-    public function getWebupd()
-    {
+    public function getWebupd() {
         return $this->webupd;
     }
+
     /**
      * @var boolean
      */
@@ -1502,7 +1498,6 @@ class Product extends Entity {
      */
     private $active = '1';
 
-
     /**
      * Set priceupd
      *
@@ -1510,8 +1505,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setPriceupd($priceupd)
-    {
+    public function setPriceupd($priceupd) {
         $this->priceupd = $priceupd;
 
         return $this;
@@ -1522,8 +1516,7 @@ class Product extends Entity {
      *
      * @return boolean
      */
-    public function getPriceupd()
-    {
+    public function getPriceupd() {
         return $this->priceupd;
     }
 
@@ -1534,8 +1527,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setActive($active)
-    {
+    public function setActive($active) {
         $this->active = $active;
 
         return $this;
@@ -1546,8 +1538,8 @@ class Product extends Entity {
      *
      * @return boolean
      */
-    public function getActive()
-    {
+    public function getActive() {
         return $this->active;
     }
+
 }
