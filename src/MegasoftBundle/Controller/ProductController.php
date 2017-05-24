@@ -78,7 +78,7 @@ class ProductController extends Main {
         $asd = $this->getArticlesSearchByIds($request->request->get("ref"));
         $asd = $asd[0];
         $json = json_encode($asd);
-
+        print_r($asd);
 
 
         $em = $this->getDoctrine();
