@@ -773,7 +773,7 @@ class EdiItem extends Entity {
         
         $product->setBarcode('');
         $product->setPlace('');
-        $product->setReference('');
+        $product->setRemarks('');
         
         $product->setTs($dt);
         $product->setCreated($dt);
