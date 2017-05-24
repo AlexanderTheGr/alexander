@@ -90,7 +90,7 @@ class ProductController extends Main {
         } else {
             echo $manufacturer->getTitle();
         }
-        $tecdocSupplier = $em->getRepository("MegasoftBundle:TecdocSupplier")->find($this->dlnr);
+        $tecdocSupplier = $em->getRepository("MegasoftBundle:TecdocSupplier")->find($asd->brandNo);
 
         $erpCode = $this->clearstring($asd->articleNo) . "-" . $manufacturer->getCode();
 
