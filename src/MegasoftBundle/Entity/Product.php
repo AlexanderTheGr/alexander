@@ -1036,8 +1036,8 @@ class Product extends Entity {
             $data["StoreId"] = $this->reference;
         $data["StoreDescr"] = $this->title;
         $data["StoreKwd"] = $this->erpCode;
-        $data["StoreRetailPrice"] = $this->storeRetailPrice;
-        $data["StoreWholeSalePrice"] = $this->storeWholeSalePrice;
+        $data["StoreRetailPrice"] = (float)$this->storeRetailPrice;
+        $data["StoreWholeSalePrice"] = (float)$this->storeWholeSalePrice;
         $data["SupplierCode"] = $this->supplierCode;
         if ($this->getManufacturer())
             $data["SupplierId"] = $this->getManufacturer()->getCode();
