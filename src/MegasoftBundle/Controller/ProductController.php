@@ -187,7 +187,7 @@ class ProductController extends Main {
             $kernel = $kernel->getKernel();
         }
 
-        $tecdocSupplier = $em->getRepository("MegasoftBundle:TecdocSupplier")
+        $tecdocSupplier = $this->getDoctrine()->getRepository("MegasoftBundle:TecdocSupplier")
                 ->findOneBy(array('supplier' => $brand));
         $login = $this->getSetting("MegasoftBundle:Webservice:Login"); //"demo-fastweb-megasoft";
         $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
