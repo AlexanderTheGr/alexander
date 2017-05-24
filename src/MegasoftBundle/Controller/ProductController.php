@@ -230,7 +230,7 @@ class ProductController extends Main {
                 //$em->getConnection()->exec($sql);
             }
         }
-        $manufacturer = $em->getRepository("MegasoftBundle:Manufacturer")
+        $manufacturer = $this->getDoctrine()->getRepository("MegasoftBundle:Manufacturer")
                 ->findOneBy(array('title' => $this->fixsuppliers($this->brand)));
         return $manufacturer;
     }    
