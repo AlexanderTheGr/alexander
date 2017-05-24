@@ -508,6 +508,9 @@ class EdiItemController extends Main {
 
 
             $sql = "Select id from softone_product where replace(replace(replace(replace(replace(`item_cccref`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $this->clearstring($obj->getItemCode()) . "' AND item_mtrsup = '" . $obj->getEdi()->getItemMtrsup() . "'";
+            
+
+            $sql = "Select id from megasoft_product where replace(replace(replace(replace(replace(`item_cccref`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $this->clearstring($obj->getItemCode()) . "' AND item_mtrsup = '" . $obj->getEdi()->getId() . "'";
             //echo $sql . "<BR>";
             $connection = $em->getConnection();
             $statement = $connection->prepare($sql);
