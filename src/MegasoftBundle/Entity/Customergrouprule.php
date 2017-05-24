@@ -175,10 +175,10 @@ class Customergrouprule {
         $productsale = 1;
         $erpcode = '';
         if ($editem) {
-            $MegasoftSupplier = $em->getRepository("MegasoftBundle:MegasoftSupplier")
+            $Manufacturer = $em->getRepository("MegasoftBundle:Manufacturer")
                     ->findOneBy(array('title' => $editem->getBrand()));
-            if ($MegasoftSupplier)
-                $supplier = $MegasoftSupplier->getId();
+            if ($Manufacturer)
+                $supplier = $Manufacturer->getId();
         } else {
             //$supplier = $product->getSupplier() ? $product->getSupplier()->getId() : 0;
             $supplier = 0;
