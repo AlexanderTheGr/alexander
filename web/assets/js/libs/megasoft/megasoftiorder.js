@@ -444,7 +444,7 @@ jQuery(".create_product").live('click', function () {
     var data = {};
     data.ref = ref;
     $("#loaderer").show();
-    $.post("/product/createProduct", data, function (result) {
+    $.post("/megasoft/product/createProduct", data, function (result) {
         $("#loaderer").hide();
         if (result.returnurl) {
             var win = window.open(result.returnurl);
