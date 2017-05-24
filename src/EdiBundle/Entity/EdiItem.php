@@ -771,6 +771,9 @@ class EdiItem extends Entity {
         $product->setCats($this->getCats());  
         $product->setSupplierCode($this->clearCode($this->partno));
         
+        $product->setBarcode('');
+        $product->setPlace('');
+        $product->setReference('');
         
         $product->setTs($dt);
         $product->setCreated($dt);
