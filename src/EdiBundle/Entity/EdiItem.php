@@ -725,7 +725,7 @@ class EdiItem extends Entity {
         $tecdocSupplier = $em->getRepository("MegasoftBundle:TecdocSupplier")->find($this->dlnr);
 
 
-        $sql = "Select id from softone_product where replace(replace(replace(replace(replace(`supref`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $this->clearstring($this->itemCode) . "' AND edi_id = '" . $this->getEdi()->getId() . "'";
+        $sql = "Select id from megasoft_product where replace(replace(replace(replace(replace(`supref`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $this->clearstring($this->itemCode) . "' AND edi_id = '" . $this->getEdi()->getId() . "'";
         //echo $sql . "<BR>";
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
