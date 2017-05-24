@@ -166,12 +166,13 @@ class UserController extends Main {
         $function = $_POST['function'];
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $log = array();
-
+        $databale = @explode(".", $_SERVER["HTTP_HOST"]);
+        $chat = $databale[0].".txt";
         switch ($function) {
 
             case('getState'):
-                if (file_exists('chat.txt')) {
-                    $lines = file('chat.txt');
+                if (file_exists($chat)) {
+                    $lines = file($chat);
                 }
                 $log['state'] = count($lines);
                 foreach ((array) $lines as $line_num => $line) {
@@ -196,8 +197,8 @@ class UserController extends Main {
 
             case('update'):
                 $state = $_POST['state'];
-                if (file_exists('chat.txt')) {
-                    $lines = file('chat.txt');
+                if (file_exists($chat)) {
+                    $lines = file($chat);
                 }
                 $count = count($lines);
                 if ($state == $count) {
@@ -238,7 +239,7 @@ class UserController extends Main {
                     if (preg_match($reg_exUrl, $message, $url)) {
                         $message = preg_replace($reg_exUrl, '<a href="' . $url[0] . '" target="_blank">' . $url[0] . '</a>', $message);
                     }
-                    fwrite(fopen('chat.txt', 'a'), $this->chatLine($from, $to, $message) . "\n");
+                    fwrite(fopen($chat, 'a'), $this->chatLine($from, $to, $message) . "\n");
                 }
                 break;
         }
