@@ -650,8 +650,7 @@ class EdiItem extends Entity {
     public function toErp() {
         $this->toSoftoneErp();
     }
-    
-    
+
     private function toSoftoneErp() {
 
         global $kernel;
@@ -706,10 +705,10 @@ class EdiItem extends Entity {
         }
         $TecdocSupplier = $em->getRepository("SoftoneBundle:TecdocSupplier")
                 ->find($this->dlnr);
-		
-		
-		if($TecdocSupplier)		
-			$TecdocSupplier->toSoftone();
+
+
+        if ($TecdocSupplier)
+            $TecdocSupplier->toSoftone();
 
 
         $sql = "Select id from softone_product where replace(replace(replace(replace(replace(`item_cccref`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $this->clearstring($this->itemCode) . "' AND edi = '" . $this->getEdi()->getItemMtrsup() . "'";
@@ -752,7 +751,7 @@ class EdiItem extends Entity {
             echo $this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode();
             return;
         }
-        
+
 
         /*
           if ($this->getProduct() > 0) {
@@ -793,11 +792,11 @@ class EdiItem extends Entity {
 
         $product->setItemMtrsup($this->getEdi()->getItemMtrsup());
 
-		if ($TecdocSupplier) {
-			$product->setItemMtrmark($this->dlnr);
-			$product->setTecdocSupplierId($TecdocSupplier);
-		}
-		
+        if ($TecdocSupplier) {
+            $product->setItemMtrmark($this->dlnr);
+            $product->setTecdocSupplierId($TecdocSupplier);
+        }
+
         $product->setSupplierId($SoftoneSupplier);
         $product->setTecdocCode($this->artNr);
         $product->setItemName($this->description);
@@ -846,44 +845,82 @@ class EdiItem extends Entity {
     }
 
     function fixsuppliers($supplier) {
-		if ($supplier == "FEBI") $supplier = str_replace("FEBI", "FEBI BILSTEIN", $supplier);
-        if ($supplier == "MANN") $supplier = str_replace("MANN", "MANN-FILTER", $supplier);
-		if ($supplier == "MEAT&DORIA")  $supplier = str_replace("MEAT&DORIA", "MEAT & DORIA", $supplier);
-        if ($supplier == "BEHR-HELLA") $supplier = str_replace("BEHR-HELLA", "BEHR HELLA SERVICE", $supplier);
-        if ($supplier == "BLUEPRINT") $supplier = str_replace("BLUEPRINT", "BLUE-PRINT", $supplier);
-        if ($supplier == "BLUE PRINT") $supplier = str_replace("BLUE PRINT", "BLUE-PRINT", $supplier);
-        if ($supplier == "BENDIX WBK") $supplier = str_replace("BENDIX WBK", "BENDIX", $supplier);
-        if ($supplier == "CONTI-TECH") $supplier = str_replace("CONTI-TECH", "CONTITECH", $supplier);
-        if ($supplier == "Fai AutoParts") $supplier = str_replace("Fai AutoParts", "FAI AutoParts", $supplier);
-        if ($supplier == "FIAAM") $supplier = str_replace("FIAAM", "COOPERSFIAAM FILTERS", $supplier);
-        if ($supplier == "FIBA") $supplier = str_replace("FIBA", "FI.BA", $supplier);
-        if ($supplier == "FLENOR") $supplier = str_replace("FLENOR", "FLENNOR", $supplier);
-        if ($supplier == "FRITECH") $supplier = str_replace("FRITECH", "fri.tech.", $supplier);
-        if ($supplier == "HERTH & BUSS JAKOPARTS") $supplier = str_replace("HERTH & BUSS JAKOPARTS", "HERTH+BUSS JAKOPARTS", $supplier);
-        if ($supplier == "KAYABA") $supplier = str_replace("KAYABA", "KYB", $supplier);
-        if ($supplier == "KM") $supplier = str_replace("KM", "KM Germany", $supplier);
-        if ($supplier == "LUK") $supplier = str_replace("LUK", "LuK", $supplier);
-        if ($supplier == "FEBI BILSTEIN BILSTEIN") $supplier = str_replace("FEBI BILSTEIN BILSTEIN", "FEBI BILSTEIN", $supplier);
-        if ($supplier == "COOPERSCOOPERSCOOPERSCOOPERSFIAAM FILTERS FILTERS FILTERS FILTERS") $supplier = str_replace("COOPERSCOOPERSCOOPERSCOOPERSFIAAM FILTERS FILTERS FILTERS FILTERS", "COOPERSFIAAM FILTERS", $supplier);
-        if ($supplier == "COOPERSCOOPERSCOOPERSFIAAM FILTERS FILTERS FILTERS") $supplier = str_replace("COOPERSCOOPERSCOOPERSFIAAM FILTERS FILTERS FILTERS", "COOPERSFIAAM FILTERS", $supplier);
-        if ($supplier == "COOPERSCOOPERSFIAAM FILTERS FILTERS") $supplier = str_replace("COOPERSCOOPERSFIAAM FILTERS FILTERS", "COOPERSFIAAM FILTERS", $supplier);
-        if ($supplier == "CoopersFiaam") $supplier = str_replace("CoopersFiaam", "COOPERSFIAAM FILTERS", $supplier);
-        if ($supplier == "MANN") $supplier = str_replace("MANN", "MANN-FILTER", $supplier);
-        if ($supplier == "MANN-FILTER-FILTER-FILTER-FILTER") $supplier = str_replace("MANN-FILTER-FILTER-FILTER-FILTER", "MANN-FILTER", $supplier);
-        if ($supplier == "MANN-FILTER-FILTER") $supplier = str_replace("MANN-FILTER-FILTER", "MANN-FILTER", $supplier);
-        if ($supplier == "MANN-FILTER-FILTER") $supplier = str_replace("MANN-FILTER-FILTER", "MANN-FILTER", $supplier);
-        if ($supplier == "MANN-FILTEREX") $supplier = str_replace("MANN-FILTEREX", "MANN-FILTER", $supplier);
-        if ($supplier == "METALCAUCHO") $supplier = str_replace("METALCAUCHO", "Metalcaucho", $supplier);
-        if ($supplier == "MULLER") $supplier = str_replace("MULLER", "MULLER FILTER", $supplier);
-        if ($supplier == "RICAMBI") $supplier = str_replace("RICAMBI", "GENERAL RICAMBI", $supplier);
-        if ($supplier == "ZIMMERMANN-FILTER") $supplier = str_replace("VERNET", "CALORSTAT by Vernet", $supplier);
-        if ($supplier == "ZIMMERMANN-FILTER") $supplier = str_replace("ZIMMERMANN-FILTER", "ZIMMERMANN", $supplier);
-        if ($supplier == "LESJ?FORS") $supplier = str_replace("LESJ?FORS", "LESJOFORS", $supplier);
-        if ($supplier == "LEMF?RDER") $supplier = str_replace("LEMF?RDER", "LEMFORDER", $supplier);
-        if ($supplier == "SALERI") $supplier = str_replace("SALERI", "Saleri SIL", $supplier);
-        if ($supplier == "CASTROL LUBRICANTS") $supplier = str_replace("CASTROL LUBRICANTS", "CASTROL", $supplier);
-		if ($supplier == "FEBI BILSTEIN BILSTEIN") $supplier = str_replace("FEBI BILSTEIN BILSTEIN", "FEBI BILSTEIN", $supplier);
-		if ($supplier == "KM Germany Germany") $supplier = str_replace("KM Germany Germany", "KM Germany", $supplier);
+        if ($supplier == "FEBI")
+            $supplier = str_replace("FEBI", "FEBI BILSTEIN", $supplier);
+        if ($supplier == "MANN")
+            $supplier = str_replace("MANN", "MANN-FILTER", $supplier);
+        if ($supplier == "MEAT&DORIA")
+            $supplier = str_replace("MEAT&DORIA", "MEAT & DORIA", $supplier);
+        if ($supplier == "BEHR-HELLA")
+            $supplier = str_replace("BEHR-HELLA", "BEHR HELLA SERVICE", $supplier);
+        if ($supplier == "BLUEPRINT")
+            $supplier = str_replace("BLUEPRINT", "BLUE-PRINT", $supplier);
+        if ($supplier == "BLUE PRINT")
+            $supplier = str_replace("BLUE PRINT", "BLUE-PRINT", $supplier);
+        if ($supplier == "BENDIX WBK")
+            $supplier = str_replace("BENDIX WBK", "BENDIX", $supplier);
+        if ($supplier == "CONTI-TECH")
+            $supplier = str_replace("CONTI-TECH", "CONTITECH", $supplier);
+        if ($supplier == "Fai AutoParts")
+            $supplier = str_replace("Fai AutoParts", "FAI AutoParts", $supplier);
+        if ($supplier == "FIAAM")
+            $supplier = str_replace("FIAAM", "COOPERSFIAAM FILTERS", $supplier);
+        if ($supplier == "FIBA")
+            $supplier = str_replace("FIBA", "FI.BA", $supplier);
+        if ($supplier == "FLENOR")
+            $supplier = str_replace("FLENOR", "FLENNOR", $supplier);
+        if ($supplier == "FRITECH")
+            $supplier = str_replace("FRITECH", "fri.tech.", $supplier);
+        if ($supplier == "HERTH & BUSS JAKOPARTS")
+            $supplier = str_replace("HERTH & BUSS JAKOPARTS", "HERTH+BUSS JAKOPARTS", $supplier);
+        if ($supplier == "KAYABA")
+            $supplier = str_replace("KAYABA", "KYB", $supplier);
+        if ($supplier == "KM")
+            $supplier = str_replace("KM", "KM Germany", $supplier);
+        if ($supplier == "LUK")
+            $supplier = str_replace("LUK", "LuK", $supplier);
+        if ($supplier == "FEBI BILSTEIN BILSTEIN")
+            $supplier = str_replace("FEBI BILSTEIN BILSTEIN", "FEBI BILSTEIN", $supplier);
+        if ($supplier == "COOPERSCOOPERSCOOPERSCOOPERSFIAAM FILTERS FILTERS FILTERS FILTERS")
+            $supplier = str_replace("COOPERSCOOPERSCOOPERSCOOPERSFIAAM FILTERS FILTERS FILTERS FILTERS", "COOPERSFIAAM FILTERS", $supplier);
+        if ($supplier == "COOPERSCOOPERSCOOPERSFIAAM FILTERS FILTERS FILTERS")
+            $supplier = str_replace("COOPERSCOOPERSCOOPERSFIAAM FILTERS FILTERS FILTERS", "COOPERSFIAAM FILTERS", $supplier);
+        if ($supplier == "COOPERSCOOPERSFIAAM FILTERS FILTERS")
+            $supplier = str_replace("COOPERSCOOPERSFIAAM FILTERS FILTERS", "COOPERSFIAAM FILTERS", $supplier);
+        if ($supplier == "CoopersFiaam")
+            $supplier = str_replace("CoopersFiaam", "COOPERSFIAAM FILTERS", $supplier);
+        if ($supplier == "MANN")
+            $supplier = str_replace("MANN", "MANN-FILTER", $supplier);
+        if ($supplier == "MANN-FILTER-FILTER-FILTER-FILTER")
+            $supplier = str_replace("MANN-FILTER-FILTER-FILTER-FILTER", "MANN-FILTER", $supplier);
+        if ($supplier == "MANN-FILTER-FILTER")
+            $supplier = str_replace("MANN-FILTER-FILTER", "MANN-FILTER", $supplier);
+        if ($supplier == "MANN-FILTER-FILTER")
+            $supplier = str_replace("MANN-FILTER-FILTER", "MANN-FILTER", $supplier);
+        if ($supplier == "MANN-FILTEREX")
+            $supplier = str_replace("MANN-FILTEREX", "MANN-FILTER", $supplier);
+        if ($supplier == "METALCAUCHO")
+            $supplier = str_replace("METALCAUCHO", "Metalcaucho", $supplier);
+        if ($supplier == "MULLER")
+            $supplier = str_replace("MULLER", "MULLER FILTER", $supplier);
+        if ($supplier == "RICAMBI")
+            $supplier = str_replace("RICAMBI", "GENERAL RICAMBI", $supplier);
+        if ($supplier == "ZIMMERMANN-FILTER")
+            $supplier = str_replace("VERNET", "CALORSTAT by Vernet", $supplier);
+        if ($supplier == "ZIMMERMANN-FILTER")
+            $supplier = str_replace("ZIMMERMANN-FILTER", "ZIMMERMANN", $supplier);
+        if ($supplier == "LESJ?FORS")
+            $supplier = str_replace("LESJ?FORS", "LESJOFORS", $supplier);
+        if ($supplier == "LEMF?RDER")
+            $supplier = str_replace("LEMF?RDER", "LEMFORDER", $supplier);
+        if ($supplier == "SALERI")
+            $supplier = str_replace("SALERI", "Saleri SIL", $supplier);
+        if ($supplier == "CASTROL LUBRICANTS")
+            $supplier = str_replace("CASTROL LUBRICANTS", "CASTROL", $supplier);
+        if ($supplier == "FEBI BILSTEIN BILSTEIN")
+            $supplier = str_replace("FEBI BILSTEIN BILSTEIN", "FEBI BILSTEIN", $supplier);
+        if ($supplier == "KM Germany Germany")
+            $supplier = str_replace("KM Germany Germany", "KM Germany", $supplier);
         return $supplier;
     }
 
@@ -1068,7 +1105,7 @@ class EdiItem extends Entity {
 
     public function setComlineSoap($qty = 1) {
         $LogUniqueKey = "";
-        $LogUniqueKey = $this->getSetting("EdiBundle:Comline:LogUniqueKey");//""; //Mage::getModel("core/cookie")->get('LogUniqueKey');
+        $LogUniqueKey = $this->getSetting("EdiBundle:Comline:LogUniqueKey"); //""; //Mage::getModel("core/cookie")->get('LogUniqueKey');
         //$client = new SoapClient("http://www.keysoft.gr/WseService.asmx?wsdl");
         //$lstLst = $client->lstPrice("sko@keysoft.gr;sko1;81-194;1");
         if ($LogUniqueKey == "") {
@@ -1081,7 +1118,7 @@ class EdiItem extends Entity {
             );
             $response = $client->__soapCall("lstLogin", array($params));
             $LogUniqueKey = $response->lstLoginResult->lstLogin->LogUniqueKey;
-            $this->setSetting("EdiBundle:Comline:LogUniqueKey",$LogUniqueKey);
+            $this->setSetting("EdiBundle:Comline:LogUniqueKey", $LogUniqueKey);
         }
         $client = new \SoapClient("http://www.comlinehellas.gr/WseService.asmx?wsdl");
         $params = array(
@@ -1099,17 +1136,18 @@ class EdiItem extends Entity {
         $ProOrdCus = $response->lstPriceResult->lstPrice->ProOrdCus > 0 ? $response->lstPriceResult->lstPrice->ProOrdCus : 0;
         $stock = $response->lstPriceResult->lstPrice->ProStock - $ProOrdCus;
         $this->wholesaleprice = $response->lstPriceResult->lstPrice->PplPrice;
-        $this->soapPrice = str_replace(",",".",$response->lstPriceResult->lstPrice->PplPrice);
+        $this->soapPrice = str_replace(",", ".", $response->lstPriceResult->lstPrice->PplPrice);
         $this->soapStock = $stock > 0 ? $stock : 0;
         $this->soapAvail1 = $response->lstPriceResult->lstPrice->ProAvail1;
         $this->soapAvail2 = $response->lstPriceResult->lstPrice->ProAvail2;
 
         return $response->lstPriceResult->lstPrice;
     }
+
     public function setFibaSoap($qty = 1) {
-        $out = file_get_contents("http://b2b.fiba.gr/antallaktika/edi/getProductPrice/code/".$this->itemCode."/customer/".$this->getEdi()->getToken());
+        $out = file_get_contents("http://b2b.fiba.gr/antallaktika/edi/getProductPrice/code/" . $this->itemCode . "/customer/" . $this->getEdi()->getToken());
         $arr = explode(";", $out);
-        $this->soapPrice = (float)$arr[0];
+        $this->soapPrice = (float) $arr[0];
         $this->soapStock = $arr[1];
     }
 
@@ -1167,23 +1205,24 @@ class EdiItem extends Entity {
         //$ediitem->tecdoc = new Tecdoc();
 
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
-		
-		$rules = $this->getEdi()->loadEdirules($pricefield)->getRules();
-		//return (array)$rules;
-		$rules2 = array();
-		foreach ($rules as $rule) {
-				//$rule->validateRule($this);
-			//if ($rule->validateRule($this)) {
-				$SoftoneSupplier = $em->getRepository("SoftoneBundle:SoftoneSupplier")->findOneBy(array('title' => $this->getBrand()));
-				if ($SoftoneSupplier) {
-					$supplier = $SoftoneSupplier->getId();	
-				}
-				$rules2[] = $supplier;
-				$rules2[] = $rule->validateRule($this);
-			//}
-		}
-		return (array)$rules2;
-	}
+
+        $rules = $this->getEdi()->loadEdirules($pricefield)->getRules();
+        //return (array)$rules;
+        $rules2 = array();
+        foreach ($rules as $rule) {
+            //$rule->validateRule($this);
+            //if ($rule->validateRule($this)) {
+            $SoftoneSupplier = $em->getRepository("SoftoneBundle:SoftoneSupplier")->findOneBy(array('title' => $this->getBrand()));
+            if ($SoftoneSupplier) {
+                $supplier = $SoftoneSupplier->getId();
+            }
+            $rules2[] = $supplier;
+            $rules2[] = $rule->validateRule($this);
+            //}
+        }
+        return (array) $rules2;
+    }
+
     function getEdiMarkup($pricefield = false) {
 
         $rules = $this->getEdi()->loadEdirules($pricefield)->getRules();
@@ -1228,23 +1267,22 @@ class EdiItem extends Entity {
      * @return string
      */
     public function getWholesaleprice() {
-		if ($this->wholesaleprice == 0) {
-			//return $this->getEdiUnitPrice();
-		}
+        if ($this->wholesaleprice == 0) {
+            //return $this->getEdiUnitPrice();
+        }
         return $this->wholesaleprice;
     }
-	
-	
-	public function getEdiUnitPrice() {
-		if ($this->getEdi()->getFunc() == 'getEdiPartMaster') { // is viakar, liakopoulos
-			if (@!$datas[$this->getEdi()->getId()][$k]) {
-				$datas[$this->getEdi()->getId()][$k]['ApiToken'] = $this->getEdi()->getToken();
-				$datas[$this->getEdi()->getId()][$k]['Items'] = array();
-			}
-			$Items[$this->getEdi()->getId()][$k]["ItemCode"] = $this->getItemcode();
-			$Items[$this->getEdi()->getId()][$k]["ReqQty"] = 1;
-			$datas[$this->getEdi()->getId()][$k]['Items'][] = $Items[$this->getEdi()->getId()][$k];
-		}
+
+    public function getEdiUnitPrice() {
+        if ($this->getEdi()->getFunc() == 'getEdiPartMaster') { // is viakar, liakopoulos
+            if (@!$datas[$this->getEdi()->getId()][$k]) {
+                $datas[$this->getEdi()->getId()][$k]['ApiToken'] = $this->getEdi()->getToken();
+                $datas[$this->getEdi()->getId()][$k]['Items'] = array();
+            }
+            $Items[$this->getEdi()->getId()][$k]["ItemCode"] = $this->getItemcode();
+            $Items[$this->getEdi()->getId()][$k]["ReqQty"] = 1;
+            $datas[$this->getEdi()->getId()][$k]['Items'][] = $Items[$this->getEdi()->getId()][$k];
+        }
         if (count($datas)) {
             $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=getiteminfo';
             foreach ($datas as $catalogue => $packs) {
@@ -1272,10 +1310,10 @@ class EdiItem extends Entity {
                     }
                 }
             }
-        }		
-	}
-
-    function getGroupedDiscountPrice(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
+        }
+    }
+    //function getGroupedDiscountPrice(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
+    function getGroupedDiscountPrice($customer, $vat = 1) {
         $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
         $sortorder = 0;
 
@@ -1295,7 +1333,8 @@ class EdiItem extends Entity {
         return number_format($finalprice * $vat, 2, '.', '');
     }
 
-    function getDiscount(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
+    //function getDiscount(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
+    function getDiscount($customer, $vat = 1) {
         $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
         $sortorder = 0;
 
