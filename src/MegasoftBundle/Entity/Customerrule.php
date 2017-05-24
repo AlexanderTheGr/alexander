@@ -211,7 +211,7 @@ class Customerrule {
         $productsale = 1;
         $erpcode = '';
         if ($editem) {
-            $MegasoftSupplier = $em->getRepository("MegasoftBundle:MegasoftSupplier")
+            $MegasoftSupplier = $em->getRepository("MegasoftBundle:Manufacturer")
                     ->findOneBy(array('title' => $editem->getBrand()));
             if ($MegasoftSupplier)
                 $supplier = $MegasoftSupplier->getId();
@@ -231,7 +231,7 @@ class Customerrule {
         foreach ($rule["rules"] as $rl) {
 
             if (count($rl["rules"])) {
-                $out = $this->rulesLoop($rl, $catsEp, $supplier, $code);
+                $out = $this->rulesLoop($rl, $catsEp, $supplier, $code, $productsale);
                 if ($rule["condition"] == "OR" AND $out == true) {
                     return true;
                 }
