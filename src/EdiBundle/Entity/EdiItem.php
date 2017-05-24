@@ -760,7 +760,8 @@ class EdiItem extends Entity {
         if ($supplier)
             $product->setSupplier($supplier);
         
-        $product->setTecdocArticleId($this->artNr);
+        $product->setTecdocSupplierId($tecdocSupplier);
+        $product->setTecdocCode($this->artNr);
         $product->setTitle($this->description);
         $product->setTecdocArticleId($this->tecdocArticleId);        
         $product->setManufacturer($manufacturer);
