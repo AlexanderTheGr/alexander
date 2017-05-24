@@ -78,7 +78,7 @@ class ProductController extends Main {
         $asd = $this->getArticlesSearchByIds($request->request->get("ref"));
         $asd = $asd[0];
         $json = json_encode($asd);
-        print_r($asd);
+        //print_r($asd);
 
 
         $em = $this->getDoctrine();
@@ -90,7 +90,9 @@ class ProductController extends Main {
         } else {
             echo $manufacturer->getTitle();
         }
-        $tecdocSupplier = $em->getRepository("MegasoftBundle:TecdocSupplier")->find($asd->brandNo);
+        //$tecdocSupplier = $em->getRepository("MegasoftBundle:TecdocSupplier")->find($asd->brandNo);
+        $tecdocSupplier = $em->getRepository("MegasoftBundle:TecdocSupplier")
+                ->findOneBy(array('supplier' => $this->fixsuppliers($this->brandName)));
 
         $erpCode = $this->clearstring($asd->articleNo) . "-" . $manufacturer->getCode();
 
@@ -231,7 +233,7 @@ class ProductController extends Main {
         }
         $manufacturer = $this->getDoctrine()->getRepository("MegasoftBundle:Manufacturer")
                 ->findOneBy(array('title' => $brand));
-        
+
         return $manufacturer;
     }
 
