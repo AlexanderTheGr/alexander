@@ -160,6 +160,7 @@ class Customergrouprule {
             $cats = $product->getCats();
         }
 
+        
         $rule = json_decode($this->rule, true);
         $categories = $em->getRepository("MegasoftBundle:Category")->findById($cats);
         $categoriesArr = array();
