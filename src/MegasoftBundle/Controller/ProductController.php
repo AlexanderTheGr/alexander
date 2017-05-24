@@ -132,8 +132,8 @@ class ProductController extends Main {
         $product->setCreated($dt);
         $product->setModified($dt); 
         
-        $em->persist($product);
-        $em->flush(); 
+        $this->flushpersist($product);
+       // $em->flush(); 
         
         /*
         $dt = new \DateTime("now");
