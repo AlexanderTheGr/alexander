@@ -687,8 +687,7 @@ class EdiItem extends Entity {
         }
         foreach ($ManufacturerDetails as $data) {
             $data = (array) $data;
-            $entity = $this->getDoctrine()
-                    ->getRepository("MegasoftBundle:Manufacturer")
+            $entity = $em->getRepository("MegasoftBundle:Manufacturer")
                     ->find((int) $data["ManufacturerID"]);
             if (!$entity) {
                 //$q[] = "`reference` = '" . $data[$params["megasoft_table"]] . "'";
