@@ -1052,7 +1052,7 @@ class Product extends Entity {
         $data["place"] = $this->place;
         $data["remarks"] = $this->remarks;
         $data["webupd"] = $this->webupd == 1 ? 'True' : 'False';
-        $data["supref"] = $this->supref;
+        $data["supref"] = "";//$this->supref;
         $data["mtrsup"] = $this->getSupplier()->getReference();
         $data["sisxetisi"] = $this->sisxetisi;
 
