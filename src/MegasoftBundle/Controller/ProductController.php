@@ -71,7 +71,7 @@ class ProductController extends Main {
      * @Route("/megasoft/product/createProduct")
      */
     public function createProductAction(Request $request) {
-        return;
+        //return;
         $json = json_encode(array("ok"));
 
 
