@@ -86,7 +86,7 @@ class ProductController extends Main {
                 ->findOneBy(array('title' => $asd->brandName));        
 
         if (!$manufacturer) {
-            $manufacturer = $this->createManufacturer();
+            $manufacturer = $this->createManufacturer($asd->brandName);
         } else {
             echo $manufacturer->getTitle();
         }
