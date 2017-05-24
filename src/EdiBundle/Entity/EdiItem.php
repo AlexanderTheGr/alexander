@@ -662,16 +662,16 @@ class EdiItem extends Entity {
                 ->findOneBy(array('supplier' => $this->fixsuppliers($this->brand)));
         $login = $this->getSetting("MegasoftBundle:Webservice:Login"); //"demo-fastweb-megasoft";
         $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
-        
-        
+
+
         $sql = "Select max(id) as max from megasoft_manufacturer";
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
         $statement->execute();
         $max = $statement->fetch();
         //if ($tecdocSupplier)
-        $manufacturerCode = $tecdocSupplier ? $tecdocSupplier->getId() :  $max["max"];
-        
+        $manufacturerCode = $tecdocSupplier ? $tecdocSupplier->getId() : $max["max"];
+
         $data["ManufacturerCode"] = $manufacturerCode;
         $data["ManufacturerName"] = $this->fixsuppliers($this->brand);
         $params["Login"] = $login;
@@ -720,7 +720,6 @@ class EdiItem extends Entity {
             $manufacturer = $this->createManufacturer();
         } else {
             echo $manufacturer->getTitle();
-            
         }
         $tecdocSupplier = $em->getRepository("MegasoftBundle:TecdocSupplier")->find($this->dlnr);
 
@@ -743,12 +742,42 @@ class EdiItem extends Entity {
         if ($product) {
             $product->setSupref($this->itemCode);
             $product->setEdiId($this->getEdi()->getId());
+            $product->setCars($this->getCars());
+            $product->setCats($this->getCats());
             if ($supplier)
                 $product->setSupplier($supplier);
             $em->persist($product);
             $em->flush();
             $product->toMegasoft();
         }
+
+        $erpCode = $this->clearCode($this->partno) . "-" . $manufacturer->getCode();
+        $productsale = $em->getRepository('MegasoftBundle:Productsale')->find(1);
+        $dt = new \DateTime("now");
+        $product = new \MegasoftBundle\Entity\Product;
+        $product->setEdiId($this->getEdi()->getId());
+        $product->setProductSale($productsale);
+        if ($supplier)
+            $product->setSupplier($supplier);
+        
+        $product->setTecdocArticleId($this->artNr);
+        $product->setTitle($this->description);
+        $product->setTecdocArticleId($this->tecdocArticleId);        
+        $product->setManufacturer($manufacturer);
+        $product->setErpCode($erpCode);
+        $product->setSupref($this->itemCode);
+        $product->setCars($this->getCars());
+        $product->setCats($this->getCats());  
+        $product->setSupplierCode($this->clearCode($this->partno));
+        
+        
+        $product->setTs($dt);
+        $product->setCreated($dt);
+        $product->setModified($dt); 
+        
+        $em->persist($product);
+        $em->flush(); 
+        $product->toMegasoft();
     }
 
     private function toSoftoneErp() {
