@@ -1031,7 +1031,7 @@ class Product extends Entity {
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
-        }        
+        }
         $login = $this->getSetting("MegasoftBundle:Webservice:Login"); //"demo-fastweb-megasoft";
         //$em = $this->getDoctrine()->getManager();
         $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
@@ -1052,8 +1052,9 @@ class Product extends Entity {
         $data["place"] = $this->place;
         $data["remarks"] = $this->remarks;
         $data["webupd"] = $this->webupd == 1 ? 'True' : 'False';
-        $data["supref"] = "";//$this->supref;
-        $data["mtrsup"] = $this->getSupplier()->getReference();
+        $data["supref"] = ""; //$this->supref;
+        //if ($this->getSupplier())
+        $data["mtrsup"] = $this->getSupplier() ? $this->getSupplier()->getReference() : "";
         $data["sisxetisi"] = $this->sisxetisi;
 
         /*
