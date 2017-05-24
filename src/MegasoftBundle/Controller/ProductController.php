@@ -91,8 +91,7 @@ class ProductController extends Main {
             echo $manufacturer->getTitle();
         }
         //$tecdocSupplier = $em->getRepository("MegasoftBundle:TecdocSupplier")->find($asd->brandNo);
-        $tecdocSupplier = $em->getRepository("MegasoftBundle:TecdocSupplier")
-                ->findOneBy(array('supplier' => $this->brandName));
+
 
         $erpCode = $this->clearstring($asd->articleNo) . "-" . $manufacturer->getCode();
 
@@ -104,15 +103,14 @@ class ProductController extends Main {
                     $json, 200, array('Content-Type' => 'application/json')
             );
         }
-
+        $tecdocSupplier = $em->getRepository("MegasoftBundle:TecdocSupplier")
+                ->findOneBy(array('supplier' => $asd->brandName));
 
         //$erpCode = $this->clearCode($this->partno) . "-" . $manufacturer->getCode();
         $productsale = $em->getRepository('MegasoftBundle:Productsale')->find(1);
         $dt = new \DateTime("now");
         $product = new \MegasoftBundle\Entity\Product;
         $product->setProductSale($productsale);
-        if ($supplier)
-            $product->setSupplier($supplier);
 
         $product->setTecdocSupplierId($tecdocSupplier);
         $product->setTecdocCode($asd->articleNo);
