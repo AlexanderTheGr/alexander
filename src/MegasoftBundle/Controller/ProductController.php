@@ -83,7 +83,7 @@ class ProductController extends Main {
 
         $em = $this->getDoctrine();
         $manufacturer = $em->getRepository("MegasoftBundle:Manufacturer")
-                ->findOneBy(array('title' => $asd->brandName));        
+                ->findOneBy(array('title' => $asd->brandName));
 
         if (!$manufacturer) {
             $manufacturer = $this->createManufacturer($asd->brandName);
@@ -103,7 +103,7 @@ class ProductController extends Main {
             );
         }
 
-        
+
         //$erpCode = $this->clearCode($this->partno) . "-" . $manufacturer->getCode();
         $productsale = $em->getRepository('MegasoftBundle:Productsale')->find(1);
         $dt = new \DateTime("now");
@@ -111,64 +111,64 @@ class ProductController extends Main {
         $product->setProductSale($productsale);
         if ($supplier)
             $product->setSupplier($supplier);
-        
+
         $product->setTecdocSupplierId($tecdocSupplier);
         $product->setTecdocCode($asd->articleNo);
         $product->setTitle($asd->genericArticleName);
-        $product->setTecdocArticleId($asd->articleId);        
+        $product->setTecdocArticleId($asd->articleId);
         $product->setManufacturer($manufacturer);
         $product->setErpCode($erpCode);
         $product->setSupref('');
         //$product->setCars($this->getCars());
         //$product->setCats($this->getCats());  
         $product->setSupplierCode($this->clearCode($asd->articleNo));
-        
+
         $product->setBarcode('');
         $product->setPlace('');
         $product->setRemarks('');
-        
+
         $product->setTs($dt);
-        $product->setCreated($dt);
-        $product->setModified($dt); 
-        
-        $this->flushpersist($product);
-       // $em->flush(); 
-        
-        /*
-        $dt = new \DateTime("now");
-        $product = new \MegasoftBundle\Entity\Product;
-        $product->setSupplierCode($asd->articleNo);
-        $product->setTitle($asd->genericArticleName);
-        $product->setTecdocCode($asd->articleNo);
-        $product->setItemMtrmark($TecdocSupplier->getId());
-        $product->setTecdocSupplierId($TecdocSupplier);
-        $product->setSupplierId($MegasoftSupplier);
-        $product->setItemName($asd->genericArticleName);
-        $product->setTecdocArticleId($asd->articleId);
-
-        $productsale = $this->getDoctrine()
-                        ->getRepository('MegasoftBundle:Productsale')->find(1);
-        $product->setStoreWholeSalePrice("0.00");
-        $product->setStoreRetailPrice("0.00");
-        $product->setItemMarkupw("0.00");
-        $product->setItemMarkupr("0.00");
-        $product->setProductSale($productsale);
-
-        //$product->setItemCode($this->partno);
-        $product->setItemApvcode($asd->articleNo);
-        $product->setErpSupplier($asd->brand);
-        $product->setItemMtrmanfctr($MegasoftSupplier->getId());
-        $product->setErpCode($erpCode);
-        $product->setItemCode($product->getErpCode());
-
-        $product->setItemV5($dt);
-        $product->setTs($dt);
-        $product->setItemInsdate($dt);
-        $product->setItemUpddate($dt);
         $product->setCreated($dt);
         $product->setModified($dt);
-        @$this->flushpersist($product);
-        */
+
+        $this->flushpersist($product);
+        // $em->flush(); 
+
+        /*
+          $dt = new \DateTime("now");
+          $product = new \MegasoftBundle\Entity\Product;
+          $product->setSupplierCode($asd->articleNo);
+          $product->setTitle($asd->genericArticleName);
+          $product->setTecdocCode($asd->articleNo);
+          $product->setItemMtrmark($TecdocSupplier->getId());
+          $product->setTecdocSupplierId($TecdocSupplier);
+          $product->setSupplierId($MegasoftSupplier);
+          $product->setItemName($asd->genericArticleName);
+          $product->setTecdocArticleId($asd->articleId);
+
+          $productsale = $this->getDoctrine()
+          ->getRepository('MegasoftBundle:Productsale')->find(1);
+          $product->setStoreWholeSalePrice("0.00");
+          $product->setStoreRetailPrice("0.00");
+          $product->setItemMarkupw("0.00");
+          $product->setItemMarkupr("0.00");
+          $product->setProductSale($productsale);
+
+          //$product->setItemCode($this->partno);
+          $product->setItemApvcode($asd->articleNo);
+          $product->setErpSupplier($asd->brand);
+          $product->setItemMtrmanfctr($MegasoftSupplier->getId());
+          $product->setErpCode($erpCode);
+          $product->setItemCode($product->getErpCode());
+
+          $product->setItemV5($dt);
+          $product->setTs($dt);
+          $product->setItemInsdate($dt);
+          $product->setItemUpddate($dt);
+          $product->setCreated($dt);
+          $product->setModified($dt);
+          @$this->flushpersist($product);
+         */
         $product->updatetecdoc();
         $product->setProductFreesearch();
         $product->toMegasoft();
@@ -230,12 +230,10 @@ class ProductController extends Main {
             }
         }
         $manufacturer = $this->getDoctrine()->getRepository("MegasoftBundle:Manufacturer")
-                ->findOneBy(array('title' => $this->fixsuppliers($this->brand)));
+                ->findOneBy(array('title' => $brand));
         return $manufacturer;
-    }    
-    
-    
-    
+    }
+
     public function getArticlesSearchByIds($search) {
         //if (file_exists(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term")) {
         //$data = file_get_contents(Yii::app()->params['root'] . "cache/terms/" . md5($search) . ".term");
@@ -392,16 +390,16 @@ class ProductController extends Main {
         $product->updatetecdoc(false, true);
         $product->toMegasoft();
         /*
-        if ($product->getSisxetisi() != '') {
-            $sproducts = $this->getDoctrine()
-                    ->getRepository($this->repository)
-                    ->findBy(array("sisxetisi" => $product->getSisxetisi()));
-            foreach ($sproducts as $sproduct) {
-                if ($sproduct->getSisxetisi() != '')
-                    $sproduct->toMegasoft();
-            }
-        }
-        */
+          if ($product->getSisxetisi() != '') {
+          $sproducts = $this->getDoctrine()
+          ->getRepository($this->repository)
+          ->findBy(array("sisxetisi" => $product->getSisxetisi()));
+          foreach ($sproducts as $sproduct) {
+          if ($sproduct->getSisxetisi() != '')
+          $sproduct->toMegasoft();
+          }
+          }
+         */
         //print_r($this->error);
         //echo $product->id;
         if (count($this->error[$this->repository])) {
@@ -696,18 +694,18 @@ class ProductController extends Main {
         $fields["barcode"] = array("label" => "Barcode", "required" => false, "className" => "col-md-3 col-sm-3");
 
         $fields["tecdocSupplierId"] = array("label" => "Tecdoc Supplier", "required" => false, "className" => "col-md-6", 'type' => "select", 'datasource' => array('repository' => 'MegasoftBundle:TecdocSupplier', 'name' => 'supplier', 'value' => 'id', 'suffix' => 'id'));
-        
+
         $fields["tecdocCode"] = array("label" => "Tecdoc Code", "required" => false, "className" => "col-md-6");
 
 
         //$fields["supplier"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'MegasoftBundle:MegasoftSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
         //$fields["supplier"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'dataarray' => $supplier);
 
-        
+
         $fields["manufacturer"] = array("label" => "Supplier", "required" => false, "className" => "col-md-2", 'type' => "select", 'datasource' => array('repository' => 'MegasoftBundle:Manufacturer', 'name' => 'title', 'value' => 'id', 'suffix' => 'id'));
 
-        $fields["erpSupplier"] = array("label" => "New Supplier", "required" => false, "className" => "col-md-3");        
-        
+        $fields["erpSupplier"] = array("label" => "New Supplier", "required" => false, "className" => "col-md-3");
+
         $fields["supplierCode"] = array("label" => "Supplier Code", "className" => "col-md-3", "required" => true);
 
 
@@ -715,12 +713,11 @@ class ProductController extends Main {
 
         $fields["qty"] = array("label" => "Αποθήκη", "className" => "col-md-2", "required" => false);
         //$fields["reserved"] = array("label" => "Δεσμευμενα", "className" => "col-md-3", "required" => false);
-
         //$fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "className" => "col-md-2", "required" => false);        
         //$fields["supplier"] = array("label" => "Συνήθης προμηθευτής", "required" => false, "className" => "col-md-2", 'type' => "select", 'dataarray' => $itemMtrsup);
-        
+
         $fields["supplier"] = array("label" => "Προμηθευτής", "required" => false, "className" => "col-md-2", 'type' => "select", 'datasource' => array('repository' => 'MegasoftBundle:Supplier', 'name' => 'supplierName', 'value' => 'id', 'suffix' => 'id'));
-        
+
         $fields["supref"] = array("label" => "Κωδικός Προμηθευτή", "className" => "col-md-2", "required" => false);
 
 
@@ -1151,7 +1148,7 @@ class ProductController extends Main {
             $q[] = "`sisxetisi` = '" . addslashes($data["sisxetisi"]) . "'";
             $q[] = "`webupd` = '" . ($data["webupd"] == 'True' ? 1 : 0) . "'";
             $q[] = "`barcode` = '" . addslashes($data["barcode"]) . "'";
-            
+
             if ($supplier)
                 $q[] = "`supplier` = '" . $supplier->getId() . "'";
 
