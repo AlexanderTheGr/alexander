@@ -104,11 +104,10 @@ class ProductController extends Main {
         }
 
         
-        $erpCode = $this->clearCode($this->partno) . "-" . $manufacturer->getCode();
+        //$erpCode = $this->clearCode($this->partno) . "-" . $manufacturer->getCode();
         $productsale = $em->getRepository('MegasoftBundle:Productsale')->find(1);
         $dt = new \DateTime("now");
         $product = new \MegasoftBundle\Entity\Product;
-;
         $product->setProductSale($productsale);
         if ($supplier)
             $product->setSupplier($supplier);
