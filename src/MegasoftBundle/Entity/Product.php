@@ -1028,6 +1028,10 @@ class Product extends Entity {
     }
 
     function toMegasoft() {
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }        
         $login = $this->getSetting("MegasoftBundle:Webservice:Login"); //"demo-fastweb-megasoft";
         //$em = $this->getDoctrine()->getManager();
         $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
@@ -1036,8 +1040,8 @@ class Product extends Entity {
             $data["StoreId"] = $this->reference;
         $data["StoreDescr"] = $this->title;
         $data["StoreKwd"] = $this->erpCode;
-        $data["StoreRetailPrice"] = (float)$this->storeRetailPrice;
-        $data["StoreWholeSalePrice"] = (float)$this->storeWholeSalePrice;
+        $data["StoreRetailPrice"] = (float) $this->storeRetailPrice;
+        $data["StoreWholeSalePrice"] = (float) $this->storeWholeSalePrice;
         $data["SupplierCode"] = $this->supplierCode;
         if ($this->getManufacturer())
             $data["SupplierId"] = $this->getManufacturer()->getCode();
@@ -1062,8 +1066,14 @@ class Product extends Entity {
         $params["Login"] = $login;
         $params["JsonStrWeb"] = json_encode($data);
         print_r($params);
-        $response =  $soap->__soapCall("SetProduct", array($params));
+        $response = $soap->__soapCall("SetProduct", array($params));
         print_r($response);
+        if ($response->SetProductResult > 0 AND $this->reference == 0) {
+            $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+            $this->reference = $response->SetProductResult;
+            $em->persist($this);
+            $em->flush();
+        }
         return $response;
         //exit;
     }
