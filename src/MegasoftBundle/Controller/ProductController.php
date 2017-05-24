@@ -119,8 +119,8 @@ class ProductController extends Main {
         $product->setManufacturer($manufacturer);
         $product->setErpCode($erpCode);
         $product->setSupref('');
-        //$product->setCars($this->getCars());
-        //$product->setCats($this->getCats());  
+        $product->setStoreRetailPrice(0);
+        $product->setStoreWholeSalePrice(0);  
         $product->setSupplierCode($this->clearCode($asd->articleNo));
 
         $product->setBarcode('');
