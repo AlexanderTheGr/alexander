@@ -92,7 +92,7 @@ class ProductController extends Main {
         }
         //$tecdocSupplier = $em->getRepository("MegasoftBundle:TecdocSupplier")->find($asd->brandNo);
         $tecdocSupplier = $em->getRepository("MegasoftBundle:TecdocSupplier")
-                ->findOneBy(array('supplier' => $this->fixsuppliers($this->brandName)));
+                ->findOneBy(array('supplier' => $this->brandName));
 
         $erpCode = $this->clearstring($asd->articleNo) . "-" . $manufacturer->getCode();
 
