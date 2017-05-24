@@ -639,16 +639,16 @@ class OrderController extends Main {
                 //exit;
 
                 $sql = str_replace("p.*,", "", $sql);
-                echo $sql;
+                //echo $sql;
                 //$sql = str_replace("ORDER BY p.qty asc","",$sql);
                 $results = array();
-                /*
+                
                 $query = $em->createQuery(
                                 $sql
                         )
                         ->setMaxResults($request->request->get("length"))
-                        ->setFirstResult($request->request->get("start"))
-                ;
+                        ->setFirstResult($request->request->get("start"));
+                
                 //echo $sql."<BR>";    
                 /*
                   echo 'SELECT  ' . $this->select . ', p.reference
@@ -657,7 +657,7 @@ class OrderController extends Main {
                   ORDER BY ' . $this->orderBy;
                   //exit;
                  */
-                //$results = $query->getResult();
+                $results = $query->getResult();
                 
             }
             $data["fields"] = $this->fields;
