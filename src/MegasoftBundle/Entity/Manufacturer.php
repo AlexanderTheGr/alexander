@@ -1,6 +1,7 @@
 <?php
 
 namespace MegasoftBundle\Entity;
+
 use AppBundle\Entity\Entity;
 use AppBundle\Entity\Tecdoc as Tecdoc;
 use MegasoftBundle\Entity\TecdocSupplier as TecdocSupplier;
@@ -36,7 +37,7 @@ class Manufacturer extends Entity {
         }
         return 'string';
     }
-    
+
     public function __construct() {
         $this->setRepositories();
     }
@@ -50,6 +51,7 @@ class Manufacturer extends Entity {
         $this->$field = $val;
         return $val;
     }
+
     /**
      * @var string
      */
@@ -65,7 +67,6 @@ class Manufacturer extends Entity {
      */
     private $id;
 
-
     /**
      * Set code
      *
@@ -73,8 +74,7 @@ class Manufacturer extends Entity {
      *
      * @return Manufacturer
      */
-    public function setCode($code)
-    {
+    public function setCode($code) {
         $this->code = $code;
 
         return $this;
@@ -85,8 +85,7 @@ class Manufacturer extends Entity {
      *
      * @return string
      */
-    public function getCode()
-    {
+    public function getCode() {
         return $this->code;
     }
 
@@ -97,8 +96,7 @@ class Manufacturer extends Entity {
      *
      * @return Manufacturer
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
 
         return $this;
@@ -109,8 +107,7 @@ class Manufacturer extends Entity {
      *
      * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -119,8 +116,35 @@ class Manufacturer extends Entity {
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
+
+    function toMegasoft($insert = false) {
+        $login = $this->getSetting("MegasoftBundle:Webservice:Login"); //"demo-fastweb-megasoft";
+        //$em = $this->getDoctrine()->getManager();
+        $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
+
+        if (!$insert)
+            $data["ManufacturerID"] = $this->id;
+
+        $data["ManufacturerCode"] = $this->code;
+        $data["ManufacturerName"] = $this->title;
+
+
+        /*
+          $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
+          $headerbody = array('Login' => "alexander", 'Date' => "2016-10-10");
+          $header = new SOAPHeader($ns,"AuthHeader",$headerbody);
+          $soap->__setSoapHeaders($header);
+         */
+
+        $params["Login"] = $login;
+        $params["JsonStrWeb"] = json_encode($data);
+        print_r($params);
+        return $soap->__soapCall("SetManufacturer", array($params));
+        print_r($response);
+        //exit;
+    }
+
 }
