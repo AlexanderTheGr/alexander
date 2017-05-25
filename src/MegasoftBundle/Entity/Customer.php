@@ -811,8 +811,8 @@ class Customer extends Entity {
         $data["CustomerAddress"] = $this->customerAddress;
         $data["CustomerCity"] = $this->customerCity;
         $data["CustomerZip"] = $this->customerZip;
-        $data["CustomerPhone1"] = $this->customerPhone1;
-        $data["CustomerPhone2"] = $this->customerPhone2;
+        $data["CustomerPhone1"] = (string)$this->customerPhone1;
+        $data["CustomerPhone2"] = (string)$this->customerPhone2;
         $data["CustomerDoy"] = $this->customerIrsdata;
         $data["CustomerOccupation"] = $this->customerJobtypetrd;
         $data["CustomerPricelist"] = $this->CustomerPricelist == 'storeRetailPrice' ? 2 : 1; //$this->CustomerPricelist;
