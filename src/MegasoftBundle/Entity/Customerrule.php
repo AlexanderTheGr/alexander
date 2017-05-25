@@ -206,6 +206,7 @@ class Customerrule {
             $pcategory = $em->getRepository("MegasoftBundle:Category")->find($category->getParent());
             $catsEp[] = $pcategory->getSortCode();
         }
+        
         //print_r($catsEp);
         $supplier = 122220;
         $productsale = 1;
