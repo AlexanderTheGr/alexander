@@ -814,7 +814,7 @@ class Customer extends Entity {
         $data["CustomerPhone1"] = $this->customerPhone1;
         $data["CustomerPhone2"] = $this->customerPhone2;
         $data["CustomerDoy"] = $this->customerIrsdata;
-        $data["CustomerOccupation"] = $this->CustomerOccupation;
+        $data["CustomerOccupation"] = $this->customerJobtypetrd;
         $data["CustomerPricelist"] = 1; //$this->CustomerPricelist;
         
         /*
