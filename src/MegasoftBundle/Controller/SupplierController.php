@@ -30,7 +30,7 @@ class SupplierController extends Main {
      */
     public function viewAction($id) {
 
-        return $this->render('supplier/view.html.twig', array(
+        return $this->render('MegasoftBundle:Supplier:view.html.twig', array(
                     'pagename' => 'Supplier',
                     'url' => '/megasoft/supplier/save',
                     'ctrl' => $this->generateRandomString(),
