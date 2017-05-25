@@ -508,11 +508,9 @@ class EdiItemController extends Main {
 
 
             $sql = "Select id from softone_product where replace(replace(replace(replace(replace(`item_cccref`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $this->clearstring($obj->getItemCode()) . "' AND item_mtrsup = '" . $obj->getEdi()->getItemMtrsup() . "'";
-            
             if ($this->getSetting("AppBundle:Erp:erpprefix") == '/megasoft') {
                 $sql = "Select id from megasoft_product where replace(replace(replace(replace(replace(`supref`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $this->clearstring($obj->getItemCode()) . "' AND edi_id = '" . $obj->getEdi()->getId() . "'";
             }
-            
             //echo $sql . "<BR>";
             $connection = $em->getConnection();
             $statement = $connection->prepare($sql);
