@@ -260,7 +260,7 @@ class CustomerController extends Main {
         $fields["customerVatsts"] = array("label" => "ΦΠΑ", "required" => true, "className" => "col-md-6", 'type' => "select", 'dataarray' => $vatsts);
 
         $priceField[] = array("value" => "storeRetailPrice", "name" => "Λιανική");
-        $priceField[] = array("value" => "storeWholesalePrice", "name" => "Χονδρική");
+        $priceField[] = array("value" => "storeWholeSalePrice", "name" => "Χονδρική");
 
 
 
