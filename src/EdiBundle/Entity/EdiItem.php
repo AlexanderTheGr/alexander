@@ -1496,7 +1496,7 @@ class EdiItem extends Entity {
         $discountedPrice = $this->getEdiMarkupPrice($pricefield) * (1 - $discount / 100 );
         $finalprice = $discount > 0 ? $discountedPrice : $price;
 
-        return number_format($finalprice * $vat, 2, '.', '') . " (" . (float) $discount . "%)";
+        return number_format($finalprice * $vat, 2, '.', '') . " (" . (float) $discount . "%)" .$customer->getPriceField();
     }
 
 }
