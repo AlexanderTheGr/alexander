@@ -58,7 +58,7 @@ class Supplier extends Entity {
     /**
      * @var integer
      */
-    private $reference;
+    var $reference;
 
     /**
      * @var string
