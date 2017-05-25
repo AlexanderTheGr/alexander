@@ -66,6 +66,15 @@ class SupplierController extends Main {
 
         $fields["supplierCode"] = array("label" => "Code");
         $fields["supplierName"] = array("label" => "Name");
+        $fields["supplierAfm"] = array("label" => "ΑΦΜ");
+        $fields["supplierAddress"] = array("label" => "Address");
+        $fields["supplierZip"] = array("label" => "Zip");
+        $fields["supplierCity"] = array("label" => "City");
+        $fields["supplierPhone01"] = array("label" => "Phone01");
+        $fields["supplierPhone02"] = array("label" => "Phone02");
+        $fields["supplierSite"] = array("label" => "Site");
+        
+        
 
         $forms = $this->getFormLyFields($entity, $fields);
 
