@@ -771,6 +771,13 @@ class EdiItem extends Entity {
         $product->setCats($this->getCats());  
         $product->setSupplierCode($this->clearCode($this->partno));
         
+        
+        $storeWholeSalePrice = $this->getEdiMarkupPrice("storeWholeSalePrice");
+        $storeRetailPrice = $this->getEdiMarkupPrice("storeRetailPrice");
+        
+        $product->setStoreRetailPrice($storeRetailPrice);
+        $product->setStoreWholeSalePrice($storeWholeSalePrice);
+        
         $product->setBarcode('');
         $product->setPlace('');
         $product->setRemarks('');
