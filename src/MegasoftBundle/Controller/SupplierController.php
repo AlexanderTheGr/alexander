@@ -11,7 +11,6 @@ use AppBundle\Controller\Main as Main;
 class SupplierController extends Main {
 
     var $repository = 'MegasoftBundle:Supplier';
-
     /**
      * @Route("/megasoft/supplier/supplier")
      */
@@ -19,7 +18,7 @@ class SupplierController extends Main {
         return $this->render('supplier/index.html.twig', array(
                     'pagename' => 'Προμηθευτές',
                     'url' => '/megasoft/supplier/getdatatable',
-                    'view' => '/supplier/view',
+                    'view' => '/megasoft/supplier/view',
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
