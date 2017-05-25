@@ -1480,23 +1480,39 @@ class EdiItem extends Entity {
 
     //function getDiscount(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
     function getDiscount($customer, $vat = 1) {
-        $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
+        $rules = $customer->loadCustomerrules()->getRules();
         $sortorder = 0;
-
-        foreach ($rules as $rule) {
-            if ($rule->validateRule($this, $this) AND $sortorder <= $rule->getSortorder()) {
+        $discount = 0;
+        $price = 0;
+        $ruled = false;
+        foreach ((array) $rules as $rule) {
+            if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
                 $sortorder = $rule->getSortorder();
                 $discount = $rule->getVal();
                 $price = $rule->getPrice();
+                $ruled = true;
             }
         }
+
+        if (!$ruled) {
+            $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
+            $sortorder = 0;
+            foreach ($rules as $rule) {
+                if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
+                    $sortorder = $rule->getSortorder();
+                    $discount = $rule->getVal();
+                    $price = $rule->getPrice();
+                }
+            }
+        }
+
         $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
         $this->getEdiMarkupPrice($pricefield);
         $price = $price > 0 ? $price : $this->getEdiMarkupPrice($pricefield);
         $discountedPrice = $this->getEdiMarkupPrice($pricefield) * (1 - $discount / 100 );
         $finalprice = $discount > 0 ? $discountedPrice : $price;
 
-        return number_format($finalprice * $vat, 2, '.', '') . " (" . (float) $discount . "%)" .$customer->getPriceField();
+        return number_format($finalprice * $vat, 2, '.', '') . " (" . (float) $discount . "%)";
     }
 
 }
