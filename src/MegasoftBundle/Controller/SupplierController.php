@@ -11,6 +11,7 @@ use AppBundle\Controller\Main as Main;
 class SupplierController extends Main {
 
     var $repository = 'MegasoftBundle:Supplier';
+
     /**
      * @Route("/megasoft/supplier/supplier")
      */
