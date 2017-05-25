@@ -809,18 +809,14 @@ class Customer extends Entity {
         $data["CustomerAfm"] = $this->customerAfm;
         $data["CustomerEmail"] = $this->customerEmail;
         $data["CustomerAddress"] = $this->customerAddress;
-
         $data["CustomerCity"] = $this->customerCity;
         $data["CustomerZip"] = $this->customerZip;
         $data["CustomerPhone1"] = $this->customerPhone1;
         $data["CustomerPhone2"] = $this->customerPhone2;
-
-
         $data["CustomerDoy"] = $this->customerIrsdata;
         $data["CustomerOccupation"] = $this->CustomerOccupation;
-        $data["CustomerPricelist"] = $this->CustomerPricelist;
+        $data["CustomerPricelist"] = 1; //$this->CustomerPricelist;
         
-
         /*
           $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
           $headerbody = array('Login' => "alexander", 'Date' => "2016-10-10");
