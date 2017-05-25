@@ -353,7 +353,8 @@ class EdiItemController extends Main {
         $tecdoc = new Tecdoc();
         foreach ($results as $result) {
             //if ($result["id"] > 356633) {
-			if ($result["id"] > 1087367) continue;
+            if ($result["id"] > 1087367)
+                continue;
             $ediediitem = $em->getRepository($this->repository)->find($result["id"]);
             $ediediitem->tecdoc = $tecdoc;
             $ediediitem->updatetecdoc();
@@ -599,18 +600,17 @@ class EdiItemController extends Main {
         //return $jsonarr;
         $datas = array();
         //print_r($jsonarr);
-        
+
         if ($this->getSetting("AppBundle:Erp:erpprefix") == '/megasoft') {
             $order = $this->getDoctrine()
                     ->getRepository("MegasoftBundle:Order")
-                    ->find($id);               
-            
+                    ->find($id);
         } else {
             $order = $this->getDoctrine()
                     ->getRepository("SoftoneBundle:Order")
-                    ->find($id);                        
-        } 
-        
+                    ->find($id);
+        }
+
         $customer = $order->getCustomer();
         $request = Request::createFromGlobals();
         $dt_columns = $request->request->get("columns");
@@ -638,28 +638,27 @@ class EdiItemController extends Main {
                     ->getRepository($this->repository)
                     ->find($json[0]);
             if ($entity->getEdi()->getFunc() == 'getGbgEdiPartMaster') { // is viakar, liakopoulos
+                $zip = new \ZipArchive;
+                if ($zip->open('/home2/partsbox/OUTOFSTOCK_ATH.ZIP') === TRUE) {
+                    $zip->extractTo('/home2/partsbox/');
+                    $zip->close();
+                    $file = "/home2/partsbox/OUTOFSTOCK_ATH.txt";
+                    $availability = false;
+                    if (($handle = fopen($file, "r")) !== FALSE) {
+                        //echo 'sss';
+                        while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
+                            if ($data[0] == $entity->getItemcode()) {
+                                if ($data[1] == 1)
+                                    $availability = true;
+                                break;
+                            }
+                        }
+                    }
+                }
 
-				$zip = new \ZipArchive;
-				if ($zip->open('/home2/partsbox/OUTOFSTOCK_ATH.ZIP') === TRUE) {
-					$zip->extractTo('/home2/partsbox/');
-					$zip->close();
-					$file = "/home2/partsbox/OUTOFSTOCK_ATH.txt";
-					$availability = false;
-					if (($handle = fopen($file, "r")) !== FALSE) {
-					//echo 'sss';
-						while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
-							if ($data[0] == $entity->getItemcode()) {
-								if ($data[1] == 1) 
-								$availability = true;
-								break;
-							}
-						}
-					}
-				}
-
-                $entities[$entity->getItemcode()] = $entity;	
-				@$jsonarr[$key]['6'] = $entity->getDiscount($customer, $vat);
-				@$jsonarr[$key]['DT_RowClass'] .=  $availability ? ' text-success ' : ' text-danger ';
+                $entities[$entity->getItemcode()] = $entity;
+                @$jsonarr[$key]['6'] = $entity->getDiscount($customer, $vat);
+                @$jsonarr[$key]['DT_RowClass'] .= $availability ? ' text-success ' : ' text-danger ';
             } elseif ($entity->getEdi()->getFunc() == 'getEdiPartMaster') { // is viakar, liakopoulos
                 if (@!$datas[$entity->getEdi()->getId()][$k]) {
                     $datas[$entity->getEdi()->getId()][$k]['ApiToken'] = $entity->getEdi()->getToken();
@@ -671,17 +670,16 @@ class EdiItemController extends Main {
 
                 $ands[$entity->getItemcode()] = $key;
                 $entities[$entity->getItemcode()] = $entity;
-				
             } elseif ($entity->getEdi()->getFunc() == 'getFibaEdiPartMaster') {
                 $AvailabilityDetailsHtml = '';
                 $entity->setFibaSoap();
                 if ($entity->soapStock >= 1) {
                     $availability = "Y";
-                }                
+                }
                 @$jsonarr[$key]['6'] = $entity->getDiscount($customer, $vat);
                 @$jsonarr[$key]['7'] = number_format((float) $entity->soapPrice, 2, '.', '');
                 @$jsonarr[$key]['8'] = $jsonarr[$key]['8'] . $AvailabilityDetailsHtml;
-                @$jsonarr[$key]['DT_RowClass'] .= $availability == "Y" ? ' text-success ' : ' text-danger ';                
+                @$jsonarr[$key]['DT_RowClass'] .= $availability == "Y" ? ' text-success ' : ' text-danger ';
             } elseif ($entity->getEdi()->getFunc() == 'getComlineEdiPartMaster') {
                 $entity->setComlineSoap();
                 $AvailabilityDetailsHtml = '';
@@ -749,8 +747,8 @@ class EdiItemController extends Main {
                     $xml = $response->GetAvailabilityResult->any;
                     $xml = simplexml_load_string($xml);
                     $AvailabilityDetailsHtml = "<select data-id='" . $entity->getId() . "' class='edistore' id='store_" . $entity->getId() . "' style=''>";
-					$asd = (array)$xml->Item;
-                    foreach ((array)$asd["AvailabilityDetails"] as $details) {
+                    $asd = (array) $xml->Item;
+                    foreach ((array) $asd["AvailabilityDetails"] as $details) {
                         if ($details->IsAvailable == 'Y') {
                             $selected = (int) $xml->Item->Header->SUGGESTED_STORE == (int) $details->StoreNo ? "selected" : "";
                             $AvailabilityDetailsHtml .= "<option " . $selected . " value='" . $details->StoreNo . "' style='color:green'>" . $details->StoreNo . "</option>";
@@ -795,6 +793,7 @@ class EdiItemController extends Main {
                             //echo $Item->ItemCode."\n";
                             if (@$jsonarr[$ands[$Item->ItemCode]]) {
                                 $entity = $entities[$Item->ItemCode];
+                                $entity->getWholesaleprice($Item->UnitPrice);
                                 @$jsonarr[$ands[$Item->ItemCode]]['6'] = $entity->getDiscount($customer, $vat);
                                 @$jsonarr[$ands[$Item->ItemCode]]['7'] = number_format($Item->UnitPrice, 2, '.', '');
 
@@ -929,16 +928,16 @@ class EdiItemController extends Main {
                     ->findOneBy(array('Edi' => $edi, 'itemCode' => $jsonarr["itemcode"]));
             if ($ediItem) {
                 //$jsonarr["itemcode"] = $itemcode;
-				$pricer = $jsonarr["pricer"] != '' ? $jsonarr["pricer"] : "itemPricer";
-				$pricew = $jsonarr["pricew"] != '' ? $jsonarr["pricew"] : "itemPricew";
-				
+                $pricer = $jsonarr["pricer"] != '' ? $jsonarr["pricer"] : "itemPricer";
+                $pricew = $jsonarr["pricew"] != '' ? $jsonarr["pricew"] : "itemPricew";
+
                 $jsonarr["markupr"] = (double) $ediItem->getEdiMarkup($pricer);
                 $jsonarr["markupw"] = (double) $ediItem->getEdiMarkup($pricew);
                 $jsonarr["rules"] = $ediItem->getRulesss($pricew);
-				
+
                 $jsonarr["pricer"] = $pricer;
                 $jsonarr["pricew"] = $pricew;
-				
+
                 $jsonarr["edi"] = $edi->getId();
             }
         }
