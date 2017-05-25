@@ -5,8 +5,6 @@
 {% block stylesheets %}
 {% endblock %}
 {% block javascripts %}
-<script src="{{  asset('assets/js/libs/softone/softoneproduct.js') }}"></script>
- 
 <script>
     $(".{{ctrl}}").alexTabs("{{app}}", "{{ctrl}}", "{{url}}","{{content|json_encode()}}");
 </script>
