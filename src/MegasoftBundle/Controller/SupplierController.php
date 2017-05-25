@@ -29,11 +29,12 @@ class SupplierController extends Main {
      * @Route("/megasoft/supplier/view/{id}")
      */
     public function viewAction($id) {
-
+        $content = $this->gettabs($id);
+        $content = $this->content();
         return $this->render('MegasoftBundle:Supplier:view.html.twig', array(
                     'pagename' => 'Supplier',
                     'url' => '/megasoft/supplier/save',
-                    'content'=>'',
+                    'content'=>$content,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'tabs' => $this->gettabs($id),
