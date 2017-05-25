@@ -84,7 +84,7 @@ class CustomerController extends Main {
             }
             $productsalejson = json_encode($productsaleArr);
             
-            $suppliers = $this->getDoctrine()->getRepository("MegasoftBundle:MegasoftSupplier")->findAll();
+            $suppliers = $this->getDoctrine()->getRepository("MegasoftBundle:Manufacturer")->findAll();
             $supplierArr = array();
             foreach ($suppliers as $supplier) {
                 $supplierArr[$supplier->getId()] = $supplier->getTitle();
@@ -256,7 +256,7 @@ class CustomerController extends Main {
 
         $fields["customergroup"] = array("label" => "Group", "className" => "col-md-6", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'MegasoftBundle:Customergroup', 'name' => 'title', 'value' => 'id'));
 
-        //$fields["supplier"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'MegasoftBundle:MegasoftSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
+        //$fields["supplier"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'MegasoftBundle:Manufacturer', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
         $fields["customerVatsts"] = array("label" => "ΦΠΑ", "required" => true, "className" => "col-md-6", 'type' => "select", 'dataarray' => $vatsts);
 
         $priceField[] = array("value" => "store_retail_price", "name" => "Λιανική");
