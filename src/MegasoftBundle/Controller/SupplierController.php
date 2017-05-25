@@ -30,7 +30,7 @@ class SupplierController extends Main {
      */
     public function viewAction($id) {
         $content = $this->gettabs($id);
-        $content = $this->content();
+        //$content = $this->content();
         return $this->render('MegasoftBundle:Supplier:view.html.twig', array(
                     'pagename' => 'Supplier',
                     'url' => '/megasoft/supplier/save',
