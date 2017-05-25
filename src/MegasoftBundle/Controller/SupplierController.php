@@ -11,6 +11,7 @@ use AppBundle\Controller\Main as Main;
 class SupplierController extends Main {
 
     var $repository = 'MegasoftBundle:Supplier';
+
     /**
      * @Route("/megasoft/supplier/supplier")
      */
@@ -30,11 +31,11 @@ class SupplierController extends Main {
      */
     public function viewAction($id) {
         $content = $this->gettabs($id);
-        //$content = $this->content();
+        $content = $this->content();
         return $this->render('MegasoftBundle:Supplier:view.html.twig', array(
                     'pagename' => 'Supplier',
                     'url' => '/megasoft/supplier/save',
-                    'content'=>$content,
+                    'content' => "888".$content,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'tabs' => $this->gettabs($id),
@@ -87,16 +88,17 @@ class SupplierController extends Main {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+
     /**
      * @Route("/megasoft/supplier/retrieve")
-     */    
+     */
     function retrieveSupplier() {
         $this->getMegasoft();
         return new Response(
                 json_encode(array()), 200, array('Content-Type' => 'application/json')
-        );        
+        );
     }
-    
+
     public function getMegasoft() {
         //return;
         $login = "W600-K78438624F8";
@@ -104,7 +106,7 @@ class SupplierController extends Main {
         $em = $this->getDoctrine()->getManager();
         //http://wsprisma.megasoft.gr/mgsft_ws.asmx
         $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
-        
+
         /*
           $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
           $headerbody = array('Login' => "alexander", 'Date' => "2016-10-10");
@@ -149,7 +151,7 @@ class SupplierController extends Main {
                 if (@$entity->getId() == 0) {
                     $q[] = "`reference` = '" . addslashes($data["SupplierId"]) . "'";
                     //$q[] = "`suppliergroup` = '1'";
-                    
+
                     $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
                     echo $sql . "<BR>";
                     //$em->getConnection()->exec($sql);
@@ -158,8 +160,8 @@ class SupplierController extends Main {
                     echo $sql . "<BR>";
                     //$em->getConnection()->exec($sql);
                 }
-
             }
         }
-    }    
+    }
+
 }
