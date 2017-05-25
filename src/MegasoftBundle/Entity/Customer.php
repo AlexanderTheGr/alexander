@@ -804,18 +804,18 @@ class Customer extends Entity {
 
         if ($this->reference > 1)
             $data["CustomerId"] = $this->reference;
-        $data["CustomerCode"] = $this->customerCode;
-        $data["CustomerName"] = $this->customerName;
-        $data["CustomerAfm"] = $this->customerAfm;
-        $data["CustomerEmail"] = $this->customerEmail;
-        $data["CustomerAddress"] = $this->customerAddress;
-        $data["CustomerCity"] = $this->customerCity;
-        $data["CustomerZip"] = $this->customerZip;
+        $data["CustomerCode"] = (string)$this->customerCode;
+        $data["CustomerName"] = (string)$this->customerName;
+        $data["CustomerAfm"] = (string)$this->customerAfm;
+        $data["CustomerEmail"] = (string)$this->customerEmail;
+        $data["CustomerAddress"] = (string)$this->customerAddress;
+        $data["CustomerCity"] = (string)$this->customerCity;
+        $data["CustomerZip"] = (string)$this->customerZip;
         $data["CustomerPhone1"] = (string)$this->customerPhone1;
         $data["CustomerPhone2"] = (string)$this->customerPhone2;
-        $data["CustomerDoy"] = $this->customerIrsdata;
-        $data["CustomerOccupation"] = $this->customerJobtypetrd;
-        $data["CustomerPricelist"] = $this->CustomerPricelist == 'storeRetailPrice' ? 2 : 1; //$this->CustomerPricelist;
+        $data["CustomerDoy"] = (string)$this->customerIrsdata;
+        $data["CustomerOccupation"] = (string)$this->customerJobtypetrd;
+        $data["CustomerPricelist"] = (string)$this->CustomerPricelist == 'storeRetailPrice' ? 2 : 1; //$this->CustomerPricelist;
         
         /*
           $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
