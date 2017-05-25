@@ -1492,20 +1492,21 @@ class EdiItem extends Entity {
                 $price = $rule->getPrice();
                 $ruled = true;
             }
-        }
-
+        }        
         if (!$ruled) {
             $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
             $sortorder = 0;
             foreach ($rules as $rule) {
-                if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
+                if ($rule->validateRule($this, $this) AND $sortorder <= $rule->getSortorder()) {
                     $sortorder = $rule->getSortorder();
                     $discount = $rule->getVal();
                     $price = $rule->getPrice();
                 }
             }
         }
+        
 
+        
         $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
         $this->getEdiMarkupPrice($pricefield);
         $price = $price > 0 ? $price : $this->getEdiMarkupPrice($pricefield);
