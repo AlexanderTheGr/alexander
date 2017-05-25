@@ -501,7 +501,7 @@ class EdiItemController extends Main {
                 } elseif (@$field["function"]) {
                     $func = $field["function"];
                     $obj = $em->getRepository($this->repository)->find($result["id"]);
-                    $json[] = $func;//$obj->$func(count($results));
+                    $json[] = $obj->$func(count($results));
                 }
             }
 
@@ -529,7 +529,7 @@ class EdiItemController extends Main {
         if ($funct) {
             $jsonarrnoref = array();
             if (count($jsonarr)) {
-                $jsonarr = $this->$funct($jsonarr, $id);
+                $jsonarr = $funct;//$this->$funct($jsonarr, $id);
                 $jsonarr = array_merge($jsonarr, $jsonarrnoref);
             }
         }
