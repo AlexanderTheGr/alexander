@@ -802,7 +802,7 @@ class Customer extends Entity {
         //$em = $this->getDoctrine()->getManager();
         $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
 
-        if ($this->reference > 0)
+        if ($this->reference > 1)
             $data["CustomerId"] = $this->reference;
         $data["CustomerCode"] = $this->customerCode;
         $data["CustomerName"] = $this->customerName;
@@ -815,7 +815,7 @@ class Customer extends Entity {
         $data["CustomerPhone2"] = $this->customerPhone2;
         $data["CustomerDoy"] = $this->customerIrsdata;
         $data["CustomerOccupation"] = $this->customerJobtypetrd;
-        $data["CustomerPricelist"] = $this->pricelist == 'storeRetailPrice' ? 2 : 1; //$this->CustomerPricelist;
+        $data["CustomerPricelist"] = $this->CustomerPricelist == 'storeRetailPrice' ? 2 : 1; //$this->CustomerPricelist;
         
         /*
           $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
