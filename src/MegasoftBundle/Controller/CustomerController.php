@@ -371,6 +371,9 @@ class CustomerController extends Main {
                 $q[] = "`customer_zip` = '" . addslashes($data["CustomerZip"]) . "'";
                 $q[] = "`customer_phone1` = '" . addslashes($data["CustomerPhone1"]) . "'";
                 $q[] = "`customer_phone2` = '" . addslashes($data["CustomerPhone2"]) . "'";
+                $q[] = "`customer_irsdata` = '" . addslashes($data["CustomerDoy"]) . "'";
+                $q[] = "`customerJobtypetrd` = '" . addslashes($data["CustomerOccupation"]) . "'";
+                
                 if (@$entity->getId() == 0) {
                     $q[] = "`reference` = '" . addslashes($data["CustomerId"]) . "'";
                     $q[] = "`customergroup` = '1'";
