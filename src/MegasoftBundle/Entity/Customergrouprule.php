@@ -181,8 +181,8 @@ class Customergrouprule {
             if ($Manufacturer)
                 $supplier = $Manufacturer->getId();
         } else {
-            //$supplier = $product->getSupplier() ? $product->getSupplier()->getId() : 0;
-            $supplier = 0;
+            $supplier = $product->getSupplier() ? $product->getSupplier()->getId() : 0;
+            //$supplier = 0;
             if ($product->getProductsale()) {
                 $productsale = $product->getProductsale()->getId();
             }
