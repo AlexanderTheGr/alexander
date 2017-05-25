@@ -746,6 +746,8 @@ class EdiItem extends Entity {
             $product->setCats($this->getCats());
             $storeWholeSalePrice = (float) $this->getEdiMarkupPrice("storeWholeSalePrice");
             $storeRetailPrice = (float) $this->getEdiMarkupPrice("storeRetailPrice");
+            $product->setStoreRetailPrice($storeRetailPrice);
+            $product->setStoreWholeSalePrice($storeWholeSalePrice);
             if ($supplier)
                 $product->setSupplier($supplier);
             $em->persist($product);
