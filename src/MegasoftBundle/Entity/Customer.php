@@ -802,6 +802,7 @@ class Customer extends Entity {
         //$em = $this->getDoctrine()->getManager();
         $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
 
+        
         if ($this->reference > 0)
             $data["CustomerId"] = $this->reference;
         $data["CustomerCode"] = $this->customerCode;
