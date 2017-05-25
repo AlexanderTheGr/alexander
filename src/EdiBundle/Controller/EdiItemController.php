@@ -529,7 +529,7 @@ class EdiItemController extends Main {
         if ($funct) {
             $jsonarrnoref = array();
             if (count($jsonarr)) {
-                $jsonarr = $funct;//$this->$funct($jsonarr, $id);
+                $jsonarr = $this->$funct($jsonarr, $id);
                 $jsonarr = array_merge($jsonarr, $jsonarrnoref);
             }
         }
