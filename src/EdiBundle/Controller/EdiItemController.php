@@ -490,7 +490,7 @@ class EdiItemController extends Main {
                     }
                     if (@$field["method"]) {
                         $method = $field["method"] . "Method";
-                        $json[] = $method;//$this->$method($val);
+                        $json[] = $this->$method($val);
                     } else {
                         if (@$field["input"]) {
                             $json[] = "<input id='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "_" . $result["id"] . "' data-id='" . $result["id"] . "' class='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "' type='" . $field["input"] . "' value='" . $val . "'>";
@@ -501,7 +501,7 @@ class EdiItemController extends Main {
                 } elseif (@$field["function"]) {
                     $func = $field["function"];
                     $obj = $em->getRepository($this->repository)->find($result["id"]);
-                    $json[] = $obj->$func(count($results));
+                    $json[] = $func;//$obj->$func(count($results));
                 }
             }
 
