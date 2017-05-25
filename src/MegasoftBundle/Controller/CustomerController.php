@@ -259,8 +259,8 @@ class CustomerController extends Main {
         //$fields["supplier"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'MegasoftBundle:Manufacturer', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
         $fields["customerVatsts"] = array("label" => "ΦΠΑ", "required" => true, "className" => "col-md-6", 'type' => "select", 'dataarray' => $vatsts);
 
-        $priceField[] = array("value" => "store_retail_price", "name" => "Λιανική");
-        $priceField[] = array("value" => "store_wholesale_price", "name" => "Χονδρική");
+        $priceField[] = array("value" => "storeRetailPrice", "name" => "Λιανική");
+        $priceField[] = array("value" => "storeWholesalePrice", "name" => "Χονδρική");
 
 
 
@@ -373,7 +373,7 @@ class CustomerController extends Main {
                 $q[] = "`customer_phone2` = '" . addslashes($data["CustomerPhone2"]) . "'";
                 $q[] = "`customer_irsdata` = '" . addslashes($data["CustomerDoy"]) . "'";
                 $q[] = "`customer_jobtypetrd` = '" . addslashes($data["CustomerOccupation"]) . "'";
-                $q[] = "`price_field` = '" . ((int)$data["CustomerPricelist"] == 1 ? 'store_wholesale_price' : 'store_retail_price') . "'";
+                $q[] = "`price_field` = '" . ((int)$data["CustomerPricelist"] == 1 ? 'storeholeSalePrice' : 'storeRetailPrice') . "'";
                 
                 
                 if (@$entity->getId() == 0) {
