@@ -744,6 +744,8 @@ class EdiItem extends Entity {
             $product->setEdiId($this->getEdi()->getId());
             $product->setCars($this->getCars());
             $product->setCats($this->getCats());
+            $storeWholeSalePrice = (float) $this->getEdiMarkupPrice("storeWholeSalePrice");
+            $storeRetailPrice = (float) $this->getEdiMarkupPrice("storeRetailPrice");
             if ($supplier)
                 $product->setSupplier($supplier);
             $em->persist($product);
@@ -759,35 +761,35 @@ class EdiItem extends Entity {
         $product->setProductSale($productsale);
         if ($supplier)
             $product->setSupplier($supplier);
-        
+
         $product->setTecdocSupplierId($tecdocSupplier);
         $product->setTecdocCode($this->artNr);
         $product->setTitle($this->description);
-        $product->setTecdocArticleId($this->tecdocArticleId);        
+        $product->setTecdocArticleId($this->tecdocArticleId);
         $product->setManufacturer($manufacturer);
         $product->setErpCode($erpCode);
         $product->setSupref($this->itemCode);
         $product->setCars($this->getCars());
-        $product->setCats($this->getCats());  
+        $product->setCats($this->getCats());
         $product->setSupplierCode($this->clearCode($this->partno));
-        
-        
-        $storeWholeSalePrice = (float)$this->getEdiMarkupPrice("storeWholeSalePrice");
-        $storeRetailPrice = (float)$this->getEdiMarkupPrice("storeRetailPrice");
-        
+
+
+        $storeWholeSalePrice = (float) $this->getEdiMarkupPrice("storeWholeSalePrice");
+        $storeRetailPrice = (float) $this->getEdiMarkupPrice("storeRetailPrice");
+
         $product->setStoreRetailPrice($storeRetailPrice);
         $product->setStoreWholeSalePrice($storeWholeSalePrice);
-        
+
         $product->setBarcode('');
         $product->setPlace('');
         $product->setRemarks('');
-        
+
         $product->setTs($dt);
         $product->setCreated($dt);
-        $product->setModified($dt); 
-        
+        $product->setModified($dt);
+
         $em->persist($product);
-        $em->flush(); 
+        $em->flush();
         $product->toMegasoft();
     }
 
