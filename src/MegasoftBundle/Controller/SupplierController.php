@@ -35,7 +35,7 @@ class SupplierController extends Main {
         return $this->render('MegasoftBundle:Supplier:view.html.twig', array(
                     'pagename' => 'Supplier',
                     'url' => '/megasoft/supplier/save',
-                    'content' => "888".$content,
+                    'content' => $content,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'tabs' => $this->gettabs($id),
