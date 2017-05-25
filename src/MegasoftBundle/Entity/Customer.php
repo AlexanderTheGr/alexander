@@ -816,7 +816,7 @@ class Customer extends Entity {
         $data["CustomerPhone2"] = $this->customerPhone2;
         $data["CustomerDoy"] = $this->customerIrsdata;
         $data["CustomerOccupation"] = $this->customerJobtypetrd;
-        $data["CustomerPricelist"] = $this->pricelist == 'storeRetailPrice' ? 2 : 1; //$this->CustomerPricelist;
+        $data["CustomerPricelist"] = $this->pricelist == 'store_retail_price' ? 2 : 1; //$this->CustomerPricelist;
         
         /*
           $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
