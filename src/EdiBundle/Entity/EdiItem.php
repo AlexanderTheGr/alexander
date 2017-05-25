@@ -772,8 +772,8 @@ class EdiItem extends Entity {
         $product->setSupplierCode($this->clearCode($this->partno));
         
         
-        $storeWholeSalePrice = $this->getEdiMarkupPrice("storeWholeSalePrice");
-        $storeRetailPrice = $this->getEdiMarkupPrice("storeRetailPrice");
+        $storeWholeSalePrice = (float)$this->getEdiMarkupPrice("storeWholeSalePrice");
+        $storeRetailPrice = (float)$this->getEdiMarkupPrice("storeRetailPrice");
         
         $product->setStoreRetailPrice($storeRetailPrice);
         $product->setStoreWholeSalePrice($storeWholeSalePrice);
