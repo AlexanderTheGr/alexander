@@ -11,16 +11,14 @@ use AppBundle\Controller\Main as Main;
 class SupplierController extends Main {
 
     var $repository = 'MegasoftBundle:Supplier';
-
     /**
      * @Route("/megasoft/supplier/supplier")
      */
     public function indexAction() {
-
         return $this->render('supplier/index.html.twig', array(
                     'pagename' => 'Προμηθευτές',
                     'url' => '/megasoft/supplier/getdatatable',
-                    'view' => '/supplier/view',
+                    'view' => '/megasoft/supplier/view',
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
@@ -34,7 +32,7 @@ class SupplierController extends Main {
 
         return $this->render('supplier/view.html.twig', array(
                     'pagename' => 'Supplier',
-                    'url' => '/supplier/save',
+                    'url' => '/megasoft/supplier/save',
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'tabs' => $this->gettabs($id),
