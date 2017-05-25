@@ -83,7 +83,7 @@ class CustomerController extends Main {
                 $productsaleArr[$productsale->getId()] = $productsale->getTitle();
             }
             $productsalejson = json_encode($productsaleArr);
-            
+
             $suppliers = $this->getDoctrine()->getRepository("MegasoftBundle:Manufacturer")->findAll();
             $supplierArr = array();
             foreach ($suppliers as $supplier) {
@@ -231,8 +231,7 @@ class CustomerController extends Main {
             $customerCode = (int) $this->getSetting("MegasoftBundle:Customer:customerCode");
             $entity->setField("customerCode", str_pad($customerCode, 7, "0", STR_PAD_LEFT));
             $this->newentity[$this->repository] = $entity;
-            $entity->setCustomerVatsts(1);
-            $entity->setPriceField("itemPricer");
+            $entity->setPriceField("storeWholeSalePrice");
             $code = $this->getSetting("MegasoftBundle:Customer:CodeIncrement");
         }
         $vats = $this->getDoctrine()
@@ -329,7 +328,7 @@ class CustomerController extends Main {
         $em = $this->getDoctrine()->getManager();
         //http://wsprisma.megasoft.gr/mgsft_ws.asmx
         $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
-        
+
         /*
           $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
           $headerbody = array('Login' => "alexander", 'Date' => "2016-10-10");
@@ -373,13 +372,13 @@ class CustomerController extends Main {
                 $q[] = "`customer_phone2` = '" . addslashes($data["CustomerPhone2"]) . "'";
                 $q[] = "`customer_irsdata` = '" . addslashes($data["CustomerDoy"]) . "'";
                 $q[] = "`customer_jobtypetrd` = '" . addslashes($data["CustomerOccupation"]) . "'";
-                $q[] = "`price_field` = '" . ((int)$data["CustomerPricelist"] == 1 ? 'storeholeSalePrice' : 'storeRetailPrice') . "'";
-                
-                
+                $q[] = "`price_field` = '" . ((int) $data["CustomerPricelist"] == 1 ? 'storeholeSalePrice' : 'storeRetailPrice') . "'";
+
+
                 if (@$entity->getId() == 0) {
                     $q[] = "`reference` = '" . addslashes($data["CustomerId"]) . "'";
                     $q[] = "`customergroup` = '1'";
-                    
+
                     $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
                     echo $sql . "<BR>";
                     $em->getConnection()->exec($sql);
@@ -388,7 +387,6 @@ class CustomerController extends Main {
                     echo $sql . "<BR>";
                     $em->getConnection()->exec($sql);
                 }
-
             }
         }
     }
