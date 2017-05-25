@@ -794,7 +794,53 @@ class Customer extends Entity {
     }
 
     function toMegasoft() {
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $login = $this->getSetting("MegasoftBundle:Webservice:Login"); //"demo-fastweb-megasoft";
+        //$em = $this->getDoctrine()->getManager();
+        $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
+
+        if ($this->reference > 0)
+            $data["CustomerId"] = $this->reference;
+        $data["CustomerCode"] = $this->customerCode;
+        $data["CustomerName"] = $this->customerName;
+        $data["CustomerAfm"] = $this->customerAfm;
+        $data["CustomerEmail"] = $this->customerEmail;
+        $data["CustomerAddress"] = $this->customerAddress;
+
+        $data["CustomerCity"] = $this->customerCity;
+        $data["CustomerZip"] = $this->customerZip;
+        $data["CustomerPhone1"] = $this->customerPhone1;
+        $data["CustomerPhone2"] = $this->customerPhone2;
+
+
+        $data["CustomerDoy"] = $this->customerIrsdata;
+        $data["CustomerOccupation"] = $this->CustomerOccupation;
+        $data["CustomerPricelist"] = $this->CustomerPricelist;
         
+
+        /*
+          $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
+          $headerbody = array('Login' => "alexander", 'Date' => "2016-10-10");
+          $header = new SOAPHeader($ns,"AuthHeader",$headerbody);
+          $soap->__setSoapHeaders($header);
+         */
+
+        $params["Login"] = $login;
+        $params["JsonStrWeb"] = json_encode($data);
+        //print_r($params);
+        $response = $soap->__soapCall("SetCustomer", array($params));
+        //print_r($response);
+        if ($response->SetProductResult > 0 AND $this->reference == 0) {
+            $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+            $this->reference = $response->SetProductResult;
+            $em->persist($this);
+            $em->flush();
+        }
+        return $response;
+        //exit;
     }
 
     private $rules = array();
