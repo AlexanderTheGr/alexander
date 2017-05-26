@@ -319,7 +319,8 @@ class ProductController extends Main {
      * @Route("/erp01/product/save")
      */
     public function savection() {
-
+        $sql = 'delete from `megasoft_product` where erp_code is null';
+        $this->getDoctrine()->getConnection()->exec($sql);
         $product = new Product;
         $this->newentity[$this->repository] = $product;
 
