@@ -40,7 +40,7 @@ class Supplier extends Entity {
         }
         return 'string';
     }
-    
+
     public function __construct() {
         $this->setRepositories();
     }
@@ -472,6 +472,48 @@ class Supplier extends Entity {
      */
     public function getId() {
         return $this->id;
+    }
+
+    function toMegasoft() {
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $login = $this->getSetting("MegasoftBundle:Webservice:Login"); //"demo-fastweb-megasoft";
+        //$em = $this->getDoctrine()->getManager();
+        $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
+
+
+        if ($this->reference > 1)
+            $data["CustomerId"] = $this->reference;
+        $data["supplierCode"] = (string) $this->supplierCode;
+        $data["supplierName"] = (string) $this->supplierName;
+        $data["supplierAfm"] = (string) $this->supplierAfm;
+        $data["supplierAddress"] = (string) $this->supplierAddress;
+        $data["supplierCity"] = (string) $this->supplierCity;
+        $data["supplierPhone01"] = (string) $this->supplierPhone01;
+        $data["supplierPhone02"] = (string) $this->supplierPhone02;
+        $data["supplierSite"] = (string) $this->supplierSite;
+        /*
+          $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
+          $headerbody = array('Login' => "alexander", 'Date' => "2016-10-10");
+          $header = new SOAPHeader($ns,"AuthHeader",$headerbody);
+          $soap->__setSoapHeaders($header);
+         */
+
+        $params["Login"] = $login;
+        $params["JsonStrWeb"] = json_encode($data);
+        //print_r($params);
+        $response = $soap->__soapCall("SetSupplier", array($params));
+        //print_r($response);
+        if ($response->SetSupplierResult > 0 AND $this->reference == 0) {
+            $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+            $this->reference = $response->SetSupplierResult;
+            $em->persist($this);
+            $em->flush();
+        }
+        return $response;
+        //exit;
     }
 
 }
