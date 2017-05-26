@@ -410,7 +410,7 @@ class OrderController extends Main {
         $dtparams[] = array("name" => "Description", "index" => 'description', 'search' => 'text');
         //$dtparams[] = array("name" => "Tecdoc Name", "index" => 'tecdocArticleName', 'search' => 'text');
 
-        $dtparams[] = array("name" => "Customer Price", "index" => 'storeRetailPrice', 'search' => 'text');
+        $dtparams[] = array("name" => "Customer Price", "index" => 'wholesaleprice', 'search' => 'text');
         $dtparams[] = array("name" => "Price", "index" => 'wholesaleprice', 'search' => 'text');
 
         $dtparams[] = array("name" => "QTY1", "index" => 'qty1', "input" => 'text', 'search' => 'text');
@@ -721,8 +721,8 @@ class OrderController extends Main {
                  * 
                  */
                 $json[4] = $obj->getArticleAttributes2($articleIds2["linkingTargetId"]);
-                $json[6] = number_format($json[6] * $vat, 2, '.', '');
-                ;
+                $json[6] = number_format($obj->getStoreRetailPrice() * $vat, 2, '.', '');
+                
                 $json[7] = $obj->getDiscount($customer, $vat);
                 $json[8] = $obj->getGroupedDiscountPrice($customer, $vat); //str_replace($obj->$priceField, $obj->getGroupedDiscountPrice($customer), $json[5]);
                 $qty = "lll";//$json[9];
