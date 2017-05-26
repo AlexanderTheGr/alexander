@@ -1108,7 +1108,7 @@ class Product extends Entity {
         //return "";
         $tecdoc = $this->getTecdocSupplierId() ? $this->getTecdocSupplierId()->getSupplier() : "";
         $ti = $this->getManufacturer() ? $this->getManufacturer()->getTitle() : "";
-        $ti = $this->erpSupplier;
+        //$ti = $this->erpSupplier;
         $out = '<a target="_blank" title="' . $ti . '"  class="" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $ti . '</a>
         <br>
         <span class="text-sm text-info">' . $tecdoc . '</span>';
