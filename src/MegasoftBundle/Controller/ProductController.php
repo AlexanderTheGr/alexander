@@ -327,7 +327,7 @@ class ProductController extends Main {
         $this->error[$this->repository] = array();
 
         if (!$product->getManufacturer() AND $product->getErpSupplier()) {
-            $manufacturer = $this->createManufacturer($entity->getErpSupplier());
+            $manufacturer = $this->createManufacturer($this->newentity[$this->repository]->getErpSupplier());
             $product->setManufacturer($manufacturer);
         }
         $erpCode = $this->clearstring($product->getSupplierCode()) . "-" . $product->getManufacturer()->getCode();        
