@@ -484,8 +484,9 @@ class Supplier extends Entity {
         $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
 
 
-        if ($this->reference > 1)
-            $data["CustomerId"] = $this->reference;
+        if ($this->reference)
+            $data["SupplierId"] = $this->reference;
+        
         $data["supplierCode"] = (string) $this->supplierCode;
         $data["supplierName"] = (string) $this->supplierName;
         $data["supplierAfm"] = (string) $this->supplierAfm;
