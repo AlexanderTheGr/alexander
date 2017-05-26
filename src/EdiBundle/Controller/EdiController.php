@@ -298,7 +298,7 @@ class EdiController extends Main {
             $i = 0;
             foreach ($collection as $entity) {
                 //if ($i++ <= 1) continue;
-                if ($entity["id"] > 4) {
+                if ($entity["id"] == 2) {
                     $func = $entity["func"];
                     $this->$func($entity);
                 }
@@ -392,7 +392,7 @@ class EdiController extends Main {
         $fiestr = file_get_contents($comlineEdiPartMaster);
         file_put_contents($file, $fiestr);
         set_time_limit(100000);
-        ini_set('memory_limit', '4096M');
+        ini_set('memory_limit', '14096M');
 
         //return;
         $em = $this->getDoctrine()->getManager();
@@ -489,7 +489,7 @@ class EdiController extends Main {
         $fiestr = file_get_contents($comlineEdiPartMaster);
         file_put_contents($file, $fiestr);
         set_time_limit(100000);
-        ini_set('memory_limit', '4096M');
+        ini_set('memory_limit', '14096M');
 
         //return;
         $em = $this->getDoctrine()->getManager();
@@ -587,7 +587,7 @@ class EdiController extends Main {
         $fiestr = gzdecode(file_get_contents($this->getEdiPartMasterFile($entity["token"])));
         file_put_contents($file, $fiestr);
         set_time_limit(100000);
-        ini_set('memory_limit', '8096M');
+        ini_set('memory_limit', '14096M');
 
         //return;
         $em = $this->getDoctrine()->getManager();
