@@ -885,6 +885,7 @@ class OrderController extends Main {
         $id = $request->request->get("id");
         //$megasoft = new Megasoft();
         $object = "SALDOC";
+        //$order->getReference();
         $order = $this->getDoctrine()
                 ->getRepository("MegasoftBundle:Order")
                 ->find($id);
@@ -924,7 +925,9 @@ class OrderController extends Main {
         $params["JsonStrWeb"] = $JsonStrWeb;
         //$results = $soap->GetCustomers();
         //print_r($params);
-        $result = $soap->__soapCall("InsertOrder", array($params));
+        if (!$order->getReference()) {
+            $result = $soap->__soapCall("InsertOrder", array($params));
+        }
         //echo $JsonStrWeb;
         //print_r($result);
         
