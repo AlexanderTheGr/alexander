@@ -324,7 +324,7 @@ class ProductController extends Main {
         $this->newentity[$this->repository] = $product;
         $this->initialazeNewEntity($product);
         @$this->newentity[$this->repository]->setField("status", 1);
-        $this->newentity[$this->repository]->setField("erpCode", $this->generateRandomString());
+        @$this->newentity[$this->repository]->setField("erpCode", $this->generateRandomString());
         $this->error[$this->repository] = array();
 
         $entities = $this->save();
