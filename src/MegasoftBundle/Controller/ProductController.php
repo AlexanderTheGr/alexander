@@ -325,7 +325,7 @@ class ProductController extends Main {
         $this->initialazeNewEntity($product);
         @$this->newentity[$this->repository]->setField("status", 1);
         $this->error[$this->repository] = array();
-
+        $entities = $this->save();
         if (!$product->getManufacturer() AND $product->getErpSupplier()) {
             $manufacturer = $this->createManufacturer($this->newentity[$this->repository]->getErpSupplier());
             $product->setManufacturer($manufacturer);
