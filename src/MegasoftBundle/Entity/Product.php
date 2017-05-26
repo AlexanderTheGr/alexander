@@ -42,7 +42,7 @@ class Product extends Entity {
         $this->types['supplier'] = 'object';
         $this->types['productSale'] = 'object';
         $this->types['manufacturer'] = 'object';
-        //$this->uniques = array("erpCode");
+        $this->uniques = array("erpCode");
 
         //$this->tecdocSupplierId = new \MegasoftBundle\Entity\TecdocSupplier;
     }
