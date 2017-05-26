@@ -1105,7 +1105,7 @@ class Product extends Entity {
 
     public function getForOrderSupplier() {
 
-        return "";
+        //return "";
         $tecdoc = $this->getTecdocSupplierId() ? $this->getTecdocSupplierId()->getSupplier() : "";
         //$ti = $this->getSupplier() ? $this->getSupplier()->getTitle() : "";
         $ti = $this->erpSupplier;
