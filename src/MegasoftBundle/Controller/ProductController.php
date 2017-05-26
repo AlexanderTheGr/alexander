@@ -181,11 +181,15 @@ class ProductController extends Main {
     }
 
     private function createManufacturer($brand) {
+        
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
         }
-
+        $brand = strtoupper($brand);
+        $manufacturer = $this->getDoctrine()->getRepository("MegasoftBundle:Manufacturer")
+                ->findOneBy(array('title' => $brand));
+        if ($manufacturer) return $manufacturer;
         $tecdocSupplier = $this->getDoctrine()->getRepository("MegasoftBundle:TecdocSupplier")
                 ->findOneBy(array('supplier' => $brand));
         $login = $this->getSetting("MegasoftBundle:Webservice:Login"); //"demo-fastweb-megasoft";
