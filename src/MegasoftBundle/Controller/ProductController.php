@@ -120,7 +120,7 @@ class ProductController extends Main {
         $product->setErpCode($erpCode);
         $product->setSupref('');
         $product->setStoreRetailPrice(0);
-        $product->setStoreWholeSalePrice(0);  
+        $product->setStoreWholeSalePrice(0);
         $product->setSupplierCode($this->clearCode($asd->articleNo));
 
         $product->setBarcode('');
@@ -332,51 +332,6 @@ class ProductController extends Main {
                 ->getRepository($this->repository)
                 ->find($entities[$this->repository]);
 
-
-        //if ($product->getErpSupplier() != '' AND ! $product->getSupplier()) {
-        /*
-          if ($product->getErpSupplier() != '') {
-          $sup = trim(strtoupper($product->getErpSupplier()));
-          $MegasoftSupplier = $this->getDoctrine()->getRepository("MegasoftBundle:MegasoftSupplier")
-          ->findOneBy(array('title' => $sup));
-          if (@$MegasoftSupplier->id == 0) {
-          $TecdocSupplier = $this->getDoctrine()->getRepository("MegasoftBundle:TecdocSupplier")
-          ->findOneBy(array('supplier' => $sup));
-          if (@$TecdocSupplier->id == 0) {
-          $MegasoftSupplier = new \MegasoftBundle\Entity\MegasoftSupplier;
-          $MegasoftSupplier->setTitle($sup);
-          $MegasoftSupplier->setCode(' ');
-          //$this->getDoctrine()->persist($MegasoftSupplier);
-          //$this->getDoctrine()->flush();
-          $this->flushpersist($MegasoftSupplier);
-          $MegasoftSupplier->setCode("G" . $MegasoftSupplier->getId());
-          //$this->getDoctrine()->persist($MegasoftSupplier);
-          //$this->getDoctrine()->flush();
-          $this->flushpersist($MegasoftSupplier);
-          $MegasoftSupplier->toMegasoft();
-          } else {
-          $MegasoftSupplier = new \MegasoftBundle\Entity\MegasoftSupplier;
-          $MegasoftSupplier->setTitle($TecdocSupplier->getSupplier());
-          $MegasoftSupplier->setCode($TecdocSupplier->id);
-          $this->flushpersist($MegasoftSupplier);
-          $MegasoftSupplier->toMegasoft();
-          }
-          }
-          //$product->setItemMtrmanfctr($MegasoftSupplier->getId());
-          $product->setSupplierId($MegasoftSupplier);
-          }
-         * 
-         */
-
-        //$erpCode = $this->clearCode($product->getSupplierCode()) . "-" . $product->getSupplier()->getCode();
-        //$product->setErpCode($erpCode);
-        //$product->setItemCode($product->getErpCode());
-        //if ($product->getTecdocSupplierId())
-        //    $product->setItemMtrmark($product->getTecdocSupplierId()->getId());
-        //$product->setItemMtrmanfctr($product->getSupplier()->getId());
-        //$product->setItemApvcode($product->getTecdocCode());
-        //$product->setItemName($product->getTitle());
-        //$product->reference = 2350;
         @$this->flushpersist($product);
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
@@ -385,6 +340,12 @@ class ProductController extends Main {
                 ->getRepository('MegasoftBundle:Product')
                 ->find((int) $product->getId());
 
+
+        if (!$product->getManufacturer() AND $product->getErpSupplier()) {
+            $manufacturer = $this->createManufacturer($entity->getErpSupplier());
+            $product->setManufacturer($manufacturer);
+            $this->flushpersist($product);
+        }
         //echo $product->id."\n";
         //echo $product->reference."\n";
         //$product = $this->newentity[$this->repository];
