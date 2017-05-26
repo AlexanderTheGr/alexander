@@ -410,7 +410,7 @@ class OrderController extends Main {
         $dtparams[] = array("name" => "Description", "index" => 'description', 'search' => 'text');
         //$dtparams[] = array("name" => "Tecdoc Name", "index" => 'tecdocArticleName', 'search' => 'text');
 
-        $dtparams[] = array("name" => "Customer Price", "index" => 'wholesaleprice', 'search' => 'text');
+        $dtparams[] = array("name" => "Customer Price", "index" => 'storeRetailPrice', 'search' => 'text');
         $dtparams[] = array("name" => "Price", "index" => 'wholesaleprice', 'search' => 'text');
 
         $dtparams[] = array("name" => "QTY1", "index" => 'qty1', "input" => 'text', 'search' => 'text');
