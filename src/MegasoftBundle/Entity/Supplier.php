@@ -495,6 +495,9 @@ class Supplier extends Entity {
         $data["supplierPhone01"] = (string) $this->supplierPhone01;
         $data["supplierPhone02"] = (string) $this->supplierPhone02;
         $data["supplierSite"] = (string) $this->supplierSite;
+        $data["SupplierOccupation"] = (string) "";
+        $data["SupplierPricelist"] = (string) 1;
+        
         /*
           $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
           $headerbody = array('Login' => "alexander", 'Date' => "2016-10-10");
