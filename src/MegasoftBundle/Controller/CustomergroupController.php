@@ -16,14 +16,14 @@ class CustomergroupController extends Main {
     var $newentity = array();
 
     /**
-     * @Route("/megasoft/customergroup/customergroup")
+     * @Route("/erp01/customergroup/customergroup")
      */
     public function indexAction() {
 
         return $this->render('MegasoftBundle:Customergroup:index.html.twig', array(
                     'pagename' => 'Customergroups',
-                    'url' => '/megasoft/customergroup/getdatatable',
-                    'view' => '/megasoft/customergroup/view',
+                    'url' => '/erp01/customergroup/getdatatable',
+                    'view' => '/erp01/customergroup/view',
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
@@ -31,7 +31,7 @@ class CustomergroupController extends Main {
     }
 
     /**
-     * @Route("/megasoft/customergroup/view/{id}")
+     * @Route("/erp01/customergroup/view/{id}")
      */
     public function viewAction($id) {
 
@@ -94,7 +94,7 @@ class CustomergroupController extends Main {
         }
         return $this->render('MegasoftBundle:Customergroup:view.html.twig', array(
                     'pagename' => "Ομάδες Πελατών: " . $entity->getTitle(),
-                    'url' => '/megasoft/customergroup/save',
+                    'url' => '/erp01/customergroup/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
@@ -109,7 +109,7 @@ class CustomergroupController extends Main {
     }
 
     /**
-     * @Route("/megasoft/customergroup/save")
+     * @Route("/erp01/customergroup/save")
      */
     public function saveAction() {
         $entity = new Customergroup;
@@ -119,7 +119,7 @@ class CustomergroupController extends Main {
         $this->initialazeNewEntity($entity);
         $this->save();
         $entity = $this->newentity[$this->repository];
-        $jsonarr["returnurl"] = "/megasoft/customergroup/view/" . $entity->getId();
+        $jsonarr["returnurl"] = "/erp01/customergroup/view/" . $entity->getId();
         $json = json_encode($jsonarr);
         //$json = json_encode(array("ok"));
         return new Response(
@@ -128,7 +128,7 @@ class CustomergroupController extends Main {
     }
 
     /**
-     * @Route("/megasoft/customergroup/saverule")
+     * @Route("/erp01/customergroup/saverule")
      */
     function saveruleAction(Request $request) {
 
@@ -176,7 +176,7 @@ class CustomergroupController extends Main {
     }
 
     /**
-     * @Route("/megasoft/customergroup/deleterule")
+     * @Route("/erp01/customergroup/deleterule")
      */
     function deleteruleAction(Request $request) {
         $id = $request->request->get("id");
@@ -187,7 +187,7 @@ class CustomergroupController extends Main {
     }
 
     /**
-     * @Route("/megasoft/customergroup/gettab")
+     * @Route("/erp01/customergroup/gettab")
      */
     public function gettabs($id) {
 
@@ -222,8 +222,8 @@ class CustomergroupController extends Main {
 
             $params['dtparams'] = $dtparams;
             $params['id'] = $dtparams;
-            $params['url'] = '/megasoft/customergroup/getrules/' . $id;
-            //$params['view'] = '/megasoft/customergroup/getrule/' . $id;
+            $params['url'] = '/erp01/customergroup/getrules/' . $id;
+            //$params['view'] = '/erp01/customergroup/getrule/' . $id;
             $params['key'] = 'gettabs_' . $id;
             $params["ctrl"] = 'ctrlgettabs';
             $params["app"] = 'appgettabs';
@@ -246,7 +246,7 @@ class CustomergroupController extends Main {
     }
 
     /**
-     * @Route("/megasoft/customergroup/getrules/{id}")
+     * @Route("/erp01/customergroup/getrules/{id}")
      */
     public function getRulesAction($id) {
         $session = new Session();
@@ -276,7 +276,7 @@ class CustomergroupController extends Main {
     }
 
     /**
-     * @Route("/megasoft/customergroup/getrulesjson/{id}")
+     * @Route("/erp01/customergroup/getrulesjson/{id}")
      */
     public function getCustomerRulesJsonAction($id) {
         $allowedips = $this->getSetting("MegasoftBundle:Product:Allowedips");
@@ -337,7 +337,7 @@ class CustomergroupController extends Main {
     }
 
     /**
-     * @Route("/megasoft/customergroup/getdatatable")
+     * @Route("/erp01/customergroup/getdatatable")
      */
     public function getdatatableAction(Request $request) {
         $this->repository = 'MegasoftBundle:Customergroup';

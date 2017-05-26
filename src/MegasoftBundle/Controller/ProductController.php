@@ -19,7 +19,7 @@ class ProductController extends Main {
     var $object = 'item';
 
     /**
-     * @Route("/megasoft/product/product")
+     * @Route("/erp01/product/product")
      * 
      */
     public function indexAction() {
@@ -59,8 +59,8 @@ class ProductController extends Main {
          */
         return $this->render('MegasoftBundle:Product:index.html.twig', array(
                     'pagename' => 'Είδη',
-                    'url' => '/megasoft/product/getdatatable',
-                    'view' => '/megasoft/product/view',
+                    'url' => '/erp01/product/getdatatable',
+                    'view' => '/erp01/product/view',
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
@@ -68,7 +68,7 @@ class ProductController extends Main {
     }
 
     /**
-     * @Route("/megasoft/product/createProduct")
+     * @Route("/erp01/product/createProduct")
      */
     public function createProductAction(Request $request) {
         //return;
@@ -98,7 +98,7 @@ class ProductController extends Main {
         $product = $em->getRepository("MegasoftBundle:Product")->findOneBy(array('erpCode' => $erpCode));
         $json = array("error" => 1);
         if (@$product->id > 0) {
-            $json = json_encode(array("error" => 0, "id" => (int) $product->id, 'returnurl' => '/megasoft/product/view/' . (int) $product->id));
+            $json = json_encode(array("error" => 0, "id" => (int) $product->id, 'returnurl' => '/erp01/product/view/' . (int) $product->id));
             return new Response(
                     $json, 200, array('Content-Type' => 'application/json')
             );
@@ -173,7 +173,7 @@ class ProductController extends Main {
         $product->setProductFreesearch();
         $product->toMegasoft();
 
-        $json = json_encode(array("error" => 0, "id" => (int) $product->id, 'returnurl' => '/megasoft/product/view/' . (int) $product->id));
+        $json = json_encode(array("error" => 0, "id" => (int) $product->id, 'returnurl' => '/erp01/product/view/' . (int) $product->id));
 
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
@@ -270,7 +270,7 @@ class ProductController extends Main {
     }
 
     /**
-     * @Route("/megasoft/product/view/{id}")
+     * @Route("/erp01/product/view/{id}")
      */
     public function viewAction($id) {
 
@@ -294,7 +294,7 @@ class ProductController extends Main {
         $content = $this->content();
         return $this->render('MegasoftBundle:Product:view.html.twig', array(
                     'pagename' => $pagename,
-                    'url' => '/megasoft/product/save',
+                    'url' => '/erp01/product/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
@@ -306,7 +306,7 @@ class ProductController extends Main {
         $datatables = array();
         return $this->render('MegasoftBundle:Product:view.html.twig', array(
                     'pagename' => 'Product',
-                    'url' => '/megasoft/product/save',
+                    'url' => '/erp01/product/save',
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'tabs' => $this->gettabs($id, $datatables),
@@ -316,7 +316,7 @@ class ProductController extends Main {
     }
 
     /**
-     * @Route("/megasoft/product/save")
+     * @Route("/erp01/product/save")
      */
     public function savection() {
 
@@ -406,7 +406,7 @@ class ProductController extends Main {
         if (count($this->error[$this->repository])) {
             $json = json_encode(array("error" => 1, "id" => (int) $product->id, 'unique' => $this->error[$this->repository]));
         } else {
-            $json = json_encode(array("error" => 0, "id" => (int) $product->id, 'returnurl' => '/megasoft/product/view/' . (int) $product->id));
+            $json = json_encode(array("error" => 0, "id" => (int) $product->id, 'returnurl' => '/erp01/product/view/' . (int) $product->id));
         }
 
         return new Response(
@@ -426,7 +426,7 @@ class ProductController extends Main {
     }
 
     /**
-     * @Route("/megasoft/product/addRelation")
+     * @Route("/erp01/product/addRelation")
      */
     public function addRelation(Request $request) {
 
@@ -507,7 +507,7 @@ class ProductController extends Main {
     }
 
     /**
-     * @Route("/megasoft/product/addCategory")
+     * @Route("/erp01/product/addCategory")
      */
     public function addCategory(Request $request) {
 
@@ -604,7 +604,7 @@ class ProductController extends Main {
     }
 
     /**
-     * @Route("/megasoft/product/gettab")
+     * @Route("/erp01/product/gettab")
      */
     /*
       public function gettabs($id) {
@@ -749,7 +749,7 @@ class ProductController extends Main {
             //$dtparams[] = array("name" => "Price", "index" => 'storeWholeSalePrice');
             $params['dtparams'] = $dtparams;
             $params['id'] = $dtparams;
-            $params['url'] = '/megasoft/product/getrelation/' . $id;
+            $params['url'] = '/erp01/product/getrelation/' . $id;
             $params['key'] = 'gettabs_' . $id;
             $params["ctrl"] = 'ctrlgettabs';
             $params["app"] = 'appgettabs';
@@ -811,7 +811,7 @@ class ProductController extends Main {
     }
 
     /**
-     * @Route("/megasoft/product/getrelation/{id}")
+     * @Route("/erp01/product/getrelation/{id}")
      */
     public function getrelationAction($id) {
         $session = new Session();
@@ -843,7 +843,7 @@ class ProductController extends Main {
     /**
      * 
      * 
-     * @Route("/megasoft/product/getdatatable")
+     * @Route("/erp01/product/getdatatable")
      */
     public function getdatatableAction(Request $request) {
 
@@ -878,7 +878,7 @@ class ProductController extends Main {
     /**
      * 
      * 
-     * @Route("/megasoft/product/productInfo")
+     * @Route("/erp01/product/productInfo")
      */
     public function productInfo(Request $request) {
 
@@ -961,7 +961,7 @@ class ProductController extends Main {
     }
 
     /**
-     * @Route("/megasoft/product/fororderajaxjson")
+     * @Route("/erp01/product/fororderajaxjson")
      */
     public function fororderajaxjsonAction() {
         return new Response(
@@ -1181,7 +1181,7 @@ class ProductController extends Main {
     }
 
     /**
-     * @Route("/megasoft/product/autocompletesearch")
+     * @Route("/erp01/product/autocompletesearch")
      */
     public function autocompletesearchAction() {
         //echo $_GET["term"];
@@ -1206,7 +1206,7 @@ class ProductController extends Main {
     }
 
     /**
-     * @Route("/megasoft/product/product/updatetecdoc")
+     * @Route("/erp01/product/product/updatetecdoc")
      */
     public function getUpdateTecdocAction($funct = false) {
         $em = $this->getDoctrine()->getManager();
@@ -1244,7 +1244,7 @@ class ProductController extends Main {
     }
 
     /**
-     * @Route("/megasoft/product/product/synchronize")
+     * @Route("/erp01/product/product/synchronize")
      */
     public function synchronizeAction($funct = false) {
         return;
@@ -1359,7 +1359,7 @@ class ProductController extends Main {
 
     /**
      * 
-     * @Route("/megasoft/product/retrieveMtrl/{mtrl}")
+     * @Route("/erp01/product/retrieveMtrl/{mtrl}")
      */
     function retrieveMtrlAction($mtrl) {
 
@@ -1382,7 +1382,7 @@ class ProductController extends Main {
 
     /**
      * 
-     * @Route("/megasoft/product/retrieveMegasoft")
+     * @Route("/erp01/product/retrieveMegasoft")
      */
     function retrieveMegasoftDataAction($params = array()) {
         //$allowedips = $this->getSetting("MegasoftBundle:Product:Allowedips");
@@ -1402,7 +1402,7 @@ class ProductController extends Main {
 
     /**
      * 
-     * @Route("/megasoft/product/retrieveApothema")
+     * @Route("/erp01/product/retrieveApothema")
      */
     function retrieveApothemaAction() {
         $allowedips = $this->getSetting("MegasoftBundle:Product:Allowedips");
@@ -1453,7 +1453,7 @@ class ProductController extends Main {
     //getmodeltypes
     /**
      * 
-     * @Route("/megasoft/product/getbrands")
+     * @Route("/erp01/product/getbrands")
      */
     function getBrandsction(Request $request) {
         $url = 'http://www.partsbay.gr/antallaktika/init/getbrands';
@@ -1473,7 +1473,7 @@ class ProductController extends Main {
 
     /**
      * 
-     * @Route("/megasoft/product/getmodels")
+     * @Route("/erp01/product/getmodels")
      */
     function getModelsAction(Request $request) {
         $url = 'http://www.partsbay.gr/antallaktika/init/getmodels';
@@ -1493,7 +1493,7 @@ class ProductController extends Main {
 
     /**
      * 
-     * @Route("/megasoft/product/getmodeltypes")
+     * @Route("/erp01/product/getmodeltypes")
      */
     function getModeltypesAction(Request $request) {
         $url = 'http://www.partsbay.gr/antallaktika/init/getmodeltypes';

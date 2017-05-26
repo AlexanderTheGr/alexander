@@ -13,14 +13,14 @@ class ProductSaleController extends Main {
     var $repository = 'MegasoftBundle:ProductSale';
 
     /**
-     * @Route("/megasoft/productsale/productsale")
+     * @Route("/erp01/productsale/productsale")
      */
     public function indexAction() {
 
         return $this->render('MegasoftBundle:ProductSale:index.html.twig', array(
                     'pagename' => 'ProductSales',
-                    'url' => '/megasoft/productsale/getdatatable',
-                    'view' => '/megasoft/productsale/view',
+                    'url' => '/erp01/productsale/getdatatable',
+                    'view' => '/erp01/productsale/view',
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
@@ -28,7 +28,7 @@ class ProductSaleController extends Main {
     }
 
     /**
-     * @Route("/megasoft/productsale/view/{id}")
+     * @Route("/erp01/productsale/view/{id}")
      */
     public function viewAction($id) {
 
@@ -39,7 +39,7 @@ class ProductSaleController extends Main {
 
         return $this->render('MegasoftBundle:ProductSale:view.html.twig', array(
                     'pagename' => 's',
-                    'url' => '/megasoft/productsale/save',
+                    'url' => '/erp01/productsale/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
@@ -49,7 +49,7 @@ class ProductSaleController extends Main {
     }
 
     /**
-     * @Route("/megasoft/productsale/save")
+     * @Route("/erp01/productsale/save")
      */
     public function savection() {
         $entity = new ProductSale;
@@ -62,7 +62,7 @@ class ProductSaleController extends Main {
 
         $jsonarr = array();
         //if ($this->newentity[$this->repository]->getId()) {
-            $jsonarr["returnurl"] = "/megasoft/productsale/view/" . $this->newentity[$this->repository]->getId();
+            $jsonarr["returnurl"] = "/erp01/productsale/view/" . $this->newentity[$this->repository]->getId();
         //}
         $json = json_encode($jsonarr);
         return new Response(
@@ -71,7 +71,7 @@ class ProductSaleController extends Main {
     }
 
     /**
-     * @Route("/megasoft/productsale/gettab")
+     * @Route("/erp01/productsale/gettab")
      */
     public function gettabs($id) {
 
@@ -97,7 +97,7 @@ class ProductSaleController extends Main {
     }
 
     /**
-     * @Route("/megasoft/productsale/getdatatable")
+     * @Route("/erp01/productsale/getdatatable")
      */
     public function getdatatableAction(Request $request) {
         $this->repository = 'MegasoftBundle:ProductSale';
@@ -112,7 +112,7 @@ class ProductSaleController extends Main {
         );
     }
     /**
-     * @Route("/megasoft/productsale/retrieve")
+     * @Route("/erp01/productsale/retrieve")
      */    
     function retrieveProductSale() {
         $where = '';

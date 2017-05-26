@@ -129,7 +129,7 @@
                 data.id = ref;
                 $("#loaderer").show();
                 $dialog.customergrouprule.dialog("close");
-                $.post("/megasoft/customergroup/deleterule", data, function (result) {
+                $.post("/erp01/customergroup/deleterule", data, function (result) {
                 $("#loaderer").hide();
                         var table = dt_tables["ctrlgettabs"];
                         table.fnFilter();
@@ -161,7 +161,7 @@
                 data.rule = result;
                 $("#loaderer").show();
                 $dialog.customergrouprule.dialog("close");
-                $.post("/megasoft/customergroup/saverule", data, function (result) {
+                $.post("/erp01/customergroup/saverule", data, function (result) {
                 $("#loaderer").hide();
                         if (ref == 0) {
                 rules_basics[result.id] = rules_basics[ref];

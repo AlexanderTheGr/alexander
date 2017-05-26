@@ -21,14 +21,14 @@ class OrderController extends Main {
     var $newentity = '';
 
     /**
-     * @Route("/megasoft/order/order")
+     * @Route("/erp01/order/order")
      */
     public function indexAction() {
         //$this->setfullytrans();
         return $this->render('MegasoftBundle:Order:index.html.twig', array(
                     'pagename' => 'Orders',
-                    'url' => '/megasoft/order/getdatatable',
-                    'view' => '/megasoft/order/view',
+                    'url' => '/erp01/order/getdatatable',
+                    'view' => '/erp01/order/view',
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
@@ -36,7 +36,7 @@ class OrderController extends Main {
     }
 
     /**
-     * @Route("/megasoft/order/print/{id}")
+     * @Route("/erp01/order/print/{id}")
      */
     public function printAction($id) {
         $order = $this->getDoctrine()
@@ -49,7 +49,7 @@ class OrderController extends Main {
           'pagename' => $pagename,
           'order' => $id,
           'content' => $content,
-          'url' => '/megasoft/order/save',
+          'url' => '/erp01/order/save',
           'buttons' => $buttons,
           'ctrl' => $this->generateRandomString(),
           'app' => $this->generateRandomString(),
@@ -131,7 +131,7 @@ class OrderController extends Main {
     }
 
     /**
-     * @Route("/megasoft/order/view/{id}")
+     * @Route("/erp01/order/view/{id}")
      */
     public function viewAction($id) {
 
@@ -162,7 +162,7 @@ class OrderController extends Main {
             $entity->setIsnew(0);
             $this->flushpersist($entity);
             $id = $entity->getId();
-            header("location: /megasoft/order/view/" . $id);
+            header("location: /erp01/order/view/" . $id);
             exit;
         }
 
@@ -182,7 +182,7 @@ class OrderController extends Main {
         return $this->render('MegasoftBundle:Order:view.html.twig', array(
                     'pagename' => $pagename,
                     'order' => $id,
-                    'url' => '/megasoft/order/save',
+                    'url' => '/erp01/order/save',
                     'printarea' => $this->printarea($order),
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
@@ -194,7 +194,7 @@ class OrderController extends Main {
     }
 
     /**
-     * @Route("/megasoft/order/save")
+     * @Route("/erp01/order/save")
      */
     public function saveAction() {
         $entity = new Order;
@@ -205,7 +205,7 @@ class OrderController extends Main {
         $out = $this->save();
         $jsonarr = array();
         if ($this->newentity[$this->repository]->getId()) {
-            //$jsonarr["returnurl"] = "/megasoft/order/view/" . $this->newentity[$this->repository]->getId();
+            //$jsonarr["returnurl"] = "/erp01/order/view/" . $this->newentity[$this->repository]->getId();
         }
         $json = json_encode($jsonarr);
         return new Response(
@@ -214,7 +214,7 @@ class OrderController extends Main {
     }
 
     /**
-     * @Route("/megasoft/order/saveCustomer")
+     * @Route("/erp01/order/saveCustomer")
      */
     public function saveCustomerAction(Request $request) {
         $request->request->get("customerName");
@@ -261,7 +261,7 @@ class OrderController extends Main {
 
         $this->flushpersist($order);
 
-        $jsonarr["returnurl"] = "/megasoft/order/view/" . $order->getId();
+        $jsonarr["returnurl"] = "/erp01/order/view/" . $order->getId();
         $json = json_encode($jsonarr);
 
         return new Response(
@@ -270,7 +270,7 @@ class OrderController extends Main {
     }
 
     /**
-     * @Route("/megasoft/order/gettab")
+     * @Route("/erp01/order/gettab")
      */
     public function gettabs($id) {
         $entity = $this->getDoctrine()
@@ -321,7 +321,7 @@ class OrderController extends Main {
 
         $params['dtparams'] = $dtparams;
         $params['id'] = $dtparams;
-        $params['url'] = '/megasoft/order/getitems/' . $id;
+        $params['url'] = '/erp01/order/getitems/' . $id;
         $params['key'] = 'gettabs_' . $id;
         $params["ctrl"] = 'ctrlgettabs';
         $params["app"] = 'appgettabs';
@@ -394,7 +394,7 @@ class OrderController extends Main {
         $params['dtparams'] = $dtparams;
         $params['id'] = $dtparams;
         $params['key'] = 'getoffcanvases_' . $id;
-        $params['url'] = '/megasoft/order/getfororderitems/' . $id . '/1';
+        $params['url'] = '/erp01/order/getfororderitems/' . $id . '/1';
         $params["ctrl"] = 'ctrlgetoffcanvases';
         $params["app"] = 'appgetoffcanvases';
         $params["drawCallback"] = 'fororder(' . $id . ')';
@@ -446,7 +446,7 @@ class OrderController extends Main {
     }
 
     /**
-     * @Route("/megasoft/order/getfororderitems/{id}/{car}")
+     * @Route("/erp01/order/getfororderitems/{id}/{car}")
      */
     public function getfororderitemsAction($id, $car) {
         $session = new Session();
@@ -878,7 +878,7 @@ class OrderController extends Main {
     }
 
     /**
-     * @Route("/megasoft/order/saveMegasoft")
+     * @Route("/erp01/order/saveMegasoft")
      */
     function saveMegasoft(Request $request) {
         $vat = 1.24;
@@ -1060,7 +1060,7 @@ class OrderController extends Main {
     }
 
     /**
-     * @Route("/megasoft/order/motorsearch")
+     * @Route("/erp01/order/motorsearch")
      */
     public function motorsearch() {
         $em = $this->getDoctrine()->getManager();
@@ -1101,7 +1101,7 @@ class OrderController extends Main {
     }
 
     /**
-     * @Route("/megasoft/order/getmodels")
+     * @Route("/erp01/order/getmodels")
      */
     function getmodels(Request $request) {
         $repository = $this->getDoctrine()->getRepository('MegasoftBundle:BrandModel');
@@ -1127,7 +1127,7 @@ class OrderController extends Main {
     }
 
     /**
-     * @Route("/megasoft/order/getmodeltypes")
+     * @Route("/erp01/order/getmodeltypes")
      */
     function getmodeltypes(Request $request) {
         $repository = $this->getDoctrine()->getRepository('MegasoftBundle:BrandModelType');
@@ -1156,7 +1156,7 @@ class OrderController extends Main {
     }
 
     /**
-     * @Route("/megasoft/order/getcategories")
+     * @Route("/erp01/order/getcategories")
      */
     function getcategories(Request $request) {
 
@@ -1275,8 +1275,8 @@ class OrderController extends Main {
         return;
         $tmpl = $this->get('twig')->render('MegasoftBundle:Order:index.html.twig', array(
             'pagename' => 'Customers',
-            'url' => '/megasoft/order/getdatatable',
-            'view' => '/megasoft/order/view',
+            'url' => '/erp01/order/getdatatable',
+            'view' => '/erp01/order/view',
             'ctrl' => $this->generateRandomString(),
             'app' => $this->generateRandomString(),
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
@@ -1286,7 +1286,7 @@ class OrderController extends Main {
     }
 
     /**
-     * @Route("/megasoft/order/getdatatable")
+     * @Route("/erp01/order/getdatatable")
      */
     public function getdatatableAction(Request $request) {
         $this
@@ -1402,7 +1402,7 @@ class OrderController extends Main {
     }
 
     /**
-     * @Route("/megasoft/order/getitems/{id}")
+     * @Route("/erp01/order/getitems/{id}")
      */
     public function getitemsAction($id) {
         $session = new Session();
@@ -1469,7 +1469,7 @@ class OrderController extends Main {
     }
 
     /**
-     * @Route("/megasoft/order/addorderitem/")
+     * @Route("/erp01/order/addorderitem/")
      */
     public function addorderitemAction(Request $request) {
 
@@ -1625,7 +1625,7 @@ class OrderController extends Main {
     }
 
     /**
-     * @Route("/megasoft/order/editorderitem/")
+     * @Route("/erp01/order/editorderitem/")
      */
     public function editorderitemAction(Request $request) {
         $orderItem = $this->getDoctrine()
@@ -1670,7 +1670,7 @@ class OrderController extends Main {
     }
 
     /**
-     * @Route("/megasoft/order/setb2border")
+     * @Route("/erp01/order/setb2border")
      */
     public function setb2borderAction(Request $request) {
 

@@ -13,13 +13,13 @@ class SupplierController extends Main {
     var $repository = 'MegasoftBundle:Supplier';
 
     /**
-     * @Route("/megasoft/supplier/supplier")
+     * @Route("/erp01/supplier/supplier")
      */
     public function indexAction() {
         return $this->render('MegasoftBundle:Supplier:index.html.twig', array(
                     'pagename' => 'Προμηθευτές',
-                    'url' => '/megasoft/supplier/getdatatable',
-                    'view' => '/megasoft/supplier/view',
+                    'url' => '/erp01/supplier/getdatatable',
+                    'view' => '/erp01/supplier/view',
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
@@ -27,14 +27,14 @@ class SupplierController extends Main {
     }
 
     /**
-     * @Route("/megasoft/supplier/view/{id}")
+     * @Route("/erp01/supplier/view/{id}")
      */
     public function viewAction($id) {
         $content = $this->gettabs($id);
         $content = $this->content();
         return $this->render('MegasoftBundle:Supplier:view.html.twig', array(
                     'pagename' => 'Supplier',
-                    'url' => '/megasoft/supplier/save',
+                    'url' => '/erp01/supplier/save',
                     'content' => $content,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
@@ -44,7 +44,7 @@ class SupplierController extends Main {
     }
 
     /**
-     * @Route("/megasoft/supplier/save")
+     * @Route("/erp01/supplier/save")
      */
     public function saveAction() {
         $entity = new Supplier;
@@ -59,7 +59,7 @@ class SupplierController extends Main {
         if ($this->newentity[$this->repository]->getId()) {
 
             $this->newentity[$this->repository]->toMegasoft();
-            $jsonarr["returnurl"] = "/megasoft/supplier/view/" . $this->newentity[$this->repository]->getId();
+            $jsonarr["returnurl"] = "/erp01/supplier/view/" . $this->newentity[$this->repository]->getId();
         }
         $json = json_encode($jsonarr);
         return new Response(
@@ -76,7 +76,7 @@ class SupplierController extends Main {
     }
 
     /**
-     * @Route("/megasoft/supplier/gettab")
+     * @Route("/erp01/supplier/gettab")
      */
     public function gettabs($id) {
 
@@ -105,7 +105,7 @@ class SupplierController extends Main {
     }
 
     /**
-     * @Route("/megasoft/supplier/getdatatable")
+     * @Route("/erp01/supplier/getdatatable")
      */
     public function getdatatableAction(Request $request) {
         $this->repository = 'MegasoftBundle:Supplier';
@@ -120,7 +120,7 @@ class SupplierController extends Main {
     }
 
     /**
-     * @Route("/megasoft/supplier/retrieve")
+     * @Route("/erp01/supplier/retrieve")
      */
     function retrieveSupplier() {
         $this->getMegasoft();

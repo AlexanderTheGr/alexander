@@ -129,7 +129,7 @@
                             data.id = ref;
                             $("#loaderer").show();
                             $dialog.customerrule.dialog("close");
-                            $.post("/megasoft/customer/deleterule", data, function (result) {
+                            $.post("/erp01/customer/deleterule", data, function (result) {
                             $("#loaderer").hide();
                                     var table = dt_tables["ctrlgettabs"];
                                     table.fnFilter();
@@ -161,7 +161,7 @@
                             data.rule = result;
                             $("#loaderer").show();
                             $dialog.customerrule.dialog("close");
-                            $.post("/megasoft/customer/saverule", data, function (result) {
+                            $.post("/erp01/customer/saverule", data, function (result) {
                             $("#loaderer").hide();
                                     if (ref == 0) {
                             rules_basics[result.id] = rules_basics[ref];

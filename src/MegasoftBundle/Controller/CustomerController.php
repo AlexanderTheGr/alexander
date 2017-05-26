@@ -17,13 +17,13 @@ class CustomerController extends Main {
     var $newentity = array();
 
     /**
-     * @Route("/megasoft/customer/customer")
+     * @Route("/erp01/customer/customer")
      */
     public function indexAction() {
         return $this->render('MegasoftBundle:Customer:index.html.twig', array(
                     'pagename' => 'Customers',
-                    'url' => '/megasoft/customer/getdatatable',
-                    'view' => '/megasoft/customer/view',
+                    'url' => '/erp01/customer/getdatatable',
+                    'view' => '/erp01/customer/view',
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
@@ -31,7 +31,7 @@ class CustomerController extends Main {
     }
 
     /**
-     * @Route("/megasoft/customer/autocompletesearch")
+     * @Route("/erp01/customer/autocompletesearch")
      */
     public function autocompletesearch() {
         $json = json_encode(array("ok"));
@@ -63,7 +63,7 @@ class CustomerController extends Main {
     }
 
     /**
-     * @Route("/megasoft/customer/view/{id}")
+     * @Route("/erp01/customer/view/{id}")
      */
     public function viewAction($id) {
 
@@ -121,7 +121,7 @@ class CustomerController extends Main {
         }
         return $this->render('MegasoftBundle:Customer:view.html.twig', array(
                     'pagename' => $pagename,
-                    'url' => '/megasoft/customer/save',
+                    'url' => '/erp01/customer/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
@@ -138,7 +138,7 @@ class CustomerController extends Main {
         /*
           return $this->render('MegasoftBundle:Product:view.html.twig', array(
           'pagename' => $pagename,
-          'url' => '/megasoft/customer/save',
+          'url' => '/erp01/customer/save',
           'buttons' => $buttons,
           'ctrl' => $this->generateRandomString(),
           'app' => $this->generateRandomString(),
@@ -150,7 +150,7 @@ class CustomerController extends Main {
     }
 
     /**
-     * @Route("/megasoft/customer/getrulesjson/{id}")
+     * @Route("/erp01/customer/getrulesjson/{id}")
      */
     public function getCustomerRulesJsonAction($id) {
         $allowedips = $this->getSetting("MegasoftBundle:Product:Allowedips");
@@ -188,7 +188,7 @@ class CustomerController extends Main {
     }
 
     /**
-     * @Route("/megasoft/customer/save")
+     * @Route("/erp01/customer/save")
      */
     public function saveAction() {
         $entity = new Customer;
@@ -209,7 +209,7 @@ class CustomerController extends Main {
                 $this->setSetting("MegasoftBundle:Customer:customerCode", $customerCode);
             }
             $this->newentity[$this->repository]->toMegasoft();
-            $jsonarr["returnurl"] = "/megasoft/customer/view/" . $this->newentity[$this->repository]->getId();
+            $jsonarr["returnurl"] = "/erp01/customer/view/" . $this->newentity[$this->repository]->getId();
         }
         $json = json_encode($jsonarr);
         return new Response(
@@ -218,7 +218,7 @@ class CustomerController extends Main {
     }
 
     /**
-     * @Route("/megasoft/customer/gettab")
+     * @Route("/erp01/customer/gettab")
      */
     public function gettabs($id) {
 
@@ -284,7 +284,7 @@ class CustomerController extends Main {
 
             $params['dtparams'] = $dtparams;
             $params['id'] = $dtparams;
-            $params['url'] = '/megasoft/customer/getrules/' . $id;
+            $params['url'] = '/erp01/customer/getrules/' . $id;
             //$params['view'] = '/customergroup/getrule/' . $id;
             $params['key'] = 'gettabs_' . $id;
             $params["ctrl"] = 'ctrlgettabs';
@@ -306,7 +306,7 @@ class CustomerController extends Main {
     }
 
     /**
-     * @Route("/megasoft/customer/getdatatable")
+     * @Route("/erp01/customer/getdatatable")
      */
     public function getdatatableAction(Request $request) {
         $this->repository = 'MegasoftBundle:Customer';
@@ -392,14 +392,14 @@ class CustomerController extends Main {
     }
 
     /**
-     * @Route("/megasoft/customer/retrieve")
+     * @Route("/erp01/customer/retrieve")
      */
     function retrieveMegasoftData($params = array()) {
         $this->getMegasoft();
     }
 
     /**
-     * @Route("/megasoft/customer/getrules/{id}")
+     * @Route("/erp01/customer/getrules/{id}")
      */
     public function getRulesAction($id) {
         $session = new Session();
@@ -429,7 +429,7 @@ class CustomerController extends Main {
     }
 
     /**
-     * @Route("/megasoft/customer/saverule")
+     * @Route("/erp01/customer/saverule")
      */
     function saveruleAction(Request $request) {
 
@@ -477,7 +477,7 @@ class CustomerController extends Main {
     }
 
     /**
-     * @Route("/megasoft/customer/deleterule")
+     * @Route("/erp01/customer/deleterule")
      */
     function deleteruleAction(Request $request) {
         $id = $request->request->get("id");
