@@ -326,6 +326,13 @@ class ProductController extends Main {
         @$this->newentity[$this->repository]->setField("status", 1);
         $this->error[$this->repository] = array();
 
+        if (!$product->getManufacturer() AND $product->getErpSupplier()) {
+            $manufacturer = $this->createManufacturer($entity->getErpSupplier());
+            $product->setManufacturer($manufacturer);
+        }
+        $erpCode = $this->clearstring($product->getSupplierCode()) . "-" . $product->getManufacturer()->getCode();        
+        $this->newentity[$this->repository]->setField("erpCode", $erpCode);
+        $this->newentity[$this->repository]->setField("manufacturer", $manufacturer);
         $entities = $this->save();
 
         $product = $this->getDoctrine()
@@ -341,13 +348,7 @@ class ProductController extends Main {
                 ->find((int) $product->getId());
 
 
-        if (!$product->getManufacturer() AND $product->getErpSupplier()) {
-            $manufacturer = $this->createManufacturer($entity->getErpSupplier());
-            $product->setManufacturer($manufacturer);
-        }
-        $erpCode = $this->clearstring($product->getSupplierCode()) . "-" . $product->getManufacturer()->getCode();
-        $product->setErpCode($erpCode);
-        $this->flushpersist($product);        
+      
         //echo $product->id."\n";
         //echo $product->reference."\n";
         //$product = $this->newentity[$this->repository];
