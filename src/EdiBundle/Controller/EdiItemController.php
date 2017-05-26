@@ -81,7 +81,7 @@ class EdiItemController extends Main {
         //$fiestr = gzdecode(file_get_contents($this->getPartMasterFile()));
         //file_put_contents('file.csv', $fiestr);
         set_time_limit(100000);
-        ini_set('memory_limit', '1256M');
+        ini_set('memory_limit', '14096M');
         $file = 'file.csv';
         $em = $this->getDoctrine()->getManager();
         if ((($handle = fopen($file, "r")) !== FALSE)) {
@@ -368,7 +368,7 @@ class EdiItemController extends Main {
     }
 
     public function ediitemdatatable($funct = false, $id = false) {
-        ini_set("memory_limit", "1256M");
+        ini_set("memory_limit", "14096M");
         $request = Request::createFromGlobals();
 
 
