@@ -728,7 +728,8 @@ class OrderController extends Main {
                 $qty = "lll";//$json[9];
                 $json[9] = $obj->getSisxetisi();
                 $json[10] = $obj->getApothiki();
-                $json[11] = $qty;
+                //$json[11] = $qty;
+                $json[11] = '<input data-id="'.$obj->getId().'" data-rep="MegasoftBundle:Product" data-ref="'.$obj->getId().'" id="MegasoftBundleProductQty_'.$obj->getId().'" class="MegasoftBundleProductQty" type="text" value="1">';
                 $json[12] = $obj->getTick($order);
                 //$json[6] = str_replace("value='---'", "value='1'", $json[6]);
                 $jsonarrnoref[$result["id"]] = $json;
