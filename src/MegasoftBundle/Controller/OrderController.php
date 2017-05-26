@@ -1195,6 +1195,7 @@ class OrderController extends Main {
             }
         }
         $order = $this->getDoctrine()->getRepository('MegasoftBundle:Order')->find($request->request->get("order"));
+        /*
         $repormodel = $this->getDoctrine()->getRepository('MegasoftBundle:Reportmodel')->findOneBy(array("sessionId" => $session->getId(), 'customerId' => $order->getCustomer()->getId(), 'model' => $request->request->get("car")));
 
         if (!$repormodel)
@@ -1212,7 +1213,7 @@ class OrderController extends Main {
         $repormodel->setActioneer(0);
         $repormodel->setFlatData('');
         $this->flushpersist($repormodel);
-
+        */
         $tecdocArticleIds = array();
         if (count($articleIds)) {
             $query = $em->createQuery(
