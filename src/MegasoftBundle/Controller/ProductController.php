@@ -322,7 +322,7 @@ class ProductController extends Main {
 
         $product = new Product;
         $this->newentity[$this->repository] = $product;
-        @$this->newentity[$this->repository]->setField("erpCode", "45678777");
+
         $this->initialazeNewEntity($product);
         @$this->newentity[$this->repository]->setField("status", 1);
         
@@ -604,7 +604,7 @@ class ProductController extends Main {
             $entity->setStoreWholeSalePrice("0.00");
             $entity->setStoreRetailPrice("0.00");
             //$entity->setItemMarkupw("0.00");
-            //$entity->setItemMarkupr("0.00");
+            $entity->getErpCode($this->generateRandomString());
             $entity->setProductSale($productsale);
         }
         $customer = $this->getDoctrine()->getRepository('MegasoftBundle:Customer')->find(1);
