@@ -674,7 +674,7 @@ class ProductController extends Main {
         //$fields["supplier"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'dataarray' => $supplier);
 
 
-        $fields["manufacturer"] = array("label" => "Supplier", "required" => false, "className" => "col-md-2", 'type' => "select", 'datasource' => array('repository' => 'MegasoftBundle:Manufacturer', 'name' => 'title', 'value' => 'id', 'suffix' => 'id'));
+        $fields["manufacturer"] = array("label" => "Supplier", "required" => false, "className" => "col-md-2", 'type' => "select", 'datasource' => array('repository' => 'MegasoftBundle:Manufacturer', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
 
         $fields["erpSupplier"] = array("label" => "New Supplier", "required" => false, "className" => "col-md-3");
 
