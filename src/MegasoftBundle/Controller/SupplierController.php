@@ -46,9 +46,30 @@ class SupplierController extends Main {
     /**
      * @Route("/megasoft/supplier/save")
      */
-    public function savection() {
+    public function saveAction() {
+        $entity = new Supplier;
+
+        //$this->repository = "MegasoftBundle:Customer";
+        $this->newentity[$this->repository] = $entity;
+        $this->initialazeNewEntity($entity);
+
+        $out = $this->save();
+
+        $jsonarr = array();
+        if ($this->newentity[$this->repository]->getId()) {
+
+            $this->newentity[$this->repository]->toMegasoft();
+            $jsonarr["returnurl"] = "/megasoft/supplier/view/" . $this->newentity[$this->repository]->getId();
+        }
+        $json = json_encode($jsonarr);
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+    }    
+    public function savection2() {
         $this->save();
         $json = json_encode(array("ok"));
+       
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
