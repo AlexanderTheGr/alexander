@@ -1091,7 +1091,7 @@ class Product extends Entity {
     public function getForOrderTitle() {
 
 
-        $out = '<a target="_blank" title="' . $this->title . '" class="" car="" data-articleId="' . $this->tecdocArticleId . '" ref="' . $this->id . '" href="/product/view/' . $this->id . '">' . $this->title . '</a>
+        $out = '<a target="_blank" title="' . $this->title . '" class="" car="" data-articleId="' . $this->tecdocArticleId . '" ref="' . $this->id . '" href="/erp01/product/view/' . $this->id . '">' . $this->title . '</a>
         <br>
         <span class="text-sm tecdocArticleName text-info">' . $this->tecdocArticleName . '</span>';
 
@@ -1099,7 +1099,7 @@ class Product extends Entity {
     }
 
     public function getEditLink() {
-        $out = '<a target="_blank" title="' . $this->title . '" class="" car="" data-articleId="' . $this->tecdocArticleId . '" ref="' . $this->id . '" href="/product/view/' . $this->id . '">Edit</a>';
+        $out = '<a target="_blank" title="' . $this->title . '" class="" car="" data-articleId="' . $this->tecdocArticleId . '" ref="' . $this->id . '" href="/erp01/product/view/' . $this->id . '">Edit</a>';
         return $out;
     }
 
