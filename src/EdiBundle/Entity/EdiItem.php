@@ -753,6 +753,7 @@ class EdiItem extends Entity {
             $em->persist($product);
             $em->flush();
             $product->toMegasoft();
+            return;
         }
 
         $erpCode = $this->clearCode($this->partno) . "-" . $manufacturer->getCode();
