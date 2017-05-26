@@ -480,12 +480,14 @@ class Main extends Controller {
         //$this->error[$this->repository] = array();
         $asd = $entity;
         foreach ((array) $entity->uniques as $attr) {
-            $ent = $this->getDoctrine()
-                    ->getRepository($this->repository)
-                    ->findOneBy(array($attr => $entity->getField($attr)));
-            if (count($ent)) {
-                $this->error[$this->repository][] = $this->repository . ":" . $attr . ":" . @$asd->id;
-                $entity = $ent;
+            if ($entity->getField($attr)!= '') {
+                $ent = $this->getDoctrine()
+                        ->getRepository($this->repository)
+                        ->findOneBy(array($attr => $entity->getField($attr)));
+                if (count($ent)) {
+                    $this->error[$this->repository][] = $this->repository . ":" . $attr . ":" . @$asd->id;
+                    $entity = $ent;
+                }
             }
         }
         if (!count($this->error[$this->repository])) {
