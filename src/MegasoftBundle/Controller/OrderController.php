@@ -725,7 +725,7 @@ class OrderController extends Main {
                 ;
                 $json[7] = $obj->getDiscount($customer, $vat);
                 $json[8] = $obj->getGroupedDiscountPrice($customer, $vat); //str_replace($obj->$priceField, $obj->getGroupedDiscountPrice($customer), $json[5]);
-                $qty = $json[9];
+                $qty = "lll";//$json[9];
                 $json[9] = $obj->getSisxetisi();
                 $json[10] = $obj->getApothiki();
                 $json[11] = $qty;
