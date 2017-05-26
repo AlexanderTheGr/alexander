@@ -16,7 +16,7 @@ class SupplierController extends Main {
      * @Route("/megasoft/supplier/supplier")
      */
     public function indexAction() {
-        return $this->render('supplier/index.html.twig', array(
+        return $this->render('MegasoftBundle:Supplier:index.html.twig', array(
                     'pagename' => 'Προμηθευτές',
                     'url' => '/megasoft/supplier/getdatatable',
                     'view' => '/megasoft/supplier/view',
