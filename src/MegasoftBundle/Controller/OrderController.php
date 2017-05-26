@@ -143,7 +143,7 @@ class OrderController extends Main {
             $this->initialazeNewEntity($entity);
             $customer = $this->getDoctrine()
                     ->getRepository("MegasoftBundle:Customer")
-                    ->find(3);
+                    ->find($this->getSetting("MegasoftBundle:Order:lianikis"));
 
             $entity->setCustomer($customer);
             $user = $this->get('security.token_storage')->getToken()->getUser();
