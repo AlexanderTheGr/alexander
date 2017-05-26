@@ -345,7 +345,7 @@ class ProductController extends Main {
             $manufacturer = $this->createManufacturer($entity->getErpSupplier());
             $product->setManufacturer($manufacturer);
         }
-        $erpCode = $this->clearstring($product->getSupplierCode()) . "-" . $manufacturer->getCode();
+        $erpCode = $this->clearstring($product->getSupplierCode()) . "-" . $product->getManufacturer()->getCode();
         $product->setErpCode($erpCode);
         $this->flushpersist($product);        
         //echo $product->id."\n";
