@@ -344,8 +344,10 @@ class ProductController extends Main {
         if (!$product->getManufacturer() AND $product->getErpSupplier()) {
             $manufacturer = $this->createManufacturer($entity->getErpSupplier());
             $product->setManufacturer($manufacturer);
-            $this->flushpersist($product);
         }
+        $erpCode = $this->clearstring($product->getSupplierCode()) . "-" . $manufacturer->getCode();
+        $product->setErpCode($erpCode);
+        $this->flushpersist($product);        
         //echo $product->id."\n";
         //echo $product->reference."\n";
         //$product = $this->newentity[$this->repository];
