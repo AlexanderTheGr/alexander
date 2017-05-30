@@ -696,8 +696,8 @@ class ProductController extends Main {
         $fields["storeWholeSalePrice"] = array("label" => "Τιμή Χοδρικής", "className" => "col-md-2", "required" => false);
         $fields["storeRetailPrice"] = array("label" => "Τιμή Λιανικής", "className" => "col-md-2", "required" => false);
 
-        //$fields["itemMarkupw"] = array("label" => "Markup Χοδρικής", "className" => "col-md-2", "required" => false);
-        //$fields["itemMarkupr"] = array("label" => "Markup Λιανικής", "className" => "col-md-2", "required" => false);
+        $fields["wholeSaleMarkup"] = array("label" => "Markup Χοδρικής", "className" => "col-md-2", "required" => false);
+        $fields["retailMarkup"] = array("label" => "Markup Λιανικής", "className" => "col-md-2", "required" => false);
 
 
         $fields["remarks"] = array("label" => "Remarks", "required" => false, 'type' => "textarea", "className" => "col-md-6 col-sm-6");
