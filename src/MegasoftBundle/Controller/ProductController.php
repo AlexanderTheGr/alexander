@@ -1102,6 +1102,8 @@ class ProductController extends Main {
             $q[] = "`erp_code` = '" . addslashes($data["StoreKwd"]) . "'";
             $q[] = "`store_retail_price` = '" . addslashes($data["StoreRetailPrice"]) . "'";
             $q[] = "`store_wholesale_price` = '" . addslashes($data["StoreWholeSalePrice"]) . "'";
+            $q[] = "`retail_markup` = '" . addslashes($data["RetailMarkup"]) . "'";
+            $q[] = "`wholesale_markup` = '" . addslashes($data["WholeSaleMarkup"]) . "'";            
             $q[] = "`qty` = '" . addslashes($data["StoreStock"]) . "'";
             $q[] = "`supplier_code` = '" . addslashes($data["SupplierCode"]) . "'";
             if ($manufacturer) {
