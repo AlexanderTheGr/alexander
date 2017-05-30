@@ -1554,4 +1554,62 @@ class Product extends Entity {
         return $this->active;
     }
 
+    /**
+     * @var string
+     */
+    private $retailMarkup;
+
+    /**
+     * @var string
+     */
+    private $wholeSaleMarkup;
+
+
+    /**
+     * Set retailMarkup
+     *
+     * @param string $retailMarkup
+     *
+     * @return Product
+     */
+    public function setRetailMarkup($retailMarkup)
+    {
+        $this->retailMarkup = $retailMarkup;
+
+        return $this;
+    }
+
+    /**
+     * Get retailMarkup
+     *
+     * @return string
+     */
+    public function getRetailMarkup()
+    {
+        return $this->retailMarkup;
+    }
+
+    /**
+     * Set wholeSaleMarkup
+     *
+     * @param string $wholeSaleMarkup
+     *
+     * @return Product
+     */
+    public function setWholeSaleMarkup($wholeSaleMarkup)
+    {
+        $this->wholeSaleMarkup = $wholeSaleMarkup;
+
+        return $this;
+    }
+
+    /**
+     * Get wholeSaleMarkup
+     *
+     * @return string
+     */
+    public function getWholeSaleMarkup()
+    {
+        return $this->wholeSaleMarkup;
+    }
 }
