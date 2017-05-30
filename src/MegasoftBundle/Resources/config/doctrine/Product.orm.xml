@@ -134,7 +134,8 @@
         
         <field name="storeRetailPrice" type="decimal" column="store_retail_price" precision="10" scale="2" nullable="true"/>
         <field name="storeWholeSalePrice" type="decimal" column="store_wholesale_price" precision="10" scale="2" nullable="true"/>
-        
+        <field name="retailMarkup" type="decimal" column="retail_markup" precision="10" scale="2" nullable="true"/>
+        <field name="wholeSaleMarkup" type="decimal" column="wholesale_markup" precision="10" scale="2" nullable="true"/>
 
         <field name="media" type="string" column="media" length="255" nullable="true">
             <options>
