@@ -5,10 +5,10 @@ namespace MegasoftBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Controller\MegasoftBundle as MegasoftBundle;
+use AppBundle\Controller\Main as Main;
 
 
-class RouteController extends MegasoftBundle  {
+class RouteController extends Main  {
 
     var $repository = 'MegasoftBundle:Route';
     var $newentity = '';
