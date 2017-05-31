@@ -15,10 +15,6 @@ class Route extends Entity {
     private $types = array();
     private $repositories = array();
 
-    public function __construct() {
-        $this->repositories['Order'] = 'BookingBundle:Order';
-        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     public function getField($field) {
         return $this->$field;
