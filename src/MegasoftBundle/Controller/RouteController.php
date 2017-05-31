@@ -19,8 +19,8 @@ class RouteController extends Main  {
 
         return $this->render('MegasoftBundle:Route:index.html.twig', array(
                     'pagename' => 'Routes',
-                    'url' => '/route/getdatatable',
-                    'view' => '/route/view',
+                    'url' => '/erp01/route/getdatatable',
+                    'view' => '/erp01/route/view',
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
@@ -41,7 +41,7 @@ class RouteController extends Main  {
 
         return $this->render('MegasoftBundle:Route:view.html.twig', array(
                     'pagename' => 's',
-                    'url' => '/route/save',
+                    'url' => '/erp01/route/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
@@ -61,7 +61,7 @@ class RouteController extends Main  {
         $out = $this->save();
         $jsonarr = array();
         if ($this->newentity[$this->repository]->getId()) {
-            $jsonarr["returnurl"] = "/route/view/" . $this->newentity[$this->repository]->getId();
+            $jsonarr["returnurl"] = "/erp01/route/view/" . $this->newentity[$this->repository]->getId();
         }
         $json = json_encode($jsonarr);
         return new Response(
