@@ -1,12 +1,52 @@
 <?php
 
 namespace MegasoftBundle\Entity;
+use AppBundle\Entity\Entity;
 
 /**
  * Route
+ *
+ * @ORM\Table(name="route")
+ * @ORM\Entity
  */
-class Route
-{
+class Route extends Entity {
+
+    var $repository = 'SoftoneBundle:Route';
+    private $types = array();
+    private $repositories = array();
+
+    public function __construct() {
+        $this->repositories['Order'] = 'BookingBundle:Order';
+        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function getField($field) {
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
+
+    public function getRepository() {
+        return $this->repository;
+    }
+    public function getRepositories($repo) {
+        $this->repositories['Order'] = 'BookingBundle:Order';
+        return  $this->repositories[$repo];
+    }
+    public function gettype($field) {
+        //return;
+        if (@$this->types[$field] != '') {
+            return @$this->types[$field];
+        }
+        if (gettype($field) != NULL) {
+            return gettype($this->$field);
+        }
+        return 'string';
+    }
+
     /**
      * @var string
      */
@@ -60,8 +100,7 @@ class Route
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->customers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -73,8 +112,7 @@ class Route
      *
      * @return Route
      */
-    public function setRoute($route)
-    {
+    public function setRoute($route) {
         $this->route = $route;
 
         return $this;
@@ -85,8 +123,7 @@ class Route
      *
      * @return string
      */
-    public function getRoute()
-    {
+    public function getRoute() {
         return $this->route;
     }
 
@@ -97,8 +134,7 @@ class Route
      *
      * @return Route
      */
-    public function setSchedule($schedule)
-    {
+    public function setSchedule($schedule) {
         $this->schedule = $schedule;
 
         return $this;
@@ -109,8 +145,7 @@ class Route
      *
      * @return string
      */
-    public function getSchedule()
-    {
+    public function getSchedule() {
         return $this->schedule;
     }
 
@@ -121,8 +156,7 @@ class Route
      *
      * @return Route
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->status = $status;
 
         return $this;
@@ -133,8 +167,7 @@ class Route
      *
      * @return integer
      */
-    public function getStatus()
-    {
+    public function getStatus() {
         return $this->status;
     }
 
@@ -145,8 +178,7 @@ class Route
      *
      * @return Route
      */
-    public function setActioneer($actioneer)
-    {
+    public function setActioneer($actioneer) {
         $this->actioneer = $actioneer;
 
         return $this;
@@ -157,8 +189,7 @@ class Route
      *
      * @return integer
      */
-    public function getActioneer()
-    {
+    public function getActioneer() {
         return $this->actioneer;
     }
 
@@ -169,8 +200,7 @@ class Route
      *
      * @return Route
      */
-    public function setTs($ts)
-    {
+    public function setTs($ts) {
         $this->ts = $ts;
 
         return $this;
@@ -181,8 +211,7 @@ class Route
      *
      * @return \DateTime
      */
-    public function getTs()
-    {
+    public function getTs() {
         return $this->ts;
     }
 
@@ -193,8 +222,7 @@ class Route
      *
      * @return Route
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -205,8 +233,7 @@ class Route
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -217,8 +244,7 @@ class Route
      *
      * @return Route
      */
-    public function setModified($modified)
-    {
+    public function setModified($modified) {
         $this->modified = $modified;
 
         return $this;
@@ -229,8 +255,7 @@ class Route
      *
      * @return \DateTime
      */
-    public function getModified()
-    {
+    public function getModified() {
         return $this->modified;
     }
 
@@ -239,8 +264,7 @@ class Route
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -251,8 +275,7 @@ class Route
      *
      * @return Route
      */
-    public function addCustomer(\MegasoftBundle\Entity\Customer $customer)
-    {
+    public function addCustomer(\MegasoftBundle\Entity\Customer $customer) {
         $this->customers[] = $customer;
 
         return $this;
@@ -263,8 +286,7 @@ class Route
      *
      * @param \MegasoftBundle\Entity\Customer $customer
      */
-    public function removeCustomer(\MegasoftBundle\Entity\Customer $customer)
-    {
+    public function removeCustomer(\MegasoftBundle\Entity\Customer $customer) {
         $this->customers->removeElement($customer);
     }
 
@@ -273,8 +295,7 @@ class Route
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCustomers()
-    {
+    public function getCustomers() {
         return $this->customers;
     }
 
@@ -285,8 +306,7 @@ class Route
      *
      * @return Route
      */
-    public function addOrder(\MegasoftBundle\Entity\Order $order)
-    {
+    public function addOrder(\MegasoftBundle\Entity\Order $order) {
         $this->orders[] = $order;
 
         return $this;
@@ -297,8 +317,7 @@ class Route
      *
      * @param \MegasoftBundle\Entity\Order $order
      */
-    public function removeOrder(\MegasoftBundle\Entity\Order $order)
-    {
+    public function removeOrder(\MegasoftBundle\Entity\Order $order) {
         $this->orders->removeElement($order);
     }
 
@@ -307,8 +326,8 @@ class Route
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getOrders()
-    {
+    public function getOrders() {
         return $this->orders;
     }
+
 }
