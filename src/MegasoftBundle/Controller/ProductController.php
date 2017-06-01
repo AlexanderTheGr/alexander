@@ -181,7 +181,7 @@ class ProductController extends Main {
     }
 
     private function createManufacturer($brand) {
-        
+
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
@@ -189,7 +189,8 @@ class ProductController extends Main {
         $brand = strtoupper($brand);
         $manufacturer = $this->getDoctrine()->getRepository("MegasoftBundle:Manufacturer")
                 ->findOneBy(array('title' => $brand));
-        if ($manufacturer) return $manufacturer;
+        if ($manufacturer)
+            return $manufacturer;
         $tecdocSupplier = $this->getDoctrine()->getRepository("MegasoftBundle:TecdocSupplier")
                 ->findOneBy(array('supplier' => $brand));
         $login = $this->getSetting("MegasoftBundle:Webservice:Login"); //"demo-fastweb-megasoft";
@@ -330,7 +331,7 @@ class ProductController extends Main {
 
         $this->initialazeNewEntity($product);
         @$this->newentity[$this->repository]->setField("status", 1);
-        
+
         $this->error[$this->repository] = array();
 
         $entities = $this->save();
@@ -352,10 +353,10 @@ class ProductController extends Main {
             $manufacturer = $this->createManufacturer($entity->getErpSupplier());
             $product->setManufacturer($manufacturer);
         }
-        $erpCode = $this->clearstring($product->getSupplierCode()) . "-" . $product->getManufacturer()->getCode();        
+        $erpCode = $this->clearstring($product->getSupplierCode()) . "-" . $product->getManufacturer()->getCode();
         $product->setErpCode($erpCode);
         $product->setSupplierCode($this->clearstring($product->getSupplierCode()));
-        $this->flushpersist($product);        
+        $this->flushpersist($product);
         //echo $product->id."\n";
         //echo $product->reference."\n";
         //$product = $this->newentity[$this->repository];
@@ -849,6 +850,28 @@ class ProductController extends Main {
     /**
      * 
      * 
+     * @Route("/erp01/product/getProducts")
+     */
+    public function getProducts(Request $request) {
+
+        $sql = "SELECT id FROM  `megasoft_product` ";
+        $connection = $this->getDoctrine()->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $results = $statement->fetchAll();
+        $arr = array();
+        foreach ($results as $data) {
+            $arr[] = $data;
+        }
+        $json = json_encode($arr);
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );        
+    }
+
+    /**
+     * 
+     * 
      * @Route("/erp01/product/productInfo")
      */
     public function productInfo(Request $request) {
@@ -1103,7 +1126,7 @@ class ProductController extends Main {
             $q[] = "`store_retail_price` = '" . addslashes($data["StoreRetailPrice"]) . "'";
             $q[] = "`store_wholesale_price` = '" . addslashes($data["StoreWholeSalePrice"]) . "'";
             $q[] = "`retail_markup` = '" . addslashes($data["RetailMarkup"]) . "'";
-            $q[] = "`wholesale_markup` = '" . addslashes($data["WholeSaleMarkup"]) . "'";            
+            $q[] = "`wholesale_markup` = '" . addslashes($data["WholeSaleMarkup"]) . "'";
             $q[] = "`qty` = '" . addslashes($data["StoreStock"]) . "'";
             $q[] = "`supplier_code` = '" . addslashes($data["SupplierCode"]) . "'";
             if ($manufacturer) {
