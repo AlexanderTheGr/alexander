@@ -79,7 +79,7 @@ class SupplierController extends Main {
      * 
      * @Route("/erp01/supplier/getSupplier")
      */
-    public function getProducts(Request $request) {
+    public function getSuppliers(Request $request) {
 
         $sql = "SELECT * FROM  `megasoft_supplier` ";
         $connection = $this->getDoctrine()->getConnection();
