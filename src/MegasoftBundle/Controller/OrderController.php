@@ -1703,7 +1703,7 @@ class OrderController extends Main {
        // $json = $request->getContent();
         $json = '{"items":[{"storeid":"14819","qty":1,"price":0.93}],"customerid":"2","orderno":"100003383","comments":"hhjkh","reference":760}';
 
-        $order = json_decode($json, true);
+        $ord = json_decode($json, true);
         print_r($order);
 
         
@@ -1711,7 +1711,7 @@ class OrderController extends Main {
         
         $customer = $this->getDoctrine()
                 ->getRepository("MegasoftBundle:Customer")
-                ->findOneByReference($ord["TRDR"]);
+                ->findOneByReference($ord["customerid"]);
         $vat = $this->getDoctrine()
                 ->getRepository("MegasoftBundle:Vat")
                 ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
@@ -1723,7 +1723,7 @@ class OrderController extends Main {
 
         $entity = $this->getDoctrine()
                 ->getRepository("MegasoftBundle:Order")
-                ->findOneByReference($ord["ID"]);
+                ->findOneByReference($ord["reference"]);
 
         if (!$entity) {
             $entity = new Order;
@@ -1734,14 +1734,14 @@ class OrderController extends Main {
 
         $entity->setCustomer($customer);
         $entity->setUser($user);
-        $entity->setReference($ord["ID"]);
-        $entity->setFincode($ord["FINCODE"]);
-        $entity->setSeries($ord["SERIES"]);
+        $entity->setReference($ord["reference"]);
+        $entity->setFincode($ord["orderno"]);
+        //$entity->setSeries($ord["SERIES"]);
 
-        $entity->setRemarks($ord["REMARKS"]);
-        $entity->setComments($ord["COMMENTS"]);
+        $entity->setRemarks($ord["comments"]);
+        $entity->setComments($ord["comments"]);
 
-        $entity->setVat($vat);
+        //$entity->setVat($vat);
         $entity->setCustomerName($customer->getCustomerName() . " (" . $customer->getCustomerAfm() . " - " . $customer->getCustomerCode() . ")");
         $route = $this->getDoctrine()
                 ->getRepository("MegasoftBundle:Route")
@@ -1751,20 +1751,20 @@ class OrderController extends Main {
 
         $sql = 'DELETE FROM megasoft_orderitem where s_order = "' . $entity->getId() . '"';
         $this->getDoctrine()->getConnection()->exec($sql);
-        $items = $order["ITELINES"];
+        $items = $order["items"];
 
         $vat = 1.24;
 
         foreach ($items as $item) {
             $product = $this->getDoctrine()
                     ->getRepository('MegasoftBundle:Product')
-                    ->findOneByReference($item["MTRL"]);
+                    ->findOneByReference($item["storeid"]);
             $orderItem = new Orderitem;
             $orderItem->setOrder($entity);
-            $orderItem->setPrice($item["PRICE"] * $vat);
+            $orderItem->setPrice($item["price"] * $vat);
             $orderItem->setDisc1prc((float) $item["DISC1PRC"]);
-            $orderItem->setLineval($item["LINEVAL"] * $item["QTY1"] * $vat);
-            $orderItem->setQty($item["QTY1"]);
+            $orderItem->setLineval($item["price"] * $item["qty"] * $vat);
+            $orderItem->setQty($item["qty"]);
             $orderItem->setChk(1);
             $orderItem->setProduct($product);
             $this->flushpersist($orderItem);
