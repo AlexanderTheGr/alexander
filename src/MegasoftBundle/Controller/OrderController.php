@@ -1704,7 +1704,7 @@ class OrderController extends Main {
         $json = '{"items":[{"storeid":"14819","qty":1,"price":0.93}],"customerid":"2","orderno":"100003383","comments":"hhjkh","reference":760}';
 
         $ord = json_decode($json, true);
-        print_r($order);
+        print_r($ord);
 
         
         //exit;
@@ -1750,6 +1750,7 @@ class OrderController extends Main {
         $this->flushpersist($entity);
 
         $sql = 'DELETE FROM megasoft_orderitem where s_order = "' . $entity->getId() . '"';
+        echo $sql;
         $this->getDoctrine()->getConnection()->exec($sql);
         $items = $order["items"];
 
