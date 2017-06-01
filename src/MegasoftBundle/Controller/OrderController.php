@@ -582,19 +582,19 @@ class OrderController extends Main {
                 if (count((array) $articleIds)) {
                     if ($search[1]) {
                         $tecdoc_article = "poi.tecdocArticleId in (" . implode(",", $articleIds) . ") OR poi.erpCode like '%" . $search[1] . "%'";
-                        $sisxetisi = "(".$this->prefix . ".sisxetisi != '' AND ".$this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM MegasoftBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ") OR koo.erpCode like '%" . $search[1] . "%' OR koo.tecdocCode like '%" . $search[0] . "%' OR koo.erpCode like '%" . $search[1] . "%' OR koo.supplierCode like '%" . $search[1] . "%')))";
+                        $sisxetisi = "(" . $this->prefix . ".sisxetisi != '' AND " . $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM MegasoftBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ") OR koo.erpCode like '%" . $search[1] . "%' OR koo.tecdocCode like '%" . $search[0] . "%' OR koo.erpCode like '%" . $search[1] . "%' OR koo.supplierCode like '%" . $search[1] . "%')))";
                     } elseif ($search[0]) {
                         if (strlen($search[0]) > 250)
                             $search[0] = '|||||';
                         $tecdoc_article = "poi.tecdocArticleId in (" . implode(",", $articleIds) . ") OR poi.erpCode like '%" . $search[0] . "%'";
-                        $sisxetisi = "(".$this->prefix . ".sisxetisi != '' AND ".$this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM MegasoftBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ") OR koo.erpCode like '%" . $search[0] . "%' OR koo.tecdocCode like '%" . $search[0] . "%' OR koo.erpCode like '%" . $search[0] . "%' OR koo.supplierCode like '%" . $search[0] . "%')))";
+                        $sisxetisi = "(" . $this->prefix . ".sisxetisi != '' AND " . $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM MegasoftBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ") OR koo.erpCode like '%" . $search[0] . "%' OR koo.tecdocCode like '%" . $search[0] . "%' OR koo.erpCode like '%" . $search[0] . "%' OR koo.supplierCode like '%" . $search[0] . "%')))";
                     } else {
                         $tecdoc_article = "poi.tecdocArticleId in (" . implode(",", $articleIds) . ")";
-                        $sisxetisi = "(".$this->prefix . ".sisxetisi != '' AND ".$this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM MegasoftBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ")))";
+                        $sisxetisi = "(" . $this->prefix . ".sisxetisi != '' AND " . $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM MegasoftBundle:Product koo where koo.sisxetisi != '' AND (koo.tecdocArticleId in (" . implode(",", $articleIds) . ")))";
                     }
                 } else {
                     $this->createWhere();
-                    $sisxetisi = " (".$this->prefix . ".sisxetisi != '' AND ".$this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM MegasoftBundle:Product koo where koo.sisxetisi != '' AND (koo.erpCode like '%" . $search[1] . "%' OR koo.tecdocCode like '%" . $search[0] . "%' OR koo.erpCode like '%" . $search[1] . "%' OR koo.supplierCode like '%" . $search[1] . "%')))";
+                    $sisxetisi = " (" . $this->prefix . ".sisxetisi != '' AND " . $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM MegasoftBundle:Product koo where koo.sisxetisi != '' AND (koo.erpCode like '%" . $search[1] . "%' OR koo.tecdocCode like '%" . $search[0] . "%' OR koo.erpCode like '%" . $search[1] . "%' OR koo.supplierCode like '%" . $search[1] . "%')))";
                 }
                 //echo  $sql;
                 //$this->q_or[] = $this->prefix . ".id in  (Select k.product FROM MegasoftBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
@@ -634,7 +634,7 @@ class OrderController extends Main {
                                 ORDER BY ' . $this->orderBy;
                 }
 
-                
+
                 //echo $sql;
                 //exit;
 
@@ -642,13 +642,13 @@ class OrderController extends Main {
                 //echo $sql;
                 //$sql = str_replace("ORDER BY p.qty asc","",$sql);
                 $results = array();
-                
+
                 $query = $em->createQuery(
                                 $sql
                         )
                         ->setMaxResults($request->request->get("length"))
                         ->setFirstResult($request->request->get("start"));
-                
+
                 //echo $sql."<BR>";    
                 /*
                   echo 'SELECT  ' . $this->select . ', p.reference
@@ -658,7 +658,6 @@ class OrderController extends Main {
                   //exit;
                  */
                 $results = $query->getResult();
-                
             }
             $data["fields"] = $this->fields;
 
@@ -722,14 +721,14 @@ class OrderController extends Main {
                  */
                 $json[4] = $obj->getArticleAttributes2($articleIds2["linkingTargetId"]);
                 $json[6] = number_format($obj->getStoreRetailPrice() * $vat, 2, '.', '');
-                
+
                 $json[7] = $obj->getDiscount($customer, $vat);
                 $json[8] = $obj->getGroupedDiscountPrice($customer, $vat); //str_replace($obj->$priceField, $obj->getGroupedDiscountPrice($customer), $json[5]);
-                $qty = "lll";//$json[9];
+                $qty = "lll"; //$json[9];
                 $json[9] = $obj->getSisxetisi();
                 $json[10] = $obj->getApothiki();
                 //$json[11] = $qty;
-                $json[11] = '<input data-id="'.$obj->getId().'" data-rep="MegasoftBundle:Product" data-ref="'.$obj->getId().'" id="MegasoftBundleProductQty_'.$obj->getId().'" class="MegasoftBundleProductQty" type="text" value="1">';
+                $json[11] = '<input data-id="' . $obj->getId() . '" data-rep="MegasoftBundle:Product" data-ref="' . $obj->getId() . '" id="MegasoftBundleProductQty_' . $obj->getId() . '" class="MegasoftBundleProductQty" type="text" value="1">';
                 $json[12] = $obj->getTick($order);
                 //$json[6] = str_replace("value='---'", "value='1'", $json[6]);
                 $jsonarrnoref[$result["id"]] = $json;
@@ -893,13 +892,13 @@ class OrderController extends Main {
                 ->getRepository("MegasoftBundle:Customer")
                 ->find($order->getCustomer());
 
-        
+
         $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
         $login = $this->getSetting("MegasoftBundle:Webservice:Login");
         //{"customerid":1,"orderno":"B2B00001","comments":"Ayti eimai mia test paraggelia","items":[{"storeid":3,"price":10.35,"qty":4},{"storeid":7,"price":14.35,"qty":7}]}
-       
-               
-        
+
+
+
         foreach ($order->getItems() as $item) {
             $item1["storeid"] = $item->getProduct()->getReference();
             $item1["qty"] = $item->getQty();
@@ -907,7 +906,7 @@ class OrderController extends Main {
             $items[] = $item1;
         }
 
-        
+
         //$comments = str_replace("\n", " ", Mage::app()->getRequest()->getParam('comments'));
         //$comments = str_replace("*", "", $comments);
         //$comments = str_replace(">", "", $comments);
@@ -930,13 +929,13 @@ class OrderController extends Main {
         }
         //echo $JsonStrWeb;
         //print_r($result);
-        
-        
+
+
         if (@$result->InsertOrderResult > 0) {
             $order->setReference($result->InsertOrderResult);
             $this->flushpersist($order);
-        }        
-        
+        }
+
 
         $json = json_encode($result);
         return new Response(
@@ -1196,24 +1195,24 @@ class OrderController extends Main {
         }
         $order = $this->getDoctrine()->getRepository('MegasoftBundle:Order')->find($request->request->get("order"));
         /*
-        $repormodel = $this->getDoctrine()->getRepository('MegasoftBundle:Reportmodel')->findOneBy(array("sessionId" => $session->getId(), 'customerId' => $order->getCustomer()->getId(), 'model' => $request->request->get("car")));
+          $repormodel = $this->getDoctrine()->getRepository('MegasoftBundle:Reportmodel')->findOneBy(array("sessionId" => $session->getId(), 'customerId' => $order->getCustomer()->getId(), 'model' => $request->request->get("car")));
 
-        if (!$repormodel)
-            $repormodel = new Reportmodel();
+          if (!$repormodel)
+          $repormodel = new Reportmodel();
 
-        $dt = new \DateTime("now");
-        $repormodel->setTs($dt);
-        $repormodel->setCreated($dt);
-        $repormodel->setModified($dt);
-        $repormodel->setModel($request->request->get("car"));
-        $repormodel->setCustomerId($order->getCustomer()->getId());
+          $dt = new \DateTime("now");
+          $repormodel->setTs($dt);
+          $repormodel->setCreated($dt);
+          $repormodel->setModified($dt);
+          $repormodel->setModel($request->request->get("car"));
+          $repormodel->setCustomerId($order->getCustomer()->getId());
 
-        $repormodel->setSessionId($session->getId());
-        $repormodel->setIp($request->getClientIp());
-        $repormodel->setActioneer(0);
-        $repormodel->setFlatData('');
-        $this->flushpersist($repormodel);
-        */
+          $repormodel->setSessionId($session->getId());
+          $repormodel->setIp($request->getClientIp());
+          $repormodel->setActioneer(0);
+          $repormodel->setFlatData('');
+          $this->flushpersist($repormodel);
+         */
         $tecdocArticleIds = array();
         if (count($articleIds)) {
             $query = $em->createQuery(
@@ -1679,13 +1678,37 @@ class OrderController extends Main {
     public function setb2borderAction(Request $request) {
 
         //$json = '{"SALDOC":[{"TRDR":"364","SERIESNUM":"1100003181","FINCODE":"B2B1100003181","PAYMENT":1010,"VATSTS":"1410","SERIES":7021,"WHOUSE":1101,"ID":"1035"}],"ITELINES":[{"VAT":"1410","QTY1":1,"LINENUM":9000001,"MTRL":"136922","PRICE":83.69,"DISC1PRC":null}]}';
-        $json = $request->getContent();
+        /*
+          Array
+          (
+          [items] => Array
+          (
+          [0] => Array
+          (
+          [storeid] => 14819
+          [qty] => 1
+          [price] => 0.93
+          )
+
+          )
+
+          [customerid] => 2
+          [orderno] => 100003382
+          [comments] => dddddd
+          [reference] => 759
+          )
+         * 
+         */
+
+       // $json = $request->getContent();
+        $json = '{"items":[{"storeid":"14819","qty":1,"price":0.93}],"customerid":"2","orderno":"100003383","comments":"hhjkh","reference":760}';
 
         $order = json_decode($json, true);
         print_r($order);
-        $ord = $order["SALDOC"][0];
-        if (!$ord["ID"])
-            exit;
+
+        
+        exit;
+        
         $customer = $this->getDoctrine()
                 ->getRepository("MegasoftBundle:Customer")
                 ->findOneByReference($ord["TRDR"]);
