@@ -1700,8 +1700,8 @@ class OrderController extends Main {
          * 
          */
 
-       // $json = $request->getContent();
-        $json = '{"items":[{"storeid":"14819","qty":1,"price":0.93}],"customerid":"2","orderno":"100003383","comments":"hhjkh","reference":760}';
+        $json = $request->getContent();
+        //$json = '{"items":[{"storeid":"14819","qty":1,"price":0.93}],"customerid":"2","orderno":"100003383","comments":"hhjkh","reference":760}';
 
         $ord = json_decode($json, true);
         print_r($ord);
