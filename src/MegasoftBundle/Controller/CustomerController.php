@@ -367,6 +367,7 @@ class CustomerController extends Main {
                 $q[] = "`customer_afm` = '" . addslashes($data["CustomerAfm"]) . "'";
                 $q[] = "`customer_email` = '" . addslashes($data["CustomerEmail"]) . "'";
                 $q[] = "`customer_address` = '" . addslashes($data["CustomerAddress"]) . "'";
+                $q[] = "`customer_city` = '" . addslashes($data["customerCity"]) . "'";
                 $q[] = "`customer_zip` = '" . addslashes($data["CustomerZip"]) . "'";
                 $q[] = "`customer_phone1` = '" . addslashes($data["CustomerPhone1"]) . "'";
                 $q[] = "`customer_phone2` = '" . addslashes($data["CustomerPhone2"]) . "'";
