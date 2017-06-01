@@ -33,6 +33,7 @@ security:
         - { path: ^/erp01/product/retrieveSoftone, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/erp01/order/setb2border*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/erp01/product/getProducts*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/erp01/supplier/getSupplier*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         
         - { path: ^/, roles: ROLE_USER }
     firewalls:
