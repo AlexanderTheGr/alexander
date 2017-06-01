@@ -103,6 +103,29 @@ class EdiController extends Main {
         ));
     }
 
+    
+    /**
+     * 
+     * 
+     * @Route("/edi/edi/getEdis")
+     */
+    public function getEdis(Request $request) {
+
+        $sql = "SELECT * FROM  `edi` ";
+        $connection = $this->getDoctrine()->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $results = $statement->fetchAll();
+        $arr = array();
+        foreach ($results as $data) {
+            $arr[] = $data;
+        }
+        $json = json_encode($arr);
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );        
+    }    
+    
     /**
      * @Route("/edi/edi/gettab")
      */
