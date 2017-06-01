@@ -24,6 +24,15 @@ security:
         - { path: ^/product/retrieveApothema, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/product/retrieveSoftone, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/order/setb2border*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        
+        - { path: ^/erp01/customergroup/getrulesjson/*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/erp01/customer/getrulesjson/*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/erp01/product/retrieveMtrl/*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/erp01/edi/ediitem/getEdiMarkup, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/erp01/product/retrieveApothema, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/erp01/product/retrieveSoftone, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/erp01/order/setb2border*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        
         - { path: ^/, roles: ROLE_USER }
     firewalls:
         login_firewall:
