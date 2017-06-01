@@ -854,7 +854,7 @@ class ProductController extends Main {
      */
     public function getProducts(Request $request) {
 
-        $sql = "SELECT id FROM  `megasoft_product` ";
+        $sql = "SELECT * FROM  `megasoft_product` ";
         $connection = $this->getDoctrine()->getConnection();
         $statement = $connection->prepare($sql);
         $statement->execute();
