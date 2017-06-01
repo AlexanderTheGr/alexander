@@ -1764,7 +1764,7 @@ class OrderController extends Main {
             $orderItem = new Orderitem;
             $orderItem->setOrder($entity);
             $orderItem->setPrice($item["price"] * $vat);
-            $orderItem->setDisc1prc((float) $item["DISC1PRC"]);
+            $orderItem->setDisc1prc((float) $item["discount"]);
             $orderItem->setLineval($item["price"] * $item["qty"] * $vat);
             $orderItem->setQty($item["qty"]);
             $orderItem->setChk(1);
