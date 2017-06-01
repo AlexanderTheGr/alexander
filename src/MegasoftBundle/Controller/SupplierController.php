@@ -74,7 +74,28 @@ class SupplierController extends Main {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+    /**
+     * 
+     * 
+     * @Route("/erp01/supplier/getSupplier")
+     */
+    public function getProducts(Request $request) {
 
+        $sql = "SELECT * FROM  `megasoft_supplier` ";
+        $connection = $this->getDoctrine()->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $results = $statement->fetchAll();
+        $arr = array();
+        foreach ($results as $data) {
+            $arr[] = $data;
+        }
+        $json = json_encode($arr);
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );        
+    }
+    
     /**
      * @Route("/erp01/supplier/gettab")
      */
