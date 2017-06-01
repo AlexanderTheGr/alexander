@@ -56,7 +56,7 @@
     
     jQuery('.printarea').click(function(){
         var data = {}
-        jQuery.post("/order/print/{{order}}", data, function (result) {
+        jQuery.post("/erp01/order/print/{{order}}", data, function (result) {
             jQuery('#printarea').html(result);
             jQuery('#printarea').show();
             jQuery('#printarea').printElement();       
