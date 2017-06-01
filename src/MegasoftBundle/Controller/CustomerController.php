@@ -180,7 +180,7 @@ class CustomerController extends Main {
                     $json, 200, array('Content-Type' => 'application/json')
             );
         } else {
-            $json = json_encode(array("opssss"));
+            $json = json_encode(array("opssss",$_SERVER["REMOTE_ADDR"]));
             return new Response(
                     $json, 200, array('Content-Type' => 'application/json')
             );
