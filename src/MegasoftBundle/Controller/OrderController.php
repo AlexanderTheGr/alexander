@@ -1752,7 +1752,7 @@ class OrderController extends Main {
         $sql = 'DELETE FROM megasoft_orderitem where s_order = "' . $entity->getId() . '"';
         echo $sql;
         $this->getDoctrine()->getConnection()->exec($sql);
-        $items = $order["items"];
+        $items = $ord["items"];
 
         $vat = 1.24;
 
