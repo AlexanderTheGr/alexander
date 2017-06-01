@@ -902,6 +902,7 @@ class OrderController extends Main {
         foreach ($order->getItems() as $item) {
             $item1["storeid"] = $item->getProduct()->getReference();
             $item1["qty"] = $item->getQty();
+            $item1["discount"] = $item->getDisc1prc();
             $item1["price"] = $item->getPrice() / $vat;
             $items[] = $item1;
         }
