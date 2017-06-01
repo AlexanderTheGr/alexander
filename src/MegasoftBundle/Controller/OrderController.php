@@ -1707,7 +1707,7 @@ class OrderController extends Main {
         print_r($order);
 
         
-        exit;
+        //exit;
         
         $customer = $this->getDoctrine()
                 ->getRepository("MegasoftBundle:Customer")
