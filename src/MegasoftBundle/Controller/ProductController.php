@@ -872,6 +872,28 @@ class ProductController extends Main {
     /**
      * 
      * 
+     * @Route("/erp01/product/getManufacturers")
+     */
+    public function getManufacturers(Request $request) {
+
+        $sql = "SELECT * FROM  `megasoft_manufacturer` ";
+        $connection = $this->getDoctrine()->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $results = $statement->fetchAll();
+        $arr = array();
+        foreach ($results as $data) {
+            $arr[] = $data;
+        }
+        $json = json_encode($arr);
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );        
+    }    
+    
+    /**
+     * 
+     * 
      * @Route("/erp01/product/productInfo")
      */
     public function productInfo(Request $request) {
