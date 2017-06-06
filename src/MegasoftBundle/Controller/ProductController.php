@@ -1229,7 +1229,7 @@ class ProductController extends Main {
         // print_r($StoreDetails);
         //exit;
 
-        foreach ($StoreDetails as $data) {
+        foreach ($StockDetails as $data) {
             //print_r($data);
             $data = (array) $data;
 
