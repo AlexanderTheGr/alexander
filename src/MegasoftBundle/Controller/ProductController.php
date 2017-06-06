@@ -1236,7 +1236,7 @@ class ProductController extends Main {
             //echo $product->id." ".$product->erp_code." --> ".$qty." -- ".$product->getApothema()."<BR>";
             $sql = "update megasoft_product set qty = '" . $data["StoreStocks"] . "'  where reference = '" . $data["StoreId"] . "'";
             echo $sql . "<BR>";
-            //$em->getConnection()->exec($sql);
+            $em->getConnection()->exec($sql);
             //if ($i++ > 100) return;
         }
     }    
