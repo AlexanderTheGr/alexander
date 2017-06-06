@@ -1198,6 +1198,48 @@ class ProductController extends Main {
         exit;
     }
 
+    
+    function retrieveApothema($filters = false) {
+        $login = "W600-K78438624F8";
+        $login = $this->getSetting("MegasoftBundle:Webservice:Login"); //"demo-fastweb-megasoft";
+        $em = $this->getDoctrine()->getManager();
+        $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
+        /*
+          $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
+          $headerbody = array('Login' => "alexander", 'Date' => "2016-10-10");
+          $header = new SOAPHeader($ns,"AuthHeader",$headerbody);
+          $soap->__setSoapHeaders($header);
+         */
+        //exit;
+        //$params["Date"] = "2017-05-24";
+        $params["ParticipateInEshop"] = 1;
+        //$results = $soap->GetCustomers();
+        $response = $soap->__soapCall("GetStocks", array($params));
+
+        echo count($response->GetStocksResult->StoreStock);
+        echo "<BR>";
+        //exit;	
+        if (count($response->GetStocksResult->StoreStock) == 1) {
+            $StockDetails[] = $response->GetStocksResult->StoreStock;
+        } elseif (count($response->GetStocksResult->StoreStock) > 1) {
+            $StockDetails = $response->GetStocksResult->StoreStock;
+        }
+
+        // print_r($StoreDetails);
+        //exit;
+
+        foreach ($StoreDetails as $data) {
+            //print_r($data);
+            $data = (array) $data;
+
+            //echo $product->id." ".$product->erp_code." --> ".$qty." -- ".$product->getApothema()."<BR>";
+            $sql = "update megasoft_product set qty = '" . $data["StoreStocks"] . "'  where reference = '" . $data["StoreId"] . "'";
+            echo $sql . "<BR>";
+            //$em->getConnection()->exec($sql);
+            //if ($i++ > 100) return;
+        }
+    }    
+    
     /**
      * @Route("/erp01/product/autocompletesearch")
      */
@@ -1438,35 +1480,6 @@ class ProductController extends Main {
         }
     }
 
-    function retrieveApothema($filters = false) {
-        //function retrieveProducts($filters=false) {
-        //$this->catalogue = 4;
-        //$filters = "ITEM.V3=".date("Y-m-d")."&ITEM.V4=1";//. date("Y-m-d");
-        //$filters = "ITEM.V3=2015-07-29&ITEM.V4=1";//. date("Y-m-d");
-        //$filters = "ITEM.SORENQTY1>1";  
-        //$filters = "ITEM.UPDDATE=".date("Y-m-d")."&ITEM.UPDDATE_TO=".date("Y-m-d");  
-        //$filters = "ITEM.ISACTIVE=1";  
-        //return;
-        $megasoft = new Megasoft();
-        $datas = $megasoft->retrieveData("ITEM", "apothema");
-        //echo 'Sss';
-        echo count($datas) . "<BR>";
-        //print_r($datas);
-        //exit;
-        $em = $this->getDoctrine()->getManager();
-        foreach ($datas as $data) {
-            //print_r($data);
-            $zoominfo = $data["zoominfo"];
-            $info = explode(";", $zoominfo);
-            $data["reference"] = $info[1];
-
-            //echo $product->id." ".$product->erp_code." --> ".$qty." -- ".$product->getApothema()."<BR>";
-            $sql = "update megasoft_product set qty = '" . $data["item_mtrl_itemtrdata_qty1"] . "', reserved = '" . $data["item_soreserved"] . "' where reference = '" . $data["reference"] . "'";
-            echo $sql . "<BR>";
-            $em->getConnection()->exec($sql);
-            //if ($i++ > 100) return;
-        }
-    }
 
     //getmodeltypes
     /**
