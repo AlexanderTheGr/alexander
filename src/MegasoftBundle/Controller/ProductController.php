@@ -1214,6 +1214,7 @@ class ProductController extends Main {
         //$params["Date"] = "2017-05-24";
         //$params["ParticipateInEshop"] = 1;
         //$results = $soap->GetCustomers();
+        $params["Login"] = $login;
         $response = $soap->__soapCall("GetStocks", array($params));
 
         echo count($response->GetStocksResult->StoreStock);
