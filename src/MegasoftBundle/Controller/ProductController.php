@@ -1253,6 +1253,8 @@ class ProductController extends Main {
         $json = $request->getContent();
         //$json = '{"items":[{"storeid":"14819","qty":1,"price":0.93}],"customerid":"2","orderno":"100003383","comments":"hhjkh","reference":760}';
         //$json = '{"StoreDescr":"VALEO \u03a3\u03a5\u039c\u03a0\u03a5\u039a\u039d\u03a9\u03a4\u0397\u03a3","StoreKwd":"120241-21","StoreRetailPrice":"0.00","StoreWholeSalePrice":"0.00","RetailMarkup":"0.00","WholeSaleMarkup":"0.00","SupplierCode":"120241","SupplierId":"21","fwSupplierId":"21","fwCode":"120241","barcode":"","place":"","remarks":"","webupd":"True","supref":"158","mtrsup":"59","sisxetisi":"","StoreId":608999}';
+        
+        $json = '{"StoreId":"609004",StoreDescr":"REMSA \u0394\u0399\u03a3\u039a\u039f\u03a6\u03a1\u0395\u039d\u0391 MERCEDES","StoreKwd":"000200-153","StoreRetailPrice":"0.00","StoreWholeSalePrice":"0.00","RetailMarkup":"0.00","WholeSaleMarkup":"0.00","SupplierCode":"000200","SupplierId":"141","fwSupplierId":"153","fwCode":"000200","barcode":"","place":"","remarks":"","webupd":"True","supref":"158","mtrsup":"59","sisxetisi":""}';
         $data = json_decode($json, true);
         if ($data) {
             $entity = $this->setProduct($data);
