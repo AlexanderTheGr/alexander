@@ -1261,7 +1261,7 @@ class ProductController extends Main {
             $json["partsbos"] = $entity->getId();
         }
         return new Response(
-                json_decode((array)$json), 200, array('Content-Type' => 'application/json')
+                json_encode((array)$json), 200, array('Content-Type' => 'application/json')
         );
     }
 
