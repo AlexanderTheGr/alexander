@@ -1186,11 +1186,11 @@ class ProductController extends Main {
             //$q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
 
             $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
-            echo $sql . "<BR>";
+            //echo $sql . "<BR>";
             $this->getDoctrine()->getManager()->getConnection()->exec($sql);
         } else {
             $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
-            echo $sql . "<BR>";
+            //echo $sql . "<BR>";
             $this->getDoctrine()->getManager()->getConnection()->exec($sql);
         }
         $entity = $this->getDoctrine()
@@ -1200,6 +1200,7 @@ class ProductController extends Main {
             //$entity->tecdoc = $tecdoc;
             $entity->updatetecdoc();
             $entity->setProductFreesearch();
+            return $entity;
         }
     }
 
@@ -1253,9 +1254,10 @@ class ProductController extends Main {
         //$json = '{"items":[{"storeid":"14819","qty":1,"price":0.93}],"customerid":"2","orderno":"100003383","comments":"hhjkh","reference":760}';
         //$json = '{"StoreDescr":"VALEO \u03a3\u03a5\u039c\u03a0\u03a5\u039a\u039d\u03a9\u03a4\u0397\u03a3","StoreKwd":"120241-21","StoreRetailPrice":"0.00","StoreWholeSalePrice":"0.00","RetailMarkup":"0.00","WholeSaleMarkup":"0.00","SupplierCode":"120241","SupplierId":"21","fwSupplierId":"21","fwCode":"120241","barcode":"","place":"","remarks":"","webupd":"True","supref":"158","mtrsup":"59","sisxetisi":"","StoreId":608999}';
         $data = json_decode($json, true);
-        $this->setProduct($data);
+        $entity = $this->setProduct($data);
+        $json["partsbos"] = $entity->getId(); 
         return new Response(
-                "", 200
+                $json, 200, array('Content-Type' => 'application/json')
         );
     }
 
