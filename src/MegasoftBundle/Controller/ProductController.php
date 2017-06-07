@@ -1258,10 +1258,10 @@ class ProductController extends Main {
         $data = json_decode($json, true);
         if ($data) {
             $entity = $this->setProduct($data);
-            $json["partsbos"] = $entity->getId();
+            $out["partsbox"] = $entity->getId();
         }
         return new Response(
-                json_encode((array)$json), 200, array('Content-Type' => 'application/json')
+                json_encode((array)$out), 200, array('Content-Type' => 'application/json')
         );
     }
 
