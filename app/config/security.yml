@@ -36,6 +36,7 @@ security:
         - { path: ^/erp01/product/getManufacturers*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/erp01/supplier/getSupplier*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/edi/edi/getEdis*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/erp01/product/setb2bproduct*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         
         
         - { path: ^/, roles: ROLE_USER }
