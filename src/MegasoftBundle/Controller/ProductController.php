@@ -1250,7 +1250,11 @@ class ProductController extends Main {
      * @Route("/erp01/product/setb2bproduct")
      */
     public function setb2bproduct() {
+        $json = $request->getContent();
+        //$json = '{"items":[{"storeid":"14819","qty":1,"price":0.93}],"customerid":"2","orderno":"100003383","comments":"hhjkh","reference":760}';
 
+        $data = json_decode($json, true);
+        $this->setProduct($data);
         return new Response(
                 "", 200
         );
