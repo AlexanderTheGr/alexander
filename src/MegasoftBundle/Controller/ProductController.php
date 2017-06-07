@@ -1254,10 +1254,12 @@ class ProductController extends Main {
         //$json = '{"items":[{"storeid":"14819","qty":1,"price":0.93}],"customerid":"2","orderno":"100003383","comments":"hhjkh","reference":760}';
         //$json = '{"StoreDescr":"VALEO \u03a3\u03a5\u039c\u03a0\u03a5\u039a\u039d\u03a9\u03a4\u0397\u03a3","StoreKwd":"120241-21","StoreRetailPrice":"0.00","StoreWholeSalePrice":"0.00","RetailMarkup":"0.00","WholeSaleMarkup":"0.00","SupplierCode":"120241","SupplierId":"21","fwSupplierId":"21","fwCode":"120241","barcode":"","place":"","remarks":"","webupd":"True","supref":"158","mtrsup":"59","sisxetisi":"","StoreId":608999}';
         $data = json_decode($json, true);
-        $entity = $this->setProduct($data);
-        $json["partsbos"] = $entity->getId();
+        if ($data) {
+            $entity = $this->setProduct($data);
+            $json["partsbos"] = $entity->getId();
+        }
         return new Response(
-                json_decode($json), 200, array('Content-Type' => 'application/json')
+                json_decode((array)$json), 200, array('Content-Type' => 'application/json')
         );
     }
 
