@@ -1171,7 +1171,6 @@ class ProductController extends Main {
         $q[] = "`title` = '" . addslashes($data["StoreDescr"]) . "'";
         $q[] = "`remarks` = '" . addslashes($data["remarks"]) . "'";
         $q[] = "`supref` = '" . addslashes($data["supref"]) . "'";
-        $q[] = "`supref` = '" . addslashes($data["supref"]) . "'";
         $q[] = "`place` = '" . addslashes($data["place"]) . "'";
         $q[] = "`sisxetisi` = '" . addslashes($data["sisxetisi"]) . "'";
         $q[] = "`webupd` = '" . ($data["webupd"] == 'True' ? 1 : 0) . "'";
