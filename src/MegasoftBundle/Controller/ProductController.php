@@ -1256,6 +1256,7 @@ class ProductController extends Main {
         
         $json = '{"StoreId":"609004",StoreDescr":"REMSA \u0394\u0399\u03a3\u039a\u039f\u03a6\u03a1\u0395\u039d\u0391 MERCEDES","StoreKwd":"000200-153","StoreRetailPrice":"0.00","StoreWholeSalePrice":"0.00","RetailMarkup":"0.00","WholeSaleMarkup":"0.00","SupplierCode":"000200","SupplierId":"141","fwSupplierId":"153","fwCode":"000200","barcode":"","place":"","remarks":"","webupd":"True","supref":"158","mtrsup":"59","sisxetisi":""}';
         $data = json_decode($json, true);
+        print_r($data);
         //if ($data) {
             $entity = $this->setProduct($data);
             $out["partsbox"] = $entity->getId();
