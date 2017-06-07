@@ -1198,8 +1198,8 @@ class ProductController extends Main {
                 ->findOneBy(array("reference" => (int) $data["StoreId"]));
         if ($entity) {
             //$entity->tecdoc = $tecdoc;
-            //$entity->updatetecdoc();
-            //$entity->setProductFreesearch();
+            $entity->updatetecdoc();
+            $entity->setProductFreesearch();
         }
     }
 
