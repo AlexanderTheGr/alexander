@@ -866,7 +866,7 @@ class ProductController extends Main {
         $json = json_encode($arr);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
-        );        
+        );
     }
 
     /**
@@ -888,9 +888,9 @@ class ProductController extends Main {
         $json = json_encode($arr);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
-        );        
-    }    
-    
+        );
+    }
+
     /**
      * 
      * 
@@ -1082,123 +1082,128 @@ class ProductController extends Main {
         //exit;
 
         foreach ($StoreDetails as $data) {
-            $data = (array) $data;
-
-            //print_r($data);
-
-            $entity = $this->getDoctrine()
-                    ->getRepository($this->repository)
-                    ->findOneBy(array("erpCode" => $data["StoreKwd"]));
-
-
-            $dt = new \DateTime("now");
-
-            if (!$entity) {
-                $entity = new Product();
-                $entity->setTs($dt);
-                $entity->setCreated($dt);
-                $entity->setModified($dt);
-            } else {
-                //continue;
-                //$entity->setRepositories();                
-            }
-
-
-
-            /*
-
-
-              [StoreLastUpdate] =&gt; 2016-12-20T17:32:24
-              [StoreId] =&gt; 345
-              [StoreDescr] =&gt; ΤΣΙΜΟΥΧΑΚΙ ΒΑΛΒΙΔΩΝ ΑΕΧ 7αρι
-              [StoreKwd] =&gt; 027-109-675-REINZ
-              [StoreRetailPrice] =&gt; 0.3655
-              [StoreWholeSalePrice] =&gt; 0.2805
-              [StoreStock] =&gt; 184
-              [SupplierCode] =&gt; 702605800
-              [SupplierId] =&gt; REINZ
-              [fwSupplierId] =&gt; 9
-              [fwCode] =&gt; 70-26058-00
-             * 
-             * 
-              mtrplace
-              sisxetisi
-              remarks
-              cccref
-              cccwebupd
-              cccpriceupd
-              mtrsup
-              barccode
-              mtrmanfctr
-             * 
-             */
-            //$this->flushpersist($entity);
-            $manufacturer = $this->getDoctrine()
-                    ->getRepository("MegasoftBundle:Manufacturer")
-                    ->findOneBy(array("code" => $data["SupplierId"]));
-            $supplier = $this->getDoctrine()
-                    ->getRepository("MegasoftBundle:Supplier")
-                    ->findOneBy(array("reference" => $data["mtrsup"]));
-
-            $params["table"] = "megasoft_product";
-            $q = array();
-            //$q[] =
-            $q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
-            $q[] = "`erp_code` = '" . addslashes($data["StoreKwd"]) . "'";
-            $q[] = "`store_retail_price` = '" . addslashes($data["StoreRetailPrice"]) . "'";
-            $q[] = "`store_wholesale_price` = '" . addslashes($data["StoreWholeSalePrice"]) . "'";
-            $q[] = "`retail_markup` = '" . addslashes($data["RetailMarkup"]) . "'";
-            $q[] = "`wholesale_markup` = '" . addslashes($data["WholeSaleMarkup"]) . "'";
-            $q[] = "`qty` = '" . addslashes($data["StoreStock"]) . "'";
-            $q[] = "`supplier_code` = '" . addslashes($data["SupplierCode"]) . "'";
-            if ($manufacturer) {
-                $q[] = "`manufacturer` = '" . $manufacturer->getId() . "'";
-                $q[] = "`erp_supplier` = '" . $manufacturer->getTitle() . "'";
-            } else {
-                $q[] = "`manufacturer` = NULL";
-                $q[] = "`erp_supplier` = ''";
-            }
-            $q[] = "`tecdoc_supplier_id` = '" . addslashes($data["fwSupplierId"]) . "'";
-            $q[] = "`tecdoc_code` = '" . addslashes($data["fwCode"]) . "'";
-            $q[] = "`title` = '" . addslashes($data["StoreDescr"]) . "'";
-            $q[] = "`remarks` = '" . addslashes($data["remarks"]) . "'";
-            $q[] = "`supref` = '" . addslashes($data["supref"]) . "'";
-            $q[] = "`place` = '" . addslashes($data["place"]) . "'";
-            $q[] = "`sisxetisi` = '" . addslashes($data["sisxetisi"]) . "'";
-            $q[] = "`webupd` = '" . ($data["webupd"] == 'True' ? 1 : 0) . "'";
-            $q[] = "`barcode` = '" . addslashes($data["barcode"]) . "'";
-
-            if ($supplier)
-                $q[] = "`supplier` = '" . $supplier->getId() . "'";
-
-            $q[] = "`product_sale` = '1'";
-
-            if (@$entity->getId() == 0) {
-                //$q[] = "`reference` = '" . $data[$params["megasoft_table"]] . "'";
-                //$q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
-
-                $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
-                echo $sql . "<BR>";
-                $em->getConnection()->exec($sql);
-            } else {
-                $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
-                echo $sql . "<BR>";
-                $em->getConnection()->exec($sql);
-            }
-            $entity = $this->getDoctrine()
-                    ->getRepository($this->repository)
-                    ->findOneBy(array("reference" => (int) $data["StoreId"]));
-            if ($entity) {
-                //$entity->tecdoc = $tecdoc;
-                //$entity->updatetecdoc();
-                //$entity->setProductFreesearch();
-            }
+            $this->setProduct($data);
             //exit;
         }
         exit;
     }
 
-    
+    function setProduct($data) {
+
+        $data = (array) $data;
+
+        //print_r($data);
+
+        $entity = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->findOneBy(array("erpCode" => $data["StoreKwd"]));
+
+
+        $dt = new \DateTime("now");
+
+        if (!$entity) {
+            $entity = new Product();
+            $entity->setTs($dt);
+            $entity->setCreated($dt);
+            $entity->setModified($dt);
+        } else {
+            //continue;
+            //$entity->setRepositories();                
+        }
+
+
+
+        /*
+
+
+          [StoreLastUpdate] =&gt; 2016-12-20T17:32:24
+          [StoreId] =&gt; 345
+          [StoreDescr] =&gt; ΤΣΙΜΟΥΧΑΚΙ ΒΑΛΒΙΔΩΝ ΑΕΧ 7αρι
+          [StoreKwd] =&gt; 027-109-675-REINZ
+          [StoreRetailPrice] =&gt; 0.3655
+          [StoreWholeSalePrice] =&gt; 0.2805
+          [StoreStock] =&gt; 184
+          [SupplierCode] =&gt; 702605800
+          [SupplierId] =&gt; REINZ
+          [fwSupplierId] =&gt; 9
+          [fwCode] =&gt; 70-26058-00
+         * 
+         * 
+          mtrplace
+          sisxetisi
+          remarks
+          cccref
+          cccwebupd
+          cccpriceupd
+          mtrsup
+          barccode
+          mtrmanfctr
+         * 
+         */
+        //$this->flushpersist($entity);
+        $manufacturer = $this->getDoctrine()
+                ->getRepository("MegasoftBundle:Manufacturer")
+                ->findOneBy(array("code" => $data["SupplierId"]));
+        $supplier = $this->getDoctrine()
+                ->getRepository("MegasoftBundle:Supplier")
+                ->findOneBy(array("reference" => $data["mtrsup"]));
+
+        $params["table"] = "megasoft_product";
+        $q = array();
+        //$q[] =
+        $q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
+        $q[] = "`erp_code` = '" . addslashes($data["StoreKwd"]) . "'";
+        $q[] = "`store_retail_price` = '" . addslashes($data["StoreRetailPrice"]) . "'";
+        $q[] = "`store_wholesale_price` = '" . addslashes($data["StoreWholeSalePrice"]) . "'";
+        $q[] = "`retail_markup` = '" . addslashes($data["RetailMarkup"]) . "'";
+        $q[] = "`wholesale_markup` = '" . addslashes($data["WholeSaleMarkup"]) . "'";
+        $q[] = "`qty` = '" . addslashes($data["StoreStock"]) . "'";
+        $q[] = "`supplier_code` = '" . addslashes($data["SupplierCode"]) . "'";
+        if ($manufacturer) {
+            $q[] = "`manufacturer` = '" . $manufacturer->getId() . "'";
+            $q[] = "`erp_supplier` = '" . $manufacturer->getTitle() . "'";
+        } else {
+            $q[] = "`manufacturer` = NULL";
+            $q[] = "`erp_supplier` = ''";
+        }
+        $q[] = "`tecdoc_supplier_id` = '" . addslashes($data["fwSupplierId"]) . "'";
+        $q[] = "`tecdoc_code` = '" . addslashes($data["fwCode"]) . "'";
+        $q[] = "`title` = '" . addslashes($data["StoreDescr"]) . "'";
+        $q[] = "`remarks` = '" . addslashes($data["remarks"]) . "'";
+        $q[] = "`supref` = '" . addslashes($data["supref"]) . "'";
+        $q[] = "`supref` = '" . addslashes($data["supref"]) . "'";
+        $q[] = "`place` = '" . addslashes($data["place"]) . "'";
+        $q[] = "`sisxetisi` = '" . addslashes($data["sisxetisi"]) . "'";
+        $q[] = "`webupd` = '" . ($data["webupd"] == 'True' ? 1 : 0) . "'";
+        $q[] = "`barcode` = '" . addslashes($data["barcode"]) . "'";
+
+        if ($supplier)
+            $q[] = "`supplier` = '" . $supplier->getId() . "'";
+
+        $q[] = "`product_sale` = '1'";
+
+        if (@$entity->getId() == 0) {
+            //$q[] = "`reference` = '" . $data[$params["megasoft_table"]] . "'";
+            //$q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
+
+            $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
+            echo $sql . "<BR>";
+            $em->getConnection()->exec($sql);
+        } else {
+            $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
+            echo $sql . "<BR>";
+            $em->getConnection()->exec($sql);
+        }
+        $entity = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->findOneBy(array("reference" => (int) $data["StoreId"]));
+        if ($entity) {
+            //$entity->tecdoc = $tecdoc;
+            //$entity->updatetecdoc();
+            //$entity->setProductFreesearch();
+        }
+    }
+
     function retrieveApothema($filters = false) {
         $login = "W600-K78438624F8";
         $login = $this->getSetting("MegasoftBundle:Webservice:Login"); //"demo-fastweb-megasoft";
@@ -1239,8 +1244,18 @@ class ProductController extends Main {
             $em->getConnection()->exec($sql);
             //if ($i++ > 100) return;
         }
-    }    
-    
+    }
+
+    /**
+     * @Route("/erp01/product/setb2bproduct")
+     */
+    public function setb2bproduct() {
+
+        return new Response(
+                "", 200
+        );
+    }
+
     /**
      * @Route("/erp01/product/autocompletesearch")
      */
@@ -1460,7 +1475,6 @@ class ProductController extends Main {
         );
         //}
     }
-    
 
     /**
      * 
@@ -1481,7 +1495,6 @@ class ProductController extends Main {
             exit;
         }
     }
-
 
     //getmodeltypes
     /**
