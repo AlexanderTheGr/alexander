@@ -1188,11 +1188,11 @@ class ProductController extends Main {
 
             $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
             echo $sql . "<BR>";
-            $em->getConnection()->exec($sql);
+            $this->getDoctrine()->getManager()->getConnection()->exec($sql);
         } else {
             $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
             echo $sql . "<BR>";
-            $em->getConnection()->exec($sql);
+            $this->getDoctrine()->getManager()->getConnection()->exec($sql);
         }
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
