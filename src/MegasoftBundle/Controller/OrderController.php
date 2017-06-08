@@ -1678,100 +1678,82 @@ class OrderController extends Main {
      */
     public function setb2borderAction(Request $request) {
 
-        //$json = '{"SALDOC":[{"TRDR":"364","SERIESNUM":"1100003181","FINCODE":"B2B1100003181","PAYMENT":1010,"VATSTS":"1410","SERIES":7021,"WHOUSE":1101,"ID":"1035"}],"ITELINES":[{"VAT":"1410","QTY1":1,"LINENUM":9000001,"MTRL":"136922","PRICE":83.69,"DISC1PRC":null}]}';
-        /*
-          Array
-          (
-          [items] => Array
-          (
-          [0] => Array
-          (
-          [storeid] => 14819
-          [qty] => 1
-          [price] => 0.93
-          )
-
-          )
-
-          [customerid] => 2
-          [orderno] => 100003382
-          [comments] => dddddd
-          [reference] => 759
-          )
-         * 
-         */
-
-        $json = $request->getContent();
-        //$json = '{"items":[{"storeid":"14819","qty":1,"price":0.93}],"customerid":"2","orderno":"100003383","comments":"hhjkh","reference":760}';
-        //$json = '{"items":[{"storeid":"609008","qty":1,"price":"0.00","discount":"40.00"},{"storeid":"609009","qty":1,"price":"0.00","discount":"40.00"}],"customerid":"2","orderno":"100003390","comments":"test test","reference":746}';
-        $ord = json_decode($json, true);
-        print_r($ord);
-
-        
-        //exit;
-        
-        $customer = $this->getDoctrine()
-                ->getRepository("MegasoftBundle:Customer")
-                ->findOneByReference($ord["customerid"]);
-        $vat = $this->getDoctrine()
-                ->getRepository("MegasoftBundle:Vat")
-                ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
-
-        $user = $this->getDoctrine()
-                ->getRepository("AppBundle:User")
-                ->find(2);
+        $allowedips = $this->getSetting("MegasoftBundle:Product:Allowedips");
+        $allowedipsArr = explode(",", $allowedips);
+        if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
+            $json = $request->getContent();
+            //$json = '{"items":[{"storeid":"14819","qty":1,"price":0.93}],"customerid":"2","orderno":"100003383","comments":"hhjkh","reference":760}';
+            //$json = '{"items":[{"storeid":"609008","qty":1,"price":"0.00","discount":"40.00"},{"storeid":"609009","qty":1,"price":"0.00","discount":"40.00"}],"customerid":"2","orderno":"100003390","comments":"test test","reference":746}';
+            $ord = json_decode($json, true);
+            print_r($ord);
 
 
-        $entity = $this->getDoctrine()
-                ->getRepository("MegasoftBundle:Order")
-                ->findOneByReference($ord["reference"]);
+            //exit;
 
-        if (!$entity) {
-            $entity = new Order;
-            $this->newentity[$this->repository] = $entity;
-            $this->initialazeNewEntity($entity);
+            $customer = $this->getDoctrine()
+                    ->getRepository("MegasoftBundle:Customer")
+                    ->findOneByReference($ord["customerid"]);
+            $vat = $this->getDoctrine()
+                    ->getRepository("MegasoftBundle:Vat")
+                    ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
+
+            $user = $this->getDoctrine()
+                    ->getRepository("AppBundle:User")
+                    ->find(2);
+
+
+            $entity = $this->getDoctrine()
+                    ->getRepository("MegasoftBundle:Order")
+                    ->findOneByReference($ord["reference"]);
+
+            if (!$entity) {
+                $entity = new Order;
+                $this->newentity[$this->repository] = $entity;
+                $this->initialazeNewEntity($entity);
+            }
+
+
+            $entity->setCustomer($customer);
+            $entity->setUser($user);
+            $entity->setReference($ord["reference"]);
+            $entity->setFincode($ord["orderno"]);
+            //$entity->setSeries($ord["SERIES"]);
+
+            $entity->setRemarks($ord["comments"]);
+            $entity->setComments($ord["comments"]);
+
+            //$entity->setVat($vat);
+            $entity->setCustomerName($customer->getCustomerName() . " (" . $customer->getCustomerAfm() . " - " . $customer->getCustomerCode() . ")");
+            $route = $this->getDoctrine()
+                    ->getRepository("MegasoftBundle:Route")
+                    ->find(1);
+            $entity->setRoute($route);
+            $this->flushpersist($entity);
+
+            $sql = 'DELETE FROM megasoft_orderitem where s_order = "' . $entity->getId() . '"';
+            echo $sql;
+            $this->getDoctrine()->getConnection()->exec($sql);
+            $items = $ord["items"];
+
+            $vat = 1.24;
+
+            foreach ($items as $item) {
+                $product = $this->getDoctrine()
+                        ->getRepository('MegasoftBundle:Product')
+                        ->findOneByReference($item["storeid"]);
+                $orderItem = new Orderitem;
+                $orderItem->setOrder($entity);
+                $orderItem->setPrice($item["price"] * $vat);
+                $orderItem->setDisc1prc((float) $item["discount"]);
+                $orderItem->setLineval($item["price"] * $item["qty"] * $vat * (1 - $item["discount"] / 100));
+                $orderItem->setQty($item["qty"]);
+                $orderItem->setChk(1);
+                $orderItem->setProduct($product);
+                $this->flushpersist($orderItem);
+            }
+        } else {
+            exit;
         }
-
-
-        $entity->setCustomer($customer);
-        $entity->setUser($user);
-        $entity->setReference($ord["reference"]);
-        $entity->setFincode($ord["orderno"]);
-        //$entity->setSeries($ord["SERIES"]);
-
-        $entity->setRemarks($ord["comments"]);
-        $entity->setComments($ord["comments"]);
-
-        //$entity->setVat($vat);
-        $entity->setCustomerName($customer->getCustomerName() . " (" . $customer->getCustomerAfm() . " - " . $customer->getCustomerCode() . ")");
-        $route = $this->getDoctrine()
-                ->getRepository("MegasoftBundle:Route")
-                ->find(1);
-        $entity->setRoute($route);
-        $this->flushpersist($entity);
-
-        $sql = 'DELETE FROM megasoft_orderitem where s_order = "' . $entity->getId() . '"';
-        echo $sql;
-        $this->getDoctrine()->getConnection()->exec($sql);
-        $items = $ord["items"];
-
-        $vat = 1.24;
-
-        foreach ($items as $item) {
-            $product = $this->getDoctrine()
-                    ->getRepository('MegasoftBundle:Product')
-                    ->findOneByReference($item["storeid"]);
-            $orderItem = new Orderitem;
-            $orderItem->setOrder($entity);
-            $orderItem->setPrice($item["price"] * $vat);
-            $orderItem->setDisc1prc((float) $item["discount"]);
-            $orderItem->setLineval($item["price"] * $item["qty"] * $vat * (1-$item["discount"]/100));
-            $orderItem->setQty($item["qty"]);
-            $orderItem->setChk(1);
-            $orderItem->setProduct($product);
-            $this->flushpersist($orderItem);
-        }
-
         exit;
     }
 
