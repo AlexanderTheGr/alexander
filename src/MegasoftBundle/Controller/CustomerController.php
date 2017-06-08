@@ -373,7 +373,7 @@ class CustomerController extends Main {
                 $q[] = "`customer_phone2` = '" . addslashes($data["CustomerPhone2"]) . "'";
                 $q[] = "`customer_irsdata` = '" . addslashes($data["CustomerDoy"]) . "'";
                 $q[] = "`customer_jobtypetrd` = '" . addslashes($data["CustomerOccupation"]) . "'";
-                $q[] = "`price_field` = '" . ((int) $data["CustomerPricelist"] == 1 ? 'storeholeSalePrice' : 'storeRetailPrice') . "'";
+                $q[] = "`price_field` = '" . ((int) $data["CustomerPricelist"] == 1 ? 'storeWholeSalePrice' : 'storeRetailPrice') . "'";
 
 
                 if (@$entity->getId() == 0) {
