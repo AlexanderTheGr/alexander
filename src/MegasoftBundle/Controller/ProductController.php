@@ -1074,6 +1074,28 @@ class ProductController extends Main {
         }
         ini_set("soap.wsdl_cache_enabled", "0");
 
+        
+        
+        $postdata = http_build_query(
+            array(
+                'Date' => '2017-06-06',
+                'Login' => $login
+            )
+        );
+
+        $opts = array('http' =>
+            array(
+                'method'  => 'POST',
+                'header'  => 'Content-type: application/x-www-form-urlencoded',
+                'content' => $postdata
+            )
+        );
+
+        $context  = stream_context_create($opts);
+
+        $result = file_get_contents('http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase', false, $context);        
+        /*
+        
         $context = stream_context_create(array(
             'http' => array(
                 'protocol_version' => 1.0,
@@ -1090,6 +1112,9 @@ class ProductController extends Main {
         //$results = $soap->GetCustomers();
         $response = $soap->__soapCall("DownloadStoreBase", array($params));
         //echo count($response->DownloadStoreBaseResponse);
+        
+        */
+        
         exit;
         /*
           if (count($response->DownloadStoreBaseResponse) == 1) {
