@@ -1072,51 +1072,72 @@ class ProductController extends Main {
                 $em->getConnection()->exec($sql);
             }
         }
-        ini_set("soap.wsdl_cache_enabled", "0");
+        //ini_set("soap.wsdl_cache_enabled", "0");
 
-        
-        
+
+
+        $ch = \curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "login=".$login."&Date=2017-06-06");
+
+        // in real life you should use something like:
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, 
+        //          http_build_query(array('postvar1' => 'value1')));
+        // receive server response ...
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $server_output = curl_exec($ch);
+
+        curl_close($ch);
+
+
+
+
+        /*
         $postdata = http_build_query(
-            array(
-                'Date' => '2017-06-06',
-                'Login' => $login
-            )
+                array(
+                    'Date' => '2017-06-06',
+                    'Login' => $login
+                )
         );
 
         $opts = array('http' =>
             array(
-                'method'  => 'POST',
-                'header'  => 'Content-Type: application/x-www-form-urlencoded\n\r'
+                'method' => 'POST',
+                'header' => 'Content-Type: application/x-www-form-urlencoded\n\r'
                 . 'Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405',
-                
                 'content' => $postdata
             )
         );
 
-        $context  = stream_context_create($opts);
+        $context = stream_context_create($opts);
 
-        $result = file_get_contents('http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase', false, $context);        
-        /*
-        
-        $context = stream_context_create(array(
-            'http' => array(
-                'protocol_version' => 1.0,
-                'header' => "Content-type: application/x-www-form-urlencoded\r\n"
-                . "Content-Length: 1000\r\n",
-            )
-        ));
-        //exit;
-        $params["Date"] = "2017-06-06";
-        $params["ParticipateInEshop"] = 1;
-        $params["trace"] = 1;
-        $params["stream_context"] = $context;
-
-        //$results = $soap->GetCustomers();
-        $response = $soap->__soapCall("DownloadStoreBase", array($params));
-        //echo count($response->DownloadStoreBaseResponse);
-        
+        $result = file_get_contents('http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase', false, $context);
         */
-        
+
+        /*
+
+          $context = stream_context_create(array(
+          'http' => array(
+          'protocol_version' => 1.0,
+          'header' => "Content-type: application/x-www-form-urlencoded\r\n"
+          . "Content-Length: 1000\r\n",
+          )
+          ));
+          //exit;
+          $params["Date"] = "2017-06-06";
+          $params["ParticipateInEshop"] = 1;
+          $params["trace"] = 1;
+          $params["stream_context"] = $context;
+
+          //$results = $soap->GetCustomers();
+          $response = $soap->__soapCall("DownloadStoreBase", array($params));
+          //echo count($response->DownloadStoreBaseResponse);
+
+         */
+
         exit;
         /*
           if (count($response->DownloadStoreBaseResponse) == 1) {
