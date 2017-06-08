@@ -1089,7 +1089,8 @@ class ProductController extends Main {
 
         $server_output = curl_exec($ch);
         $xml = \simplexml_load_string($server_output);
-        echo count($xml->DownloadStoreBaseResponse);
+        //print_r($xml);
+        echo count($xml);
         curl_close($ch);
 
 
