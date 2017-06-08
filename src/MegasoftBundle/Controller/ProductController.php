@@ -1072,19 +1072,19 @@ class ProductController extends Main {
                 $em->getConnection()->exec($sql);
             }
         }
+        ini_set( "soap.wsdl_cache_enabled", "0" );
 
+        $context = stream_context_create(array(
+            'http'=>array(
+                'protocol_version' => 1.0
+            )
+        ));
         //exit;
         $params["Date"] = "2017-06-06";
         $params["ParticipateInEshop"] = 1;
         $params["trace"] = 1;
-        $params["stream_context"] = stream_context_create(
-            array(
-                'http' => array(
-                    'protocol_version' => 1.0,
-                    'header' => "Transfer-Encoding: chunked\r\n",
-                ),
-            )
-        );
+        $params["stream_context"] = $contextl;
+        
         //$results = $soap->GetCustomers();
         $response = $soap->__soapCall("DownloadStoreBase", array($params));
         //echo count($response->DownloadStoreBaseResponse);
