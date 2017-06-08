@@ -1077,8 +1077,10 @@ class ProductController extends Main {
         $params["Date"] = "2017-06-06";
         $params["ParticipateInEshop"] = 1;
         //$results = $soap->GetCustomers();
-        $response = $soap->__soapCall("GetProducts", array($params));
-
+        $response = $soap->__soapCall("DownloadStoreBase", array($params));
+        echo count($response->DownloadStoreBaseResponse);
+        exit;
+        /*
         echo count($response->GetProductsResult->StoreDetails);
         echo "<BR>";
         //exit;	
@@ -1087,6 +1089,8 @@ class ProductController extends Main {
         } elseif (count($response->GetProductsResult->StoreDetails) > 1) {
             $StoreDetails = $response->GetProductsResult->StoreDetails;
         }
+         * 
+         */
 
         // print_r($StoreDetails);
         //exit;
