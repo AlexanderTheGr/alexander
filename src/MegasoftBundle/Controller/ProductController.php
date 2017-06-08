@@ -1150,7 +1150,7 @@ class ProductController extends Main {
 
         $data = (array) $data;
 
-        print_r($data);
+        //print_r($data);
 
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
@@ -1244,11 +1244,11 @@ class ProductController extends Main {
             //$q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
 
             $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
-            //echo $sql . "<BR>";
+            echo $sql . "<BR>";
             $this->getDoctrine()->getManager()->getConnection()->exec($sql);
         } else {
             $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
-            //echo $sql . "<BR>";
+            echo $sql . "<BR>";
             $this->getDoctrine()->getManager()->getConnection()->exec($sql);
         }
         $entity = $this->getDoctrine()
