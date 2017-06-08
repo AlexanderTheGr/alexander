@@ -1072,12 +1072,13 @@ class ProductController extends Main {
                 $em->getConnection()->exec($sql);
             }
         }
-        ini_set( "soap.wsdl_cache_enabled", "0" );
+        ini_set("soap.wsdl_cache_enabled", "0");
 
         $context = stream_context_create(array(
-            'http'=>array(
+            'http' => array(
                 'protocol_version' => 1.0,
-                'header' => "User-Agent: Mozilla/5.0",
+                'header' => "Content-type: application/x-www-form-urlencoded\r\n"
+                . "Content-Length: 1000\r\n",
             )
         ));
         //exit;
@@ -1085,30 +1086,30 @@ class ProductController extends Main {
         $params["ParticipateInEshop"] = 1;
         $params["trace"] = 1;
         $params["stream_context"] = $context;
-        
+
         //$results = $soap->GetCustomers();
         $response = $soap->__soapCall("DownloadStoreBase", array($params));
         //echo count($response->DownloadStoreBaseResponse);
         exit;
         /*
-        if (count($response->DownloadStoreBaseResponse) == 1) {
-            $StoreDetails[] = $response->$response->DownloadStoreBaseResponse;
-        } elseif (count($response->$response->DownloadStoreBaseResponse) > 1) {
-            $StoreDetails = $response->$response->DownloadStoreBaseResponse;
-        }  
+          if (count($response->DownloadStoreBaseResponse) == 1) {
+          $StoreDetails[] = $response->$response->DownloadStoreBaseResponse;
+          } elseif (count($response->$response->DownloadStoreBaseResponse) > 1) {
+          $StoreDetails = $response->$response->DownloadStoreBaseResponse;
+          }
          * 
-         */      
-        
+         */
+
         //exit;
         /*
-        echo count($response->GetProductsResult->StoreDetails);
-        echo "<BR>";
-        //exit;	
-        if (count($response->GetProductsResult->StoreDetails) == 1) {
-            $StoreDetails[] = $response->GetProductsResult->StoreDetails;
-        } elseif (count($response->GetProductsResult->StoreDetails) > 1) {
-            $StoreDetails = $response->GetProductsResult->StoreDetails;
-        }
+          echo count($response->GetProductsResult->StoreDetails);
+          echo "<BR>";
+          //exit;
+          if (count($response->GetProductsResult->StoreDetails) == 1) {
+          $StoreDetails[] = $response->GetProductsResult->StoreDetails;
+          } elseif (count($response->GetProductsResult->StoreDetails) > 1) {
+          $StoreDetails = $response->GetProductsResult->StoreDetails;
+          }
          * 
          */
 
