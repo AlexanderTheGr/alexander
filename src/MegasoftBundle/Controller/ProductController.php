@@ -1076,10 +1076,11 @@ class ProductController extends Main {
 
 
         $ch = \curl_init();
+        $header = array('Contect-Type:application/xml', 'Accept:application/xml');
         curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=2017-06-06&ParticipateInEshop=1");
-        //curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
         // in real life you should use something like:
         // curl_setopt($ch, CURLOPT_POSTFIELDS, 
         //          http_build_query(array('postvar1' => 'value1')));
