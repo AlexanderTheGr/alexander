@@ -1092,7 +1092,7 @@ class ProductController extends Main {
         $params["Date"] = "2017-06-06";
         //$params["ParticipateInEshop"] = 1;
         $params["trace"] = 1;
-        $params["stream_context"] = $contextl;
+        $params["stream_context"] = $context;
 
         //$results = $soap->GetCustomers();
         $response = $soap->__soapCall("DownloadStoreBase", array($params));
