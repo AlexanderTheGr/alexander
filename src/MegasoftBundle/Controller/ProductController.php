@@ -1079,12 +1079,15 @@ class ProductController extends Main {
         //$results = $soap->GetCustomers();
         $response = $soap->__soapCall("DownloadStoreBase", array($params));
         echo count($response->DownloadStoreBaseResponse);
-        
+        exit;
+        /*
         if (count($response->DownloadStoreBaseResponse) == 1) {
             $StoreDetails[] = $response->$response->DownloadStoreBaseResponse;
         } elseif (count($response->$response->DownloadStoreBaseResponse) > 1) {
             $StoreDetails = $response->$response->DownloadStoreBaseResponse;
-        }        
+        }  
+         * 
+         */      
         
         //exit;
         /*
