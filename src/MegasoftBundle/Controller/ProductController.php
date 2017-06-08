@@ -1072,43 +1072,51 @@ class ProductController extends Main {
                 $em->getConnection()->exec($sql);
             }
         }
-        ini_set( "soap.wsdl_cache_enabled", "0" );
+        ini_set("soap.wsdl_cache_enabled", "0");
 
         $context = stream_context_create(array(
-            'http'=>array(
-                'protocol_version' => 1.0,
-                'header' => "Transfer-Encoding: chunked\r\n"
-            )
-        ));
+            'http' => array(
+                'method' => "GET",
+                'header' => array("Host: subdomain.domain.org",
+                    "Connection: keep-alive",
+                    "Cache-Control: max-age=0",
+                    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+                    "Upgrade-Insecure-Requests: 1",
+                    "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/24.0.3215.75 Safari/537.36",
+                    "Referer: https://subdomain.domain.org/oncorev2/ShowDetails.aspx?CFN=104525097",
+                    "Accept-Encoding: gzip, deflate, sdch",
+                    "Accept-Language: en-US,en;q=0.8\r\n",
+                    "Cookie:ASP.NET_SessionId=lrv3rfjl1ay0aj45v33s0ozm;OnCoreWeb=AutoLoadImages=-1&ImageViewer=2&DefaultNumberOfRows=10")
+        )));
         //exit;
         $params["Date"] = "2017-06-06";
         //$params["ParticipateInEshop"] = 1;
         $params["trace"] = 1;
         $params["stream_context"] = $contextl;
-        
+
         //$results = $soap->GetCustomers();
         $response = $soap->__soapCall("DownloadStoreBase", array($params));
         //echo count($response->DownloadStoreBaseResponse);
         exit;
         /*
-        if (count($response->DownloadStoreBaseResponse) == 1) {
-            $StoreDetails[] = $response->$response->DownloadStoreBaseResponse;
-        } elseif (count($response->$response->DownloadStoreBaseResponse) > 1) {
-            $StoreDetails = $response->$response->DownloadStoreBaseResponse;
-        }  
+          if (count($response->DownloadStoreBaseResponse) == 1) {
+          $StoreDetails[] = $response->$response->DownloadStoreBaseResponse;
+          } elseif (count($response->$response->DownloadStoreBaseResponse) > 1) {
+          $StoreDetails = $response->$response->DownloadStoreBaseResponse;
+          }
          * 
-         */      
-        
+         */
+
         //exit;
         /*
-        echo count($response->GetProductsResult->StoreDetails);
-        echo "<BR>";
-        //exit;	
-        if (count($response->GetProductsResult->StoreDetails) == 1) {
-            $StoreDetails[] = $response->GetProductsResult->StoreDetails;
-        } elseif (count($response->GetProductsResult->StoreDetails) > 1) {
-            $StoreDetails = $response->GetProductsResult->StoreDetails;
-        }
+          echo count($response->GetProductsResult->StoreDetails);
+          echo "<BR>";
+          //exit;
+          if (count($response->GetProductsResult->StoreDetails) == 1) {
+          $StoreDetails[] = $response->GetProductsResult->StoreDetails;
+          } elseif (count($response->GetProductsResult->StoreDetails) > 1) {
+          $StoreDetails = $response->GetProductsResult->StoreDetails;
+          }
          * 
          */
 
