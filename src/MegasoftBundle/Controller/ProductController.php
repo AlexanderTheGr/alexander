@@ -1076,12 +1076,13 @@ class ProductController extends Main {
 
         $context = stream_context_create(array(
             'http'=>array(
-                'protocol_version' => 1.0
+                'protocol_version' => 1.0,
+                'header' => "Transfer-Encoding: chunked\r\n"
             )
         ));
         //exit;
         $params["Date"] = "2017-06-06";
-        $params["ParticipateInEshop"] = 1;
+        //$params["ParticipateInEshop"] = 1;
         $params["trace"] = 1;
         $params["stream_context"] = $contextl;
         
