@@ -1088,16 +1088,9 @@ class ProductController extends Main {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $server_output = curl_exec($ch);
-        $xml = \simplexml_load_string($server_output);
+        $StoreDetails = \simplexml_load_string($server_output);
         //print_r($xml);
-        echo count($xml);
-        curl_close($ch);
-
-
-
-
-
-
+        //echo count($xml);
 
         /*
 
@@ -1120,7 +1113,7 @@ class ProductController extends Main {
 
          */
 
-        exit;
+        //exit;
         /*
           if (count($response->DownloadStoreBaseResponse) == 1) {
           $StoreDetails[] = $response->$response->DownloadStoreBaseResponse;
