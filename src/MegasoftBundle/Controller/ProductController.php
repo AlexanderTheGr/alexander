@@ -1088,8 +1088,8 @@ class ProductController extends Main {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $server_output = curl_exec($ch);
-        echo  $server_output;
-        echo count($server_output->DownloadStoreBaseResponse);
+        $xml = \simplexml_load_string($server_output);
+        echo count($xml->DownloadStoreBaseResponse);
         curl_close($ch);
 
 
