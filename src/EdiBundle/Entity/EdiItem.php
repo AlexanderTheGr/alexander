@@ -1373,6 +1373,7 @@ class EdiItem extends Entity {
         $rules = $this->getEdi()->loadEdirules($pricefield)->getRules();
         $sortorder = 0;
         $markup = $this->markup;
+        echo "-".$pricefield."-";
         foreach ($rules as $rule) {
             if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
                 $sortorder = $rule->getSortorder();
