@@ -1150,7 +1150,7 @@ class ProductController extends Main {
 
         $data = (array) $data;
 
-        //print_r($data);
+        print_r($data);
 
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
