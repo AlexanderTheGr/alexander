@@ -1080,6 +1080,7 @@ class ProductController extends Main {
             array(
                 'http' => array(
                     'protocol_version' => 1.0,
+                    'header' => "Transfer-Encoding: chunked\r\n",
                 ),
             )
         );
