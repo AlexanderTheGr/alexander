@@ -1076,6 +1076,7 @@ class ProductController extends Main {
         //exit;
         $params["Date"] = "2017-06-06";
         $params["ParticipateInEshop"] = 1;
+        $params["trace"] = 1;
         $params["stream_context"] = stream_context_create(
             array(
                 'http' => array(
