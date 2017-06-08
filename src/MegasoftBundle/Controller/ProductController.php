@@ -1078,7 +1078,7 @@ class ProductController extends Main {
         $params["ParticipateInEshop"] = 1;
         //$results = $soap->GetCustomers();
         $response = $soap->__soapCall("DownloadStoreBase", array($params));
-        echo count($response->DownloadStoreBaseResponse);
+        //echo count($response->DownloadStoreBaseResponse);
         exit;
         /*
         if (count($response->DownloadStoreBaseResponse) == 1) {
