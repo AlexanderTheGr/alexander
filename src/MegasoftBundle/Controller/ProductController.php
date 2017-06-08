@@ -1075,9 +1075,8 @@ class ProductController extends Main {
         //ini_set("soap.wsdl_cache_enabled", "0");
 
 
-
+        /*
         $ch = \curl_init();
-
         curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, "login=".$login."&Date=2017-06-06&ParticipateInEshop=1");
@@ -1092,14 +1091,15 @@ class ProductController extends Main {
         echo  $server_output;
         curl_close($ch);
 
+        */
 
 
-
-        /*
+        
         $postdata = http_build_query(
                 array(
                     'Date' => '2017-06-06',
-                    'Login' => $login
+                    'Login' => $login,
+                    'ParticipateInEshop' => 1
                 )
         );
 
@@ -1115,7 +1115,7 @@ class ProductController extends Main {
         $context = stream_context_create($opts);
 
         $result = file_get_contents('http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase', false, $context);
-        */
+        
 
         /*
 
