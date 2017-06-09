@@ -1616,10 +1616,11 @@ class Product extends Entity {
     {
         return $this->wholeSaleMarkup;
     }
+
     /**
      * @var string
      */
-    private $supplier_item_code;
+    private $supplierItemCode;
 
 
     /**
@@ -1631,7 +1632,7 @@ class Product extends Entity {
      */
     public function setSupplierItemCode($supplierItemCode)
     {
-        $this->supplier_item_code = $supplierItemCode;
+        $this->supplierItemCode = $supplierItemCode;
 
         return $this;
     }
@@ -1643,6 +1644,6 @@ class Product extends Entity {
      */
     public function getSupplierItemCode()
     {
-        return $this->supplier_item_code;
+        return $this->supplierItemCode;
     }
 }
