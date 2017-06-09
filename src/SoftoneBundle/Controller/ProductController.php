@@ -878,7 +878,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $params["linkingTargetId"] = $request->request->get("car");
         $out["originals"] = $tecdoc->originals($params);
-        $out["articleAttributes"] = $tecdoc->articleAttributesRow($params, 0) . "<img width=100% src='" . $this->media($params["articleId"]) . "'/>";
+        $out["articleAttributes"] = $tecdoc->articleAttributesRow($params, 0) . "<img width=100% src='" . $this->media($params["articleId"]) . "'/>[".$this->media($params["articleId"])."]";
 
         //$asd = unserialize($this->getArticlesSearchByIds($article_id));
         //$out["articlesSearch"] = $tecdoc->getArticlesSearch($asd[0]->articleNo);
@@ -1020,7 +1020,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //print_r($datas);
 		//echo "</PRE>";
         //exit;
-		
+
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
 			//print_r($data);
@@ -1041,7 +1041,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 					}
 				} else {
 					$sql = "delete from softone_softone_supplier where id = '" . $data["MTRMANFCTR"] . "'";
-					//echo $sql."<BR>";
+					echo $sql."<BR>";
 					//$this->getDoctrine()->getConnection()->exec($sql);
 				}
 				//$this->getDoctrine()->getConnection()->exec($sql);			
@@ -1089,7 +1089,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 				$params["extra"] = array(); //$this->getSetting("SoftoneBundle:Softone:merchant") ? $extra[$this->getSetting("SoftoneBundle:Softone:merchant")] : array("cccRef" => "cccRef", "cccWebUpd" => "cccWebUpd", "cccPriceUpd" => "cccPriceUpd");
 			} else {
 				if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
-					$where = " AND UPDDATE >= '" . date("Y-m-d",strtotime( "-1114 days" )) . "' ORDER BY MTRL";
+					$where = " AND UPDDATE >= '" . date("Y-m-d",strtotime( "-4 days" )) . "' ORDER BY MTRL";
 					//$where = " AND UPDDATE >= '2017-02-18' ORDER BY MTRL";
 					$extra["foxline"] = array("CCCFXRELTDCODE" => "CCCFXRELTDCODE", "CCCFXRELBRAND" => "CCCFXRELBRAND","CCCFXTDBRAND"=>"CCCFXTDBRAND");
 				} else {
@@ -1647,16 +1647,17 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
         $allowedipsArr = explode(",", $allowedips);
         file_put_contents("ip.txt", $_SERVER["REMOTE_ADDR"]);
-        if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
+
+        //if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
             //echo "aaaa";
             //exit;
             file_put_contents("ip1.txt", $_SERVER["REMOTE_ADDR"]);
             $this->retrieveApothema();
             exit;
-        } else {
+        //} else {
             //echo 'sss';
             exit;
-        }
+        //}
     }
 
     function retrieveApothema($filters = false) {
