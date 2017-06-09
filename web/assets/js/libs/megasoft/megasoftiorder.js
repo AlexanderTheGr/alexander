@@ -466,7 +466,7 @@ jQuery(".product_info").live('click', function () {
     data.ref = ref;
     data.car = jQuery(".brand_model_type-select").val();
 
-    $.post("/product/productInfo", data, function (result) {
+    $.post("/erp01/product/productInfo", data, function (result) {
         $dialog.productInfo.html(result);
         $dialog.productInfo.dialog("open");
         $("#productInfoTabs").tabs();
