@@ -657,9 +657,15 @@ class EdiItem extends Entity {
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
         }
+        
+        
+        
+        
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        
         $tecdocSupplier = $em->getRepository("MegasoftBundle:TecdocSupplier")
                 ->findOneBy(array('supplier' => $this->fixsuppliers($this->brand)));
+        
         $login = $this->getSetting("MegasoftBundle:Webservice:Login"); //"demo-fastweb-megasoft";
         $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
 
@@ -999,9 +1005,9 @@ class EdiItem extends Entity {
         if ($supplier == "BEHR-HELLA")
             $supplier = str_replace("BEHR-HELLA", "BEHR HELLA SERVICE", $supplier);
         if ($supplier == "BLUEPRINT")
-            $supplier = str_replace("BLUEPRINT", "BLUE-PRINT", $supplier);
-        if ($supplier == "BLUE PRINT")
-            $supplier = str_replace("BLUE PRINT", "BLUE-PRINT", $supplier);
+            $supplier = str_replace("BLUEPRINT", "BLUE PRINT", $supplier);
+        if ($supplier == "BLUE-PRINT")
+            $supplier = str_replace("BLUE-PRINT", "BLUE PRINT", $supplier);
         if ($supplier == "BENDIX WBK")
             $supplier = str_replace("BENDIX WBK", "BENDIX", $supplier);
         if ($supplier == "CONTI-TECH")
