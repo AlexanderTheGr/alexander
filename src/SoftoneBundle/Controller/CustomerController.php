@@ -40,7 +40,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
 
         $query = $em->createQuery(
-                        "SELECT p.id, p.customerName,p.customerAfm,p.customerCode FROM " . $this->repository . " " . $this->prefix . " where p.customerName LIKE '%" . $_GET["term"] . "%' OR p.customerAfm LIKE '%" . $_GET["term"] . "%' OR p.customerCode LIKE '%" . $_GET["term"] . "%'"
+                        "SELECT p.id, p.customerName,p.customerAfm,p.customerCode,p.status FROM " . $this->repository . " " . $this->prefix . " where p.customerName LIKE '%" . $_GET["term"] . "%' OR p.customerAfm LIKE '%" . $_GET["term"] . "%' OR p.customerCode LIKE '%" . $_GET["term"] . "%'"
                 )
                 ->setMaxResults(20)
                 ->setFirstResult(0);
@@ -49,6 +49,8 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ((array) $datas as $data) {
             //print_r($data);
             //$data["flat_data"] = "";
+            if ($data["status"] == 'deactive')
+                continue;
             $json = array();
             $json["id"] = $data["id"];
             $json["value"] = $data["customerName"] . " (" . $data["customerAfm"] . " - " . $data["customerCode"] . ")";
@@ -180,7 +182,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
                     $json, 200, array('Content-Type' => 'application/json')
             );
         } else {
-            $json = json_encode(array("opssss",$_SERVER["REMOTE_ADDR"]));
+            $json = json_encode(array("opssss", $_SERVER["REMOTE_ADDR"]));
             return new Response(
                     $json, 200, array('Content-Type' => 'application/json')
             );
@@ -232,13 +234,13 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             $entity->setField("customerCode", str_pad($customerCode, 7, "0", STR_PAD_LEFT));
             $this->newentity[$this->repository] = $entity;
             $entity->setCustomerVatsts(1);
-			$customergroup = $this->getDoctrine()->getRepository("SoftoneBundle:Customergroup")->find(1);
+            $customergroup = $this->getDoctrine()->getRepository("SoftoneBundle:Customergroup")->find(1);
             $entity->setCustomergroup($customergroup);
-			if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
-				$entity->setPriceField("itemPricew02");
-			} else {
-				$entity->setPriceField("itemPricer");
-			}
+            if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
+                $entity->setPriceField("itemPricew02");
+            } else {
+                $entity->setPriceField("itemPricer");
+            }
             $code = $this->getSetting("SoftoneBundle:Customer:CodeIncrement");
         }
         $vats = $this->getDoctrine()
@@ -265,41 +267,53 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         //$fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
         $fields["customerVatsts"] = array("label" => "ΦΠΑ", "required" => true, "className" => "col-md-6", 'type' => "select", 'dataarray' => $vatsts);
 
-		if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
-			//$priceField[] = array("value" => "itemPricer", "name" => "Λιανική");
-			//$priceField[] = array("value" => "itemPricew", "name" => "Χονδρική");
+        if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
+            //$priceField[] = array("value" => "itemPricer", "name" => "Λιανική");
+            //$priceField[] = array("value" => "itemPricew", "name" => "Χονδρική");
 
-			$priceField[] = array("value" => "itemPricer01", "name" => "Χονδρικής με ΦΠΑ");
-			$priceField[] = array("value" => "itemPricew01", "name" => "Χονδρικής");
+            $priceField[] = array("value" => "itemPricer01", "name" => "Χονδρικής με ΦΠΑ");
+            $priceField[] = array("value" => "itemPricew01", "name" => "Χονδρικής");
 
-			$priceField[] = array("value" => "itemPricer02", "name" => "Λιανικής με ΦΠΑ");
-			$priceField[] = array("value" => "itemPricew02", "name" => "Λιανικής");
+            $priceField[] = array("value" => "itemPricer02", "name" => "Λιανικής με ΦΠΑ");
+            $priceField[] = array("value" => "itemPricew02", "name" => "Λιανικής");
 
-			$priceField[] = array("value" => "itemPricer03", "name" => "Ειδικη Τιμή με ΦΠΑ");
-			$priceField[] = array("value" => "itemPricew03", "name" => "Ειδικη Τιμή");
+            $priceField[] = array("value" => "itemPricer03", "name" => "Ειδικη Τιμή με ΦΠΑ");
+            $priceField[] = array("value" => "itemPricew03", "name" => "Ειδικη Τιμή");
 
-			$priceField[] = array("value" => "itemPricer04", "name" => "Eshop με ΦΠΑ");
-			$priceField[] = array("value" => "itemPricew04", "name" => "Eshop");		
-		} else {
-			$priceField[] = array("value" => "itemPricer", "name" => "Λιανική");
-			$priceField[] = array("value" => "itemPricew", "name" => "Χονδρική");
+            $priceField[] = array("value" => "itemPricer04", "name" => "Eshop με ΦΠΑ");
+            $priceField[] = array("value" => "itemPricew04", "name" => "Eshop");
 
-			$priceField[] = array("value" => "itemPricer01", "name" => "Λιανική 1");
-			$priceField[] = array("value" => "itemPricew01", "name" => "Χονδρική 1");
+            $payment[] = array("value" => "1000", "name" => "Τοίς Μετρητοίς");
+            $payment[] = array("value" => "1001", "name" => "Κάρτα");
+            $payment[] = array("value" => "1002", "name" => "Μικτός Τρόπος Πληρωμής");
+            $payment[] = array("value" => "1003", "name" => "Πίστωση 30 ημερών");
+            $payment[] = array("value" => "1004", "name" => "Πίστωση 60 ημερών");
+            $payment[] = array("value" => "1005", "name" => "Πίστωση 90 ημερών");
+            $payment[] = array("value" => "1006", "name" => "Αντικαταβολή");
+            $payment[] = array("value" => "1007", "name" => "Πίστωση 45 ημερών");
+        } else {
+            $priceField[] = array("value" => "itemPricer", "name" => "Λιανική");
+            $priceField[] = array("value" => "itemPricew", "name" => "Χονδρική");
 
-			$priceField[] = array("value" => "itemPricer02", "name" => "Λιανική 2");
-			$priceField[] = array("value" => "itemPricew02", "name" => "Χονδρική 2");
+            $priceField[] = array("value" => "itemPricer01", "name" => "Λιανική 1");
+            $priceField[] = array("value" => "itemPricew01", "name" => "Χονδρική 1");
 
-			$priceField[] = array("value" => "itemPricer03", "name" => "Λιανική 3");
-			$priceField[] = array("value" => "itemPricew03", "name" => "Χονδρική 3");
+            $priceField[] = array("value" => "itemPricer02", "name" => "Λιανική 2");
+            $priceField[] = array("value" => "itemPricew02", "name" => "Χονδρική 2");
 
-			$priceField[] = array("value" => "itemPricer04", "name" => "Λιανική 4");
-			$priceField[] = array("value" => "itemPricew04", "name" => "Χονδρική 4");		
-		}
+            $priceField[] = array("value" => "itemPricer03", "name" => "Λιανική 3");
+            $priceField[] = array("value" => "itemPricew03", "name" => "Χονδρική 3");
 
-		
-        $fields["priceField"] = array("label" => "Κατάλογος", "className" => "col-md-6", 'type' => "select", "required" => true, 'dataarray' => $priceField);
+            $priceField[] = array("value" => "itemPricer04", "name" => "Λιανική 4");
+            $priceField[] = array("value" => "itemPricew04", "name" => "Χονδρική 4");
+        }
 
+        if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
+            $fields["priceField"] = array("label" => "Κατάλογος", "className" => "col-md-3", 'type' => "select", "required" => true, 'dataarray' => $priceField);
+            $fields["customerPayment"] = array("label" => "Τρόπος Πληρωμής", "className" => "col-md-3", 'type' => "select", "required" => true, 'dataarray' => $payment);
+        } else {
+            $fields["priceField"] = array("label" => "Κατάλογος", "className" => "col-md-6", 'type' => "select", "required" => true, 'dataarray' => $priceField);
+        }
         $forms = $this->getFormLyFields($entity, $fields);
 
 
@@ -398,7 +412,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             //}
         }
 
-
+        $itemfield[] = "M.ISACTIVE";
         $selfields = implode(",", $itemfield);
         $params["fSQL"] = 'SELECT ' . $selfields . ' FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
         //echo $params["fSQL"];
@@ -409,7 +423,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
         $softone = new Softone();
         $datas = $softone->createSql($params);
-		//print_r($datas);
+        //print_r($datas);
         //return;
         ///exit;
         $em = $this->getDoctrine()->getManager();
@@ -472,6 +486,9 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
                     //$entity->setField($baz, $val);
                 }
             }
+            $status = $data["ISACTIVE"] == 1 ? 'active' : 'deactive';
+            $q[] = "`status` = '" . $status . "'";
+
             if ($entity) {
                 $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
             } else {
@@ -498,10 +515,10 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             //if (@$i++ > 1500)
             //    break;
         }
-		if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
-			$sql = 'update `softone_customer` set customergroup = 1 where customergroup is null';
-			$this->getDoctrine()->getConnection()->exec($sql);		
-		}
+        if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
+            $sql = 'update `softone_customer` set customergroup = 1 where customergroup is null';
+            $this->getDoctrine()->getConnection()->exec($sql);
+        }
     }
 
     /**
