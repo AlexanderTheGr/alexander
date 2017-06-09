@@ -1235,7 +1235,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $entity->setModified($dt);
             } else {
                 //continue;
-                //$entity->setRepositories();                
+                //$entity->setRepositories();
+                
             }
 
             //@print_r($entity->repositories);
@@ -1327,7 +1328,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             try {
                 if (@$entity->id == 0) {
                     $q[] = "`reference` = '" . $data[$params["softone_table"]] . "'";
-                    $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
+                    $sql = "insert ingore " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
                     echo $sql . "<BR>";
                     $em->getConnection()->exec($sql);
                 } else {
