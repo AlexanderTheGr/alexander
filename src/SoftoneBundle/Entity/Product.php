@@ -2137,13 +2137,21 @@ class Product extends Entity {
 			if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
 				$objectArr2["PRICER01"] = $this->itemPricew01*1.24;
 				$objectArr2["PRICER02"] = $this->itemPricew02*1.24;
-				$objectArr2["CCCFXTDBRAND"] = $this->tecdocSupplierId;
+				if($this->tecdocSupplierId)
+				$objectArr2["CCCFXTDBRAND"] = $this->tecdocSupplierId->getId();
 				$objectArr2["CCCFXRELBRAND"] = $this->itemMtrmanfctr;
+				unset($objectArr2["MU21"]);
+				unset($objectArr2["MU12MODE"]);
+				//MU21
 			}
 		}
+		
         $objectArr2["VAT"] = 1410;
         $objectArr2["CODE2"] = $this->supplierCode;
         $objectArr2["CCCREF"] = $this->cccRef;
+        $objectArr2["cccRef"] = $this->cccRef;
+        $objectArr2["cccPriceUpd"] = $this->cccPriceUpd;
+        $objectArr2["cccWebUpd"] = $this->cccWebUpd;
         $objectArr2["REMARKS"] = $this->itemRemarks;
         $objectArr2["MTRMARK"] = $this->itemMtrmark;
 		
@@ -2730,8 +2738,11 @@ class Product extends Entity {
         $out = '<a target="_blank" title="' . $ti . '"  class="" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $ti . '</a>
         <br>
         <span class="text-sm text-info">' . $tecdoc . '</span>';
-
-        return $out;
+		if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
+			return $out;
+		} else {
+			return $out;
+		}
     }
 
     function getArticleAttributes() {
