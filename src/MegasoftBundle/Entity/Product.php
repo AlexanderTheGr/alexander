@@ -1055,10 +1055,11 @@ class Product extends Entity {
         $data["place"] = $this->place;
         $data["remarks"] = $this->remarks;
         $data["webupd"] = $this->webupd == 1 ? 'True' : 'False';
-        $data["supref"] = ""; //$this->supref;
+        $data["supref"] = $this->getSupplier() ? $this->getSupplier()->getSupplierCode() : "";
         //if ($this->getSupplier())
         $data["mtrsup"] = $this->getSupplier() ? $this->getSupplier()->getReference() : "";
         $data["sisxetisi"] = $this->sisxetisi;
+        $data["fwSupplierItemCode"] = $this->supplierItemCode;
 
         /*
           $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
@@ -1614,5 +1615,34 @@ class Product extends Entity {
     public function getWholeSaleMarkup()
     {
         return $this->wholeSaleMarkup;
+    }
+    /**
+     * @var string
+     */
+    private $supplier_item_code;
+
+
+    /**
+     * Set supplierItemCode
+     *
+     * @param string $supplierItemCode
+     *
+     * @return Product
+     */
+    public function setSupplierItemCode($supplierItemCode)
+    {
+        $this->supplier_item_code = $supplierItemCode;
+
+        return $this;
+    }
+
+    /**
+     * Get supplierItemCode
+     *
+     * @return string
+     */
+    public function getSupplierItemCode()
+    {
+        return $this->supplier_item_code;
     }
 }
