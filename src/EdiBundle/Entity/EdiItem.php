@@ -724,7 +724,7 @@ class EdiItem extends Entity {
         $tecdocSupplier = $em->getRepository("MegasoftBundle:TecdocSupplier")->find($this->dlnr);
 
 
-        $sql = "Select id from megasoft_product where replace(replace(replace(replace(replace(`supref`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $this->clearstring($this->itemCode) . "' AND edi_id = '" . $this->getEdi()->getId() . "'";
+        $sql = "Select id from megasoft_product where replace(replace(replace(replace(replace(`supplier_item_code`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $this->clearstring($this->itemCode) . "' AND edi_id = '" . $this->getEdi()->getId() . "'";
         //echo $sql . "<BR>";
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
@@ -740,7 +740,7 @@ class EdiItem extends Entity {
         }
         $supplier = $em->getRepository("MegasoftBundle:Supplier")->find($this->getEdi()->getItemMtrsup());
         if ($product) {
-            $product->setSupref($this->itemCode);
+            $product->setSupplierItemCode($this->itemCode);
             $product->setEdiId($this->getEdi()->getId());
             $product->setCars($this->getCars());
             $product->setCats($this->getCats());
@@ -771,7 +771,7 @@ class EdiItem extends Entity {
         $product->setTecdocArticleId($this->tecdocArticleId);
         $product->setManufacturer($manufacturer);
         $product->setErpCode($erpCode);
-        $product->setSupref($this->itemCode);
+        $product->setSupplierItemCode($this->itemCode);
         $product->setCars($this->getCars());
         $product->setCats($this->getCats());
         $product->setSupplierCode($this->clearCode($this->partno));
