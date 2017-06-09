@@ -291,8 +291,6 @@ jQuery(".livevalqty").live('keyup', function (e) {
     }
 })
 
-
-
 jQuery(".MegasoftBundleProductQty").live('keyup', function (e) {
     if (e.keyCode == 13) {
         var data = {}
