@@ -931,13 +931,13 @@ class ProductController extends Main {
         //print_r( $out["articlesSearch"]);
         $egarmoges = '<ul>';
         foreach ($tecdoc->efarmoges($params) as $efarmogi) {
-            $brandModelType = $this->getDoctrine()->getRepository('MegasoftBundle:BrandModelType')->find($efarmogi);
+            $brandModelType = $this->getDoctrine()->getRepository('SoftoneBundle:BrandModelType')->find($efarmogi);
             if (!$brandModelType)
                 continue;
-            $brandModel = $this->getDoctrine()->getRepository('MegasoftBundle:BrandModel')->find($brandModelType->getBrandModel());
+            $brandModel = $this->getDoctrine()->getRepository('SoftoneBundle:BrandModel')->find($brandModelType->getBrandModel());
             if (!$brandModel)
                 continue;
-            $brand = $this->getDoctrine()->getRepository('MegasoftBundle:Brand')->find($brandModel->getBrand());
+            $brand = $this->getDoctrine()->getRepository('SoftoneBundle:Brand')->find($brandModel->getBrand());
             if (!$brand)
                 continue;
             $egarmoges .= '<li>' . $brand->getBrand() . ' ' . $brandModel->getBrandModel() . ' ' . $brandModelType->getBrandModelType() . '</li>';
