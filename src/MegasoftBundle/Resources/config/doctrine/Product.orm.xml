@@ -170,6 +170,7 @@
         <field name="supplierItemCode" type="string" column="supplier_item_code" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
+                <option name="default"></option>
             </options>
         </field>         
                         
