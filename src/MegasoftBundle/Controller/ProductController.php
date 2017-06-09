@@ -1206,10 +1206,14 @@ class ProductController extends Main {
                 ->getRepository("MegasoftBundle:Supplier")
                 ->findOneBy(array("reference" => $data["mtrsup"]));
 
+        $edi = $this->getDoctrine()
+                ->getRepository("EdiBundle:Edi")
+                ->findOneBy(array("itemMtrsup" => $data["mtrsup"]));
         $params["table"] = "megasoft_product";
         $q = array();
         //$q[] =
         $q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
+        $q[] = "`edi` = '" . addslashes($data["StoreId"]) . "'";
         $q[] = "`erp_code` = '" . addslashes($data["StoreKwd"]) . "'";
         $q[] = "`store_retail_price` = '" . addslashes($data["StoreRetailPrice"]) . "'";
         $q[] = "`store_wholesale_price` = '" . addslashes($data["StoreWholeSalePrice"]) . "'";
@@ -1235,8 +1239,14 @@ class ProductController extends Main {
         $q[] = "`webupd` = '" . ($data["webupd"] == 'True' ? 1 : 0) . "'";
         $q[] = "`barcode` = '" . addslashes($data["barcode"]) . "'";
 
-        if ($supplier)
+        if ($supplier) {
             $q[] = "`supplier` = '" . $supplier->getId() . "'";
+            $edi = $this->getDoctrine()
+                    ->getRepository("EdiBundle:Edi")
+                    ->findOneBy(array("itemMtrsup" => $supplier->getId()));
+            if ($edi)
+                $q[] = "`edi` = '" . $edi->getId() . "'";
+        }
 
         $q[] = "`product_sale` = '1'";
 
