@@ -1241,11 +1241,13 @@ class ProductController extends Main {
 
         if ($supplier) {
             $q[] = "`supplier` = '" . $supplier->getId() . "'";
+            /*
             $edi = $this->getDoctrine()
                     ->getRepository("EdiBundle:Edi")
                     ->findOneBy(array("itemMtrsup" => $supplier->getId()));
             if ($edi)
                 $q[] = "`edi` = '" . $edi->getId() . "'";
+            */
         }
 
         $q[] = "`product_sale` = '1'";
