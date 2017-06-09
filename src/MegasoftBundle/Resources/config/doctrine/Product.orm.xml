@@ -167,7 +167,7 @@
             </options>
         </field> 
 
-        <field name="supplier_item_code" type="string" column="supplierItemCode" length="255" nullable="true">
+        <field name="supplierItemCode" type="string" column="supplier_item_code" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
             </options>
