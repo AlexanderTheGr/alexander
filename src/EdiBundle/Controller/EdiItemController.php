@@ -512,7 +512,7 @@ class EdiItemController extends Main {
 
             $sql = "Select id from softone_product where replace(replace(replace(replace(replace(`item_cccref`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $this->clearstring($obj->getItemCode()) . "' AND item_mtrsup = '" . $obj->getEdi()->getItemMtrsup() . "'";
             if ($this->getSetting("AppBundle:Erp:erpprefix") == '/erp01') {
-                $sql = "Select id from megasoft_product where replace(replace(replace(replace(replace(`supplier_item_code`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $this->clearstring($obj->getItemCode()) . "' AND edi_id = '" . $obj->getEdi()->getId() . "'";
+                $sql = "Select id from megasoft_product where replace(replace(replace(replace(replace(`supplier_item_code`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $this->clearstring($obj->getItemCode()) . "' AND supplier = '" . $obj->getEdi()->getItemMtrsup() . "'";
             }
             echo $sql . "<BR>";
             $connection = $em->getConnection();
