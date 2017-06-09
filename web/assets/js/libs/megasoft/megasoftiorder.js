@@ -146,7 +146,7 @@ jQuery(".MegasoftBundleOrderitemQty").live('keyup', function (e) {
         data.id = jQuery(this).attr('data-id');
         data.qty = jQuery(this).val();
         $("#loaderer").show();
-        $.post("/erp01//order/editorderitem/", data, function (result) {
+        $.post("/erp01/order/editorderitem/", data, function (result) {
             $("#loaderer").hide();
             var json = angular.fromJson(result);
             if (json.error) {
@@ -168,7 +168,7 @@ jQuery(".deleteitem").live('click', function (e) {
     data.id = jQuery(this).attr('data-id');
     data.qty = 0;
     $("#loaderer").show();
-    $.post("/erp01order/editorderitem/", data, function (result) {
+    $.post("/erp01/order/editorderitem/", data, function (result) {
         $("#loaderer").hide();
         var json = angular.fromJson(result);
         if (json.error) {
@@ -187,7 +187,7 @@ jQuery(".MegasoftBundleOrderitemQty").live('keyup', function (e) {
         data.id = jQuery(this).attr('data-id');
         data.qty = jQuery(this).val();
         $("#loaderer").show();
-        $.post("//erp01/order/editorderitem/", data, function (result) {
+        $.post("/erp01/order/editorderitem/", data, function (result) {
             $("#loaderer").hide();
             var json = angular.fromJson(result);
             if (json.error) {
