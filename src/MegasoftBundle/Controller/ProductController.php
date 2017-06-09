@@ -1079,7 +1079,7 @@ class ProductController extends Main {
         $header = array('Contect-Type:application/xml', 'Accept:application/xml');
         curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=2016-06-06&ParticipateInEshop=1");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=2017-06-06&ParticipateInEshop=1");
         curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
         // in real life you should use something like:
         // curl_setopt($ch, CURLOPT_POSTFIELDS, 
@@ -1094,26 +1094,11 @@ class ProductController extends Main {
 
         /*
 
-          $context = stream_context_create(array(
-          'http' => array(
-          'protocol_version' => 1.0,
-          'header' => "Content-type: application/x-www-form-urlencoded\r\n"
-          . "Content-Length: 1000\r\n",
-          )
-          ));
-          //exit;
-          $params["Date"] = "2017-06-06";
-          $params["ParticipateInEshop"] = 1;
-          $params["trace"] = 1;
-          $params["stream_context"] = $context;
-
-          //$results = $soap->GetCustomers();
-          $response = $soap->__soapCall("DownloadStoreBase", array($params));
+          $response = $soap->__soapCall("GetProducts", array($params));
           //echo count($response->DownloadStoreBaseResponse);
 
          */
 
-        //exit;
         /*
           if (count($response->DownloadStoreBaseResponse) == 1) {
           $StoreDetails[] = $response->$response->DownloadStoreBaseResponse;
@@ -1170,35 +1155,6 @@ class ProductController extends Main {
         }
 
 
-
-        /*
-
-
-          [StoreLastUpdate] =&gt; 2016-12-20T17:32:24
-          [StoreId] =&gt; 345
-          [StoreDescr] =&gt; ΤΣΙΜΟΥΧΑΚΙ ΒΑΛΒΙΔΩΝ ΑΕΧ 7αρι
-          [StoreKwd] =&gt; 027-109-675-REINZ
-          [StoreRetailPrice] =&gt; 0.3655
-          [StoreWholeSalePrice] =&gt; 0.2805
-          [StoreStock] =&gt; 184
-          [SupplierCode] =&gt; 702605800
-          [SupplierId] =&gt; REINZ
-          [fwSupplierId] =&gt; 9
-          [fwCode] =&gt; 70-26058-00
-         * 
-         * 
-          mtrplace
-          sisxetisi
-          remarks
-          cccref
-          cccwebupd
-          cccpriceupd
-          mtrsup
-          barccode
-          mtrmanfctr
-         * 
-         */
-        //$this->flushpersist($entity);
         $manufacturer = $this->getDoctrine()
                 ->getRepository("MegasoftBundle:Manufacturer")
                 ->findOneBy(array("code" => $data["SupplierId"]));
@@ -1240,12 +1196,12 @@ class ProductController extends Main {
         if ($supplier) {
             $q[] = "`supplier` = '" . $supplier->getId() . "'";
             /*
-            $edi = $this->getDoctrine()
-                    ->getRepository("EdiBundle:Edi")
-                    ->findOneBy(array("itemMtrsup" => $supplier->getId()));
-            if ($edi)
-                $q[] = "`edi` = '" . $edi->getId() . "'";
-            */
+              $edi = $this->getDoctrine()
+              ->getRepository("EdiBundle:Edi")
+              ->findOneBy(array("itemMtrsup" => $supplier->getId()));
+              if ($edi)
+              $q[] = "`edi` = '" . $edi->getId() . "'";
+             */
         }
 
         $q[] = "`product_sale` = '1'";
