@@ -929,7 +929,7 @@ class OrderController extends Main {
             $result = $soap->__soapCall("InsertOrder", array($params));
         //}
         //echo $JsonStrWeb;
-        //print_r($result);
+        print_r($result);
 
 
         if (@$result->InsertOrderResult > 0) {
