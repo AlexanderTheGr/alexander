@@ -1051,7 +1051,7 @@ class ProductController extends Main {
             $ManufacturerDetails = $response->GetManufacturersResult->ManufacturerDetails;
         }
 
-        //print_r($StoreDetails);
+        print_r($StoreDetails);
 
         foreach ($ManufacturerDetails as $data) {
             $data = (array) $data;
