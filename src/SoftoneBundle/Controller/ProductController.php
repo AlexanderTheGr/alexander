@@ -1328,7 +1328,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             try {
                 if (@$entity->id == 0) {
                     $q[] = "`reference` = '" . $data[$params["softone_table"]] . "'";
-                    $sql = "insert ingore " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
+                    $sql = "insert ignore " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
                     echo $sql . "<BR>";
                     $em->getConnection()->exec($sql);
                 } else {
