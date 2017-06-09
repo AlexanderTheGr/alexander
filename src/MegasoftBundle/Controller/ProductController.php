@@ -691,7 +691,7 @@ class ProductController extends Main {
 
         $fields["supplier"] = array("label" => "Προμηθευτής", "required" => false, "className" => "col-md-2", 'type' => "select", 'datasource' => array('repository' => 'MegasoftBundle:Supplier', 'name' => 'supplierName', 'value' => 'id', 'suffix' => 'id'));
 
-        $fields["supref"] = array("label" => "Κωδικός Προμηθευτή", "className" => "col-md-2", "required" => false);
+        $fields["supplierItemCode"] = array("label" => "Κωδικός Προμηθευτή", "className" => "col-md-2", "required" => false);
 
 
         $fields["storeWholeSalePrice"] = array("label" => "Τιμή Χοδρικής", "className" => "col-md-2", "required" => false);
@@ -1231,6 +1231,7 @@ class ProductController extends Main {
         $q[] = "`supref` = '" . addslashes($data["supref"]) . "'";
         $q[] = "`place` = '" . addslashes($data["place"]) . "'";
         $q[] = "`sisxetisi` = '" . addslashes($data["sisxetisi"]) . "'";
+        $q[] = "`supplier_item_code` = '" . addslashes($data["fwSupplierItemCode"]) . "'";
         $q[] = "`webupd` = '" . ($data["webupd"] == 'True' ? 1 : 0) . "'";
         $q[] = "`barcode` = '" . addslashes($data["barcode"]) . "'";
 
