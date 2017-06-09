@@ -991,6 +991,7 @@ class Customer extends Entity {
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
         }
+		
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         $object = "CUSTOMER";
         $softone = new Softone();
@@ -1019,6 +1020,7 @@ class Customer extends Entity {
             $objectArr = $data->data->$object;
             $objectArr2 = (array) $objectArr[0];
         }
+		
         foreach ($fields as $field) {
             $field1 = strtoupper(str_replace(strtolower($object) . "_", "", $field));
             $field2 = lcfirst($this->createName($field));
@@ -1026,6 +1028,8 @@ class Customer extends Entity {
             @$objectArr2[$field1] = $this->$field2;
             //}
         }
+		$objectArr2["CITY"] = $this->customerCity;
+		$objectArr2["ZIP"] = $this->customerZip;
         $objectArr[0] = $objectArr2;
         $dataOut[$object] = (array) $objectArr;
         //@$dataOut["ITEEXTRA"][0] = array("NUM02" => $this->item_mtrl_iteextra_num02);
@@ -1216,34 +1220,4 @@ class Customer extends Entity {
         return $this->rules;
     }
 
-    /**
-     * @var boolean
-     */
-    private $customerIsactive = '1';
-
-
-    /**
-     * Set customerIsactive
-     *
-     * @param boolean $customerIsactive
-     *
-     * @return Customer
-     */
-    public function setCustomerIsactive($customerIsactive)
-    {
-        $this->customerIsactive = $customerIsactive;
-
-        return $this;
-    }
-    
-
-    /**
-     * Get customerIsactive
-     *
-     * @return boolean
-     */
-    public function getCustomerIsactive()
-    {
-        return $this->customerIsactive;
-    }
 }
