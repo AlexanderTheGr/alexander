@@ -965,7 +965,7 @@ class ProductController extends Main {
             return;
 
 
-        $url = "http://service5.fastwebltd.com/";
+        $url = "http://service4.fastwebltd.com/";
         $fields = array(
             'action' => 'media',
             'tecdoc_article_id' => $tecdocArticleId
