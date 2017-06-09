@@ -1206,9 +1206,7 @@ class ProductController extends Main {
                 ->getRepository("MegasoftBundle:Supplier")
                 ->findOneBy(array("reference" => $data["mtrsup"]));
 
-        $edi = $this->getDoctrine()
-                ->getRepository("EdiBundle:Edi")
-                ->findOneBy(array("itemMtrsup" => $data["mtrsup"]));
+
         $params["table"] = "megasoft_product";
         $q = array();
         //$q[] =
