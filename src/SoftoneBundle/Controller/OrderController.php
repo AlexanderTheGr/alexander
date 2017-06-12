@@ -1267,7 +1267,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     function getfmodeltypes(Request $request) {
         //$request->request->get("brand")
         $em = $this->getDoctrine()->getManager();
-        $sql = "SELECT model FROM  partsbox_db.fanopoiia_category where brand = '".$request->request->get("brand")."' AND model = '".$request->request->get("model")."'";
+        $sql = "SELECT model_id, year  FROM  partsbox_db.fanopoiia_category where brand = '".$request->request->get("brand")."' AND model = '".$request->request->get("model")."'";
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
         $statement->execute();
