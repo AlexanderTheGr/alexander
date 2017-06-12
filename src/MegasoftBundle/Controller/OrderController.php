@@ -511,6 +511,8 @@ class OrderController extends Main {
                 } else {
                     @$articleIds2 = unserialize(base64_decode($search[0]));
                 }
+            } else {
+                $search[1] = str_pad($search[1], 4, "0", STR_PAD_LEFT);
             }
 
             //$articleIds2["linkingTargetId"];
