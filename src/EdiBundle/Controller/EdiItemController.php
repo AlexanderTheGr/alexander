@@ -172,18 +172,28 @@ class EdiItemController extends Main {
 
 
         if ($search[1]) {
-            $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
 
-            @$articleIds2 = unserialize(base64_decode($search[1]));
-            $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
-            $articleIds[] = 1;
-            $query = $em->createQuery(
-                    "SELECT  distinct(e.id) as eid, e.name as edi
+            if ($search[0] != 'productfano') {
+                $query = $em->createQuery(
+                        "SELECT  distinct(e.id) as eid, e.name as edi
+                    FROM " . $this->repository . " p, EdiBundle:Edi e
+                    where 
+                        e.id = p.Edi AND p.partno != '' AND
+                        (p.itemCode LIKE '" . $search[1] . "%' "
+                );                
+            } else {
+                $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
+                @$articleIds2 = unserialize(base64_decode($search[1]));
+                $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
+                $articleIds[] = 1;
+                $query = $em->createQuery(
+                        "SELECT  distinct(e.id) as eid, e.name as edi
                     FROM " . $this->repository . " p, EdiBundle:Edi e
                     where 
                         e.id = p.Edi AND p.partno != '' AND
                         (p.artNr = '" . $search[1] . "' OR p.partno = '" . $search[1] . "' OR p.itemCode = '" . $search[1] . "' OR p.tecdocArticleId in (" . implode(",", $articleIds) . ")) "
-            );
+                );
+            }
         } else {
             $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[0])));
 
