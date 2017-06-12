@@ -725,7 +725,7 @@ class EdiItem extends Entity {
         if (!$manufacturer) {
             $manufacturer = $this->createManufacturer();
         } else {
-            echo $manufacturer->getTitle();
+            //echo $manufacturer->getTitle();
         }
         $tecdocSupplier = $em->getRepository("MegasoftBundle:TecdocSupplier")->find($this->dlnr);
 
