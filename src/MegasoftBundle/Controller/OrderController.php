@@ -560,6 +560,8 @@ class OrderController extends Main {
                     }
                     $like = implode(" AND ", $likearr);
                     $sqlearch = "Select o.id from MegasoftBundle:ProductFreesearch o where " . $like . "";
+                } elseif ($search[0] == 'productfano') {
+                    
                 } else {
                     $search[1] = $this->clearstring($search[1]);
                     $sqlearch = "Select o.id from MegasoftBundle:ProductSearch o where o.erpCode like '%" . $search[1] . "%' OR o.erpCode like '%" . $search[1] . "%' OR o.supplierCode like '%" . $search[1] . "%'";
@@ -1064,10 +1066,10 @@ class OrderController extends Main {
         $statement = $connection->prepare($sql);
         $statement->execute();
         $brands = $statement->fetchAll();
-        
+
         return $brands;
-    }    
-    
+    }
+
     function getBrands() {
         $repository = $this->getDoctrine()->getRepository('SoftoneBundle:Brand');
         $brands = $repository->findAll(array(), array('brand' => 'ASC'));
@@ -1121,16 +1123,16 @@ class OrderController extends Main {
     function getfmodels(Request $request) {
         //$request->request->get("brand")
         $em = $this->getDoctrine()->getManager();
-        $sql = "SELECT model FROM  partsbox_db.fanopoiia_category group by model where brand = '".$request->request->get("brand")."'";
+        $sql = "SELECT model FROM  partsbox_db.fanopoiia_category group by model where brand = '" . $request->request->get("brand") . "'";
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
         $statement->execute();
         $brands = $statement->fetchAll();
         foreach ($brands as $brand) {
             $o["id"] = $brand["model"];
-            $o["name"] = $brand["model"];            
+            $o["name"] = $brand["model"];
         }
-  
+
         $json = json_encode($out);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
@@ -1161,8 +1163,8 @@ class OrderController extends Main {
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
-    }    
-    
+    }
+
     /**
      * @Route("/erp01/order/getmodeltypes")
      */
