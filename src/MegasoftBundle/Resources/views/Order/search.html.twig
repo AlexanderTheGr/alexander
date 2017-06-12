@@ -282,6 +282,8 @@
             b=true;
             data.car = jQuery(".brand_model_type-select").val();
             data.order = '{{order}}';
+            data.all = jQuery(".brand_model_type-select").val();
+            $("#loaderer").show();
         });        
         
         jQuery(".subcategoriesli").live('click', function () {
