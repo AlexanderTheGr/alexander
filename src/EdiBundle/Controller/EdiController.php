@@ -396,7 +396,7 @@ class EdiController extends Main {
                             echo $sql . "<BR>";
                             //$em->getConnection()->exec($sql);
                         }
-                        //if ($i++ > 100) return;	
+                        if ($i++ > 100) return;	
                     }
                 }
             }
