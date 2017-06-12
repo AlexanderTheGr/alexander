@@ -1059,14 +1059,12 @@ class OrderController extends Main {
 
     function getFbrands() {
         $em = $this->getDoctrine()->getManager();
-        $sql = "SELECT id FROM  partsbox_db.fanopoiia_category group by brand";
+        $sql = "SELECT brand FROM  partsbox_db.fanopoiia_category group by brand";
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
         $statement->execute();
         $brands = $statement->fetchAll();
-        foreach ($brands as $data) {
-            $brands[] = $data;
-        }        
+        
         return $brands;
     }    
     
