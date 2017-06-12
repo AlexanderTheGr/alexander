@@ -79,7 +79,7 @@
                             <div id="accordion5-4" class="collapse">
                                 <div class="card-body">
                                     <div class='plaisio'>
-                                        <select style="width:100%" name="fbrand_id" class="fbrand-select" class="brand-select" title="" onchange="">
+                                        <select style="width:100%" name="fbrand_id" class="fbrand-select"  title="" onchange="">
                                             <option value="0">Επιλέξτε Μάρκα</option>
                                             {% for brand in fbrands %}
                                                 <option value="{{brand.brand}}">{{brand.brand}}</option>
@@ -88,12 +88,12 @@
                                         </select>
                                     </div>
                                     <div class='plaisio'>
-                                        <select style="width:100%" name="fbrand_model_id" class="fbrand_model-select inactive" class="brand_model-select" title="" onchange="">
+                                        <select style="width:100%" name="fbrand_model_id" class="fbrand_model-select inactive" title="" onchange="">
 
                                         </select>   
                                     </div>
                                     <div class='plaisio'>
-                                        <select  style="width:100%" name="fbrand_model_type_id" class="fbrand_model_type-select inactive" class="brand_model-select" title="" onchange="">
+                                        <select  style="width:100%" name="fbrand_model_type_id" class="fbrand_model_type-select inactive" title="" onchange="">
                                         </select>  
                                     </div>
                                     <button type="btn" id="gogo" title="Αναζήτηση" class="gogo button"><span><span>Αναζήτηση</span></span></button>                  
@@ -132,9 +132,15 @@
 
 {% block javascripts %}
     <script>
+        
         jQuery(".brand-select").chosen({width: '100%'});
         jQuery(".brand_model-select").chosen({width: '100%'});
         jQuery(".brand_model_type-select").chosen({width: '100%'});
+        
+        jQuery(".fbrand-select").chosen({width: '100%'});
+        jQuery(".fbrand_model-select").chosen({width: '100%'});
+        jQuery(".fbrand_model_type-select").chosen({width: '100%'});
+        
         order = '{{order}}';
 
         jQuery(".brand-select").change(function () {
@@ -170,6 +176,44 @@
 
             });
         });
+        
+        jQuery(".fbrand-select").change(function () {
+            var data = {};
+            data.brand = jQuery(this).val();
+
+            jQuery("#productfreesearch").val("");
+            jQuery("#productitem").val("");
+            var group_name = "";
+            jQuery('.fbrand_model-select').text("");
+            jQuery('.fbrand_model_type-select').text("");
+
+            jQuery('.fbrand_model-select').addClass("inactive");
+            jQuery('.fbrand_model_type-select').addClass("inactive");
+            jQuery('.search-form button.button span').removeClass("active");
+            jQuery(".fbrand-select").trigger("chosen:updated");
+            jQuery(".fbrand_model-select").trigger("chosen:updated");
+            jQuery(".fbrand_model_type-select").trigger("chosen:updated");
+            jQuery.post("/order/getfmodels", data, function (json) {
+                if (json) {
+                    jQuery('.fbrand_model-select').removeClass("inactive");
+                }
+                jQuery('.fbrand_model-select').text("");
+                jQuery('.fbrand_model_type-select').text("");
+                var sop = "";
+                var a = 0;
+                jQuery.each(json, function (i, optionHtml) {
+                    jQuery('.fbrand_model-select').append(jQuery('<option>').text(optionHtml.name).attr('value', optionHtml.id));
+                });
+                jQuery(".fbrand-select").trigger("chosen:updated");
+                jQuery(".fbrand_model-select").trigger("chosen:updated");
+                jQuery(".fbrand_model_type-select").trigger("chosen:updated");
+
+            });
+        });        
+        
+        
+        
+        
         jQuery(".brand_model-select").change(function () {
             var data = {};
             data.brand = jQuery(".brand-select").val();
