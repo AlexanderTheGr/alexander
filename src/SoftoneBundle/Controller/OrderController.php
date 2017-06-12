@@ -1236,6 +1236,32 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     /**
+     * @Route("/order/getfmodels")
+     */
+    function getfmodels(Request $request) {
+        $repository = $this->getDoctrine()->getRepository('SoftoneBundle:BrandModel');
+        $brandsmodels = $repository->findBy(array('brand' => $request->request->get("brand")), array('brandModel' => 'ASC'));
+        $out = array();
+        $o["id"] = 0;
+        $o["name"] = "Select an Option";
+        $out[] = $o;
+        foreach ($brandsmodels as $brandsmodel) {
+            $yearfrom = substr($brandsmodel->getYearFrom(), 4, 2) . "/" . substr($brandsmodel->getYearFrom(), 0, 4);
+            $yearto = substr($brandsmodel->getYearTo(), 4, 2) . "/" . substr($brandsmodel->getYearTo(), 0, 4);
+            $yearto = $yearto == 0 ? 'Today' : $yearto;
+            $year = $yearfrom . " - " . $yearto;
+            $o["id"] = $brandsmodel->getId();
+            $o["name"] = $brandsmodel->getBrandModel() . " " . $year;
+            $out[] = $o;
+        }
+
+        $json = json_encode($out);
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+    }       
+    
+    /**
      * @Route("/order/getmodeltypes")
      */
     function getmodeltypes(Request $request) {
