@@ -977,11 +977,11 @@ class Product extends Entity {
         $dataindexarr[] = $this->barcode;
         $dataindexarr[] = $this->supplierCode;
 
-        $dataindexarr[] = $this->title;
+        $dataindexarr[] = trim($this->title);
 
 
-        $dataindexarr[] = strtolower($this->greeklish($this->title));
-        $dataindexarr[] = strtolower($this->greeklish($this->erpSupplier));
+        $dataindexarr[] = trim(strtolower($this->greeklish($this->title)));
+        $dataindexarr[] = trim(strtolower($this->greeklish($this->erpSupplier)));
 
         //$article_id = $this->_webserviceProducts_[11632]->article_id;
         /*
