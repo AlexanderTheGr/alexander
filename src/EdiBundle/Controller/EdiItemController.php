@@ -467,7 +467,11 @@ class EdiItemController extends Main {
                   }
                  */
             } else {
-                $this->createWhere();
+                if ($search[0] == 'productfano') {
+                    $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".itemCode LIKE '0" . $search[1] . "%'))";
+                } else {
+                    $this->createWhere();
+                }
             }
 
             //echo $this->where."\n\n";
