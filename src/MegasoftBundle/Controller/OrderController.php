@@ -1050,12 +1050,23 @@ class OrderController extends Main {
          */
         $response = $this->get('twig')->render('MegasoftBundle:Order:search.html.twig', array(
             'brands' => $this->getBrands(),
+            'fbrands' => $this->getFbrands(),
             'order' => $order->getId(),
             'history' => $history
         ));
         return str_replace("\n", "", htmlentities($response));
     }
 
+    function getFbrands() {
+        $em = $this->getDoctrine()->getManager();
+        $sql = "SELECT id FROM  `partsbox_db.fanopoiia_category` group by brand";
+        $connection = $em->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $brands = $statement->fetchAll();
+        return $brands;
+    }    
+    
     function getBrands() {
         $repository = $this->getDoctrine()->getRepository('SoftoneBundle:Brand');
         $brands = $repository->findAll(array(), array('brand' => 'ASC'));
