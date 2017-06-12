@@ -537,14 +537,16 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $search = $dt_search["value"];
             $search = explode(":", $dt_search["value"]);
 
-            $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
-
-            if ($search[1]) {
-                @$articleIds2 = unserialize(base64_decode($search[1]));
+            if ($search[0] != 'productfano') {
+                $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
+                if ($search[1]) {
+                    @$articleIds2 = unserialize(base64_decode($search[1]));
+                } else {
+                    @$articleIds2 = unserialize(base64_decode($search[0]));
+                }
             } else {
-                @$articleIds2 = unserialize(base64_decode($search[0]));
+                $search[1] = str_pad($search[1], 4, "0", STR_PAD_LEFT);
             }
-
             //$articleIds2["linkingTargetId"];
 
             $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
@@ -595,6 +597,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     }
                     $like = implode(" AND ", $likearr);
                     $sqlearch = "Select so.id from SoftoneBundle:ProductFreesearch so where " . $like . "";
+                } elseif ($search[0] == 'productfano') {
+
+                    $sqlearch = "Select o.id from SoftoneBundle:Product o where o.supplierCode like '" . $search[1] . "%'";
                 } else {
                     $search[1] = $this->clearstring($search[1]);
                     $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
@@ -1234,13 +1239,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+
     /**
      * @Route("/order/getfmodels")
      */
     function getfmodels(Request $request) {
         //$request->request->get("brand")
         $em = $this->getDoctrine()->getManager();
-        $sql = "SELECT model FROM  partsbox_db.fanopoiia_category where brand = '".$request->request->get("brand")."'  group by model";
+        $sql = "SELECT model FROM  partsbox_db.fanopoiia_category where brand = '" . $request->request->get("brand") . "'  group by model";
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
         $statement->execute();
@@ -1248,13 +1254,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $out = array();
         $o["id"] = 0;
         $o["name"] = "Select an Option";
-        $out[] = $o;        
+        $out[] = $o;
         foreach ($brands as $brand) {
             $o["id"] = $brand["model"];
-            $o["name"] = $brand["model"];     
+            $o["name"] = $brand["model"];
             $out[] = $o;
         }
-  
+
         $json = json_encode($out);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
@@ -1267,7 +1273,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     function getfmodeltypes(Request $request) {
         //$request->request->get("brand")
         $em = $this->getDoctrine()->getManager();
-        $sql = "SELECT model_id, year  FROM  partsbox_db.fanopoiia_category where brand = '".$request->request->get("brand")."' AND model = '".$request->request->get("model")."'";
+        $sql = "SELECT model_id, year  FROM  partsbox_db.fanopoiia_category where brand = '" . $request->request->get("brand") . "' AND model = '" . $request->request->get("model") . "'";
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
         $statement->execute();
@@ -1275,10 +1281,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $out = array();
         $o["id"] = 0;
         $o["name"] = "Select an Option";
-        $out[] = $o;        
+        $out[] = $o;
         foreach ($brands as $brand) {
             $o["id"] = $brand["model_id"];
-            $o["name"] = $brand["year"];     
+            $o["name"] = $brand["year"];
             $out[] = $o;
         }
 
@@ -1286,9 +1292,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
-    }    
-    
-    
+    }
+
     /**
      * @Route("/order/getmodeltypes")
      */
