@@ -1130,7 +1130,7 @@ class ProductController extends Main {
             $this->setProduct($data);
             //exit;
         }
-        $sql = 'UPDATE  `softone_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
+        $sql = 'UPDATE  `megasoft_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
         $this->getDoctrine()->getConnection()->exec($sql);
         
         exit;
