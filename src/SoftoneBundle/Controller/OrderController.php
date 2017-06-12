@@ -1234,32 +1234,28 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
-
     /**
      * @Route("/order/getfmodels")
      */
     function getfmodels(Request $request) {
-        $repository = $this->getDoctrine()->getRepository('SoftoneBundle:BrandModel');
-        $brandsmodels = $repository->findBy(array('brand' => $request->request->get("brand")), array('brandModel' => 'ASC'));
-        $out = array();
-        $o["id"] = 0;
-        $o["name"] = "Select an Option";
-        $out[] = $o;
-        foreach ($brandsmodels as $brandsmodel) {
-            $yearfrom = substr($brandsmodel->getYearFrom(), 4, 2) . "/" . substr($brandsmodel->getYearFrom(), 0, 4);
-            $yearto = substr($brandsmodel->getYearTo(), 4, 2) . "/" . substr($brandsmodel->getYearTo(), 0, 4);
-            $yearto = $yearto == 0 ? 'Today' : $yearto;
-            $year = $yearfrom . " - " . $yearto;
-            $o["id"] = $brandsmodel->getId();
-            $o["name"] = $brandsmodel->getBrandModel() . " " . $year;
-            $out[] = $o;
+        //$request->request->get("brand")
+        $em = $this->getDoctrine()->getManager();
+        $sql = "SELECT model FROM  partsbox_db.fanopoiia_category group by model where brand = '".$request->request->get("brand")."'";
+        $connection = $em->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $brands = $statement->fetchAll();
+        foreach ($brands as $brand) {
+            $o["id"] = $brand["model"];
+            $o["name"] = $brand["model"];            
         }
-
+  
         $json = json_encode($out);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
-    }       
+    }
+
     
     /**
      * @Route("/order/getmodeltypes")
