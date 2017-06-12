@@ -1064,6 +1064,9 @@ class OrderController extends Main {
         $statement = $connection->prepare($sql);
         $statement->execute();
         $brands = $statement->fetchAll();
+        foreach ($brands as $data) {
+            $brands[] = $data;
+        }        
         return $brands;
     }    
     
