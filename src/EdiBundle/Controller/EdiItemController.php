@@ -405,6 +405,8 @@ class EdiItemController extends Main {
             if ($search11[0] != 'productfano') {
                 $articleIds = count($articles["articleIds"]) ? $articles["articleIds"] : (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
                 $articleIds[] = 1;
+            } else {
+                $search[1] = str_pad($search[1], 4, "0", STR_PAD_LEFT);
             }
 
 
