@@ -242,6 +242,33 @@
             })
         });
         
+        jQuery(".fbrand_model-select").change(function () {
+            var data = {};
+            data.brand = jQuery(".brand-select").val();
+            data.model = jQuery(this).val();
+            var motor_type = "";
+            var sop = "";
+            jQuery('.fbrand_model_type-select').addClass("inactive");
+            jQuery('.search-form button.button span').removeClass("active");
+            jQuery.post("/order/getmodeltypes", data, function (json) {
+                if (json) {
+                    jQuery('.fbrand_model_type-select').removeClass("inactive");
+                }
+                jQuery('.fbrand_model_type-select').text("");
+                var a = 0;
+                jQuery.each(json, function (i, optionHtml) {
+                    jQuery('.fbrand_model_type-select').append(jQuery('<option>').text(optionHtml.name).attr('value', optionHtml.id));
+                });
+                jQuery(".fbrand-select").trigger("chosen:updated");
+                jQuery(".fbrand_model-select").trigger("chosen:updated");
+                jQuery(".fbrand_model_type-select").trigger("chosen:updated");
+            })
+        });
+        
+        
+        
+        
+        
         
         jQuery(".modelhistory").click(function () {
             asdda(jQuery(this).attr("data-order"), jQuery(this).attr("data-ref"), jQuery(this).text());
