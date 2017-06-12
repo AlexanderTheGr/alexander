@@ -601,7 +601,7 @@ class OrderController extends Main {
                     $this->createWhere();
                     $sisxetisi = " (" . $this->prefix . ".sisxetisi != '' AND " . $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM MegasoftBundle:Product koo where koo.sisxetisi != '' AND (koo.erpCode like '%" . $search[1] . "%' OR koo.tecdocCode like '%" . $search[0] . "%' OR koo.erpCode like '%" . $search[1] . "%' OR koo.supplierCode like '%" . $search[1] . "%')))";
                 }
-                //echo  $sql;
+                echo  $sql;
                 //$this->q_or[] = $this->prefix . ".id in  (Select k.product FROM MegasoftBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
 
 
