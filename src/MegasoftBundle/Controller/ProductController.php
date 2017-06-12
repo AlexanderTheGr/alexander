@@ -88,7 +88,7 @@ class ProductController extends Main {
         if (!$manufacturer) {
             $manufacturer = $this->createManufacturer($asd->brandName);
         } else {
-            echo $manufacturer->getTitle();
+            //echo $manufacturer->getTitle();
         }
         //$tecdocSupplier = $em->getRepository("MegasoftBundle:TecdocSupplier")->find($asd->brandNo);
 
