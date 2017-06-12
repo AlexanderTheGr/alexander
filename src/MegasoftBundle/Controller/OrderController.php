@@ -566,7 +566,8 @@ class OrderController extends Main {
                     $like = implode(" AND ", $likearr);
                     $sqlearch = "Select o.id from MegasoftBundle:ProductFreesearch o where " . $like . "";
                 } elseif ($search[0] == 'productfano') {
-                    $sqlearch = "Select o.id from MegasoftBundle:Product o where o.supplierCode like '0" . $search[1] . "%'";
+                    
+                    $sqlearch = "Select o.id from MegasoftBundle:Product o where o.supplierCode like '" . $search[1] . "%'";
                     
                 } else {
                     $search[1] = $this->clearstring($search[1]);
