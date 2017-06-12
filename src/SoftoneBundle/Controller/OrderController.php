@@ -1250,7 +1250,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $o["name"] = $brand["model"];            
         }
   
-        $json = json_encode($out);
+        $json = json_encode($o);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
