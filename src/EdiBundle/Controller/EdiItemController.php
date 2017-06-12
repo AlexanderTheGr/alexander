@@ -174,12 +174,13 @@ class EdiItemController extends Main {
         if ($search[1]) {
 
             if ($search[0] == 'productfano') {
+                $search[1] = str_pad($search[1], 4, "0", STR_PAD_LEFT);
                 $query = $em->createQuery(
                         "SELECT  distinct(e.id) as eid, e.name as edi
                     FROM " . $this->repository . " p, EdiBundle:Edi e
                     where 
                         e.id = p.Edi AND p.partno != '' AND  e.id = 11 AND
-                        p.itemCode LIKE '0" . $search[1] . "%' "
+                        p.itemCode LIKE '" . $search[1] . "%' "
                 );
             } else {
                 $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
@@ -406,7 +407,7 @@ class EdiItemController extends Main {
                 $articleIds = count($articles["articleIds"]) ? $articles["articleIds"] : (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
                 $articleIds[] = 1;
             } else {
-                $search[1] = str_pad($search[1], 4, "0", STR_PAD_LEFT);
+                $search11[1] = str_pad($search[1], 4, "0", STR_PAD_LEFT);
             }
 
 
@@ -471,7 +472,7 @@ class EdiItemController extends Main {
                  */
             } else {
                 if ($search11[0] == 'productfano') {
-                    $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".itemCode LIKE '0" . $search11[1] . "%'";
+                    $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".itemCode LIKE '" . $search11[1] . "%'";
                 } else {
                     $this->createWhere();
                 }
