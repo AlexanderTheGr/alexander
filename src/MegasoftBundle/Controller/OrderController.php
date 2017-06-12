@@ -504,10 +504,12 @@ class OrderController extends Main {
 
             $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
 
-            if ($search[1]) {
-                @$articleIds2 = unserialize(base64_decode($search[1]));
-            } else {
-                @$articleIds2 = unserialize(base64_decode($search[0]));
+            if ($search[0] != 'productfano') {
+                if ($search[1]) {
+                    @$articleIds2 = unserialize(base64_decode($search[1]));
+                } else {
+                    @$articleIds2 = unserialize(base64_decode($search[0]));
+                }
             }
 
             //$articleIds2["linkingTargetId"];
