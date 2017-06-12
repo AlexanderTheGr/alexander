@@ -1245,12 +1245,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $statement = $connection->prepare($sql);
         $statement->execute();
         $brands = $statement->fetchAll();
+        $out = array();
         foreach ($brands as $brand) {
             $o["id"] = $brand["model"];
-            $o["name"] = $brand["model"];            
+            $o["name"] = $brand["model"];     
+            $out[] = $o;
         }
   
-        $json = json_encode($o);
+        $json = json_encode($out);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
