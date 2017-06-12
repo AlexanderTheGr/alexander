@@ -607,7 +607,6 @@ class OrderController extends Main {
                 //$this->q_or[] = $this->prefix . ".id in  (Select k.product FROM MegasoftBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
 
 
-
                 $this->createWhere();
 
                 $this->createOrderBy($fields, $dt_order);
@@ -646,7 +645,7 @@ class OrderController extends Main {
                 //exit;
 
                 $sql = str_replace("p.*,", "", $sql);
-                echo $sql;
+                //echo $sql;
                 //$sql = str_replace("ORDER BY p.qty asc","",$sql);
                 $results = array();
 
