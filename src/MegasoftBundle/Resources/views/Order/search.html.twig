@@ -173,6 +173,10 @@
                 jQuery(".brand-select").trigger("chosen:updated");
                 jQuery(".brand_model-select").trigger("chosen:updated");
                 jQuery(".brand_model_type-select").trigger("chosen:updated");
+                
+                jQuery(".fbrand-select").trigger("chosen:updated");
+                jQuery(".fbrand_model-select").trigger("chosen:updated");
+                jQuery(".fbrand_model_type-select").trigger("chosen:updated");
 
             });
         });
@@ -199,14 +203,16 @@
                 }
                 jQuery('.fbrand_model-select').text("");
                 jQuery('.fbrand_model_type-select').text("");
-                var sop = "";
-                var a = 0;
                 jQuery.each(json, function (i, optionHtml) {
                     jQuery('.fbrand_model-select').append(jQuery('<option>').text(optionHtml.name).attr('value', optionHtml.id));
+                    alert(optionHtml.id);
                 });
                 jQuery(".fbrand-select").trigger("chosen:updated");
                 jQuery(".fbrand_model-select").trigger("chosen:updated");
                 jQuery(".fbrand_model_type-select").trigger("chosen:updated");
+                
+                
+                
 
             });
         });        
