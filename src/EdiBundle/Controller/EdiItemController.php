@@ -408,7 +408,7 @@ class EdiItemController extends Main {
 
 
 
-            print_r($$search11);
+            print_r($search11);
             $dt_search["value"] = '';
 
             $recordsTotal = $em->getRepository($this->repository)->recordsTotal();
