@@ -96,7 +96,7 @@
                                         <select  style="width:100%" name="fbrand_model_type_id" class="fbrand_model_type-select inactive" title="" onchange="">
                                         </select>  
                                     </div>
-                                    <button type="btn" id="gogo" title="Αναζήτηση" class="gogo button"><span><span>Αναζήτηση</span></span></button>                  
+                                    <button type="btn" id="fgogo" title="Αναζήτηση" class="fgogo button"><span><span>Αναζήτηση</span></span></button>                  
                                 </div>
                             </div>
                         </div><!--end .panel -->                        
@@ -286,7 +286,15 @@
             $("#loaderer").show();
             asdf2(data);
         });
-
+        jQuery(".gogo2").live('click', function () {
+            var data = {};
+            b=true;
+            data.car = jQuery(".fbrand_model_type-select").val();
+            data.order = '{{order}}';
+            data.all = jQuery(this).attr('data-all');
+            $("#loaderer").show();
+            asdf2(data);
+        });
     </script>
 {% endblock %}
 
