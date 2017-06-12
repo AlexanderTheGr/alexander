@@ -178,7 +178,7 @@ class EdiItemController extends Main {
                         "SELECT  distinct(e.id) as eid, e.name as edi
                     FROM " . $this->repository . " p, EdiBundle:Edi e
                     where 
-                        e.id = p.Edi AND p.partno != '' AND
+                        e.id = p.Edi AND p.partno != '' AND  e.id = 11 AND
                         p.itemCode LIKE '0" . $search[1] . "%' "
                 );                
             } else {
