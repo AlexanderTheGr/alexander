@@ -1161,11 +1161,22 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $history .= "</ul>";
         $response = $this->get('twig')->render('SoftoneBundle:Order:search.html.twig', array(
             'brands' => $this->getBrands(),
+            'fbrands' => $this->getFbrands(),
             'order' => $order->getId(),
             'history' => $history
         ));
         return str_replace("\n", "", htmlentities($response));
     }
+    function getFbrands() {
+        $em = $this->getDoctrine()->getManager();
+        $sql = "SELECT brand FROM  partsbox_db.fanopoiia_category group by brand";
+        $connection = $em->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $brands = $statement->fetchAll();
+
+        return $brands;
+    }    
 
     function getBrands() {
         $repository = $this->getDoctrine()->getRepository('SoftoneBundle:Brand');
