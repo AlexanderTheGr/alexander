@@ -277,6 +277,10 @@
             var cartext = $(".brand-select option:selected").text() + ' ' + $(".brand_model-select option:selected").text() + ' ' + $(".brand_model_type-select option:selected").text();
             asdda('{{order}}', jQuery(".brand_model_type-select").val(), cartext)
         });
+        jQuery(".fgogo").click(function () {
+
+        });        
+        
         jQuery(".subcategoriesli").live('click', function () {
             var data = {};
             b=true;
@@ -286,9 +290,7 @@
             $("#loaderer").show();
             asdf2(data);
         });
-        jQuery(".fgogo").click(function () {
 
-        });
     </script>
 {% endblock %}
 
