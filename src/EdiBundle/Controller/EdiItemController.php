@@ -400,7 +400,8 @@ class EdiItemController extends Main {
             $dt_columns = $request->request->get("columns");
 
             $search = explode(":", $dt_columns[4]["search"]["value"]);
-            $search11 = explode(":", $request->request->get("value"));
+
+            $search11 = explode(":", $dt_search["value"]);
             if ($search11[0] != 'productfano') {
                 $articleIds = count($articles["articleIds"]) ? $articles["articleIds"] : (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
                 $articleIds[] = 1;
@@ -408,7 +409,7 @@ class EdiItemController extends Main {
 
 
 
-            print_r($search11);
+           // print_r($search11);
             $dt_search["value"] = '';
 
             $recordsTotal = $em->getRepository($this->repository)->recordsTotal();
