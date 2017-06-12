@@ -800,6 +800,7 @@ class EdiItem extends Entity {
 
         $em->persist($product);
         $em->flush();
+        $product->setProductFreesearch();
         $product->toMegasoft();
     }
 
