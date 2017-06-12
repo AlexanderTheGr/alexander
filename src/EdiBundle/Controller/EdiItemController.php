@@ -407,7 +407,7 @@ class EdiItemController extends Main {
                 $articleIds = count($articles["articleIds"]) ? $articles["articleIds"] : (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
                 $articleIds[] = 1;
             } else {
-                $search11[1] = str_pad($search[1], 4, "0", STR_PAD_LEFT);
+                $search11[1] = str_pad($search11[1], 4, "0", STR_PAD_LEFT);
             }
 
 
