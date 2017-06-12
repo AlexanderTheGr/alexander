@@ -361,6 +361,7 @@ class ProductController extends Main {
         //echo $product->reference."\n";
         //$product = $this->newentity[$this->repository];
         $product->updatetecdoc(false, true);
+        $product->setProductFreesearch();
         $product->toMegasoft();
         /*
           if ($product->getSisxetisi() != '') {
