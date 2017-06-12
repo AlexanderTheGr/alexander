@@ -1240,7 +1240,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     function getfmodels(Request $request) {
         //$request->request->get("brand")
         $em = $this->getDoctrine()->getManager();
-        $sql = "SELECT model FROM  partsbox_db.fanopoiia_category group by model where brand = '".$request->request->get("brand")."'";
+        $sql = "SELECT model FROM  partsbox_db.fanopoiia_category where brand = '".$request->request->get("brand")."'  group by model";
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
         $statement->execute();
