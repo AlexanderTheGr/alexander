@@ -1116,9 +1116,9 @@ class OrderController extends Main {
     }
 
     /**
-     * @Route("/erp01/order/getmodels")
+     * @Route("/erp01/order/getfmodels")
      */
-    function getmodels(Request $request) {
+    function getfmodels(Request $request) {
         //$request->request->get("brand")
         $em = $this->getDoctrine()->getManager();
         $sql = "SELECT model FROM  partsbox_db.fanopoiia_category group by model where brand = '".$request->request->get("brand")."'";
@@ -1138,9 +1138,9 @@ class OrderController extends Main {
     }
 
     /**
-     * @Route("/erp01/order/getfmodels")
+     * @Route("/erp01/order/getmodels")
      */
-    function getfmodels(Request $request) {
+    function getmodels(Request $request) {
         $repository = $this->getDoctrine()->getRepository('MegasoftBundle:BrandModel');
         $brandsmodels = $repository->findBy(array('brand' => $request->request->get("brand")), array('brandModel' => 'ASC'));
         $out = array();
