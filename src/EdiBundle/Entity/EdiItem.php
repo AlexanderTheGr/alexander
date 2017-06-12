@@ -713,7 +713,7 @@ class EdiItem extends Entity {
     }
 
     private function toMegasoftErp() {
-        return;
+
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
