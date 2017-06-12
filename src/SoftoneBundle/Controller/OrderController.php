@@ -1261,6 +1261,33 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         );
     }
 
+    /**
+     * @Route("/order/getfmodeltypes")
+     */
+    function getfmodeltypes(Request $request) {
+        //$request->request->get("brand")
+        $em = $this->getDoctrine()->getManager();
+        $sql = "SELECT model FROM  partsbox_db.fanopoiia_category where brand = '".$request->request->get("brand")."' AND model = '".$request->request->get("model")."'";
+        $connection = $em->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $brands = $statement->fetchAll();
+        $out = array();
+        $o["id"] = 0;
+        $o["name"] = "Select an Option";
+        $out[] = $o;        
+        foreach ($brands as $brand) {
+            $o["id"] = $brand["model_id"];
+            $o["name"] = $brand["year"];     
+            $out[] = $o;
+        }
+
+        $json = json_encode($out);
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+    }    
+    
     
     /**
      * @Route("/order/getmodeltypes")
