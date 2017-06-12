@@ -250,7 +250,7 @@
             var sop = "";
             jQuery('.fbrand_model_type-select').addClass("inactive");
             jQuery('.search-form button.button span').removeClass("active");
-            jQuery.post("/order/getmodeltypes", data, function (json) {
+            jQuery.post("/order/getfmodeltypes", data, function (json) {
                 if (json) {
                     jQuery('.fbrand_model_type-select').removeClass("inactive");
                 }
