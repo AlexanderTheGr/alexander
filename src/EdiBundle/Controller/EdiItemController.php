@@ -173,7 +173,7 @@ class EdiItemController extends Main {
 
         if ($search[1]) {
 
-            if ($search[0] != 'productfano') {
+            if ($search[0] == 'productfano') {
                 $query = $em->createQuery(
                         "SELECT  distinct(e.id) as eid, e.name as edi
                     FROM " . $this->repository . " p, EdiBundle:Edi e
