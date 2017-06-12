@@ -400,7 +400,8 @@ class EdiItemController extends Main {
             $dt_columns = $request->request->get("columns");
 
             $search = explode(":", $dt_columns[4]["search"]["value"]);
-            if ($search[0] != 'productfano') {
+            $search11 = explode(":", $request->request->get("value"));
+            if ($search11[0] != 'productfano') {
 
                 $articleIds = count($articles["articleIds"]) ? $articles["articleIds"] : (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
                 $articleIds[] = 1;
@@ -467,8 +468,8 @@ class EdiItemController extends Main {
                   }
                  */
             } else {
-                if ($search[0] == 'productfano') {
-                    $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".itemCode LIKE '0" . $search[1] . "%'))";
+                if ($search11[0] == 'productfano') {
+                    $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".itemCode LIKE '0" . $search11[1] . "%'))";
                 } else {
                     $this->createWhere();
                 }
