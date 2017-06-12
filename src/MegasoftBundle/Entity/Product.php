@@ -961,7 +961,7 @@ class Product extends Entity {
     }
 
     function setProductFreesearch() {
-        return;
+        //return;
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
