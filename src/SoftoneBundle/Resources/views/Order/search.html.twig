@@ -63,6 +63,44 @@
                                 </div>
                             </div>
                         </div><!--end .panel -->
+                        
+                        
+                        <div class="card panel">
+                            <div class="card-head style-info card-head collapsed" data-toggle="collapse" data-parent="#accordion5" data-target="#accordion5-1">
+                                <header>
+                                    <i class="fa fa-automobile"></i> Αναζήτηση με Φανοποιεία
+                                </header>
+                                <div class="tools">
+
+                                    <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+                                </div>
+                            </div>
+                            <div id="accordion5-1" class="collapse">
+                                <div class="card-body">
+                                    <div class='plaisio'>
+                                        <select style="width:100%" name="brand_id" class="brand-select" class="brand-select" title="" onchange="">
+                                            <option value="0">Επιλέξτε Μάρκα</option>
+                                            {% for brand in brands %}
+                                                <option value="{{brand.id}}">{{brand.brand}}</option>
+                                            {% endfor %}    
+                                        </select>
+                                    </div>
+                                    <div class='plaisio'>
+                                        <select style="width:100%" name="brand_model_id" class="brand_model-select inactive" class="brand_model-select" title="" onchange="">
+
+                                        </select>   
+                                    </div>
+                                    <div class='plaisio'>
+                                        <select  style="width:100%" name="brand_model_type_id" class="brand_model_type-select inactive" class="brand_model-select" title="" onchange="">
+                                        </select>  
+                                    </div>
+                                    <button type="btn" id="gogo" title="Αναζήτηση" class="gogo button"><span><span>Αναζήτηση</span></span></button>                  
+                                </div>
+                            </div>
+                        </div><!--end .panel -->                        
+                        
+                        
+                        
                         <div class="card panel">
                             <div class="card-head style-info card-head collapsed" data-toggle="collapse" data-parent="#accordion5" data-target="#accordion5-2">
                                 <header>
