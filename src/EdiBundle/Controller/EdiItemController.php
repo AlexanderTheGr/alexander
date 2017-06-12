@@ -389,11 +389,12 @@ class EdiItemController extends Main {
             $articles = unserialize(base64_decode($dt_search["value"]));
             $dt_columns = $request->request->get("columns");
 
-
             $search = explode(":", $dt_columns[4]["search"]["value"]);
+            if ($search[0] != 'productfano') {
 
-            $articleIds = count($articles["articleIds"]) ? $articles["articleIds"] : (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
-            $articleIds[] = 1;
+                $articleIds = count($articles["articleIds"]) ? $articles["articleIds"] : (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
+                $articleIds[] = 1;
+            }
 
 
 
@@ -797,7 +798,7 @@ class EdiItemController extends Main {
                                 $entity = $entities[$Item->ItemCode];
                                 //if ()
                                 //$entity->setWholesaleprice($Item->UnitPrice);
-                                
+
                                 @$jsonarr[$ands[$Item->ItemCode]]['6'] = $entity->getDiscount($customer, $vat);
                                 @$jsonarr[$ands[$Item->ItemCode]]['7'] = number_format($Item->UnitPrice, 2, '.', '');
 
