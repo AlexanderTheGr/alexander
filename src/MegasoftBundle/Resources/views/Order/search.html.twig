@@ -278,7 +278,10 @@
             asdda('{{order}}', jQuery(".brand_model_type-select").val(), cartext)
         });
         jQuery(".fgogo").click(function () {
-
+            var data = {};
+            b=true;
+            data.car = jQuery(".brand_model_type-select").val();
+            data.order = '{{order}}';
         });        
         
         jQuery(".subcategoriesli").live('click', function () {
