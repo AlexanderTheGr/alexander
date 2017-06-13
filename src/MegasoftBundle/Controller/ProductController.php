@@ -851,13 +851,40 @@ class ProductController extends Main {
     /**
      * 
      * 
+     * @Route("/erp01/product/getFanoProducts")
+     */
+    public function getFanoProducts(Request $request) {
+        $allowedips = $this->getSetting("MegasoftBundle:Product:Allowedips");
+        $allowedipsArr = explode(",", $allowedips);
+        if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
+            $sql = "SELECT * FROM  `megasoft_product` where erp_supplier != 'GBG'";
+            $connection = $this->getDoctrine()->getConnection();
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            $results = $statement->fetchAll();
+            $arr = array();
+            foreach ($results as $data) {
+                $arr[] = $data;
+            }
+            $json = json_encode($arr);
+            return new Response(
+                    $json, 200, array('Content-Type' => 'application/json')
+            );
+        } else {
+            exit;
+        }
+    }    
+    
+    /**
+     * 
+     * 
      * @Route("/erp01/product/getProducts")
      */
     public function getProducts(Request $request) {
         $allowedips = $this->getSetting("MegasoftBundle:Product:Allowedips");
         $allowedipsArr = explode(",", $allowedips);
         if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
-            $sql = "SELECT * FROM  `megasoft_product` ";
+            $sql = "SELECT * FROM  `megasoft_product` where erp_supplier != 'GBG'";
             $connection = $this->getDoctrine()->getConnection();
             $statement = $connection->prepare($sql);
             $statement->execute();
