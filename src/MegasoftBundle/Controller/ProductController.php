@@ -857,7 +857,7 @@ class ProductController extends Main {
         $allowedips = $this->getSetting("MegasoftBundle:Product:Allowedips");
         $allowedipsArr = explode(",", $allowedips);
         if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
-            $sql = "SELECT * FROM  `megasoft_product` where erp_supplier != 'GBG'";
+            $sql = "SELECT * FROM  `megasoft_product` where erp_supplier = 'GBG'";
             $connection = $this->getDoctrine()->getConnection();
             $statement = $connection->prepare($sql);
             $statement->execute();
