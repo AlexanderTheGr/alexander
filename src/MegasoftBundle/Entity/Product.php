@@ -99,7 +99,11 @@ class Product extends Entity {
      * @var string
      */
     private $erpCode;
-
+    
+    /**
+     * @var string
+     */
+    private $erpCode2;
     /**
      * @var string
      */
@@ -309,6 +313,28 @@ class Product extends Entity {
     public function getErpCode() {
         return $this->erpCode;
     }
+
+    /**
+     * Set erpCode2
+     *
+     * @param string $erpCode2
+     *
+     * @return Product
+     */
+    public function setErpCode2($erpCode2) {
+        $this->erpCode2 = $erpCode2;
+
+        return $this;
+    }
+
+    /**
+     * Get erpCode2
+     *
+     * @return string
+     */
+    public function getErpCode2() {
+        return $this->erpCode2;
+    }    
 
     /**
      * Set title
