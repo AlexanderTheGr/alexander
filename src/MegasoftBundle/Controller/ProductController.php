@@ -1080,7 +1080,7 @@ class ProductController extends Main {
         }
 
 
-        print_r($ManufacturerDetails);
+        //print_r($ManufacturerDetails);
 
         foreach ($ManufacturerDetails as $data) {
             $data = (array) $data;
@@ -1102,7 +1102,7 @@ class ProductController extends Main {
             }
         }
         //ini_set("soap.wsdl_cache_enabled", "0");
-        exit;
+        //exit;
         /*
           $ch = \curl_init();
           $header = array('Contect-Type:application/xml', 'Accept:application/xml');
