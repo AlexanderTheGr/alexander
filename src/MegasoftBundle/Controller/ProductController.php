@@ -1091,7 +1091,7 @@ class ProductController extends Main {
 
             if (!$entity) {
                 //$q[] = "`reference` = '" . $data[$params["megasoft_table"]] . "'";
-                $sql = "insert megasoft_manufacturer set id = '" . $data["ManufacturerID"] . "', code = '" . addslashes($data["ManufacturerCode"]) . "', title = '" . $data["ManufacturerName"] . "'";
+                $sql = "insert megasoft_manufacturer set id = '" . $data["ManufacturerID"] . "', code = '" . addslashes($data["ManufacturerCode"]) . "', title = '" . addslashes($data["ManufacturerName"]) . "'";
                 //echo $sql . "<BR>";
                 $em->getConnection()->exec($sql);
             } else {
