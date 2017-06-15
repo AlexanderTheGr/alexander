@@ -873,8 +873,8 @@ class ProductController extends Main {
         } else {
             exit;
         }
-    }    
-    
+    }
+
     /**
      * 
      * 
@@ -1079,7 +1079,7 @@ class ProductController extends Main {
             $ManufacturerDetails = $response->GetManufacturersResult->ManufacturerDetails;
         }
 
-        
+
         print_r($ManufacturerDetails);
 
         foreach ($ManufacturerDetails as $data) {
@@ -1103,30 +1103,30 @@ class ProductController extends Main {
         }
         //ini_set("soap.wsdl_cache_enabled", "0");
         //exit;
-
-        $ch = \curl_init();
-        $header = array('Contect-Type:application/xml', 'Accept:application/xml');
-        curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=2016-06-06&ParticipateInEshop=1");
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-        // in real life you should use something like:
-        // curl_setopt($ch, CURLOPT_POSTFIELDS, 
-        //          http_build_query(array('postvar1' => 'value1')));
-        // receive server response ...
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        $server_output = curl_exec($ch);
-        $StoreDetails = \simplexml_load_string($server_output);
-        //print_r($xml);
-        //echo count($xml);
-
         /*
+          $ch = \curl_init();
+          $header = array('Contect-Type:application/xml', 'Accept:application/xml');
+          curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
+          curl_setopt($ch, CURLOPT_POST, 1);
+          curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=2016-06-06&ParticipateInEshop=1");
+          curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+          // in real life you should use something like:
+          // curl_setopt($ch, CURLOPT_POSTFIELDS,
+          //          http_build_query(array('postvar1' => 'value1')));
+          // receive server response ...
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-          $response = $soap->__soapCall("GetProducts", array($params));
-          //echo count($response->DownloadStoreBaseResponse);
-
+          $server_output = curl_exec($ch);
+          $StoreDetails = \simplexml_load_string($server_output);
+          //print_r($xml);
+          //echo count($xml);
          */
+
+
+        $response = $soap->__soapCall("GetProducts", array($params));
+        //echo count($response->DownloadStoreBaseResponse);
+
+
 
         /*
           if (count($response->DownloadStoreBaseResponse) == 1) {
@@ -1134,33 +1134,31 @@ class ProductController extends Main {
           } elseif (count($response->$response->DownloadStoreBaseResponse) > 1) {
           $StoreDetails = $response->$response->DownloadStoreBaseResponse;
           }
-         * 
          */
 
+
+        echo count($response->GetProductsResult->StoreDetails);
+        echo "<BR>";
         //exit;
-        /*
-          echo count($response->GetProductsResult->StoreDetails);
-          echo "<BR>";
-          //exit;
-          if (count($response->GetProductsResult->StoreDetails) == 1) {
-          $StoreDetails[] = $response->GetProductsResult->StoreDetails;
-          } elseif (count($response->GetProductsResult->StoreDetails) > 1) {
-          $StoreDetails = $response->GetProductsResult->StoreDetails;
-          }
-         * 
-         */
+        if (count($response->GetProductsResult->StoreDetails) == 1) {
+            $StoreDetails[] = $response->GetProductsResult->StoreDetails;
+        } elseif (count($response->GetProductsResult->StoreDetails) > 1) {
+            $StoreDetails = $response->GetProductsResult->StoreDetails;
+        }
+
 
         //print_r($StoreDetails);
-       // exit;
+        // exit;
 
         foreach ($StoreDetails as $data) {
             $this->setProduct($data);
             //exit;
-            if ($i++ > 100) exit;
+            if ($i++ > 100)
+                exit;
         }
         $sql = 'UPDATE  `megasoft_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
         $this->getDoctrine()->getConnection()->exec($sql);
-        
+
         exit;
     }
 
@@ -1169,7 +1167,7 @@ class ProductController extends Main {
         $data = (array) $data;
 
         print_r($data);
-        return;    
+        return;
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->findOneBy(array("erpCode" => $data["StoreKwd"]));
