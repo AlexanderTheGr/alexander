@@ -1152,11 +1152,8 @@ class ProductController extends Main {
 
         foreach ($StoreDetails as $data) {
             $this->setProduct($data);
-            //exit;
-            //if ($i++ > 100)
-            //    exit;
         }
-        $sql = 'UPDATE  `megasoft_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
+        $sql = 'UPDATE `megasoft_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
         $this->getDoctrine()->getConnection()->exec($sql);
 
         exit;
@@ -1214,7 +1211,9 @@ class ProductController extends Main {
             $q[] = "`manufacturer` = NULL";
             $q[] = "`erp_supplier` = ''";
         }
-        $q[] = "`tecdoc_supplier_id` = '" . addslashes($data["fwSupplierId"]) . "'";
+        if (addslashes($data["fwSupplierId"]) > 0)
+            $q[] = "`tecdoc_supplier_id` = '" . addslashes($data["fwSupplierId"]) . "'";
+        
         $q[] = "`tecdoc_code` = '" . addslashes($data["fwCode"]) . "'";
         $q[] = "`title` = '" . addslashes($data["StoreDescr"]) . "'";
         $q[] = "`remarks` = '" . addslashes($data["remarks"]) . "'";
