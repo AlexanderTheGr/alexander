@@ -47,7 +47,11 @@
                 <option name="fixed"/>
             </options>
         </field>
-               
+        <field name="erpCode2" type="string" column="erp_code2" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>               
                         
         <field name="title" type="text" column="title" length="65535" nullable="true">
             <options>
