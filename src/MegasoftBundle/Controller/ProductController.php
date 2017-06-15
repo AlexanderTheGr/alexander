@@ -1092,17 +1092,17 @@ class ProductController extends Main {
             if (!$entity) {
                 //$q[] = "`reference` = '" . $data[$params["megasoft_table"]] . "'";
                 $sql = "insert megasoft_manufacturer set id = '" . $data["ManufacturerID"] . "', code = '" . $data["ManufacturerCode"] . "', title = '" . $data["ManufacturerName"] . "'";
-                //echo $sql . "<BR>";
+                echo $sql . "<BR>";
                 $em->getConnection()->exec($sql);
             } else {
                 //$sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
                 $sql = "update megasoft_manufacturer set code = '" . $data["ManufacturerCode"] . "', title = '" . $data["ManufacturerName"] . "' where id = '" . $entity->getId() . "'";
-                //echo $sql . "<BR>";
+                echo $sql . "<BR>";
                 $em->getConnection()->exec($sql);
             }
         }
         //ini_set("soap.wsdl_cache_enabled", "0");
-
+        exit;
 
         $ch = \curl_init();
         $header = array('Contect-Type:application/xml', 'Accept:application/xml');
@@ -1167,8 +1167,8 @@ class ProductController extends Main {
 
         $data = (array) $data;
 
-        //print_r($data);
-
+        print_r($data);
+            
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->findOneBy(array("erpCode" => $data["StoreKwd"]));
