@@ -1008,6 +1008,7 @@ class Product extends Entity {
         if ($this->supplierCode != '')
             $dataindexarr[] = $this->supplierCode;
 
+        
         if ($this->barcode != '')
             $dataindexarr[] = $this->barcode;
 
