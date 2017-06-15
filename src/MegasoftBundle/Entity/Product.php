@@ -952,7 +952,7 @@ class Product extends Entity {
                   $em->flush();
                  * 
                  */
-                $sql = "update `megasoft_product` set tecdoc_generic_article_id = '" . $out->genericArticleId . "', tecdoc_article_name = '" . $out->articleName . "', tecdoc_article_id = '" . $out->articleId . "', cars = '" . serialize($cars) . "', cats = '" . serialize($categories) . "' where id = '" . $this->id . "'";
+                $sql = "update `megasoft_product` set tecdoc_generic_article_id = '" . $out->genericArticleId . "', tecdoc_article_name = '" . addslashes($out->articleName) . "', tecdoc_article_id = '" . $out->articleId . "', cars = '" . serialize($cars) . "', cats = '" . serialize($categories) . "' where id = '" . $this->id . "'";
                 $em->getConnection()->exec($sql);
             }
         } catch (Exception $e) {
