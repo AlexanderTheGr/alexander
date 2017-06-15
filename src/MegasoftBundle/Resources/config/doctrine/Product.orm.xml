@@ -4,6 +4,7 @@
         <indexes>
             <index name="reference" columns="reference"/>
             <index name="erp_code" columns="erp_code"/>
+            <index name="erp_code2" columns="erp_code2"/>
             <index name="edi_id" columns="edi_id"/>     
             <index name="supplier_code" columns="supplier_code"/>
             <index name="tecdoc_article_id" columns="tecdoc_article_id"/>
