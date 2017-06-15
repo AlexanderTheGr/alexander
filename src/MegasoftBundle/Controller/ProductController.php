@@ -1166,8 +1166,8 @@ class ProductController extends Main {
 
         $data = (array) $data;
 
-        print_r($data);
-        return;
+        //print_r($data);
+        //return;
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->findOneBy(array("erpCode" => $data["StoreKwd"]));
@@ -1245,12 +1245,12 @@ class ProductController extends Main {
             //$q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
 
             $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
-            //echo $sql . "<BR>";
+            echo $sql . "<BR>";
             echo ".";
             $this->getDoctrine()->getManager()->getConnection()->exec($sql);
         } else {
             $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
-            //echo $sql . "<BR>";
+            echo $sql . "<BR>";
             echo ".";
             $this->getDoctrine()->getManager()->getConnection()->exec($sql);
         }
