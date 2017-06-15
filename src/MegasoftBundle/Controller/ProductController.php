@@ -1091,12 +1091,12 @@ class ProductController extends Main {
 
             if (!$entity) {
                 //$q[] = "`reference` = '" . $data[$params["megasoft_table"]] . "'";
-                $sql = "insert megasoft_manufacturer set id = '" . $data["ManufacturerID"] . "', code = '" . $data["ManufacturerCode"] . "', title = '" . $data["ManufacturerName"] . "'";
+                $sql = "insert megasoft_manufacturer set id = '" . $data["ManufacturerID"] . "', code = '" . addslashes($data["ManufacturerCode"]) . "', title = '" . $data["ManufacturerName"] . "'";
                 //echo $sql . "<BR>";
                 $em->getConnection()->exec($sql);
             } else {
                 //$sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
-                $sql = "update megasoft_manufacturer set code = '" . $data["ManufacturerCode"] . "', title = '" . $data["ManufacturerName"] . "' where id = '" . $entity->getId() . "'";
+                $sql = "update megasoft_manufacturer set code = '" . $data["ManufacturerCode"] . "', title = '" . addslashes($data["ManufacturerName"]) . "' where id = '" . $entity->getId() . "'";
                 //echo $sql . "<BR>";
                 $em->getConnection()->exec($sql);
             }
