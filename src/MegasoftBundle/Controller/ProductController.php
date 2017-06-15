@@ -1150,8 +1150,8 @@ class ProductController extends Main {
          * 
          */
 
-        print_r($StoreDetails);
-        exit;
+        //print_r($StoreDetails);
+       // exit;
 
         foreach ($StoreDetails as $data) {
             $this->setProduct($data);
@@ -1168,7 +1168,7 @@ class ProductController extends Main {
         $data = (array) $data;
 
         print_r($data);
-            
+        return;    
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->findOneBy(array("erpCode" => $data["StoreKwd"]));
