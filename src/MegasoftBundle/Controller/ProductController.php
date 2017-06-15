@@ -1080,7 +1080,7 @@ class ProductController extends Main {
         }
 
         
-        //print_r($ManufacturerDetails);
+        print_r($ManufacturerDetails);
 
         foreach ($ManufacturerDetails as $data) {
             $data = (array) $data;
