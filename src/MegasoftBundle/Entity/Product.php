@@ -43,7 +43,6 @@ class Product extends Entity {
         $this->types['productSale'] = 'object';
         $this->types['manufacturer'] = 'object';
         //$this->uniques = array("erpCode");
-
         //$this->tecdocSupplierId = new \MegasoftBundle\Entity\TecdocSupplier;
     }
 
@@ -99,11 +98,12 @@ class Product extends Entity {
      * @var string
      */
     private $erpCode;
-    
+
     /**
      * @var string
      */
     private $erpCode2;
+
     /**
      * @var string
      */
@@ -334,7 +334,7 @@ class Product extends Entity {
      */
     public function getErpCode2() {
         return $this->erpCode2;
-    }    
+    }
 
     /**
      * Set title
@@ -999,9 +999,17 @@ class Product extends Entity {
         $dataindexarr = array();
 
         $dataindexarr[] = $this->erpCode;
-        $dataindexarr[] = $this->itemApvcode;
-        $dataindexarr[] = $this->barcode;
-        $dataindexarr[] = $this->supplierCode;
+        if ($this->erpCode2 != '')
+            $dataindexarr[] = $this->erpCode2;
+
+        if ($this->tecdocCode != '')
+            $dataindexarr[] = $this->tecdocCode;
+
+        if ($this->supplierCode != '')
+            $dataindexarr[] = $this->supplierCode;
+
+        if ($this->barcode != '')
+            $dataindexarr[] = $this->barcode;
 
         $dataindexarr[] = trim($this->title);
 
@@ -1070,7 +1078,7 @@ class Product extends Entity {
         $data["StoreWholeSalePrice"] = (float) $this->storeWholeSalePrice;
         $data["RetailMarkup"] = (float) $this->retailMarkup;
         $data["WholeSaleMarkup"] = (float) $this->wholeSaleMarkup;
-        
+
         $data["SupplierCode"] = $this->supplierCode;
         if ($this->getManufacturer())
             $data["SupplierId"] = $this->getManufacturer()->getCode();
@@ -1594,7 +1602,6 @@ class Product extends Entity {
      */
     private $wholeSaleMarkup;
 
-
     /**
      * Set retailMarkup
      *
@@ -1602,8 +1609,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setRetailMarkup($retailMarkup)
-    {
+    public function setRetailMarkup($retailMarkup) {
         $this->retailMarkup = $retailMarkup;
 
         return $this;
@@ -1614,8 +1620,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getRetailMarkup()
-    {
+    public function getRetailMarkup() {
         return $this->retailMarkup;
     }
 
@@ -1626,8 +1631,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setWholeSaleMarkup($wholeSaleMarkup)
-    {
+    public function setWholeSaleMarkup($wholeSaleMarkup) {
         $this->wholeSaleMarkup = $wholeSaleMarkup;
 
         return $this;
@@ -1638,8 +1642,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getWholeSaleMarkup()
-    {
+    public function getWholeSaleMarkup() {
         return $this->wholeSaleMarkup;
     }
 
@@ -1648,7 +1651,6 @@ class Product extends Entity {
      */
     private $supplierItemCode;
 
-
     /**
      * Set supplierItemCode
      *
@@ -1656,8 +1658,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setSupplierItemCode($supplierItemCode)
-    {
+    public function setSupplierItemCode($supplierItemCode) {
         $this->supplierItemCode = $supplierItemCode;
 
         return $this;
@@ -1668,8 +1669,8 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getSupplierItemCode()
-    {
+    public function getSupplierItemCode() {
         return $this->supplierItemCode;
     }
+
 }
