@@ -1200,6 +1200,7 @@ class ProductController extends Main {
         $q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
         $q[] = "`edi` = '" . addslashes($data["StoreId"]) . "'";
         $q[] = "`erp_code` = '" . addslashes($data["StoreKwd"]) . "'";
+        $q[] = "`erp_code2` = '" . addslashes($data["StoreCodeErp"]) . "'";
         $q[] = "`store_retail_price` = '" . addslashes($data["StoreRetailPrice"]) . "'";
         $q[] = "`store_wholesale_price` = '" . addslashes($data["StoreWholeSalePrice"]) . "'";
         $q[] = "`retail_markup` = '" . addslashes($data["RetailMarkup"]) . "'";
@@ -1223,6 +1224,8 @@ class ProductController extends Main {
         $q[] = "`supplier_item_code` = '" . addslashes($data["fwSupplierItemCode"]) . "'";
         $q[] = "`webupd` = '" . ($data["webupd"] == 'True' ? 1 : 0) . "'";
         $q[] = "`barcode` = '" . addslashes($data["barcode"]) . "'";
+        
+        
 
         if ($supplier) {
             $q[] = "`supplier` = '" . $supplier->getId() . "'";
