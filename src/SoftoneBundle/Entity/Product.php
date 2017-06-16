@@ -1762,8 +1762,8 @@ class Product extends Entity {
         if ($this->getTecdocSupplierId() == null AND $forceupdate == false)
             return;
 
-		//echo 'sss';	
-			
+        //echo 'sss';	
+
         $this->setTecdocArticleId($out->articleId);
         $this->setTecdocArticleName($out->articleName);
 
@@ -1832,7 +1832,7 @@ class Product extends Entity {
                     $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($params);
                 }
             }
-			
+
             $out = $articleDirectSearchAllNumbers->data->array[0];
 
             //print_r($out);
@@ -2009,46 +2009,44 @@ class Product extends Entity {
         $out = $softone->calculate((array) $dataOut, $object, "", "", $locateinfo);
     }
 
-
-	
     function toB2b() {
-		
-		//$this->getSetting("SoftoneBundle:Softone:b2burl") == 'foxline')
-		if ($this->getSetting("SoftoneBundle:Softone:b2burl") == '') return;
-		$object = "SoftoneBundle\Entity\Product";
-		$requerstUrl = $this->getSetting("SoftoneBundle:Softone:b2burl")."antallaktika/init/setpartsbox";
+
+        //$this->getSetting("SoftoneBundle:Softone:b2burl") == 'foxline')
+        if ($this->getSetting("SoftoneBundle:Softone:b2burl") == '')
+            return;
+        $object = "SoftoneBundle\Entity\Product";
+        $requerstUrl = $this->getSetting("SoftoneBundle:Softone:b2burl") . "antallaktika/init/setpartsbox";
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         $fields = $em->getClassMetadata($object)->getFieldNames();
-		$apo = array("itemPricew01","itemPricew02","itemPricew","itemPricer","reference","itemCode","itemCode2","itemName","sisxetisi","edis");
-		foreach($fields as $field) {
-			if (in_array($field,$apo)) {
-				$data[$field] = $this->getField($field);
-			}
-		}
+        $apo = array("itemPricew01", "itemPricew02", "itemPricew", "itemPricer", "reference", "itemCode", "itemCode2", "itemName", "sisxetisi", "edis");
+        foreach ($fields as $field) {
+            if (in_array($field, $apo)) {
+                $data[$field] = $this->getField($field);
+            }
+        }
         $data_string = json_encode($data);
-		
-		//echo  $data_string;	
-		
-		//echo $requerstUrl;
-		//urlencode
-        $result = file_get_contents($requerstUrl."?data=".urlencode($data_string), null, stream_context_create(array(
+
+        //echo  $data_string;	
+        //echo $requerstUrl;
+        //urlencode
+        $result = file_get_contents($requerstUrl . "?data=" . urlencode($data_string), null, stream_context_create(array(
             'http' => array(
-			'method' => 'POST',
-			'header' =>
-			'Content-Type: application/json' . "\r\n"
-			. 'Content-Length: ' . strlen($data_string) . "\r\n",
-			'content' => $data_string,
+                'method' => 'POST',
+                'header' =>
+                'Content-Type: application/json' . "\r\n"
+                . 'Content-Length: ' . strlen($data_string) . "\r\n",
+                'content' => $data_string,
             ),
         )));
-		//echo $result;
-		return $this;
-		//echo $result;
-	}
-	
+        //echo $result;
+        return $this;
+        //echo $result;
+    }
+
     function toSoftone() {
 
         //if ($this->reference)
@@ -2109,9 +2107,11 @@ class Product extends Entity {
                 $zoominfo = $data["zoominfo"];
                 $info = explode(";", $zoominfo);
                 $this->reference = $info[1];
-				
-				if ($data["MTRMANFCTR"]!=$this->itemMtrmanfctr) $op = true;
-				if ($data["MTRMARK"]!=$this->itemMtrmark) $op = true;
+
+                if ($data["MTRMANFCTR"] != $this->itemMtrmanfctr)
+                    $op = true;
+                if ($data["MTRMARK"] != $this->itemMtrmark)
+                    $op = true;
                 break;
             }
             $data = $softone->getData($object, $this->reference);
@@ -2126,26 +2126,26 @@ class Product extends Entity {
             @$objectArr2[$field1] = $this->$field2;
             //}
         }
-		$this->itemCode2 = $this->supplierCode;
+        $this->itemCode2 = $this->supplierCode;
         $objectArr2["MTRUNIT1"] = 101;
-		if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
-			$objectArr2["MTRPCATEGORY"] = 1000;
-			$objectArr2["MTRACN"] = 101;
-			$objectArr2["CCCFXRELTDCODE"] = $this->tecdocCode;
-			$objectArr2["CCCFXTDBRAND"] = $this->itemMtrmark;
-			$objectArr2["CCCFXRELBRAND"] = $this->itemMtrmark;
-			if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
-				$objectArr2["PRICER01"] = $this->itemPricew01*1.24;
-				$objectArr2["PRICER02"] = $this->itemPricew02*1.24;
-				if($this->tecdocSupplierId)
-				$objectArr2["CCCFXTDBRAND"] = $this->tecdocSupplierId->getId();
-				$objectArr2["CCCFXRELBRAND"] = $this->itemMtrmanfctr;
-				unset($objectArr2["MU21"]);
-				unset($objectArr2["MU12MODE"]);
-				//MU21
-			}
-		}
-		
+        if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
+            $objectArr2["MTRPCATEGORY"] = 1000;
+            $objectArr2["MTRACN"] = 101;
+            $objectArr2["CCCFXRELTDCODE"] = $this->tecdocCode;
+            $objectArr2["CCCFXTDBRAND"] = $this->itemMtrmark;
+            $objectArr2["CCCFXRELBRAND"] = $this->itemMtrmark;
+            if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
+                $objectArr2["PRICER01"] = $this->itemPricew01 * 1.24;
+                $objectArr2["PRICER02"] = $this->itemPricew02 * 1.24;
+                if ($this->tecdocSupplierId)
+                    $objectArr2["CCCFXTDBRAND"] = $this->tecdocSupplierId->getId();
+                $objectArr2["CCCFXRELBRAND"] = $this->itemMtrmanfctr;
+
+                //MU21
+            }
+        }
+        unset($objectArr2["MU21"]);
+        unset($objectArr2["MU12MODE"]);
         $objectArr2["VAT"] = 1410;
         $objectArr2["CODE2"] = $this->supplierCode;
         $objectArr2["CCCREF"] = $this->cccRef;
@@ -2154,9 +2154,9 @@ class Product extends Entity {
         $objectArr2["cccWebUpd"] = $this->cccWebUpd;
         $objectArr2["REMARKS"] = $this->itemRemarks;
         $objectArr2["MTRMARK"] = $this->itemMtrmark;
-		
+
         $objectArr2["MTRMANFCTR"] = $this->itemMtrmanfctr > 0 ? $this->itemMtrmanfctr : $this->getSupplierId()->getId();
-        $objectArr2["ISACTIVE"] = (int)$this->itemIsactive;
+        $objectArr2["ISACTIVE"] = (int) $this->itemIsactive;
         $objectArr[0] = $objectArr2;
         $dataOut[$object] = (array) $objectArr;
         @$dataOut["ITEEXTRA"][0] = array("VARCHAR02" => $this->sisxetisi);
@@ -2164,25 +2164,25 @@ class Product extends Entity {
         $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
         //print_r($out);
 
-	
+
         if (@$out->id > 0) {
-			$op = false;
-			if ($this->reference) {
-				$op = true;
-			}		
+            $op = false;
+            if ($this->reference) {
+                $op = true;
+            }
             $this->reference = $out->id;
             $em->persist($this);
             $em->flush();
             //$this->itemMtrmark = $this->itemMtrmark > 0 ? $this->itemMtrmark : 1000;
             $this->itemMtrmanfctr = $this->itemMtrmanfctr > 0 ? $this->itemMtrmanfctr : 1000;
-			$params["fSQL"] = "UPDATE MTRL SET MTRMANFCTR=" . $this->getSupplierId()->getId() . " , MTRMARK=" . $this->itemMtrmark . " WHERE MTRL = " . $this->reference;
-			//echo $params["fSQL"]."\n";
-			//if (!$op) {
-			if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'gianop') {
-				//$softone->createSql($params);
-				//print_r($softone->createSql($params));
-			}
-			//$this->toB2b();
+            $params["fSQL"] = "UPDATE MTRL SET MTRMANFCTR=" . $this->getSupplierId()->getId() . " , MTRMARK=" . $this->itemMtrmark . " WHERE MTRL = " . $this->reference;
+            //echo $params["fSQL"]."\n";
+            //if (!$op) {
+            if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'gianop') {
+                //$softone->createSql($params);
+                //print_r($softone->createSql($params));
+            }
+            //$this->toB2b();
             //print_r($softone->createSql($params));
         }
     }
@@ -2492,13 +2492,13 @@ class Product extends Entity {
         $dataindexarr[] = strtolower($this->greeklish($this->itemName1));
         $dataindexarr[] = strtolower($this->greeklish($this->erpSupplier));
 
-		$edis = (array)explode(",",$this->edis);
-		foreach($edis as $edi) {
-			$dataindexarr[] = $edi;
-			$dataindexarrs[] = $edi;
-			$dataindexarr[] = $this->greeklish($edi);		
-			$dataindexarrs[] = $this->greeklish($edi);		
-		}
+        $edis = (array) explode(",", $this->edis);
+        foreach ($edis as $edi) {
+            $dataindexarr[] = $edi;
+            $dataindexarrs[] = $edi;
+            $dataindexarr[] = $this->greeklish($edi);
+            $dataindexarrs[] = $this->greeklish($edi);
+        }
         //$article_id = $this->_webserviceProducts_[11632]->article_id;
         /*
           if (@$article_id > 0) {
@@ -2535,31 +2535,31 @@ class Product extends Entity {
           }
           }
          */
-		
-		if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
-			$this->itemRemarks = str_replace("\n","|",$this->itemRemarks);
-			$this->itemRemarks = str_replace("\r","|",$this->itemRemarks);
-			$this->itemRemarks = str_replace("||","|",$this->itemRemarks);
-			
-			$remarks = explode("|",str_replace("\n","|",$this->itemRemarks));
-			foreach((array)$remarks as $remark) {
-				$dataindexarr[] = $remark;
-				$dataindexarr[] = $this->greeklish($remark);	
-			}
-			//echo "<BR>";
-			//print_r($dataindexarr);
-			//echo "<BR>";
-		}
-		
+
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
+            $this->itemRemarks = str_replace("\n", "|", $this->itemRemarks);
+            $this->itemRemarks = str_replace("\r", "|", $this->itemRemarks);
+            $this->itemRemarks = str_replace("||", "|", $this->itemRemarks);
+
+            $remarks = explode("|", str_replace("\n", "|", $this->itemRemarks));
+            foreach ((array) $remarks as $remark) {
+                $dataindexarr[] = $remark;
+                $dataindexarr[] = $this->greeklish($remark);
+            }
+            //echo "<BR>";
+            //print_r($dataindexarr);
+            //echo "<BR>";
+        }
+
         $data_index = array_filter(array_unique($dataindexarr));
-		
+
         $data_indexs = array_filter(array_unique($dataindexarrs));
         $dataindex = addslashes(implode("|", $data_index));
-		
+
         $dataindexs = addslashes(implode("|", $data_indexs));
         $sql = "replace softone_product_freesearch set id = '" . $this->id . "', data_index='" . $dataindex . "'";
         $em->getConnection()->exec($sql);
-        $sql = "replace softone_product_search set id = '" . $this->id . "',gnisia='',search='".$dataindexs."' ,item_code='" . $this->itemCode . "',item_code1='" . $this->itemCode1 . "',item_code2='" . $this->supplierCode . "'";
+        $sql = "replace softone_product_search set id = '" . $this->id . "',gnisia='',search='" . $dataindexs . "' ,item_code='" . $this->itemCode . "',item_code1='" . $this->itemCode1 . "',item_code2='" . $this->supplierCode . "'";
         $em->getConnection()->exec($sql);
     }
 
@@ -2719,28 +2719,27 @@ class Product extends Entity {
         return $out;
     }
 
-    
     public function getEditLink() {
         $out = '<a target="_blank" title="' . $this->title . '" class="" car="" data-articleId="' . $this->tecdocArticleId . '" ref="' . $this->id . '" href="/product/view/' . $this->id . '">Edit</a>';
         return $out;
     }
-    
+
     public function getForOrderSupplier() {
 
-		$ti = $this->getSupplierId() ? $this->getSupplierId()->getTitle() : "";
-		if ($this->tecdocArticleId == 0) {
-			$out = '<a target="_blank" title="' . $ti . '"  class="" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $ti . '</a>';
-			return $out;
-		}
+        $ti = $this->getSupplierId() ? $this->getSupplierId()->getTitle() : "";
+        if ($this->tecdocArticleId == 0) {
+            $out = '<a target="_blank" title="' . $ti . '"  class="" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $ti . '</a>';
+            return $out;
+        }
         @$tecdoc = $this->getTecdocSupplierId() ? $this->getTecdocSupplierId()->getSupplier() : "";
         $out = '<a target="_blank" title="' . $ti . '"  class="" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $ti . '</a>
         <br>
         <span class="text-sm text-info">' . $tecdoc . '</span>';
-		if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
-			return $out;
-		} else {
-			return $out;
-		}
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
+            return $out;
+        } else {
+            return $out;
+        }
     }
 
     function getArticleAttributes() {
@@ -2833,12 +2832,12 @@ class Product extends Entity {
     }
 
     function getApothiki() {
-		if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'foxline') {
-			return $this->edis;
-		} else {
-			$qty = $this->qty - $this->reserved;
-			return $this->qty . ' / <span class="text-lg text-bold text-accent-dark">' . ($qty) . '</span> (' . $this->itemMtrplace . ")";
-		}
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'foxline') {
+            return $this->edis;
+        } else {
+            $qty = $this->qty - $this->reserved;
+            return $this->qty . ' / <span class="text-lg text-bold text-accent-dark">' . ($qty) . '</span> (' . $this->itemMtrplace . ")";
+        }
     }
 
     function getTick($order) {
@@ -3122,12 +3121,12 @@ class Product extends Entity {
     public function getMtrsup() {
         return $this->mtrsup;
     }
-	
-	function priceEshop($vat = 1) {
-		$pricer1 = number_format($this->getItemPricew02() * $vat, 2, '.', '');
-		$pricer2 = number_format($this->getItemPricew04() * $vat, 2, '.', '');
-		$pricer = $pricer1." / ".$pricer2;
-		return 	$pricer;
-	}
+
+    function priceEshop($vat = 1) {
+        $pricer1 = number_format($this->getItemPricew02() * $vat, 2, '.', '');
+        $pricer2 = number_format($this->getItemPricew04() * $vat, 2, '.', '');
+        $pricer = $pricer1 . " / " . $pricer2;
+        return $pricer;
+    }
 
 }
