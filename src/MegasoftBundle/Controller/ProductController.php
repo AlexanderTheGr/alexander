@@ -668,7 +668,7 @@ class ProductController extends Main {
 
         $fields["title"] = array("label" => "Περιγραφή", "required" => true, "className" => "col-md-6 col-sm-6");
         $fields["erpCode"] = array("label" => "Κωδικός Είδους", "required" => false, "className" => "col-md-2 col-sm-2");
-        $fields["erpCode"] = array("label" => "Κωδικός Είδους", "required" => false, "className" => "col-md-2 col-sm-2");
+        $fields["erpCode2"] = array("label" => "Κωδικός Είδους 2", "required" => false, "className" => "col-md-2 col-sm-2");
         $fields["barcode"] = array("label" => "Barcode", "required" => false, "className" => "col-md-2 col-sm-2");
 
         $fields["tecdocSupplierId"] = array("label" => "Tecdoc Supplier", "required" => false, "className" => "col-md-6", 'type' => "select", 'datasource' => array('repository' => 'MegasoftBundle:TecdocSupplier', 'name' => 'supplier', 'value' => 'id', 'suffix' => 'id'));
