@@ -357,7 +357,7 @@ class ProductController extends Main {
         $product->setErpCode2($erpCode);
         if ($product->getErpCode() == '') {
             $product->setErpCode($erpCode);
-        } 
+        }
         $product->setSupplierCode($this->clearstring($product->getSupplierCode()));
         $this->flushpersist($product);
         //echo $product->id."\n";
@@ -667,8 +667,9 @@ class ProductController extends Main {
         $fields["productSale"] = array("label" => "Προσφορά", "className" => "col-md-3", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'MegasoftBundle:ProductSale', 'name' => 'title', 'value' => 'id'));
 
         $fields["title"] = array("label" => "Περιγραφή", "required" => true, "className" => "col-md-6 col-sm-6");
-        $fields["erpCode"] = array("label" => "Κωδικός Είδους", "required" => false, "className" => "col-md-3 col-sm-3");
-        $fields["barcode"] = array("label" => "Barcode", "required" => false, "className" => "col-md-3 col-sm-3");
+        $fields["erpCode"] = array("label" => "Κωδικός Είδους", "required" => false, "className" => "col-md-2 col-sm-2");
+        $fields["erpCode"] = array("label" => "Κωδικός Είδους", "required" => false, "className" => "col-md-2 col-sm-2");
+        $fields["barcode"] = array("label" => "Barcode", "required" => false, "className" => "col-md-2 col-sm-2");
 
         $fields["tecdocSupplierId"] = array("label" => "Tecdoc Supplier", "required" => false, "className" => "col-md-6", 'type' => "select", 'datasource' => array('repository' => 'MegasoftBundle:TecdocSupplier', 'name' => 'supplier', 'value' => 'id', 'suffix' => 'id'));
 
