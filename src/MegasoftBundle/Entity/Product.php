@@ -1095,7 +1095,7 @@ class Product extends Entity {
         $data["mtrsup"] = $this->getSupplier() ? $this->getSupplier()->getReference() : "";
         $data["sisxetisi"] = $this->sisxetisi;
         $data["fwSupplierItemCode"] = $this->supplierItemCode;
-        $data["StoreCodeErp"] = $this->erpCode2;
+        $data["StoreCodeErp"] = "";//$this->erpCode2;
         /*
           $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
           $headerbody = array('Login' => "alexander", 'Date' => "2016-10-10");
