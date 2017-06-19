@@ -1162,7 +1162,7 @@ class OrderController extends Main {
             $yearto = $yearto == 0 ? 'Today' : $yearto;
             $year = $yearfrom . " - " . $yearto;
             $na = $brandsmodel->getBrandModel() . " " . $year;
-            $na = $brandsmodel->getBrandModel() != "" ?  $brandsmodel->getBrandModel() : $na;
+            $na = $brandsmodel->getBrandModelStr() != "" ?  $brandsmodel->getBrandModelStr() : $na;
             $o["id"] = $brandsmodel->getId();
             $o["name"] = $brandsmodel->getBrandModel() . " " . $year;
             $out[] = $o;
