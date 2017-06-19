@@ -39,7 +39,14 @@ class BrandModel
      * @ORM\Column(name="brand_model", type="string", length=255, nullable=false)
      */
     protected $brandModel;
-
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="brand_model_str", type="string", length=255, nullable=false)
+     */
+    protected $brandModelStr;
+    
     /**
      * @var integer
      *
@@ -185,7 +192,7 @@ class BrandModel
      */
     public function setBrandModelStr($brandModelStr)
     {
-        $this->brandModel = $brandModel;
+        $this->brandModelStr = $brandModel;
 
         return $this;
     }
@@ -197,7 +204,7 @@ class BrandModel
      */
     public function getBrandModelStr()
     {
-        return $this->brandModel;
+        return $this->brandModelStr;
     }    
     
 
