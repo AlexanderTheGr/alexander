@@ -1164,7 +1164,7 @@ class OrderController extends Main {
             $na = $brandsmodel->getBrandModel() . " " . $year;
             $na = $brandsmodel->getBrandModelStr() != "" ?  $brandsmodel->getBrandModelStr() : $na;
             $o["id"] = $brandsmodel->getId();
-            $o["name"] = $brandsmodel->getBrandModel() . " " . $year;
+            $o["name"] = $na;
             $out[] = $o;
         }
 
