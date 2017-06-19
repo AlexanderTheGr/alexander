@@ -27,6 +27,11 @@
         <option name="fixed"/>
       </options>
     </field>
+    <field name="brandModelStr" type="string" column="brand_model_str" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>    
     <field name="yearFrom" type="integer" column="year_from" nullable="false">
       <options>
         <option name="unsigned"/>
