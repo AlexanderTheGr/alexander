@@ -174,6 +174,32 @@ class BrandModel
     {
         return $this->brandModel;
     }
+    
+    
+    /**
+     * Set brandModelStr
+     *
+     * @param string $brandModelStr
+     *
+     * @return BrandModelStr
+     */
+    public function setBrandModelStr($brandModelStr)
+    {
+        $this->brandModel = $brandModel;
+
+        return $this;
+    }
+
+    /**
+     * Get brandModelStr
+     *
+     * @return string
+     */
+    public function getBrandModelStr()
+    {
+        return $this->brandModel;
+    }    
+    
 
     /**
      * Set yearFrom
