@@ -922,7 +922,7 @@ class OrderController extends Main {
         //$comments = str_replace(">", "", $comments);
         ///$comments = str_replace("<", "", $comments);
         //$comments = str_replace("@", "", $comments);
-        $comments = '';
+        $comments = $order->getRemarks();
 
         $orderArr["items"] = $items;
         $orderArr["customerid"] = $customer->getReference();
@@ -939,7 +939,6 @@ class OrderController extends Main {
         //}
         //echo $JsonStrWeb;
         print_r($result);
-
 
         if (@$result->InsertOrderResult > 0) {
             $order->setReference($result->InsertOrderResult);
