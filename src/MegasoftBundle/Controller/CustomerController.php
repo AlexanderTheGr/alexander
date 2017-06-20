@@ -314,7 +314,7 @@ class CustomerController extends Main {
                 ->addField(array("name" => "Name", "index" => 'customerName', 'search' => 'text'))
                 ->addField(array("name" => "ΑΦΜ", "index" => 'customerAfm', 'search' => 'text'))
                 ->addField(array("name" => "Address", "index" => 'customerAddress', 'search' => 'text'))
-                ->addField(array("name" => "Group", "index" => 'customergroup:title'));
+                ->addField(array("name" => "Group", "type"=>"select", "index" => 'customergroup:title'));
         $json = $this->datatable();
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
