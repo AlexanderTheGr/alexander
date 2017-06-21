@@ -1108,12 +1108,12 @@ class ProductController extends Main {
         }
         //ini_set("soap.wsdl_cache_enabled", "0");
         //exit;
-
+        
         $ch = \curl_init();
         $header = array('Contect-Type:application/xml', 'Accept:application/xml');
         curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=2016-06-06&ParticipateInEshop=1");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=2010-06-06&ParticipateInEshop=1");
         curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
         // in real life you should use something like:
         // curl_setopt($ch, CURLOPT_POSTFIELDS,
@@ -1122,26 +1122,28 @@ class ProductController extends Main {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $server_output = curl_exec($ch);
-        file_put_contents("downliad.xml",$server_output);
+        file_put_contents("downliad.xml", $server_output);
         $StoreDetails = \simplexml_load_string($server_output);
-        
+
+
         //print_r($xml);
         //echo count($xml);
         //$params["Date"] = "2016-06-21";
         //$response = $soap->__soapCall("GetProducts", array($params));
-        //echo count($response->DownloadStoreBaseResponse);
+        echo count($response->DownloadStoreBaseResponse);
+        exit;
 
 
-        /*
-          if (count($response->DownloadStoreBaseResponse) == 1) {
-          $StoreDetails[] = $response->$response->DownloadStoreBaseResponse;
-          } elseif (count($response->$response->DownloadStoreBaseResponse) > 1) {
-          $StoreDetails = $response->$response->DownloadStoreBaseResponse;
-          }
-         */
+
+        if (count($response->DownloadStoreBaseResponse) == 1) {
+            $StoreDetails[] = $response->$response->DownloadStoreBaseResponse;
+        } elseif (count($response->$response->DownloadStoreBaseResponse) > 1) {
+            $StoreDetails = $response->$response->DownloadStoreBaseResponse;
+        }
 
 
-        echo count($response->GetProductsResult->StoreDetails);
+
+        //echo count($response->GetProductsResult->StoreDetails);
         echo "<BR>";
         exit;
         if (count($response->GetProductsResult->StoreDetails) == 1) {
