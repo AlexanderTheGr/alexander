@@ -1074,7 +1074,10 @@ class Product extends Entity {
         if ($this->reference > 0)
             $data["StoreId"] = $this->reference;
         $data["StoreDescr"] = $this->title;
+        
+        
         $data["StoreKwd"] = $this->erpCode;
+        
         $data["StoreRetailPrice"] = (float) $this->storeRetailPrice;
         $data["StoreWholeSalePrice"] = (float) $this->storeWholeSalePrice;
         $data["RetailMarkup"] = (float) $this->retailMarkup;
@@ -1105,9 +1108,9 @@ class Product extends Entity {
 
         $params["Login"] = $login;
         $params["JsonStrWeb"] = json_encode($data);
-        print_r($params);
+        //print_r($params);
         $response = $soap->__soapCall("SetProduct", array($params));
-        print_r($response);
+        //print_r($response);
         if ($response->SetProductResult > 0 AND $this->reference == 0) {
             $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
             $this->reference = $response->SetProductResult;
