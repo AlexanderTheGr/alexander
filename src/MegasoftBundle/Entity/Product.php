@@ -1071,6 +1071,10 @@ class Product extends Entity {
         //$em = $this->getDoctrine()->getManager();
         $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
 
+        if ($this->erpCode2 == "" ) {
+            $this->erpCode2 = $this->erpCode;
+        }
+        
         if ($this->reference > 0)
             $data["StoreId"] = $this->reference;
         $data["StoreDescr"] = $this->title;
