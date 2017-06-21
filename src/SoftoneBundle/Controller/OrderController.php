@@ -1706,6 +1706,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($order->getCustomer());
+        
+        $vat = $customer->getCustomerVatsts() > 1 ? 1.17 : 1.24;
+        
         $price = $product->getGroupedPrice($customer, $vat);
 
         $orderItem->setField("qty", $qty + $request->request->get("qty"));
