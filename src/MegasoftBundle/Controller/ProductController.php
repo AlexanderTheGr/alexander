@@ -1253,12 +1253,12 @@ class ProductController extends Main {
             //$q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
 
             $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
-            echo $sql . "<BR>";
-            echo ".";
+            //echo $sql . "<BR>";
+            echo "-";
             $this->getDoctrine()->getManager()->getConnection()->exec($sql);
         } else {
             $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
-            echo $sql . "<BR>";
+            //echo $sql . "<BR>";
             echo ".";
             $this->getDoctrine()->getManager()->getConnection()->exec($sql);
         }
