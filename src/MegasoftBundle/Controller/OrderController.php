@@ -1060,6 +1060,7 @@ class OrderController extends Main {
             'brands' => $this->getBrands(),
             'fbrands' => $this->getFbrands(),
             'order' => $order->getId(),
+            'fanoshow' => $this->getSetting("AppBundle:fanoshow:fanoshow"),
             'history' => $history
         ));
         return str_replace("\n", "", htmlentities($response));
