@@ -1160,7 +1160,7 @@ class ProductController extends Main {
 
         foreach ($StoreDetails as $data) {
             $this->setProduct($data);
-            if ($i++ > 100) return;
+            //if ($i++ > 100) return;
         }
         $sql = 'UPDATE `megasoft_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
         $this->getDoctrine()->getConnection()->exec($sql);
