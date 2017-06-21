@@ -1125,17 +1125,18 @@ class ProductController extends Main {
         file_put_contents("downliad.xml", $server_output);
         */
         //$StoreDetails = \simplexml_load_string($server_output);
-        $StoreDetails = \simplexml_load_file("downliad.xml");
+        $result = \simplexml_load_file("downliad.xml");
 
-
+        $StoreDetails = $result->StoreDetails;
         //print_r($xml);
         //echo count($xml);
         //$params["Date"] = "2016-06-21";
         //$response = $soap->__soapCall("GetProducts", array($params));
-        echo count($StoreDetails->StoreDetails);
+        echo count($StoreDetails);
         exit;
 
 
+        /*
 
         if (count($response->DownloadStoreBaseResponse) == 1) {
             $StoreDetails[] = $response->$response->DownloadStoreBaseResponse;
@@ -1153,13 +1154,13 @@ class ProductController extends Main {
         } elseif (count($response->GetProductsResult->StoreDetails) > 1) {
             $StoreDetails = $response->GetProductsResult->StoreDetails;
         }
-
-
+        */
         //print_r($StoreDetails);
         // exit;
 
         foreach ($StoreDetails as $data) {
             $this->setProduct($data);
+            if ($i++ > 100) return;
         }
         $sql = 'UPDATE `megasoft_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
         $this->getDoctrine()->getConnection()->exec($sql);
