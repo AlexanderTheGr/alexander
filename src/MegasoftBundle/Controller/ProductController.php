@@ -1108,7 +1108,7 @@ class ProductController extends Main {
         }
         //ini_set("soap.wsdl_cache_enabled", "0");
         //exit;
-        
+        /*
         $ch = \curl_init();
         $header = array('Contect-Type:application/xml', 'Accept:application/xml');
         curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
@@ -1123,7 +1123,9 @@ class ProductController extends Main {
 
         $server_output = curl_exec($ch);
         file_put_contents("downliad.xml", $server_output);
-        $StoreDetails = \simplexml_load_string($server_output);
+        */
+        //$StoreDetails = \simplexml_load_string($server_output);
+        $StoreDetails = \simplexml_load_file("downliad.xml");
 
 
         //print_r($xml);
