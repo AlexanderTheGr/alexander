@@ -1108,29 +1108,27 @@ class ProductController extends Main {
         }
         //ini_set("soap.wsdl_cache_enabled", "0");
         //exit;
-        /*
-          $ch = \curl_init();
-          $header = array('Contect-Type:application/xml', 'Accept:application/xml');
-          curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
-          curl_setopt($ch, CURLOPT_POST, 1);
-          curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=2016-06-06&ParticipateInEshop=1");
-          curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-          // in real life you should use something like:
-          // curl_setopt($ch, CURLOPT_POSTFIELDS,
-          //          http_build_query(array('postvar1' => 'value1')));
-          // receive server response ...
-          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-          $server_output = curl_exec($ch);
-          $StoreDetails = \simplexml_load_string($server_output);
-          //print_r($xml);
-          //echo count($xml);
-         */
+        $ch = \curl_init();
+        $header = array('Contect-Type:application/xml', 'Accept:application/xml');
+        curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=2016-06-06&ParticipateInEshop=1");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+        // in real life you should use something like:
+        // curl_setopt($ch, CURLOPT_POSTFIELDS,
+        //          http_build_query(array('postvar1' => 'value1')));
+        // receive server response ...
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-        $params["Date"] = "2016-06-21";
-        $response = $soap->__soapCall("GetProducts", array($params));
+        $server_output = curl_exec($ch);
+        $StoreDetails = \simplexml_load_string($server_output);
+        
+        //print_r($xml);
+        //echo count($xml);
+        //$params["Date"] = "2016-06-21";
+        //$response = $soap->__soapCall("GetProducts", array($params));
         //echo count($response->DownloadStoreBaseResponse);
-
 
 
         /*
@@ -1144,7 +1142,7 @@ class ProductController extends Main {
 
         echo count($response->GetProductsResult->StoreDetails);
         echo "<BR>";
-        //exit;
+        exit;
         if (count($response->GetProductsResult->StoreDetails) == 1) {
             $StoreDetails[] = $response->GetProductsResult->StoreDetails;
         } elseif (count($response->GetProductsResult->StoreDetails) > 1) {
@@ -1218,7 +1216,7 @@ class ProductController extends Main {
         }
         if (addslashes($data["fwSupplierId"]) > 0)
             $q[] = "`tecdoc_supplier_id` = '" . addslashes($data["fwSupplierId"]) . "'";
-        
+
         $q[] = "`tecdoc_code` = '" . addslashes($data["fwCode"]) . "'";
         $q[] = "`title` = '" . addslashes($data["StoreDescr"]) . "'";
         $q[] = "`remarks` = '" . addslashes($data["remarks"]) . "'";
@@ -1228,8 +1226,8 @@ class ProductController extends Main {
         $q[] = "`supplier_item_code` = '" . addslashes($data["fwSupplierItemCode"]) . "'";
         $q[] = "`webupd` = '" . ($data["webupd"] == 'True' ? 1 : 0) . "'";
         $q[] = "`barcode` = '" . addslashes($data["barcode"]) . "'";
-        
-        
+
+
 
         if ($supplier) {
             $q[] = "`supplier` = '" . $supplier->getId() . "'";
