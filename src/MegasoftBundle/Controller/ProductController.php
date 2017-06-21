@@ -1122,6 +1122,7 @@ class ProductController extends Main {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $server_output = curl_exec($ch);
+        file_put_contents("downliad.xml",$server_output);
         $StoreDetails = \simplexml_load_string($server_output);
         
         //print_r($xml);
