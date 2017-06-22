@@ -1234,6 +1234,7 @@ class ProductController extends Main {
         $q[] = "`supplier_item_code` = '" . addslashes($data["fwSupplierItemCode"]) . "'";
         $q[] = "`webupd` = '" . ($data["webupd"] == 'True' ? 1 : 0) . "'";
         $q[] = "`barcode` = '" . addslashes($data["barcode"]) . "'";
+        $q[] = "`has_transactions` = '" . addslashes($data["HasTransactions"]) . "'";
 
 
 
