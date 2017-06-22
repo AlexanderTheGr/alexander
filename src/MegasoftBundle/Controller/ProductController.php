@@ -620,7 +620,7 @@ class ProductController extends Main {
         }
         $customer = $this->getDoctrine()->getRepository('MegasoftBundle:Customer')->find(1);
         //echo $entity->getGroupedDiscountPrice($customer);
-
+       
         $cats = $entity->getCats();
         foreach ((array) $cats as $cat) {
             $category = $this->getDoctrine()
@@ -666,8 +666,12 @@ class ProductController extends Main {
 
         $fields["productSale"] = array("label" => "Προσφορά", "className" => "col-md-3", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'MegasoftBundle:ProductSale', 'name' => 'title', 'value' => 'id'));
 
+        
         $fields["title"] = array("label" => "Περιγραφή", "required" => true, "className" => "col-md-6 col-sm-6");
         $fields["erpCode"] = array("label" => "Κωδικός Είδους", "required" => false, "className" => "col-md-2 col-sm-2");
+        
+        
+        
         $fields["erpCode2"] = array("label" => "Κωδικός Είδους 2", "required" => false, "className" => "col-md-2 col-sm-2");
         $fields["barcode"] = array("label" => "Barcode", "required" => false, "className" => "col-md-2 col-sm-2");
 
@@ -709,7 +713,7 @@ class ProductController extends Main {
         $fields["remarks"] = array("label" => "Remarks", "required" => false, 'type' => "textarea", "className" => "col-md-6 col-sm-6");
         $fields["sisxetisi"] = array("label" => "Κωδικός Συσχέτισης", "className" => "col-md-6", "required" => false);
 
-
+        
         $forms = $this->getFormLyFields($entity, $fields);
 
         if ($id > 0 AND count($entity) > 0) {
