@@ -667,8 +667,8 @@ class ProductController extends Main {
         $fields["productSale"] = array("label" => "Προσφορά", "className" => "col-md-3", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'MegasoftBundle:ProductSale', 'name' => 'title', 'value' => 'id'));
 
         
-        $fields["title"] = array("label" => "Περιγραφή","disabled"=>false, "required" => true, "className" => "col-md-6 col-sm-6");
-        $fields["erpCode"] = array("label" => "Κωδικός Είδους","disabled"=>$entity->getHasTransactions(), "required" => false, "className" => "col-md-2 col-sm-2");
+        $fields["title"] = array("label" => "Περιγραφή","disabled"=>$entity->getHasTransactions() > 0 ? true : false, "required" => true, "className" => "col-md-6 col-sm-6");
+        $fields["erpCode"] = array("label" => "Κωδικός Είδους","disabled"=>$entity->getHasTransactions() > 0 ? true : false, "required" => false, "className" => "col-md-2 col-sm-2");
         
         
         
