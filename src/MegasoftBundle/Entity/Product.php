@@ -1550,6 +1550,11 @@ class Product extends Entity {
      * @var boolean
      */
     private $priceupd = '0';
+    
+    /**
+     * @var boolean
+     */
+    private $hasTransactions = '0';    
 
     /**
      * @var boolean
@@ -1578,6 +1583,30 @@ class Product extends Entity {
         return $this->priceupd;
     }
 
+    
+    /**
+     * Set hasTransactions
+     *
+     * @param boolean $hasTransactions
+     *
+     * @return Product
+     */
+    public function setHasTransactions($hasTransactions) {
+        $this->hasTransactions = $hasTransactions;
+
+        return $this;
+    }
+
+    /**
+     * Get hasTransactions
+     *
+     * @return boolean
+     */
+    public function getHasTransactions() {
+        return $this->hasTransactions;
+    }    
+    
+    
     /**
      * Set active
      *
