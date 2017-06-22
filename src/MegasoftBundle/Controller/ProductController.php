@@ -1172,7 +1172,7 @@ class ProductController extends Main {
 
         $data = (array) $data;
 
-        if ($data["StoreId"] < 263243) return;
+        //if ($data["StoreId"] < 207820) return;
         //print_r($data);
         //return;
         $entity = $this->getDoctrine()
