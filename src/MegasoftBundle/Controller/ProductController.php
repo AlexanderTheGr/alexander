@@ -1172,12 +1172,14 @@ class ProductController extends Main {
 
         $data = (array) $data;
 
+        if ($data["StoreId"] < 148309) return;
         //print_r($data);
         //return;
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->findOneBy(array("erpCode" => $data["StoreKwd"]));
-
+        
+       
 
         $dt = new \DateTime("now");
 
