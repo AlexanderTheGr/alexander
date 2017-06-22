@@ -1261,7 +1261,7 @@ class ProductController extends Main {
             $this->getDoctrine()->getManager()->getConnection()->exec($sql);
         } else {
             $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
-            //echo $sql . "<BR>";
+            echo $entity->getId() . "<BR>";
             echo ".";
             //$this->getDoctrine()->getManager()->getConnection()->exec($sql);
         }
