@@ -1606,7 +1606,6 @@ class Product extends Entity {
         return $this->hasTransactions;
     }    
     
-    
     /**
      * Set active
      *
