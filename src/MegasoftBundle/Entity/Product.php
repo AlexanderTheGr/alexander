@@ -1114,8 +1114,8 @@ class Product extends Entity {
         $params["Login"] = $login;
         $params["JsonStrWeb"] = json_encode($data);
         print_r($params);
-        $response = $soap->__soapCall("SetProduct", array($params));
-        print_r($response);
+        //$response = $soap->__soapCall("SetProduct", array($params));
+        //print_r($response);
         if ($response->SetProductResult > 0 AND $this->reference == 0) {
             $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
             $this->reference = $response->SetProductResult;
