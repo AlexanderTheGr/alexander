@@ -1076,11 +1076,12 @@ class Product extends Entity {
         }
         
         if ($this->reference > 0)
-            $data["StoreId"] = $this->reference;
-        $data["StoreDescr"] = $this->title;
+            $data["StoreId"] = $this->reference; 
         
-        
-        $data["StoreKwd"] = $this->erpCode;
+        if ($this->reference == 0) {
+            $data["StoreDescr"] = $this->title;
+            $data["StoreKwd"] = $this->erpCode;
+        }
         
         $data["StoreRetailPrice"] = (float) $this->storeRetailPrice;
         $data["StoreWholeSalePrice"] = (float) $this->storeWholeSalePrice;
