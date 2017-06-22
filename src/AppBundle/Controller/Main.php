@@ -630,7 +630,7 @@ class Main extends Controller {
                 //@$options["required"] = $options["required"] != '' ? $options["required"] > 0 ? true : false : true;
                 //echo @$options["required"]." ".$options["className"]."<BR>";
                 
-                @$forms["fields"][] = array("key" => $field, "className" => (string) $options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field), "type" => $options["type"], "templateOptions" => array("type" => '', 'disabled'=>true, 'class' => '', "label" => $options["label"], "required" => $options["required"]));
+                @$forms["fields"][] = array("key" => $field, "className" => (string) $options["className"], "id" => $this->repository . ":" . $field . ":" . $entity->getId(), "defaultValue" => $entity->getField($field), "type" => $options["type"], "templateOptions" => array("type" => '', 'disabled'=>$options["disabled"], 'class' => '', "label" => $options["label"], "required" => $options["required"]));
             }
         }
         return $forms;
