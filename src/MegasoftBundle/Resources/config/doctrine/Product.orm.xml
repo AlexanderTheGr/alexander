@@ -201,7 +201,15 @@
             <options>
                 <option name="default">0</option>
             </options>
-        </field>      
+        </field>     
+        
+        <field name="hasTransactions" type="boolean" column="has_transactions" nullable="false">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>          
+         
+           
         <field name="active" type="boolean" column="active" nullable="false">
             <options>
                 <option name="default">1</option>
