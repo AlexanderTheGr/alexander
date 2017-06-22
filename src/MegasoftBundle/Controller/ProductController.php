@@ -1175,6 +1175,15 @@ class ProductController extends Main {
         //if ($data["StoreId"] < 207820) return;
         //print_r($data);
         //return;
+        
+        
+        $sql = "update megasoft_product set `has_transactions` = '" . addslashes($data["HasTransactions"]) . "' where reference = '" . addslashes($data["StoreId"]) . "'";
+
+        echo ".";
+        $this->getDoctrine()->getManager()->getConnection()->exec($sql);        
+        
+        return;
+        
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->findOneBy(array("erpCode" => $data["StoreKwd"]));
