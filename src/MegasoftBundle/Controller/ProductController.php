@@ -823,7 +823,7 @@ class ProductController extends Main {
             if (in_array($brandmodeltype->getId(), $cars)) {
                 $style = "style='color:red'";
             }   
-                
+            $style = "style='color:red'";    
             $html .= "<li class='brandmodetypeli' data-ref='" . $brandmodeltype->getId() . "'>";
             $html .= "<a " . $style . " data-ref='" . $brandmodeltype->getId() . "' class='brandmodetypelia'>" . $brandmodeltype->getBrandModelType() . "</a>";
             $html .= '</li>';
