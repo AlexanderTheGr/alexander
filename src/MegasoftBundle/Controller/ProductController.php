@@ -813,12 +813,16 @@ class ProductController extends Main {
         }
         $cars = (array)  unserialize( $product->getCars());
 
-        print_r($cars);
         
         $brandmodeltypes = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:BrandModelType')->findBy(array("brandModel" => $request->request->get("brandModel")), array('brandModelType' => 'ASC'));
         $html = '';
         foreach ($brandmodeltypes as $brandmodeltype) {
+            //if (in_array())
+            if (in_array($brandmodeltype->getId(), $cars)) {
+                $style = 'style="color:red"';
+            }   
+                
             $html .= "<li class='brandmodetypeli' data-ref='" . $brandmodeltype->getId() . "'>";
             $html .= "<a " . $style . " data-ref='" . $brandmodeltype->getId() . "' class='brandmodetypelia'>" . $brandmodeltype->getBrandModelType() . "</a>";
             $html .= '</li>';
