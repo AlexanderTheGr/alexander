@@ -756,11 +756,11 @@ class ProductController extends Main {
     public function getCars($product) {
         $brands = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:Brand')->findBy(array(), array('brand' => 'ASC'));
-        
+
 
         $cars = (array) $product->getCars();
 
-        $html = "<ul class='pbrands' data-cars='" . serialize($cars). "'>";
+        $html = "<ul class='pbrands' data-prod='" . $product->getId() . "'>";
         foreach ($brands as $brand) {
             $brandmodels = $this->getDoctrine()
                             ->getRepository('SoftoneBundle:BrandModel')->findBy(array("brand" => $brand->getId()), array('brandModel' => 'ASC'));
@@ -802,7 +802,7 @@ class ProductController extends Main {
      */
     public function getBrandmodeltypes(Request $request) {
         //echo $request->request->get("brandModel");
-        
+
         $brandmodeltypes = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:BrandModelType')->findBy(array("brandModel" => $request->request->get("brandModel")), array('brandModelType' => 'ASC'));
         $html = '';
