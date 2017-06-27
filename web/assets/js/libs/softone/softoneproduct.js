@@ -94,7 +94,7 @@ setTimeout(function () {
 }, 1000)
 
 jQuery('.brandli').live('click', function () {
-    $(".pbrandmodels"+$(this).attr("data-ref")).slideToggle();
+    $(".pbrandmodels_"+$(this).attr("data-ref")).slideToggle();
 })
 
 jQuery('.brandmodellia').live('click', function () {
