@@ -800,7 +800,7 @@ class ProductController extends Main {
      * @Route("/product/getBrandmodeltypes")
      */
     public function getBrandmodeltypes(Request $request) {
-        $request->request->get("brandModel");
+        echo $request->request->get("brandModel");
         $brandmodeltypes = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:BrandModelType')->findBy(array("brandModel" => $request->request->get("brandModel")), array('brandModelType' => 'ASC'));
         $html = '';
