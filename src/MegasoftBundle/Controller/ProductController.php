@@ -756,37 +756,14 @@ class ProductController extends Main {
 
     public function getCars($product) {
         $entities = $this->getDoctrine()
-                ->getRepository('MegasoftBundle:Category')
-                ->findBy(array("parent" => 0));
-        $html = "<ul class='productcategory'>";
+                ->getRepository('SoftoneBundle:Brand');
+        $html = "<ul class='brands'>";
 
-        $cats = (array) $product->getCats();
+        $cars = (array) $product->getCars();
 
         foreach ($entities as $entity) {
-            $html .= "<li class='parentcategoryli' data-ref='" . $entity->getId() . "'>";
-
-
-            $entities2 = $this->getDoctrine()
-                    ->getRepository('MegasoftBundle:Category')
-                    ->findBy(array("parent" => $entity->getId()));
-            $style = "";
-            foreach ($entities2 as $entity2) {
-                //$style = in_array($entity2->getId(), $cats) ? "style='color:red'" : '';
-                if (in_array($entity2->getId(), (array) $cats)) {
-                    $style = "style='color:red'";
-                }
-            }
-            $html .= "<a " . $style . " data-ref='" . $entity->getId() . "' class='parentcategorylia'>" . $entity->getName() . "</a>";
-
-            $html .= "<ul class='productcategory categoryul categoryul_" . $entity->getId() . "'>";
-
-            foreach ($entities2 as $entity2) {
-                $checked = in_array($entity2->getId(), (array) $cats) ? 'checked' : '';
-                $style = in_array($entity2->getId(), $cats) ? "style='color:red'" : '';
-                $html .= "<li " . $style . " class='categoryli categoryli_" . $entity->getId() . "'><input " . $checked . " class='productcategorychk' data-product='" . $product->getId() . "' data-ref='" . $entity2->getId() . "' type='checkbox'/>" . $entity2->getName() . "</li>";
-            }
-            $html .= '</ul>';
-
+            $html .= "<li class='brandli' data-ref='" . $entity->getId() . "'>";
+            $html .= "<a " . $style . " data-ref='" . $entity->getId() . "' class='parentcategorylia'>" . $entity->getBrand() . "</a>";
             $html .= '</li>';
         }
         $html .= '</ul>';
