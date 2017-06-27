@@ -93,7 +93,7 @@ setTimeout(function () {
     })
 }, 1000)
 
-jQuery('.brandli').live('click', function () {
+jQuery('.brandlia').live('click', function () {
     $(".pbrandmodels_"+$(this).attr("data-ref")).slideToggle();
 })
 
