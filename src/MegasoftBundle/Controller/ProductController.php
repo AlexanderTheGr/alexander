@@ -762,7 +762,8 @@ class ProductController extends Main {
 
         foreach ($brands as $brand) {
             $brandmodels = $this->getDoctrine()
-                        ->getRepository('SoftoneBundle:BrandModel')->findBy(array("brand"=>$brand->getId()), array('brandModel' => 'ASC'));            
+                        ->getRepository('SoftoneBundle:BrandModel')->findBy(array("brand"=>$brand->getId()), array('brandModel' => 'ASC'));
+            if (count($brandmodels) == 0) continue;
             $html .= "<li class='brandli' data-ref='" . $brand->getId() . "'>";
             $html .= "<a " . $style . " data-ref='" . $brand->getId() . "' class='brandlia'>" . $brand->getBrand() . "</a>";
             $html .= "<ul class='pbrandmodelss'>";
