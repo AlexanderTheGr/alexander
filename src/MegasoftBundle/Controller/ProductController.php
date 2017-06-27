@@ -620,7 +620,7 @@ class ProductController extends Main {
         }
         $customer = $this->getDoctrine()->getRepository('MegasoftBundle:Customer')->find(1);
         //echo $entity->getGroupedDiscountPrice($customer);
-       
+
         $cats = $entity->getCats();
         foreach ((array) $cats as $cat) {
             $category = $this->getDoctrine()
@@ -666,12 +666,12 @@ class ProductController extends Main {
 
         $fields["productSale"] = array("label" => "Προσφορά", "className" => "col-md-3", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'MegasoftBundle:ProductSale', 'name' => 'title', 'value' => 'id'));
 
-        
-        $fields["title"] = array("label" => "Περιγραφή","disabled"=>$entity->getHasTransactions() > 0 ? true : false, "required" => true, "className" => "col-md-6 col-sm-6");
-        $fields["erpCode"] = array("label" => "Κωδικός Είδους","disabled"=>$entity->getHasTransactions() > 0 ? true : false, "required" => false, "className" => "col-md-2 col-sm-2");
-        
-        
-        
+
+        $fields["title"] = array("label" => "Περιγραφή", "disabled" => $entity->getHasTransactions() > 0 ? true : false, "required" => true, "className" => "col-md-6 col-sm-6");
+        $fields["erpCode"] = array("label" => "Κωδικός Είδους", "disabled" => $entity->getHasTransactions() > 0 ? true : false, "required" => false, "className" => "col-md-2 col-sm-2");
+
+
+
         $fields["erpCode2"] = array("label" => "Κωδικός Είδους 2", "required" => false, "className" => "col-md-2 col-sm-2");
         $fields["barcode"] = array("label" => "Barcode", "required" => false, "className" => "col-md-2 col-sm-2");
 
@@ -713,7 +713,7 @@ class ProductController extends Main {
         $fields["remarks"] = array("label" => "Remarks", "required" => false, 'type' => "textarea", "className" => "col-md-6 col-sm-6");
         $fields["sisxetisi"] = array("label" => "Κωδικός Συσχέτισης", "className" => "col-md-6", "required" => false);
 
-        
+
         $forms = $this->getFormLyFields($entity, $fields);
 
         if ($id > 0 AND count($entity) > 0) {
@@ -743,7 +743,6 @@ class ProductController extends Main {
             $tabs[] = array("title" => "Retaltions", "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
             $tabs[] = array("title" => "Categories", "datatables" => '', "form" => '', "content" => $this->getCategories($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
             $tabs[] = array("title" => "Models", "datatables" => '', "form" => '', "content" => $this->getCars($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
-            
         }
 
         foreach ($tabs as $tab) {
@@ -756,7 +755,7 @@ class ProductController extends Main {
 
     public function getCars($product) {
         $entities = $this->getDoctrine()
-                ->getRepository('SoftoneBundle:Brand')->findAll();
+                        ->getRepository('SoftoneBundle:Brand')->findAll(array(), array('brand' => 'ASC'));
         $html = "<ul class='brands'>";
 
         $cars = (array) $product->getCars();
@@ -768,9 +767,8 @@ class ProductController extends Main {
         }
         $html .= '</ul>';
         return $html;
-    }    
-    
-    
+    }
+
     public function getCategories($product) {
         $entities = $this->getDoctrine()
                 ->getRepository('MegasoftBundle:Category')
@@ -1132,21 +1130,21 @@ class ProductController extends Main {
         //ini_set("soap.wsdl_cache_enabled", "0");
         //exit;
         /*
-        $ch = \curl_init();
-        $header = array('Contect-Type:application/xml', 'Accept:application/xml');
-        curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=2010-06-06&ParticipateInEshop=1");
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-        // in real life you should use something like:
-        // curl_setopt($ch, CURLOPT_POSTFIELDS,
-        //          http_build_query(array('postvar1' => 'value1')));
-        // receive server response ...
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+          $ch = \curl_init();
+          $header = array('Contect-Type:application/xml', 'Accept:application/xml');
+          curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
+          curl_setopt($ch, CURLOPT_POST, 1);
+          curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=2010-06-06&ParticipateInEshop=1");
+          curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+          // in real life you should use something like:
+          // curl_setopt($ch, CURLOPT_POSTFIELDS,
+          //          http_build_query(array('postvar1' => 'value1')));
+          // receive server response ...
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-        $server_output = curl_exec($ch);
-        file_put_contents("downliad10.xml", $server_output);
-        */
+          $server_output = curl_exec($ch);
+          file_put_contents("downliad10.xml", $server_output);
+         */
         //$StoreDetails = \simplexml_load_string($server_output);
         $result = \simplexml_load_file("downliad10.xml");
 
@@ -1161,23 +1159,23 @@ class ProductController extends Main {
 
         /*
 
-        if (count($response->DownloadStoreBaseResponse) == 1) {
-            $StoreDetails[] = $response->$response->DownloadStoreBaseResponse;
-        } elseif (count($response->$response->DownloadStoreBaseResponse) > 1) {
-            $StoreDetails = $response->$response->DownloadStoreBaseResponse;
-        }
+          if (count($response->DownloadStoreBaseResponse) == 1) {
+          $StoreDetails[] = $response->$response->DownloadStoreBaseResponse;
+          } elseif (count($response->$response->DownloadStoreBaseResponse) > 1) {
+          $StoreDetails = $response->$response->DownloadStoreBaseResponse;
+          }
 
 
 
-        //echo count($response->GetProductsResult->StoreDetails);
-        echo "<BR>";
-        exit;
-        if (count($response->GetProductsResult->StoreDetails) == 1) {
-            $StoreDetails[] = $response->GetProductsResult->StoreDetails;
-        } elseif (count($response->GetProductsResult->StoreDetails) > 1) {
-            $StoreDetails = $response->GetProductsResult->StoreDetails;
-        }
-        */
+          //echo count($response->GetProductsResult->StoreDetails);
+          echo "<BR>";
+          exit;
+          if (count($response->GetProductsResult->StoreDetails) == 1) {
+          $StoreDetails[] = $response->GetProductsResult->StoreDetails;
+          } elseif (count($response->GetProductsResult->StoreDetails) > 1) {
+          $StoreDetails = $response->GetProductsResult->StoreDetails;
+          }
+         */
         //print_r($StoreDetails);
         // exit;
 
@@ -1198,11 +1196,11 @@ class ProductController extends Main {
         //if ($data["StoreId"] < 207820) return;
         //print_r($data);
         //return;
-        
+
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->findOneBy(array("erpCode" => $data["StoreKwd"]));
-        
+
 
         $dt = new \DateTime("now");
 
