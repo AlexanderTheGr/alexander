@@ -811,7 +811,7 @@ class ProductController extends Main {
                     ->find($request->request->get("product"));            
             
         }
-        $cars = (array) $product->getCars();
+        $cars = (array)  unserialize( $product->getCars());
 
         print_r($cars);
         
