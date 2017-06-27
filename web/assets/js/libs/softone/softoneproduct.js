@@ -87,7 +87,17 @@ setTimeout(function () {
                 var table = dt_tables["ctrlgettabs"];
                 table.fnFilter();
                 jQuery('.synafiacode input').val('')
+                jQuery("#SoftoneBundle:Product:sisxetisi:"+data.id).val(result.sisxetisi);
             })
         }
     })
 }, 1000)
+
+jQuery('.productcategorychk').live('click', function () {
+    var ref = $(this).attr("data-ref");
+    var data = {};
+    data.brandModel = $(this).attr("data-ref");
+    $.post("/product/getBrandmodeltypes", data, function (result) {
+        
+    })
+})
