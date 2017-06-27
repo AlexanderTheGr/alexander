@@ -755,7 +755,7 @@ class ProductController extends Main {
 
     public function getCars($product) {
         $entities = $this->getDoctrine()
-                        ->getRepository('SoftoneBundle:Brand')->findAll(array(), array('brand' => 'ASC'));
+                        ->getRepository('SoftoneBundle:Brand')->findBy(array(), array('brand' => 'ASC'));
         $html = "<ul class='brands'>";
 
         $cars = (array) $product->getCars();
