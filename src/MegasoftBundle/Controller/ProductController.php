@@ -754,15 +754,24 @@ class ProductController extends Main {
     }
 
     public function getCars($product) {
-        $entities = $this->getDoctrine()
+        $brands = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:Brand')->findBy(array(), array('brand' => 'ASC'));
-        $html = "<ul class='brands'>";
+        $html = "<ul class='pbrands'>";
 
         $cars = (array) $product->getCars();
 
-        foreach ($entities as $entity) {
-            $html .= "<li class='brandli' data-ref='" . $entity->getId() . "'>";
-            $html .= "<a " . $style . " data-ref='" . $entity->getId() . "' class='parentcategorylia'>" . $entity->getBrand() . "</a>";
+        foreach ($brands as $brand) {
+            $brandmodels = $this->getDoctrine()
+                        ->getRepository('SoftoneBundle:Brand')->findBy(array("brand"=>$brand->getId()), array('brand' => 'ASC'));            
+            $html .= "<li class='brandli' data-ref='" . $brand->getId() . "'>";
+            $html .= "<a " . $style . " data-ref='" . $brand->getId() . "' class='brandlia'>" . $brand->getBrand() . "</a>";
+            $html .= "<ul class='pbrandmodelss'>";
+            foreach ($brandmodels as $brandmodel) {
+                $html .= "<li class='brandli' data-ref='" . $brandmodel->getId() . "'>";
+                    $html .= "<a " . $style . " data-ref='" . $brandmodel->getId() . "' class='brandmodellia'>" . $brandmodel->getBrandModel() . "</a>";
+                $html .= '</ul>';
+            }
+            $html .= '</ul>';
             $html .= '</li>';
         }
         $html .= '</ul>';
