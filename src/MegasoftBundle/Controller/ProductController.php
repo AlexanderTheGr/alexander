@@ -758,7 +758,6 @@ class ProductController extends Main {
                         ->getRepository('SoftoneBundle:Brand')->findBy(array(), array('brand' => 'ASC'));
 
 
-        $cars = (array) $product->getCars();
 
         $html = "<ul class='pbrands' data-prod='" . $product->getId() . "'>";
         foreach ($brands as $brand) {
@@ -802,6 +801,17 @@ class ProductController extends Main {
      */
     public function getBrandmodeltypes(Request $request) {
         //echo $request->request->get("brandModel");
+        if ($this->getSetting("AppBundle:Erp:erpprefix") == '/erp01') {
+            $product = $this->getDoctrine()
+                    ->getRepository('MegasoftBundle:Product')
+                    ->find($request->request->get("product"));
+        } else {
+            $product = $this->getDoctrine()
+                    ->getRepository('SoftoneBundle:Product')
+                    ->find($request->request->get("product"));            
+            
+        }
+        $cars = (array) $product->getCars();
 
         $brandmodeltypes = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:BrandModelType')->findBy(array("brandModel" => $request->request->get("brandModel")), array('brandModelType' => 'ASC'));
