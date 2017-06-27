@@ -820,12 +820,14 @@ class ProductController extends Main {
         foreach ($brandmodeltypes as $brandmodeltype) {
             //if (in_array())
             $style = '';
+            $checkbox = "<input type='checkbox' class='brandmodetypechk' data-ref='" . $brandmodeltype->getId() . "' />";
             if (in_array($brandmodeltype->getId(), $cars)) {
                 $style = "style='color:red'";
+                $checkbox = "<input checked type='checkbox' class='brandmodetypechk' data-ref='" . $brandmodeltype->getId() . "' />";
             }   
             //$style = "style='color:red'";    
             $html .= "<li class='brandmodetypeli' data-ref='" . $brandmodeltype->getId() . "'>";
-            $html .= "<a " . $style . " data-ref='" . $brandmodeltype->getId() . "' class='brandmodetypelia'>" . $brandmodeltype->getBrandModelType() . "</a>";
+            $html .=  $checkbox."<a " . $style . " data-ref='" . $brandmodeltype->getId() . "' class='brandmodetypelia'>" . $brandmodeltype->getBrandModelType() . "</a>";
             $html .= '</li>';
         }
         $json = json_encode(array("data" => $html));
