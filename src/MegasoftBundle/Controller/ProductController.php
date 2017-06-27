@@ -778,7 +778,7 @@ class ProductController extends Main {
                 $html .= "<li class='brandli' data-ref='" . $brandmodel->getId() . "'>";
                 $html .= "<a " . $style . " data-ref='" . $brandmodel->getId() . "' class='brandmodellia'>" . $brandmodel->getBrandModel() . "</a>";
                 $html .= '</li>';
-                $html .= "<ul class='pbrandmodelstypes'>";
+                $html .= "<ul class='pbrandmodelstypes pbrandmodelstypes_" . $brandmodel->getId() . "'>";
                 /*
                   foreach ($brandmodeltypes as $brandmodeltype) {
                   $html .= "<li class='brandli' data-ref='" . $brandmodeltype->getId() . "'>";
@@ -800,7 +800,7 @@ class ProductController extends Main {
      * @Route("/product/getBrandmodeltypes")
      */
     public function getBrandmodeltypes(Request $request) {
-        echo $request->request->get("brandModel");
+        //echo $request->request->get("brandModel");
         $brandmodeltypes = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:BrandModelType')->findBy(array("brandModel" => $request->request->get("brandModel")), array('brandModelType' => 'ASC'));
         $html = '';
