@@ -778,7 +778,7 @@ class ProductController extends Main {
                 $html .= "<li class='brandli' data-ref='" . $brandmodel->getId() . "'>";
                 $html .= "<a " . $style . " data-ref='" . $brandmodel->getId() . "' class='brandmodellia'>" . $brandmodel->getBrandModel() . "</a>";
                 $html .= '</li>';
-                $html .= "<ul class='pbrandmodelstypes pbrandmodelstypes_" . $brandmodel->getId() . "'>";
+                $html .= "<ul style='display:none' class='pbrandmodelstypes pbrandmodelstypes_" . $brandmodel->getId() . "'>";
                 /*
                   foreach ($brandmodeltypes as $brandmodeltype) {
                   $html .= "<li class='brandli' data-ref='" . $brandmodeltype->getId() . "'>";
