@@ -770,21 +770,21 @@ class ProductController extends Main {
             $html .= "<ul class='pbrandmodels'>";
             foreach ($brandmodels as $brandmodel) {
                 /*
-                $brandmodeltypes = $this->getDoctrine()
-                                ->getRepository('SoftoneBundle:BrandModelType')->findBy(array("brandModel" => $brandmodel->getId()), array('brandModelType' => 'ASC'));
-                if (count($brandmodeltypes) == 0)
-                    continue;
-                */
+                  $brandmodeltypes = $this->getDoctrine()
+                  ->getRepository('SoftoneBundle:BrandModelType')->findBy(array("brandModel" => $brandmodel->getId()), array('brandModelType' => 'ASC'));
+                  if (count($brandmodeltypes) == 0)
+                  continue;
+                 */
                 $html .= "<li class='brandli' data-ref='" . $brandmodel->getId() . "'>";
                 $html .= "<a " . $style . " data-ref='" . $brandmodel->getId() . "' class='brandmodellia'>" . $brandmodel->getBrandModel() . "</a>";
                 $html .= '</li>';
                 $html .= "<ul class='pbrandmodelstypes'>";
                 /*
-                foreach ($brandmodeltypes as $brandmodeltype) {
-                    $html .= "<li class='brandli' data-ref='" . $brandmodeltype->getId() . "'>";
-                    $html .= "<a " . $style . " data-ref='" . $brandmodeltype->getId() . "' class='brandmodellia'>" . $brandmodeltype->getBrandModelType() . "</a>";
-                    $html .= '</li>';
-                }
+                  foreach ($brandmodeltypes as $brandmodeltype) {
+                  $html .= "<li class='brandli' data-ref='" . $brandmodeltype->getId() . "'>";
+                  $html .= "<a " . $style . " data-ref='" . $brandmodeltype->getId() . "' class='brandmodellia'>" . $brandmodeltype->getBrandModelType() . "</a>";
+                  $html .= '</li>';
+                  }
                  * 
                  */
                 $html .= '</ul>';
@@ -794,6 +794,25 @@ class ProductController extends Main {
         }
         $html .= '</ul>';
         return $html;
+    }
+
+    /**
+     * @Route("/product/getBrandmodeltypes")
+     */
+    public function getBrandmodeltypes(Request $request) {
+        $request->request->get("brandModel");
+        $brandmodeltypes = $this->getDoctrine()
+                        ->getRepository('SoftoneBundle:BrandModelType')->findBy(array("brandModel" => $request->request->get("brandModel")), array('brandModelType' => 'ASC'));
+        $html = '';
+        foreach ($brandmodeltypes as $brandmodeltype) {
+            $html .= "<li class='brandmodetypeli' data-ref='" . $brandmodeltype->getId() . "'>";
+            $html .= "<a " . $style . " data-ref='" . $brandmodeltype->getId() . "' class='brandmodetypelia'>" . $brandmodeltype->getBrandModelType() . "</a>";
+            $html .= '</li>';
+        }
+        $json = json_encode(array("data" => $html));
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
     }
 
     public function getCategories($product) {
