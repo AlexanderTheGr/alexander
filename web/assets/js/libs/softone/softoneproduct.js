@@ -93,7 +93,7 @@ setTimeout(function () {
     })
 }, 1000)
 
-jQuery('.productcategorychk').live('click', function () {
+jQuery('.brandmodetypelia').live('click', function () {
     var ref = $(this).attr("data-ref");
     var data = {};
     data.brandModel = $(this).attr("data-ref");
