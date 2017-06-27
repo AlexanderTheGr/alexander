@@ -97,7 +97,7 @@ jQuery('.brandmodellia').live('click', function () {
     var ref = $(this).attr("data-ref");
     var data = {};
     data.brandModel = $(this).attr("data-ref");
-    $(".pbrandmodelstypes").slideUp();
+    //$(".pbrandmodelstypes").slideUp();
     $.post("/product/getBrandmodeltypes", data, function (result) {
         $(".pbrandmodelstypes_"+data.brandModel).html(result);
         $('.pbrandmodelstypes_' + ref).slideToggle();
