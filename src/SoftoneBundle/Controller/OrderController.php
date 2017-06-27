@@ -1167,6 +1167,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             'history' => $history
         ));
         return str_replace("\n", "", htmlentities($response));
+        
     }
     function getFbrands() {
         $em = $this->getDoctrine()->getManager();
