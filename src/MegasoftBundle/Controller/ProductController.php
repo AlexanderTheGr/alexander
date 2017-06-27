@@ -760,7 +760,7 @@ class ProductController extends Main {
 
         $cars = (array) $product->getCars();
 
-        $html = "<ul class='pbrands' data-cars='" . json_encode($cars). "'>";
+        $html = "<ul class='pbrands' data-cars='" . serialize($cars). "'>";
         foreach ($brands as $brand) {
             $brandmodels = $this->getDoctrine()
                             ->getRepository('SoftoneBundle:BrandModel')->findBy(array("brand" => $brand->getId()), array('brandModel' => 'ASC'));
