@@ -762,15 +762,28 @@ class ProductController extends Main {
 
         foreach ($brands as $brand) {
             $brandmodels = $this->getDoctrine()
-                        ->getRepository('SoftoneBundle:BrandModel')->findBy(array("brand"=>$brand->getId()), array('brandModel' => 'ASC'));
-            if (count($brandmodels) == 0) continue;
+                            ->getRepository('SoftoneBundle:BrandModel')->findBy(array("brand" => $brand->getId()), array('brandModel' => 'ASC'));
+            if (count($brandmodels) == 0)
+                continue;
             $html .= "<li class='brandli' data-ref='" . $brand->getId() . "'>";
             $html .= "<a " . $style . " data-ref='" . $brand->getId() . "' class='brandlia'>" . $brand->getBrand() . "</a>";
             $html .= "<ul class='pbrandmodelss'>";
             foreach ($brandmodels as $brandmodel) {
+
+                $brandmodeltypes = $this->getDoctrine()
+                                ->getRepository('SoftoneBundle:BrandModelType')->findBy(array("brandModel" => $brandmodel->getId()), array('brandModelType' => 'ASC'));
+                if (count($brandmodeltypes) == 0)
+                    continue;
                 $html .= "<li class='brandli' data-ref='" . $brandmodel->getId() . "'>";
-                    $html .= "<a " . $style . " data-ref='" . $brandmodel->getId() . "' class='brandmodellia'>" . $brandmodel->getBrandModel() . "</a>";
+                $html .= "<a " . $style . " data-ref='" . $brandmodel->getId() . "' class='brandmodellia'>" . $brandmodel->getBrandModel() . "</a>";
                 $html .= '</li>';
+                $html .= "<ul class='pbrandmodelss'>";
+                foreach ($brandmodeltypes as $brandmodeltype) {
+                    $html .= "<li class='brandli' data-ref='" . $brandmodeltype->getId() . "'>";
+                    $html .= "<a " . $style . " data-ref='" . $brandmodeltype->getId() . "' class='brandmodellia'>" . $brandmodeltype->getBrandModelType() . "</a>";
+                    $html .= '</li>';
+                }
+                $html .= '</ul>';
             }
             $html .= '</ul>';
             $html .= '</li>';
