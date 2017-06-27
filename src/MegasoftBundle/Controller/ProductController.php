@@ -756,10 +756,11 @@ class ProductController extends Main {
     public function getCars($product) {
         $brands = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:Brand')->findBy(array(), array('brand' => 'ASC'));
-        $html = "<ul class='pbrands'>";
+        
 
         $cars = (array) $product->getCars();
 
+        $html = "<ul class='pbrands' data-cars='" . json_encode($cars). "'>";
         foreach ($brands as $brand) {
             $brandmodels = $this->getDoctrine()
                             ->getRepository('SoftoneBundle:BrandModel')->findBy(array("brand" => $brand->getId()), array('brandModel' => 'ASC'));
@@ -776,7 +777,7 @@ class ProductController extends Main {
                   continue;
                  */
                 $html .= "<li class='brandli' data-ref='" . $brandmodel->getId() . "'>";
-                $html .= "<a " . $style . " data-ref='" . $brandmodel->getId() . "' class='brandmodellia'>" . $brandmodel->getBrandModel() . "</a>";
+                $html .= "<a " . $style . " data-prod='" . $product->getId() . "' data-ref='" . $brandmodel->getId() . "' class='brandmodellia'>" . $brandmodel->getBrandModel() . "</a>";
                 $html .= '</li>';
                 $html .= "<ul style='display:none' class='pbrandmodelstypes pbrandmodelstypes_" . $brandmodel->getId() . "'>";
                 /*
@@ -801,6 +802,7 @@ class ProductController extends Main {
      */
     public function getBrandmodeltypes(Request $request) {
         //echo $request->request->get("brandModel");
+        
         $brandmodeltypes = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:BrandModelType')->findBy(array("brandModel" => $request->request->get("brandModel")), array('brandModelType' => 'ASC'));
         $html = '';
