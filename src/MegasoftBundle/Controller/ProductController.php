@@ -767,7 +767,7 @@ class ProductController extends Main {
                 continue;
             $html .= "<li class='brandli' data-ref='" . $brand->getId() . "'>";
             $html .= "<a " . $style . " data-ref='" . $brand->getId() . "' class='brandlia'>" . $brand->getBrand() . "</a>";
-            $html .= "<ul class='pbrandmodels'>";
+            $html .= "<ul  style='display:none' class='pbrandmodels'>";
             foreach ($brandmodels as $brandmodel) {
                 /*
                   $brandmodeltypes = $this->getDoctrine()
