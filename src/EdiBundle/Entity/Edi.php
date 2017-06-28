@@ -469,9 +469,12 @@ class Edi extends Entity {
                             if (!$edidatass[$k]) {
                                 $edidatass[$k]['ApiToken'] = $this->getToken();
                                 $edidatass[$k]['Items'] = array();
+                                $edidatass[$k]['ProcVersion'] = "sync";
                             }
                             $Items["ItemCode"] = $product->getCccRef();
                             $Items["ReqQty"] = 1;
+                            
+                            
                             $edidatass[$k]['Items'][] = $Items;
                             $products[$product->getCccRef()] = $product;
                         } else {
