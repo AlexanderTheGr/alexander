@@ -386,7 +386,7 @@ class Edi extends Entity {
         //return;    
         if ($this->getItemMtrsup() > 0) {
             $products = $em->getRepository('SoftoneBundle:Product')
-                    ->findBy(array("itemMtrsup" => $this->getItemMtrsup()), array('id' => 'desc'),100,0);
+                    ->findBy(array("itemMtrsup" => $this->getItemMtrsup()), array('id' => 'desc'),10,0);
             echo count($products);
             //return;
             
@@ -457,9 +457,9 @@ class Edi extends Entity {
                             //$sql = "update softone_product set item_pricew = '" . $itemPricew . "', item_pricer = '" . $itemPricer . "', item_cccpriceupd = 1, item_cccref = '" . $product->getCccRef() . "'   where id = '" . $product->getId() . "'";
 
                             echo $sql . "<BR>";
-                            //$em->getConnection()->exec($sql);
-                            //$this->flushpersist($product);
-                            //$product->toSoftone();
+                            $em->getConnection()->exec($sql);
+                            $this->flushpersist($product);
+                            $product->toSoftone();
 
                             if ($newcccref)
                                 $sql = "UPDATE MTRL SET CCCREF='" . $product->getCccRef() . "', CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
