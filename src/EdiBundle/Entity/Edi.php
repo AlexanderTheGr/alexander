@@ -386,10 +386,11 @@ class Edi extends Entity {
         //return;    
         if ($this->getItemMtrsup() > 0) {
             $products = $em->getRepository('SoftoneBundle:Product')
-                    ->findBy(array("itemMtrsup" => $this->getItemMtrsup()), array('id' => 'desc'), 25, 0);
+                    ->findBy(array("itemMtrsup" => $this->getItemMtrsup()), array('id' => 'desc'), 100, 0);
             echo count($products);
             //return;
-
+            $k = 0;
+            $i = 0;
             foreach ($products as $product) {
 
                 //return;
@@ -460,13 +461,17 @@ class Edi extends Entity {
                         echo $sql . "<BR>";
                         $em->getConnection()->exec($sql);
 
-                        if (!$edidatas) {
-                            $edidatas['ApiToken'] = $this->getToken();
-                            $edidatas['Items'] = array();
+
+                        if ($i++ % 25 == 0) {
+                            $k++;
+                        }
+                        if (!$edidatass[$k]) {
+                            $edidatass[$k]['ApiToken'] = $this->getToken();
+                            $edidatass[$k]['Items'] = array();
                         }
                         $Items["ItemCode"] = $product->getCccRef();
                         $Items["ReqQty"] = 1;
-                        $edidatas['Items'][] = $Items;
+                        $edidatass[$k]['Items'][] = $Items;
 
                         $products[$product->getCccRef()] = $product;
 
@@ -490,67 +495,71 @@ class Edi extends Entity {
                 }
                 //exit;
             }
+
             $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=getiteminfo';
-            $data_string = json_encode($edidatas);
-            print_r($edidatas);
-            echo "<BR>";
-            //exit;
-            //turn;
-            $result = file_get_contents($requerstUrl, null, stream_context_create(array(
-                'http' => array(
-                    'method' => 'POST',
-                    'header' =>
-                    'Content-Type: application/json' . "\r\n"
-                    . 'Content-Length: ' . strlen($data_string) . "\r\n",
-                    'content' => $data_string,
-                ),
-            )));
-            $re = json_decode($result);
+            foreach ($edidatass as $edidatas) {
+                $data_string = json_encode($edidatas);
+                print_r($edidatas);
+                echo "<BR>";
+                continue;
+                //exit;
+                //turn;
+                $result = file_get_contents($requerstUrl, null, stream_context_create(array(
+                    'http' => array(
+                        'method' => 'POST',
+                        'header' =>
+                        'Content-Type: application/json' . "\r\n"
+                        . 'Content-Length: ' . strlen($data_string) . "\r\n",
+                        'content' => $data_string,
+                    ),
+                )));
+                $re = json_decode($result);
 
-            print_r($re);
-            echo "<BR>";
-            foreach ((array)$re->Items as $item) {
-                $product = $products[$item->ItemCode];
-                $ediitem = $ediitems[$item->ItemCode];
-                $ediitem->setWholesaleprice($item->UnitPrice);
-
-
-                $itemPricew = $ediitem->getEdiMarkupPrice("itemPricew");
-                $itemPricew01 = $ediitem->getEdiMarkupPrice("itemPricew01");
-                $itemPricew02 = $ediitem->getEdiMarkupPrice("itemPricew02");
-                $itemPricew03 = $ediitem->getEdiMarkupPrice("itemPricew03");
-
-                $itemPricer = $ediitem->getEdiMarkupPrice("itemPricer");
-                $itemPricer01 = $ediitem->getEdiMarkupPrice("itemPricer01");
-                $itemPricer02 = $ediitem->getEdiMarkupPrice("itemPricer02");
-                $itemPricer03 = $ediitem->getEdiMarkupPrice("itemPricer03");
+                print_r($re);
+                echo "<BR>";
+                foreach ((array) $re->Items as $item) {
+                    $product = $products[$item->ItemCode];
+                    $ediitem = $ediitems[$item->ItemCode];
+                    $ediitem->setWholesaleprice($item->UnitPrice);
 
 
-                if ($itemPricew != $item->UnitPrice)
-                    $product->setItemPricew($itemPricew);
-                if ($itemPricew01 != $item->UnitPrice)
-                    $product->setItemPricew01($itemPricew01);
-                if ($itemPricew02 != $item->UnitPrice)
-                    $product->setItemPricew02($itemPricew02);
-                if ($itemPricew03 != $item->UnitPrice)
-                    $product->setItemPricew03($itemPricew03);
-                if ($itemPricer != $item->UnitPrice)
-                    $product->setItemPricer($itemPricer);
-                if ($itemPricer01 != $item->UnitPrice)
-                    $product->setItemPricer01($itemPricer01);
-                if ($itemPricer02 != $item->UnitPrice)
-                    $product->setItemPricer02($itemPricer02);
-                if ($itemPricer03 != $item->UnitPrice)
-                    $product->setItemPricer03($itemPricer03);
-                /*
-                  $em->persist($product);
-                  $em->flush();
-                  $product->toSoftone();
-                 * 
-                 */
+                    $itemPricew = $ediitem->getEdiMarkupPrice("itemPricew");
+                    $itemPricew01 = $ediitem->getEdiMarkupPrice("itemPricew01");
+                    $itemPricew02 = $ediitem->getEdiMarkupPrice("itemPricew02");
+                    $itemPricew03 = $ediitem->getEdiMarkupPrice("itemPricew03");
 
-                //$itemPricer = $ediitem->getEdiMarkupPrice("itemPricer"); 
-                echo $item->ItemCode . " " . $item->UnitPrice . " " . $itemPricew01 . " " . $itemPricew02 . "<BR>";
+                    $itemPricer = $ediitem->getEdiMarkupPrice("itemPricer");
+                    $itemPricer01 = $ediitem->getEdiMarkupPrice("itemPricer01");
+                    $itemPricer02 = $ediitem->getEdiMarkupPrice("itemPricer02");
+                    $itemPricer03 = $ediitem->getEdiMarkupPrice("itemPricer03");
+
+
+                    if ($itemPricew != $item->UnitPrice)
+                        $product->setItemPricew($itemPricew);
+                    if ($itemPricew01 != $item->UnitPrice)
+                        $product->setItemPricew01($itemPricew01);
+                    if ($itemPricew02 != $item->UnitPrice)
+                        $product->setItemPricew02($itemPricew02);
+                    if ($itemPricew03 != $item->UnitPrice)
+                        $product->setItemPricew03($itemPricew03);
+                    if ($itemPricer != $item->UnitPrice)
+                        $product->setItemPricer($itemPricer);
+                    if ($itemPricer01 != $item->UnitPrice)
+                        $product->setItemPricer01($itemPricer01);
+                    if ($itemPricer02 != $item->UnitPrice)
+                        $product->setItemPricer02($itemPricer02);
+                    if ($itemPricer03 != $item->UnitPrice)
+                        $product->setItemPricer03($itemPricer03);
+                    /*
+                      $em->persist($product);
+                      $em->flush();
+                      $product->toSoftone();
+                     * 
+                     */
+
+                    //$itemPricer = $ediitem->getEdiMarkupPrice("itemPricer"); 
+                    echo $item->ItemCode . " " . $item->UnitPrice . " " . $itemPricew01 . " " . $itemPricew02 . "<BR>";
+                }
             }
         }
     }
