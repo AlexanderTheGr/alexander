@@ -33,13 +33,16 @@ class SupplierController extends \SoftoneBundle\Controller\SoftoneController  {
     public function synchronizeAction($id) {
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
-                ->find($id);        
-        $edi = $this->getDoctrine()
-                ->getRepository($this->repository)
-                ->findBy(array("itemMtrsup"=>$entity->getId()));  
-        if ($edi) {
-            $edi->synchronize();
+                ->find($id);  
+        if ($entity->getReference()) {
+            $edi = $this->getDoctrine()
+                    ->getRepository($this->repository)
+                    ->findBy(array("itemMtrsup"=>$entity->getReference()));  
+            if ($edi) {
+                $edi->synchronize();
+            }
         }
+        exit;
     }
     
     /**
