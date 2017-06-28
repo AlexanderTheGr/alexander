@@ -51,9 +51,12 @@ class SupplierController extends \SoftoneBundle\Controller\SoftoneController  {
      */
     public function viewAction($id) {
 
+        $content = $this->gettabs($id);
+        $content = $this->content();
         return $this->render('SoftoneBundle:Supplier:view.html.twig', array(
                     'pagename' => 'Supplier',
-                    'url' => '/supplier/save',
+                    'url' => '/erp01/supplier/save',
+                    'content' => $content,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'tabs' => $this->gettabs($id),
