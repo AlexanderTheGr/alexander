@@ -16,7 +16,7 @@ class SupplierController extends \SoftoneBundle\Controller\SoftoneController  {
      */
     public function indexAction() {
 
-        return $this->render('supplier/index.html.twig', array(
+        return $this->render('SoftoneBundle:Supplier:index.html.twig', array(
                     'pagename' => 'Προμηθευτές',
                     'url' => '/supplier/getdatatable',
                     'view' => '/supplier/view',
@@ -51,7 +51,7 @@ class SupplierController extends \SoftoneBundle\Controller\SoftoneController  {
      */
     public function viewAction($id) {
 
-        return $this->render('supplier/view.html.twig', array(
+        return $this->render('SoftoneBundle:Supplier:view.html.twig', array(
                     'pagename' => 'Supplier',
                     'url' => '/supplier/save',
                     'ctrl' => $this->generateRandomString(),
