@@ -515,7 +515,7 @@ class Edi extends Entity {
                 $ediitem->setWholesaleprice($item->UnitPrice);
                 $itemPricew01 = $ediitem->getEdiMarkupPrice("itemPricew01");
                 //$itemPricer = $ediitem->getEdiMarkupPrice("itemPricer"); 
-                echo $item->ItemCode." ".$item->UnitPrice." ".$itemPricew01;
+                echo $item->ItemCode." ".$item->UnitPrice." ".$itemPricew01."<BR>";
             }
             
             
