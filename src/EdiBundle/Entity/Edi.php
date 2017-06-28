@@ -459,6 +459,8 @@ class Edi extends Entity {
                             echo $sql . "<BR>";
                             $em->getConnection()->exec($sql);
                             //$this->flushpersist($product);
+                            $em->persist($product);
+                            $em->flush();
                             $product->toSoftone();
 
                             if ($newcccref)
