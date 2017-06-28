@@ -413,7 +413,7 @@ class Edi extends Entity {
                     if ($data["id"] > 0)
                         $ediitem = $em->getRepository('EdiBundle:EdiItem')->find($data["id"]);
                 }
-                continue;
+                //continue;
                 if (!$ediitem) {
                     $brand = $product->getSupplierId() ? $product->getSupplierId()->getTitle() : "";
                     if ($brand != '') {
@@ -431,7 +431,7 @@ class Edi extends Entity {
                 //if ($brand == "BERU")
                 //if ($i++ > 240)
                 //    exit;
-                continue;
+                //continue;
                 if ($ediitem) {
                     //$itemPricew = $ediitem->getEdiMarkupPrice("itemPricew");
                     //$itemPricer = $ediitem->getEdiMarkupPrice("itemPricer");
