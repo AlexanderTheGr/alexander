@@ -402,7 +402,7 @@ class Edi extends Entity {
                 if ($code != '') {
                     $sql = "Select id from partsbox_db.edi_item where 
                                             replace(replace(replace(replace(replace(`itemcode`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $code . "' AND edi = '" . $this->getId() . "'
-                                            limit 0,100";
+                                            limit 0,1";
 
                     //echo $sql . "<BR>";
                     $connection = $em->getConnection();
