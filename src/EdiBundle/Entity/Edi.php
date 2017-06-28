@@ -387,7 +387,7 @@ class Edi extends Entity {
         
         if ($this->getItemMtrsup() > 0) {
             $products = $em->getRepository('SoftoneBundle:Product')
-                    ->findBy(array("itemMtrsup" => $this->getItemMtrsup()), array('id' => 'desc'), 1000, 0);
+                    ->findBy(array("itemMtrsup" => $this->getItemMtrsup()), array('id' => 'desc'), 10000, 0);
             echo count($products);
             //return;
             $k = 0;
@@ -472,8 +472,9 @@ class Edi extends Entity {
                         echo $sql . "<BR>";
                         $em->getConnection()->exec($sql);
 
-
+                        
                         if (strlen($this->getToken()) == 36) {
+                            /*
                             if ($product->getQty() > 0) {
                                 if ($i++ % 25 == 0) {
                                     $k++;
@@ -488,6 +489,8 @@ class Edi extends Entity {
                                 $edidatass[$k]['Items'][] = $Items;
                                 $products[$product->getCccRef()] = $product;
                             }
+                             * 
+                             */
                         } else {
                             $itemPricew   = $ediitem->getEdiMarkupPrice("itemPricew");
                             $itemPricew01 = $ediitem->getEdiMarkupPrice("itemPricew01");
@@ -532,7 +535,7 @@ class Edi extends Entity {
                         //echo $sql . "<BR>";
                         //sleep(5);
 
-                        echo "</div>";
+                        //echo "</div>";
                     } else {
                         echo "<span style='color:green'>" . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediitem->getWholesaleprice() . " -- " . $ediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "</span><BR>";
                     }
