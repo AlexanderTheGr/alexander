@@ -464,7 +464,7 @@ class Edi extends Entity {
                             $edidatas['ApiToken'] = $this->getToken();
                             $edidatas['Items'] = array();
                         }
-                        $Items["ItemCode"] = $product->getCccRef();
+                        $Items["ItemCode"] = $ediitem->getItemCode();
                         $Items["ReqQty"] = 1;
                         $edidatas['Items'][] = $Items;
                         
