@@ -510,7 +510,7 @@ class Edi extends Entity {
 
             print_r($re);
             echo "<BR>";
-            foreach ($re->Items as $item) {
+            foreach ((array)$re->Items as $item) {
                 $product = $products[$item->ItemCode];
                 $ediitem = $ediitems[$item->ItemCode];
                 $ediitem->setWholesaleprice($item->UnitPrice);
