@@ -439,7 +439,7 @@ class Edi extends Entity {
                     //echo $this->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediitem->getWholesaleprice() . " -- " . $ediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
                     //if ($i++ > 15)
                     //    exit;
-                    $ediitems[$product->getCccRef()] = $ediitem; 
+                    $ediitems[$ediitem->getItemCode()] = $ediitem; 
                     $itemPricew = 1;
                     if ($itemPricew > 0.01 AND $product->getReference() > 0) {
                         $color = '';
@@ -468,7 +468,7 @@ class Edi extends Entity {
                         $Items["ReqQty"] = 1;
                         $edidatas['Items'][] = $Items;
                         
-                        $products[$product->getCccRef()] = $product;
+                        $products[$ediitem->getItemCode()] = $product;
 
                         //$this->flushpersist($product);
                         //$em->persist($product);
