@@ -509,6 +509,7 @@ class Edi extends Entity {
             $re = json_decode($result);
             
             print_r($ediitems);
+            print_r($re);
             foreach($re as $item) {
                 $product = $products[$item->ItemCode];
                 $ediitem = $ediitems[$item->ItemCode];
