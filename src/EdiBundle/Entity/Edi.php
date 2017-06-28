@@ -404,6 +404,7 @@ class Edi extends Entity {
                                             replace(replace(replace(replace(replace(`itemcode`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $code . "' AND edi = '" . $this->getId() . "'
                                             limit 0,1";
                    
+                    
                     $ediitem = $em
                                 ->getRepository('EdiBundle:EdiItem')
                                 ->findOneBy(array("itemcode" => $product->getCccRef(), "Edi" => $this));
