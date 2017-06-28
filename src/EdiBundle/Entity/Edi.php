@@ -410,6 +410,7 @@ class Edi extends Entity {
                     if ($data["id"] > 0)
                         $ediitem = $em->getRepository('EdiBundle:EdiItem')->find($data["id"]);
                 }
+                continue;
                 if (!$ediitem) {
                     $brand = $product->getSupplierId() ? $product->getSupplierId()->getTitle() : "";
                     if ($brand != '') {
