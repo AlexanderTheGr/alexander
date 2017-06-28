@@ -493,7 +493,7 @@ class Edi extends Entity {
             }
             $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=getiteminfo';
             $data_string = json_encode($edidatas);
-            print_r($edidatas);
+            //print_r($edidatas);
             echo "<BR>";
             //exit;
             //turn;
@@ -508,11 +508,11 @@ class Edi extends Entity {
             )));
             $re = json_decode($result);
             
-            
+            print_r($ediitems);
             foreach($re as $item) {
                 $product = $products[$item->ItemCode];
                 $ediitem = $ediitems[$item->ItemCode];
-                echo $ediitem;
+                //echo $ediitem;
                 /*
                 $ediitem->setWholesaleprice($item->UnitPrice);
                 $itemPricew01 = $ediitem->getEdiMarkupPrice("itemPricew01");
@@ -523,7 +523,7 @@ class Edi extends Entity {
             }
             
             
-            print_r($re);
+            //print_r($re);
         }
     }
 
