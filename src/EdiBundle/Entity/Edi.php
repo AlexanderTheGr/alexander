@@ -512,10 +512,14 @@ class Edi extends Entity {
             foreach($re as $item) {
                 $product = $products[$item->ItemCode];
                 $ediitem = $ediitems[$item->ItemCode];
+                echo $ediitem->getId();
+                /*
                 $ediitem->setWholesaleprice($item->UnitPrice);
                 $itemPricew01 = $ediitem->getEdiMarkupPrice("itemPricew01");
                 //$itemPricer = $ediitem->getEdiMarkupPrice("itemPricer"); 
                 echo $item->ItemCode." ".$item->UnitPrice." ".$itemPricew01."<BR>";
+                 * 
+                 */
             }
             
             
