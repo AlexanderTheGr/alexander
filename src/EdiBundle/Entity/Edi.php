@@ -388,6 +388,7 @@ class Edi extends Entity {
             $products = $em->getRepository('SoftoneBundle:Product')->findBy(array("itemMtrsup" => $this->getItemMtrsup()), array('id' => 'desc'));
             echo count($products);
             return;
+            
             foreach ($products as $product) {
 
                 //return;
