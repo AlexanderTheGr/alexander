@@ -459,16 +459,10 @@ class Edi extends Entity {
                             echo $sql . "<BR>";
                             $em->getConnection()->exec($sql);
                             //$this->flushpersist($product);
-                            $em->persist($product);
-                            $em->flush();
-                            $product->toSoftone();
+                            //$em->persist($product);
+                            //$em->flush();
+                            //$product->toSoftone();
 
-                            if ($newcccref)
-                                $sql = "UPDATE MTRL SET CCCREF='" . $product->getCccRef() . "', CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
-                            else
-                                $sql = "UPDATE MTRL SET CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
-
-                            $params["fSQL"] = $sql;
                             //$product->toSoftone();
 
                             //$softone = new Softone();
@@ -483,7 +477,7 @@ class Edi extends Entity {
                     //    echo "<span style='color:red'>" . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediitem->getWholesaleprice() . " -- " . $ediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "</span><BR>";
                     //}
                 } else {
-                    //echo "<span style='color:red'>".$product->getItemCode().";".$product->getSupplierId()->getTitle().";" . $product->getItemCode2() . "</span><BR>";
+                    echo "<span style='color:red'>".$product->getItemCode().";".$product->getSupplierId()->getTitle().";" . $product->getItemCode2() . "</span><BR>";
                 }
                 //exit;
             }
