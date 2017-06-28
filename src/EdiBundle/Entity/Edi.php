@@ -407,7 +407,7 @@ class Edi extends Entity {
                     
                     $ediitem = $em
                                 ->getRepository('EdiBundle:EdiItem')
-                                ->findOneBy(array("itemcode" => $product->getCccRef(), "Edi" => $this));
+                                ->findOneBy(array("itemCode" => $product->getCccRef(), "Edi" => $this));
                     /*
                     $sql = ""
                     //echo $sql . "<BR>";
