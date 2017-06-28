@@ -435,6 +435,7 @@ class Edi extends Entity {
                         //echo $this->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediitem->getWholesaleprice() . " -- " . $ediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
                         //if ($i++ > 15)
                         //    exit;
+                        $itemPricew = 1;
                         if ($itemPricew > 0.01 AND $product->getReference() > 0) {
                             $color = '';
                             if ($itemPricew == $itemPricer) {
