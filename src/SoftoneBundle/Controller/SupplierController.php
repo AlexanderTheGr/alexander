@@ -37,7 +37,7 @@ class SupplierController extends \SoftoneBundle\Controller\SoftoneController  {
         if ($entity->getReference()) {
             $edi = $this->getDoctrine()
                     ->getRepository("EdiBundle:Edi")
-                    ->findBy(array("itemMtrsup"=>$entity->getReference()));  
+                    ->findOneBy(array("itemMtrsup"=>$entity->getReference()));  
             if ($edi) {
                 echo $edi->getId();
                 //$edi->synchronize();
