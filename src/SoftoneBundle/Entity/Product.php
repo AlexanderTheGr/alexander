@@ -2160,6 +2160,8 @@ class Product extends Entity {
         $objectArr[0] = $objectArr2;
         $dataOut[$object] = (array) $objectArr;
         @$dataOut["ITEEXTRA"][0] = array("VARCHAR02" => $this->sisxetisi);
+        @$dataOut["ITEEXTRA"][0] = array("VARCHAR05" => $this->cccRef);
+        //@$dataOut["ITEEXTRA"][0] = array("VARCHAR02" => $this->sisxetisi); 
         //print_r(@$dataOut);
         $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
         //print_r($out);
