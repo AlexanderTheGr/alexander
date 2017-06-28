@@ -397,6 +397,7 @@ class Edi extends Entity {
                 //continue;
                 $ediitem = false;
                 $newcccref = false;
+                /*
                 $code = trim($this->clearstring($product->getCccRef()));
                 if ($code != '') {
                     $sql = "Select id from partsbox_db.edi_item where 
@@ -414,6 +415,8 @@ class Edi extends Entity {
                     if ($data["id"] > 0)
                         $ediitem = $em->getRepository('EdiBundle:EdiItem')->find($data["id"]);
                 }
+                 * 
+                 */
                 //continue;
                 if (!$ediitem) {
                     $brand = $product->getSupplierId() ? $product->getSupplierId()->getTitle() : "";
