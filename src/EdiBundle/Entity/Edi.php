@@ -393,7 +393,6 @@ class Edi extends Entity {
             $k = 0;
             $i = 0;
             foreach ($products as $product) {
-
                 //return;
                 //continue;
                 $ediitem = false;
