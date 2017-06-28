@@ -2162,6 +2162,8 @@ class Product extends Entity {
         @$dataOut["ITEEXTRA"][0] = array("VARCHAR02" => $this->sisxetisi);
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             @$dataOut["ITEEXTRA"][0] = array("VARCHAR05" => $this->cccRef);
+            @$dataOut["ITEEXTRA"][0] = array("BOOL01" => $this->cccWebUpd);
+            @$dataOut["ITEEXTRA"][0] = array("BOOL02" => $this->cccPriceUpd);
         }
         //@$dataOut["ITEEXTRA"][0] = array("VARCHAR02" => $this->sisxetisi); 
         //print_r(@$dataOut);
