@@ -427,7 +427,7 @@ class Edi extends Entity {
                 //if ($brand == "BERU")
                 //if ($i++ > 240)
                 //    exit;
-                //continue;
+                continue;
                 if ($ediitem) {
                     //$itemPricew = $ediitem->getEdiMarkupPrice("itemPricew");
                     //$itemPricer = $ediitem->getEdiMarkupPrice("itemPricer");
