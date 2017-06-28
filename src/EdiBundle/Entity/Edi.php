@@ -493,7 +493,7 @@ class Edi extends Entity {
             }
             $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=getiteminfo';
             $data_string = json_encode($edidatas);
-            //print_r($edidatas);
+            print_r($edidatas);
             echo "<BR>";
             //exit;
             //turn;
@@ -508,7 +508,8 @@ class Edi extends Entity {
             )));
             $re = json_decode($result);
 
-
+            print_r($re);
+             echo "<BR>";
             foreach ($re->Items as $item) {
                 $product = $products[$item->ItemCode];
                 $ediitem = $ediitems[$item->ItemCode];
@@ -554,7 +555,7 @@ class Edi extends Entity {
             }
 
 
-            //print_r($re);
+            
         }
     }
 
