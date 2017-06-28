@@ -509,7 +509,7 @@ class Edi extends Entity {
             $re = json_decode($result);
 
             print_r($re);
-             echo "<BR>";
+            echo "<BR>";
             foreach ($re->Items as $item) {
                 $product = $products[$item->ItemCode];
                 $ediitem = $ediitems[$item->ItemCode];
@@ -544,18 +544,15 @@ class Edi extends Entity {
                 if ($itemPricer03 != $item->UnitPrice)
                     $product->setItemPricer03($itemPricer03);
                 /*
-                $em->persist($product);
-                $em->flush();
-                $product->toSoftone();
+                  $em->persist($product);
+                  $em->flush();
+                  $product->toSoftone();
                  * 
                  */
 
                 //$itemPricer = $ediitem->getEdiMarkupPrice("itemPricer"); 
                 echo $item->ItemCode . " " . $item->UnitPrice . " " . $itemPricew01 . " " . $itemPricew02 . "<BR>";
             }
-
-
-            
         }
     }
 
