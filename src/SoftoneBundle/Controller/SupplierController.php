@@ -26,6 +26,22 @@ class SupplierController extends \SoftoneBundle\Controller\SoftoneController  {
         ));
     }
 
+    
+        /**
+     * @Route("/supplier/synchronize/{id}")
+     */
+    public function synchronizeAction($id) {
+        $entity = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->find($id);        
+        $edi = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->findBy(array("itemMtrsup"=>$entity->getId()));  
+        if ($edi) {
+            $edi->synchronize();
+        }
+    }
+    
     /**
      * @Route("/supplier/view/{id}")
      */
