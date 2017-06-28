@@ -387,7 +387,7 @@ class Edi extends Entity {
         if ($this->getItemMtrsup() > 0) {
             $products = $em->getRepository('SoftoneBundle:Product')->findBy(array("itemMtrsup" => $this->getItemMtrsup()), array('id' => 'desc'));
             echo count($products);
-            return;
+            //return;
             foreach ($products as $product) {
 
                 return;
@@ -431,7 +431,7 @@ class Edi extends Entity {
                 if ($ediitem) {
                     //$itemPricew = $ediitem->getEdiMarkupPrice("itemPricew");
                     //$itemPricer = $ediitem->getEdiMarkupPrice("itemPricer");
-                    if ($product->getCccPriceUpd() == 0 OR $newcccref OR round($itemPricew, 2) != round($product->getItemPricew(), 2) OR round($itemPricer, 2) != round($product->getItemPricer(), 2)) {
+                    //if ($product->getCccPriceUpd() == 0 OR $newcccref OR round($itemPricew, 2) != round($product->getItemPricew(), 2) OR round($itemPricer, 2) != round($product->getItemPricer(), 2)) {
                         //echo $this->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediitem->getWholesaleprice() . " -- " . $ediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
                         //if ($i++ > 15)
                         //    exit;
@@ -448,8 +448,8 @@ class Edi extends Entity {
                             //$product->setItemPricer($itemPricer);
                             //
                                 //echo $product->id." ".$product->erp_code." --> ".$qty." -- ".$product->getApothema()."<BR>";
-                            //$sql = "update softone_product set item_cccpriceupd = 1, item_cccref = '" . $product->getCccRef() . "'   where id = '" . $product->getId() . "'";
-                            $sql = "update softone_product set item_pricew = '" . $itemPricew . "', item_pricer = '" . $itemPricer . "', item_cccpriceupd = 1, item_cccref = '" . $product->getCccRef() . "'   where id = '" . $product->getId() . "'";
+                            $sql = "update softone_product set item_cccpriceupd = 1, item_cccref = '" . $product->getCccRef() . "'   where id = '" . $product->getId() . "'";
+                            //$sql = "update softone_product set item_pricew = '" . $itemPricew . "', item_pricer = '" . $itemPricer . "', item_cccpriceupd = 1, item_cccref = '" . $product->getCccRef() . "'   where id = '" . $product->getId() . "'";
 
                             echo $sql . "<BR>";
                             //$em->getConnection()->exec($sql);
@@ -472,9 +472,9 @@ class Edi extends Entity {
 
                             echo "</div>";
                         }
-                    } else {
-                        echo "<span style='color:red'>" . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediitem->getWholesaleprice() . " -- " . $ediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "</span><BR>";
-                    }
+                    //} else {
+                    //    echo "<span style='color:red'>" . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediitem->getWholesaleprice() . " -- " . $ediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "</span><BR>";
+                    //}
                 } else {
                     //echo "<span style='color:red'>".$product->getItemCode().";".$product->getSupplierId()->getTitle().";" . $product->getItemCode2() . "</span><BR>";
                 }
