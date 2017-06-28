@@ -389,7 +389,7 @@ class Edi extends Entity {
             echo count($products);
             foreach ($products as $product) {
 
-
+                return;
                 $ediitem = false;
                 $newcccref = false;
                 $code = trim($this->clearstring($product->getCccRef()));
@@ -451,7 +451,7 @@ class Edi extends Entity {
                             $sql = "update softone_product set item_pricew = '" . $itemPricew . "', item_pricer = '" . $itemPricer . "', item_cccpriceupd = 1, item_cccref = '" . $product->getCccRef() . "'   where id = '" . $product->getId() . "'";
 
                             echo $sql . "<BR>";
-                            $em->getConnection()->exec($sql);
+                            //$em->getConnection()->exec($sql);
                             //$this->flushpersist($product);
                             //$product->toSoftone();
 
@@ -461,7 +461,7 @@ class Edi extends Entity {
                                 $sql = "UPDATE MTRL SET CCCPRICEUPD=1, PRICEW = " . $itemPricew . ", PRICER = " . $itemPricer . "  WHERE MTRL = " . $product->getReference();
 
                             $params["fSQL"] = $sql;
-                            $product->toSoftone();
+                            //$product->toSoftone();
 
                             //$softone = new Softone();
                             //$datas = $softone->createSql($params);
