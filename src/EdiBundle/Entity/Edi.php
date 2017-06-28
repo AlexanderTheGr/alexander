@@ -421,6 +421,7 @@ class Edi extends Entity {
                         $ediitem = $em->getRepository('EdiBundle:EdiItem')->find($data["id"]);
                      * 
                      */
+                    echo "....<BR>";
                 }
               
                 //continue;
