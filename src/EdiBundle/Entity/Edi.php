@@ -386,7 +386,7 @@ class Edi extends Entity {
         //return;    
         if ($this->getItemMtrsup() > 0) {
             $products = $em->getRepository('SoftoneBundle:Product')
-                    ->findBy(array("itemMtrsup" => $this->getItemMtrsup()), array('id' => 'desc'), 10, 0);
+                    ->findBy(array("itemMtrsup" => $this->getItemMtrsup()), array('id' => 'desc'), 50, 0);
             echo count($products);
             //return;
 
@@ -439,7 +439,7 @@ class Edi extends Entity {
                     //echo $this->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediitem->getWholesaleprice() . " -- " . $ediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
                     //if ($i++ > 15)
                     //    exit;
-                    $ediitems[$product->getCccRef()] = $ediitem; 
+                    $ediitems[$product->getCccRef()] = $ediitem;
                     $itemPricew = 1;
                     if ($itemPricew > 0.01 AND $product->getReference() > 0) {
                         $color = '';
@@ -467,7 +467,7 @@ class Edi extends Entity {
                         $Items["ItemCode"] = $product->getCccRef();
                         $Items["ReqQty"] = 1;
                         $edidatas['Items'][] = $Items;
-                        
+
                         $products[$product->getCccRef()] = $product;
 
                         //$this->flushpersist($product);
@@ -507,20 +507,53 @@ class Edi extends Entity {
                 ),
             )));
             $re = json_decode($result);
-            
-            
-            foreach($re->Items as $item) {
+
+
+            foreach ($re->Items as $item) {
                 $product = $products[$item->ItemCode];
                 $ediitem = $ediitems[$item->ItemCode];
                 $ediitem->setWholesaleprice($item->UnitPrice);
+
+
+                $itemPricew = $ediitem->getEdiMarkupPrice("itemPricew");
                 $itemPricew01 = $ediitem->getEdiMarkupPrice("itemPricew01");
                 $itemPricew02 = $ediitem->getEdiMarkupPrice("itemPricew02");
                 $itemPricew03 = $ediitem->getEdiMarkupPrice("itemPricew03");
+
+                $itemPricer = $ediitem->getEdiMarkupPrice("itemPricer");
+                $itemPricer01 = $ediitem->getEdiMarkupPrice("itemPricer01");
+                $itemPricer02 = $ediitem->getEdiMarkupPrice("itemPricer02");
+                $itemPricer03 = $ediitem->getEdiMarkupPrice("itemPricer03");
+
+
+                if ($itemPricew != $item->UnitPrice)
+                    $product->setItemPricew($itemPricew);
+                if ($itemPricew01 != $item->UnitPrice)
+                    $product->setItemPricew01($itemPricew01);
+                if ($itemPricew02 != $item->UnitPrice)
+                    $product->setItemPricew02($itemPricew02);
+                if ($itemPricew03 != $item->UnitPrice)
+                    $product->setItemPricew03($itemPricew03);
+                if ($itemPricer != $item->UnitPrice)
+                    $product->setItemPricer($itemPricer);
+                if ($itemPricer01 != $item->UnitPrice)
+                    $product->setItemPricer01($itemPricer01);
+                if ($itemPricer02 != $item->UnitPrice)
+                    $product->setItemPricer02($itemPricer02);
+                if ($itemPricer03 != $item->UnitPrice)
+                    $product->setItemPricer03($itemPricer03);
+                /*
+                $em->persist($product);
+                $em->flush();
+                $product->toSoftone();
+                 * 
+                 */
+
                 //$itemPricer = $ediitem->getEdiMarkupPrice("itemPricer"); 
-                echo $item->ItemCode." ".$item->UnitPrice." ".$itemPricew01." ".$itemPricew02."<BR>";
+                echo $item->ItemCode . " " . $item->UnitPrice . " " . $itemPricew01 . " " . $itemPricew02 . "<BR>";
             }
-            
-            
+
+
             //print_r($re);
         }
     }
