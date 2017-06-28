@@ -558,7 +558,7 @@ class Edi extends Entity {
                     foreach ((array) $re->Items as $item) {
                         $product = $products[$item->ItemCode];
                         $ediitem = $ediitems[$item->ItemCode];
-                        $ediitem->setWholesaleprice($item->UnitPrice);
+                        $ediitem->setWholesaleprice($item->ListPrice);
 
 
                         $itemPricew = $ediitem->getEdiMarkupPrice("itemPricew");
@@ -572,21 +572,21 @@ class Edi extends Entity {
                         $itemPricer03 = $ediitem->getEdiMarkupPrice("itemPricer03");
 
 
-                        if ($itemPricew != $item->UnitPrice)
+                        if ($itemPricew != $item->ListPrice)
                             $product->setItemPricew($itemPricew);
-                        if ($itemPricew01 != $item->UnitPrice)
+                        if ($itemPricew01 != $item->ListPrice)
                             $product->setItemPricew01($itemPricew01);
-                        if ($itemPricew02 != $item->UnitPrice)
+                        if ($itemPricew02 != $item->ListPrice)
                             $product->setItemPricew02($itemPricew02);
-                        if ($itemPricew03 != $item->UnitPrice)
+                        if ($itemPricew03 != $item->ListPrice)
                             $product->setItemPricew03($itemPricew03);
-                        if ($itemPricer != $item->UnitPrice)
+                        if ($itemPricer != $item->ListPrice)
                             $product->setItemPricer($itemPricer);
-                        if ($itemPricer01 != $item->UnitPrice)
+                        if ($itemPricer01 != $item->ListPrice)
                             $product->setItemPricer01($itemPricer01);
-                        if ($itemPricer02 != $item->UnitPrice)
+                        if ($itemPricer02 != $item->ListPrice)
                             $product->setItemPricer02($itemPricer02);
-                        if ($itemPricer03 != $item->UnitPrice)
+                        if ($itemPricer03 != $item->ListPrice)
                             $product->setItemPricer03($itemPricer03);
                         /*
                           $em->persist($product);
