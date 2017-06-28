@@ -386,10 +386,10 @@ class Edi extends Entity {
         //return;    
         if ($this->getItemMtrsup() > 0) {
             $products = $em->getRepository('SoftoneBundle:Product')
-                    ->findBy(array("itemMtrsup" => $this->getItemMtrsup()), array('id' => 'desc'),10,0);
+                    ->findBy(array("itemMtrsup" => $this->getItemMtrsup()), array('id' => 'desc'), 10, 0);
             echo count($products);
             //return;
-            
+
             foreach ($products as $product) {
 
                 //return;
@@ -436,51 +436,73 @@ class Edi extends Entity {
                     //$itemPricew = $ediitem->getEdiMarkupPrice("itemPricew");
                     //$itemPricer = $ediitem->getEdiMarkupPrice("itemPricer");
                     //if ($product->getCccPriceUpd() == 0 OR $newcccref OR round($itemPricew, 2) != round($product->getItemPricew(), 2) OR round($itemPricer, 2) != round($product->getItemPricer(), 2)) {
-                        //echo $this->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediitem->getWholesaleprice() . " -- " . $ediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
-                        //if ($i++ > 15)
-                        //    exit;
-                        $itemPricew = 1;
-                        if ($itemPricew > 0.01 AND $product->getReference() > 0) {
-                            $color = '';
-                            if ($itemPricew == $itemPricer) {
-                                $color = 'red';
-                            }
-                            echo "<div style='color:" . $color . "'>";
-                            echo $this->getName() . " " . $ediitem->getWholesaleprice() . " -- " . $product->getItemCode() . " itemPricew:(" . $itemPricew . "/" . $product->getItemPricew() . ") itemPricer:(" . $itemPricer . "/" . $product->getItemPricer() . ")<BR>";
-
-                            $product->setCccPriceUpd(1);
-                            //$product->setItemPricew($itemPricew);
-                            //$product->setItemPricer($itemPricer);
-                            //
-                                //echo $product->id." ".$product->erp_code." --> ".$qty." -- ".$product->getApothema()."<BR>";
-                            $sql = "update softone_product set item_cccpriceupd = 1, item_cccref = '" . $product->getCccRef() . "'   where id = '" . $product->getId() . "'";
-                            //$sql = "update softone_product set item_pricew = '" . $itemPricew . "', item_pricer = '" . $itemPricer . "', item_cccpriceupd = 1, item_cccref = '" . $product->getCccRef() . "'   where id = '" . $product->getId() . "'";
-
-                            echo $sql . "<BR>";
-                            $em->getConnection()->exec($sql);
-                            //$this->flushpersist($product);
-                            //$em->persist($product);
-                            //$em->flush();
-                            //$product->toSoftone();
-
-                            //$product->toSoftone();
-
-                            //$softone = new Softone();
-                            //$datas = $softone->createSql($params);
-                            //unset($softone);
-                            //echo $sql . "<BR>";
-                            //sleep(5);
-
-                            echo "</div>";
+                    //echo $this->getName() . " -- " . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediitem->getWholesaleprice() . " -- " . $ediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "<BR>";
+                    //if ($i++ > 15)
+                    //    exit;
+                    $itemPricew = 1;
+                    if ($itemPricew > 0.01 AND $product->getReference() > 0) {
+                        $color = '';
+                        if ($itemPricew == $itemPricer) {
+                            $color = 'red';
                         }
+                        echo "<div style='color:" . $color . "'>";
+                        echo $this->getName() . " " . $ediitem->getWholesaleprice() . " -- " . $product->getItemCode() . " itemPricew:(" . $itemPricew . "/" . $product->getItemPricew() . ") itemPricer:(" . $itemPricer . "/" . $product->getItemPricer() . ")<BR>";
+
+                        $product->setCccPriceUpd(1);
+                        //$product->setItemPricew($itemPricew);
+                        //$product->setItemPricer($itemPricer);
+                        //
+                                //echo $product->id." ".$product->erp_code." --> ".$qty." -- ".$product->getApothema()."<BR>";
+                        $sql = "update softone_product set item_cccpriceupd = 1, item_cccref = '" . $product->getCccRef() . "'   where id = '" . $product->getId() . "'";
+                        //$sql = "update softone_product set item_pricew = '" . $itemPricew . "', item_pricer = '" . $itemPricer . "', item_cccpriceupd = 1, item_cccref = '" . $product->getCccRef() . "'   where id = '" . $product->getId() . "'";
+
+                        echo $sql . "<BR>";
+                        $em->getConnection()->exec($sql);
+
+                        if (!$edidatas) {
+                            $edidatas['ApiToken'] = $this->getToken();
+                            $edidatas['Items'] = array();
+                        }
+                        $Items["ItemCode"] = $product->getCccRef();
+                        $Items["ReqQty"] = 1;
+                        $edidatas['Items'][] = $Items;
+
+                        //$this->flushpersist($product);
+                        //$em->persist($product);
+                        //$em->flush();
+                        //$product->toSoftone();
+                        //$product->toSoftone();
+                        //$softone = new Softone();
+                        //$datas = $softone->createSql($params);
+                        //unset($softone);
+                        //echo $sql . "<BR>";
+                        //sleep(5);
+
+                        echo "</div>";
+                    }
                     //} else {
                     //    echo "<span style='color:red'>" . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediitem->getWholesaleprice() . " -- " . $ediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "</span><BR>";
                     //}
                 } else {
-                    echo "<span style='color:red'>".$product->getItemCode().";".$product->getSupplierId()->getTitle().";" . $product->getItemCode2() . "</span><BR>";
+                    echo "<span style='color:red'>" . $product->getItemCode() . ";" . $product->getSupplierId()->getTitle() . ";" . $product->getItemCode2() . "</span><BR>";
                 }
                 //exit;
             }
+            $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=getiteminfo';
+            $data_string = json_encode($edidatas);
+            //print_r($data);
+            //turn;
+            $result = file_get_contents($requerstUrl, null, stream_context_create(array(
+                'http' => array(
+                    'method' => 'POST',
+                    'header' =>
+                    'Content-Type: application/json' . "\r\n"
+                    . 'Content-Length: ' . strlen($data_string) . "\r\n",
+                    'content' => $data_string,
+                ),
+            )));
+            $re = json_decode($result);
+            print_r($re);
         }
     }
 
