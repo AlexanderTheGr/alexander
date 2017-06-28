@@ -386,7 +386,7 @@ class Edi extends Entity {
         //return;    
         if ($this->getItemMtrsup() > 0) {
             $products = $em->getRepository('SoftoneBundle:Product')
-                    ->findBy(array("itemMtrsup" => $this->getItemMtrsup()), array('id' => 'desc'), 10, 0);
+                    ->findBy(array("itemMtrsup" => $this->getItemMtrsup()), array('id' => 'desc'), 100, 0);
             echo count($products);
             //return;
             $k = 0;
@@ -463,32 +463,29 @@ class Edi extends Entity {
 
 
                         if (strlen($this->getToken()) == 36) {
-                            if ($i++ % 25 == 0) {
-                                $k++;
+                            if ($product->getQty() > 0) {
+                                if ($i++ % 25 == 0) {
+                                    $k++;
+                                }
+                                if (!$edidatass[$k]) {
+                                    $edidatass[$k]['ApiToken'] = $this->getToken();
+                                    $edidatass[$k]['Items'] = array();
+                                    $edidatass[$k]['ProcVersion'] = "sync";
+                                }
+                                $Items["ItemCode"] = $product->getCccRef();
+                                $Items["ReqQty"] = 1;
+                                $edidatass[$k]['Items'][] = $Items;
+                                $products[$product->getCccRef()] = $product;
                             }
-                            if (!$edidatass[$k]) {
-                                $edidatass[$k]['ApiToken'] = $this->getToken();
-                                $edidatass[$k]['Items'] = array();
-                                $edidatass[$k]['ProcVersion'] = "sync";
-                            }
-                            $Items["ItemCode"] = $product->getCccRef();
-                            $Items["ReqQty"] = 1;
-                            
-                            
-                            $edidatass[$k]['Items'][] = $Items;
-                            $products[$product->getCccRef()] = $product;
                         } else {
-                            
-                            $itemPricew = $ediitem->getEdiMarkupPrice("itemPricew");
+                            $itemPricew   = $ediitem->getEdiMarkupPrice("itemPricew");
                             $itemPricew01 = $ediitem->getEdiMarkupPrice("itemPricew01");
                             $itemPricew02 = $ediitem->getEdiMarkupPrice("itemPricew02");
                             $itemPricew03 = $ediitem->getEdiMarkupPrice("itemPricew03");
-
-                            $itemPricer = $ediitem->getEdiMarkupPrice("itemPricer");
+                            $itemPricer   = $ediitem->getEdiMarkupPrice("itemPricer");
                             $itemPricer01 = $ediitem->getEdiMarkupPrice("itemPricer01");
                             $itemPricer02 = $ediitem->getEdiMarkupPrice("itemPricer02");
                             $itemPricer03 = $ediitem->getEdiMarkupPrice("itemPricer03");
-
 
                             if ($itemPricew != $item->UnitPrice)
                                 $product->setItemPricew($itemPricew);
@@ -506,7 +503,7 @@ class Edi extends Entity {
                                 $product->setItemPricer02($itemPricer02);
                             if ($itemPricer03 != $item->UnitPrice)
                                 $product->setItemPricer03($itemPricer03);
-
+                            
                             /*
                               $em->persist($product);
                               $em->flush();
