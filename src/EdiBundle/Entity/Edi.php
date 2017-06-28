@@ -383,7 +383,7 @@ class Edi extends Entity {
         }
         $softone = new Softone();
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
-        return;    
+        //return;    
         if ($this->getItemMtrsup() > 0) {
             $products = $em->getRepository('SoftoneBundle:Product')->findBy(array("itemMtrsup" => $this->getItemMtrsup()), array('id' => 'desc'));
             echo count($products);
