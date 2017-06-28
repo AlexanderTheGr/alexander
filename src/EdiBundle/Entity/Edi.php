@@ -499,9 +499,9 @@ class Edi extends Entity {
             $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=getiteminfo';
             foreach ($edidatass as $edidatas) {
                 $data_string = json_encode($edidatas);
-                print_r($edidatas);
+                //print_r($edidatas);
                 echo "<BR>";
-                continue;
+                //continue;
                 //exit;
                 //turn;
                 $result = file_get_contents($requerstUrl, null, stream_context_create(array(
