@@ -390,7 +390,7 @@ class Edi extends Entity {
             //return;
             foreach ($products as $product) {
 
-                return;
+                //return;
                 $ediitem = false;
                 $newcccref = false;
                 $code = trim($this->clearstring($product->getCccRef()));
