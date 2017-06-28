@@ -56,6 +56,7 @@ class SupplierController extends \SoftoneBundle\Controller\SoftoneController  {
         return $this->render('SoftoneBundle:Supplier:view.html.twig', array(
                     'pagename' => 'Supplier',
                     'url' => '/erp01/supplier/save',
+                    'supplierid' => $id,
                     'content' => $content,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
