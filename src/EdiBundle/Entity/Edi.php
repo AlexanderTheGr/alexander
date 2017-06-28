@@ -421,7 +421,7 @@ class Edi extends Entity {
                                 ->getRepository('EdiBundle:EdiItem')
                                 ->findOneBy(array("partno" => $this->clearstring($product->getItemCode2()), 'brand' => $brand, "Edi" => $this));
                         if ($ediitem) {
-                            echo $this->clearstring($product->getItemCode2()) . "<BR>";
+                            echo $this->clearstring($product->getItemCode2()) . "---<BR>";
                             $product->setCccRef($ediitem->getItemCode());
                             $newcccref = true;
                         }
