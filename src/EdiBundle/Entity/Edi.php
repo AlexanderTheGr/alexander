@@ -462,7 +462,7 @@ class Edi extends Entity {
                         $em->getConnection()->exec($sql);
 
 
-                        if (strlen($this->getToken()) == 16) {
+                        if (strlen($this->getToken()) == 36) {
                             if ($i++ % 25 == 0) {
                                 $k++;
                             }
@@ -530,7 +530,7 @@ class Edi extends Entity {
                 }
                 //exit;
             }
-            if ($this->getToken() != "") {
+            if (strlen($this->getToken()) == 36) {
                 $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=getiteminfo';
                 foreach ($edidatass as $edidatas) {
                     $data_string = json_encode($edidatas);
