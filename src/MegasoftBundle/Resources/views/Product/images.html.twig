@@ -25,7 +25,7 @@
     <script src="{{  asset('assets/js/libs/partsbox/core.js') }}"></script>
     <script src="{{  asset('assets/js/libs/partsbox/upload.js') }}"></script>
     <script>
-        setTimeout(function () {
+        $(document).ready(function () {
             $(".upload").upload({
                 maxSize: 1073741824,
                 beforeSend: onBeforeSend
@@ -138,9 +138,7 @@
 
         function onChunkError(e, file, error) {
             console.log("Chunk Error");
-            }
         }
-        , 100)
     </script>
 {% endblock %}
 
