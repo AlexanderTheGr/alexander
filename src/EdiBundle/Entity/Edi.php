@@ -405,8 +405,7 @@ class Edi extends Entity {
                                             limit 0,1";
                    
                     
-                    $ediitem = $em
-                                ->getRepository('EdiBundle:EdiItem')
+                    $ediitem = $em->getRepository('EdiBundle:EdiItem')
                                 ->findOneBy(array("itemCode" => $product->getCccRef(), "Edi" => $this));
                     /*
                     $sql = ""
@@ -422,7 +421,7 @@ class Edi extends Entity {
                         $ediitem = $em->getRepository('EdiBundle:EdiItem')->find($data["id"]);
                      * 
                      */
-                    echo "....<BR>";
+                    //echo "....<BR>";
                 }
               
                 //continue;
@@ -542,10 +541,10 @@ class Edi extends Entity {
 
                         //echo "</div>";
                     } else {
-                        echo "<span style='color:green'>" . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediitem->getWholesaleprice() . " -- " . $ediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "</span><BR>";
+                        //echo "<span style='color:green'>" . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediitem->getWholesaleprice() . " -- " . $ediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "</span><BR>";
                     }
                 } else {
-                    echo "<span style='color:red'>" . $product->getItemCode() . ";" . $product->getSupplierId()->getTitle() . ";" . $product->getItemCode2() . "</span><BR>";
+                   //echo "<span style='color:red'>" . $product->getItemCode() . ";" . $product->getSupplierId()->getTitle() . ";" . $product->getItemCode2() . "</span><BR>";
                 }
                 //exit;
             }
@@ -554,7 +553,7 @@ class Edi extends Entity {
                 foreach ($edidatass as $edidatas) {
                     $data_string = json_encode($edidatas);
                     //print_r($edidatas);
-                    echo "<BR>";
+                   // echo "<BR>";
                     //continue;
                     //exit;
                     //turn;
@@ -570,7 +569,7 @@ class Edi extends Entity {
                     $re = json_decode($result);
 
                     print_r($re);
-                    echo "<BR>";
+                    //echo "<BR>";
                     foreach ((array) $re->Items as $item) {
                         $product = $products[$item->ItemCode];
                         $ediitem = $ediitems[$item->ItemCode];
