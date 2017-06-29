@@ -591,15 +591,22 @@ class Edi extends Entity {
                         
                         if ($itemPricew != $item->ListPrice) {
                             $product->setItemPricew($itemPricew);
+                            //if ()
                             //$upd = true;
                         }
                         if ($itemPricew01 != $item->ListPrice) {
+                            if ($itemPricew01 != $product->getItemPricew01()) {
+                                $upd = true;
+                            }
                             $product->setItemPricew01($itemPricew01);
-                            $upd = true;
+                            //$upd = true;
                         }
                         if ($itemPricew02 != $item->ListPrice) {
+                            if ($itemPricew02 != $product->getItemPricew02()) {
+                                $upd = true;
+                            }                            
                             $product->setItemPricew02($itemPricew02);
-                            $upd = true;
+                            //$upd = true;
                         }
                         if ($itemPricew03 != $item->ListPrice) {
                             $product->setItemPricew03($itemPricew03);
