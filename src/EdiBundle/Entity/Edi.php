@@ -609,7 +609,6 @@ class Edi extends Entity {
                           $product->toSoftone();
                          * 
                          */
-
                         //$itemPricer = $ediitem->getEdiMarkupPrice("itemPricer"); 
                         echo $product->getItemCode(). " " . $item->ListPrice . " (".$asd.") " . $itemPricew01 . " " . $itemPricew02 . "<BR>";
                     }
