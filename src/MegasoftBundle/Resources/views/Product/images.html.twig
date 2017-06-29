@@ -25,7 +25,9 @@
     <script src="{{  asset('assets/js/libs/partsbox/core.js') }}"></script>
     <script src="{{  asset('assets/js/libs/partsbox/upload.js') }}"></script>
     <script>
-        $(document).ready(function () {
+        
+        
+
             $(".upload").upload({
                 maxSize: 1073741824,
                 beforeSend: onBeforeSend
@@ -43,7 +45,7 @@
 
             $(".filelist.queue").on("click", ".cancel", onCancel);
             $(".cancel_all").on("click", onCancelAll);
-        });
+
 
         function onCancel(e) {
             console.log("Cancel");
@@ -63,16 +65,7 @@
             return formData;
         }
 
-        function onQueued(e, files) {
-            console.log("Queued");
-            var html = '';
-            for (var i = 0; i < files.length; i++) {
-                html += '<li data-index="' + files[i].index + '"><span class="content"><span class="file">' + files[i].name + '</span><span class="cancel">Cancel</span><span class="progress">Queued</span></span><span class="bar"></span></li>';
-            }
 
-            $(this).parents("form").find(".filelist.queue")
-                    .append(html);
-        }
 
         function onStart(e, files) {
             console.log("Start");
