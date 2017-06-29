@@ -1212,7 +1212,7 @@ class EdiItem extends Entity {
             $data['ApiToken'] = $this->getEdi()->getToken();
             $data['Items'] = array();
 
-            $Item["ItemCode"] = $this->getPartno();
+            $Item["ItemCode"] = $this->getItemCode();
             $Item["ReqQty"] = $qty;
 
             $data['Items'][] = $Item;
