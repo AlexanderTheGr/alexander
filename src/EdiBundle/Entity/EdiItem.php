@@ -895,7 +895,7 @@ class EdiItem extends Entity {
             $product->setCccPriceUpd(1);
             //echo "itemPricer:".$this->getEdiMarkupPrice("itemPricer")."\n";
             //echo "itemPricew:".$this->getEdiMarkupPrice("itemPricew")."\n";
-
+            $this->wholesaleprice = $this->getEdiListPrice();
             $product->setItemPricer((double) $this->getEdiMarkupPrice("itemPricer"));
             $product->setItemPricew((double) $this->getEdiMarkupPrice("itemPricew"));
 
@@ -1223,7 +1223,7 @@ class EdiItem extends Entity {
             //$data_string = '{ "ApiToken": "b5ab708b-0716-4c91-a8f3-b6513990fe3c", "Items": [ { "ItemCode": "' . $this->erp_code . '", "ReqQty": 1 } ] } ';
             //return 10;
             $data_string = json_encode($data);
-            print_r($data);
+            //print_r($data);
             //turn;
             $result = file_get_contents($requerstUrl, null, stream_context_create(array(
                 'http' => array(
@@ -1237,7 +1237,7 @@ class EdiItem extends Entity {
 
             $re = json_decode($result);
 
-
+            print_r($re);
             //return;
             if (@count($re->Items))
                 foreach ($re->Items as $Item) {
@@ -1430,7 +1430,47 @@ class EdiItem extends Entity {
         }
         return $this->wholesaleprice;
     }
+    
+    public function getEdiListPrice() {
+        if ($this->getEdi()->getFunc() == 'getEdiPartMaster') { // is viakar, liakopoulos
+            if (@!$datas[$this->getEdi()->getId()][$k]) {
+                $datas[$this->getEdi()->getId()][$k]['ApiToken'] = $this->getEdi()->getToken();
+                $datas[$this->getEdi()->getId()][$k]['Items'] = array();
+            }
+            $Items[$this->getEdi()->getId()][$k]["ItemCode"] = $this->getItemcode();
+            $Items[$this->getEdi()->getId()][$k]["ReqQty"] = 1;
+            $datas[$this->getEdi()->getId()][$k]['Items'][] = $Items[$this->getEdi()->getId()][$k];
+        }
+        if (count($datas)) {
+            $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=getiteminfo';
+            foreach ($datas as $catalogue => $packs) {
+                foreach ($packs as $k => $data) {
+                    $data_string = json_encode($data);
 
+                    //continue;
+                    $result = file_get_contents($requerstUrl, null, stream_context_create(array(
+                        'http' => array(
+                            'method' => 'POST',
+                            'header' =>
+                            'Content-Type: application/json' . "\r\n"
+                            . 'Content-Length: ' . strlen($data_string) . "\r\n",
+                            'content' => $data_string,
+                        ),
+                    )));
+                    $re = json_decode($result);
+
+                    //print_r($re);
+                    if (@count($re->Items)) {
+                        foreach ($re->Items as $Item) {
+                            $qty = $Item->Availability == 'red' ? 0 : 1000;
+                            return $Item->ListPrice;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     public function getEdiUnitPrice() {
         if ($this->getEdi()->getFunc() == 'getEdiPartMaster') { // is viakar, liakopoulos
             if (@!$datas[$this->getEdi()->getId()][$k]) {
