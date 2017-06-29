@@ -648,8 +648,12 @@ class EdiItem extends Entity {
     }
 
     public function toErp() {
-        //$this->toSoftoneErp();
-        $this->toMegasoftErp();
+        
+        if ($this->getSetting("AppBundle:Erp:erpprefix") == '/erp01') {
+            $this->toMegasoftErp();
+        } else {
+            $this->toSoftoneErp();
+        }
     }
 
     private function createManufacturer() {
