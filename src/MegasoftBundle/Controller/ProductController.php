@@ -743,6 +743,7 @@ class ProductController extends Main {
             $tabs[] = array("title" => "Retaltions", "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
             $tabs[] = array("title" => "Categories", "datatables" => '', "form" => '', "content" => $this->getCategories($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
             $tabs[] = array("title" => "Models", "datatables" => '', "form" => '', "content" => $this->getCars($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
+            $tabs[] = array("title" => "Images", "datatables" => '', "form" => '', "content" => $this->getImagesHtml($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
         }
 
         foreach ($tabs as $tab) {
@@ -753,6 +754,13 @@ class ProductController extends Main {
         return $json;
     }
 
+    public function getImagesHtml($product) {
+        $response = $this->get('twig')->render('MegasoftBundle:Product:images.html.twig', array(
+            'product' => $product->getId(),
+        ));
+        return str_replace("\n", "", htmlentities($response));
+    }
+    
     public function getCars($product) {
         $brands = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:Brand')->findBy(array(), array('brand' => 'ASC'));
