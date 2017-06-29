@@ -1241,7 +1241,7 @@ class EdiItem extends Entity {
             //return;
             if (@count($re->Items))
                 foreach ($re->Items as $Item) {
-                    return number_format($Item->UnitPrice, 2, '.', '');
+                    return number_format($Item->ListPrice, 2, '.', '');
                 }
         } else {
             $elteka = $this->eltekaAuth();
