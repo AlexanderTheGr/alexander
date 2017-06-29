@@ -634,10 +634,11 @@ class Edi extends Entity {
                         //$product->toSoftone();
                          
                         //$itemPricer = $ediitem->getEdiMarkupPrice("itemPricer"); 
+                        echo $product->getItemCode(). ";" . $item->ListPrice . ";".$asd.";" . $itemPricew01 . ";" . $itemPricew02 . "<BR>";
                         if ($upd) {
-                            echo "<span style='color:green'>".$product->getItemCode(). " " . $item->ListPrice . " (".$asd.") " . $itemPricew01 . " " . $itemPricew02 . "</span><BR>"; 
+                            //echo "<span style='color:green'>".$product->getItemCode(). " " . $item->ListPrice . " (".$asd.") " . $itemPricew01 . " " . $itemPricew02 . "</span><BR>"; 
                         }  else { 
-                            echo $product->getItemCode(). " " . $item->ListPrice . " (".$asd.") " . $itemPricew01 . " " . $itemPricew02 . "<BR>";
+                            //echo $product->getItemCode(). " " . $item->ListPrice . " (".$asd.") " . $itemPricew01 . " " . $itemPricew02 . "<BR>";
                         }
                     }
                     break;
