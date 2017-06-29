@@ -8,7 +8,11 @@
 {% block javascripts %}
     <script src="{{  asset('assets/js/libs/partsbox/dropzone.js') }}"></script>
     <script>
-        $("div#myId").dropzone({ url: "/file/post" });
+        setTimeout(function(){
+            alert("ss");
+            $("div#myId").dropzone({ url: "/file/post" });
+        },100)
+        
     </script>
 {% endblock %}
 
