@@ -548,6 +548,7 @@ class Edi extends Entity {
                 //exit;
             }
             if (strlen($this->getToken()) == 36) {
+                print_r($edidatass);
                 $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=getiteminfo';
                 foreach ($edidatass as $edidatas) {
                     $data_string = json_encode($edidatas);
