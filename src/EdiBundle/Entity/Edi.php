@@ -502,6 +502,7 @@ class Edi extends Entity {
                             $itemPricer02 = $ediitem->getEdiMarkupPrice("itemPricer02");
                             $itemPricer03 = $ediitem->getEdiMarkupPrice("itemPricer03");
 
+                            
                             $asd = $product->getItemPricew01();
                             
                             if ($itemPricew != $ediitem->getWholesaleprice())
