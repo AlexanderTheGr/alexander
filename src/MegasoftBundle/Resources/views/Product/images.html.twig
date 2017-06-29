@@ -10,7 +10,7 @@
     <script>
         setTimeout(function(){
             alert("ss");
-            $("div#myId").dropzone({ url: "/file/post" });
+            var myDropzone = new Dropzone("div#myId", { url: "/file/post"});
         },10000)
         
     </script>
