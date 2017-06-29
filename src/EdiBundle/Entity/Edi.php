@@ -477,7 +477,7 @@ class Edi extends Entity {
                             if ($product->getQty() > 0) {
                                 if ($i++ % 25 == 0) {
                                     $k++;
-                                    if ($k > 2) break;
+                                    //if ($k > 2) break;
                                 }
                                 if (!$edidatass[$k]) {
                                     $edidatass[$k]['ApiToken'] = $this->getToken();
