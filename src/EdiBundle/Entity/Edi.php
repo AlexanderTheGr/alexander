@@ -552,7 +552,7 @@ class Edi extends Entity {
                 foreach ($edidatass as $edidatas) {
                     $data_string = json_encode($edidatas);
                     print_r($edidatas);
-                   // echo "<BR>";
+                    echo "<BR>";
                     continue;
                     //exit;
                     //turn;
