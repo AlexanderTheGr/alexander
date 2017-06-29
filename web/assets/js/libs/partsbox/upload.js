@@ -764,9 +764,7 @@
     Events.start = "start";
     Events.queued = "queued";
 
-})
-
-        );
+}));
 function onUploadCancel(e) {
     console.log("Cancel");
     var index = $(this).parents("li").data("index");
