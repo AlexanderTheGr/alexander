@@ -458,8 +458,8 @@ class Edi extends Entity {
                         if ($itemPricew == $itemPricer) {
                             $color = 'red';
                         }
-                        echo "<div style='color:" . $color . "'>";
-                        echo $this->getName() . " " . $ediitem->getWholesaleprice() . " -- " . $product->getItemCode() . " itemPricew:(" . $itemPricew . "/" . $product->getItemPricew() . ") itemPricer:(" . $itemPricer . "/" . $product->getItemPricer() . ")<BR>";
+                        //echo "<div style='color:" . $color . "'>";
+                        //echo $this->getName() . " " . $ediitem->getWholesaleprice() . " -- " . $product->getItemCode() . " itemPricew:(" . $itemPricew . "/" . $product->getItemPricew() . ") itemPricer:(" . $itemPricer . "/" . $product->getItemPricer() . ")<BR>";
 
                         $product->setCccPriceUpd(1);
                         //$product->setItemPricew($itemPricew);
@@ -469,7 +469,7 @@ class Edi extends Entity {
                         $sql = "update softone_product set item_cccpriceupd = 1, item_cccref = '" . $product->getCccRef() . "'   where id = '" . $product->getId() . "'";
                         //$sql = "update softone_product set item_pricew = '" . $itemPricew . "', item_pricer = '" . $itemPricer . "', item_cccpriceupd = 1, item_cccref = '" . $product->getCccRef() . "'   where id = '" . $product->getId() . "'";
 
-                        echo $sql . "<BR>";
+                        //echo $sql . "<BR>";
                         $em->getConnection()->exec($sql);
 
                         
