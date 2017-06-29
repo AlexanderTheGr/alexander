@@ -473,7 +473,7 @@ class Edi extends Entity {
 
                         
                         if (strlen($this->getToken()) == 36) {
-                            /*
+                            
                             if ($product->getQty() > 0) {
                                 if ($i++ % 25 == 0) {
                                     $k++;
@@ -488,8 +488,7 @@ class Edi extends Entity {
                                 $edidatass[$k]['Items'][] = $Items;
                                 $products[$product->getCccRef()] = $product;
                             }
-                             * 
-                             */
+                             
                         } else {
                             
                             $itemPricew   = $ediitem->getEdiMarkupPrice("itemPricew");
@@ -548,13 +547,13 @@ class Edi extends Entity {
                 }
                 //exit;
             }
-            if (strlen($this->getToken()) == 136) {
+            if (strlen($this->getToken()) == 36) {
                 $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=getiteminfo';
                 foreach ($edidatass as $edidatas) {
                     $data_string = json_encode($edidatas);
-                    //print_r($edidatas);
+                    print_r($edidatas);
                    // echo "<BR>";
-                    //continue;
+                    continue;
                     //exit;
                     //turn;
                     $result = file_get_contents($requerstUrl, null, stream_context_create(array(
