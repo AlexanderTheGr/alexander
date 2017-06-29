@@ -525,7 +525,7 @@ class Edi extends Entity {
                               $em->flush();
                               $product->toSoftone();
                              */
-                            echo $product->getItemCode(). ";" . $ediitem->getWholesaleprice() . ";".$asd.";" . $itemPricew01 . ";" . $itemPricew02 . "<BR>";
+                            echo $product->getItemCode(). ";" . $ediitem->getWholesaleprice() . ";".$asd.";" . $itemPricew01 . ";" . $itemPricew02 . ";Eltreka<BR>";
                         }
                         //$this->flushpersist($product);
                         //$em->persist($product);
