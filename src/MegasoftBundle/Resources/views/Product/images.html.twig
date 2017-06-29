@@ -3,7 +3,15 @@
 {% endblock %}
 {% block body %}
     <div class="upload"></div>
-
+    <div class="filelists">
+        <h5>Complete</h5>
+        <ol class="filelist complete">
+        </ol>
+        <h5>Queued</h5>
+        <ol class="filelist queue">
+        </ol>
+        <span class="cancel_all">Cancel All</span>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
