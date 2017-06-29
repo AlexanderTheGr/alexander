@@ -12,9 +12,18 @@
     <script>
         setTimeout(function () {
             $(".upload").upload({
-                maxSize: 1073741824,
-                beforeSend: onBeforeSend
-            })
+                action: "//example.com/handle-upload.php"
+            }).on("start.upload", onStart)
+                    .on("complete.upload", onComplete)
+                    .on("filestart.upload", onFileStart)
+                    .on("fileprogress.upload", onFileProgress)
+                    .on("filecomplete.upload", onFileComplete)
+                    .on("fileerror.upload", onFileError)
+                    .on("chunkstart.upload", onChunkStart)
+                    .on("chunkprogress.upload", onChunkProgress)
+                    .on("chunkcomplete.upload", onChunkComplete)
+                    .on("chunkerror.upload", onChunkError)
+                    .on("queued.upload", onQueued);
         }, 100)
     </script>
 {% endblock %}
