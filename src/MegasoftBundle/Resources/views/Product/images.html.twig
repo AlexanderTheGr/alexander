@@ -2,51 +2,19 @@
     <link type="text/css" rel="stylesheet" href="{{  asset('assets/css/upload.css') }}" />
 {% endblock %}
 {% block body %}
-
-    <div class="demo_example">
-        <form action="#" method="GET" class="form demo_form">
-            <div class="upload" ></div>
-            <div class="filelists">
-                <h5>Complete</h5>
-                <ol class="filelist complete">
-                </ol>
-                <h5>Queued</h5>
-                <ol class="filelist queue">
-                </ol>
-                <span class="cancel_all">Cancel All</span>
-            </div>
-        </form>
-    </div>
-
-
+    <div class="upload"></div>
+    
 {% endblock %}
 
 {% block javascripts %}
     <script src="{{  asset('assets/js/libs/partsbox/core.js') }}"></script>
     <script src="{{  asset('assets/js/libs/partsbox/upload.js') }}"></script>
     <script>
-
-
-
-        $(".upload").upload({
-            maxSize: 1073741824,
-            beforeSend: onBeforeSend
-        }).on("start.upload", onStart)
-                .on("complete.upload", onComplete)
-                .on("filestart.upload", onFileStart)
-                .on("fileprogress.upload", onFileProgress)
-                .on("filecomplete.upload", onFileComplete)
-                .on("fileerror.upload", onFileError)
-                .on("chunkstart.upload", onChunkStart)
-                .on("chunkprogress.upload", onChunkProgress)
-                .on("chunkcomplete.upload", onChunkComplete)
-                .on("chunkerror.upload", onChunkError)
-                .on("queued.upload", onQueued);
-
-        $(".filelist.queue").on("click", ".cancel", onCancel);
-        $(".cancel_all").on("click", onCancelAll);
-
-
+        setTimeout(function () {
+            $(".upload").upload({
+                action: "//example.com/handle-upload.php"
+            });
+        }, 100)
     </script>
 {% endblock %}
 
