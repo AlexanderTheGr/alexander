@@ -591,7 +591,7 @@ class Edi extends Entity {
                         
                         if ($itemPricew != $item->ListPrice) {
                             $product->setItemPricew($itemPricew);
-                            $upd = true;
+                            //$upd = true;
                         }
                         if ($itemPricew01 != $item->ListPrice) {
                             $product->setItemPricew01($itemPricew01);
@@ -603,23 +603,23 @@ class Edi extends Entity {
                         }
                         if ($itemPricew03 != $item->ListPrice) {
                             $product->setItemPricew03($itemPricew03);
-                            $upd = true;
+                            //$upd = true;
                         }
                         if ($itemPricer != $item->ListPrice) {
                             $product->setItemPricer($itemPricer);
-                            $upd = true;
+                            //$upd = true;
                         }
                         if ($itemPricer01 != $item->ListPrice) {
                             $product->setItemPricer01($itemPricer01);
-                            $upd = true;
+                            //$upd = true;
                         }
                         if ($itemPricer02 != $item->ListPrice) {
                             $product->setItemPricer02($itemPricer02);
-                            $upd = true;
+                            //$upd = true;
                         }
                         if ($itemPricer03 != $item->ListPrice) {
                             $product->setItemPricer03($itemPricer03);
-                            $upd = true;
+                           // $upd = true;
                         }
                         
                         // $em->persist($product);
