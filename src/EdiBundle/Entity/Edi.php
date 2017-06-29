@@ -587,30 +587,51 @@ class Edi extends Entity {
                         $itemPricer03 = $ediitem->getEdiMarkupPrice("itemPricer03");
 
                         $asd = $product->getItemPricew01();
-                        if ($itemPricew != $item->ListPrice)
+                        $upd = false;
+                        
+                        if ($itemPricew != $item->ListPrice) {
                             $product->setItemPricew($itemPricew);
-                        if ($itemPricew01 != $item->ListPrice)
+                            $upd = true;
+                        }
+                        if ($itemPricew01 != $item->ListPrice) {
                             $product->setItemPricew01($itemPricew01);
-                        if ($itemPricew02 != $item->ListPrice)
+                            $upd = true;
+                        }
+                        if ($itemPricew02 != $item->ListPrice) {
                             $product->setItemPricew02($itemPricew02);
-                        if ($itemPricew03 != $item->ListPrice)
+                            $upd = true;
+                        }
+                        if ($itemPricew03 != $item->ListPrice) {
                             $product->setItemPricew03($itemPricew03);
-                        if ($itemPricer != $item->ListPrice)
+                            $upd = true;
+                        }
+                        if ($itemPricer != $item->ListPrice) {
                             $product->setItemPricer($itemPricer);
-                        if ($itemPricer01 != $item->ListPrice)
+                            $upd = true;
+                        }
+                        if ($itemPricer01 != $item->ListPrice) {
                             $product->setItemPricer01($itemPricer01);
-                        if ($itemPricer02 != $item->ListPrice)
+                            $upd = true;
+                        }
+                        if ($itemPricer02 != $item->ListPrice) {
                             $product->setItemPricer02($itemPricer02);
-                        if ($itemPricer03 != $item->ListPrice)
+                            $upd = true;
+                        }
+                        if ($itemPricer03 != $item->ListPrice) {
                             $product->setItemPricer03($itemPricer03);
-                        /*
-                          $em->persist($product);
-                          $em->flush();
-                          $product->toSoftone();
-                         * 
-                         */
+                            $upd = true;
+                        }
+                        
+                        // $em->persist($product);
+                        // $em->flush();
+                        //$product->toSoftone();
+                         
                         //$itemPricer = $ediitem->getEdiMarkupPrice("itemPricer"); 
-                        echo $product->getItemCode(). " " . $item->ListPrice . " (".$asd.") " . $itemPricew01 . " " . $itemPricew02 . "<BR>";
+                        if ($upd) {
+                            echo "<span style='colr:green'>".$product->getItemCode(). " " . $item->ListPrice . " (".$asd.") " . $itemPricew01 . " " . $itemPricew02 . "</span><BR>"; 
+                        }  else { 
+                            echo $product->getItemCode(). " " . $item->ListPrice . " (".$asd.") " . $itemPricew01 . " " . $itemPricew02 . "<BR>";
+                        }
                     }
                     break;
                 }
