@@ -14,20 +14,7 @@
             $(".upload").upload({
                 maxSize: 1073741824,
                 beforeSend: onBeforeSend
-            }).on("start.upload", onStart)
-                    .on("complete.upload", onComplete)
-                    .on("filestart.upload", onFileStart)
-                    .on("fileprogress.upload", onFileProgress)
-                    .on("filecomplete.upload", onFileComplete)
-                    .on("fileerror.upload", onFileError)
-                    .on("chunkstart.upload", onChunkStart)
-                    .on("chunkprogress.upload", onChunkProgress)
-                    .on("chunkcomplete.upload", onChunkComplete)
-                    .on("chunkerror.upload", onChunkError)
-                    .on("queued.upload", onQueued);
-
-            $(".filelist.queue").on("click", ".cancel", onCancel);
-            $(".cancel_all").on("click", onCancelAll);
+            })
         }, 100)
     </script>
 {% endblock %}
