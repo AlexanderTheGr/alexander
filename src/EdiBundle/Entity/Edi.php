@@ -387,7 +387,7 @@ class Edi extends Entity {
         
         if ($this->getItemMtrsup() > 0) {
             $products = $em->getRepository('SoftoneBundle:Product')
-                    ->findBy(array("itemMtrsup" => $this->getItemMtrsup()), array('id' => 'desc'),200,0);
+                    ->findBy(array("itemMtrsup" => $this->getItemMtrsup()), array('id' => 'desc'),500,0);
             echo count($products);
             //return;
             $k = 0;
@@ -477,7 +477,7 @@ class Edi extends Entity {
                             if ($product->getQty() > 0) {
                                 if ($i++ % 25 == 0) {
                                     $k++;
-                                    //if ($k > 2) break;
+                                    if ($k > 2) break;
                                 }
                                 if (!$edidatass[$k]) {
                                     $edidatass[$k]['ApiToken'] = $this->getToken();
@@ -643,7 +643,7 @@ class Edi extends Entity {
                             //echo $product->getItemCode(). " " . $item->ListPrice . " (".$asd.") " . $itemPricew01 . " " . $itemPricew02 . "<BR>";
                         }
                     }
-                    //break;
+                    break;
                 }
             }
         }
