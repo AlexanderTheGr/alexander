@@ -492,7 +492,7 @@ class Edi extends Entity {
                              * 
                              */
                         } else {
-                            /*
+                            
                             $itemPricew   = $ediitem->getEdiMarkupPrice("itemPricew");
                             $itemPricew01 = $ediitem->getEdiMarkupPrice("itemPricew01");
                             $itemPricew02 = $ediitem->getEdiMarkupPrice("itemPricew02");
@@ -502,21 +502,23 @@ class Edi extends Entity {
                             $itemPricer02 = $ediitem->getEdiMarkupPrice("itemPricer02");
                             $itemPricer03 = $ediitem->getEdiMarkupPrice("itemPricer03");
 
-                            if ($itemPricew != $item->UnitPrice)
+                            $asd = $product->getItemPricew01();
+                            
+                            if ($itemPricew != $ediitem->getWholesaleprice())
                                 $product->setItemPricew($itemPricew);
-                            if ($itemPricew01 != $item->UnitPrice)
+                            if ($itemPricew01 != $ediitem->getWholesaleprice())
                                 $product->setItemPricew01($itemPricew01);
-                            if ($itemPricew02 != $item->UnitPrice)
+                            if ($itemPricew02 != $ediitem->getWholesaleprice())
                                 $product->setItemPricew02($itemPricew02);
-                            if ($itemPricew03 != $item->UnitPrice)
+                            if ($itemPricew03 != $ediitem->getWholesaleprice())
                                 $product->setItemPricew03($itemPricew03);
-                            if ($itemPricer != $item->UnitPrice)
+                            if ($itemPricer != $ediitem->getWholesaleprice())
                                 $product->setItemPricer($itemPricer);
-                            if ($itemPricer01 != $item->UnitPrice)
+                            if ($itemPricer01 != $ediitem->getWholesaleprice())
                                 $product->setItemPricer01($itemPricer01);
-                            if ($itemPricer02 != $item->UnitPrice)
+                            if ($itemPricer02 != $ediitem->getWholesaleprice())
                                 $product->setItemPricer02($itemPricer02);
-                            if ($itemPricer03 != $item->UnitPrice)
+                            if ($itemPricer03 != $ediitem->getWholesaleprice())
                                 $product->setItemPricer03($itemPricer03);
                             
                             /*
@@ -524,6 +526,7 @@ class Edi extends Entity {
                               $em->flush();
                               $product->toSoftone();
                              */
+                            echo $item->ItemCode . " " . $ediitem->getWholesaleprice() . " (".$asd.") " . $itemPricew01 . " " . $itemPricew02 . "<BR>";
                         }
                         //$this->flushpersist($product);
                         //$em->persist($product);
