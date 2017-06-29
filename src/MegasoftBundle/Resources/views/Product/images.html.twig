@@ -1,19 +1,21 @@
 {% block stylesheets %}
-        <link type="text/css" rel="stylesheet" href="{{  asset('assets/css/upload.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{  asset('assets/css/upload.css') }}" />
 {% endblock %}
 {% block body %}
-<form action="/upload-target" class="dropzone"></form>
+    <div class="upload"></div>
 {% endblock %}
 
 {% block javascripts %}
     <script src="{{  asset('assets/js/libs/partsbox/core.js') }}"></script>
     <script src="{{  asset('assets/js/libs/partsbox/upload.js') }}"></script>
     <script>
-        setTimeout(function(){
+        setTimeout(function () {
             alert("ss");
-            var myDropzone = new Dropzone("div#myId", { url: "/file/post"});
-        },10000)
-        
+            $(".upload").upload({
+                action: "//example.com/handle-upload.php"
+            });
+        }, 10000)
+
     </script>
 {% endblock %}
 
