@@ -586,7 +586,7 @@ class Edi extends Entity {
                         $itemPricer02 = $ediitem->getEdiMarkupPrice("itemPricer02");
                         $itemPricer03 = $ediitem->getEdiMarkupPrice("itemPricer03");
 
-
+                        $asd = $product->getItemPricew01();
                         if ($itemPricew != $item->ListPrice)
                             $product->setItemPricew($itemPricew);
                         if ($itemPricew01 != $item->ListPrice)
@@ -611,7 +611,7 @@ class Edi extends Entity {
                          */
 
                         //$itemPricer = $ediitem->getEdiMarkupPrice("itemPricer"); 
-                        echo $item->ItemCode . " " . $item->ListPrice . " " . $itemPricew01 . " " . $itemPricew02 . "<BR>";
+                        echo $product->getItemCode(). " " . $item->ListPrice . " (".$asd.") " . $itemPricew01 . " " . $itemPricew02 . "<BR>";
                     }
                 }
             }
