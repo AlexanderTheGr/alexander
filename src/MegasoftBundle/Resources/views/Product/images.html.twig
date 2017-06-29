@@ -1,12 +1,13 @@
 {% block stylesheets %}
-        <link type="text/css" rel="stylesheet" href="{{  asset('assets/css/dropzone.css') }}" />
+        <link type="text/css" rel="stylesheet" href="{{  asset('assets/css/upload.css') }}" />
 {% endblock %}
 {% block body %}
 <form action="/upload-target" class="dropzone"></form>
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{  asset('assets/js/libs/partsbox/dropzone.js') }}"></script>
+    <script src="{{  asset('assets/js/libs/partsbox/core.js') }}"></script>
+    <script src="{{  asset('assets/js/libs/partsbox/upload.js') }}"></script>
     <script>
         setTimeout(function(){
             alert("ss");
