@@ -481,7 +481,12 @@ class ProductController extends Main {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
-
+    /**
+     * @Route("/erp01/product/addUpload")
+     */
+    public function addUpload(Request $request) {
+        exit;
+    }
     /**
      * @Route("/erp01/product/addCategory")
      */
