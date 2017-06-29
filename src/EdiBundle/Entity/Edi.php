@@ -553,8 +553,8 @@ class Edi extends Entity {
                 foreach ($edidatass as $edidatas) {
                     $data_string = json_encode($edidatas);
                     print_r($edidatas);
-                    echo "<BR>";
-                    continue;
+                    //echo "<BR>";
+                    //continue;
                     //exit;
                     //turn;
                     $result = file_get_contents($requerstUrl, null, stream_context_create(array(
@@ -612,6 +612,7 @@ class Edi extends Entity {
                         //$itemPricer = $ediitem->getEdiMarkupPrice("itemPricer"); 
                         echo $product->getItemCode(). " " . $item->ListPrice . " (".$asd.") " . $itemPricew01 . " " . $itemPricew02 . "<BR>";
                     }
+                    break;
                 }
             }
         }
