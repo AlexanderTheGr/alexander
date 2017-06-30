@@ -1333,6 +1333,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                             if ($identifier != 'mtrmark' AND $identifier != 'apvcode') {
                                 $q[] = "`" . strtolower($params["softone_object"] . "_" . $identifier) . "` = '" . addslashes($val) . "'";
                                 $hasmark = true;
+                                echo  "`" . strtolower($params["softone_object"] . "_" . $identifier) . "` = '" . addslashes($val) . "'";
                             }
                         }
                     } else {
