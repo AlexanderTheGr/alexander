@@ -222,7 +222,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $pagename = $product->getTitle() . " " . $product->getErpCode();
         }
         //$product->toSoftone();
-        //exit;
+        exit;
         $content = $this->gettabs($id);
 
         //$content = $this->getoffcanvases($id);
