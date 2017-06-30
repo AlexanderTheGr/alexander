@@ -481,16 +481,26 @@ class ProductController extends Main {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+
     /**
      * @Route("/erp01/product/addUpload")
      */
     public function addUpload(Request $request) {
-        
+
         //$request->request->get("product");
-        print_r($_FILES);
+        //print_r($_FILES);
+        $check = getimagesize($_FILES["file"]["tmp_name"]);
+        if ($check !== false) {
+            echo "File is an image - " . $check["mime"] . ".";
+            $uploadOk = 1;
+        } else {
+            echo "File is not an image.";
+            $uploadOk = 0;
+        }
         echo "File: 62289290.jpg";
         exit;
     }
+
     /**
      * @Route("/erp01/product/addCategory")
      */
@@ -769,7 +779,7 @@ class ProductController extends Main {
         ));
         return str_replace("\n", "", htmlentities($response));
     }
-    
+
     public function getCars($product) {
         $brands = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:Brand')->findBy(array(), array('brand' => 'ASC'));
@@ -825,10 +835,9 @@ class ProductController extends Main {
         } else {
             $product = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Product')
-                    ->find($request->request->get("product"));            
-            
+                    ->find($request->request->get("product"));
         }
-        $cars = (array)  unserialize( $product->getCars());
+        $cars = (array) unserialize($product->getCars());
 
         //print_r($cars);
         $brandmodeltypes = $this->getDoctrine()
@@ -841,10 +850,10 @@ class ProductController extends Main {
             if (in_array($brandmodeltype->getId(), $cars)) {
                 $style = "style='color:red'";
                 $checkbox = "<input checked type='checkbox' class='brandmodetypechk' data-ref='" . $brandmodeltype->getId() . "' />";
-            }   
+            }
             //$style = "style='color:red'";    
             $html .= "<li class='brandmodetypeli' data-ref='" . $brandmodeltype->getId() . "'>";
-            $html .=  $checkbox."<a " . $style . " data-ref='" . $brandmodeltype->getId() . "' class='brandmodetypelia'>" . $brandmodeltype->getBrandModelType() . "</a>";
+            $html .= $checkbox . "<a " . $style . " data-ref='" . $brandmodeltype->getId() . "' class='brandmodetypelia'>" . $brandmodeltype->getBrandModelType() . "</a>";
             $html .= '</li>';
         }
         $json = json_encode(array("data" => $html));
