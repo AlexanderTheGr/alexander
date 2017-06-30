@@ -1371,7 +1371,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
                     if (addslashes($data["CCCFXRELBRAND"]) != '' AND $hasmark == false) {
                         $q[] = "`" . strtolower($params["softone_object"] . "_mtrmark") . "` = '" . addslashes($data["CCCFXRELBRAND"]) . "'";
-                        echo "----------";
+                        echo "<BR><BR><BR>----------<BR><BR>";
                     }
                 }
             } else {
