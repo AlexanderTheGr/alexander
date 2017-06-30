@@ -1222,14 +1222,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $selfields = implode(",", $itemfield);
         $params["fSQL"] = 'SELECT ' . $selfields . ' FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
-        echo $params["fSQL"];
+        //echo $params["fSQL"];
         //exit;
         //$params["fSQL"] = 'SELECT M.* FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
         //$params["fSQL"] = "SELECT VARCHAR02, MTRL FROM MTREXTRA WHERE VARCHAR02 != ''";
         //$sql = "SELECT M.MTRL,M.INSDATE,M.UPDDATE,M.ISACTIVE,M.VAT,M.MTRMANFCTR,M.MTRMARK,M.REMARKS,M.MARKUPW,M.MARKUPR,M.PRICER,M.PRICEW,M.PRICEW01,M.PRICEW02,M.PRICEW03,M.PRICEW04,M.PRICEW05,M.PRICER01,M.PRICER02,M.PRICER03,M.PRICER04,M.PRICER05,M.NAME,M.NAME1,M.CODE,M.CODE1,M.CODE2,M.APVCODE,M.MTRPLACE,M.MTRSUP,M.MTRCATEGORY,M.MTRGROUP FROM MTRL M WHERE M.SODTYPE=51 AND MTRL = 421443";
         // echo "<BR>";
         //echo $params["fSQL"];
-        echo $params["fSQL"];
+        //echo $params["fSQL"];
         // echo "<BR>";
         //return;
         $softone = new Softone();
@@ -1240,12 +1240,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             echo "</PRE>";
             //exit;
         }
-        echo "<BR>" . count($datas->data) . "<BR>";
+        //echo "<BR>" . count($datas->data) . "<BR>";
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'gianop') {
             //exit;
         }
         $em = $this->getDoctrine()->getManager();
 
+        echo "<BR><BR><BR>";
         /*
           foreach ((array) $datas->data as $data) {
           $sql = "update softone_product set sisxetisi = '" . $data->VARCHAR02 . "' where reference = '" . $data->MTRL . "'";
