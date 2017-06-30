@@ -1259,7 +1259,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         ini_set('memory_limit', '12256M');
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
-            //print_r($data);
+            print_r($data);
             //echo "<BR>";
             //exit;
             $entity = $this->getDoctrine()
