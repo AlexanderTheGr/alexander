@@ -1268,7 +1268,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     ->getRepository($this->repository)
                     ->findOneBy(array("reference" => (int) $data["MTRL"]));
 
-            echo "[".@$entity->id . "]<BR>";
+            echo "[".@$entity->id . " -- ".$data["MTRL"]."]<BR>";
             //if ($data[$params["softone_table"]] != 13121) continue;
             $dt = new \DateTime("now");
             /*
