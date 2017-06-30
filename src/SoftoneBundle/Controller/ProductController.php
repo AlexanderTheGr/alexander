@@ -227,7 +227,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         
         //$content = $this->getoffcanvases($id);
         $content = $this->content();
-        exit;
+       
         return $this->render('SoftoneBundle:Product:view.html.twig', array(
                     'pagename' => $pagename,
                     'url' => '/product/save',
@@ -238,7 +238,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
 
-
+        exit;
         $datatables = array();
         return $this->render('SoftoneBundle:Product:view.html.twig', array(
                     'pagename' => 'Product',
