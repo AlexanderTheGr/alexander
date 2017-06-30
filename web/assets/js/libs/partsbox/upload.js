@@ -779,7 +779,7 @@ function onUploadCancelAll(e) {
 function onUploadBeforeSend(formData, file) {
     console.log("Before Send");
     formData.append("test_field", "test_value");
-    return (file.name.indexOf(".jpg") < -1) ? false : formData; // cancel all jpgs
+    return (file.name.indexOf(".jpg") < 0) ? false : formData; // cancel all jpgs
     return formData;
 }
 
