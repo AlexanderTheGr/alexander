@@ -895,4 +895,8 @@ class Order extends Entity {
     {
         return $this->isnew;
     }
+    
+    function getPicked() {
+        return $this->getStatus() == 2 ? "Picked" : "";
+    }	    
 }
