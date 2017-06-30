@@ -65,7 +65,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $order = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Order")
                 ->find($id);
-
+        $order->setField("status", 2);
+        $this->flushpersist($order);
         $content = $this->printarea($order);
         /*
           return $this->render('SoftoneBundle:Order:print.html.twig', array(
@@ -1169,8 +1170,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             'history' => $history
         ));
         return str_replace("\n", "", htmlentities($response));
-        
     }
+
     function getFbrands() {
         $em = $this->getDoctrine()->getManager();
         $sql = "SELECT brand FROM  partsbox_db.fanopoiia_category group by brand";
@@ -1180,7 +1181,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $brands = $statement->fetchAll();
 
         return $brands;
-    }    
+    }
 
     function getBrands() {
         $repository = $this->getDoctrine()->getRepository('SoftoneBundle:Brand');
@@ -1245,7 +1246,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $yearto = $yearto == 0 ? 'Today' : $yearto;
             $year = $yearfrom . " - " . $yearto;
             $na = $brandsmodel->getBrandModel() . " " . $year;
-            $na = $brandsmodel->getBrandModelStr() != "" ?  $brandsmodel->getBrandModelStr() : $na;
+            $na = $brandsmodel->getBrandModelStr() != "" ? $brandsmodel->getBrandModelStr() : $na;
             $o["id"] = $brandsmodel->getId();
             $o["name"] = $na;
             $out[] = $o;
@@ -1711,9 +1712,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($order->getCustomer());
-        
+
         $vat = $customer->getCustomerVatsts() > 1 ? 1.17 : 1.24;
-        
+
         $price = $product->getGroupedPrice($customer, $vat);
 
         $orderItem->setField("qty", $qty + $request->request->get("qty"));
