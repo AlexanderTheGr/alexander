@@ -1928,6 +1928,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $product = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Product')
                     ->findOneByReference($item["MTRL"]);
+            if (!$product) return;
             $orderItem = new Orderitem;
             $orderItem->setOrder($entity);
             $orderItem->setPrice($item["PRICE"] * $vat);
