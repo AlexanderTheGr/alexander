@@ -1222,7 +1222,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $selfields = implode(",", $itemfield);
         $params["fSQL"] = 'SELECT ' . $selfields . ' FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
-        //echo $params["fSQL"];
+        echo $params["fSQL"];
         //exit;
         //$params["fSQL"] = 'SELECT M.* FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
         //$params["fSQL"] = "SELECT VARCHAR02, MTRL FROM MTREXTRA WHERE VARCHAR02 != ''";
@@ -1259,7 +1259,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         ini_set('memory_limit', '12256M');
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
-            print_r($data);
+            //print_r($data);
             //echo "<BR>";
             //exit;
             $entity = $this->getDoctrine()
