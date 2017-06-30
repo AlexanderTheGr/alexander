@@ -1333,11 +1333,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                             if ($identifier != 'mtrmark' AND $identifier != 'apvcode') {
                                 $q[] = "`" . strtolower($params["softone_object"] . "_" . $identifier) . "` = '" . addslashes($val) . "'";
                                 $hasmark = true;
-                                echo  "`" . strtolower($params["softone_object"] . "_" . $identifier) . "` = '" . addslashes($val) . "'";
+                                echo  "`" . strtolower($params["softone_object"] . "_" . $identifier) . "` = '" . addslashes($val) . "'<BR>";
                             }
                         }
                     } else {
                         $q[] = "`" . strtolower($params["softone_object"] . "_" . $identifier) . "` = '" . addslashes($val) . "'";
+                        echo  "`" . strtolower($params["softone_object"] . "_" . $identifier) . "` = '" . addslashes($val) . "'<BR>";
                     }
                     //$entity->setField($baz, $val);
                 }
