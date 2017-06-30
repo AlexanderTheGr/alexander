@@ -866,7 +866,6 @@ function onUploadBeforeSend(formData, file) {
         return false;
 
     }
-    alert("aaaaaa");
     // Modify and return form data
     formdata.append("input_name", "input_value");
     return formData;
