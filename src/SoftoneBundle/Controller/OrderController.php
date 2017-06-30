@@ -798,9 +798,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                   }
                  * 
                  */
-                if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
+                if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'foxline') {
                     $pricer = $obj->priceEshop($vat);
-                } elseif ($this->getSetting("SoftoneBundle:Softone:merchant") == 'mpalantinakis') {
+                } elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
                     $pricer = $obj->priceMpal($vat);
                 } else {
                     $pricer = $obj->getItemPricer();
