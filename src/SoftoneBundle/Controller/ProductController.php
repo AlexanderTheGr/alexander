@@ -1321,7 +1321,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline' AND strtolower($params["softone_object"] . "_" . $identifier) == 'item_apvcode') {
                         continue;
                     }
-                    echo $this->getSetting("SoftoneBundle:Softone:merchant");    
+                    echo $this->getSetting("SoftoneBundle:Softone:merchant")."<BR>";    
                     if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
                         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
                             $identifier = strtolower($identifier);
