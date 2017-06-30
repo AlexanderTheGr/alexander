@@ -1321,7 +1321,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline' AND strtolower($params["softone_object"] . "_" . $identifier) == 'item_apvcode') {
                         continue;
                     }
-                    echo $this->getSetting("SoftoneBundle:Softone:merchant")."<BR>";    
+                    //echo $this->getSetting("SoftoneBundle:Softone:merchant")."<BR>";    
                     if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
                         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
                             $identifier = strtolower($identifier);
@@ -1339,6 +1339,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     } else {
                         $q[] = "`" . strtolower($params["softone_object"] . "_" . $identifier) . "` = '" . addslashes($val) . "'";
                         //echo  "`" . strtolower($params["softone_object"] . "_" . $identifier) . "` = '" . addslashes($val) . "'<BR>";
+                        $hasmark = true;
                     }
                     //$entity->setField($baz, $val);
                 }
