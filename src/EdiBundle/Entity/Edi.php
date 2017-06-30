@@ -634,12 +634,12 @@ class Edi extends Entity {
                            // $upd = true;
                         }
                         
-                        // $em->persist($product);
-                        // $em->flush();
-                        //$product->toSoftone();
+                        $em->persist($product);
+                        $em->flush();
+                        $product->toSoftone();
                          
                         //$itemPricer = $ediitem->getEdiMarkupPrice("itemPricer"); 
-                        echo $product->getItemCode(). ";" . $item->ListPrice . ";".$asd.";" . $itemPricew01 . ";" . $itemPricew02 . ";Viakar<BR>";
+                        echo $product->getItemCode(). ";" . $item->ListPrice . ";".$asd.";" . $itemPricew01 . ";" . $itemPricew02 . "<BR>";
                         if ($upd) {
                             //echo "<span style='color:green'>".$product->getItemCode(). " " . $item->ListPrice . " (".$asd.") " . $itemPricew01 . " " . $itemPricew02 . "</span><BR>"; 
                         }  else { 
