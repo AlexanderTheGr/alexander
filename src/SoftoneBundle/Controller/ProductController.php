@@ -682,7 +682,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $remarks = str_replace("||", "|", $remarks);
             $entity->setItemRemarks($remarks);
 
-            if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'mpalantinakis') {
+            if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
                 $fields["itemPricew01"] = array("label" => "Τιμή Χοδρικής", "className" => "col-md-2", "required" => false); 
             } else {
                 $fields["itemPricew01"] = array("label" => "Τιμή Χοδρικής", "className" => "col-md-2", "required" => false);
