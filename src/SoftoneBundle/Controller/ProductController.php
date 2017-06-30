@@ -1326,7 +1326,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
                             $identifier = strtolower($identifier);
                             if ($identifier != 'mtrmark' AND $identifier != 'apvcode') {
-                                $q[] = "`" . strtolower($params["softone_object"] . "_" . $identifier) . "` = '" . addslashes($val) . "'";
+                                //$q[] = "`" . strtolower($params["softone_object"] . "_" . $identifier) . "` = '" . addslashes($val) . "'";
                                 //echo $identifier."<BR>";
                             }
                         } else {
