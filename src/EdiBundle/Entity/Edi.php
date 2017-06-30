@@ -504,12 +504,15 @@ class Edi extends Entity {
                             
                             $asd = $product->getItemPricew01();
                             
-                            if ($itemPricew != $ediitem->getWholesaleprice())
-                                $product->setItemPricew($itemPricew);
+                            //if ($itemPricew != $ediitem->getWholesaleprice())
+                           //     $product->setItemPricew($itemPricew);
+                            
                             if ($itemPricew01 != $ediitem->getWholesaleprice())
                                 $product->setItemPricew01($itemPricew01);
                             if ($itemPricew02 != $ediitem->getWholesaleprice())
                                 $product->setItemPricew02($itemPricew02);
+                            
+                            /*
                             if ($itemPricew03 != $ediitem->getWholesaleprice())
                                 $product->setItemPricew03($itemPricew03);
                             if ($itemPricer != $ediitem->getWholesaleprice())
@@ -592,7 +595,7 @@ class Edi extends Entity {
                         $upd = false;
                         
                         if ($itemPricew != $item->ListPrice) {
-                            $product->setItemPricew($itemPricew);
+                            //$product->setItemPricew($itemPricew);
                             //if ()
                             //$upd = true;
                         }
@@ -611,23 +614,23 @@ class Edi extends Entity {
                             //$upd = true;
                         }
                         if ($itemPricew03 != $item->ListPrice) {
-                            $product->setItemPricew03($itemPricew03);
+                            //$product->setItemPricew03($itemPricew03);
                             //$upd = true;
                         }
                         if ($itemPricer != $item->ListPrice) {
-                            $product->setItemPricer($itemPricer);
+                            //$product->setItemPricer($itemPricer);
                             //$upd = true;
                         }
                         if ($itemPricer01 != $item->ListPrice) {
-                            $product->setItemPricer01($itemPricer01);
+                            //$product->setItemPricer01($itemPricer01);
                             //$upd = true;
                         }
                         if ($itemPricer02 != $item->ListPrice) {
-                            $product->setItemPricer02($itemPricer02);
+                            //$product->setItemPricer02($itemPricer02);
                             //$upd = true;
                         }
                         if ($itemPricer03 != $item->ListPrice) {
-                            $product->setItemPricer03($itemPricer03);
+                            //$product->setItemPricer03($itemPricer03);
                            // $upd = true;
                         }
                         
