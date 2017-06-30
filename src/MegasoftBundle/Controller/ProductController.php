@@ -485,6 +485,7 @@ class ProductController extends Main {
      * @Route("/erp01/product/addUpload")
      */
     public function addUpload(Request $request) {
+        echo "File: 62289290.jpg";
         exit;
     }
     /**
