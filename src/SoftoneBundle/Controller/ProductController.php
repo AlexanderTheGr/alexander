@@ -869,10 +869,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $fields[] = array("name" => "Συνχρ.", "index" => 'cccPriceUpd', 'method' => 'yesno');
 
 
-        if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'foxline') {
             $fields[] = array("name" => "Λιανική", "index" => 'itemPricew02');
             $fields[] = array("name" => "Χονδρική", "index" => 'itemPricew01');
             $fields[] = array("name" => "Eshop", "index" => 'itemPricew04');
+        } elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {    
+            $fields[] = array("name" => "Χονδρική", "index" => 'itemPricew01');
+            $fields[] = array("name" => "Olympic", "index" => 'itemPricew03');           
         } else {
             $fields[] = array("name" => "Λιανική", "index" => 'itemPricer');
             $fields[] = array("name" => "Χονδρική", "index" => 'itemPricew');
