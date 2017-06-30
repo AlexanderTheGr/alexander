@@ -1260,15 +1260,15 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         ini_set('memory_limit', '12256M');
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
-            print_r($data);
+            //print_r($data);
             //echo "<BR>";
             //exit;
-            echo $data["MTRL"]."<BR>";
+            //echo $data["MTRL"]."<BR>";
             $entity = $this->getDoctrine()
                     ->getRepository($this->repository)
                     ->findOneBy(array("reference" => (int) $data["MTRL"]));
 
-            //echo "[".@$entity->id . "]<BR>";
+            echo "[".@$entity->id . "]<BR>";
             //if ($data[$params["softone_table"]] != 13121) continue;
             $dt = new \DateTime("now");
             /*
