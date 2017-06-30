@@ -28,7 +28,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $statement = $connection->prepare($sql);
         $statement->execute();
         $data = $statement->fetch();
-        $findoc = $data["ref"] - 150;
+        $findoc = $data["ref"] - 50;
         $em = $this->getDoctrine()->getManager();
         $sql = "SELECT FINDOC,FULLYTRANSF FROM FINDOC WHERE FULLYTRANSF = 1 AND FINDOC > " . $findoc;
         $params["fSQL"] = $sql;
