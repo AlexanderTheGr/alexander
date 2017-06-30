@@ -771,7 +771,7 @@ function onUploadCancel(e) {
     $(this).parents("form").find(".upload").upload("abort", parseInt(index, 10));
 }
 
-function onUploadUploadCancelAll(e) {
+function onUploadCancelAll(e) {
     console.log("Cancel All");
     $(this).parents("form").find(".upload").upload("abort");
 }
@@ -779,7 +779,7 @@ function onUploadUploadCancelAll(e) {
 function onUploadBeforeSend(formData, file) {
     console.log("Before Send");
     formData.append("test_field", "test_value");
-    // return (file.name.indexOf(".jpg") < -1) ? false : formData; // cancel all jpgs
+    return (file.name.indexOf(".jpg") < -1) ? false : formData; // cancel all jpgs
     return formData;
 }
 
@@ -858,15 +858,4 @@ function onUploadChunkComplete(e, file, response) {
 
 function onUploadChunkError(e, file, error) {
     console.log("Chunk Error");
-}
-function onUploadBeforeSend(e, file) {
-    // Cancel request
-    if (file.name.indexOf(".jpg") < 0) {
-        alert("jpg");
-        return false;
-
-    }
-    // Modify and return form data
-    e.append("input_name", "input_value");
-    //return formData;
 }
