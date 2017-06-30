@@ -224,10 +224,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //$product->toSoftone();
         
         $content = $this->gettabs($id);
-        exit;
+        
         //$content = $this->getoffcanvases($id);
         $content = $this->content();
-        
+        exit;
         return $this->render('SoftoneBundle:Product:view.html.twig', array(
                     'pagename' => $pagename,
                     'url' => '/product/save',
