@@ -2135,6 +2135,7 @@ class Product extends Entity {
             $objectArr2["CCCFXTDBRAND"] = $this->itemMtrmark;
             $objectArr2["CCCFXRELBRAND"] = $this->itemMtrmark;
             $objectArr2["PRICER01"] = $this->itemPricew01 * 1.24;
+            $objectArr2["PRICER02"] = $this->itemPricew02 * 1.24;
             if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
                 $objectArr2["PRICER01"] = $this->itemPricew01 * 1.24;
                 $objectArr2["PRICER02"] = $this->itemPricew02 * 1.24;
