@@ -1369,7 +1369,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     //if (addslashes($data["CCCFXRELTDCODE"]) != '')
                         $q[] = "`" . strtolower($params["softone_object"] . "_apvcode") . "` = '" . addslashes($data["CCCFXRELTDCODE"]) . "'";
 
-                    if (addslashes($data["CCCFXRELBRAND"]) != '')
+                    if (addslashes($data["CCCFXRELBRAND"]) != '' AND $hasmark == false)
                         $q[] = "`" . strtolower($params["softone_object"] . "_mtrmark") . "` = '" . addslashes($data["CCCFXRELBRAND"]) . "'";
                 }
             } else {
