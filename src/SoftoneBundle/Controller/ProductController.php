@@ -1316,6 +1316,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $imporetedData[strtolower($params["softone_object"] . "_" . $identifier)] = addslashes($val);
                 $ad = strtolower($identifier);
                 $baz = $params["softone_object"] . ucwords(str_replace("_", " ", $ad));
+                $hasmark = false;
                 if (in_array($baz, $fields)) {
                     if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline' AND strtolower($params["softone_object"] . "_" . $identifier) == 'item_apvcode') {
                         continue;
@@ -1331,6 +1332,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         } else {
                             if ($identifier != 'mtrmark' AND $identifier != 'apvcode') {
                                 $q[] = "`" . strtolower($params["softone_object"] . "_" . $identifier) . "` = '" . addslashes($val) . "'";
+                                $hasmark = true;
                             }
                         }
                     } else {
@@ -1353,7 +1355,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     if (addslashes($data["CCCFXRELTDCODE"]) != '')
                     //if (addslashes($data["CCCFXRELTDCODE"]) != '')
                         $q[] = "`" . strtolower($params["softone_object"] . "_apvcode") . "` = '" . addslashes($data["CCCFXRELTDCODE"]) . "'";
-                    if (addslashes($data["CCCFXTDBRAND"]) != '')
+                    if (addslashes($data["CCCFXTDBRAND"]) != '' AND $hasmark == false)
                         $q[] = "`" . strtolower($params["softone_object"] . "_mtrmark") . "` = '" . addslashes($data["CCCFXTDBRAND"]) . "'";
                     //if (addslashes($data["CCCFXRELBRAND"]) != '')
                     //	$q[] = "`" . strtolower($params["softone_object"] . "_mtrmanfctr") . "` = '" . addslashes($data["CCCFXRELBRAND"]) . "'";
