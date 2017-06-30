@@ -1490,6 +1490,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->addField(array("name" => "Παραγγελία", "index" => 'reference', 'method' => 'yesno'))
                 ->addField(array("name" => "Τιμολογημένη", "index" => 'fullytrans', 'method' => 'yesno'))
                 ->addField(array("name" => "Πωλητής", "index" => 'user:username'))
+                ->addField(array("name" => "Status", 'function' => 'getPicked'))
                 ->addField(array("name" => "Σύνολο", 'function' => 'getTotal'))
 
         ;
