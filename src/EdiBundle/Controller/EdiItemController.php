@@ -539,7 +539,7 @@ class EdiItemController extends Main {
             if ($this->getSetting("AppBundle:Erp:erpprefix") == '/erp01') {
                 $sql = "Select id from megasoft_product where replace(replace(replace(replace(replace(`supplier_item_code`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $this->clearstring($obj->getItemCode()) . "' AND supplier = '" . $obj->getEdi()->getItemMtrsup() . "'";
             }
-            echo $sql . "<BR>";
+            //echo $sql . "<BR>";
             $connection = $em->getConnection();
             $statement = $connection->prepare($sql);
             $statement->execute();
