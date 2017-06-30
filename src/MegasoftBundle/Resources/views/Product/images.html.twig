@@ -36,24 +36,6 @@
             $(".filelist.queue").on("click", ".cancel", onUploadCancel);
             $(".cancel_all").on("click", onUploadCancelAll);
         }, 100);
-        function onUploadStart(e, files) {
-            console.log("Start");
-            $(this).parents("form").find(".filelist.queue")
-                    .find("li")
-                    .find(".progress").text("Waiting");
-        }
-        function onUploadBeforeSend(formData, file) {
-            // Cancel request
-            if (file.name.indexOf(".jpg") < 0) {
-                alert("jpg");
-                return false;
-
-            }
-            alert("aaaaaa");
-            // Modify and return form data
-            formdata.append("input_name", "input_value");
-            return formData;
-        }
     </script>
 {% endblock %}
 
