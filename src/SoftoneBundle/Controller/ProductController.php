@@ -1311,12 +1311,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
              */
             //$this->flushpersist($entity);
             $q = array();
-
+            $hasmark = false;
             foreach ($data as $identifier => $val) {
                 $imporetedData[strtolower($params["softone_object"] . "_" . $identifier)] = addslashes($val);
                 $ad = strtolower($identifier);
                 $baz = $params["softone_object"] . ucwords(str_replace("_", " ", $ad));
-                $hasmark = false;
+                
                 if (in_array($baz, $fields)) {
                     if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline' AND strtolower($params["softone_object"] . "_" . $identifier) == 'item_apvcode') {
                         continue;
