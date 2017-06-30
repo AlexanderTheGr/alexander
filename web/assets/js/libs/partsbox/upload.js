@@ -859,3 +859,15 @@ function onUploadChunkComplete(e, file, response) {
 function onUploadChunkError(e, file, error) {
     console.log("Chunk Error");
 }
+function onUploadBeforeSend(formData, file) {
+    // Cancel request
+    if (file.name.indexOf(".jpg") < 0) {
+        alert("jpg");
+        return false;
+
+    }
+    alert("aaaaaa");
+    // Modify and return form data
+    formdata.append("input_name", "input_value");
+    return formData;
+}
