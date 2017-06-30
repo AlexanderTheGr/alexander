@@ -222,11 +222,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $pagename = $product->getTitle() . " " . $product->getErpCode();
         }
         //$product->toSoftone();
-        exit;
+        
         $content = $this->gettabs($id);
-
+        exit;
         //$content = $this->getoffcanvases($id);
         $content = $this->content();
+        
         return $this->render('SoftoneBundle:Product:view.html.twig', array(
                     'pagename' => $pagename,
                     'url' => '/product/save',
