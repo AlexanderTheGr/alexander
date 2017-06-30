@@ -20,7 +20,8 @@
     <script>
         setTimeout(function () {
             $(".upload").upload({
-                action: "/erp01/product/addUpload"
+                action: "/erp01/product/addUpload",
+                beforeSend: onUploadBeforeSend
             }).on("start.upload", onUploadStart)
                     .on("complete.upload", onUploadComplete)
                     .on("filestart.upload", onUploadFileStart)
@@ -41,7 +42,17 @@
                     .find("li")
                     .find(".progress").text("Waiting");
         }
+        function onUploadBeforeSend(formData, file) {
+            // Cancel request
+            if (file.name.indexOf(".jpg") < 0) {
+                alert("jpg")
+                return false;
 
+            }
+            // Modify and return form data
+            formdata.append("input_name", "input_value");
+            return formData;
+        }
     </script>
 {% endblock %}
 
