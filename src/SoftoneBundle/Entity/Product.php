@@ -3138,5 +3138,9 @@ class Product extends Entity {
         $pricer = $pricer1 . " / " . $pricer2;
         return $pricer;
     }
-
+    function priceMpal($vat = 1) {
+        $pricer1 = number_format($this->getItemPricew01() * $vat, 2, '.', '');
+        $pricer = $pricer1;
+        return $pricer;
+    }
 }
