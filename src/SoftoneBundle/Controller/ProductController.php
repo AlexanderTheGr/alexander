@@ -1265,7 +1265,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //exit;
             $entity = $this->getDoctrine()
                     ->getRepository($params["repository"])
-                    ->findOneBy(array("reference" => (int) $data[$params["softone_table"]]));
+                    ->findOneBy(array("reference" => (int) $data["MTRL"]));
 
             echo "[".@$entity->id . "]<BR>";
             //if ($data[$params["softone_table"]] != 13121) continue;
