@@ -478,7 +478,7 @@ class EdiItemController extends Main {
                 }
             }
 
-            echo $this->where."\n\n";
+            //echo $this->where."\n\n";
             $recordsFiltered = $em->getRepository($this->repository)->recordsFiltered($this->where);
 
             $query = $em->createQuery(
