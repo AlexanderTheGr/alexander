@@ -2842,6 +2842,8 @@ class Product extends Entity {
     function getApothiki() {
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'foxline') {
             return $this->edis;
+        } elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
+            return $this->edis;
         } else {
             $qty = $this->qty - $this->reserved;
             return $this->qty . ' / <span class="text-lg text-bold text-accent-dark">' . ($qty) . '</span> (' . $this->itemMtrplace . ")";
