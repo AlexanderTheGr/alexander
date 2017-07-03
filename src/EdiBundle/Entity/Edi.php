@@ -477,8 +477,8 @@ class Edi extends Entity {
                             if ($product->getQty() > 0) {
                                 if ($i++ % 25 == 0) {
                                     $k++;
-                                    //if ($k > 2)
-                                    //    break;
+                                    if ($k > 2)
+                                        break;
                                 }
                                 if (!$edidatass[$k]) {
                                     $edidatass[$k]['ApiToken'] = $this->getToken();
@@ -618,7 +618,7 @@ class Edi extends Entity {
                         }
                         if ($itemPricew02 != $item->ListPrice) {
                             if ($itemPricew02 != $product->getItemPricew02()) {
-                                $upd = true;
+                                //$upd = true;
                             }
                             $product->setItemPricew02($itemPricew02);
                             //$upd = true;
@@ -644,12 +644,14 @@ class Edi extends Entity {
                             // $upd = true;
                         }
                         $product->setSynchronized($dt);
-                        $em->persist($product);
-                        $em->flush();
-                        $product->toSoftone();
+                        if ($upd) {
+                            $em->persist($product);
+                            $em->flush();
+                            $product->toSoftone();
 
-                        //$itemPricer = $ediitem->getEdiMarkupPrice("itemPricer"); 
-                        echo $product->getItemCode() . ";" . $item->ListPrice . ";" . $asd . ";" . $itemPricew01 . ";" . $itemPricew02 . "<BR>";
+                            //$itemPricer = $ediitem->getEdiMarkupPrice("itemPricer"); 
+                            echo $product->getItemCode() . ";" . $item->ListPrice . ";" . $asd . ";" . $itemPricew01 . ";" . $itemPricew02 . "<BR>";
+                        }
                         if ($upd) {
                             //echo "<span style='color:green'>".$product->getItemCode(). " " . $item->ListPrice . " (".$asd.") " . $itemPricew01 . " " . $itemPricew02 . "</span><BR>"; 
                         } else {
