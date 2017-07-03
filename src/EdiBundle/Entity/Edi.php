@@ -384,10 +384,10 @@ class Edi extends Entity {
         $softone = new Softone();
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         //return;    
-        
+
         if ($this->getItemMtrsup() > 0) {
             $products = $em->getRepository('SoftoneBundle:Product')
-                    ->findBy(array("itemMtrsup" => $this->getItemMtrsup()), array('id' => 'desc'),500,0);
+                    ->findBy(array("itemMtrsup" => $this->getItemMtrsup()), array('id' => 'desc'), 500, 0);
             echo count($products);
             //return;
             $k = 0;
@@ -397,33 +397,33 @@ class Edi extends Entity {
                 //continue;
                 $ediitem = false;
                 $newcccref = false;
-                
+
                 $code = trim($this->clearstring($product->getCccRef()));
                 if ($code != '') {
                     $sql = "Select id from partsbox_db.edi_item where 
                                             replace(replace(replace(replace(replace(`itemcode`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $code . "' AND edi = '" . $this->getId() . "'
                                             limit 0,1";
-                   
-                    
+
+
                     $ediitem = $em->getRepository('EdiBundle:EdiItem')
-                                ->findOneBy(array("itemCode" => $product->getCccRef(), "Edi" => $this));
+                            ->findOneBy(array("itemCode" => $product->getCccRef(), "Edi" => $this));
                     /*
-                    $sql = ""
-                    //echo $sql . "<BR>";
-                    $connection = $em->getConnection();
-                    $statement = $connection->prepare($sql);
-                    $statement->execute();
-                    $data = $statement->fetch();
-                    ;
-                    //echo "<BR>";
-                    echo ".";
-                    if ($data["id"] > 0)
-                        $ediitem = $em->getRepository('EdiBundle:EdiItem')->find($data["id"]);
+                      $sql = ""
+                      //echo $sql . "<BR>";
+                      $connection = $em->getConnection();
+                      $statement = $connection->prepare($sql);
+                      $statement->execute();
+                      $data = $statement->fetch();
+                      ;
+                      //echo "<BR>";
+                      echo ".";
+                      if ($data["id"] > 0)
+                      $ediitem = $em->getRepository('EdiBundle:EdiItem')->find($data["id"]);
                      * 
                      */
                     //echo "....<BR>";
                 }
-              
+
                 //continue;
                 if (!$ediitem) {
                     $brand = $product->getSupplierId() ? $product->getSupplierId()->getTitle() : "";
@@ -467,17 +467,17 @@ class Edi extends Entity {
                                 //echo $product->id." ".$product->erp_code." --> ".$qty." -- ".$product->getApothema()."<BR>";
                         $sql = "update softone_product set item_cccpriceupd = 1, item_cccref = '" . $product->getCccRef() . "'   where id = '" . $product->getId() . "'";
                         //$sql = "update softone_product set item_pricew = '" . $itemPricew . "', item_pricer = '" . $itemPricer . "', item_cccpriceupd = 1, item_cccref = '" . $product->getCccRef() . "'   where id = '" . $product->getId() . "'";
-
                         //echo $sql . "<BR>";
                         $em->getConnection()->exec($sql);
 
-                        
+
                         if (strlen($this->getToken()) == 36) {
-                            
+
                             if ($product->getQty() > 0) {
                                 if ($i++ % 25 == 0) {
                                     $k++;
-                                    if ($k > 2) break;
+                                    if ($k > 2)
+                                        break;
                                 }
                                 if (!$edidatass[$k]) {
                                     $edidatass[$k]['ApiToken'] = $this->getToken();
@@ -489,47 +489,46 @@ class Edi extends Entity {
                                 $edidatass[$k]['Items'][] = $Items;
                                 $products[$product->getCccRef()] = $product;
                             }
-                             
                         } else {
-                            
-                            $itemPricew   = $ediitem->getEdiMarkupPrice("itemPricew");
+
+                            $itemPricew = $ediitem->getEdiMarkupPrice("itemPricew");
                             $itemPricew01 = $ediitem->getEdiMarkupPrice("itemPricew01");
                             $itemPricew02 = $ediitem->getEdiMarkupPrice("itemPricew02");
                             $itemPricew03 = $ediitem->getEdiMarkupPrice("itemPricew03");
-                            $itemPricer   = $ediitem->getEdiMarkupPrice("itemPricer");
+                            $itemPricer = $ediitem->getEdiMarkupPrice("itemPricer");
                             $itemPricer01 = $ediitem->getEdiMarkupPrice("itemPricer01");
                             $itemPricer02 = $ediitem->getEdiMarkupPrice("itemPricer02");
                             $itemPricer03 = $ediitem->getEdiMarkupPrice("itemPricer03");
 
-                            
+
                             $asd = $product->getItemPricew01();
-                            
+
                             //if ($itemPricew != $ediitem->getWholesaleprice())
-                           //     $product->setItemPricew($itemPricew);
-                            
+                            //     $product->setItemPricew($itemPricew);
+
                             if ($itemPricew01 != $ediitem->getWholesaleprice())
                                 $product->setItemPricew01($itemPricew01);
                             if ($itemPricew02 != $ediitem->getWholesaleprice())
                                 $product->setItemPricew02($itemPricew02);
-                            
+
                             /*
-                            if ($itemPricew03 != $ediitem->getWholesaleprice())
-                                $product->setItemPricew03($itemPricew03);
-                            if ($itemPricer != $ediitem->getWholesaleprice())
-                                $product->setItemPricer($itemPricer);
-                            if ($itemPricer01 != $ediitem->getWholesaleprice())
-                                $product->setItemPricer01($itemPricer01);
-                            if ($itemPricer02 != $ediitem->getWholesaleprice())
-                                $product->setItemPricer02($itemPricer02);
-                            if ($itemPricer03 != $ediitem->getWholesaleprice())
-                                $product->setItemPricer03($itemPricer03);
-                            
-                            /*
-                              $em->persist($product);
-                              $em->flush();
-                              $product->toSoftone();
+                              if ($itemPricew03 != $ediitem->getWholesaleprice())
+                              $product->setItemPricew03($itemPricew03);
+                              if ($itemPricer != $ediitem->getWholesaleprice())
+                              $product->setItemPricer($itemPricer);
+                              if ($itemPricer01 != $ediitem->getWholesaleprice())
+                              $product->setItemPricer01($itemPricer01);
+                              if ($itemPricer02 != $ediitem->getWholesaleprice())
+                              $product->setItemPricer02($itemPricer02);
+                              if ($itemPricer03 != $ediitem->getWholesaleprice())
+                              $product->setItemPricer03($itemPricer03);
+
                              */
-                            echo $product->getItemCode(). ";" . $ediitem->getWholesaleprice() . ";".$asd.";" . $itemPricew01 . ";" . $itemPricew02 . ";Eltreka<BR>";
+                            $em->persist($product);
+                            $em->flush();
+                            $product->toSoftone();
+
+                            echo $product->getItemCode() . ";" . $ediitem->getWholesaleprice() . ";" . $asd . ";" . $itemPricew01 . ";" . $itemPricew02 . ";Eltreka<BR>";
                             //if ($o++ > 25) exit;;
                         }
                         //$this->flushpersist($product);
@@ -542,13 +541,12 @@ class Edi extends Entity {
                         //unset($softone);
                         //echo $sql . "<BR>";
                         //sleep(5);
-
                         //echo "</div>";
                     } else {
                         //echo "<span style='color:green'>" . $product->getItemCode() . " -- " . $product->getSupplierId()->getTitle() . " -- " . $product->getItemCode2() . " " . $ediitem->getWholesaleprice() . " -- " . $ediitem->getEdiMarkupPrice("itemPricew") . " -- " . $product->getItemPricew() . "</span><BR>";
                     }
                 } else {
-                   //echo "<span style='color:red'>" . $product->getItemCode() . ";" . $product->getSupplierId()->getTitle() . ";" . $product->getItemCode2() . "</span><BR>";
+                    //echo "<span style='color:red'>" . $product->getItemCode() . ";" . $product->getSupplierId()->getTitle() . ";" . $product->getItemCode2() . "</span><BR>";
                 }
                 //exit;
             }
@@ -593,7 +591,7 @@ class Edi extends Entity {
 
                         $asd = $product->getItemPricew01();
                         $upd = false;
-                        
+
                         if ($itemPricew != $item->ListPrice) {
                             //$product->setItemPricew($itemPricew);
                             //if ()
@@ -609,7 +607,7 @@ class Edi extends Entity {
                         if ($itemPricew02 != $item->ListPrice) {
                             if ($itemPricew02 != $product->getItemPricew02()) {
                                 $upd = true;
-                            }                            
+                            }
                             $product->setItemPricew02($itemPricew02);
                             //$upd = true;
                         }
@@ -631,18 +629,18 @@ class Edi extends Entity {
                         }
                         if ($itemPricer03 != $item->ListPrice) {
                             //$product->setItemPricer03($itemPricer03);
-                           // $upd = true;
+                            // $upd = true;
                         }
-                        
+
                         $em->persist($product);
                         $em->flush();
                         $product->toSoftone();
-                         
+
                         //$itemPricer = $ediitem->getEdiMarkupPrice("itemPricer"); 
-                        echo $product->getItemCode(). ";" . $item->ListPrice . ";".$asd.";" . $itemPricew01 . ";" . $itemPricew02 . "<BR>";
+                        echo $product->getItemCode() . ";" . $item->ListPrice . ";" . $asd . ";" . $itemPricew01 . ";" . $itemPricew02 . "<BR>";
                         if ($upd) {
                             //echo "<span style='color:green'>".$product->getItemCode(). " " . $item->ListPrice . " (".$asd.") " . $itemPricew01 . " " . $itemPricew02 . "</span><BR>"; 
-                        }  else { 
+                        } else {
                             //echo $product->getItemCode(). " " . $item->ListPrice . " (".$asd.") " . $itemPricew01 . " " . $itemPricew02 . "<BR>";
                         }
                     }
