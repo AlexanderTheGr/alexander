@@ -513,11 +513,11 @@ class Edi extends Entity {
                                 $product->setItemPricew02($itemPricew02);
 
                             
-                            echo $product->getSynchronized();
                             
-                            if ($product->getSynchronized() == $dt) continue; 
+                            
+                            //if ($product->getSynchronized() == $dt) continue; 
                             $product->setSynchronized($dt);
-                            
+                            echo $product->getSynchronized();
                             /*
                               if ($itemPricew03 != $ediitem->getWholesaleprice())
                               $product->setItemPricew03($itemPricew03);
