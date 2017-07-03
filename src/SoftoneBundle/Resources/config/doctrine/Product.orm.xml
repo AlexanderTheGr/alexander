@@ -293,6 +293,7 @@
         
         <field name="created" type="datetime" column="created" nullable="true"/>
         <field name="modified" type="datetime" column="modified" nullable="true"/>
+        <field name="synchronized" type="datetime" column="synchronized" nullable="true"/>
         
         <many-to-one
             field="tecdocSupplierId"
