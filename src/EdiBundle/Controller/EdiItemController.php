@@ -786,6 +786,7 @@ class EdiItemController extends Main {
                     $AvailabilityDetailsHtml .= "</select>";
                     //$entity->setWholesaleprice($Item->ListPrice);
                     print_r($xml->Item->Header);
+                    
                     @$jsonarr[$key]['6'] = $entity->getDiscount($customer, $vat);
                     @$jsonarr[$key]['7'] = number_format((float) $xml->Item->Header->PriceOnPolicy, 2, '.', '');
                     @$jsonarr[$key]['8'] = $jsonarr[$key]['8'] . $AvailabilityDetailsHtml;
