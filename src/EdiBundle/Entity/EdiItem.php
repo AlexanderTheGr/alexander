@@ -993,8 +993,12 @@ class EdiItem extends Entity {
         //$this->setProduct($product->getId());
         $em->persist($this);
         $em->flush();
-        $sql = 'UPDATE  `softone_product` SET `supplier_code` =  `item_code2`, `title` =  `item_name`, `tecdoc_code` =  `item_apvcode`, `erp_code` =  `item_code`, `supplier_id` =  `item_mtrmanfctr`';
+        $sql = 'UPDATE  `softone_product` SET `supplier_code` =  `item_code2`, `title` =  `item_name`, `tecdoc_code` =  `item_apvcode`, `erp_code` =  `item_code`';
         $em->getConnection()->exec($sql);
+        
+        $sql = 'UPDATE  `softone_product` SET `supplier_id` =  `item_mtrmanfctr` where item_mtrmanfctr > 0 AND item_mtrmanfctr in (SELECT id FROM `softone_softone_supplier`)';
+        $em->getConnection()->exec($sql);
+        
         $sql = 'update `softone_product` set product_sale = 1 where product_sale is null';
         $em->getConnection()->exec($sql);
         return;
