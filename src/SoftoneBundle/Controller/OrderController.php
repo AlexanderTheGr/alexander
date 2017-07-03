@@ -1571,10 +1571,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 if ($item->getProduct()) {
                     $items = array();
                     $items["id"] = $item->getId();
-                    $items["Code"] = $item->getOrder()->getFincode();
-                    $items["Title"] = $item->getOrder()->getCreated()->format("Y-m-d");
-                    
-                    $items["Qty"] = $item->getQty();
+                    $items["code"] = $item->getOrder()->getFincode();
+                    $items["date"] = $item->getOrder()->getCreated()->format("Y-m-d");
+                    $items["qty"] = $item->getQty();
                     $items["price"] = $item->getPrice();
                     $items["disc1prc"] = $item->getDisc1prc();
                     $items["lineval"] = $item->getLineval();
