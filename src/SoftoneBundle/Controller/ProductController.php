@@ -1789,7 +1789,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             }
 
             //$em->getConnection()->exec($sql);
-            if ($i++ > 100) return;
+            //if ($i++ > 100) return;
         }
         //if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
         $sql = "update softone_product set reserved = 0";
