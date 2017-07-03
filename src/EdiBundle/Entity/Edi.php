@@ -381,6 +381,7 @@ class Edi extends Entity {
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
         }
+        $dt = new \DateTime("now");
         $softone = new Softone();
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         //return;    
@@ -511,6 +512,7 @@ class Edi extends Entity {
                             if ($itemPricew02 != $ediitem->getWholesaleprice())
                                 $product->setItemPricew02($itemPricew02);
 
+                            $product->setSynchronized($dt);
                             /*
                               if ($itemPricew03 != $ediitem->getWholesaleprice())
                               $product->setItemPricew03($itemPricew03);
