@@ -1566,29 +1566,19 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $product = $entity->getProduct();
         if ($product) {
             $html = $product->getId();
-           /*
+           
             foreach ($product->getHistory() as $item) {
                 if ($item->getProduct()) {
                     $items = array();
                     $items["id"] = $item->getId();
-                    $items["Code"] = $item->getProduct()->getItemCode();
-                    $items["Title"] = $item->getProduct()->getTitle();
-                    $items["Qty"] = $item->getQty();
+                    $items["Code"] = $item->getOrder()->getFincode();
+                    $items["Title"] = $item->getOrder()->getCreated()->format("Y-m-d");
+                    $items["Qty"] = $item->getOrder()->getFincode();
                     $items["Price"] = $item->getLineval();
                     @$total += $item->getLineval();
                     $content[] = $items;
                 }
             }
-            * 
-            */
-       
-            $items = array();
-            $items["id"] = $product->getId();
-            $items["Title"] = count($product->getHistory());
-            $items["Code"] = "";
-            $items["Qty"] = "";
-            $items["Price"] = @$total;
-            $content[] = $items;
         }
 
         $response = $this->get('twig')->render('SoftoneBundle:Order:items.html.twig', array('content' => $content));
