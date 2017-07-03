@@ -3181,7 +3181,7 @@ class Product extends Entity {
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         $orderItems = $em->getRepository("SoftoneBundle:Orderitem")
-                ->findBy(array("product" => $this));
+                ->findBy(array("product" => $this), array('id' => 'desc'));
         return $orderItems;
     }
 
