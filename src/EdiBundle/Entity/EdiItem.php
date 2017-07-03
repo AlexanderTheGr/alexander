@@ -1356,8 +1356,7 @@ class EdiItem extends Entity {
         }
         //$markup = $markup == 0 ? 0 : $markup; 
         //echo $markup."\n";
-        $markupedPrice = $this->getWholesaleprice() * (1 + $markup / 100 );
-        $markupedPrice = $this->getWholesaleprice();
+        $markupedPrice = (double)$this->getWholesaleprice() * (1 + $markup / 100 );
         return $price > 0 ? $price : round($markupedPrice,2);
     }
 
