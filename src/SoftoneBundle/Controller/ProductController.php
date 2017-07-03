@@ -1053,7 +1053,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
 
         //echo "<PRE>";
-        //print_r($datas);
+        print_r($datas);
         //echo "</PRE>";
         //exit;
 
