@@ -1563,6 +1563,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $entity = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Product")
                 ->find($id);
+        echo $id;
         if ($entity) {
             $html = $entity->getId();
             foreach ($entity->getHistory() as $item) {
