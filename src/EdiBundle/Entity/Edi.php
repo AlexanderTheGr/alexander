@@ -583,7 +583,7 @@ class Edi extends Entity {
                     )));
                     $re = json_decode($result);
 
-                    print_r($re);
+                    //print_r($re);
                     //echo "<BR>";
                     foreach ((array) $re->Items as $item) {
                         $product = $products[$item->ItemCode];
@@ -643,7 +643,7 @@ class Edi extends Entity {
                             //$product->setItemPricer03($itemPricer03);
                             // $upd = true;
                         }
-
+                        $product->setSynchronized($dt);
                         $em->persist($product);
                         $em->flush();
                         $product->toSoftone();
