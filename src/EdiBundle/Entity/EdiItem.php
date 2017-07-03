@@ -904,7 +904,7 @@ class EdiItem extends Entity {
                 $product->setTecdocSupplierId($TecdocSupplier);
             }
             $product->toSoftone();
-            echo $this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode();
+            //echo $this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode();
             return;
         }
 
