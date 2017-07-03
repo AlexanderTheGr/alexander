@@ -397,6 +397,7 @@ class Edi extends Entity {
                 //return;
                 //continue;
                 if ($product->getQty() == 0) continue;
+                if ($product->getSynchronized()) continue;
                 $ediitem = false;
                 $newcccref = false;
 
@@ -563,8 +564,8 @@ class Edi extends Entity {
                 }
                 //exit;
             }
-            //print_r($edidatass);
-            //exit;
+            print_r($edidatass);
+            exit;
             if (strlen($this->getToken()) == 36) {
                 //print_r($edidatass);
                 $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=getiteminfo';
