@@ -508,19 +508,20 @@ class Edi extends Entity {
                             //     $product->setItemPricew($itemPricew);
 
                             if ($itemPricew01 != $ediitem->getWholesaleprice()) {
-                                if ($itemPricew01 == $product->getItemPricew01()) continue;
+                                if ($itemPricew01 == $product->getItemPricew01())
+                                    continue;
                                 $product->setItemPricew01($itemPricew01);
                             }
                             if ($itemPricew02 != $ediitem->getWholesaleprice())
                                 $product->setItemPricew02($itemPricew02);
 
-                            
-                            
-                            
+
+
+
                             //if ($product->getSynchronized() == $dt) continue; 
                             $product->setSynchronized($dt);
-                            
-                            echo $product->getSynchronized()->format('Y-m-d');
+                            if ($product->getSynchronized())
+                                echo $product->getSynchronized()->format('Y-m-d');
                             /*
                               if ($itemPricew03 != $ediitem->getWholesaleprice())
                               $product->setItemPricew03($itemPricew03);
@@ -539,7 +540,8 @@ class Edi extends Entity {
                             $product->toSoftone();
 
                             echo $product->getItemCode() . ";" . $ediitem->getWholesaleprice() . ";" . $asd . ";" . $itemPricew01 . ";" . $itemPricew02 . ";Eltreka<BR>";
-                            if ($o++ > 5) exit;;
+                            if ($o++ > 5)
+                                exit;;
                         }
                         //$this->flushpersist($product);
                         //$em->persist($product);
