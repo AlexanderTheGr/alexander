@@ -210,7 +210,7 @@ class TecdocSupplier extends Entity {
             if (@count($datas->data))
                 continue;
             $params["fSQL"] = 'Insert INTO MTRMARK (MTRMARK,NAME,CODE,COMPANY,SODTYPE) VALUES (' . $data["id"] . ',\'' . $data["supplier"]. '\', \'' . $data["id"] . '\',1000,51)';
-            print_r($softone->createSql($params));
+            //print_r($softone->createSql($params));
             //if ($i++ > 5) exit;
         }
     }
