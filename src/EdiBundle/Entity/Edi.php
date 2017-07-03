@@ -616,8 +616,6 @@ class Edi extends Entity {
                                 $upd = true;
                             }
                             $product->setItemPricew01($itemPricew01);
-                            //$upd = true;
-                            
                         }
                         if ($itemPricew02 != $item->ListPrice) {
                             if ($itemPricew02 != $product->getItemPricew02()) {
@@ -646,8 +644,9 @@ class Edi extends Entity {
                             //$product->setItemPricer03($itemPricer03);
                             // $upd = true;
                         }
-                        $product->setSynchronized($dt);
+                        
                         if ($upd) {
+                            $product->setSynchronized($dt);
                             $em->persist($product);
                             $em->flush();
                             $product->toSoftone();
