@@ -651,8 +651,7 @@ class Edi extends Entity {
                             $em->persist($product);
                             $em->flush();
                             $product->toSoftone();
-                        }
-                            //$itemPricer = $ediitem->getEdiMarkupPrice("itemPricer"); 
+                        }    //$itemPricer = $ediitem->getEdiMarkupPrice("itemPricer"); 
                         echo $product->getItemCode() . ";" . $item->ListPrice . ";" . $asd . ";" . $itemPricew01 . ";" . $itemPricew02 . "<BR>";
                         
                         if ($upd) {
@@ -661,7 +660,7 @@ class Edi extends Entity {
                             //echo $product->getItemCode(). " " . $item->ListPrice . " (".$asd.") " . $itemPricew01 . " " . $itemPricew02 . "<BR>";
                         }
                     }
-                    //break;
+                    break;
                 }
             }
         }
