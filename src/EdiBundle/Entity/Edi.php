@@ -564,8 +564,8 @@ class Edi extends Entity {
                 }
                 //exit;
             }
-            print_r($edidatass);
-            exit;
+            //print_r($edidatass);
+            //exit;
             
             if (strlen($this->getToken()) == 36) {
                 //print_r($edidatass);
@@ -662,7 +662,7 @@ class Edi extends Entity {
                             //echo $product->getItemCode(). " " . $item->ListPrice . " (".$asd.") " . $itemPricew01 . " " . $itemPricew02 . "<BR>";
                         }
                     }
-                    break;
+                    //break;
                 }
             }
         }
