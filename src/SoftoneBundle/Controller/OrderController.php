@@ -1561,11 +1561,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
     function getOrderItemHistoryPopup($id) {
         $entity = $this->getDoctrine()
-                ->getRepository("SoftoneBundle:Product")
+                ->getRepository($this->repository)
                 ->find($id);
-        
+        $product = $entity->getProduct();
         if ($entity) {
-            $html = $entity->getId();
+            $html = $product->getId();
             /*
             foreach ($entity->getHistory() as $item) {
                 if ($item->getProduct()) {
@@ -1582,7 +1582,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
              * 
              */
             $items = array();
-            $items["id"] = $id;
+            $items["id"] = $product->getId();
             $items["Title"] = "";
             $items["Code"] = "";
             $items["Qty"] = "";
