@@ -1746,7 +1746,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $info = explode(";", $zoominfo);
             $data["reference"] = $info[1];
             //if ($data["reference"] != 21927) continue;
-            if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'foxline') {
+            if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
                 //print_r($data);
                 //exit;			
                 $data["item_mtrl_itemtrdata_qty1"] = $data["item_v3"] + $data["item_v4"];
