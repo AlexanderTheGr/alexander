@@ -894,7 +894,7 @@ class EdiItem extends Entity {
             $product->setCccPriceUpd(1);
             //echo "itemPricer:".$this->getEdiMarkupPrice("itemPricer")."\n";
             //echo "itemPricew:".$this->getEdiMarkupPrice("itemPricew")."\n";
-            $this->wholesaleprice = $this->getEdiListPrice();
+            $this->wholesaleprice = $this->getEdiQtyAvailability();
             $product->setItemPricer((double) $this->getEdiMarkupPrice("itemPricer"));
             $product->setItemPricew((double) $this->getEdiMarkupPrice("itemPricew"));
             $product->setItemPricew01((double) $this->getEdiMarkupPrice("itemPricew01"));
@@ -974,7 +974,7 @@ class EdiItem extends Entity {
 
         $product->setCars($this->getCars());
         $product->setCats($this->getCats());
-        $this->wholesaleprice = $this->getEdiListPrice();
+        $this->wholesaleprice = $this->getEdiQtyAvailability();
         $product->setItemPricer((double) $this->getEdiMarkupPrice("itemPricer"));
         $product->setItemPricew((double) $this->getEdiMarkupPrice("itemPricew"));
         
