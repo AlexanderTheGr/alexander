@@ -977,6 +977,7 @@ class EdiItem extends Entity {
 
         $product->setItemPricer((double) $this->getEdiMarkupPrice("itemPricer"));
         $product->setItemPricew((double) $this->getEdiMarkupPrice("itemPricew"));
+        $product->setItemPricew01((double) $this->getEdiMarkupPrice("itemPricew01"));
 
 
         $product->setItemV5($dt);
