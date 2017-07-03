@@ -95,7 +95,7 @@ class DefaultController extends Main {
      * @Route("/erpprefix", name="erpprefix")
      */
     public function erpprefix() {
-        
+        return "";
         return $this->render('default/erpprefix.html.twig', array(
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));        
@@ -120,6 +120,7 @@ class DefaultController extends Main {
     }
 
     function setSetting($path, $value) {
+        
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('AppBundle:Setting');
         $setting = $repository->findOneBy(
