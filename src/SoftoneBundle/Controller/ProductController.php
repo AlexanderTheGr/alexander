@@ -1047,15 +1047,15 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $softone = new Softone();
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             $datas = $softone->getManufactures($params);
-            //$datas = $softone->createSql($params);
+            $datas = $softone->createSql($params);
         } else {
             $datas = $softone->createSql($params);
         }
-        echo 'sss';
+        //echo 'sss';
         //echo "<PRE>";
-        print_r($datas);
+        //print_r($datas);
         //echo "</PRE>";
-        exit;
+        //exit;
 
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
