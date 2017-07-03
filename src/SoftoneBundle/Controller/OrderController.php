@@ -1566,7 +1566,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $product = $entity->getProduct();
         if ($product) {
             $html = $product->getId();
-           
+           /*
             foreach ($product->getHistory() as $item) {
                 if ($item->getProduct()) {
                     $items = array();
@@ -1579,10 +1579,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $content[] = $items;
                 }
             }
+            * 
+            */
        
             $items = array();
             $items["id"] = $product->getId();
-            $items["Title"] = "";
+            $items["Title"] = count($product->getHistory());
             $items["Code"] = "";
             $items["Qty"] = "";
             $items["Price"] = @$total;
