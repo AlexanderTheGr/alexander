@@ -897,6 +897,7 @@ class EdiItem extends Entity {
             $this->wholesaleprice = $this->getEdiListPrice();
             $product->setItemPricer((double) $this->getEdiMarkupPrice("itemPricer"));
             $product->setItemPricew((double) $this->getEdiMarkupPrice("itemPricew"));
+            $product->setItemPricew01((double) $this->getEdiMarkupPrice("itemPricew01"));
 
             $em->persist($product);
             $em->flush();
