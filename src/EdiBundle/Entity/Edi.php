@@ -388,7 +388,7 @@ class Edi extends Entity {
 
         if ($this->getItemMtrsup() > 0) {
             $products = $em->getRepository('SoftoneBundle:Product')
-                    ->findBy(array("itemMtrsup" => $this->getItemMtrsup()), array('id' => 'desc'), 50000, 0);
+                    ->findBy(array("itemMtrsup" => $this->getItemMtrsup()), array('id' => 'desc'));
             echo count($products);
             //return;
             $k = 0;
@@ -562,8 +562,8 @@ class Edi extends Entity {
                 }
                 //exit;
             }
-            print_r($edidatass);
-            exit;
+            //print_r($edidatass);
+            //exit;
             if (strlen($this->getToken()) == 36) {
                 //print_r($edidatass);
                 $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=getiteminfo';
