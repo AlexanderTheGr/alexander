@@ -1256,7 +1256,7 @@ class EdiItem extends Entity {
             $xml = simplexml_load_string($xml);
             //print_r($xml);
 
-            return $xml->Item->PriceOnPolicy;
+            return $xml->Item->WholePrice;
         }
         //print_r($jsonarr);
     }
