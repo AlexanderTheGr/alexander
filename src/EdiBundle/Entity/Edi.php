@@ -507,8 +507,10 @@ class Edi extends Entity {
                             //if ($itemPricew != $ediitem->getWholesaleprice())
                             //     $product->setItemPricew($itemPricew);
 
-                            if ($itemPricew01 != $ediitem->getWholesaleprice())
+                            if ($itemPricew01 != $ediitem->getWholesaleprice()) {
+                                if ($itemPricew01 == $product->getItemPricew01()) continue;
                                 $product->setItemPricew01($itemPricew01);
+                            }
                             if ($itemPricew02 != $ediitem->getWholesaleprice())
                                 $product->setItemPricew02($itemPricew02);
 
