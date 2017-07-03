@@ -1564,10 +1564,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository($this->repository)
                 ->find($id);
         $product = $entity->getProduct();
-        if ($entity) {
+        if ($product) {
             $html = $product->getId();
-            /*
-            foreach ($entity->getHistory() as $item) {
+           
+            foreach ($product->getHistory() as $item) {
                 if ($item->getProduct()) {
                     $items = array();
                     $items["id"] = $item->getId();
@@ -1579,8 +1579,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $content[] = $items;
                 }
             }
-             * 
-             */
+       
             $items = array();
             $items["id"] = $product->getId();
             $items["Title"] = "";
