@@ -1573,15 +1573,18 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $items["id"] = $item->getId();
                     $items["Code"] = $item->getOrder()->getFincode();
                     $items["Title"] = $item->getOrder()->getCreated()->format("Y-m-d");
+                    
                     $items["Qty"] = $item->getQty();
-                    $items["Price"] = $item->getLineval();
+                    $items["price"] = $item->getPrice();
+                    $items["disc1prc"] = $item->getDisc1prc();
+                    $items["lineval"] = $item->getLineval();
                     @$total += $item->getLineval();
                     $content[] = $items;
                 }
             }
         }
 
-        $response = $this->get('twig')->render('SoftoneBundle:Order:items.html.twig', array('content' => $content));
+        $response = $this->get('twig')->render('SoftoneBundle:Order:history.html.twig', array('content' => $content));
         return $response;
     }
 
