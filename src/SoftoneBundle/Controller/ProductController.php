@@ -676,6 +676,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
             if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
                 $fields["itemPricew01"] = array("label" => "Τιμή Χοδρικής", "className" => "col-md-2", "required" => false); 
+                $fields["itemPricew03"] = array("label" => "Τιμή Olympic", "className" => "col-md-2", "required" => false); 
             } else {
                 $fields["itemPricew01"] = array("label" => "Τιμή Χοδρικής", "className" => "col-md-2", "required" => false);
                 $fields["itemPricew02"] = array("label" => "Τιμή Λιανικής", "className" => "col-md-1", "required" => false);
