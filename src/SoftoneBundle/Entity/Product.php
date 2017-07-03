@@ -374,7 +374,6 @@ class Product extends Entity {
      */
     protected $synchronized;
 
-    
     /**
      * @var string
      *
@@ -1390,8 +1389,7 @@ class Product extends Entity {
      */
     public function getSynchronized() {
         return $this->modified;
-    }    
-    
+    }
 
     /**
      * Set flatData
@@ -3169,9 +3167,22 @@ class Product extends Entity {
         $pricer = $pricer1 . " / " . $pricer2;
         return $pricer;
     }
+
     function priceMpal($vat = 1) {
         $pricer1 = number_format($this->getItemPricew01() * $vat, 2, '.', '');
         $pricer = $pricer1;
         return $pricer;
     }
+
+    function getHistory() {
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $orderItems = $em->getRepository("SoftoneBundle:Orderitem")
+                ->findAll(array("product" => $this));
+        return $orderItems;
+    }
+
 }
