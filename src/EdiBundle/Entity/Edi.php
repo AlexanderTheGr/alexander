@@ -512,8 +512,12 @@ class Edi extends Entity {
                             if ($itemPricew02 != $ediitem->getWholesaleprice())
                                 $product->setItemPricew02($itemPricew02);
 
+                            
+                            echo $product->getSynchronized()->format('Y-m-d');
+                            
                             if ($product->getSynchronized() == $dt) continue; 
                             $product->setSynchronized($dt);
+                            
                             /*
                               if ($itemPricew03 != $ediitem->getWholesaleprice())
                               $product->setItemPricew03($itemPricew03);
