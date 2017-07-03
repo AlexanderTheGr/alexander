@@ -103,7 +103,6 @@ class EdiController extends Main {
         ));
     }
 
-    
     /**
      * 
      * 
@@ -123,9 +122,9 @@ class EdiController extends Main {
         $json = json_encode($arr);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
-        );        
-    }    
-    
+        );
+    }
+
     /**
      * @Route("/edi/edi/gettab")
      */
@@ -316,16 +315,16 @@ class EdiController extends Main {
         //$allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
         //$allowedipsArr = explode(",", $allowedips);
         //if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
-            $this->createSelect(array($this->prefix . ".id", $this->prefix . ".token", $this->prefix . ".func", $this->prefix . ".id"));
-            $collection = $this->collection($this->repository);
-            $i = 0;
-            foreach ($collection as $entity) {
-                //if ($i++ <= 1) continue;
-                if ($entity["id"] == 11) {
-                    $func = $entity["func"];
-                    $this->$func($entity);
-                }
+        $this->createSelect(array($this->prefix . ".id", $this->prefix . ".token", $this->prefix . ".func", $this->prefix . ".id"));
+        $collection = $this->collection($this->repository);
+        $i = 0;
+        foreach ($collection as $entity) {
+            //if ($i++ <= 1) continue;
+            if ($entity["id"] == 11) {
+                $func = $entity["func"];
+                $this->$func($entity);
             }
+        }
         //}
         exit;
     }
@@ -396,7 +395,8 @@ class EdiController extends Main {
                             echo $sql . "<BR>";
                             //$em->getConnection()->exec($sql);
                         }
-                        if ($i++ > 100) return;	
+                        if ($i++ > 100)
+                            return;
                     }
                 }
             }
@@ -901,5 +901,16 @@ class EdiController extends Main {
         //$this->install();
         //$this->getPartMaster();
     }
+
+    /**
+     * @Route("/edi/edi/synchronize")
+     */
+    public function synchronizeAction($funct = false) {
+        $ediedis = $this->getDoctrine()->getRepository('EdiBundle:Edi')->findAll();
+        foreach ($ediedis as $ediedi) {
+            $this->synchronize($ediedi);
+        }
+    }
+
 
 }
