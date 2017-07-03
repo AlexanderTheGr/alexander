@@ -368,6 +368,14 @@ class Product extends Entity {
     protected $modified;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="synchronized", type="datetime", nullable=false)
+     */
+    protected $synchronized;
+
+    
+    /**
      * @var string
      *
      * @ORM\Column(name="flat_data", type="text", nullable=false)
@@ -1361,6 +1369,29 @@ class Product extends Entity {
     public function getModified() {
         return $this->modified;
     }
+
+    /**
+     * Set synchronized
+     *
+     * @param \DateTime $modified
+     *
+     * @return Product
+     */
+    public function setSynchronized(\DateTime $synchronized) {
+        $this->synchronized = $synchronized;
+
+        return $this;
+    }
+
+    /**
+     * Get synchronized
+     *
+     * @return \DateTime
+     */
+    public function getSynchronized() {
+        return $this->modified;
+    }    
+    
 
     /**
      * Set flatData
