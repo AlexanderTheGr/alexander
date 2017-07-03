@@ -1083,7 +1083,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 //$this->getDoctrine()->getConnection()->exec($sql);			
             }
         }
-        exit;
+       //exit;
     }
 
     function retrieveMtrl($MTRL = 0) {
