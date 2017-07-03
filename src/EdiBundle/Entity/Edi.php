@@ -513,7 +513,7 @@ class Edi extends Entity {
                                 $product->setItemPricew02($itemPricew02);
 
                             
-                            echo $product->getSynchronized()->format('Y-m-d');
+                            echo $product->getSynchronized();
                             
                             if ($product->getSynchronized() == $dt) continue; 
                             $product->setSynchronized($dt);
