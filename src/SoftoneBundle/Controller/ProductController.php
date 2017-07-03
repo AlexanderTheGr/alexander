@@ -1072,7 +1072,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'gianop') {
                         $name = str_replace(" - " . $data["CODE"], "", $data["NAME"]);
                         $sql = "update softone_softone_supplier SET title = '" . addslashes($name) . "', code = '" . $data["CODE"] . "' where id = '" . $data["MTRMANFCTR"] . "'";
-                        //echo $sql."<BR>";
+                        echo $sql."<BR>";
                         //$this->getDoctrine()->getConnection()->exec($sql);
                     }
                 } else {
@@ -1083,7 +1083,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 //$this->getDoctrine()->getConnection()->exec($sql);			
             }
         }
-        //exit;
+        exit;
     }
 
     function retrieveMtrl($MTRL = 0) {
@@ -1672,7 +1672,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //ini_set('memory_limit', '2256M');
             //echo $this->retrieveMtrcategory();
             echo $this->retrieveMtrmanfctr();
-            echo $this->retrieveMtrl();
+            //echo $this->retrieveMtrl();
             file_put_contents("retrieveSoftone.txt", $allowedipsArr);
             //echo $this->retrieveApothema();
         } return new Response("", 200);
