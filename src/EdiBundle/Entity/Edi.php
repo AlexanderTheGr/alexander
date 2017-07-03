@@ -477,7 +477,7 @@ class Edi extends Entity {
                             if ($product->getQty() > 0) {
                                 if ($i++ % 25 == 0) {
                                     $k++;
-                                    if ($k > 2)
+                                    if ($k > 3)
                                         break;
                                 }
                                 if (!$edidatass[$k]) {
