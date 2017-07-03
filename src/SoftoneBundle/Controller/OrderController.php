@@ -1559,6 +1559,37 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         return false;
     }
 
+    function getOrderItemHistoryPopup($id) {
+        $entity = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Product")
+                ->find($id);
+        if ($entity) {
+            $html = $entity->getId();
+            foreach ($entity->getHistory() as $item) {
+                if ($item->getProduct()) {
+                    $items = array();
+                    $items["id"] = $item->getId();
+                    $items["Code"] = $item->getProduct()->getItemCode();
+                    $items["Title"] = $item->getProduct()->getTitle();
+                    $items["Qty"] = $item->getQty();
+                    $items["Price"] = $item->getLineval();
+                    @$total += $item->getLineval();
+                    $content[] = $items;
+                }
+            }
+            $items = array();
+            $items["id"] = "";
+            $items["Title"] = "";
+            $items["Code"] = "";
+            $items["Qty"] = "";
+            $items["Price"] = @$total;
+            $content[] = $items;
+        }
+
+        $response = $this->get('twig')->render('SoftoneBundle:Order:items.html.twig', array('content' => $content));
+        return $response;
+    }
+
     function getOrderItemsPopup($id) {
         $id = (int) $id;
 
@@ -1618,6 +1649,43 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         }
         $json = json_encode($datatable);
 
+        
+        
+        $json = $this->datatable();
+
+
+        $datatable = json_decode($json);
+        $datatable->data = (array) $datatable->data;
+        $i = 0;
+        foreach ($datatable->data as $key => $table) {
+            $table = (array) $table;
+            $tbl = (array) $table;
+            $table1 = array();
+
+            foreach ($table as $f => $val) {
+                if ($f == 0 AND $f != 'DT_RowId' AND $f != 'DT_RowClass') {
+                    $table1[$f] = $val;
+                    if ($i++ < 100) {
+                        $table1[1] = $this->getOrderItemHistoryPopup($val);
+                    }
+                    //$hasOrderItems = $this->getHasOrderItems($val);
+                } else if ($f == 1) {
+                    $table1[$f] = $table1[1] . $val;
+                } else {
+                    $table1[$f] = $val;
+                }
+            }
+            //if ($hasOrderItems) {
+            $datatable->data[$key] = $table1;
+            //} else {
+            //$datatable->data[$key] = $table1;
+            //unset($datatable->data[$key]);
+            //}
+        }
+        $json = json_encode($datatable);        
+        
+        
+        
 
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
@@ -1928,7 +1996,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $product = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Product')
                     ->findOneByReference($item["MTRL"]);
-            if (!$product) return;
+            if (!$product)
+                return;
             $orderItem = new Orderitem;
             $orderItem->setOrder($entity);
             $orderItem->setPrice($item["PRICE"] * $vat);
