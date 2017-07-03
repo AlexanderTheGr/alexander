@@ -95,11 +95,11 @@ class DefaultController extends Main {
      * @Route("/erpprefix", name="erpprefix")
      */
     public function erpprefix() {
-        return "";
-        //return $this->render('default/erpprefix.html.twig', array(
-       //            'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
-       // ));        
-       return  $this->getSetting("AppBundle:Erp:erpprefix") ?  $this->getSetting("AppBundle:Erp:erp") : $this->setSetting("AppBundle:Erp:erp", "");
+       //return "";
+       return $this->render('default/erpprefix.html.twig', array(
+                   'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
+       ));        
+       //return  $this->getSetting("AppBundle:Erp:erpprefix") ?  $this->getSetting("AppBundle:Erp:erp") : $this->setSetting("AppBundle:Erp:erp", "");
     }
     function getSetting($path) {
         $em = $this->getDoctrine()->getManager();
