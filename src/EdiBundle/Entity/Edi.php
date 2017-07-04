@@ -546,8 +546,8 @@ class Edi extends Entity {
                             $string = $product->getItemCode() . ";" . $ediitem->getWholesaleprice() . ";" . $asd . ";" . $itemPricew01 . ";" . $itemPricew02."\n";
                             file_put_contents($this->getName()."_".date("Y-m-d").".csv", $string, FILE_APPEND | LOCK_EX);
                             echo $product->getItemCode() . ";" . $ediitem->getWholesaleprice() . ";" . $asd . ";" . $itemPricew01 . ";" . $itemPricew02 . ";Eltreka<BR>";
-                            if ($o++ > 5)
-                                exit;;
+                            //if ($o++ > 5)
+                            //    exit;;
                         }
                         //$this->flushpersist($product);
                         //$em->persist($product);
