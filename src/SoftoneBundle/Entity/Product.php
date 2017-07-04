@@ -3098,6 +3098,37 @@ class Product extends Entity {
         return $this;
     }
 
+    
+    /**
+     * @var string
+     */
+    private $nosync = '';
+
+
+    /**
+     * Set nosync
+     *
+     * @param string $nosync
+     *
+     * @return Product
+     */
+    public function setNosync($nosync) {
+        $this->cccRef = $cccRef;
+
+        return $this;
+    }
+
+    /**
+     * Get nosync
+     *
+     * @return string
+     */
+    public function geNosync() {
+        return $this->nosync;
+    }    
+    
+    
+    
     /**
      * Get reserved
      *
