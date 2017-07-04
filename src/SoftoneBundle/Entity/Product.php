@@ -3123,7 +3123,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function geNosync() {
+    public function getNosync() {
         return $this->nosync;
     }    
     
