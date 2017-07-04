@@ -3113,7 +3113,7 @@ class Product extends Entity {
      * @return Product
      */
     public function setNosync($nosync) {
-        $this->cccRef = $cccRef;
+        $this->cccRef = $nosync;
 
         return $this;
     }
