@@ -95,7 +95,7 @@ class DefaultController extends Main {
      * @Route("/erpprefix", name="erpprefix")
      */
     public function erpprefix() {
-       //return "";
+       echo "kkk";
        return $this->render('default/erpprefix.html.twig', array(
                    'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
        ));        
