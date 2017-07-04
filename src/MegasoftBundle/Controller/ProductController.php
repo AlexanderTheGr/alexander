@@ -781,7 +781,7 @@ class ProductController extends Main {
     public function getImagesHtml($product) {
         $em = $this->getDoctrine()->getManager();
         $response = $this->get('twig')->render('MegasoftBundle:Product:images.html.twig', array(
-            'url' => "<img src='/assets/media/".$em->getConnection()->getDatabase()."/".$product->getId().".jpg'>",
+            'img' => "<img src='/assets/media/".$em->getConnection()->getDatabase()."/".$product->getId().".jpg'>",
             'product' => $product->getId(),
         ));
         return str_replace("\n", "", htmlentities($response));
