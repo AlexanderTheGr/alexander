@@ -540,14 +540,12 @@ class Edi extends Entity {
                               $product->setItemPricer03($itemPricer03);
 
                              */
-                            
                             $em->persist($product);
                             $em->flush();
                             $product->toSoftone();
                             $string = $product->getItemCode() . ";" . $ediitem->getWholesaleprice() . ";" . $asd . ";" . $itemPricew01 . ";" . $itemPricew02."\n";
                             file_put_contents($this->getName()."_".date("Y-m-s").".csv", $string, FILE_APPEND | LOCK_EX);
                             echo $product->getItemCode() . ";" . $ediitem->getWholesaleprice() . ";" . $asd . ";" . $itemPricew01 . ";" . $itemPricew02 . ";Eltreka<BR>";
-                            
                             if ($o++ > 5)
                                 exit;;
                         }
