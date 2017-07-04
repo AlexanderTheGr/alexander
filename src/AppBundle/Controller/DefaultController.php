@@ -95,7 +95,7 @@ class DefaultController extends Main {
      * @Route("/erpprefix", name="erpprefix")
      */
     public function erpprefix() {
-       echo "lll".$this->getSetting("AppBundle:Erp:erpprefix");
+       echo $this->getSetting("AppBundle:Erp:erpprefix");
        return $this->render('default/erpprefix.html.twig', array(
                    'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
        ));        
@@ -107,9 +107,6 @@ class DefaultController extends Main {
         $setting = $repository->findOneBy(
                 array('path' => $path)
         );
-        echo $em->getConnection()->getDatabase();
-
-        echo $setting->getId().$setting->getPath();
         if (!$setting) {
             $dt = new \DateTime("now");
             $setting = new Setting;
