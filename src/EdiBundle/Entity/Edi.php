@@ -397,7 +397,7 @@ class Edi extends Entity {
                 //return;
                 //continue;
                 if ($product->getQty() == 0) continue;
-                if ($product->getNosync() == 0) continue;
+                if ($product->getNosync() == 1) continue;
                 if ($product->getSynchronized()) continue;
                 $ediitem = false;
                 $newcccref = false;
