@@ -107,7 +107,7 @@ class DefaultController extends Main {
         $setting = $repository->findOneBy(
                 array('path' => $path)
         );
-        echo $setting->getId();
+        echo $setting->getId().$setting->getPath();
         if (!$setting) {
             $dt = new \DateTime("now");
             $setting = new Setting;
