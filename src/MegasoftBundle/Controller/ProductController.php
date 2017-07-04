@@ -495,7 +495,8 @@ class ProductController extends Main {
             $path .= $em->getConnection()->getDatabase();
             @mkdir($path);
             move_uploaded_file($_FILES["file"]["tmp_name"],$path."/".$product.".jpg");
-            echo "File is an image - " . $check["mime"] . ".";
+            //echo "File is an image - " . $check["mime"] . ".";
+            echo "/assets/media/".$em->getConnection()->getDatabase()."/".$product.".jpg";
             $uploadOk = 1;
         } else {
             echo "File is not an image.";
