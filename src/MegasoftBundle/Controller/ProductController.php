@@ -493,7 +493,7 @@ class ProductController extends Main {
         if ($check !== false) {
             $em = $this->getDoctrine()->getManager();
             $path .= $em->getConnection()->getDatabase();
-            mkdir($path);
+            @mkdir($path);
             echo "File is an image - " . $check["mime"] . ".";
             $uploadOk = 1;
         } else {
