@@ -499,7 +499,7 @@ class ProductController extends Main {
             echo "/assets/media/".$em->getConnection()->getDatabase()."/".$product.".jpg";
             $uploadOk = 1;
         } else {
-            echo "File is not an image.";
+            //echo "File is not an image.";
             $uploadOk = 0;
         }
         //echo "File: 62289290.jpg";
@@ -780,8 +780,15 @@ class ProductController extends Main {
 
     public function getImagesHtml($product) {
         $em = $this->getDoctrine()->getManager();
+        
+        $path = "/home2/partsbox/public_html/partsbox/web/assets/media/".$em->getConnection()->getDatabase()."/".$product->getId().".jpg";
+        
+        if (file_exists($path)) {
+            $img = "<img src='/assets/media/".$em->getConnection()->getDatabase()."/".$product->getId().".jpg'>";
+        }
+        
         $response = $this->get('twig')->render('MegasoftBundle:Product:images.html.twig', array(
-            'img' => "<img src='/assets/media/".$em->getConnection()->getDatabase()."/".$product->getId().".jpg'>",
+            'img' => $img,
             'product' => $product->getId(),
         ));
         return str_replace("\n", "", htmlentities($response));
