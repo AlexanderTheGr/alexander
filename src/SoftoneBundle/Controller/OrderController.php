@@ -331,6 +331,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $fields["fincode"] = array("label" => "Code", 'className' => 'asdfg', "required" => true);
             $fields["customerName"] = array("label" => "Customer Name", "required" => true, 'className' => 'asdfg');
             $fields["route"] = array("label" => "Route", "required" => false, 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Route', 'name' => 'route', 'value' => 'id'));
+            $fields["softoneStore"] = array("label" => "Store", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Store', 'name' => 'title', 'value' => 'id'));
 
             if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'foxline') {
                 $storeField[] = array("value" => "7021", "name" => "Γέρακας");
@@ -994,7 +995,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             $objectArr[0]["ACNMSK"] = $order->getUser()->getUsername();
         }
-        $objectArr[0]["SERIES"] = 7021; //$model->series;
+        $objectArr[0]["SERIES"] = 7021; //$model->series; //
         $objectArr[0]["VATSTS"] = $this->getSetting("SoftoneBundle:Order:Vat") != '' ? $this->getSetting("SoftoneBundle:Order:Vat") : $customer->getCustomerVatsts();
         $objectArr[0]["COMMENTS"] = $order->getRemarks(); //$customer->getCustomerPayment() > 0 ? $customer->getCustomerPayment() : 1003; // Mage::app()->getRequest()->getParam('comments');
         $objectArr[0]["REMARKS"] = $order->getRemarks();
