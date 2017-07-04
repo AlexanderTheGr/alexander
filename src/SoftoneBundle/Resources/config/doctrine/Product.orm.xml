@@ -143,6 +143,13 @@
                 <option name="default"></option>
             </options>
         </field>
+ 
+        <field name="nosync" type="string" column="nosync" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+                <option name="default">0</option>
+            </options>
+        </field>               
       
         <field name="qty" type="integer" column="qty" nullable="true">
             <options>
