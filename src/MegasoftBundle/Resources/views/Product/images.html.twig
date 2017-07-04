@@ -2,6 +2,9 @@
     <link type="text/css" rel="stylesheet" href="{{  asset('assets/css/upload.css') }}" />
 {% endblock %}
 {% block body %}
+    <style>
+        .imagearea img {max-width: 300px; max-height: 300px;}
+    </style>
     <div class="imagearea">{{img | raw}}</div>
     <div class="upload"></div>
     <div class="filelists">
