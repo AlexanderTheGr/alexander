@@ -263,6 +263,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
         $order->setCustomerName($request->request->get("customerName"));
         $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user = $this->getDoctrine()
+                ->getRepository("AppBundle:User")
+                ->find($user->getId());
         $order->setUser($user);
         echo $user->getSoftoneStore()->getId();
         exit;
