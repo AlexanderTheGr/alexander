@@ -483,7 +483,7 @@ class ProductController extends Main {
     }
 
     /**
-     * @Route("/erp01/product/addUpload")
+     * @Route("/erp01/product/addUpload/{product}")
      */
     public function addUpload(Request $request) {
         $path = "/home2/partsbox/public_html/partsbox/web/assets/media/";
