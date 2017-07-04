@@ -173,6 +173,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $entity->setCustomer($customer);
             $user = $this->get('security.token_storage')->getToken()->getUser();
             $entity->setUser($user);
+            $entity->setSoftoneStore($user->getSoftoneStore());
 
             $vat = $this->getDoctrine()
                     ->getRepository("SoftoneBundle:Vat")
@@ -995,7 +996,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             $objectArr[0]["ACNMSK"] = $order->getUser()->getUsername();
         }
-        $objectArr[0]["SERIES"] = 7021; //$model->series; //
+        $objectArr[0]["SERIES"] = $order->getSoftoneStore()->getSeries();
         $objectArr[0]["VATSTS"] = $this->getSetting("SoftoneBundle:Order:Vat") != '' ? $this->getSetting("SoftoneBundle:Order:Vat") : $customer->getCustomerVatsts();
         $objectArr[0]["COMMENTS"] = $order->getRemarks(); //$customer->getCustomerPayment() > 0 ? $customer->getCustomerPayment() : 1003; // Mage::app()->getRequest()->getParam('comments');
         $objectArr[0]["REMARKS"] = $order->getRemarks();
