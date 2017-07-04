@@ -23,7 +23,7 @@
       </options>
     </field>
     
-    <!--many-to-one
+    <many-to-one
         field="softoneStore"
         target-entity="SoftoneBundle\Entity\Store"
         inversed-by="Stores"
@@ -32,7 +32,7 @@
             <cascade-persist/>
         </cascade>
         <join-column name="store" referenced-column-name="id"/>
-    </many-to-one--> 
+    </many-to-one> 
     
     <field name="key" type="string" column="`key`" length="50" nullable="true">
       <options>
