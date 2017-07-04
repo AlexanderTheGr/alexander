@@ -486,11 +486,14 @@ class ProductController extends Main {
      * @Route("/erp01/product/addUpload")
      */
     public function addUpload(Request $request) {
-
+        $path = "/home2/partsbox/public_html/partsbox/web/assets/media/";
         //$request->request->get("product");
         //print_r($_FILES);
         $check = getimagesize($_FILES["file"]["tmp_name"]);
         if ($check !== false) {
+            $em = $this->getDoctrine()->getManager();
+            $path .= $em->getConnection()->getDatabase();
+            mkdir($path);
             echo "File is an image - " . $check["mime"] . ".";
             $uploadOk = 1;
         } else {
