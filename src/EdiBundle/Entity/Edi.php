@@ -514,6 +514,7 @@ class Edi extends Entity {
                             if ($itemPricew01 != $ediitem->getWholesaleprice()) {
                                 if ($itemPricew01 == $product->getItemPricew01())
                                     continue;
+                                
                                 $product->setItemPricew01($itemPricew01);
                             }
                             if ($itemPricew02 != $ediitem->getWholesaleprice())
@@ -539,11 +540,14 @@ class Edi extends Entity {
                               $product->setItemPricer03($itemPricer03);
 
                              */
+                            
                             $em->persist($product);
                             $em->flush();
                             $product->toSoftone();
-
+                            $string = $product->getItemCode() . ";" . $ediitem->getWholesaleprice() . ";" . $asd . ";" . $itemPricew01 . ";" . $itemPricew02."\n";
+                            file_put_contents($this->getName()."_".date("Y-m-s").".csv", $string, FILE_APPEND | LOCK_EX);
                             echo $product->getItemCode() . ";" . $ediitem->getWholesaleprice() . ";" . $asd . ";" . $itemPricew01 . ";" . $itemPricew02 . ";Eltreka<BR>";
+                            
                             if ($o++ > 5)
                                 exit;;
                         }
@@ -656,6 +660,8 @@ class Edi extends Entity {
                             $em->flush();
                             $product->toSoftone();
                             echo $product->getItemCode() . ";" . $item->ListPrice . ";" . $asd . ";" . $itemPricew01 . ";" . $itemPricew02 . "<BR>";
+                            $string = $product->getItemCode() . ";" . $item->ListPrice . ";" . $asd . ";" . $itemPricew01 . ";" . $itemPricew02."\n";
+                            file_put_contents($this->getName()."_".date("Y-m-s").".csv", $string, FILE_APPEND | LOCK_EX);
                         }    //$itemPricer = $ediitem->getEdiMarkupPrice("itemPricer"); 
 
                         if ($upd) {
