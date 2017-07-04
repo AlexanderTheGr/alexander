@@ -502,7 +502,7 @@ class ProductController extends Main {
             echo "File is not an image.";
             $uploadOk = 0;
         }
-        echo "File: 62289290.jpg";
+        //echo "File: 62289290.jpg";
         exit;
     }
 
