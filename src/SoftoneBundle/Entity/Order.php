@@ -249,26 +249,32 @@ class Order extends Entity {
     }
 
     /**
-     * Set store
-     *
-     * @param integer $store
-     *
-     * @return Order
+     * @var \SoftoneBundle\Entity\Store
      */
-    public function setStore($store) {
-        $this->store = $store;
+    protected $softoneStore;
+
+    /**
+     * Set softoneStore
+     *
+     * @param \SoftoneBundle\Entity\Store $softoneStore
+     *
+     * @return User
+     */
+    public function setSoftoneStore(\SoftoneBundle\Entity\Store $softoneStore = null) {
+        $this->softoneStore = $softoneStore;
 
         return $this;
     }
 
     /**
-     * Get store
+     * Get softoneStore
      *
-     * @return integer
+     * @return \SoftoneBundle\Entity\Store
      */
-    public function getStore() {
-        return $this->store;
+    public function getSoftoneStore() {
+        return $this->softoneStore;
     }
+
 
     /**
      * Set customerName
