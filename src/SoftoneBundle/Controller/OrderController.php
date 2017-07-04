@@ -269,8 +269,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->find($user->getId());
         */
         $order->setUser($user);
-        echo $user->getSoftoneStore()->getId();
-        exit;
         $order->setSoftoneStore($user->getSoftoneStore());
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
