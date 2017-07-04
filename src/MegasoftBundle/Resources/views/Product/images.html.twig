@@ -20,7 +20,7 @@
     <script>
         setTimeout(function () {
             $(".upload").upload({
-                action: "/erp01/product/addUpload",
+                action: "/erp01/product/addUpload/{{product}}",
                 beforeSend: onUploadBeforeSend
             }).on("start.upload", onUploadStart)
                     .on("complete.upload", onUploadComplete)
