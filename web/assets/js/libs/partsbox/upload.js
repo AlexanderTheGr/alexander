@@ -831,8 +831,7 @@ function onUploadFileComplete(e, file, response) {
     else {
         var $target = $(this).parents("form").find(".filelist.queue").find("li[data-index=" + file.index + "]");
         $target.find(".file").text(file.name);
-        alert(response);
-        $(".imagearea").html("<img src='"+response+"'>");
+        $(".imagearea").html("<img src='"+response+"?file="+file.name+"'>");
         $target.find(".progress").remove();
         $target.find(".cancel").remove();
         $target.appendTo($(this).parents("form").find(".filelist.complete"));
