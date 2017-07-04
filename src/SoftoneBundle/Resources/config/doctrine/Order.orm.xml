@@ -19,14 +19,18 @@
             </options>
         </field>
 
-        <field name="store" type="integer" column="store" nullable="true">
-            <options>
-                <option name="unsigned"/>
-                <option name="default">1</option>
-            </options>
-        </field>
-       
 
+       
+        <many-to-one
+            field="softoneStore"
+            target-entity="SoftoneBundle\Entity\Store"
+            inversed-by="Stores"
+            join-column="store">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+            <join-column name="store" referenced-column-name="id"/>
+        </many-to-one> 
         
         <field name="customerName" type="string" column="customer_name" length="255" nullable="true">
             <options>
