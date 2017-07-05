@@ -1760,8 +1760,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $data["item_soreserved"] = $data["item_v7"] + $data["item_v6"];
                 $qty1 = (int) $data["item_v3"] - (int) $data["item_v7"];
                 $qty2 = (int) $data["item_v4"] - (int) $data["item_v6"];
-                $edis = "Γέρακας: " . (int) $data["item_v3"] . ' / <span class="text-lg text-bold text-accent-dark">' . ($qty1) . '</span> (' . $data["item_mtrplace"] . ")<BR>";
-                $edis .= "Κορωπί: " . (int) $data["item_v4"] . ' / <span class="text-lg text-bold text-accent-dark">' . ($qty2) . '</span> (' . $data["item_mtrl_iteextra_varchar04"] . ")";
+                $edis = "Κορωπί: " . (int) $data["item_v3"] . ' / <span class="text-lg text-bold text-accent-dark">' . ($qty1) . '</span> (' . $data["item_mtrplace"] . ")<BR>";
+                $edis .= "Γέρακας: " . (int) $data["item_v4"] . ' / <span class="text-lg text-bold text-accent-dark">' . ($qty2) . '</span> (' . $data["item_mtrl_iteextra_varchar04"] . ")";
                 $sql = "update softone_product set edis = '" . $edis . "', qty = '" . $data["item_mtrl_itemtrdata_qty1"] . "', reserved = '" . $data["item_soreserved"] . "' where reference = '" . $data["reference"] . "'";
                 if ($data["item_soreserved"] > 0 OR $data["item_mtrl_itemtrdata_qty1"] > 0) {
                     echo $sql . "<BR>";
