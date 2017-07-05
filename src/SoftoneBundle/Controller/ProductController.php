@@ -1741,7 +1741,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
         $edis = 'Γέρακας:  / <span class="text-lg text-bold text-accent-dark">0</span> (0)<BR>';
         $edis .= 'Κορωπί: 0 / <span class="text-lg text-bold text-accent-dark">0</span> (0)';            
-        $sql = "update softone_product set edis = '" . $edis . "', qty = '" . $data["item_mtrl_itemtrdata_qty1"] . "', reserved = '0'";
+        $sql = "update softone_product set edis = '" . $edis . "', qty = '0', reserved = '0'";
         echo $sql . "<BR>";
         $em->getConnection()->exec($sql);
         foreach ($datas as $data) {
