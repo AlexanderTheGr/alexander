@@ -1748,6 +1748,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $info = explode(";", $zoominfo);
             $data["reference"] = $info[1];
             //if ($data["reference"] != 21927) continue;
+            $edis = 'Γέρακας:  / <span class="text-lg text-bold text-accent-dark">0</span> (0)<BR>';
+            $edis .= 'Κορωπί: 0 / <span class="text-lg text-bold text-accent-dark">0</span> (0)';            
+            $sql = "update softone_product set edis = '" . $edis . "', qty = '" . $data["item_mtrl_itemtrdata_qty1"] . "', reserved = '0'";
+            echo $sql . "<BR>";
+            $em->getConnection()->exec($sql);
+                
             if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
                 //print_r($data);
                 //exit;			
@@ -1758,8 +1764,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $edis = "Γέρακας: " . (int) $data["item_v3"] . ' / <span class="text-lg text-bold text-accent-dark">' . ($qty1) . '</span> (' . $data["item_mtrplace"] . ")<BR>";
                 $edis .= "Κορωπί: " . (int) $data["item_v4"] . ' / <span class="text-lg text-bold text-accent-dark">' . ($qty2) . '</span> (' . $data["item_mtrl_iteextra_varchar04"] . ")";
                 $sql = "update softone_product set edis = '" . $edis . "', qty = '" . $data["item_mtrl_itemtrdata_qty1"] . "', reserved = '" . $data["item_soreserved"] . "' where reference = '" . $data["reference"] . "'";
-                echo $sql . "<BR>";
-                $em->getConnection()->exec($sql);
+                if ($data["item_soreserved"] > 0 OR $data["item_mtrl_itemtrdata_qty1"] > 0) {
+                    echo $sql . "<BR>";
+                    $em->getConnection()->exec($sql);
+                }
+                
             } elseif ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
                 //if ($data["item_mtrl_itemtrdata_qty1"] > 0 OR $data["item_soreserved"] > 0) {
                 //$sql = "update softone_product set qty = '" . $data["item_mtrl_itemtrdata_qty1"] . "', reserved = '" . $data["item_soreserved"] . "' where reference = '" . $data["reference"] . "'";
