@@ -396,8 +396,8 @@ class Edi extends Entity {
             foreach ($products as $product) {
                 //return;
                 //continue;
-                //if ($product->getQty() == 0) continue;
-                //if ($product->getNosync() == 1) continue;
+                if ($product->getQty() == 0) continue;
+                if ($product->getNosync() == 1) continue;
                 //if ($product->getSynchronized()) continue;
                 
                 $ediitem = false;
