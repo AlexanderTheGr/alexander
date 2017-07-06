@@ -965,7 +965,7 @@ class EdiItemController extends Main {
 
                 $jsonarr["markupr"] = (double) $ediItem->getEdiMarkup($pricer);
                 $jsonarr["markupw"] = (double) $ediItem->getEdiMarkup($pricew);
-                $jsonarr["rules"] = $ediItem->getRulesss($pricew);
+                //$jsonarr["rules"] = $ediItem->getRulesss($pricew);
 
                 $jsonarr["pricer"] = $pricer;
                 $jsonarr["pricew"] = $pricew;
