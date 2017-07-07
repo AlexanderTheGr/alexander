@@ -251,21 +251,21 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         }
         
         $fields["customerCode"] = array("label" => $this->getTranslation("Κωδικός"), "className" => "col-md-6", "required" => true);
-        $fields["customerName"] = array("label" => "Επωνυμία", "className" => "col-md-6", "required" => true);
-        $fields["customerAfm"] = array("label" => "ΑΦΜ", "className" => "col-md-6", "required" => true);
-        $fields["customerEmail"] = array("label" => "Email", "className" => "col-md-6", "required" => false);
+        $fields["customerName"] = array("label" => $this->getTranslation("Επωνυμία"), "className" => "col-md-6", "required" => true);
+        $fields["customerAfm"] = array("label" => $this->getTranslation("ΑΦΜ"), "className" => "col-md-6", "required" => true);
+        $fields["customerEmail"] = array("label" => $this->getTranslation("Email"), "className" => "col-md-6", "required" => false);
 
-        $fields["customerIrsdata"] = array("label" => "ΔΟΥ", "className" => "col-md-6", "required" => false);
-        $fields["customerJobtypetrd"] = array("label" => "Επάγγελμα", "className" => "col-md-6", "required" => false);
+        $fields["customerIrsdata"] = array("label" => $this->getTranslation("ΔΟΥ"), "className" => "col-md-6", "required" => false);
+        $fields["customerJobtypetrd"] = array("label" => $this->getTranslation("Επάγγελμα"), "className" => "col-md-6", "required" => false);
 
-        $fields["customerAddress"] = array("label" => "Customer Address", "className" => "col-md-6", "required" => false);
-        $fields["customerCity"] = array("label" => "Customer City", "className" => "col-md-6", "required" => false);
-        $fields["customerPhone01"] = array("label" => "Τηλέφωνο", "required" => false);
+        $fields["customerAddress"] = array("label" => $this->getTranslation("Customer Address"), "className" => "col-md-6", "required" => false);
+        $fields["customerCity"] = array("label" => $this->getTranslation("Customer City"), "className" => "col-md-6", "required" => false);
+        $fields["customerPhone01"] = array("label" => $this->getTranslation("Τηλέφωνο"), "required" => false);
 
-        $fields["customergroup"] = array("label" => "Group", "className" => "col-md-6", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:Customergroup', 'name' => 'title', 'value' => 'id'));
+        $fields["customergroup"] = array("label" => $this->getTranslation("Ομάδα Πελάτη"), "className" => "col-md-6", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:Customergroup', 'name' => 'title', 'value' => 'id'));
 
         //$fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
-        $fields["customerVatsts"] = array("label" => "ΦΠΑ", "required" => true, "className" => "col-md-6", 'type' => "select", 'dataarray' => $vatsts);
+        $fields["customerVatsts"] = array("label" => $this->getTranslation("ΦΠΑ"), "required" => true, "className" => "col-md-6", 'type' => "select", 'dataarray' => $vatsts);
 
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             //$priceField[] = array("value" => "itemPricer", "name" => "Λιανική");
@@ -309,10 +309,10 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         }
 
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
-            $fields["priceField"] = array("label" => "Κατάλογος", "className" => "col-md-3", 'type' => "select", "required" => true, 'dataarray' => $priceField);
-            $fields["customerPayment"] = array("label" => "Τρόπος Πληρωμής", "className" => "col-md-3", 'type' => "select", "required" => true, 'dataarray' => $payment);
+            $fields["priceField"] = array("label" => $this->getTranslation("Κατάλογος"), "className" => "col-md-3", 'type' => "select", "required" => true, 'dataarray' => $priceField);
+            $fields["customerPayment"] = array("label" => $this->getTranslation("Τρόπος Πληρωμής"), "className" => "col-md-3", 'type' => "select", "required" => true, 'dataarray' => $payment);
         } else {
-            $fields["priceField"] = array("label" => "Κατάλογος", "className" => "col-md-6", 'type' => "select", "required" => true, 'dataarray' => $priceField);
+            $fields["priceField"] = array("label" => $this->getTranslation("Κατάλογος"), "className" => "col-md-6", 'type' => "select", "required" => true, 'dataarray' => $priceField);
         }
         $forms = $this->getFormLyFields($entity, $fields);
 
