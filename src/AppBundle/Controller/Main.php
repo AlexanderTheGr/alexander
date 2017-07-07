@@ -11,6 +11,7 @@ use Symfony\Component\Console\Application as Application;
 use Symfony\Component\Console\Input\ArrayInput as ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput as BufferedOutput;
 use AppBundle\Entity\Setting as Setting;
+use AppBundle\Entity\Translation as Translation;
 
 class Main extends Controller {
 
@@ -714,43 +715,41 @@ class Main extends Controller {
     function getTranslation($path) {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('AppBundle:Translation');
-        $setting = $repository->findOneBy(
+        $translation = $repository->findOneBy(
                 array('path' => $path)
         );
-        if (!$setting) {
+        if (!$translation) {
             $dt = new \DateTime("now");
-            $setting = new Setting;
-            $setting->setTs($dt);
-            $setting->setCreated($dt);
-            $setting->setModified($dt);
-            $setting->setPath($path);
-            $this->flushpersist($setting);
+            $translation = new translation;
+            $translation->setTs($dt);
+            $translation->setCreated($dt);
+            $translation->setModified($dt);
+            $translation->setPath($path);
+            $this->flushpersist($translation);
         }
-        return $setting->getValue();
+        return $translation->getValue();
     }
 
     function setTranslation($path, $value) {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('AppBundle:Translation');
-        $setting = $repository->findOneBy(
+        $translation = $repository->findOneBy(
                 array('path' => $path)
         );
-        if (!$setting) {
+        if (!$translation) {
             $dt = new \DateTime("now");
-            $setting = new Setting;
-            $setting->setTs($dt);
-            $setting->setCreated($dt);
-            $setting->setModified($dt);
-            $setting->setPath($path);
-            $this->flushpersist($setting);
+            $translation = new Translation;
+            $translation->setTs($dt);
+            $translation->setCreated($dt);
+            $translation->setModified($dt);
+            $translation->setPath($path);
+            $this->flushpersist($translation);
         }
-        $setting->setValue($value);
-        $this->flushpersist($setting);
-        return $setting->getValue();
+        $translation->setValue($value);
+        $this->flushpersist($translation);
+        return $translation->getValue();
     }
-    
-    
-    
+        
     
 
     public function articleAttributes($article_id, $car_id = 0) {
