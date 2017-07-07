@@ -705,7 +705,7 @@ class EdiController extends Main {
                 //if ($i < 83701) continue;
                 //if ($key == 'similardlnr' OR $key = 'similarartnr' ) continue;
                 echo "."."[".$attributes['similarartnr']."][".$attributes['artnr']."]";
-                if ($attributes['similarartnr'] == '' AND $attributes['artnr'] != '')  continue;
+                if ($attributes['similarartnr'] == '')  continue;
                 
                 
                 if ((int) $attributes['dlnr'] == 0)
