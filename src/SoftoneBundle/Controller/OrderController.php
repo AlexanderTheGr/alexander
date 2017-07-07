@@ -206,6 +206,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $fullytrans = $order->getFullytrans() > 0 ? '' : 'display:none';
         }
 
+        
+        $orderview["send_to_softone"] = $this->getTranslation("Send To Softone");
+        
         $content = $this->content();
         return $this->render('SoftoneBundle:Order:view.html.twig', array(
                     'pagename' => $pagename,
@@ -215,6 +218,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
+                    '$orderview' => $orderview,
                     'content' => $content,
                     'displaynone' => $displaynone,
                     'fullytrans' => $fullytrans,
