@@ -208,6 +208,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
         
         $orderview["send_to_softone"] = $this->getTranslation("Send To Softone");
+        $orderview["send_to_route"] = $this->getTranslation("Send To Route");
+        $orderview["save"] = $this->getTranslation("Save");
         
         $content = $this->content();
         return $this->render('SoftoneBundle:Order:view.html.twig', array(
