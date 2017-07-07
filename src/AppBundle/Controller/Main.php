@@ -727,7 +727,7 @@ class Main extends Controller {
             $translation->setPath($path);
             $this->flushpersist($translation);
         }
-        return $translation->getValue();
+        return $translation->getValue() ? $translation->getValue() : $path;
     }
 
     function setTranslation($path, $value) {
