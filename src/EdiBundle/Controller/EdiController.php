@@ -753,7 +753,7 @@ class EdiController extends Main {
                     //if ($i++ > 60) return;
                 } else {
                     $sql = "update partsbox_db.edi_item set " . implode(",", $q) . " where id = '" . $ediedi_id . "'";
-                    //echo $sql . "<BR>";
+                    echo $sql . "<BR>";
                     echo ".";
                     $em->getConnection()->exec($sql);
                 }
