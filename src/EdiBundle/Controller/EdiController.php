@@ -517,7 +517,7 @@ class EdiController extends Main {
                 if ((int) $attributes['dlnr'] == 0)
                     $attributes['dlnr'] = $attributes['similardlnr'];
                 if ($attributes['artnr'] == '')
-                    $attributes['artnr'] = $attributes['similarartnr'];
+                    $attributes['artnr'] = $attributes['c'];
 
 
                 $attributes['wholesaleprice'] = $attributes['pricew'];
@@ -674,8 +674,8 @@ class EdiController extends Main {
         //return;
         $tecdoc = new Tecdoc();
         $file = "/home2/partsbox/" . $apiToken . '.csv';
-        $fiestr = gzdecode(file_get_contents($this->getEdiPartMasterFile($entity["token"])));
-        file_put_contents($file, $fiestr);
+        //$fiestr = gzdecode(file_get_contents($this->getEdiPartMasterFile($entity["token"])));
+        //file_put_contents($file, $fiestr);
         set_time_limit(100000);
         ini_set('memory_limit', '14096M');
 
@@ -710,7 +710,7 @@ class EdiController extends Main {
                 if ($attributes['artnr'] == '') {
                     $attributes['artnr'] = $attributes['similarartnr'];
                 }
-
+                if ($attributes['similarartnr'] == '')  continue;
 
                 $attributes['wholesaleprice'] = $attributes['pricew'] > 0 ? $attributes['pricew'] : $attributes['netprice'];
                 $attributes['retailprice'] = $attributes['pricer'];
