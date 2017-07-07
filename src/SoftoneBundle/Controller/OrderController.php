@@ -335,19 +335,19 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
 
 
-            $fields["fincode"] = array("label" => "Code", 'className' => 'asdfg', "required" => true);
-            $fields["customerName"] = array("label" => "Customer Name", "required" => true, 'className' => 'asdfg');
+            $fields["fincode"] = array("label" => $this->getTranslation("Customer Code"), 'className' => 'asdfg', "required" => true);
+            $fields["customerName"] = array("label" => $this->getTranslation("Customer Name"), "required" => true, 'className' => 'asdfg');
             $fields["route"] = array("label" => "Route", "required" => false, 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Route', 'name' => 'route', 'value' => 'id'));
-            $fields["softoneStore"] = array("label" => "Store", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Store', 'name' => 'title', 'value' => 'id'));
+            $fields["softoneStore"] = array("label" => $this->getTranslation("Store"), 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Store', 'name' => 'title', 'value' => 'id'));
 
             if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'foxline') {
                 $storeField[] = array("value" => "7021", "name" => "Γέρακας");
                 $storeField[] = array("value" => "7121", "name" => "Κορωπί");
-                $fields["series"] = array("label" => "Store", "className" => "col-md-12", 'type' => "select", "required" => true, 'dataarray' => $storeField);
+                $fields["series"] = array("label" => $this->getTranslation("Store"), "className" => "col-md-12", 'type' => "select", "required" => true, 'dataarray' => $storeField);
             }
 
             $entity->setRemarks(str_replace("\n", "", $entity->getRemarks()));
-            $fields["remarks"] = array("label" => "Σχόλια", 'className' => '', "required" => false);
+            $fields["remarks"] = array("label" => $this->getTranslation("Remarks"), 'className' => '', "required" => false);
             //$fields["vat"] = array("label" => "Vat", "required" => true, 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Vat', 'name' => 'vat', 'value' => 'id'));
         }
 
