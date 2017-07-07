@@ -198,6 +198,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             'search' => $search
         );
         $tecdoc = new Tecdoc();
+        if ($this->getSetting("AppBundle:Entity:lng") > 0) {
+            $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
+        };         
         $data = $tecdoc->getArticlesSearchByIds($params);
         return $data->data->array;
         //return $data;
@@ -907,6 +910,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //$content = $this->content();
 
         $tecdoc = new Tecdoc();
+        if ($this->getSetting("AppBundle:Entity:lng") > 0) {
+            $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
+        };         
         $article_id = $request->request->get("articleId");
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
@@ -1172,6 +1178,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         if ($MTRL > 0) {
             $tecdoc = new Tecdoc();
+            if ($this->getSetting("AppBundle:Entity:lng") > 0) {
+                $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
+            };             
             $entity = $this->getDoctrine()
                     ->getRepository($params["repository"])
                     ->findOneBy(array("reference" => (int) $MTRL));
@@ -1251,6 +1260,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
          * 
          */
         $tecdoc = new Tecdoc();
+        if ($this->getSetting("AppBundle:Entity:lng") > 0) {
+            $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
+        };         
         ini_set('memory_limit', '12256M');
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
@@ -1464,6 +1476,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         echo count($results);
         $i = 0;
         $tecdoc = new Tecdoc();
+        if ($this->getSetting("AppBundle:Entity:lng") > 0) {
+            $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
+        };         
         foreach ($results as $result) {
             //if ($result["id"] > 41170) {
             $ediediitem = $em->getRepository($this->repository)->find($result["id"]);
@@ -1501,6 +1516,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         echo count($results);
         $i = 0;
         $tecdoc = new Tecdoc();
+        if ($this->getSetting("AppBundle:Entity:lng") > 0) {
+            $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
+        };         
         echo "<BR>";
         foreach ($results as $result) {
             //if ($result["id"] > 41170) {
