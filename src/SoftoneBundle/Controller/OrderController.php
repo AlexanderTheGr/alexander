@@ -887,7 +887,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     function getArticleAttributes($articleId, $linkingTargetId = '') {
 
         $tecdoc = new Tecdoc();
-
+        if ($this->getSetting("AppBundle:Entity:lng") > 0) {
+            $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
+        }; 
         $attributs = $tecdoc->getAssignedArticlesByIds(
                 array(
                     "articleId" => $articleId,
@@ -1095,6 +1097,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             'search' => $search
         );
         $tecdoc = new Tecdoc();
+        if ($this->getSetting("AppBundle:Entity:lng") > 0) {
+            $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
+        };      
         $data = $tecdoc->getArticlesSearchByIds($params);
         return $data->data->array;
         //}
@@ -1134,6 +1139,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
         //} else {
         $tecdoc = new Tecdoc();
+        if ($this->getSetting("AppBundle:Entity:lng") > 0) {
+            $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
+        };      
         $articles = $tecdoc->getArticlesSearch(array('search' => $this->clearstring($search)));
         //print_r($articles);
         //echo $search;
@@ -1384,6 +1392,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $session = new Session();
         $em = $this->getDoctrine()->getManager();
         $tecdoc = new Tecdoc();
+        if ($this->getSetting("AppBundle:Entity:lng") > 0) {
+            $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
+        };        
         $params["linkingTargetId"] = $request->request->get("car");
         $data = $tecdoc->linkedChildNodesAllLinkingTargetTree($params);
         $articleIds = array();
