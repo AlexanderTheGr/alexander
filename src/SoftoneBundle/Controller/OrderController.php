@@ -1395,7 +1395,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         if ($this->getSetting("AppBundle:Entity:lng") > 0) {
            $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
             $em = $this->getDoctrine()->getManager();
-            $sql = "SELECT id FROM  `category`";
+            $sql = "SELECT * FROM  `category`";
             $connection = $em->getConnection();
             $statement = $connection->prepare($sql);
             $statement->execute();
