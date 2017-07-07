@@ -77,9 +77,9 @@ class SecurityController extends Main {
             $this->newentity['AppBundle:User'] = $user;
             $encodeFactory = $this->container->get('security.encoder_factory');
             
-            $user->setTs($dt);
-            $user->setCreated($dt);
-            $user->setModified($dt);
+            //$user->setTs($dt);
+            //$user->setCreated($dt);
+            //$user->setModified($dt);
             $ser[0] = 'admin';
             //$user->setStore($store);
             $user->setEmail($ser[0] . "@partsbox.com");
