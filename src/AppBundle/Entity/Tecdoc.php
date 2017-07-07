@@ -42,7 +42,9 @@ class Tecdoc extends Entity {
     public function setLng($lng) {
         $this->tecdoc->lng = $lng;
     }
-
+    public function getLng() {
+        return $this->tecdoc->lng;
+    }
     public function getVehicleManufacturers($params) {
         $params = array(
             "carType" => 1,
