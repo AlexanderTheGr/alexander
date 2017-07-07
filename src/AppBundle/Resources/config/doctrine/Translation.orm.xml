@@ -3,7 +3,6 @@
   <entity name="AppBundle\Entity\Translation" repository-class="AppBundle\Entity\TranslationRepository"  table="translation">
     <indexes>
       <index name="user_id" columns="actioneer"/>
-      <index name="path" columns="path"/>
     </indexes>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
