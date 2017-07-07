@@ -309,8 +309,8 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         }
 
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
-            $fields["priceField"] = array("label" => $this->getTranslation("Κατάλογος"), "className" => "col-md-3", 'type' => "select", "required" => true, 'dataarray' => $priceField);
-            $fields["customerPayment"] = array("label" => $this->getTranslation("Τρόπος Πληρωμής"), "className" => "col-md-3", 'type' => "select", "required" => true, 'dataarray' => $payment);
+            $fields["priceField"] = array("label" => $this->getTranslation("Price List"), "className" => "col-md-3", 'type' => "select", "required" => true, 'dataarray' => $priceField);
+            $fields["customerPayment"] = array("label" => $this->getTranslation("Payment Method"), "className" => "col-md-3", 'type' => "select", "required" => true, 'dataarray' => $payment);
         } else {
             $fields["priceField"] = array("label" => $this->getTranslation("Κατάλογος"), "className" => "col-md-6", 'type' => "select", "required" => true, 'dataarray' => $priceField);
         }
