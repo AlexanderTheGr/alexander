@@ -353,16 +353,17 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
         $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
         $dtparams[] = array("name" => "", "function" => 'deleteitem');
-        $dtparams[] = array("name" => "Είδος", "index" => 'product:title');
-        $dtparams[] = array("name" => "Κωδικός Είδους", "index" => 'product:erpCode');
-        $dtparams[] = array("name" => "Ράφι", "index" => 'product:itemMtrplace');
-        $dtparams[] = array("name" => "Supplier", "index" => 'product:supplierId:title');
-        $dtparams[] = array("name" => "Αποθηκη", "function" => 'getProductApothiki', 'search' => 'text');
-        $dtparams[] = array("name" => "Qty", "input" => "text", "index" => 'qty');
-        $dtparams[] = array("name" => "Τιμή Καταλόγου", "input" => "text", "index" => 'price');
-        $dtparams[] = array("name" => "Έκπτωση", "input" => "text", "index" => 'disc1prc');
-        $dtparams[] = array("name" => "Τιμή", "input" => "text", "function" => 'getLinevalQty', 'class' => 'livevalqty');
-        $dtparams[] = array("name" => "Τελική Τιμή", "input" => "text", "index" => 'lineval');
+        $dtparams[] = array("name" => $this->getTranslation("Product Name"), "index" => 'product:title');
+        $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
+        $dtparams[] = array("name" => $this->getTranslation("Product Code"), "index" => 'product:erpCode');
+        $dtparams[] = array("name" => $this->getTranslation("Place"), "index" => 'product:itemMtrplace');
+        $dtparams[] = array("name" => $this->getTranslation("Supplier"), "index" => 'product:supplierId:title');
+        $dtparams[] = array("name" => $this->getTranslation("Invetory"), "function" => 'getProductApothiki', 'search' => 'text');
+        $dtparams[] = array("name" => $this->getTranslation("Qty"), "input" => "text", "index" => 'qty');
+        $dtparams[] = array("name" => $this->getTranslation("Catalogue Price"), "input" => "text", "index" => 'price');
+        $dtparams[] = array("name" => $this->getTranslation("Discount"), "input" => "text", "index" => 'disc1prc');
+        $dtparams[] = array("name" => $this->getTranslation("Price"), "input" => "text", "function" => 'getLinevalQty', 'class' => 'livevalqty');
+        $dtparams[] = array("name" => $this->getTranslation("Final Price"), "input" => "text", "index" => 'lineval');
 
         $params['dtparams'] = $dtparams;
         $params['id'] = $dtparams;
