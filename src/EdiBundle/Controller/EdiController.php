@@ -420,7 +420,7 @@ class EdiController extends Main {
                 $attributes['itemcode'] = $data[0];
                 $attributes['description'] = $data[1];
                 $attributes['partno'] = $data[2];
-                $attributes['brand'] = $this->fixsuppliers($data[3]);
+                $attributes['brand'] = $data[3];
                 $attributes['wholesaleprice'] = $data[6];
                 $attributes['retailprice'] = $data[7];
                 $attributes['partno'] = $this->clearstring($attributes['partno']);
@@ -565,6 +565,7 @@ class EdiController extends Main {
                 }
             }
         }
+        //$this->fixsuppliers();
     }
 
     public function getComlineEdiPartMaster($entity) {
