@@ -1505,6 +1505,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         ));
         return str_replace("\n", "", trim($tmpl));
         return $response;
+        
     }
 
     /**
@@ -1513,15 +1514,15 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     public function getdatatableAction(Request $request) {
         $this
                 ->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
-                ->addField(array("name" => "Ημερομηνία", 'datetime' => 'Y-m-d H:s:i', "index" => 'created'))
-                ->addField(array("name" => "Παραστατικό", "index" => 'fincode'))
-                ->addField(array("name" => "Customer Name", "index" => 'customerName'))
-                ->addField(array("name" => "ΑΦΜ", "index" => 'customer:customerAfm'))
-                ->addField(array("name" => "Παραγγελία", "index" => 'reference', 'method' => 'yesno'))
-                ->addField(array("name" => "Τιμολογημένη", "index" => 'fullytrans', 'method' => 'yesno'))
-                ->addField(array("name" => "Πωλητής", "index" => 'user:username'))
-                ->addField(array("name" => "Status", 'function' => 'getPicked'))
-                ->addField(array("name" => "Σύνολο", 'function' => 'getTotal'))
+                ->addField(array("name" => $this->getTranslation("Date Time"), 'datetime' => 'Y-m-d H:s:i', "index" => 'created'))
+                ->addField(array("name" => $this->getTranslation("Fincode"), "index" => 'fincode'))
+                ->addField(array("name" => $this->getTranslation("Customer Name"), "index" => 'customerName'))
+                ->addField(array("name" => $this->getTranslation("Customer AFM"), "index" => 'customer:customerAfm'))
+                ->addField(array("name" => $this->getTranslation("To Softone"), "index" => 'reference', 'method' => 'yesno'))
+                ->addField(array("name" => $this->getTranslation("Invoiced"), "index" => 'fullytrans', 'method' => 'yesno'))
+                ->addField(array("name" => $this->getTranslation("Seller"), "index" => 'user:username'))
+                ->addField(array("name" => $this->getTranslation("Status"), 'function' => 'getPicked'))
+                ->addField(array("name" => $this->getTranslation("Total"), 'function' => 'getTotal'))
 
         ;
         $em = $this->getDoctrine()->getManager();
