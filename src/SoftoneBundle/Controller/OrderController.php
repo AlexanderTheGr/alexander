@@ -412,24 +412,24 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $dtparams = array();
 
         $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
-        $dtparams[] = array("name" => "Κωδικός", "function" => 'getForOrderCode', 'search' => 'text');
-        $dtparams[] = array("name" => "Είδος", "function" => 'getForOrderTitle', 'search' => 'text');
+        $dtparams[] = array("name" => $this->getTranslation("Product Code"), "function" => 'getForOrderCode', 'search' => 'text');
+        $dtparams[] = array("name" => $this->getTranslation("Product Title"), "function" => 'getForOrderTitle', 'search' => 'text');
 
-        $dtparams[] = array("name" => "Supplier", "function" => 'getForOrderSupplier', 'search' => 'text');
-        $dtparams[] = array("name" => "Χαρακτ.", "function" => 'getArticleAttributes', 'search' => 'text');
+        $dtparams[] = array("name" => $this->getTranslation("Supplier"), "function" => 'getForOrderSupplier', 'search' => 'text');
+        $dtparams[] = array("name" => $this->getTranslation("Atributes"), "function" => 'getArticleAttributes', 'search' => 'text');
 
-        $dtparams[] = array("name" => "Remarks", "index" => "itemRemarks", 'search' => 'text');
+        $dtparams[] = array("name" => $this->getTranslation("Remarks"), "index" => "itemRemarks", 'search' => 'text');
 
-        $dtparams[] = array("name" => "Λιανική", "index" => "itemPricer", 'search' => 'text');
-        $dtparams[] = array("name" => "Τιμή Κατ", "index" => $priceField, 'search' => 'text');
+        $dtparams[] = array("name" => $this->getTranslation("Retail Price"), "index" => "itemPricer", 'search' => 'text');
+        $dtparams[] = array("name" => $this->getTranslation("Catalogue Price"), "index" => $priceField, 'search' => 'text');
 
-        $dtparams[] = array("name" => "Τελ Τιμη", "index" => $priceField, 'search' => 'text');
+        $dtparams[] = array("name" => $this->getTranslation("Final Price"), "index" => $priceField, 'search' => 'text');
 
-        $dtparams[] = array("name" => "Συσχ", "index" => "sisxetisi", 'search' => 'text');
+        $dtparams[] = array("name" => $this->getTranslation("Relation"), "index" => "sisxetisi", 'search' => 'text');
 
-        $dtparams[] = array("name" => "Αποθηκη", "function" => 'getApothiki', 'search' => 'text');
+        $dtparams[] = array("name" => $this->getTranslation("Invertory"), "function" => 'getApothiki', 'search' => 'text');
 
-        $dtparams[] = array("name" => "QTY", "index" => 'qty', "input" => 'text', 'search' => 'text');
+        $dtparams[] = array("name" => $this->getTranslation("QTY"), "index" => 'qty', "input" => 'text', 'search' => 'text');
         //$dtparams[] = array("name" => "EDI", "index" => 'edi', "input" => 'text', 'search' => 'text');
 
         $dtparams[] = array("name" => "-", "function" => 'getTick', 'search' => 'text');
