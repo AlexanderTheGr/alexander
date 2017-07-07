@@ -1393,7 +1393,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $em = $this->getDoctrine()->getManager();
         $tecdoc = new Tecdoc();
         if ($this->getSetting("AppBundle:Entity:lng") > 0) {
-            $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
+           // $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
         };        
         $params["linkingTargetId"] = $request->request->get("car");
         $data = $tecdoc->linkedChildNodesAllLinkingTargetTree($params);
