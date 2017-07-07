@@ -1837,7 +1837,9 @@ class Product extends Entity {
             );
             //if (!$tecdoc)
             $tecdoc = new Tecdoc();
-
+            if ($this->getSetting("AppBundle:Entity:lng") > 0) {
+                $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
+            };
             $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($postparams);
             $tectdoccode = $this->tecdocCode;
             if (count($articleDirectSearchAllNumbers->data->array) == 0) {
@@ -2782,7 +2784,9 @@ class Product extends Entity {
     function getArticleAttributes() {
         //return "";
         $tecdoc = new Tecdoc();
-
+        if ($this->getSetting("AppBundle:Entity:lng") > 0) {
+            $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
+        }; 
         $attributs = $tecdoc->getAssignedArticlesByIds(
                 array(
                     "articleId" => $this->tecdocArticleId,
@@ -2811,7 +2815,9 @@ class Product extends Entity {
     function getArticleAttributes2($linkingTargetId) {
         //return "";
         $tecdoc = new Tecdoc();
-
+        if ($this->getSetting("AppBundle:Entity:lng") > 0) {
+            $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
+        }; 
         $attributs = $tecdoc->getAssignedArticlesByIds(
                 array(
                     "articleId" => $this->tecdocArticleId,
@@ -3098,12 +3104,10 @@ class Product extends Entity {
         return $this;
     }
 
-    
     /**
      * @var string
      */
     private $nosync = '';
-
 
     /**
      * Set nosync
@@ -3125,10 +3129,8 @@ class Product extends Entity {
      */
     public function getNosync() {
         return $this->nosync;
-    }    
-    
-    
-    
+    }
+
     /**
      * Get reserved
      *
