@@ -320,7 +320,7 @@ class EdiController extends Main {
         $i = 0;
         foreach ($collection as $entity) {
             //if ($i++ <= 1) continue;
-            if ($entity["id"] == 4) {
+            if ($entity["id"] == 7) {
                 $func = $entity["func"];
                 $this->$func($entity);
             }
@@ -404,6 +404,72 @@ class EdiController extends Main {
         }
     }
 
+    public function getRaskosEdiPartMaster($entity) {
+        $file = "/home2/partsbox/raskos.csv";
+        $em = $this->getDoctrine()->getManager();
+        if ((($handle = fopen($file, "r")) !== FALSE)) {
+
+            while ($data = fgetcsv($handle, 1000, ";")) {
+
+                foreach ($data as $key => $val) {
+                    $data[$key] = trim(addslashes($val));
+                }
+
+
+
+                $attributes['itemcode'] = $data[0];
+                $attributes['description'] = $data[1];
+                $attributes['partno'] = $data[2];
+                $attributes['brand'] = $data[3];
+                $attributes['wholesaleprice'] = $data[6];
+                $attributes['retailprice'] = $data[7];
+                $attributes['partno'] = $this->clearstring($attributes['partno']);
+
+                $TecdocSupplier = $em->getRepository("SoftoneBundle:TecdocSupplier")
+                        ->findOneBy(array('supplier' => $this->fixsuppliers($data[5])));
+
+                if ($TecdocSupplier) {
+                    $attributes['artnr'] = $data[4];
+                    $attributes['dlnr'] = $TecdocSupplier->getId();
+                }
+
+                if (@!$ediedis[$entity["id"]]) {
+                    $ediedi = $this->getDoctrine()
+                            ->getRepository('EdiBundle:Edi')
+                            ->findOneById($entity["id"]);
+                    $ediedis[$entity["id"]] = $ediedi;
+                }
+                $ediedi = $ediedis[$entity["id"]];
+                $ediediitem = $this->getDoctrine()
+                        ->getRepository('EdiBundle:EdiItem')
+                        ->findOneBy(array("itemCode" => $attributes["itemcode"], "Edi" => $ediedi));
+                //echo @$ediediitem->id . "<BR>";
+                $q = array();
+                foreach ($attributes as $field => $val) {
+                    $q[] = "`" . $field . "` = '" . addslashes($val) . "'";
+                }
+                @$ediedi_id = (int) $ediediitem->id;
+                if (@$ediedi_id == 0) {
+                    $sql = "replace partsbox_db.edi_item set id = '" . $ediedi_id . "', edi='" . $entity["id"] . "', " . implode(",", $q);
+                    echo $sql . "<BR>";
+                    //$em->getConnection()->exec($sql);
+                    /*
+                      $ediediitem = $this->getDoctrine()
+                      ->getRepository('EdiBundle:EdiItem')
+                      ->findOneBy(array("itemCode" => $attributes["itemcode"], "Edi" => $ediedi));
+                     */
+                    //$ediediitem->tecdoc = $tecdoc;
+                    //$ediediitem->updatetecdoc();
+                    //if ($i++ > 60) return;
+                } else {
+                    $sql = "update partsbox_db.edi_item set " . implode(",", $q) . " where id = '" . $ediedi_id . "'";
+                    echo $sql . "<BR>";
+                    //$em->getConnection()->exec($sql);
+                }
+            }
+        }
+    }
+
     public function getFibaEdiPartMaster($entity) {
         //echo $this->getPartMaster();
         //return;
@@ -451,7 +517,7 @@ class EdiController extends Main {
                 if ((int) $attributes['dlnr'] == 0)
                     $attributes['dlnr'] = $attributes['similardlnr'];
                 if ($attributes['artnr'] == '')
-                    $attributes['dlnr'] = $attributes['similarartnr'];
+                    $attributes['artnr'] = $attributes['similarartnr'];
 
 
                 $attributes['wholesaleprice'] = $attributes['pricew'];
@@ -911,6 +977,5 @@ class EdiController extends Main {
             $this->synchronize($ediedi);
         }
     }
-
 
 }
