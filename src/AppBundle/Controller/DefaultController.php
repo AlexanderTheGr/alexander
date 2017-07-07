@@ -93,10 +93,10 @@ class DefaultController extends Main {
     }
     
     /**
-     * @Route("/tranlation/{path}", name="erpprefix")
+     * @Route("/tranlation/{id}")
      */
-    public function tranlation($path) {
-        return $this->getTranslation($path);        
+    public function tranlation($id) {
+        return $this->getTranslation($id);        
     }    
     
     /**
