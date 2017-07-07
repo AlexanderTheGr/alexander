@@ -72,7 +72,6 @@ class SecurityController extends Main {
                 ->find(1);
         
         if (@$user->id == 0) {
-            return;
             $user = new User;
             $dt = new \DateTime("now");
             $this->newentity['AppBundle:User'] = $user;
