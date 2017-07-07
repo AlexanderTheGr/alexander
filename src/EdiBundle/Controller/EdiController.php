@@ -420,13 +420,13 @@ class EdiController extends Main {
                 $attributes['itemcode'] = $data[0];
                 $attributes['description'] = $data[1];
                 $attributes['partno'] = $data[2];
-                $attributes['brand'] = $data[3];
+                $attributes['brand'] = $this->fixsuppliers($data[3]);
                 $attributes['wholesaleprice'] = $data[6];
                 $attributes['retailprice'] = $data[7];
                 $attributes['partno'] = $this->clearstring($attributes['partno']);
 
                 $TecdocSupplier = $em->getRepository("SoftoneBundle:TecdocSupplier")
-                        ->findOneBy(array('supplier' => $this->fixsuppliers($data[5])));
+                        ->findOneBy(array('supplier' => $data[5]));
 
                 if ($TecdocSupplier) {
                     $attributes['artnr'] = $data[4];
