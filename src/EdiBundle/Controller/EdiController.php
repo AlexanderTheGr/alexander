@@ -707,8 +707,9 @@ class EdiController extends Main {
 
                 if ((int) $attributes['dlnr'] == 0)
                     $attributes['dlnr'] = $attributes['similardlnr'];
-                if ($attributes['artnr'] == '')
+                if ($attributes['artnr'] == '') {
                     $attributes['artnr'] = $attributes['similarartnr'];
+                }
 
 
                 $attributes['wholesaleprice'] = $attributes['pricew'] > 0 ? $attributes['pricew'] : $attributes['netprice'];
