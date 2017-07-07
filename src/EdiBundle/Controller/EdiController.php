@@ -874,9 +874,9 @@ class EdiController extends Main {
 
         $sql = "UPDATE partsbox_db.edi_item SET brand = 'FEBI BILSTEIN' WHERE brand LIKE 'FEBI'";
         $em->getConnection()->exec($sql);
-        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'BENDIX', updated = 1 WHERE  brand LIKE 'BENDIX WBK'";
+        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'BENDIX' WHERE  brand LIKE 'BENDIX WBK'";
         $em->getConnection()->exec($sql);
-        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'FEBI BILSTEIN', updated = 1 WHERE  brand LIKE 'FEBI BILSTEIN BILSTEIN'";
+        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'FEBI BILSTEIN' WHERE  brand LIKE 'FEBI BILSTEIN BILSTEIN'";
         $em->getConnection()->exec($sql);
         $sql = "UPDATE  partsbox_db.edi_item SET brand = 'BLUE-PRINT' WHERE  brand LIKE 'BLUEPRINT'";
         $em->getConnection()->exec($sql);
@@ -890,11 +890,11 @@ class EdiController extends Main {
         $em->getConnection()->exec($sql);
         $sql = "UPDATE  partsbox_db.edi_item SET brand = 'COOPERSFIAAM FILTERS' WHERE  brand LIKE 'COOPERSFIAAM FILTERSFIAAM'";
         $em->getConnection()->exec($sql);
-        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'MANN-FILTER', updated = 1 WHERE  brand LIKE 'MANN'";
+        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'MANN-FILTER' WHERE  brand LIKE 'MANN'";
         $em->getConnection()->exec($sql);
-        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'MANN-FILTER', updated = 1 WHERE  brand LIKE 'MANN-FILTEREX'";
+        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'MANN-FILTER' WHERE  brand LIKE 'MANN-FILTEREX'";
         $em->getConnection()->exec($sql);
-        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'MANN-FILTER', updated = 1 WHERE  brand LIKE 'MANN-FILTER-FILTER'";
+        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'MANN-FILTER', WHERE  brand LIKE 'MANN-FILTER-FILTER'";
         $em->getConnection()->exec($sql);
         $sql = "UPDATE  partsbox_db.edi_item SET brand = 'MULLER FILTER' WHERE  brand LIKE 'MULLER'";
         $em->getConnection()->exec($sql);
@@ -926,19 +926,19 @@ class EdiController extends Main {
         $em->getConnection()->exec($sql);
         $sql = "UPDATE  partsbox_db.edi_item SET brand = 'Metalcaucho' WHERE  brand LIKE 'METALCAUCHO'";
         $em->getConnection()->exec($sql);
-        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'MANN-FILTER', updated = 1 WHERE  brand LIKE 'MANN'";
+        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'MANN-FILTER' WHERE  brand LIKE 'MANN'";
         $em->getConnection()->exec($sql);
-        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'MANN-FILTER', updated = 1 WHERE  brand LIKE 'MANN-FILTER'";
+        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'MANN-FILTER' WHERE  brand LIKE 'MANN-FILTER'";
         $em->getConnection()->exec($sql);
-        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'MANN-FILTER', updated = 1 WHERE  brand LIKE 'MANN-FILTER-FILTER'";
+        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'MANN-FILTER' WHERE  brand LIKE 'MANN-FILTER-FILTER'";
         $em->getConnection()->exec($sql);
-        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'COOPERSFIAAM FILTERS', updated = 1 WHERE  brand LIKE 'COOPERSCOOPERSCOOPERSCOOPERSFIAAM FILTERS FILTERS FILTERS FILTERS'";
+        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'COOPERSFIAAM FILTERS' WHERE  brand LIKE 'COOPERSCOOPERSCOOPERSCOOPERSFIAAM FILTERS FILTERS FILTERS FILTERS'";
         $em->getConnection()->exec($sql);
-        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'COOPERSFIAAM FILTERS', updated = 1 WHERE  brand LIKE 'FIAAM'";
+        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'COOPERSFIAAM FILTERS', WHERE  brand LIKE 'FIAAM'";
         $em->getConnection()->exec($sql);
-        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'COOPERSFIAAM FILTERS', updated = 1 WHERE  brand LIKE 'FIAAM'";
+        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'COOPERSFIAAM FILTERS' WHERE  brand LIKE 'FIAAM'";
         $em->getConnection()->exec($sql);
-        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'COOPERSFIAAM FILTERS', updated = 1 WHERE  brand LIKE 'CoopersFiaam'";
+        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'COOPERSFIAAM FILTERS' WHERE  brand LIKE 'CoopersFiaam'";
         $em->getConnection()->exec($sql);
     }
 
