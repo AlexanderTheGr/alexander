@@ -38,7 +38,11 @@ class Tecdoc extends Entity {
         $this->linkingTargetType = "C";
         $this->tecdoc = new \Tecdoc_first();
     }
-
+    var $categoriestree = array();
+    public function setCategoriestree($categoriestree) {
+        $this->categoriestree = $categoriestree;
+    }
+    
     public function setLng($lng) {
         $this->tecdoc->lng = $lng;
     }
@@ -220,8 +224,11 @@ class Tecdoc extends Entity {
                 }
                 $v->articleIds = $articleIds;
             }
+            if ($this->getLng() == $this->getSetting("AppBundle:Entity:lng")) {
+                $v->assemblyGroupName = $this->categoriestree[$v->assemblyGroupNodeId];
+            }
             $this->c[$v->assemblyGroupNodeId] = $v;
-
+            
             if ($hasChilds) {
                 $params["parentNodeId"] = $v->assemblyGroupNodeId;
                 $this->linkedChildNodesAllLinkingTargetTree($params, $lvl);
