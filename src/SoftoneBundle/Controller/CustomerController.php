@@ -249,8 +249,8 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ($vats as $vat) {
             $vatsts[] = array("value" => (string) $vat->getId(), "name" => $vat->getVat()); // $supplier->getSupplierName();
         }
-
-        $fields["customerCode"] = array("label" => "Κωδικός", "className" => "col-md-6", "required" => true);
+        
+        $fields["customerCode"] = array("label" => $this->getTranslation("Κωδικός"), "className" => "col-md-6", "required" => true);
         $fields["customerName"] = array("label" => "Επωνυμία", "className" => "col-md-6", "required" => true);
         $fields["customerAfm"] = array("label" => "ΑΦΜ", "className" => "col-md-6", "required" => true);
         $fields["customerEmail"] = array("label" => "Email", "className" => "col-md-6", "required" => false);
