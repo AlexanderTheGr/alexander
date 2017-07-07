@@ -1394,6 +1394,16 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $tecdoc = new Tecdoc();
         if ($this->getSetting("AppBundle:Entity:lng") > 0) {
            $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
+            $em = $this->getDoctrine()->getManager();
+            $sql = "SELECT id FROM  `category`";
+            $connection = $em->getConnection();
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            $results = $statement->fetchAll();
+            foreach ($results as $data) {
+                $arr[$data["id"]] = $data["name"];
+            }  
+            $tecdoc->setCategoriestree($arr);
         };        
         $params["linkingTargetId"] = $request->request->get("car");
         $data = $tecdoc->linkedChildNodesAllLinkingTargetTree($params);
