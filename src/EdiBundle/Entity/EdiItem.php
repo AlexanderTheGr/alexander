@@ -537,9 +537,7 @@ class EdiItem extends Entity {
         //echo ".";
 
         $tecdoc = $this->tecdoc ? $this->tecdoc : new Tecdoc(); //new Tecdoc();
-        if ($this->setSetting("AppBundle:Entity:lng") > 0) {
-            $tecdoc->setLng($this->setSetting("AppBundle:Entity:lng"));
-        };
+
         $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($postparams);
         $tectdoccode = $this->artNr;
         if (count($articleDirectSearchAllNumbers->data->array) == 0) {
