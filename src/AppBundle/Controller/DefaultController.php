@@ -91,6 +91,14 @@ class DefaultController extends Main {
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
+    
+    /**
+     * @Route("/tranlation/{parh}", name="erpprefix")
+     */
+    public function tranlation($path) {
+        return $this->getTranslation($path);        
+    }    
+    
     /**
      * @Route("/erpprefix", name="erpprefix")
      */
