@@ -218,7 +218,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
-                    '$orderview' => $orderview,
+                    'orderview' => $orderview,
                     'content' => $content,
                     'displaynone' => $displaynone,
                     'fullytrans' => $fullytrans,
