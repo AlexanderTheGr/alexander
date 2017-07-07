@@ -704,15 +704,16 @@ class EdiController extends Main {
                 //if ($i==10) exit;
                 //if ($i < 83701) continue;
                 //if ($key == 'similardlnr' OR $key = 'similarartnr' ) continue;
-
+                echo ".";
+                if ($attributes['similarartnr'] != '' AND $attributes['artnr'] == '')  continue;
+                
                 if ((int) $attributes['dlnr'] == 0)
                     $attributes['dlnr'] = $attributes['similardlnr'];
                 if ($attributes['artnr'] == '') {
                     $attributes['artnr'] = $attributes['similarartnr'];
                 }
                 
-                echo ".";
-                if ($attributes['similarartnr'] != '')  continue;
+
 
                 $attributes['wholesaleprice'] = $attributes['pricew'] > 0 ? $attributes['pricew'] : $attributes['netprice'];
                 $attributes['retailprice'] = $attributes['pricer'];
