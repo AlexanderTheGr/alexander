@@ -250,22 +250,22 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             $vatsts[] = array("value" => (string) $vat->getId(), "name" => $vat->getVat()); // $supplier->getSupplierName();
         }
         
-        $fields["customerCode"] = array("label" => $this->getTranslation("Κωδικός"), "className" => "col-md-6", "required" => true);
-        $fields["customerName"] = array("label" => $this->getTranslation("Επωνυμία"), "className" => "col-md-6", "required" => true);
-        $fields["customerAfm"] = array("label" => $this->getTranslation("ΑΦΜ"), "className" => "col-md-6", "required" => true);
-        $fields["customerEmail"] = array("label" => $this->getTranslation("Email"), "className" => "col-md-6", "required" => false);
+        $fields["customerCode"] = array("label" => $this->getTranslation("Customer Code"), "className" => "col-md-6", "required" => true);
+        $fields["customerName"] = array("label" => $this->getTranslation("Customer Name"), "className" => "col-md-6", "required" => true);
+        $fields["customerAfm"] = array("label" => $this->getTranslation("Customer Afm"), "className" => "col-md-6", "required" => true);
+        $fields["customerEmail"] = array("label" => $this->getTranslation("Customer Email"), "className" => "col-md-6", "required" => false);
 
-        $fields["customerIrsdata"] = array("label" => $this->getTranslation("ΔΟΥ"), "className" => "col-md-6", "required" => false);
-        $fields["customerJobtypetrd"] = array("label" => $this->getTranslation("Επάγγελμα"), "className" => "col-md-6", "required" => false);
+        $fields["customerIrsdata"] = array("label" => $this->getTranslation("Customer DOY"), "className" => "col-md-6", "required" => false);
+        $fields["customerJobtypetrd"] = array("label" => $this->getTranslation("Customer Occupation"), "className" => "col-md-6", "required" => false);
 
         $fields["customerAddress"] = array("label" => $this->getTranslation("Customer Address"), "className" => "col-md-6", "required" => false);
         $fields["customerCity"] = array("label" => $this->getTranslation("Customer City"), "className" => "col-md-6", "required" => false);
-        $fields["customerPhone01"] = array("label" => $this->getTranslation("Τηλέφωνο"), "required" => false);
+        $fields["customerPhone01"] = array("label" => $this->getTranslation("Customer Phones"), "required" => false);
 
-        $fields["customergroup"] = array("label" => $this->getTranslation("Ομάδα Πελάτη"), "className" => "col-md-6", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:Customergroup', 'name' => 'title', 'value' => 'id'));
+        $fields["customergroup"] = array("label" => $this->getTranslation("Customer Group"), "className" => "col-md-6", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:Customergroup', 'name' => 'title', 'value' => 'id'));
 
         //$fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
-        $fields["customerVatsts"] = array("label" => $this->getTranslation("ΦΠΑ"), "required" => true, "className" => "col-md-6", 'type' => "select", 'dataarray' => $vatsts);
+        $fields["customerVatsts"] = array("label" => $this->getTranslation("Customer Vat"), "required" => true, "className" => "col-md-6", 'type' => "select", 'dataarray' => $vatsts);
 
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             //$priceField[] = array("value" => "itemPricer", "name" => "Λιανική");
@@ -343,9 +343,9 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
 
 
-        $this->addTab(array("title" => "General1", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
+        $this->addTab(array("title" => $this->getTranslation("General"), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         if ($id > 0 AND count($entity) > 0) {
-            $tabs[] = array("title" => "Rules", "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
+            $tabs[] = array("title" => $this->getTranslation("Customer Rules"), "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
         }
         foreach ((array) $tabs as $tab) {
             $this->addTab($tab);
