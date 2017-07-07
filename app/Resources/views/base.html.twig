@@ -157,7 +157,7 @@
                 <li>
                     <a href="/" class="">
                         <div class="gui-icon"><i class="md md-home"></i></div>
-                        <span class="title">Αρχική</span>
+                        <span class="title">{% render '/tranlation/Home'  %}</span>
                     </a>
                 </li>
                 <li>
@@ -190,7 +190,7 @@
                 <li>
                     <a href="{% render '/erpprefix'  %}/supplier/supplier" class="">
                         <div class="gui-icon"><i class="md md-computer"></i></div>
-                        <span class="title">Προμηθευτές</span>
+                        <span class="title">{% render '/tranlation/Suppliers'  %}</span>
                     </a>
                 </li>   
 
@@ -209,7 +209,7 @@
                 <li>
                     <a href="/route/route" class="">
                         <div class="gui-icon"><i class="fa fa-truck"></i></div>
-                        <span class="title">Δρομολόγια</span>
+                        <span class="title">{% render '/tranlation/Routes'  %}</span>
                     </a>
                 </li>                            
 
@@ -222,7 +222,7 @@
                     <ul>
                         <li class="gui-folder">
                             <a href="/edi/edi">
-                                <span class="title">Edis</span>
+                                <span class="title">{% render '/tranlation/Edis'  %}</span>
                             </a>
                             <!--start submenu -->
                             <!--ul>
@@ -234,7 +234,7 @@
 
                         <li class="gui-folder">
                             <a href="/edi/edi/order">
-                                <span class="title">Order</span>
+                                <span class="title">{% render '/tranlation/Orders'  %}</span>
                             </a>
                             <!--start submenu -->
                             <!--ul>
@@ -250,24 +250,24 @@
                 <li class="gui-folder">
                     <a class="">
                         <div class="gui-icon"><i class="md md-shopping-cart"></i></div>
-                        <span class="title">Παραγγελίες</span>
+                        <span class="title">{% render '/tranlation/Orders'  %}</span>
                     </a>
 
                     <!--start submenu -->
                     <ul>
-                        <li><a href="{% render '/erpprefix'  %}/order/order" ><span class="title">Λίστα Παραγγελιών</span></a></li>
-                        <li><a href="{% render '/erpprefix'  %}/order/view/new" ><span class="title">Νέα Παραγγελία</span></a></li>  
-                        <li><a href="{% render '/erpprefix'  %}/order/view/pelatis" ><span class="title">Νέα Παραγγελία Λιανικης</span></a></li>  
+                        <li><a href="{% render '/erpprefix'  %}/order/order" ><span class="title">{% render '/tranlation/OrderList'  %}</span></a></li>
+                        <li><a href="{% render '/erpprefix'  %}/order/view/new" ><span class="title">{% render '/tranlation/NewOrder'  %}</span></a></li>  
+                        <li><a href="{% render '/erpprefix'  %}/order/view/pelatis" ><span class="title">{% render '/tranlation/NewOrderList'  %}</span></a></li>  
                     </ul><!--end /submenu -->
                 </li><!--end /menu-li -->
                 <li class="gui-folder">
                     <a href="#">
                         <div class="gui-icon"><i class="md md-assessment"></i></div>
-                        <span class="title">Στατιστικά</span>
+                        <span class="title">{% render '/tranlation/Statitics'  %}</span>
                     </a>
                     <ul>
-                        <li><a href="/report/report/sales" ><span class="title">Πωλήσεις</span></a></li>
-                        <li><a href="/report/report/search" ><span class="title">Αναζητήσεις</span></a></li>  
+                        <li><a href="/report/report/sales" ><span class="title">{% render '/tranlation/Sales'  %}</span></a></li>
+                        <li><a href="/report/report/search" ><span class="title">{% render '/tranlation/Searchesc'  %}</span></a></li>  
                     </ul><!--end /submenu -->                           
                 </li>
             </ul><!--end .main-menu -->
