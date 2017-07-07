@@ -674,8 +674,8 @@ class EdiController extends Main {
         //return;
         $tecdoc = new Tecdoc();
         $file = "/home2/partsbox/" . $apiToken . '.csv';
-        //$fiestr = gzdecode(file_get_contents($this->getEdiPartMasterFile($entity["token"])));
-        //file_put_contents($file, $fiestr);
+        $fiestr = gzdecode(file_get_contents($this->getEdiPartMasterFile($entity["token"])));
+        file_put_contents($file, $fiestr);
         set_time_limit(100000);
         ini_set('memory_limit', '14096M');
 
@@ -704,9 +704,9 @@ class EdiController extends Main {
                 //if ($i==10) exit;
                 //if ($i < 83701) continue;
                 //if ($key == 'similardlnr' OR $key = 'similarartnr' ) continue;
-                echo "."."[".$attributes['similarartnr']."][".$attributes['artnr']."]";
-                if ($attributes['similarartnr'] == '')  continue;
-                if ($attributes['artnr'] == '')  continue;
+                //echo "."."[".$attributes['similarartnr']."][".$attributes['artnr']."]";
+                //if ($attributes['similarartnr'] == '')  continue;
+                //if ($attributes['artnr'] == '')  continue;
                 
                 
                 if ((int) $attributes['dlnr'] == 0)
