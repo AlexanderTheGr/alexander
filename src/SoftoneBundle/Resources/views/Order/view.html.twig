@@ -20,26 +20,26 @@
 
         <button class="btn ink-reaction btn-raised ink-reaction btn-danger delete_model_Order">
             <div class="gui-icon"><i class="md md-delete"></i></div>
-            <span class="title">Διαγραφή</span>
+            <span class="title">{{orderview.delete}}</span>
         </button>
 
         <button style="float:left {{displaynone}}"  class="apestaleni btn btn-raised ink-reaction btn-success">
             <div class="gui-icon"><i class="md md-cloud"></i></div>
-            <span class="title">Απεσταλμένη</span>
+            <span class="title">{{orderview.sended}}</span>
         </button>
 
         <button style="float:left; margin-left:2px; {{fullytrans}} "  class="btn btn-raised ink-reaction btn-success">
             <div class="gui-icon"><i class="md md-cloud"></i></div>
-            <span class="title">Τιμολογημένη</span>
+            <span class="title">{{orderview.invoiced}}</span>
         </button>
 		
         <button class="btn ink-reaction btn-raised ink-reaction return_to_main_Order">
             <div class="gui-icon"><i class="md md-keyboard-return"></i></div>
-            <span class="title">Επιστροφή</span>
+            <span class="title">{{orderview.return}}</span>
         </button>
         <button ref="1127113" class="btn btn-raised ink-reaction printarea">
             <div class="gui-icon"><i class="md md-print"></i></div>
-            <span class="title">Εκτύπωση</span>
+            <span class="title">{{orderview.print}}</span>
         </button>
     </div>    
 
