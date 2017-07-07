@@ -934,7 +934,7 @@ class EdiController extends Main {
         $em->getConnection()->exec($sql);
         $sql = "UPDATE  partsbox_db.edi_item SET brand = 'COOPERSFIAAM FILTERS' WHERE  brand LIKE 'COOPERSCOOPERSCOOPERSCOOPERSFIAAM FILTERS FILTERS FILTERS FILTERS'";
         $em->getConnection()->exec($sql);
-        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'COOPERSFIAAM FILTERS', WHERE  brand LIKE 'FIAAM'";
+        $sql = "UPDATE  partsbox_db.edi_item SET brand = 'COOPERSFIAAM FILTERS' WHERE  brand LIKE 'FIAAM'";
         $em->getConnection()->exec($sql);
         $sql = "UPDATE  partsbox_db.edi_item SET brand = 'COOPERSFIAAM FILTERS' WHERE  brand LIKE 'FIAAM'";
         $em->getConnection()->exec($sql);
