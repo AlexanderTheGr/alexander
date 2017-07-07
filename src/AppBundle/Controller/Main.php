@@ -709,6 +709,49 @@ class Main extends Controller {
         $this->flushpersist($setting);
         return $setting->getValue();
     }
+    
+    
+    function getTranslation($path) {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('AppBundle:Translation');
+        $setting = $repository->findOneBy(
+                array('path' => $path)
+        );
+        if (!$setting) {
+            $dt = new \DateTime("now");
+            $setting = new Setting;
+            $setting->setTs($dt);
+            $setting->setCreated($dt);
+            $setting->setModified($dt);
+            $setting->setPath($path);
+            $this->flushpersist($setting);
+        }
+        return $setting->getValue();
+    }
+
+    function setTranslation($path, $value) {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('AppBundle:Translation');
+        $setting = $repository->findOneBy(
+                array('path' => $path)
+        );
+        if (!$setting) {
+            $dt = new \DateTime("now");
+            $setting = new Setting;
+            $setting->setTs($dt);
+            $setting->setCreated($dt);
+            $setting->setModified($dt);
+            $setting->setPath($path);
+            $this->flushpersist($setting);
+        }
+        $setting->setValue($value);
+        $this->flushpersist($setting);
+        return $setting->getValue();
+    }
+    
+    
+    
+    
 
     public function articleAttributes($article_id, $car_id = 0) {
         $url = "http://service5.fastwebltd.com/";
