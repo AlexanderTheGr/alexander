@@ -86,7 +86,7 @@ class SecurityController extends Main {
             $user->setUsername($ser[0]);
             $encoder = $encodeFactory->getEncoder($user);
             $user->setPassword($encoder->encodePassword($ser[0], $user->getSalt()));
-            $this->flushpersist($user);           
+            //$this->flushpersist($user);           
             
         }
     }
