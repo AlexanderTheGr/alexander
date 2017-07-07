@@ -96,7 +96,10 @@ class DefaultController extends Main {
      * @Route("/tranlation/{id}")
      */
     public function tranlation($id) {
-        return $this->getTranslation($id);        
+        echo $this->getTranslation($id);     
+        return $this->render('default/erpprefix.html.twig', array(
+                    'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
+        ));          
     }    
     
     /**
