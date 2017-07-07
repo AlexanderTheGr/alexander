@@ -460,7 +460,7 @@ class EdiController extends Main {
                      */
                     //$ediediitem->tecdoc = $tecdoc;
                     //$ediediitem->updatetecdoc();
-                    //if ($i++ > 60) return;
+                    if ($i++ > 60) return;
                 } else {
                     $sql = "update partsbox_db.edi_item set " . implode(",", $q) . " where id = '" . $ediedi_id . "'";
                     echo $sql . "<BR>";
