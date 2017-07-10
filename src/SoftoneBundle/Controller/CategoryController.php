@@ -116,7 +116,7 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
             $entity = new Category;
         }
         //$fields["categoryCode"] = array("label" => "Code");
-        $fields["name"] = array("label" => "Name");
+        $fields["name"] = array("label" => $this->getTranslation("Category Name"));
         $fields["weight"] = array("label" => "Weight");
 
         $forms = $this->getFormLyFields($entity, $fields);
@@ -130,7 +130,7 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
             $forms2 = $this->getFormLyFields($entity2, $fields2);
 
             $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
-            $dtparams[] = array("name" => "Name", "index" => 'name');
+            $dtparams[] = array("name" => $this->getTranslation("Category Name"), "index" => 'name');
             //$dtparams[] = array("name" => "Weight", "index" => 'weight');
             $params['dtparams'] = $dtparams;
             $params['id'] = $dtparams;
@@ -144,7 +144,7 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
 
         $this->addTab(array("title" => "General", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         if ($id > 0 AND count($entity) > 0 AND $entity->getParent() == 0) {
-            $this->addTab(array("title" => "Categories", "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
+            $this->addTab(array("title" => $this->getTranslation("Categories"), "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         }
         $json = $this->tabs();
         return $json;
@@ -158,7 +158,7 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
 
         $this->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
                 //->addField(array("name" => "Code", "index" => 'categoryCode'))
-                ->addField(array("name" => "Name", "index" => 'name'))
+                ->addField(array("name" => $this->getTranslation("Category Name"), "index" => 'name'))
         //->addField(array("name" => "Weight", "index" => 'weight'))
         ;
 
