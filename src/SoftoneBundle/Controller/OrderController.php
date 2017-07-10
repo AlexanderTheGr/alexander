@@ -1714,25 +1714,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 } else {
                     $table1[$f] = $val;
                 }
+                
             }
             //if ($hasOrderItems) {
             $datatable->data[$key] = $table1;
             //} else {
             //$datatable->data[$key] = $table1;
             //unset($datatable->data[$key]);
-            //}
-            $of = "11";
 
-            $text = $table->$of;
-            $document = new \DOMDocument();
-            $document->loadHTML($text);
-
-            $inputs = $document->getElementsByTagName("input");
-            $value = 0;
-            foreach ($inputs as $input) {
-                $value = $input->getAttribute("value");
-                break;
-            }
             $total += $value;            
         }
 
