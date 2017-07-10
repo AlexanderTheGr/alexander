@@ -215,10 +215,10 @@ class CustomergroupController extends Main {
             //$forms2 = $this->getFormLyFields($entity2, $fields2);
 
             $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
-            $dtparams[] = array("name" => "Title", "index" => 'title');
-            $dtparams[] = array("name" => "Discount", "index" => 'val');
-            $dtparams[] = array("name" => "Price", "index" => 'price');
-            $dtparams[] = array("name" => "Order", "index" => 'sortorder');
+            $dtparams[] = array("name" => $this->getTranslation("Title"), "index" => 'title');
+            $dtparams[] = array("name" => $this->getTranslation("Discount"), "index" => 'val');
+            $dtparams[] = array("name" => $this->getTranslation("Price"), "index" => 'price');
+            $dtparams[] = array("name" => $this->getTranslation("Sort Order"), "index" => 'sortorder');
 
             $params['dtparams'] = $dtparams;
             $params['id'] = $dtparams;
@@ -343,8 +343,8 @@ class CustomergroupController extends Main {
         $this->repository = 'SoftoneBundle:Customergroup';
 
         $this->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
-                ->addField(array("name" => "Title", "index" => 'title'))
-                ->addField(array("name" => "Price", "index" => 'basePrice'));
+                ->addField(array("name" => $this->getTranslation("Title"), "index" => 'title'))
+                ->addField(array("name" => $this->getTranslation("Price"), "index" => 'basePrice'));
         $json = $this->datatable();
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
