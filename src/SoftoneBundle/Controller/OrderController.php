@@ -1723,7 +1723,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             //}
             $of = "11";
 
-            $text = $item->$of;
+            $text = $table->$of;
             $document = new \DOMDocument();
             $document->loadHTML($text);
 
