@@ -679,58 +679,57 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $entity->setItemRemarks($remarks);
 
             if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
-                $fields["itemPricew01"] = array("label" => "Τιμή Χοδρικής", "className" => "col-md-2", "required" => false);
+                $fields["itemPricew01"] = array("label" => $this->getTranslation("Retail Price"), "className" => "col-md-2", "required" => false);
                 $fields["itemPricew03"] = array("label" => "Τιμή Olympic", "className" => "col-md-2", "required" => false);
             } else {
-                $fields["itemPricew01"] = array("label" => "Τιμή Χοδρικής", "className" => "col-md-2", "required" => false);
-                $fields["itemPricew02"] = array("label" => "Τιμή Λιανικής", "className" => "col-md-1", "required" => false);
-                $fields["itemPricew04"] = array("label" => "Τιμή Eshop", "className" => "col-md-1", "required" => false);
+                $fields["itemPricew01"] = array("label" => $this->getTranslation("Wholesale Price"), "className" => "col-md-2", "required" => false);
+                $fields["itemPricew02"] = array("label" => $this->getTranslation("Retail Price"), "className" => "col-md-1", "required" => false);
+                $fields["itemPricew04"] = array("label" => $this->getTranslation("Eshop Price"), "className" => "col-md-1", "required" => false);
             }
-            $fields["itemMarkupw"] = array("label" => "Markup Χοδρικής", "className" => "col-md-2", "required" => false);
-            $fields["itemMarkupr"] = array("label" => "Markup Λιανικής", "className" => "col-md-2", "required" => false);
-            $fields["itemRemarks"] = array("label" => "Remarks", "required" => false, "className" => "col-md-6 col-sm-6");
-            $fields["sisxetisi"] = array("label" => "Κωδικός Συσχέτισης", "className" => "col-md-6", "required" => false);
+            $fields["itemMarkupw"] = array("label" => $this->getTranslation("Wholessle Markup"), "className" => "col-md-2", "required" => false);
+            $fields["itemMarkupr"] = array("label" => $this->getTranslation("Retail Markup"), "className" => "col-md-2", "required" => false);
+            $fields["itemRemarks"] = array("label" => $this->getTranslation("Remarks"), "required" => false, "className" => "col-md-6 col-sm-6");
+            $fields["sisxetisi"] = array("label" => $this->getTranslation("Κωδικός Συσχέτισης"), "className" => "col-md-6", "required" => false);
             //$fields["edis"] = array("label" => "Αντιστοιχίες Εκτός Αποθήκης", "className" => "col-md-6", "required" => false);      
         } else {
 
             //$fields["productSale"] = array("label" => "Προσφορά", "className" => "col-md-3", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:ProductSale', 'name' => 'title', 'value' => 'id'));
 
-            $fields["title"] = array("label" => "Περιγραφή", "required" => true, "className" => "col-md-6 col-sm-6");
-            $fields["erpCode"] = array("label" => "Κωδικός Είδους", "required" => false, "className" => "col-md-3 col-sm-3");
-            $fields["itemCode1"] = array("label" => "Barcode", "required" => false, "className" => "col-md-3 col-sm-3");
+            $fields["title"] = array("label" => $this->getTranslation("Product Name"), "required" => true, "className" => "col-md-6 col-sm-6");
+            $fields["erpCode"] = array("label" => $this->getTranslation("Product Code"), "required" => false, "className" => "col-md-3 col-sm-3");
+            $fields["itemCode1"] = array("label" => $this->getTranslation("Barcode"), "required" => false, "className" => "col-md-3 col-sm-3");
 
-            $fields["tecdocSupplierId"] = array("label" => "Tecdoc Supplier", "required" => false, "className" => "col-md-6", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:TecdocSupplier', 'name' => 'supplier', 'value' => 'id', 'suffix' => 'id'));
-            $fields["tecdocCode"] = array("label" => "Tecdoc Code", "required" => false, "className" => "col-md-6");
+            $fields["tecdocSupplierId"] = array("label" => $this->getTranslation("Tecdoc Supplier"), "required" => false, "className" => "col-md-6", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:TecdocSupplier', 'name' => 'supplier', 'value' => 'id', 'suffix' => 'id'));
+            $fields["tecdocCode"] = array("label" => $this->getTranslation("Tecdoc Code"), "required" => false, "className" => "col-md-6");
 
 
-            $fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
+            $fields["supplierId"] = array("label" =>  $this->getTranslation("Supplier"), "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
 
             //$fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'dataarray' => $supplierId);
 
-            $fields["erpSupplier"] = array("label" => "New Supplier", "required" => false, "className" => "col-md-3");
+            $fields["erpSupplier"] = array("label" => $this->getTranslation("New Supplier"), "required" => false, "className" => "col-md-3");
 
-            $fields["supplierCode"] = array("label" => "Supplier Code", "className" => "col-md-3", "required" => true);
+            $fields["supplierCode"] = array("label" => $this->getTranslation("Supplier Code"), "className" => "col-md-3", "required" => true);
 
 
 
-            $fields["itemMtrplace"] = array("label" => "Ράφι", "className" => "col-md-1", "required" => false);
+            $fields["itemMtrplace"] = array("label" => $this->getTranslation("Place"), "className" => "col-md-1", "required" => false);
 
-            $fields["qty"] = array("label" => "Αποθήκη", "className" => "col-md-1", "required" => false);
-            $fields["reserved"] = array("label" => "Δεσμευμενα", "className" => "col-md-1", "required" => false);
+            $fields["qty"] = array("label" => $this->getTranslation("Place"), "className" => "col-md-1", "required" => false);
+            $fields["reserved"] = array("label" => $this->getTranslation("Δεσμευμενα"), "className" => "col-md-1", "required" => false);
 
             //$fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "className" => "col-md-2", "required" => false);        
-            $fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "required" => false, "className" => "col-md-2", 'type' => "select", 'dataarray' => $itemMtrsup);
-            $fields["cccRef"] = array("label" => "Κωδικός Προμηθευτή", "className" => "col-md-2", "required" => false);
+            $fields["itemMtrsup"] = array("label" => $this->getTranslation("Συνήθης προμηθευτής"), "required" => false, "className" => "col-md-2", 'type' => "select", 'dataarray' => $itemMtrsup);
+            $fields["cccRef"] = array("label" =>  $this->getTranslation("Κωδικός Προμηθευτή"), "className" => "col-md-2", "required" => false);
 
 
 
-
-            $fields["itemPricew"] = array("label" => "Τιμή Χοδρικής", "className" => "col-md-2", "required" => false);
-            $fields["itemPricer"] = array("label" => "Τιμή Λιανικής", "className" => "col-md-2", "required" => false);
-            $fields["itemMarkupw"] = array("label" => "Markup Χοδρικής", "className" => "col-md-2", "required" => false);
-            $fields["itemMarkupr"] = array("label" => "Markup Λιανικής", "className" => "col-md-2", "required" => false);
-            $fields["itemRemarks"] = array("label" => "Remarks", "required" => false, 'type' => "textarea", "className" => "col-md-6 col-sm-6");
-            $fields["sisxetisi"] = array("label" => "Κωδικός Συσχέτισης", "className" => "col-md-6", "required" => false);
+            $fields["itemMarkupw"] = array("label" => $this->getTranslation("Wholessle Markup"), "className" => "col-md-2", "required" => false);
+            $fields["itemMarkupr"] = array("label" => $this->getTranslation("Retail Markup"), "className" => "col-md-2", "required" => false);
+            $fields["itemMarkupw"] = array("label" => $this->getTranslation("Wholessle Markup"), "className" => "col-md-2", "required" => false);
+            $fields["itemMarkupr"] = array("label" => $this->getTranslation("Retail Markup"), "className" => "col-md-2", "required" => false);
+            $fields["itemRemarks"] = array("label" => $this->getTranslation("Remarks"), "required" => false, "className" => "col-md-6 col-sm-6");
+            $fields["sisxetisi"] = array("label" => $this->getTranslation("Κωδικός Συσχέτισης"), "className" => "col-md-6", "required" => false);
             $fields["edis"] = array("label" => "Αντιστοιχίες Εκτός Αποθήκης", "className" => "col-md-6", "required" => false);
         }
         //$fields["itemMarkupw"] = array("label" => "Markup Χοδρικής", "className" => "col-md-2", "required" => false);
