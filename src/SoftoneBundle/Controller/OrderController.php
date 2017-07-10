@@ -1664,6 +1664,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         return $response;
     }
 
+    
+    
+
+    
     /**
      * @Route("/order/getitems/{id}")
      */
@@ -1682,17 +1686,25 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $table = (array) $table;
             $table1 = array();
             foreach ($table as $f => $val) {
-                $table1[$f] = $val;
+                if ($f == 0 AND $f != 'DT_RowId' AND $f != 'DT_RowClass') {
+                    $table1[$f] = $val;
+                    if ($i++ < 100) {
+                        $table1[1] = $this->getOrderItemHistoryPopup($val);
+                    }
+                    //$hasOrderItems = $this->getHasOrderItems($val);
+                } else if ($f == 1) {
+                    $table1[$f] = $table1[1] . $val;
+                } else {
+                    $table1[$f] = $val;
+                }
             }
             $datatable->data[$key] = $table1;
         }
         $json = json_encode($datatable);
 
         
-        
+        /*
         $json = $this->datatable();
-
-
         $datatable = json_decode($json);
         $datatable->data = (array) $datatable->data;
         $i = 0;
@@ -1722,7 +1734,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             //}
         }
         $json = json_encode($datatable);        
-        
+        */
         
         
 
