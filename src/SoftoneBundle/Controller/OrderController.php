@@ -206,7 +206,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $fullytrans = $order->getFullytrans() > 0 ? '' : 'display:none';
         }
 
-        
+
         $orderview["send_to_softone"] = $this->getTranslation("Send To Softone");
         $orderview["send_to_route"] = $this->getTranslation("Send To Route");
         $orderview["save"] = $this->getTranslation("Save");
@@ -216,7 +216,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $orderview["sended"] = $this->getTranslation("Sended");
         $orderview["return"] = $this->getTranslation("Return");
         $orderview["print"] = $this->getTranslation("Print");
-        
+
         $content = $this->content();
         return $this->render('SoftoneBundle:Order:view.html.twig', array(
                     'pagename' => $pagename,
@@ -276,10 +276,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $order->setCustomerName($request->request->get("customerName"));
         $user = $this->get('security.token_storage')->getToken()->getUser();
         /*
-        $user = $this->getDoctrine()
-                ->getRepository("AppBundle:User")
-                ->find($user->getId());
-        */
+          $user = $this->getDoctrine()
+          ->getRepository("AppBundle:User")
+          ->find($user->getId());
+         */
         $order->setUser($user);
         $order->setSoftoneStore($user->getSoftoneStore());
         $customer = $this->getDoctrine()
@@ -901,7 +901,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $tecdoc = new Tecdoc();
         if ($this->getSetting("AppBundle:Entity:lng") > 0) {
             $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
-        }; 
+        };
         $attributs = $tecdoc->getAssignedArticlesByIds(
                 array(
                     "articleId" => $articleId,
@@ -1111,7 +1111,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $tecdoc = new Tecdoc();
         if ($this->getSetting("AppBundle:Entity:lng") > 0) {
             $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
-        };      
+        };
         $data = $tecdoc->getArticlesSearchByIds($params);
         return $data->data->array;
         //}
@@ -1153,7 +1153,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $tecdoc = new Tecdoc();
         if ($this->getSetting("AppBundle:Entity:lng") > 0) {
             $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
-        };      
+        };
         $articles = $tecdoc->getArticlesSearch(array('search' => $this->clearstring($search)));
         //print_r($articles);
         //echo $search;
@@ -1405,7 +1405,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $em = $this->getDoctrine()->getManager();
         $tecdoc = new Tecdoc();
         if ($this->getSetting("AppBundle:Entity:lng") > 0) {
-           $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
+            $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
             $em = $this->getDoctrine()->getManager();
             $sql = "SELECT * FROM  `category`";
             $connection = $em->getConnection();
@@ -1414,9 +1414,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $results = $statement->fetchAll();
             foreach ($results as $data) {
                 $arr[$data["id"]] = $data["name"];
-            }  
+            }
             $tecdoc->setCategoriestree($arr);
-        };        
+        };
         $params["linkingTargetId"] = $request->request->get("car");
         $data = $tecdoc->linkedChildNodesAllLinkingTargetTree($params);
         $articleIds = array();
@@ -1517,7 +1517,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         ));
         return str_replace("\n", "", trim($tmpl));
         return $response;
-        
     }
 
     /**
@@ -1608,7 +1607,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $product = $entity->getProduct();
         if ($product) {
             $html = $product->getId();
-           
+
             foreach ($product->getHistory() as $item) {
                 if ($item->getProduct()) {
                     $items = array();
@@ -1688,8 +1687,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         }
         $json = json_encode($datatable);
 
-        
-        
+
+
         $json = $this->datatable();
 
 
@@ -1714,19 +1713,28 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 } else {
                     $table1[$f] = $val;
                 }
-                
+                if ($f == 0) {
+                    $text = $val;
+                    $document = new \DOMDocument();
+                    $document->loadHTML($text);
+                    $inputs = $document->getElementsByTagName("input");
+                    $value = 0;
+                    foreach ($inputs as $input) {
+                        $value = $input->getAttribute("value");
+                        break;
+                    }
+                    $total += $value;
+                }
             }
             //if ($hasOrderItems) {
             $datatable->data[$key] = $table1;
             //} else {
             //$datatable->data[$key] = $table1;
             //unset($datatable->data[$key]);
-
-            $total += $value;            
         }
 
-        
-        $json = json_encode($datatable);        
+
+        $json = json_encode($datatable);
 
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
@@ -1765,7 +1773,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $json[9] = "";
         $json[10] = "Total";
         $json[11] = $total;
-        
+
         $data->data[] = $json;
         return json_encode($data);
     }
