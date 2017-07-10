@@ -680,7 +680,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
             if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
                 $fields["itemPricew01"] = array("label" => $this->getTranslation("Retail Price"), "className" => "col-md-2", "required" => false);
-                $fields["itemPricew03"] = array("label" => "Τιμή Olympic", "className" => "col-md-2", "required" => false);
+                $fields["itemPricew03"] = array("label" => $this->getTranslation("Τιμή Olympic"), "className" => "col-md-2", "required" => false);
             } else {
                 $fields["itemPricew01"] = array("label" => $this->getTranslation("Wholesale Price"), "className" => "col-md-2", "required" => false);
                 $fields["itemPricew02"] = array("label" => $this->getTranslation("Retail Price"), "className" => "col-md-1", "required" => false);
@@ -730,7 +730,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $fields["itemMarkupr"] = array("label" => $this->getTranslation("Retail Markup"), "className" => "col-md-2", "required" => false);
             $fields["itemRemarks"] = array("label" => $this->getTranslation("Remarks"), "required" => false, "className" => "col-md-6 col-sm-6");
             $fields["sisxetisi"] = array("label" => $this->getTranslation("Κωδικός Συσχέτισης"), "className" => "col-md-6", "required" => false);
-            $fields["edis"] = array("label" => "Αντιστοιχίες Εκτός Αποθήκης", "className" => "col-md-6", "required" => false);
+            $fields["edis"] = array("label" => $this->getTranslation("Αντιστοιχίες Εκτός Αποθήκης"), "className" => "col-md-6", "required" => false);
         }
         //$fields["itemMarkupw"] = array("label" => "Markup Χοδρικής", "className" => "col-md-2", "required" => false);
         //$fields["itemMarkupr"] = array("label" => "Markup Λιανικής", "className" => "col-md-2", "required" => false);
@@ -749,9 +749,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $forms2 = $this->getFormLyFields($entity2, $fields2);
 
             $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
-            $dtparams[] = array("name" => "Title", "index" => 'title');
-            $dtparams[] = array("name" => "Code", "index" => 'erpCode');
-            $dtparams[] = array("name" => "Price", "index" => 'itemPricew01');
+            $dtparams[] = array("name" => $this->getTranslation("Title"), "index" => 'title');
+            $dtparams[] = array("name" => $this->getTranslation("Code"), "index" => 'erpCode');
+            $dtparams[] = array("name" => $this->getTranslation("Price"), "index" => 'itemPricew01');
             $params['dtparams'] = $dtparams;
             $params['id'] = $dtparams;
             $params['url'] = '/product/getrelation/' . $id;
@@ -765,8 +765,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $tabs[] = array("title" => "General", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
         if ($id > 0 AND count($entity) > 0) {
-            $tabs[] = array("title" => "Αντιστοιχίες Εντός Αποθήκης", "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
-            $tabs[] = array("title" => "Categories", "datatables" => '', "form" => '', "content" => $this->getCategories($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
+            $tabs[] = array("title" => $this->getTranslation("Αντιστοιχίες Εντός Αποθήκης"), "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
+            $tabs[] = array("title" => $this->getTranslation("Categories"), "datatables" => '', "form" => '', "content" => $this->getCategories($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
         }
 
         foreach ($tabs as $tab) {
