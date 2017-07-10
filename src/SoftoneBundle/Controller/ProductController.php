@@ -858,24 +858,24 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //$fields = unserialize($this->getSetting("SoftoneBundle:Product:getdatatable"));
         //if (count($fields) == 0 OR $this->getSetting("SoftoneBundle:Product:getdatatable") == '') {
         $fields[] = array("name" => "ID", "index" => 'id', "active" => "active");
-        $fields[] = array("name" => "Title", "index" => 'title');
-        $fields[] = array("name" => "Code", "index" => 'erpCode');
-        $fields[] = array("name" => "Supplier", "index" => 'supplierId:title', 'type' => 'select', 'object' => 'SoftoneSupplier');
-        $fields[] = array("name" => "Προσφορά", "index" => 'productSale:title', 'type' => 'select', 'object' => 'ProductSale');
-        $fields[] = array("name" => "Ράφι", "index" => 'itemMtrplace');
-        $fields[] = array("name" => "Συνχρ.", "index" => 'cccPriceUpd', 'method' => 'yesno');
+        $fields[] = array("name" => $this->getTranslation("Product Title"), "index" => 'title');
+        $fields[] = array("name" => $this->getTranslation("Product Code"), "index" => 'erpCode');
+        $fields[] = array("name" => $this->getTranslation("Product Supplier"), "index" => 'supplierId:title', 'type' => 'select', 'object' => 'SoftoneSupplier');
+        $fields[] = array("name" => $this->getTranslation("Offer"), "index" => 'productSale:title', 'type' => 'select', 'object' => 'ProductSale');
+        $fields[] = array("name" => $this->getTranslation("Product Place"), "index" => 'itemMtrplace');
+        $fields[] = array("name" => $this->getTranslation("Syncrhonize"), "index" => 'cccPriceUpd', 'method' => 'yesno');
 
 
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'foxline') {
-            $fields[] = array("name" => "Λιανική", "index" => 'itemPricew02');
-            $fields[] = array("name" => "Χονδρική", "index" => 'itemPricew01');
-            $fields[] = array("name" => "Eshop", "index" => 'itemPricew04');
+            $fields[] = array("name" => $this->getTranslation("Retail"), "index" => 'itemPricew02');
+            $fields[] = array("name" => $this->getTranslation("Wholesale"), "index" => 'itemPricew01');
+            $fields[] = array("name" => $this->getTranslation("Eshop Price"), "index" => 'itemPricew04');
         } elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
-            $fields[] = array("name" => "Χονδρική", "index" => 'itemPricew01');
-            $fields[] = array("name" => "Olympic", "index" => 'itemPricew03');
+            $fields[] = array("name" => $this->getTranslation("Wholesale"), "index" => 'itemPricew01');
+            $fields[] = array("name" => $this->getTranslation("Olympic"), "index" => 'itemPricew03');
         } else {
-            $fields[] = array("name" => "Λιανική", "index" => 'itemPricer');
-            $fields[] = array("name" => "Χονδρική", "index" => 'itemPricew');
+            $fields[] = array("name" => $this->getTranslation("Retail"), "index" => 'itemPricer');
+            $fields[] = array("name" => $this->getTranslation("Wholesale"), "index" => 'itemPricew');
         }
 
 
