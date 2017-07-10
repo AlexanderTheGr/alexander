@@ -18,7 +18,7 @@ class RouteController extends \SoftoneBundle\Controller\SoftoneController  {
     public function indexAction() {
 
         return $this->render('SoftoneBundle:Route:index.html.twig', array(
-                    'pagename' => 'Routes',
+                    'pagename' => $this->getTranslation('Routes'),
                     'url' => '/route/getdatatable',
                     'view' => '/route/view',
                     'ctrl' => $this->generateRandomString(),
@@ -84,12 +84,12 @@ class RouteController extends \SoftoneBundle\Controller\SoftoneController  {
             $this->newentity[$this->repository] = $entity;
         }
 
-        $fields["route"] = array("label" => "Route");
+        $fields["route"] = array("label" => $this->getTranslation("Route"));
         //$fields["routeName"] = array("label" => "Name");
 
         $forms = $this->getFormLyFields($entity, $fields);
 
-        $this->addTab(array("title" => "General", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
+        $this->addTab(array("title" => $this->getTranslation("General"), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         $json = $this->tabs();
         return $json;
     }
@@ -101,7 +101,7 @@ class RouteController extends \SoftoneBundle\Controller\SoftoneController  {
         $this->repository = 'SoftoneBundle:Route';
 
         $this->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
-                ->addField(array("name" => "Route", "index" => 'route'));
+                ->addField(array("name" => $this->getTranslation("Route"), "index" => 'route'));
         $json = $this->datatable();
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
