@@ -17,7 +17,7 @@ class SupplierController extends \SoftoneBundle\Controller\SoftoneController  {
     public function indexAction() {
 
         return $this->render('SoftoneBundle:Supplier:index.html.twig', array(
-                    'pagename' => 'Προμηθευτές',
+                    'pagename' => $this->getTranslation('Προμηθευτές'),
                     'url' => '/supplier/getdatatable',
                     'view' => '/supplier/view',
                     'ctrl' => $this->generateRandomString(),
@@ -54,7 +54,7 @@ class SupplierController extends \SoftoneBundle\Controller\SoftoneController  {
         $content = $this->gettabs($id);
         $content = $this->content();
         return $this->render('SoftoneBundle:Supplier:view.html.twig', array(
-                    'pagename' => 'Supplier',
+                    'pagename' => $this->getTranslation('Supplier'),
                     'url' => '/erp01/supplier/save',
                     'supplierid' => $id,
                     'content' => $content,
@@ -86,8 +86,8 @@ class SupplierController extends \SoftoneBundle\Controller\SoftoneController  {
                 ->getRepository($this->repository)
                 ->find($id);
 
-        $fields["supplierCode"] = array("label" => "Code");
-        $fields["supplierName"] = array("label" => "Name");
+        $fields["supplierCode"] = array("label" => $this->getTranslation("Code"));
+        $fields["supplierName"] = array("label" => $this->getTranslation("Supplier Name"));
 
         $forms = $this->getFormLyFields($entity, $fields);
 
@@ -103,8 +103,8 @@ class SupplierController extends \SoftoneBundle\Controller\SoftoneController  {
         $this->repository = 'SoftoneBundle:Supplier';
 
         $this->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
-                ->addField(array("name" => "Code", "index" => 'supplierCode'))
-                ->addField(array("name" => "Name", "index" => 'supplierName'));
+                ->addField(array("name" => $this->getTranslation("Code"), "index" => 'supplierCode'))
+                ->addField(array("name" => $this->getTranslation("Name"), "index" => 'supplierName'));
         $json = $this->datatable();
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
