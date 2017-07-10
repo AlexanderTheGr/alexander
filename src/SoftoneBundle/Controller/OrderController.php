@@ -1696,6 +1696,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $datatable = json_decode($json);
         $datatable->data = (array) $datatable->data;
         $i = 0;
+        $total = 0;
         foreach ($datatable->data as $key => $table) {
             $table = (array) $table;
             $tbl = (array) $table;
@@ -1720,11 +1721,37 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             //$datatable->data[$key] = $table1;
             //unset($datatable->data[$key]);
             //}
+            $of = "11";
+
+            $text = $item->$of;
+            $document = new \DOMDocument();
+            $document->loadHTML($text);
+
+            $inputs = $document->getElementsByTagName("input");
+            $value = 0;
+            foreach ($inputs as $input) {
+                $value = $input->getAttribute("value");
+                break;
+            }
+            $total += $value;            
         }
+        $total = number_format($total, 2, '.', '');
+        $json[0] = "";
+        $json[1] = "";
+        $json[2] = "";
+        $json[3] = "";
+        $json[4] = "";
+        $json[5] = "";
+        $json[6] = "";
+        $json[7] = "";
+        $json[8] = "";
+        $json[9] = "";
+        $json[10] = "Total";
+        $json[11] = $total;        
+        
+        $datatable->data[] = $json;
+        
         $json = json_encode($datatable);        
-        
-        
-        
 
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
@@ -1763,7 +1790,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $json[9] = "";
         $json[10] = "Total";
         $json[11] = $total;
-
+        
         $data->data[] = $json;
         return json_encode($data);
     }
