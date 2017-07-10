@@ -178,7 +178,7 @@ class CategoryController extends \SoftoneBundle\Controller\SoftoneController {
 
         $this->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
                 //->addField(array("name" => "Code", "index" => 'categoryCode'))
-                ->addField(array("name" => "Name", "index" => 'name'));
+                ->addField(array("name" => $this->getTranslation("Category Name"), "index" => 'name'));
 
         $this->q_and[] = $this->prefix . ".parent = '" . $id . "'";
 
