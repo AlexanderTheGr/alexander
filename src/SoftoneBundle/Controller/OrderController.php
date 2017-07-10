@@ -102,7 +102,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $html .= "<th>Είδος</th>";
         $html .= "<th align='left'>Κωδικός Είδους</th>";
         $html .= "<th align='left'>Supplier</th>";
-        $html .= "<th align='left'>Ράφι</th>";
+        //$html .= "<th align='left'>Ράφι</th>";
         $html .= "<th align='left'>Υπόλοιπο</th>";
         $html .= "<th align='left'>Ποσότητα</th>";
         $html .= "<th align='left'>Τιμή Μονάδος</th>";
@@ -110,9 +110,16 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $html .= "<th align='left'>Τελική Τιμή</th>";
         $html .= "</tr></thead>";
         $items = array();
-        foreach ($order->getItems() as $item) {
-            $product = $item->getProduct();
-            $items[$product->getItemMtrplace() . "-" . $product->getId()] = $item;
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
+            foreach ($order->getItems() as $item) {
+                $product = $item->getProduct();
+                $items[$item->getId()] = $item;
+            }            
+        } else {
+            foreach ($order->getItems() as $item) {
+                $product = $item->getProduct();
+                $items[$product->getItemMtrplace() . "-" . $product->getId()] = $item;
+            }
         }
         ksort($items);
         foreach ($items as $item) {
@@ -129,7 +136,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $html .= "<td>" . $product->getTitle() . "</td>";
             $html .= "<td>" . $product->getErpCode() . "</td>";
             $html .= "<td>" . $ti . "</td>";
-            $html .= "<td>" . $product->getItemMtrplace() . "</td>";
+            //$html .= "<td>" . $product->getItemMtrplace() . "</td>";
             $html .= "<td>" . $product->getApothiki() . "</td>";
             $html .= "<td align='right'>" . $item->getQty() . "</td>";
             $html .= "<td align='right'>" . $item->getPrice() . "</td>";
