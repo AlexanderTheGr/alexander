@@ -434,7 +434,7 @@ jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .SoftoneBundleProductEdi').live("
         $("#loaderer").show();
         $.post("/edi/order/addorderitem/", data, function (result) {
             $("#loaderer").hide();
-            toastr.success(json.error, "Success");
+            toastr.success(result.error, "Success");
         })
     }
 });
