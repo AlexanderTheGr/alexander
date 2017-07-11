@@ -238,7 +238,7 @@ class EdiOrderController extends Main {
             $this->flushpersist($EdiOrder);   
         }
 
-
+        
         //$availability = $Ediitem->getQtyAvailability($request->request->get("qty"));
         //$Available = (array) $availability["Header"];
         //$price = $availability["PriceOnPolicy"];
@@ -287,7 +287,7 @@ class EdiOrderController extends Main {
 
         try {
             $this->flushpersist($EdiOrderItem);
-            $json = json_encode(array("error" => false,"message"=>$Ediitem->getEdi()->getName()));
+            $json = json_encode(array("error" => false,"message"=>$Ediitem->getEdi()->getName()." ".$Ediitem->getItemCode()." ανοιχτηκε επιτυχώς"));
         } catch (\Exception $e) {
             $json = json_encode(array("error" => true, "message" => "Product Exists"));
         }
