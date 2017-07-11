@@ -1953,17 +1953,17 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $orderItem = $this->getDoctrine()
                 ->getRepository('SoftoneBundle:Orderitem')
                 ->find($request->request->get("id"));
-        if ($request->request->get("qty")) {
+        if ($request->request->get("qty") != '') {
             $orderItem->setQty($request->request->get("qty"));
-        } else if ($request->request->get("price"))
+        } else if ($request->request->get("price") != '')
             $orderItem->setPrice($request->request->get("price"));
-        else if ($request->request->get("discount"))
+        else if ($request->request->get("discount") != '')
             $orderItem->setDisc1prc($request->request->get("discount"));
-        elseif ($request->request->get("livevalqty")) {
+        elseif ($request->request->get("livevalqty") != '') {
             //$orderItem->setDisc1prc($request->request->get("discount"));
             $disc1prc = 1 - ($request->request->get("livevalqty") / $orderItem->getPrice());
             $orderItem->setDisc1prc($disc1prc * 100);
-        } elseif ($request->request->get("liveval")) {
+        } elseif ($request->request->get("liveval") != '') {
             //$orderItem->setDisc1prc($request->request->get("discount"));
             $disc1prc = 1 - (($request->request->get("liveval") / $orderItem->getQty()) / $orderItem->getPrice());
             $orderItem->setDisc1prc($disc1prc * 100);
