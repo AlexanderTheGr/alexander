@@ -287,7 +287,7 @@ class EdiOrderController extends Main {
 
         try {
             $this->flushpersist($EdiOrderItem);
-            $json = json_encode(array("error" => false));
+            $json = json_encode(array("error" => false,"message"=>$Ediitem->getEdi()->getName()));
         } catch (\Exception $e) {
             $json = json_encode(array("error" => true, "message" => "Product Exists"));
         }
