@@ -738,8 +738,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 ORDER BY ' . $this->orderBy;
                 }
                 if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
-                    echo $sql;
-                    exit;				
+                    //echo $sql;
+                    //exit;				
                 }
 
 
@@ -763,7 +763,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                   //exit;
                  */
                 $results = $query->getResult();
-
+                if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
+                    echo count($results);   
+                }
 
                 //$articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
             }
