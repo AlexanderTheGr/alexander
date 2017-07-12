@@ -737,16 +737,17 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 where p.itemIsactive = 1 AND (' . $qsupplier . ' (' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . '))
                                 ORDER BY ' . $this->orderBy;
                 }
-                if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
-                    //echo $sql;
-                    //exit;				
+                if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
+                    echo $sql;
+                    exit;				
                 }
 
 
 
                 $sql = str_replace("p.*,", "", $sql);
                 //$sql = str_replace("ORDER BY p.qty asc","",$sql);
-                echo $sql."<BR>";
+                
+                //echo $sql."<BR>";
                 $query = $em->createQuery(
                                 $sql
                         )
