@@ -764,7 +764,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                  */
                 $results = $query->getResult();
                 if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
-                    echo count($results);   
+                    //echo count($results);   
                 }
 
                 //$articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
