@@ -1527,7 +1527,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $ediediitem->setProductFreesearch();
             unset($ediediitem);
             //echo $result["id"] . "<BR>";
-            if ($i++ > 30) exit;
+            //if ($i++ > 30) exit;
             // }
         }
         exit;
