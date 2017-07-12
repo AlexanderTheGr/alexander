@@ -746,7 +746,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                 $sql = str_replace("p.*,", "", $sql);
                 //$sql = str_replace("ORDER BY p.qty asc","",$sql);
-
+                echo $sql."<BR>";
                 $query = $em->createQuery(
                                 $sql
                         )
