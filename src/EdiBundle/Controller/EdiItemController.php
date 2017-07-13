@@ -764,7 +764,7 @@ class EdiItemController extends Main {
                 if ($ed[0]->price > 0) {
                     $entity->getWholesaleprice($ed[0]->price);
                 }
-                @$jsonarr[$key]['6'] = $entity->getDiscount($customer, $vat);
+                @$jsonarr[$key]['6'] = "";//$entity->getDiscount($customer, $vat);
                 @$jsonarr[$key]['7'] = number_format((float) $entity->getWholesaleprice(), 2, '.', '');
                 @$jsonarr[$key]['8'] = $jsonarr[$key]['8'] . $AvailabilityDetailsHtml;
                 @$jsonarr[$key]['DT_RowClass'] .= $ed[0]->avail == "green" ? ' text-success ' : ' text-danger ';
