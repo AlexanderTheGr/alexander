@@ -761,7 +761,7 @@ class EdiItemController extends Main {
                
                $ed = json_decode($json);
                
-               $AvailabilityDetailsHtml = $ed->avail;
+               $AvailabilityDetailsHtml = print_r($ed,true);
                 @$jsonarr[$key]['6'] = $entity->getDiscount($customer, $vat);
                 @$jsonarr[$key]['7'] = number_format((float) $entity->getWholesaleprice(), 2, '.', '');
                 @$jsonarr[$key]['8'] = $jsonarr[$key]['8'] . $AvailabilityDetailsHtml;
