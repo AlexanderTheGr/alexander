@@ -756,11 +756,16 @@ class EdiItemController extends Main {
                 @$jsonarr[$key]['DT_RowClass'] .= $availability == "Y" ? ' text-success ' : ' text-danger ';
                 
            } elseif ($entity->getEdi()->getFunc() == 'getRaskosEdiPartMaster') {    
+               
+               $json = file_get_contents("http://actedi.actae.gr/PartInfo/api/ActPriceAndAvail/c9ff4c75-2ef9-4dbd-9708-f8175d441f96/".$entity->getItemCode());
+               
+               $ed = json_decode($json);
+               
                $AvailabilityDetailsHtml = '';
                 @$jsonarr[$key]['6'] = $entity->getDiscount($customer, $vat);
                 @$jsonarr[$key]['7'] = number_format((float) $entity->getWholesaleprice(), 2, '.', '');
                 @$jsonarr[$key]['8'] = $jsonarr[$key]['8'] . $AvailabilityDetailsHtml;
-                @$jsonarr[$key]['DT_RowClass'] .= $availability == "Y" ? ' text-success ' : ' text-danger ';               
+                @$jsonarr[$key]['DT_RowClass'] .= $ed->avail == "green" ? ' text-success ' : ' text-danger ';               
                 
             } else {
                 /*
