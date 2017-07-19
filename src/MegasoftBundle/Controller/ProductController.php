@@ -1303,7 +1303,7 @@ class ProductController extends Main {
         //if ($data["StoreId"] < 207820) return;
         //print_r($data);
         //return;
-        //if ($data["StoreKwd"] != "1357067") return;
+        if ($data["StoreKwd"] != "1643070G") return;
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->findOneBy(array("erpCode" => $data["StoreKwd"]));
