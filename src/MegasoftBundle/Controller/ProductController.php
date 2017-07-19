@@ -494,9 +494,9 @@ class ProductController extends Main {
             $em = $this->getDoctrine()->getManager();
             $path .= $em->getConnection()->getDatabase();
             @mkdir($path);
-            move_uploaded_file($_FILES["file"]["tmp_name"],$path."/".$product.".jpg");
+            move_uploaded_file($_FILES["file"]["tmp_name"], $path . "/" . $product . ".jpg");
             //echo "File is an image - " . $check["mime"] . ".";
-            echo "/assets/media/".$em->getConnection()->getDatabase()."/".$product.".jpg";
+            echo "/assets/media/" . $em->getConnection()->getDatabase() . "/" . $product . ".jpg";
             $uploadOk = 1;
         } else {
             //echo "File is not an image.";
@@ -780,13 +780,13 @@ class ProductController extends Main {
 
     public function getImagesHtml($product) {
         $em = $this->getDoctrine()->getManager();
-        
-        $path = "/home2/partsbox/public_html/partsbox/web/assets/media/".$em->getConnection()->getDatabase()."/".$product->getId().".jpg";
-        
+
+        $path = "/home2/partsbox/public_html/partsbox/web/assets/media/" . $em->getConnection()->getDatabase() . "/" . $product->getId() . ".jpg";
+
         if (file_exists($path)) {
-            $img = "<img src='/assets/media/".$em->getConnection()->getDatabase()."/".$product->getId().".jpg'>";
+            $img = "<img src='/assets/media/" . $em->getConnection()->getDatabase() . "/" . $product->getId() . ".jpg'>";
         }
-        
+
         $response = $this->get('twig')->render('MegasoftBundle:Product:images.html.twig', array(
             'img' => $img,
             'product' => $product->getId(),
@@ -1236,22 +1236,22 @@ class ProductController extends Main {
         }
         //ini_set("soap.wsdl_cache_enabled", "0");
         //exit;
-        /*
-          $ch = \curl_init();
-          $header = array('Contect-Type:application/xml', 'Accept:application/xml');
-          curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
-          curl_setopt($ch, CURLOPT_POST, 1);
-          curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=2010-06-06&ParticipateInEshop=1");
-          curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-          // in real life you should use something like:
-          // curl_setopt($ch, CURLOPT_POSTFIELDS,
-          //          http_build_query(array('postvar1' => 'value1')));
-          // receive server response ...
-          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-          $server_output = curl_exec($ch);
-          file_put_contents("downliad10.xml", $server_output);
-         */
+        $ch = \curl_init();
+        $header = array('Contect-Type:application/xml', 'Accept:application/xml');
+        curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=2010-07-06&ParticipateInEshop=1");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+        // in real life you should use something like:
+        // curl_setopt($ch, CURLOPT_POSTFIELDS,
+        //          http_build_query(array('postvar1' => 'value1')));
+        // receive server response ...
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $server_output = curl_exec($ch);
+        file_put_contents("downliad10.xml", $server_output);
+
         //$StoreDetails = \simplexml_load_string($server_output);
         $result = \simplexml_load_file("downliad10.xml");
 
