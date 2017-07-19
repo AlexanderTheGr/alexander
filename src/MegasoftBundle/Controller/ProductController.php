@@ -1307,8 +1307,9 @@ class ProductController extends Main {
         
         if ((int)$data["SupplierId"] > 0)  {
             echo (int)$data["SupplierId"]."<BR>";     
+        } else {
+            return;
         }
-        return;
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->findOneBy(array("erpCode" => $data["StoreKwd"]));
