@@ -1305,8 +1305,7 @@ class ProductController extends Main {
         //return;
         //if ($data["StoreKwd"] != "1643070G") return;
         
-        echo $data["StoreKwd"]."<BR>";
-        return;
+
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->findOneBy(array("erpCode" => $data["StoreKwd"]));
@@ -1381,7 +1380,8 @@ class ProductController extends Main {
         }
 
         $q[] = "`product_sale` = '1'";
-
+        echo $data["StoreKwd"]."<BR>";
+        return;
         if (@$entity->getId() == 0) {
             //$q[] = "`reference` = '" . $data[$params["megasoft_table"]] . "'";
             //$q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
