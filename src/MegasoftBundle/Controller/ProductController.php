@@ -1303,7 +1303,10 @@ class ProductController extends Main {
         //if ($data["StoreId"] < 207820) return;
         //print_r($data);
         //return;
-        if ($data["StoreKwd"] != "1643070G") return;
+        //if ($data["StoreKwd"] != "1643070G") return;
+        
+        echo $data["StoreKwd"]."<BR>";
+        return;
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->findOneBy(array("erpCode" => $data["StoreKwd"]));
@@ -1320,7 +1323,7 @@ class ProductController extends Main {
             //continue;
             //$entity->setRepositories();                
         }
-        
+       
 
         $manufacturer = $this->getDoctrine()
                 ->getRepository("MegasoftBundle:Manufacturer")
