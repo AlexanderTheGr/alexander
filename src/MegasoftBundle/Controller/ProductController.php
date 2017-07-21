@@ -506,9 +506,9 @@ class ProductController extends Main {
         exit;
     }
     /**
-     * @Route("/erp01/product/addCars")
+     * @Route("/erp01/product/addCar")
      */
-    public function addCars(Request $request) {
+    public function addCar(Request $request) {
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($request->request->get("product"));
