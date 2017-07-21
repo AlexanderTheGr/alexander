@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="brand_model", indexes={@ORM\Index(name="brand", columns={"brand"})})
  * @ORM\Entity
  */
-class BrandModel
-{
+class BrandModel {
+
     /**
      * @var integer
      *
@@ -39,14 +39,14 @@ class BrandModel
      * @ORM\Column(name="brand_model", type="string", length=255, nullable=false)
      */
     protected $brandModel;
-    
+
     /**
      * @var string
      *
      * @ORM\Column(name="brand_model_str", type="string", length=255, nullable=false)
      */
     protected $brandModelStr;
-    
+
     /**
      * @var integer
      *
@@ -84,8 +84,6 @@ class BrandModel
      */
     protected $id;
 
-
-
     /**
      * Set brand
      *
@@ -93,8 +91,7 @@ class BrandModel
      *
      * @return BrandModel
      */
-    public function setBrand($brand)
-    {
+    public function setBrand($brand) {
         $this->brand = $brand;
 
         return $this;
@@ -105,8 +102,7 @@ class BrandModel
      *
      * @return integer
      */
-    public function getBrand()
-    {
+    public function getBrand() {
         return $this->brand;
     }
 
@@ -117,8 +113,7 @@ class BrandModel
      *
      * @return BrandModel
      */
-    public function setGroup($group)
-    {
+    public function setGroup($group) {
         $this->group = $group;
 
         return $this;
@@ -129,8 +124,7 @@ class BrandModel
      *
      * @return integer
      */
-    public function getGroup()
-    {
+    public function getGroup() {
         return $this->group;
     }
 
@@ -141,8 +135,7 @@ class BrandModel
      *
      * @return BrandModel
      */
-    public function setGroupName($groupName)
-    {
+    public function setGroupName($groupName) {
         $this->groupName = $groupName;
 
         return $this;
@@ -153,8 +146,7 @@ class BrandModel
      *
      * @return string
      */
-    public function getGroupName()
-    {
+    public function getGroupName() {
         return $this->groupName;
     }
 
@@ -165,8 +157,7 @@ class BrandModel
      *
      * @return BrandModel
      */
-    public function setBrandModel($brandModel)
-    {
+    public function setBrandModel($brandModel) {
         $this->brandModel = $brandModel;
 
         return $this;
@@ -177,12 +168,10 @@ class BrandModel
      *
      * @return string
      */
-    public function getBrandModel()
-    {
+    public function getBrandModel() {
         return $this->brandModel;
     }
-    
-    
+
     /**
      * Set brandModelStr
      *
@@ -190,8 +179,7 @@ class BrandModel
      *
      * @return BrandModelStr
      */
-    public function setBrandModelStr($brandModelStr)
-    {
+    public function setBrandModelStr($brandModelStr) {
         $this->brandModelStr = $brandModel;
 
         return $this;
@@ -202,11 +190,9 @@ class BrandModel
      *
      * @return string
      */
-    public function getBrandModelStr()
-    {
+    public function getBrandModelStr() {
         return $this->brandModelStr;
-    }    
-    
+    }
 
     /**
      * Set yearFrom
@@ -215,8 +201,7 @@ class BrandModel
      *
      * @return BrandModel
      */
-    public function setYearFrom($yearFrom)
-    {
+    public function setYearFrom($yearFrom) {
         $this->yearFrom = $yearFrom;
 
         return $this;
@@ -227,8 +212,7 @@ class BrandModel
      *
      * @return integer
      */
-    public function getYearFrom()
-    {
+    public function getYearFrom() {
         return $this->yearFrom;
     }
 
@@ -239,8 +223,7 @@ class BrandModel
      *
      * @return BrandModel
      */
-    public function setYearTo($yearTo)
-    {
+    public function setYearTo($yearTo) {
         $this->yearTo = $yearTo;
 
         return $this;
@@ -251,8 +234,7 @@ class BrandModel
      *
      * @return integer
      */
-    public function getYearTo()
-    {
+    public function getYearTo() {
         return $this->yearTo;
     }
 
@@ -263,8 +245,7 @@ class BrandModel
      *
      * @return BrandModel
      */
-    public function setEnable($enable)
-    {
+    public function setEnable($enable) {
         $this->enable = $enable;
 
         return $this;
@@ -275,8 +256,7 @@ class BrandModel
      *
      * @return boolean
      */
-    public function getEnable()
-    {
+    public function getEnable() {
         return $this->enable;
     }
 
@@ -287,8 +267,7 @@ class BrandModel
      *
      * @return BrandModel
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->status = $status;
 
         return $this;
@@ -299,8 +278,7 @@ class BrandModel
      *
      * @return boolean
      */
-    public function getStatus()
-    {
+    public function getStatus() {
         return $this->status;
     }
 
@@ -309,10 +287,10 @@ class BrandModel
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
+
     /**
      * @var boolean
      */
@@ -328,7 +306,6 @@ class BrandModel
      */
     private $mod_cc;
 
-
     /**
      * Set modPc
      *
@@ -336,8 +313,7 @@ class BrandModel
      *
      * @return BrandModel
      */
-    public function setModPc($modPc)
-    {
+    public function setModPc($modPc) {
         $this->mod_pc = $modPc;
 
         return $this;
@@ -348,8 +324,7 @@ class BrandModel
      *
      * @return boolean
      */
-    public function getModPc()
-    {
+    public function getModPc() {
         return $this->mod_pc;
     }
 
@@ -360,8 +335,7 @@ class BrandModel
      *
      * @return BrandModel
      */
-    public function setModCv($modCv)
-    {
+    public function setModCv($modCv) {
         $this->mod_cv = $modCv;
 
         return $this;
@@ -372,8 +346,7 @@ class BrandModel
      *
      * @return boolean
      */
-    public function getModCv()
-    {
+    public function getModCv() {
         return $this->mod_cv;
     }
 
@@ -384,8 +357,7 @@ class BrandModel
      *
      * @return BrandModel
      */
-    public function setModCc($modCc)
-    {
+    public function setModCc($modCc) {
         $this->mod_cc = $modCc;
 
         return $this;
@@ -396,8 +368,21 @@ class BrandModel
      *
      * @return boolean
      */
-    public function getModCc()
-    {
+    public function getModCc() {
         return $this->mod_cc;
     }
+
+    function checkIfExists($id) {
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $brandModelType = $em->getRepository("SoftoneBundle:BrandModelType")->find($id);
+        //$brandModel = $em->getRepository("SoftoneBundle:BrandModel")->find($brandModelType->getBrandModel());
+        if ($this->id == $brandModelType->getBrandModel()) {
+            return true;
+        }
+    }
+
 }
