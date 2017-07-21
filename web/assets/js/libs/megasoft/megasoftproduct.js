@@ -62,7 +62,7 @@ jQuery('.productcategorychk').live('click', function () {
     var data = {};
     data.category = $(this).attr("data-ref");
     data.product = $(this).attr("data-product");
-    $.post("/product/addCategory", data, function (result) {
+    $.post("/erp01/product/addCategory", data, function (result) {
         $("#loaderer").hide();
         var table = dt_tables["ctrlgettabs"];
         table.fnFilter();
