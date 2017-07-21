@@ -525,7 +525,7 @@ class ProductController extends Main {
             }   
         }
         if (!$cars[0]) unset($cars[0]);
-        print_r($cars);
+        //print_r($cars);
         $product->setCars((array)$cars);
         $this->flushpersist($product);
         $json = json_encode((array)$cars);
@@ -887,6 +887,7 @@ class ProductController extends Main {
         $brandmodeltypes = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:BrandModelType')->findBy(array("brandModel" => $request->request->get("brandModel")), array('brandModelType' => 'ASC'));
         $html = '';
+        print_r($cars);
         foreach ($brandmodeltypes as $brandmodeltype) {
             //if (in_array())
             $style = '';
