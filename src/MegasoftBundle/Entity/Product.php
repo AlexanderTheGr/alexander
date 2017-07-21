@@ -490,6 +490,38 @@ class Product extends Entity {
         return $this->supplierCode;
     }
 
+    
+     /**
+     * @var string
+     */
+    private $cats;
+
+    /**
+     * @var string
+     */
+    private $cars;
+
+    /**
+     * Set cats
+     *
+     * @param string $cars
+     *
+     * @return EdiItem
+     */
+    public function setCats($cats) {
+        $this->cats = serialize($cats);
+        return $this;
+    }
+
+    /**
+     * Get cats
+     *
+     * @return string
+     */
+    public function getCats() {
+        return (array) unserialize($this->cats);
+    }   
+    
     /**
      * Set erpSupplier
      *
