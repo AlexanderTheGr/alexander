@@ -829,9 +829,19 @@ class ProductController extends Main {
                         ->getRepository('SoftoneBundle:Brand')->findBy(array(), array('brand' => 'ASC'));
 
 
+        $cars = (array) $product->getCars();
 
         $html = "<ul class='pbrands' data-prod='" . $product->getId() . "'>";
         foreach ($brands as $brand) {
+            
+            foreach($cars as $car) {
+                if ($brand->checkIfExists($car)) {
+                    $exists = true;
+                    $style = 'style="color:red"';
+                    break;
+                }
+            }
+            
             $brandmodels = $this->getDoctrine()
                             ->getRepository('SoftoneBundle:BrandModel')->findBy(array("brand" => $brand->getId()), array('brandModel' => 'ASC'));
             if (count($brandmodels) == 0)
