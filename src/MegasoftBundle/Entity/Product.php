@@ -366,7 +366,8 @@ class Product extends Entity {
      * @return Product
      */
     public function setCats($cats) {
-        $this->cats = $cats;
+        $this->cats = serialize($cats);
+        //$this->cats = $cats;
 
         return $this;
     }
@@ -388,8 +389,8 @@ class Product extends Entity {
      * @return Product
      */
     public function setCars($cars) {
-        $this->cars = $cars;
-
+        //$this->cars = $cars;
+        $this->cats = serialize($cars);
         return $this;
     }
 
