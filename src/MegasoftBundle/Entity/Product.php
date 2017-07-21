@@ -377,7 +377,7 @@ class Product extends Entity {
      * @return string
      */
     public function getCats() {
-        return $this->cats;
+        return (array) unserialize($this->cats);
     }
 
     /**
@@ -399,7 +399,7 @@ class Product extends Entity {
      * @return string
      */
     public function getCars() {
-        return $this->cars;
+        return (array) unserialize($this->cars);
     }
 
     /**
