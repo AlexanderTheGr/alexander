@@ -838,7 +838,7 @@ class ProductController extends Main {
                 if ($brand->checkIfExists($car)) {
                     $exists = true;
                     $style1 = 'color:red';
-                    break;
+                    //break;
                 }
             }
             
@@ -861,7 +861,7 @@ class ProductController extends Main {
                     if ($brandmodel->checkIfExists($car)) {
                         $exists = true;
                         $style2 = 'color:red';
-                        break;
+                        //break;
                     }
                 }                
                 $html .= "<li class='brandli' data-ref='" . $brandmodel->getId() . "'>";
