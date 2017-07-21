@@ -837,7 +837,7 @@ class ProductController extends Main {
             foreach($cars as $car) {
                 if ($brand->checkIfExists($car)) {
                     $exists = true;
-                    $style = 'style="color:red"';
+                    //$style = 'style="color:red"';
                     break;
                 }
             }
