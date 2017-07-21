@@ -917,6 +917,19 @@ class ProductController extends Main {
         $html = '';
 
         foreach ($brandmodeltypes as $brandmodeltype) {
+            
+            $details = unserialize($brandmodeltype->getDetails());
+            if (@$details["yearOfConstructionTo"]) {
+                $yearfrom = substr($details["yearOfConstructionFrom"], 4, 2) . "/" . substr($details["yearOfConstructionFrom"], 0, 4);
+                $yearto = substr($details["yearOfConstructionTo"], 4, 2) . "/" . substr($details["yearOfConstructionTo"], 0, 4);
+                $yearto = $yearto == 0 ? 'Today' : $yearto;
+                $year = " " . $yearfrom . " - " . $yearto;
+            }
+            if ($brandmodeltype->getEngine() != "") {
+                $name = $brandmodeltype->getBrandModelType() . " " . $brandmodeltype->getPowerHp() . "ps (" . $brandmodeltype->getEngine() . ")" . $year;
+            } else {
+                $name = $brandmodeltype->getBrandModelType() . " " . $brandmodeltype->getPowerHp() . "ps" . $year;
+            }            
             //if (in_array())
             $style = '';
             $checkbox = "<input type='checkbox' data-product='" . $product->getId() . "' class='brandmodetypechk' data-ref='" . $brandmodeltype->getId() . "' />";
@@ -926,7 +939,7 @@ class ProductController extends Main {
             }
             //$style = "style='color:red'";    
             $html .= "<li class='brandmodetypeli' data-product='" . $product->getId() . "' data-ref='" . $brandmodeltype->getId() . "'>";
-            $html .= $checkbox . "<a " . $style . " data-ref='" . $brandmodeltype->getId() . "' class='brandmodetypelia'>" . $brandmodeltype->getBrandModelType() . "</a>";
+            $html .= $checkbox . "<a " . $style . " data-ref='" . $brandmodeltype->getId() . "' class='brandmodetypelia'>" . $name . "</a>";
             $html .= '</li>';
         }
         $json = json_encode(array("data" => $html));
