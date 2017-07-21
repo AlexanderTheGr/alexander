@@ -859,12 +859,12 @@ class ProductController extends Main {
                   if (count($brandmodeltypes) == 0)
                   continue;
                  */
-                $yearfrom = substr($brandsmodel->getYearFrom(), 4, 2) . "/" . substr($brandsmodel->getYearFrom(), 0, 4);
-                $yearto = substr($brandsmodel->getYearTo(), 4, 2) . "/" . substr($brandsmodel->getYearTo(), 0, 4);
+                $yearfrom = substr($brandmodel->getYearFrom(), 4, 2) . "/" . substr($brandmodel->getYearFrom(), 0, 4);
+                $yearto = substr($brandmodel->getYearTo(), 4, 2) . "/" . substr($brandmodel->getYearTo(), 0, 4);
                 $yearto = $yearto == 0 ? 'Today' : $yearto;
                 $year = $yearfrom . " - " . $yearto;
-                $na = $brandsmodel->getBrandModel() . " " . $year;
-                $na = $brandsmodel->getBrandModelStr() != "" ? $brandsmodel->getBrandModelStr() : $na;
+                $na = $brandmodel->getBrandModel() . " " . $year;
+                $na = $brandmodel->getBrandModelStr() != "" ? $brandmodel->getBrandModelStr() : $na;
 
                 $style2 = "";
                 foreach ($cars as $car) {
