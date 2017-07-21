@@ -525,6 +525,7 @@ class ProductController extends Main {
             }   
         }
         $product->setCars($cars);
+        $this->flushpersist($product);
         $json = json_encode(array($request->request->get("car"),$request->request->get("product")));
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
