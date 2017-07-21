@@ -505,6 +505,7 @@ class ProductController extends Main {
         //echo "File: 62289290.jpg";
         exit;
     }
+
     /**
      * @Route("/erp01/product/addCar")
      */
@@ -515,30 +516,32 @@ class ProductController extends Main {
 
         $cars = (array) $product->getCars();
         $cars2 = array();
-        if (!in_array($request->request->get("car"),$cars)) {
+        if (!in_array($request->request->get("car"), $cars)) {
             $cars[] = $request->request->get("car");
         } else {
-            foreach ((array) $cars as $key=>$car) {
+            foreach ((array) $cars as $key => $car) {
                 if ($request->request->get("car") == $car) {
-                    unset($cars[$key]); 
+                    unset($cars[$key]);
                 }
-            }   
+            }
         }
-        if (!$cars[0]) unset($cars[0]);
+        if (!$cars[0])
+            unset($cars[0]);
         //print_r($cars);
-        $product->setCars((array)$cars);
+        $product->setCars((array) $cars);
         $this->flushpersist($product);
-        $json = json_encode((array)$cars);
+        $json = json_encode((array) $cars);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
-        );        
+        );
     }
+
     /**
      * @Route("/erp01/product/addCategory")
      */
     public function addCategory(Request $request) {
 
-        
+
 
         $idArr = explode(":", $request->request->get("product"));
         $id = (int) $idArr[3];
@@ -585,9 +588,9 @@ class ProductController extends Main {
         $this->flushpersist($product);
         //$json = json_encode($product);
         //print_r($product);
-        
-        $json = json_encode(array($request->request->get("category"),$request->request->get("product")));
-        
+
+        $json = json_encode(array($request->request->get("category"), $request->request->get("product")));
+
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
@@ -834,20 +837,20 @@ class ProductController extends Main {
         $html = "<ul class='pbrands' data-prod='" . $product->getId() . "'>";
         foreach ($brands as $brand) {
             $style1 = "";
-            foreach($cars as $car) {
+            foreach ($cars as $car) {
                 if ($brand->checkIfExists($car)) {
                     $exists = true;
                     $style1 = 'color:red';
                     //break;
                 }
             }
-            
+
             $brandmodels = $this->getDoctrine()
                             ->getRepository('SoftoneBundle:BrandModel')->findBy(array("brand" => $brand->getId()), array('brandModel' => 'ASC'));
             if (count($brandmodels) == 0)
                 continue;
             $html .= "<li class='brandli' data-ref='" . $brand->getId() . "'>";
-            $html .= "<a " . $style . " style='".$style1."' data-ref='" . $brand->getId() . "' class='brandlia'>" . $brand->getBrand() . "</a>";
+            $html .= "<a " . $style . " style='" . $style1 . "' data-ref='" . $brand->getId() . "' class='brandlia'>" . $brand->getBrand() . "</a>";
             $html .= "<ul  style='display:none' class='pbrandmodels pbrandmodels_" . $brand->getId() . "'>";
             foreach ($brandmodels as $brandmodel) {
                 /*
@@ -856,16 +859,23 @@ class ProductController extends Main {
                   if (count($brandmodeltypes) == 0)
                   continue;
                  */
+                $yearfrom = substr($brandsmodel->getYearFrom(), 4, 2) . "/" . substr($brandsmodel->getYearFrom(), 0, 4);
+                $yearto = substr($brandsmodel->getYearTo(), 4, 2) . "/" . substr($brandsmodel->getYearTo(), 0, 4);
+                $yearto = $yearto == 0 ? 'Today' : $yearto;
+                $year = $yearfrom . " - " . $yearto;
+                $na = $brandsmodel->getBrandModel() . " " . $year;
+                $na = $brandsmodel->getBrandModelStr() != "" ? $brandsmodel->getBrandModelStr() : $na;
+
                 $style2 = "";
-                foreach($cars as $car) {
+                foreach ($cars as $car) {
                     if ($brandmodel->checkIfExists($car)) {
                         $exists = true;
                         $style2 = 'color:red';
                         //break;
                     }
-                }                
+                }
                 $html .= "<li class='brandli' data-ref='" . $brandmodel->getId() . "'>";
-                $html .= "<a " . $style . " style='".$style2."' data-prod='" . $product->getId() . "' data-ref='" . $brandmodel->getId() . "' class='brandmodellia'>" . $brandmodel->getBrandModel() . "</a>";
+                $html .= "<a " . $style . " style='" . $style2 . "' data-prod='" . $product->getId() . "' data-ref='" . $brandmodel->getId() . "' class='brandmodellia'>" . $na . "</a>";
                 $html .= '</li>';
                 $html .= "<ul style='display:none' class='pbrandmodelstypes pbrandmodelstypes_" . $brandmodel->getId() . "'>";
                 /*
@@ -905,17 +915,17 @@ class ProductController extends Main {
         $brandmodeltypes = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:BrandModelType')->findBy(array("brandModel" => $request->request->get("brandModel")), array('brandModelType' => 'ASC'));
         $html = '';
-        
+
         foreach ($brandmodeltypes as $brandmodeltype) {
             //if (in_array())
             $style = '';
-            $checkbox = "<input type='checkbox' data-product='".$product->getId()."' class='brandmodetypechk' data-ref='" . $brandmodeltype->getId() . "' />";
+            $checkbox = "<input type='checkbox' data-product='" . $product->getId() . "' class='brandmodetypechk' data-ref='" . $brandmodeltype->getId() . "' />";
             if (in_array($brandmodeltype->getId(), $cars)) {
                 $style = "style='color:red'";
-                $checkbox = "<input checked type='checkbox' data-product='".$product->getId()."' class='brandmodetypechk' data-ref='" . $brandmodeltype->getId() . "' />";
+                $checkbox = "<input checked type='checkbox' data-product='" . $product->getId() . "' class='brandmodetypechk' data-ref='" . $brandmodeltype->getId() . "' />";
             }
             //$style = "style='color:red'";    
-            $html .= "<li class='brandmodetypeli' data-product='".$product->getId()."' data-ref='" . $brandmodeltype->getId() . "'>";
+            $html .= "<li class='brandmodetypeli' data-product='" . $product->getId() . "' data-ref='" . $brandmodeltype->getId() . "'>";
             $html .= $checkbox . "<a " . $style . " data-ref='" . $brandmodeltype->getId() . "' class='brandmodetypelia'>" . $brandmodeltype->getBrandModelType() . "</a>";
             $html .= '</li>';
         }
@@ -1286,21 +1296,21 @@ class ProductController extends Main {
         //ini_set("soap.wsdl_cache_enabled", "0");
         //exit;
         /*
-        $ch = \curl_init();
-        $header = array('Contect-Type:application/xml', 'Accept:application/xml');
-        curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=2010-06-06&ParticipateInEshop=1");
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-        // in real life you should use something like:
-        // curl_setopt($ch, CURLOPT_POSTFIELDS,
-        //          http_build_query(array('postvar1' => 'value1')));
-        // receive server response ...
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+          $ch = \curl_init();
+          $header = array('Contect-Type:application/xml', 'Accept:application/xml');
+          curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
+          curl_setopt($ch, CURLOPT_POST, 1);
+          curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=2010-06-06&ParticipateInEshop=1");
+          curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+          // in real life you should use something like:
+          // curl_setopt($ch, CURLOPT_POSTFIELDS,
+          //          http_build_query(array('postvar1' => 'value1')));
+          // receive server response ...
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-        $server_output = curl_exec($ch);
-        file_put_contents("downliad10.xml", $server_output);
-        */
+          $server_output = curl_exec($ch);
+          file_put_contents("downliad10.xml", $server_output);
+         */
         //$StoreDetails = \simplexml_load_string($server_output);
         $result = \simplexml_load_file("downliad10.xml");
 
@@ -1353,9 +1363,9 @@ class ProductController extends Main {
         //print_r($data);
         //return;
         //if ($data["StoreKwd"] != "1643070G") return;
-        
-        if ((int)$data["SupplierId"] > 0)  {
-            echo (int)$data["SupplierId"]."<BR>";     
+
+        if ((int) $data["SupplierId"] > 0) {
+            echo (int) $data["SupplierId"] . "<BR>";
         } else {
             return;
         }
@@ -1375,7 +1385,7 @@ class ProductController extends Main {
             //continue;
             //$entity->setRepositories();                
         }
-       
+
 
         $manufacturer = $this->getDoctrine()
                 ->getRepository("MegasoftBundle:Manufacturer")
