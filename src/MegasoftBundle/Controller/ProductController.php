@@ -511,7 +511,7 @@ class ProductController extends Main {
      */
     public function addCategory(Request $request) {
 
-        $json = json_encode(array("ok"));
+        
 
         $idArr = explode(":", $request->request->get("product"));
         $id = (int) $idArr[3];
@@ -558,6 +558,9 @@ class ProductController extends Main {
         $this->flushpersist($product);
         //$json = json_encode($product);
         //print_r($product);
+        
+        $json = json_encode(array($request->request->get("category"),$request->request->get("product")));
+        
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
