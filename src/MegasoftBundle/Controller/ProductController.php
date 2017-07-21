@@ -887,7 +887,7 @@ class ProductController extends Main {
         $brandmodeltypes = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:BrandModelType')->findBy(array("brandModel" => $request->request->get("brandModel")), array('brandModelType' => 'ASC'));
         $html = '';
-        print_r($cars);
+        
         foreach ($brandmodeltypes as $brandmodeltype) {
             //if (in_array())
             $style = '';
