@@ -243,4 +243,16 @@ class Brand
     {
         return $this->mod_cc;
     }
+    function checkIfExists($id) {
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $brandModelType = $em->getRepository("SoftoneBundle:BrandModelType")->find($id);
+        $brandModel = $em->getRepository("SoftoneBundle:BrandModel")->find($brandModelType->getBrandModel());
+        if ($this->id == $brandModel->getBrand()) {
+            return true;
+        }
+    }
 }
