@@ -887,7 +887,7 @@ class ProductController extends Main {
         foreach ($brandmodeltypes as $brandmodeltype) {
             //if (in_array())
             $style = '';
-            $checkbox = "<input type='checkbox' class='brandmodetypechk' data-ref='" . $brandmodeltype->getId() . "' />";
+            $checkbox = "<input type='checkbox' data-product='".$product->getId()."' class='brandmodetypechk' data-ref='" . $brandmodeltype->getId() . "' />";
             if (in_array($brandmodeltype->getId(), $cars)) {
                 $style = "style='color:red'";
                 $checkbox = "<input checked type='checkbox' data-product='".$product->getId()."' class='brandmodetypechk' data-ref='" . $brandmodeltype->getId() . "' />";
