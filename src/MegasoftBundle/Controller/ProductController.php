@@ -878,7 +878,7 @@ class ProductController extends Main {
                     ->getRepository('SoftoneBundle:Product')
                     ->find($request->request->get("product"));
         }
-        $cars = (array) unserialize($product->getCars());
+        $cars = (array) $product->getCars();
 
         //print_r($cars);
         $brandmodeltypes = $this->getDoctrine()
