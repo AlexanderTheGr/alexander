@@ -505,7 +505,31 @@ class ProductController extends Main {
         //echo "File: 62289290.jpg";
         exit;
     }
+    /**
+     * @Route("/erp01/product/addCars")
+     */
+    public function addCars(Request $request) {
+        $product = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->find($request->request->get("product"));
 
+        $cars = (array) $product->getCars();
+        $cars2 = array();
+        if (!in_array($request->request->get("car"),$cars)) {
+            $cars[] = $request->request->get("car");
+        } else {
+            foreach ((array) $cars as $key=>$car) {
+                if ($request->request->get("car") == $car) {
+                    unset($cars[$key]); 
+                }
+            }   
+        }
+        $product->setCars($cars);
+        $json = json_encode(array($request->request->get("car"),$request->request->get("product")));
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );        
+    }
     /**
      * @Route("/erp01/product/addCategory")
      */
