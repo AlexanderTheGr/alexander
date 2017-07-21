@@ -524,6 +524,7 @@ class ProductController extends Main {
                 }
             }   
         }
+        print_r($cars);
         $product->setCars((array)$cars);
         $this->flushpersist($product);
         $json = json_encode((array)$cars);
