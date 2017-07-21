@@ -833,11 +833,11 @@ class ProductController extends Main {
 
         $html = "<ul class='pbrands' data-prod='" . $product->getId() . "'>";
         foreach ($brands as $brand) {
-            
+            $style1 = "";
             foreach($cars as $car) {
                 if ($brand->checkIfExists($car)) {
                     $exists = true;
-                    //$style = 'style="color:red"';
+                    $style1 = 'color:red';
                     break;
                 }
             }
@@ -847,7 +847,7 @@ class ProductController extends Main {
             if (count($brandmodels) == 0)
                 continue;
             $html .= "<li class='brandli' data-ref='" . $brand->getId() . "'>";
-            $html .= "<a " . $style . " data-ref='" . $brand->getId() . "' class='brandlia'>" . $brand->getBrand() . "</a>";
+            $html .= "<a " . $style . " style='".$style1."' data-ref='" . $brand->getId() . "' class='brandlia'>" . $brand->getBrand() . "</a>";
             $html .= "<ul  style='display:none' class='pbrandmodels pbrandmodels_" . $brand->getId() . "'>";
             foreach ($brandmodels as $brandmodel) {
                 /*
