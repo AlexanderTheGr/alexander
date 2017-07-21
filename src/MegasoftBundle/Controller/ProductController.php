@@ -856,8 +856,16 @@ class ProductController extends Main {
                   if (count($brandmodeltypes) == 0)
                   continue;
                  */
+                $style2 = "";
+                foreach($cars as $car) {
+                    if ($brandmodel->checkIfExists($car)) {
+                        $exists = true;
+                        $style2 = 'color:red';
+                        break;
+                    }
+                }                
                 $html .= "<li class='brandli' data-ref='" . $brandmodel->getId() . "'>";
-                $html .= "<a " . $style . " data-prod='" . $product->getId() . "' data-ref='" . $brandmodel->getId() . "' class='brandmodellia'>" . $brandmodel->getBrandModel() . "</a>";
+                $html .= "<a " . $style . " style='".$style2."' data-prod='" . $product->getId() . "' data-ref='" . $brandmodel->getId() . "' class='brandmodellia'>" . $brandmodel->getBrandModel() . "</a>";
                 $html .= '</li>';
                 $html .= "<ul style='display:none' class='pbrandmodelstypes pbrandmodelstypes_" . $brandmodel->getId() . "'>";
                 /*
