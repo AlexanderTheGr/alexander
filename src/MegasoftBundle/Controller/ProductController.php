@@ -893,7 +893,7 @@ class ProductController extends Main {
                 $checkbox = "<input checked type='checkbox' class='brandmodetypechk' data-ref='" . $brandmodeltype->getId() . "' />";
             }
             //$style = "style='color:red'";    
-            $html .= "<li class='brandmodetypeli' data-ref='" . $brandmodeltype->getId() . "'>";
+            $html .= "<li class='brandmodetypeli' data-product='".$product->getId()."' data-ref='" . $brandmodeltype->getId() . "'>";
             $html .= $checkbox . "<a " . $style . " data-ref='" . $brandmodeltype->getId() . "' class='brandmodetypelia'>" . $brandmodeltype->getBrandModelType() . "</a>";
             $html .= '</li>';
         }
