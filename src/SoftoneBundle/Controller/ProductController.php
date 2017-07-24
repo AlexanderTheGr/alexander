@@ -1334,8 +1334,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                 //$q[] = "`" . strtolower($params["softone_object"] . "_" . $identifier) . "` = '" . addslashes($val) . "'";
                                 //echo $identifier."<BR>";
                             }
-                        //} elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
-                            
+                        } elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
+                            $hasmark = true;
                         } else {
                             if ($identifier != 'mtrmark' AND $identifier != 'apvcode') {
                                 $q[] = "`" . strtolower($params["softone_object"] . "_" . $identifier) . "` = '" . addslashes($val) . "'";
