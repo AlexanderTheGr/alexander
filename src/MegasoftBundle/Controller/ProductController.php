@@ -875,7 +875,8 @@ class ProductController extends Main {
                     }
                 }
                 $html .= "<li class='brandli' data-ref='" . $brandmodel->getId() . "'>";
-                $html .= "<a " . $style . " style='" . $style2 . "' data-prod='" . $product->getId() . "' data-ref='" . $brandmodel->getId() . "' class='brandmodellia'>" . $na . "</a>";
+                $checkbox = "<input type='checkbox' data-product='" . $product->getId() . "' class='brandmodelchk' data-ref='" . $brandmodel->getId() . "' />";
+                $html .= $checkbox."<a " . $style . " style='" . $style2 . "' data-prod='" . $product->getId() . "' data-ref='" . $brandmodel->getId() . "' class='brandmodellia'>" . $na . "</a>";
                 $html .= '</li>';
                 $html .= "<ul style='display:none' class='pbrandmodelstypes pbrandmodelstypes_" . $brandmodel->getId() . "'>";
                 /*
