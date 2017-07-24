@@ -1334,6 +1334,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                 //$q[] = "`" . strtolower($params["softone_object"] . "_" . $identifier) . "` = '" . addslashes($val) . "'";
                                 //echo $identifier."<BR>";
                             }
+                        //} elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
+                            
                         } else {
                             if ($identifier != 'mtrmark' AND $identifier != 'apvcode') {
                                 $q[] = "`" . strtolower($params["softone_object"] . "_" . $identifier) . "` = '" . addslashes($val) . "'";
@@ -1387,7 +1389,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $q[] = "`" . strtolower($params["softone_object"] . "_cccwebupd") . "` = '" . addslashes($data["CCCWEBUPD"]) . "'";
                 $q[] = "`" . strtolower($params["softone_object"] . "_cccref") . "` = '" . addslashes($data["CCCREF"]) . "'";
             }
-
+            print_r($q);
             if (@$entity->id == 0) {
                 $q[] = "`reference` = '" . $data[$params["softone_table"]] . "'";
                 $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
