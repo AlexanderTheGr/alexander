@@ -57,6 +57,19 @@ jQuery('.parentcategorylia').live("click", function (e) {
 
 
 })
+jQuery(".brandmodelchk").live("click", function () {
+    var ref = $(this).attr("data-ref");
+    var data = {};
+    data.model = $(this).attr("data-ref");
+    data.product = $(this).attr("data-product");
+    $.post("/erp01/product/addModel", data, function (result) {
+        $("#loaderer").hide();
+        var table = dt_tables["ctrlgettabs"];
+        table.fnFilter();
+        jQuery('.parentcat input').val('')
+    })
+})
+
 jQuery(".brandmodetypechk").live("click", function () {
     var ref = $(this).attr("data-ref");
     var data = {};
