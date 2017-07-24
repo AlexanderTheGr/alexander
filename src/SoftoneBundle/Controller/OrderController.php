@@ -1030,6 +1030,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $objectArr[0]["TRDR"] = $customer->getReference();
         $objectArr[0]["SERIESNUM"] = $order->getId();
         $objectArr[0]["FINCODE"] = $order->getFincode();
+        $objectArr[0]["TRDBRANCH"] = $order->getTrdbranch();
         $objectArr[0]["PAYMENT"] = $customer->getCustomerPayment() > 0 ? $customer->getCustomerPayment() : 1003;
         //$objectArr[0]["TFPRMS"] = $model->tfprms;
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
@@ -1039,6 +1040,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $objectArr[0]["VATSTS"] = $this->getSetting("SoftoneBundle:Order:Vat") != '' ? $this->getSetting("SoftoneBundle:Order:Vat") : $customer->getCustomerVatsts();
         $objectArr[0]["COMMENTS"] = $order->getRemarks(); //$customer->getCustomerPayment() > 0 ? $customer->getCustomerPayment() : 1003; // Mage::app()->getRequest()->getParam('comments');
         $objectArr[0]["REMARKS"] = $order->getRemarks();
+        $objectArr[0]["COMMENTS"] = $order->getComments();
         //$objectArr[0]["WHOUSE"] = 1101;
         //$objectArr[0]["DISC1PRC"] = 10;   
         $dataOut[$object] = (array) $objectArr;
