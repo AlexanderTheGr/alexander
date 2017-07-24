@@ -505,7 +505,38 @@ class ProductController extends Main {
         //echo "File: 62289290.jpg";
         exit;
     }
+    /**
+     * @Route("/erp01/product/addModel")
+     */
+    public function addModel(Request $request) {
+        
+        $product = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->find($request->request->get("product"));
 
+        $cars = (array) $product->getCars();
+        $cars2 = array();
+        
+        $brandmodeltypes = $this->getDoctrine()
+                        ->getRepository('SoftoneBundle:BrandModelType')->findBy(array("brandModel" => $request->request->get("model")), array('brandModelType' => 'ASC'));
+
+        foreach($brandmodeltypes as $brandmodeltype) {
+            $cars[] = $brandmodeltype->getId();
+        }
+        $cars = array_unique($cars);
+        
+        if (!$cars[0])
+            unset($cars[0]);
+        //print_r($cars);
+        $product->setCars((array) $cars);
+        $this->flushpersist($product);
+        $json = json_encode((array) $cars);
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+        
+    }
+    
     /**
      * @Route("/erp01/product/addCar")
      */
