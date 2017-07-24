@@ -1334,8 +1334,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                 //$q[] = "`" . strtolower($params["softone_object"] . "_" . $identifier) . "` = '" . addslashes($val) . "'";
                                 //echo $identifier."<BR>";
                             }
-                        } elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
-                            $hasmark = true;
+                        //} elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
+                        //    $hasmark = true;
                         } else {
                             if ($identifier != 'mtrmark' AND $identifier != 'apvcode') {
                                 $q[] = "`" . strtolower($params["softone_object"] . "_" . $identifier) . "` = '" . addslashes($val) . "'";
@@ -1383,6 +1383,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         $q[] = "`" . strtolower($params["softone_object"] . "_mtrmark") . "` = '" . addslashes($data["CCCFXRELBRAND"]) . "'";
                         echo "<BR><BR><BR>----------<BR><BR>";
                     }
+                }
+                if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
+                    $q[] = "`" . strtolower($params["softone_object"] . "_mtrmark") . "` = '" . addslashes($data["CCCFXRELBRAND"]) . "'";
                 }
             } else {
                 $q[] = "`" . strtolower($params["softone_object"] . "_cccpriceupd") . "` = '" . addslashes($data["CCCPRICEUPD"]) . "'";
