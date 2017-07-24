@@ -374,6 +374,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             }
 
             $entity->setRemarks(str_replace("\n", "", $entity->getRemarks()));
+            $fields["comments"] = array("label" => $this->getTranslation("Comments"), 'className' => '', "required" => false);
             $fields["remarks"] = array("label" => $this->getTranslation("Remarks"), 'className' => '', "required" => false);
             //$fields["vat"] = array("label" => "Vat", "required" => true, 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Vat', 'name' => 'vat', 'value' => 'id'));
         }
