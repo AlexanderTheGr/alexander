@@ -515,8 +515,19 @@ class OrderController extends Main {
                 $search[1] = str_pad($search[1], 4, "0", STR_PAD_LEFT);
             }
             
-            echo $articleIds2["linkingTargetId"]." -- ".$articleIds2["assemblyGroupNodeId"];
+            //echo $articleIds2["linkingTargetId"]." -- ".$articleIds2["assemblyGroupNodeId"];
 
+            $sql = "SELECT a.product FROM `megasoft_productcategory` a, `megasoft_productcar` b where a.product = b.product where car = '".$articleIds2["linkingTargetId"]."' AND category = '".$articleIds2["assemblyGroupNodeId"]."'";
+            $connection = $this->getDoctrine()->getConnection();
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            $results = $statement->fetchAll();
+            $arr = array();
+            foreach ($results as $data) {
+                $arr[] = $data["product"];
+            }
+            print_r($arr);
+            
             $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
             //print_r($articleIds);
             //print_r($articleIds2["articleIds"]);
