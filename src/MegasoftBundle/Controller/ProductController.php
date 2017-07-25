@@ -577,10 +577,11 @@ class ProductController extends Main {
         
         foreach ((array) $cars as $car) {
             echo $car.",";
-            /*
+            
             $carobj = $this->getDoctrine()
                     ->getRepository('MegasoftBundle:Productcategory')
                     ->findOneBy(array('car' => $car, 'product' => $product->getId()));
+            /*
             if (count($carobj) == 0) {
                 $carobj = new Productcar();
                 $carobj->setProduct($product->getId());
