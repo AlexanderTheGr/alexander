@@ -537,7 +537,7 @@ class ProductController extends Main {
             if (count($carobj) == 0) {
                 $carobj = new Productcar();
                 $carobj->setProduct($product->getId());
-                $carobj->setCategory($car);
+                $carobj->setCar($car);
                 @$this->flushpersist($carobj);
             }
         }         
@@ -586,7 +586,7 @@ class ProductController extends Main {
             if (count($carobj) == 0) {
                 $carobj = new Productcar();
                 $carobj->setProduct($product->getId());
-                $carobj->setCategory($car);
+                $carobj->setCar($car);
                 @$this->flushpersist($carobj);
             }
 
