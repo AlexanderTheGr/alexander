@@ -527,7 +527,11 @@ class OrderController extends Main {
             foreach ($results as $data) {
                 $arr[] = $data["product"];
             }
-            print_r($arr);
+            $extras = '';
+            if (count($arr)) {
+                $extras = ' OR in ' . $this->prefix . '.id in ('.implode(",",$arr).')';
+            }
+            //print_r($arr);
             
             $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
             //print_r($articleIds);
@@ -646,12 +650,12 @@ class OrderController extends Main {
 
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where ' . $qsupplier . ' (' . $tecdoc_article . $tecdoc_article2 . ' ' . $sisxetisi . ')
+                                where ' . $qsupplier . ' (' . $tecdoc_article . $tecdoc_article2 . ' ' . $sisxetisi . ')'.$extras.' 
                                 ORDER BY ' . $this->orderBy;
                 } else {
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where ' . $qsupplier . ' (' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . ')
+                                where ' . $qsupplier . ' (' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . ')'.$extras.' 
                                 ORDER BY ' . $this->orderBy;
                 }
 
