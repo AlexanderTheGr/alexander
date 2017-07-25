@@ -581,15 +581,14 @@ class ProductController extends Main {
             $carobj = $this->getDoctrine()
                     ->getRepository('MegasoftBundle:Productcar')
                     ->findOneBy(array('car' => $car, 'product' => $product->getId()));
-            /*
+            
             if (count($carobj) == 0) {
                 $carobj = new Productcar();
                 $carobj->setProduct($product->getId());
                 $carobj->setCategory($car);
                 @$this->flushpersist($carobj);
             }
-             * 
-             */
+
         }        
         
         //print_r($cars);
