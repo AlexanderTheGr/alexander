@@ -1319,7 +1319,7 @@ class OrderController extends Main {
             $dt->matched = base64_encode(serialize($matched));
             $dt->matched_count = count($matched);
 
-            if (count($matched)) {
+            if (count($matched) == 0) {
                 $sql = "SELECT a.product FROM `megasoft_productcategory` a, `megasoft_productcar` b where a.product = b.product AND car = '" . $params["linkingTargetId"]. "' AND category = '" . $dt->assemblyGroupNodeId . "'";
                 $connection = $this->getDoctrine()->getConnection();
                 $statement = $connection->prepare($sql);
