@@ -530,6 +530,13 @@ class ProductController extends Main {
             unset($cars[0]);
         
         
+        $connection = $em->getConnection();
+        $sql = "delete from megasoft_productcategory where product = '".$product->getId()."'";
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $sql = "delete from megasoft_productcarwhere product = '".$product->getId()."'";
+        $statement = $connection->prepare($sql);
+        $statement->execute();
         foreach ((array) $cars as $car) {
             $carobj = $this->getDoctrine()
                     ->getRepository('MegasoftBundle:Productcar')
@@ -541,6 +548,19 @@ class ProductController extends Main {
                 @$this->flushpersist($carobj);
             }
         }         
+        $cats = (array) $product->getCats();
+        foreach ((array) $cats as $cat) {
+            $category = $this->getDoctrine()
+                    ->getRepository('MegasoftBundle:Productcategory')
+                    ->findOneBy(array('category' => $cat, 'product' => $product->getId()));
+            if (count($category) == 0) {
+                $category = new Productcategory();
+                $category->setProduct($product->getId());
+                $category->setCategory($cat);
+                @$this->flushpersist($category);
+            }
+        }          
+        
         
         //print_r($cars);
         $product->setCars((array) $cars);
