@@ -531,7 +531,7 @@ class ProductController extends Main {
         
         foreach ((array) $cars as $car) {
             $carobj = $this->getDoctrine()
-                    ->getRepository('MegasoftBundle:Productcategory')
+                    ->getRepository('MegasoftBundle:Productcar')
                     ->findOneBy(array('car' => $car, 'product' => $product->getId()));
             if (count($carobj) == 0) {
                 $carobj = new Productcar();
@@ -579,7 +579,7 @@ class ProductController extends Main {
             echo $car.",";
             
             $carobj = $this->getDoctrine()
-                    ->getRepository('MegasoftBundle:Productcategory')
+                    ->getRepository('MegasoftBundle:Productcar')
                     ->findOneBy(array('car' => $car, 'product' => $product->getId()));
             /*
             if (count($carobj) == 0) {
