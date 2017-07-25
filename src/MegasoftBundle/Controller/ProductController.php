@@ -10,6 +10,7 @@ use AppBundle\Controller\Main as Main;
 use MegasoftBundle\Entity\Product as Product;
 use MegasoftBundle\Entity\Manufacturer as Manufacturer;
 use MegasoftBundle\Entity\Productcategory as Productcategory;
+use MegasoftBundle\Entity\Productcar as Productcar;
 use AppBundle\Entity\Tecdoc as Tecdoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
