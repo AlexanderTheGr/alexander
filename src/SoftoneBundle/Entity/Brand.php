@@ -244,7 +244,6 @@ class Brand
         return $this->mod_cc;
     }
     function checkIfExists($id) {
-        echo $id;
         if (!$id) return;
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
