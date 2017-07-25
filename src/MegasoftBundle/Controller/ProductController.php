@@ -555,6 +555,8 @@ class ProductController extends Main {
             }
         }        
         $cats = (array) $product->getCats();
+        if (!$cats[0])
+            unset($cats[0]);         
         foreach ((array) $cats as $cat) {
             $category = $this->getDoctrine()
                     ->getRepository('MegasoftBundle:Productcategory')
@@ -623,6 +625,8 @@ class ProductController extends Main {
         }        
         
         $cats = (array) $product->getCats();
+        if (!$cats[0])
+            unset($cats[0]);        
         foreach ((array) $cats as $cat) {
             $category = $this->getDoctrine()
                     ->getRepository('MegasoftBundle:Productcategory')
@@ -693,6 +697,8 @@ class ProductController extends Main {
         foreach ($categories as $category) {
             $cats[] = $category->getCategory();
         }
+        if (!$cats[0])
+            unset($cats[0]);         
         $product->setCats($cats);
         $this->flushpersist($product);
         //$json = json_encode($product);
@@ -718,6 +724,8 @@ class ProductController extends Main {
             }
         }        
         $cats = (array) $product->getCats();
+        if (!$cats[0])
+            unset($cats[0]);         
         foreach ((array) $cats as $cat) {
             $category = $this->getDoctrine()
                     ->getRepository('MegasoftBundle:Productcategory')
