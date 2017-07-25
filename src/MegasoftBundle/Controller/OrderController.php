@@ -529,7 +529,7 @@ class OrderController extends Main {
             }
             $extras = '';
             if (count($arr)) {
-                $extras = ' OR in ' . $this->prefix . '.id in ('.implode(",",$arr).')';
+                $extras = ' OR ' . $this->prefix . '.id in ('.implode(",",$arr).')';
             }
             //print_r($arr);
             
