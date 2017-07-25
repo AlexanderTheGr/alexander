@@ -539,7 +539,7 @@ class ProductController extends Main {
         $sql = "delete from megasoft_productcategory where product = '".$product->getId()."'";
         $statement = $connection->prepare($sql);
         $statement->execute();
-        $sql = "delete from megasoft_productcarwhere product = '".$product->getId()."'";
+        $sql = "delete from megasoft_productcar where product = '".$product->getId()."'";
         $statement = $connection->prepare($sql);
         $statement->execute();        
         $cars = (array) $product->getCars();
@@ -702,7 +702,7 @@ class ProductController extends Main {
         $sql = "delete from megasoft_productcategory where product = '".$product->getId()."'";
         $statement = $connection->prepare($sql);
         $statement->execute();
-        $sql = "delete from megasoft_productcarwhere product = '".$product->getId()."'";
+        $sql = "delete from megasoft_productcar where product = '".$product->getId()."'";
         $statement = $connection->prepare($sql);
         $statement->execute();        
         $cars = (array) $product->getCars();
