@@ -576,6 +576,8 @@ class ProductController extends Main {
         
         
         foreach ((array) $cars as $car) {
+            echo $car.",";
+            /*
             $carobj = $this->getDoctrine()
                     ->getRepository('MegasoftBundle:Productcategory')
                     ->findOneBy(array('car' => $car, 'product' => $product->getId()));
@@ -585,6 +587,8 @@ class ProductController extends Main {
                 $carobj->setCategory($car);
                 @$this->flushpersist($carobj);
             }
+             * 
+             */
         }        
         
         //print_r($cars);
