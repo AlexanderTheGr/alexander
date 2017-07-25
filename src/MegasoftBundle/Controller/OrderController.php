@@ -523,10 +523,11 @@ class OrderController extends Main {
             $statement->execute();
             $results = $statement->fetchAll();
             $arr = array();
+            echo $sql;
             foreach ($results as $data) {
                 $arr[] = $data["product"];
             }
-            print_r($arr);
+            //print_r($arr);
             
             $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
             //print_r($articleIds);
