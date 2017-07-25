@@ -373,6 +373,7 @@ class BrandModel {
     }
 
     function checkIfExists($id) {
+        if (!$id) return;
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
