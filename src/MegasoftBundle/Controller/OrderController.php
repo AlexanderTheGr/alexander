@@ -523,7 +523,7 @@ class OrderController extends Main {
             $statement->execute();
             $results = $statement->fetchAll();
             $arr = array();
-            echo $sql;
+            //echo $sql;
             foreach ($results as $data) {
                 $arr[] = $data["product"];
             }
