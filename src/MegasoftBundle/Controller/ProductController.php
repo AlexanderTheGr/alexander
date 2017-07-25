@@ -527,6 +527,20 @@ class ProductController extends Main {
         
         if (!$cars[0])
             unset($cars[0]);
+        
+        
+        foreach ((array) $cars as $car) {
+            $carobj = $this->getDoctrine()
+                    ->getRepository('MegasoftBundle:Productcategory')
+                    ->findOneBy(array('car' => $car, 'product' => $product->getId()));
+            if (count($carobj) == 0) {
+                $carobj = new Productcar();
+                $carobj->setProduct($product->getId());
+                $carobj->setCategory($car);
+                @$this->flushpersist($carobj);
+            }
+        }         
+        
         //print_r($cars);
         $product->setCars((array) $cars);
         $this->flushpersist($product);
@@ -561,7 +575,7 @@ class ProductController extends Main {
         
         
         
-        foreach ((array) $cars as $carr) {
+        foreach ((array) $cars as $car) {
             $carobj = $this->getDoctrine()
                     ->getRepository('MegasoftBundle:Productcategory')
                     ->findOneBy(array('car' => $car, 'product' => $product->getId()));
