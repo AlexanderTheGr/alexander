@@ -534,7 +534,7 @@ class ProductController extends Main {
         $product->setCars((array) $cars);
         $this->flushpersist($product);
         
-        
+        $em = $this->getDoctrine()->getManager();
         $connection = $em->getConnection();
         $sql = "delete from megasoft_productcategory where product = '".$product->getId()."'";
         $statement = $connection->prepare($sql);
@@ -600,7 +600,7 @@ class ProductController extends Main {
         $product->setCars((array) $cars);
         $this->flushpersist($product);
         
-        
+        $em = $this->getDoctrine()->getManager();
         $connection = $em->getConnection();
         $sql = "delete from megasoft_productcategory where product = '".$product->getId()."'";
         $statement = $connection->prepare($sql);
@@ -697,7 +697,7 @@ class ProductController extends Main {
         $this->flushpersist($product);
         //$json = json_encode($product);
         //print_r($product);
-
+        $em = $this->getDoctrine()->getManager();
         $connection = $em->getConnection();
         $sql = "delete from megasoft_productcategory where product = '".$product->getId()."'";
         $statement = $connection->prepare($sql);
