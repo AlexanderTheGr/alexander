@@ -517,7 +517,7 @@ class OrderController extends Main {
             
             //echo $articleIds2["linkingTargetId"]." -- ".$articleIds2["assemblyGroupNodeId"];
 
-            $sql = "SELECT a.product FROM `megasoft_productcategory` a, `megasoft_productcar` b where a.product = b.product where car = '".$articleIds2["linkingTargetId"]."' AND category = '".$articleIds2["assemblyGroupNodeId"]."'";
+            $sql = "SELECT a.product FROM `megasoft_productcategory` a, `megasoft_productcar` b where a.product = b.product AND car = '".$articleIds2["linkingTargetId"]."' AND category = '".$articleIds2["assemblyGroupNodeId"]."'";
             $connection = $this->getDoctrine()->getConnection();
             $statement = $connection->prepare($sql);
             $statement->execute();
