@@ -1309,6 +1309,7 @@ class OrderController extends Main {
             $all["edimatched"] = (array) $edimatched;
             $all["articleIds"] = @(array) $dt->articleIds;
             $all["linkingTargetId"] = $params["linkingTargetId"];
+            $all["assemblyGroupNodeId"] = $dt->assemblyGroupNodeId;
             $dt->all = base64_encode(serialize($all));
             //$data[$key] = $dt;
         }
