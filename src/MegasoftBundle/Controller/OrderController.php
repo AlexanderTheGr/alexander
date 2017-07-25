@@ -502,7 +502,7 @@ class OrderController extends Main {
             $search = $dt_search["value"];
             $search = explode(":", $dt_search["value"]);
 
-            
+
 
             if ($search[0] != 'productfano') {
                 $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
@@ -514,10 +514,10 @@ class OrderController extends Main {
             } else {
                 $search[1] = str_pad($search[1], 4, "0", STR_PAD_LEFT);
             }
-            
+
             //echo $articleIds2["linkingTargetId"]." -- ".$articleIds2["assemblyGroupNodeId"];
 
-            $sql = "SELECT a.product FROM `megasoft_productcategory` a, `megasoft_productcar` b where a.product = b.product AND car = '".$articleIds2["linkingTargetId"]."' AND category = '".$articleIds2["assemblyGroupNodeId"]."'";
+            $sql = "SELECT a.product FROM `megasoft_productcategory` a, `megasoft_productcar` b where a.product = b.product AND car = '" . $articleIds2["linkingTargetId"] . "' AND category = '" . $articleIds2["assemblyGroupNodeId"] . "'";
             $connection = $this->getDoctrine()->getConnection();
             $statement = $connection->prepare($sql);
             $statement->execute();
@@ -529,10 +529,10 @@ class OrderController extends Main {
             }
             $extras = '';
             if (count($arr)) {
-                $extras = ' OR ' . $this->prefix . '.id in ('.implode(",",$arr).')';
+                $extras = ' OR ' . $this->prefix . '.id in (' . implode(",", $arr) . ')';
             }
             //print_r($arr);
-            
+
             $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
             //print_r($articleIds);
             //print_r($articleIds2["articleIds"]);
@@ -582,9 +582,8 @@ class OrderController extends Main {
                     $like = implode(" AND ", $likearr);
                     $sqlearch = "Select o.id from MegasoftBundle:ProductFreesearch o where " . $like . "";
                 } elseif ($search[0] == 'productfano') {
-                    
+
                     $sqlearch = "Select o.id from MegasoftBundle:Product o where o.supplierCode like '" . $search[1] . "%'";
-                    
                 } else {
                     $search[1] = $this->clearstring($search[1]);
                     $sqlearch = "Select o.id from MegasoftBundle:ProductSearch o where o.erpCode like '%" . $search[1] . "%' OR o.erpCode like '%" . $search[1] . "%' OR o.supplierCode like '%" . $search[1] . "%'";
@@ -621,7 +620,7 @@ class OrderController extends Main {
                     $this->createWhere();
                     $sisxetisi = " (" . $this->prefix . ".sisxetisi != '' AND " . $this->prefix . ".sisxetisi in  (Select koo.sisxetisi FROM MegasoftBundle:Product koo where koo.sisxetisi != '' AND (koo.erpCode like '%" . $search[1] . "%' OR koo.tecdocCode like '%" . $search[0] . "%' OR koo.erpCode like '%" . $search[1] . "%' OR koo.supplierCode like '%" . $search[1] . "%')))";
                 }
-                
+
                 //echo  $sql;
                 //$this->q_or[] = $this->prefix . ".id in  (Select k.product FROM MegasoftBundle:Sisxetiseis k where k.sisxetisi in (" . $sql . "))";
 
@@ -650,16 +649,16 @@ class OrderController extends Main {
 
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where ' . $qsupplier . ' (' . $tecdoc_article . $tecdoc_article2 . ' ' . $sisxetisi . ')'.$extras.' 
+                                where ' . $qsupplier . ' (' . $tecdoc_article . $tecdoc_article2 . ' ' . $sisxetisi . ')' . $extras . ' 
                                 ORDER BY ' . $this->orderBy;
                 } else {
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where ' . $qsupplier . ' (' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . ')'.$extras.' 
+                                where ' . $qsupplier . ' (' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . ')' . $extras . ' 
                                 ORDER BY ' . $this->orderBy;
                 }
 
-                
+
                 //echo $sql;
                 //exit;
 
@@ -1178,7 +1177,7 @@ class OrderController extends Main {
             $yearto = $yearto == 0 ? 'Today' : $yearto;
             $year = $yearfrom . " - " . $yearto;
             $na = $brandsmodel->getBrandModel() . " " . $year;
-            $na = $brandsmodel->getBrandModelStr() != "" ?  $brandsmodel->getBrandModelStr() : $na;
+            $na = $brandsmodel->getBrandModelStr() != "" ? $brandsmodel->getBrandModelStr() : $na;
             $o["id"] = $brandsmodel->getId();
             $o["name"] = $na;
             $out[] = $o;
@@ -1313,9 +1312,21 @@ class OrderController extends Main {
         foreach ($data as $key => $dt) {
             $matched = array_intersect(@(array) $dt->articleIds, $tecdocArticleIds);
             $edimatched = array_intersect(@(array) $dt->articleIds, $tecdocEdiArticleIds);
+
+
+
             $dt->matched = array();
             $dt->matched = base64_encode(serialize($matched));
             $dt->matched_count = count($matched);
+
+            if (count($matched)) {
+                $sql = "SELECT a.product FROM `megasoft_productcategory` a, `megasoft_productcar` b where a.product = b.product AND car = '" . $params["linkingTargetId"]. "' AND category = '" . $dt->assemblyGroupNodeId . "'";
+                $connection = $this->getDoctrine()->getConnection();
+                $statement = $connection->prepare($sql);
+                $statement->execute();
+                $results = $statement->fetchAll();
+                $dt->matched_count = count($results);
+            }
 
             $dt->edimatched = array();
             $dt->edimatched = base64_encode(serialize($edimatched));
