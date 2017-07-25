@@ -514,8 +514,8 @@ class OrderController extends Main {
             } else {
                 $search[1] = str_pad($search[1], 4, "0", STR_PAD_LEFT);
             }
-
-            //$articleIds2["linkingTargetId"];
+            
+            echo $articleIds2["linkingTargetId"]." -- ".$articleIds2["assemblyGroupNodeId"];
 
             $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
             //print_r($articleIds);
