@@ -530,13 +530,19 @@ class ProductController extends Main {
             unset($cars[0]);
         
         
+        //print_r($cars);
+        $product->setCars((array) $cars);
+        $this->flushpersist($product);
+        
+        
         $connection = $em->getConnection();
         $sql = "delete from megasoft_productcategory where product = '".$product->getId()."'";
         $statement = $connection->prepare($sql);
         $statement->execute();
         $sql = "delete from megasoft_productcarwhere product = '".$product->getId()."'";
         $statement = $connection->prepare($sql);
-        $statement->execute();
+        $statement->execute();        
+        $cars = (array) $product->getCars();
         foreach ((array) $cars as $car) {
             $carobj = $this->getDoctrine()
                     ->getRepository('MegasoftBundle:Productcar')
@@ -547,7 +553,7 @@ class ProductController extends Main {
                 $carobj->setCar($car);
                 @$this->flushpersist($carobj);
             }
-        }         
+        }        
         $cats = (array) $product->getCats();
         foreach ((array) $cats as $cat) {
             $category = $this->getDoctrine()
@@ -561,10 +567,6 @@ class ProductController extends Main {
             }
         }          
         
-        
-        //print_r($cars);
-        $product->setCars((array) $cars);
-        $this->flushpersist($product);
         $json = json_encode((array) $cars);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
@@ -594,14 +596,19 @@ class ProductController extends Main {
         if (!$cars[0])
             unset($cars[0]);
         
+        //print_r($cars);
+        $product->setCars((array) $cars);
+        $this->flushpersist($product);
+        
+        
         $connection = $em->getConnection();
         $sql = "delete from megasoft_productcategory where product = '".$product->getId()."'";
         $statement = $connection->prepare($sql);
         $statement->execute();
         $sql = "delete from megasoft_productcarwhere product = '".$product->getId()."'";
         $statement = $connection->prepare($sql);
-        $statement->execute();
-        
+        $statement->execute();        
+        $cars = (array) $product->getCars();
         foreach ((array) $cars as $car) {
             $carobj = $this->getDoctrine()
                     ->getRepository('MegasoftBundle:Productcar')
@@ -624,13 +631,12 @@ class ProductController extends Main {
                 $category->setCategory($cat);
                 @$this->flushpersist($category);
             }
-        }        
+        }         
         
         
         
-        //print_r($cars);
-        $product->setCars((array) $cars);
-        $this->flushpersist($product);
+        
+        
         $json = json_encode((array) $cars);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
@@ -690,6 +696,39 @@ class ProductController extends Main {
         //$json = json_encode($product);
         //print_r($product);
 
+        $connection = $em->getConnection();
+        $sql = "delete from megasoft_productcategory where product = '".$product->getId()."'";
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $sql = "delete from megasoft_productcarwhere product = '".$product->getId()."'";
+        $statement = $connection->prepare($sql);
+        $statement->execute();        
+        $cars = (array) $product->getCars();
+        foreach ((array) $cars as $car) {
+            $carobj = $this->getDoctrine()
+                    ->getRepository('MegasoftBundle:Productcar')
+                    ->findOneBy(array('car' => $car, 'product' => $product->getId()));
+            if (count($carobj) == 0) {
+                $carobj = new Productcar();
+                $carobj->setProduct($product->getId());
+                $carobj->setCar($car);
+                @$this->flushpersist($carobj);
+            }
+        }        
+        $cats = (array) $product->getCats();
+        foreach ((array) $cats as $cat) {
+            $category = $this->getDoctrine()
+                    ->getRepository('MegasoftBundle:Productcategory')
+                    ->findOneBy(array('category' => $cat, 'product' => $product->getId()));
+            if (count($category) == 0) {
+                $category = new Productcategory();
+                $category->setProduct($product->getId());
+                $category->setCategory($cat);
+                @$this->flushpersist($category);
+            }
+        }         
+        
+        
         $json = json_encode(array($request->request->get("category"), $request->request->get("product")));
 
         return new Response(
