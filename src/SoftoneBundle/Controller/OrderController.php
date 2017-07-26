@@ -1699,6 +1699,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         }
         $this->repository = 'SoftoneBundle:Orderitem';
         $this->q_and[] = $this->prefix . ".order = " . $id;
+        $this->q_and[] = $this->prefix . ".qty > 0 ";
         $json = $this->itemsdatatable();
 
         $datatable = json_decode($json);
