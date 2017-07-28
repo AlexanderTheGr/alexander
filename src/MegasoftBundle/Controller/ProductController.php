@@ -1511,7 +1511,7 @@ class ProductController extends Main {
         // exit;
 
         foreach ($StoreDetails as $data) {
-            if ($i++ < 70000) continue;
+            if ($i++ < 120000) continue;
             $this->setProduct($data);
             //if ($i++ > 100) return;
         }
@@ -1540,7 +1540,7 @@ class ProductController extends Main {
                 ->getRepository($this->repository)
                 ->findOneBy(array("erpCode" => $data["StoreKwd"]));
 
-        if ($entity->getId() < 77650) return;
+        if ($entity->getId() < 123045) return;
         $dt = new \DateTime("now");
 
         if (!$entity) {
