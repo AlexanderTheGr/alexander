@@ -1530,7 +1530,7 @@ class ProductController extends Main {
         //if ($data["StoreKwd"] != "1643070G") return;
 
         if ($data["SupplierId"] != "") {
-            echo (int) $data["SupplierId"] . "<BR>";
+            echo $data["SupplierId"] . "<BR>";
         } else {
             echo "[".$data["SupplierId"]."]<BR>";
             return;
