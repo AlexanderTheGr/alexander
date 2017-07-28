@@ -1488,7 +1488,7 @@ class ProductController extends Main {
         
 
 
-        
+        /*
 
           if (count($response->DownloadStoreBaseResponse) == 1) {
           $StoreDetails[] = $response->$response->DownloadStoreBaseResponse;
@@ -1506,7 +1506,7 @@ class ProductController extends Main {
           } elseif (count($response->GetProductsResult->StoreDetails) > 1) {
           $StoreDetails = $response->GetProductsResult->StoreDetails;
           }
-         
+         */
         //print_r($StoreDetails);
         // exit;
 
