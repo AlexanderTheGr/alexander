@@ -1539,7 +1539,7 @@ class ProductController extends Main {
                 ->getRepository($this->repository)
                 ->findOneBy(array("erpCode" => $data["StoreKwd"]));
 
-
+        if ($entity->getId() < 47389) return;
         $dt = new \DateTime("now");
 
         if (!$entity) {
