@@ -1529,10 +1529,10 @@ class ProductController extends Main {
         //return;
         //if ($data["StoreKwd"] != "1643070G") return;
 
-        if ((int) $data["SupplierId"] != "") {
+        if ($data["SupplierId"] != "") {
             echo (int) $data["SupplierId"] . "<BR>";
         } else {
-            echo $data["SupplierId"]."<BR>";
+            echo "[".$data["SupplierId"]."]<BR>";
             return;
         }
         $entity = $this->getDoctrine()
