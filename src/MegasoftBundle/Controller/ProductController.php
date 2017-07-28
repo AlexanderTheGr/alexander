@@ -1532,6 +1532,7 @@ class ProductController extends Main {
         if ((int) $data["SupplierId"] != "") {
             echo (int) $data["SupplierId"] . "<BR>";
         } else {
+            echo $data["SupplierId"]."<BR>";
             return;
         }
         $entity = $this->getDoctrine()
