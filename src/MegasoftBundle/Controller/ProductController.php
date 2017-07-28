@@ -1525,7 +1525,7 @@ class ProductController extends Main {
         $data = (array) $data;
 
         //if ($data["StoreId"] < 207820) return;
-        //print_r($data);
+        print_r($data);
         //return;
         //if ($data["StoreKwd"] != "1643070G") return;
 
