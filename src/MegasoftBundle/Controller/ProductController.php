@@ -1485,6 +1485,7 @@ class ProductController extends Main {
         //$response = $soap->__soapCall("GetProducts", array($params));
         echo count($StoreDetails);
         exit;
+        
 
 
         /*
