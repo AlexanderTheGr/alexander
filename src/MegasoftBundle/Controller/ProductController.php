@@ -939,7 +939,12 @@ class ProductController extends Main {
         $fieldsextra["int5"] = array("label" => "Int5", "className" => "col-md-2", "required" => false);
         $fieldsextra["int6"] = array("label" => "Int6", "className" => "col-md-2", "required" => false);
  
-        
+        $fieldsextra["decimal1"] = array("label" => "Decimal1", "className" => "col-md-2", "required" => false);
+        $fieldsextra["decimal2"] = array("label" => "Decimal2", "className" => "col-md-2", "required" => false);
+        $fieldsextra["decimal3"] = array("label" => "Decimal3", "className" => "col-md-2", "required" => false);
+        $fieldsextra["decimal4"] = array("label" => "Decimal4", "className" => "col-md-2", "required" => false);
+        $fieldsextra["decimal5"] = array("label" => "Decimal5", "className" => "col-md-2", "required" => false);
+        $fieldsextra["decimal6"] = array("label" => "Decimal6", "className" => "col-md-2", "required" => false);
         
         $formsextra = $this->getFormLyFields($entity, $fieldsextra);
 
