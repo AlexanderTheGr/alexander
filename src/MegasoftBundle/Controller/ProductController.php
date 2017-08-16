@@ -922,6 +922,14 @@ class ProductController extends Main {
 
 
         $forms = $this->getFormLyFields($entity, $fields);
+        
+        
+        $fieldsextra["var1"] = array("label" => "Var1", "className" => "col-md-2", "required" => false);
+        $fieldsextra["var2"] = array("label" => "Var2", "className" => "col-md-2", "required" => false);
+        $fieldsextra["var3"] = array("label" => "Var3", "className" => "col-md-2", "required" => false);
+        $fieldsextra["var4"] = array("label" => "Var4", "className" => "col-md-2", "required" => false);
+        $fieldsextra["var5"] = array("label" => "Var5", "className" => "col-md-2", "required" => false);
+        $formsextra = $this->getFormLyFields($entity, $fields);
 
         if ($id > 0 AND count($entity) > 0) {
             $entity2 = $this->getDoctrine()
@@ -951,6 +959,7 @@ class ProductController extends Main {
             $tabs[] = array("title" => "Categories", "datatables" => '', "form" => '', "content" => $this->getCategories($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
             $tabs[] = array("title" => "Models", "datatables" => '', "form" => '', "content" => $this->getCars($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
             $tabs[] = array("title" => "Images", "datatables" => '', "form" => '', "content" => $this->getImagesHtml($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
+            $tabs[] = array("title" => "Extra", "datatables" => array(), "form" => $formsextra, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
         }
 
         foreach ($tabs as $tab) {
