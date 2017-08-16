@@ -242,6 +242,7 @@
                 <option name="default"></option>
             </options>
         </field> 
+        
         <field name="var6" type="string" column="var6" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
