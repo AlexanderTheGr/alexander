@@ -929,7 +929,7 @@ class ProductController extends Main {
         $fieldsextra["var3"] = array("label" => "Var3", "className" => "col-md-2", "required" => false);
         $fieldsextra["var4"] = array("label" => "Var4", "className" => "col-md-2", "required" => false);
         $fieldsextra["var5"] = array("label" => "Var5", "className" => "col-md-2", "required" => false);
-        $formsextra = $this->getFormLyFields($entity, $fields);
+        $formsextra = $this->getFormLyFields($entity, $fieldsextra);
 
         if ($id > 0 AND count($entity) > 0) {
             $entity2 = $this->getDoctrine()
