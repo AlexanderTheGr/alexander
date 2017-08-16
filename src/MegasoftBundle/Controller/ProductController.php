@@ -930,6 +930,17 @@ class ProductController extends Main {
         $fieldsextra["var4"] = array("label" => "Var4", "className" => "col-md-2", "required" => false);
         $fieldsextra["var5"] = array("label" => "Var5", "className" => "col-md-2", "required" => false);
         $fieldsextra["var6"] = array("label" => "Var6", "className" => "col-md-2", "required" => false);
+        
+        
+        $fieldsextra["int1"] = array("label" => "Int1", "className" => "col-md-2", "required" => false);
+        $fieldsextra["int2"] = array("label" => "Int2", "className" => "col-md-2", "required" => false);
+        $fieldsextra["int3"] = array("label" => "Int3", "className" => "col-md-2", "required" => false);
+        $fieldsextra["int4"] = array("label" => "Int4", "className" => "col-md-2", "required" => false);
+        $fieldsextra["int5"] = array("label" => "Int5", "className" => "col-md-2", "required" => false);
+        $fieldsextra["int6"] = array("label" => "Int6", "className" => "col-md-2", "required" => false);
+ 
+        
+        
         $formsextra = $this->getFormLyFields($entity, $fieldsextra);
 
         if ($id > 0 AND count($entity) > 0) {
