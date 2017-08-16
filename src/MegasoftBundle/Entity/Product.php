@@ -2119,4 +2119,178 @@ class Product extends Entity {
     {
         return $this->int6;
     }
+    /**
+     * @var string
+     */
+    private $decimal1 = '0';
+
+    /**
+     * @var string
+     */
+    private $decimal2 = '0';
+
+    /**
+     * @var string
+     */
+    private $decimal3 = '0';
+
+    /**
+     * @var string
+     */
+    private $decimal4 = '0';
+
+    /**
+     * @var string
+     */
+    private $decimal5 = '0';
+
+    /**
+     * @var string
+     */
+    private $decimal6 = '0';
+
+
+    /**
+     * Set decimal1
+     *
+     * @param string $decimal1
+     *
+     * @return Product
+     */
+    public function setDecimal1($decimal1)
+    {
+        $this->decimal1 = $decimal1;
+
+        return $this;
+    }
+
+    /**
+     * Get decimal1
+     *
+     * @return string
+     */
+    public function getDecimal1()
+    {
+        return $this->decimal1;
+    }
+
+    /**
+     * Set decimal2
+     *
+     * @param string $decimal2
+     *
+     * @return Product
+     */
+    public function setDecimal2($decimal2)
+    {
+        $this->decimal2 = $decimal2;
+
+        return $this;
+    }
+
+    /**
+     * Get decimal2
+     *
+     * @return string
+     */
+    public function getDecimal2()
+    {
+        return $this->decimal2;
+    }
+
+    /**
+     * Set decimal3
+     *
+     * @param string $decimal3
+     *
+     * @return Product
+     */
+    public function setDecimal3($decimal3)
+    {
+        $this->decimal3 = $decimal3;
+
+        return $this;
+    }
+
+    /**
+     * Get decimal3
+     *
+     * @return string
+     */
+    public function getDecimal3()
+    {
+        return $this->decimal3;
+    }
+
+    /**
+     * Set decimal4
+     *
+     * @param string $decimal4
+     *
+     * @return Product
+     */
+    public function setDecimal4($decimal4)
+    {
+        $this->decimal4 = $decimal4;
+
+        return $this;
+    }
+
+    /**
+     * Get decimal4
+     *
+     * @return string
+     */
+    public function getDecimal4()
+    {
+        return $this->decimal4;
+    }
+
+    /**
+     * Set decimal5
+     *
+     * @param string $decimal5
+     *
+     * @return Product
+     */
+    public function setDecimal5($decimal5)
+    {
+        $this->decimal5 = $decimal5;
+
+        return $this;
+    }
+
+    /**
+     * Get decimal5
+     *
+     * @return string
+     */
+    public function getDecimal5()
+    {
+        return $this->decimal5;
+    }
+
+    /**
+     * Set decimal6
+     *
+     * @param string $decimal6
+     *
+     * @return Product
+     */
+    public function setDecimal6($decimal6)
+    {
+        $this->decimal6 = $decimal6;
+
+        return $this;
+    }
+
+    /**
+     * Get decimal6
+     *
+     * @return string
+     */
+    public function getDecimal6()
+    {
+        return $this->decimal6;
+    }
 }
