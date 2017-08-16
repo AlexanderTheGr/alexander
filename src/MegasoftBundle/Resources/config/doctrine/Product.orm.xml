@@ -242,7 +242,13 @@
                 <option name="default"></option>
             </options>
         </field> 
-         
+        <field name="var6" type="string" column="var6" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+                <option name="default"></option>
+            </options>
+        </field> 
+                 
         <field name="int1" type="integer" column="int1" nullable="true">
             <options>
                 <option name="unsigned"/>
@@ -272,8 +278,15 @@
                 <option name="unsigned"/>
                 <option name="default">0</option>
             </options>
-        </field>       
-                                        
+        </field>    
+           
+        <field name="int6" type="integer" column="int6" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="default">0</option>
+            </options>
+        </field>   
+                                                
         <field name="text1" type="string" column="text1" length="65535" nullable="true">
             <options>
                 <option name="fixed"/>
