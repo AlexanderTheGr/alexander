@@ -287,7 +287,38 @@
                 <option name="default">0</option>
             </options>
         </field>   
-                                                
+                
+        <field name="decimal1" type="decimal" column="decimal1" precision="10" scale="3" nullable="true">
+           <options>
+                <option name="default">0</option>
+            </options>
+        </field>                                                
+        <field name="decimal2" type="decimal" column="decimal2" precision="10" scale="3" nullable="true">
+           <options>
+                <option name="default">0</option>
+            </options>
+        </field>                                                                                
+        <field name="decimal3" type="decimal" column="decimal3" precision="10" scale="3" nullable="true">
+           <options>
+                <option name="default">0</option>
+            </options>
+        </field>       
+        <field name="decimal4" type="decimal" column="decimal4" precision="10" scale="3" nullable="true">
+           <options>
+                <option name="default">0</option>
+            </options>
+        </field>        
+        <field name="decimal5" type="decimal" column="decimal5" precision="10" scale="3" nullable="true">
+           <options>
+                <option name="default">0</option>
+            </options>
+        </field>                                                                                                                 
+        <field name="decimal6" type="decimal" column="decimal6" precision="10" scale="3" nullable="true">
+           <options>
+                <option name="default">0</option>
+            </options>
+        </field>                                                                                                                                                                                                                                                                                                                                   
+                                                                                                                                                                                
         <field name="text1" type="string" column="text1" length="65535" nullable="true">
             <options>
                 <option name="fixed"/>
