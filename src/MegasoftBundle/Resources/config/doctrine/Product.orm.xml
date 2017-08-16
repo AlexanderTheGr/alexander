@@ -209,13 +209,92 @@
             </options>
         </field>          
          
-           
+         
+         
+         
+        <field name="var1" type="string" column="var1" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+                <option name="default"></option>
+            </options>
+        </field>           
+        <field name="var2" type="string" column="var2" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+                <option name="default"></option>
+            </options>
+        </field>
+        <field name="var3" type="string" column="var3" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+                <option name="default"></option>
+            </options>
+        </field>
+        <field name="var4" type="string" column="var4" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+                <option name="default"></option>
+            </options>
+        </field>                         
+        <field name="var5" type="string" column="var5" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+                <option name="default"></option>
+            </options>
+        </field> 
+         
+        <field name="int1" type="integer" column="int1" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="default">0</option>
+            </options>
+        </field>           
+        <field name="int2" type="integer" column="int2" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="default">0</option>
+            </options>
+        </field>                 
+        <field name="int3" type="integer" column="int3" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="default">0</option>
+            </options>
+        </field>                         
+        <field name="int4" type="integer" column="int4" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="default">0</option>
+            </options>
+        </field>                                
+        <field name="int5" type="integer" column="int5" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="default">0</option>
+            </options>
+        </field>       
+                                        
+        <field name="text1" type="string" column="text1" length="65535" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>                                             
+        <field name="text2" type="string" column="text2" length="65535" nullable="true">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+
         <field name="active" type="boolean" column="active" nullable="false">
             <options>
                 <option name="default">1</option>
             </options>
         </field>          
                                 
+                
+                
+                
+                
                 
         <field name="ts" type="datetime" column="ts" nullable="true">
             <options>
@@ -228,6 +307,9 @@
                 <option name="unsigned"/>
             </options>
         </field>
+        
+        
+        
         
         <field name="created" type="datetime" column="created" nullable="true"/>
         <field name="modified" type="datetime" column="modified" nullable="true"/>
