@@ -1713,4 +1713,352 @@ class Product extends Entity {
         return $this->supplierItemCode;
     }
 
+    /**
+     * @var string
+     */
+    private $var1 = '';
+
+    /**
+     * @var string
+     */
+    private $var2 = '';
+
+    /**
+     * @var string
+     */
+    private $var3 = '';
+
+    /**
+     * @var string
+     */
+    private $var4 = '';
+
+    /**
+     * @var string
+     */
+    private $var5 = '';
+
+    /**
+     * @var integer
+     */
+    private $int1 = '0';
+
+    /**
+     * @var integer
+     */
+    private $int2 = '0';
+
+    /**
+     * @var integer
+     */
+    private $int3 = '0';
+
+    /**
+     * @var integer
+     */
+    private $int4 = '0';
+
+    /**
+     * @var integer
+     */
+    private $int5 = '0';
+
+    /**
+     * @var string
+     */
+    private $text1;
+
+    /**
+     * @var string
+     */
+    private $text2;
+
+
+    /**
+     * Set var1
+     *
+     * @param string $var1
+     *
+     * @return Product
+     */
+    public function setVar1($var1)
+    {
+        $this->var1 = $var1;
+
+        return $this;
+    }
+
+    /**
+     * Get var1
+     *
+     * @return string
+     */
+    public function getVar1()
+    {
+        return $this->var1;
+    }
+
+    /**
+     * Set var2
+     *
+     * @param string $var2
+     *
+     * @return Product
+     */
+    public function setVar2($var2)
+    {
+        $this->var2 = $var2;
+
+        return $this;
+    }
+
+    /**
+     * Get var2
+     *
+     * @return string
+     */
+    public function getVar2()
+    {
+        return $this->var2;
+    }
+
+    /**
+     * Set var3
+     *
+     * @param string $var3
+     *
+     * @return Product
+     */
+    public function setVar3($var3)
+    {
+        $this->var3 = $var3;
+
+        return $this;
+    }
+
+    /**
+     * Get var3
+     *
+     * @return string
+     */
+    public function getVar3()
+    {
+        return $this->var3;
+    }
+
+    /**
+     * Set var4
+     *
+     * @param string $var4
+     *
+     * @return Product
+     */
+    public function setVar4($var4)
+    {
+        $this->var4 = $var4;
+
+        return $this;
+    }
+
+    /**
+     * Get var4
+     *
+     * @return string
+     */
+    public function getVar4()
+    {
+        return $this->var4;
+    }
+
+    /**
+     * Set var5
+     *
+     * @param string $var5
+     *
+     * @return Product
+     */
+    public function setVar5($var5)
+    {
+        $this->var5 = $var5;
+
+        return $this;
+    }
+
+    /**
+     * Get var5
+     *
+     * @return string
+     */
+    public function getVar5()
+    {
+        return $this->var5;
+    }
+
+    /**
+     * Set int1
+     *
+     * @param integer $int1
+     *
+     * @return Product
+     */
+    public function setInt1($int1)
+    {
+        $this->int1 = $int1;
+
+        return $this;
+    }
+
+    /**
+     * Get int1
+     *
+     * @return integer
+     */
+    public function getInt1()
+    {
+        return $this->int1;
+    }
+
+    /**
+     * Set int2
+     *
+     * @param integer $int2
+     *
+     * @return Product
+     */
+    public function setInt2($int2)
+    {
+        $this->int2 = $int2;
+
+        return $this;
+    }
+
+    /**
+     * Get int2
+     *
+     * @return integer
+     */
+    public function getInt2()
+    {
+        return $this->int2;
+    }
+
+    /**
+     * Set int3
+     *
+     * @param integer $int3
+     *
+     * @return Product
+     */
+    public function setInt3($int3)
+    {
+        $this->int3 = $int3;
+
+        return $this;
+    }
+
+    /**
+     * Get int3
+     *
+     * @return integer
+     */
+    public function getInt3()
+    {
+        return $this->int3;
+    }
+
+    /**
+     * Set int4
+     *
+     * @param integer $int4
+     *
+     * @return Product
+     */
+    public function setInt4($int4)
+    {
+        $this->int4 = $int4;
+
+        return $this;
+    }
+
+    /**
+     * Get int4
+     *
+     * @return integer
+     */
+    public function getInt4()
+    {
+        return $this->int4;
+    }
+
+    /**
+     * Set int5
+     *
+     * @param integer $int5
+     *
+     * @return Product
+     */
+    public function setInt5($int5)
+    {
+        $this->int5 = $int5;
+
+        return $this;
+    }
+
+    /**
+     * Get int5
+     *
+     * @return integer
+     */
+    public function getInt5()
+    {
+        return $this->int5;
+    }
+
+    /**
+     * Set text1
+     *
+     * @param string $text1
+     *
+     * @return Product
+     */
+    public function setText1($text1)
+    {
+        $this->text1 = $text1;
+
+        return $this;
+    }
+
+    /**
+     * Get text1
+     *
+     * @return string
+     */
+    public function getText1()
+    {
+        return $this->text1;
+    }
+
+    /**
+     * Set text2
+     *
+     * @param string $text2
+     *
+     * @return Product
+     */
+    public function setText2($text2)
+    {
+        $this->text2 = $text2;
+
+        return $this;
+    }
+
+    /**
+     * Get text2
+     *
+     * @return string
+     */
+    public function getText2()
+    {
+        return $this->text2;
+    }
 }
