@@ -2061,4 +2061,62 @@ class Product extends Entity {
     {
         return $this->text2;
     }
+    /**
+     * @var string
+     */
+    private $var6 = '';
+
+    /**
+     * @var integer
+     */
+    private $int6 = '0';
+
+
+    /**
+     * Set var6
+     *
+     * @param string $var6
+     *
+     * @return Product
+     */
+    public function setVar6($var6)
+    {
+        $this->var6 = $var6;
+
+        return $this;
+    }
+
+    /**
+     * Get var6
+     *
+     * @return string
+     */
+    public function getVar6()
+    {
+        return $this->var6;
+    }
+
+    /**
+     * Set int6
+     *
+     * @param integer $int6
+     *
+     * @return Product
+     */
+    public function setInt6($int6)
+    {
+        $this->int6 = $int6;
+
+        return $this;
+    }
+
+    /**
+     * Get int6
+     *
+     * @return integer
+     */
+    public function getInt6()
+    {
+        return $this->int6;
+    }
 }
