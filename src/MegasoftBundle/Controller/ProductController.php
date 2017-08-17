@@ -506,42 +506,43 @@ class ProductController extends Main {
         //echo "File: 62289290.jpg";
         exit;
     }
+
     /**
      * @Route("/erp01/product/addModel")
      */
     public function addModel(Request $request) {
-        
+
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($request->request->get("product"));
 
         $cars = (array) $product->getCars();
         $cars2 = array();
-        
+
         $brandmodeltypes = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:BrandModelType')->findBy(array("brandModel" => $request->request->get("model")), array('brandModelType' => 'ASC'));
 
-        foreach($brandmodeltypes as $brandmodeltype) {
+        foreach ($brandmodeltypes as $brandmodeltype) {
             $cars[] = $brandmodeltype->getId();
         }
         $cars = array_unique($cars);
-        
+
         if (!$cars[0])
             unset($cars[0]);
-        
-        
+
+
         //print_r($cars);
         $product->setCars((array) $cars);
         $this->flushpersist($product);
-        
+
         $em = $this->getDoctrine()->getManager();
         $connection = $em->getConnection();
-        $sql = "delete from megasoft_productcategory where product = '".$product->getId()."'";
+        $sql = "delete from megasoft_productcategory where product = '" . $product->getId() . "'";
         $statement = $connection->prepare($sql);
         $statement->execute();
-        $sql = "delete from megasoft_productcar where product = '".$product->getId()."'";
+        $sql = "delete from megasoft_productcar where product = '" . $product->getId() . "'";
         $statement = $connection->prepare($sql);
-        $statement->execute();        
+        $statement->execute();
         $cars = (array) $product->getCars();
         foreach ((array) $cars as $car) {
             $carobj = $this->getDoctrine()
@@ -553,10 +554,10 @@ class ProductController extends Main {
                 $carobj->setCar($car);
                 @$this->flushpersist($carobj);
             }
-        }        
+        }
         $cats = (array) $product->getCats();
         if (!$cats[0])
-            unset($cats[0]);         
+            unset($cats[0]);
         foreach ((array) $cats as $cat) {
             $category = $this->getDoctrine()
                     ->getRepository('MegasoftBundle:Productcategory')
@@ -567,15 +568,14 @@ class ProductController extends Main {
                 $category->setCategory($cat);
                 @$this->flushpersist($category);
             }
-        }          
-        
+        }
+
         $json = json_encode((array) $cars);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
-        
     }
-    
+
     /**
      * @Route("/erp01/product/addCar")
      */
@@ -597,20 +597,20 @@ class ProductController extends Main {
         }
         if (!$cars[0])
             unset($cars[0]);
-        
+
         //print_r($cars);
         $product->setCars((array) $cars);
         $this->flushpersist($product);
-        
+
         $em = $this->getDoctrine()->getManager();
         $connection = $em->getConnection();
-        $sql = "delete from megasoft_productcategory where product = '".$product->getId()."'";
+        $sql = "delete from megasoft_productcategory where product = '" . $product->getId() . "'";
         $statement = $connection->prepare($sql);
         $statement->execute();
-        $sql = "delete from megasoft_productcar where product = '".$product->getId()."'";
+        $sql = "delete from megasoft_productcar where product = '" . $product->getId() . "'";
         $statement = $connection->prepare($sql);
-        $statement->execute();        
-        
+        $statement->execute();
+
         $cars = (array) $product->getCars();
         foreach ((array) $cars as $car) {
             $carobj = $this->getDoctrine()
@@ -622,11 +622,11 @@ class ProductController extends Main {
                 $carobj->setCar($car);
                 @$this->flushpersist($carobj);
             }
-        }        
-        
+        }
+
         $cats = (array) $product->getCats();
         if (!$cats[0])
-            unset($cats[0]);        
+            unset($cats[0]);
         foreach ((array) $cats as $cat) {
             $category = $this->getDoctrine()
                     ->getRepository('MegasoftBundle:Productcategory')
@@ -637,12 +637,12 @@ class ProductController extends Main {
                 $category->setCategory($cat);
                 @$this->flushpersist($category);
             }
-        }         
-        
-        
-        
-        
-        
+        }
+
+
+
+
+
         $json = json_encode((array) $cars);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
@@ -698,19 +698,19 @@ class ProductController extends Main {
             $cats[] = $category->getCategory();
         }
         if (!$cats[0])
-            unset($cats[0]);         
+            unset($cats[0]);
         $product->setCats($cats);
         $this->flushpersist($product);
         //$json = json_encode($product);
         //print_r($product);
         $em = $this->getDoctrine()->getManager();
         $connection = $em->getConnection();
-        $sql = "delete from megasoft_productcategory where product = '".$product->getId()."'";
+        $sql = "delete from megasoft_productcategory where product = '" . $product->getId() . "'";
         $statement = $connection->prepare($sql);
         $statement->execute();
-        $sql = "delete from megasoft_productcar where product = '".$product->getId()."'";
+        $sql = "delete from megasoft_productcar where product = '" . $product->getId() . "'";
         $statement = $connection->prepare($sql);
-        $statement->execute();        
+        $statement->execute();
         $cars = (array) $product->getCars();
         foreach ((array) $cars as $car) {
             $carobj = $this->getDoctrine()
@@ -722,10 +722,10 @@ class ProductController extends Main {
                 $carobj->setCar($car);
                 @$this->flushpersist($carobj);
             }
-        }        
+        }
         $cats = (array) $product->getCats();
         if (!$cats[0])
-            unset($cats[0]);         
+            unset($cats[0]);
         foreach ((array) $cats as $cat) {
             $category = $this->getDoctrine()
                     ->getRepository('MegasoftBundle:Productcategory')
@@ -736,9 +736,9 @@ class ProductController extends Main {
                 $category->setCategory($cat);
                 @$this->flushpersist($category);
             }
-        }         
-        
-        
+        }
+
+
         $json = json_encode(array($request->request->get("category"), $request->request->get("product")));
 
         return new Response(
@@ -900,14 +900,14 @@ class ProductController extends Main {
 
         $fields["place"] = array("label" => "Ράφι", "className" => "col-md-1", "required" => false);
 
-        $fields["qty"] = array("label" => "Αποθήκη", "className" => "col-md-2", "required" => false);
+        $fields["qty"] = array("label" => $this->getTranslation("Αποθήκη"), "className" => "col-md-2", "required" => false);
         //$fields["reserved"] = array("label" => "Δεσμευμενα", "className" => "col-md-3", "required" => false);
         //$fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "className" => "col-md-2", "required" => false);        
         //$fields["supplier"] = array("label" => "Συνήθης προμηθευτής", "required" => false, "className" => "col-md-2", 'type' => "select", 'dataarray' => $itemMtrsup);
 
         $fields["supplier"] = array("label" => "Προμηθευτής", "required" => false, "className" => "col-md-2", 'type' => "select", 'datasource' => array('repository' => 'MegasoftBundle:Supplier', 'name' => 'supplierName', 'value' => 'id', 'suffix' => 'id'));
 
-        $fields["supplierItemCode"] = array("label" => "Κωδικός Προμηθευτή", "className" => "col-md-2", "required" => false);
+        $fields["supplierItemCode"] = array("label" => $this->getTranslation("Κωδικός Προμηθευτή"), "className" => "col-md-2", "required" => false);
 
 
         $fields["storeWholeSalePrice"] = array("label" => "Τιμή Χοδρικής", "className" => "col-md-2", "required" => false);
@@ -922,31 +922,31 @@ class ProductController extends Main {
 
 
         $forms = $this->getFormLyFields($entity, $fields);
-        
-        
+
+
         $fieldsextra["var1"] = array("label" => $this->getTranslation("Var1"), "className" => "col-md-2", "required" => false);
         $fieldsextra["var2"] = array("label" => $this->getTranslation("Var2"), "className" => "col-md-2", "required" => false);
         $fieldsextra["var3"] = array("label" => $this->getTranslation("Var3"), "className" => "col-md-2", "required" => false);
         $fieldsextra["var4"] = array("label" => $this->getTranslation("Var4"), "className" => "col-md-2", "required" => false);
         $fieldsextra["var5"] = array("label" => $this->getTranslation("Var5"), "className" => "col-md-2", "required" => false);
         $fieldsextra["var6"] = array("label" => $this->getTranslation("Var6"), "className" => "col-md-2", "required" => false);
-        
-        
+
+
         $fieldsextra["int1"] = array("label" => $this->getTranslation("Int1"), "className" => "col-md-2", "required" => false);
         $fieldsextra["int2"] = array("label" => $this->getTranslation("Int2"), "className" => "col-md-2", "required" => false);
         $fieldsextra["int3"] = array("label" => $this->getTranslation("Int3"), "className" => "col-md-2", "required" => false);
         $fieldsextra["int4"] = array("label" => $this->getTranslation("Int4"), "className" => "col-md-2", "required" => false);
         $fieldsextra["int5"] = array("label" => $this->getTranslation("Int5"), "className" => "col-md-2", "required" => false);
         $fieldsextra["int6"] = array("label" => $this->getTranslation("Int6"), "className" => "col-md-2", "required" => false);
- 
+
         $fieldsextra["decimal1"] = array("label" => $this->getTranslation("Decimal1"), "className" => "col-md-2", "required" => false);
         $fieldsextra["decimal2"] = array("label" => $this->getTranslation("Decimal2"), "className" => "col-md-2", "required" => false);
         $fieldsextra["decimal3"] = array("label" => $this->getTranslation("Decimal3"), "className" => "col-md-2", "required" => false);
         $fieldsextra["decimal4"] = array("label" => $this->getTranslation("Decimal4"), "className" => "col-md-2", "required" => false);
         $fieldsextra["decimal5"] = array("label" => $this->getTranslation("Decimal5"), "className" => "col-md-2", "required" => false);
         $fieldsextra["decimal6"] = array("label" => $this->getTranslation("Decimal6"), "className" => "col-md-2", "required" => false);
-        
-        
+
+
         $formsextra = $this->getFormLyFields($entity, $fieldsextra);
 
         if ($id > 0 AND count($entity) > 0) {
@@ -958,8 +958,8 @@ class ProductController extends Main {
             $forms2 = $this->getFormLyFields($entity2, $fields2);
 
             $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
-            $dtparams[] = array("name" => "Title", "index" => 'title');
-            $dtparams[] = array("name" => "Code", "index" => 'erpCode');
+            $dtparams[] = array("name" => $this->getTranslation("Title"), "index" => 'title');
+            $dtparams[] = array("name" => $this->getTranslation("Code"), "index" => 'erpCode');
             //$dtparams[] = array("name" => "Price", "index" => 'storeWholeSalePrice');
             $params['dtparams'] = $dtparams;
             $params['id'] = $dtparams;
@@ -971,13 +971,13 @@ class ProductController extends Main {
         }
 
 
-        $tabs[] = array("title" => "General", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
+        $tabs[] = array("title" => $this->getTranslation("General"), "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
         if ($id > 0 AND count($entity) > 0) {
-            $tabs[] = array("title" => "Retaltions", "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
-            $tabs[] = array("title" => "Categories", "datatables" => '', "form" => '', "content" => $this->getCategories($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
-            $tabs[] = array("title" => "Models", "datatables" => '', "form" => '', "content" => $this->getCars($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
-            $tabs[] = array("title" => "Images", "datatables" => '', "form" => '', "content" => $this->getImagesHtml($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
-            $tabs[] = array("title" => "Extra", "datatables" => array(), "form" => $formsextra, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
+            $tabs[] = array("title" => $this->getTranslation("Relations"), "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
+            $tabs[] = array("title" => $this->getTranslation("Categories"), "datatables" => '', "form" => '', "content" => $this->getCategories($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
+            $tabs[] = array("title" => $this->getTranslation("Models"), "datatables" => '', "form" => '', "content" => $this->getCars($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
+            $tabs[] = array("title" => $this->getTranslation("Images"), "datatables" => '', "form" => '', "content" => $this->getImagesHtml($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
+            $tabs[] = array("title" => $this->getTranslation("Extra"), "datatables" => array(), "form" => $formsextra, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
         }
 
         foreach ($tabs as $tab) {
@@ -1053,7 +1053,7 @@ class ProductController extends Main {
                 }
                 $html .= "<li class='brandli' data-ref='" . $brandmodel->getId() . "'>";
                 $checkbox = "<input type='checkbox' data-product='" . $product->getId() . "' class='brandmodelchk' data-ref='" . $brandmodel->getId() . "' />";
-                $html .= $checkbox."<a " . $style . " style='" . $style2 . "' data-prod='" . $product->getId() . "' data-ref='" . $brandmodel->getId() . "' class='brandmodellia'>" . $na . "</a>";
+                $html .= $checkbox . "<a " . $style . " style='" . $style2 . "' data-prod='" . $product->getId() . "' data-ref='" . $brandmodel->getId() . "' class='brandmodellia'>" . $na . "</a>";
                 $html .= '</li>';
                 $html .= "<ul style='display:none' class='pbrandmodelstypes pbrandmodelstypes_" . $brandmodel->getId() . "'>";
                 /*
@@ -1095,7 +1095,7 @@ class ProductController extends Main {
         $html = '';
 
         foreach ($brandmodeltypes as $brandmodeltype) {
-            
+
             $details = unserialize($brandmodeltype->getDetails());
             if (@$details["yearOfConstructionTo"]) {
                 $yearfrom = substr($details["yearOfConstructionFrom"], 4, 2) . "/" . substr($details["yearOfConstructionFrom"], 0, 4);
@@ -1107,7 +1107,7 @@ class ProductController extends Main {
                 $name = $brandmodeltype->getBrandModelType() . " " . $brandmodeltype->getPowerHp() . "ps (" . $brandmodeltype->getEngine() . ")" . $year;
             } else {
                 $name = $brandmodeltype->getBrandModelType() . " " . $brandmodeltype->getPowerHp() . "ps" . $year;
-            }            
+            }
             //if (in_array())
             $style = '';
             $checkbox = "<input type='checkbox' data-product='" . $product->getId() . "' class='brandmodetypechk' data-ref='" . $brandmodeltype->getId() . "' />";
@@ -1486,24 +1486,24 @@ class ProductController extends Main {
         }
         //ini_set("soap.wsdl_cache_enabled", "0");
         //exit;
-        /*
-          $ch = \curl_init();
-          $header = array('Contect-Type:application/xml', 'Accept:application/xml');
-          curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
-          curl_setopt($ch, CURLOPT_POST, 1);
-          curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=2017-07-06&ParticipateInEshop=1");
-          curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-          // in real life you should use something like:
-          // curl_setopt($ch, CURLOPT_POSTFIELDS,
-          //          http_build_query(array('postvar1' => 'value1')));
-          // receive server response ...
-          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-          $server_output = curl_exec($ch);
-          file_put_contents("downliad10.xml", $server_output);
-        */
+        $ch = \curl_init();
+        $header = array('Contect-Type:application/xml', 'Accept:application/xml');
+        curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=2017-07-06&ParticipateInEshop=1");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+        // in real life you should use something like:
+        // curl_setopt($ch, CURLOPT_POSTFIELDS,
+        //          http_build_query(array('postvar1' => 'value1')));
+        // receive server response ...
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $server_output = curl_exec($ch);
+        file_put_contents("downliad210.xml", $server_output);
+
         //$StoreDetails = \simplexml_load_string($server_output);
-        $result = \simplexml_load_file("downliad10.xml");
+        $result = \simplexml_load_file("downliad210.xml");
 
         $StoreDetails = $result->StoreDetails;
         //print_r($xml);
@@ -1512,7 +1512,7 @@ class ProductController extends Main {
         //$response = $soap->__soapCall("GetProducts", array($params));
         echo count($StoreDetails);
         //exit;
-        
+
 
 
         /*
@@ -1538,7 +1538,8 @@ class ProductController extends Main {
         // exit;
 
         foreach ($StoreDetails as $data) {
-            if ($i++ < 150000) continue;
+            if ($i++ < 150000)
+                continue;
             $this->setProduct($data);
             //if ($i++ > 100) return;
         }
@@ -1553,21 +1554,22 @@ class ProductController extends Main {
         $data = (array) $data;
 
         //if ($data["StoreId"] < 207820) return;
-       // print_r($data);
+        // print_r($data);
         //return;
         //if ($data["StoreKwd"] != "1643070G") return;
         //if ($i++ < 70000) return;
         if ($data["SupplierId"] != "") {
             echo $data["SupplierId"] . "<BR>";
         } else {
-            echo "[".$data["SupplierId"]."]<BR>";
+            echo "[" . $data["SupplierId"] . "]<BR>";
             return;
         }
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->findOneBy(array("erpCode" => $data["StoreKwd"]));
 
-        if ($entity->getId() < 172652) return;
+        if ($entity->getId() < 172652)
+            return;
         $dt = new \DateTime("now");
 
         if (!$entity) {
