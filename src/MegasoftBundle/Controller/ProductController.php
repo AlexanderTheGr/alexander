@@ -1568,8 +1568,8 @@ class ProductController extends Main {
                 ->getRepository($this->repository)
                 ->findOneBy(array("erpCode" => $data["StoreKwd"]));
 
-        if ($entity->getId() < 172652)
-            return;
+
+        
         $dt = new \DateTime("now");
 
         if (!$entity) {
@@ -1578,6 +1578,8 @@ class ProductController extends Main {
             $entity->setCreated($dt);
             $entity->setModified($dt);
         } else {
+            if ($entity->getId() < 172652)
+                return;
             //continue;
             //$entity->setRepositories();                
         }
