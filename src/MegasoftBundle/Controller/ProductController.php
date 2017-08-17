@@ -1651,8 +1651,8 @@ class ProductController extends Main {
             $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
             echo $sql . "<BR>";
             echo "-";
-            return;
-            //$this->getDoctrine()->getManager()->getConnection()->exec($sql);
+            //return;
+            $this->getDoctrine()->getManager()->getConnection()->exec($sql);
         } else {
             return;
             $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
