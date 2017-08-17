@@ -924,27 +924,28 @@ class ProductController extends Main {
         $forms = $this->getFormLyFields($entity, $fields);
         
         
-        $fieldsextra["var1"] = array("label" => "Var1", "className" => "col-md-2", "required" => false);
-        $fieldsextra["var2"] = array("label" => "Var2", "className" => "col-md-2", "required" => false);
-        $fieldsextra["var3"] = array("label" => "Var3", "className" => "col-md-2", "required" => false);
-        $fieldsextra["var4"] = array("label" => "Var4", "className" => "col-md-2", "required" => false);
-        $fieldsextra["var5"] = array("label" => "Var5", "className" => "col-md-2", "required" => false);
-        $fieldsextra["var6"] = array("label" => "Var6", "className" => "col-md-2", "required" => false);
+        $fieldsextra["var1"] = array("label" => $this->getTranslation("Var1"), "className" => "col-md-2", "required" => false);
+        $fieldsextra["var2"] = array("label" => $this->getTranslation("Var2"), "className" => "col-md-2", "required" => false);
+        $fieldsextra["var3"] = array("label" => $this->getTranslation("Var3"), "className" => "col-md-2", "required" => false);
+        $fieldsextra["var4"] = array("label" => $this->getTranslation("Var4"), "className" => "col-md-2", "required" => false);
+        $fieldsextra["var5"] = array("label" => $this->getTranslation("Var5"), "className" => "col-md-2", "required" => false);
+        $fieldsextra["var6"] = array("label" => $this->getTranslation("Var6"), "className" => "col-md-2", "required" => false);
         
         
-        $fieldsextra["int1"] = array("label" => "Int1", "className" => "col-md-2", "required" => false);
-        $fieldsextra["int2"] = array("label" => "Int2", "className" => "col-md-2", "required" => false);
-        $fieldsextra["int3"] = array("label" => "Int3", "className" => "col-md-2", "required" => false);
-        $fieldsextra["int4"] = array("label" => "Int4", "className" => "col-md-2", "required" => false);
-        $fieldsextra["int5"] = array("label" => "Int5", "className" => "col-md-2", "required" => false);
-        $fieldsextra["int6"] = array("label" => "Int6", "className" => "col-md-2", "required" => false);
+        $fieldsextra["int1"] = array("label" => $this->getTranslation("Int1"), "className" => "col-md-2", "required" => false);
+        $fieldsextra["int2"] = array("label" => $this->getTranslation("Int2"), "className" => "col-md-2", "required" => false);
+        $fieldsextra["int3"] = array("label" => $this->getTranslation("Int3"), "className" => "col-md-2", "required" => false);
+        $fieldsextra["int4"] = array("label" => $this->getTranslation("Int4"), "className" => "col-md-2", "required" => false);
+        $fieldsextra["int5"] = array("label" => $this->getTranslation("Int5"), "className" => "col-md-2", "required" => false);
+        $fieldsextra["int6"] = array("label" => $this->getTranslation("Int6"), "className" => "col-md-2", "required" => false);
  
-        $fieldsextra["decimal1"] = array("label" => "Decimal1", "className" => "col-md-2", "required" => false);
-        $fieldsextra["decimal2"] = array("label" => "Decimal2", "className" => "col-md-2", "required" => false);
-        $fieldsextra["decimal3"] = array("label" => "Decimal3", "className" => "col-md-2", "required" => false);
-        $fieldsextra["decimal4"] = array("label" => "Decimal4", "className" => "col-md-2", "required" => false);
-        $fieldsextra["decimal5"] = array("label" => "Decimal5", "className" => "col-md-2", "required" => false);
-        $fieldsextra["decimal6"] = array("label" => "Decimal6", "className" => "col-md-2", "required" => false);
+        $fieldsextra["decimal1"] = array("label" => $this->getTranslation("Decimal1"), "className" => "col-md-2", "required" => false);
+        $fieldsextra["decimal2"] = array("label" => $this->getTranslation("Decimal2"), "className" => "col-md-2", "required" => false);
+        $fieldsextra["decimal3"] = array("label" => $this->getTranslation("Decimal3"), "className" => "col-md-2", "required" => false);
+        $fieldsextra["decimal4"] = array("label" => $this->getTranslation("Decimal4"), "className" => "col-md-2", "required" => false);
+        $fieldsextra["decimal5"] = array("label" => $this->getTranslation("Decimal5"), "className" => "col-md-2", "required" => false);
+        $fieldsextra["decimal6"] = array("label" => $this->getTranslation("Decimal6"), "className" => "col-md-2", "required" => false);
+        
         
         $formsextra = $this->getFormLyFields($entity, $fieldsextra);
 
