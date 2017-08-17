@@ -1578,8 +1578,9 @@ class ProductController extends Main {
             $entity->setCreated($dt);
             $entity->setModified($dt);
         } else {
-            if ($entity->getId() < 172652)
-                return;
+            return;
+            //if ($entity->getId() < 172652)
+            //    return;
             //continue;
             //$entity->setRepositories();                
         }
