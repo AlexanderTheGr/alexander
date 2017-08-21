@@ -751,10 +751,11 @@ class EdiItem extends Entity {
             $erpCode = $this->clearCode($this->partno) . "-" . $manufacturer->getCode();
             $product = $em->getRepository("MegasoftBundle:Product")->findOneBy(array("erpCode" => $erpCode));
         }
+        
         if (!$product) {
             $erpCode = $this->clearCode($this->partno) . "-" . $manufacturer->getCode();
             $product = $em->getRepository("MegasoftBundle:Product")->findOneBy(array("supplierCode" => $this->clearCode($this->partno),"manufacturer"=>$manufacturer));
-        }        
+        }
         
         if ($product) {
             $product->setSupplierItemCode($this->itemCode);
