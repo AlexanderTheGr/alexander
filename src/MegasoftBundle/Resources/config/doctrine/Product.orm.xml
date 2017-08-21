@@ -250,31 +250,31 @@
             </options>
         </field> 
                  
-        <field name="int1" type="integer" column="int1" nullable="true">
+        <field name="int1" type="integer" column="`int1`" nullable="true">
             <options>
                 <option name="unsigned"/>
                 <option name="default">0</option>
             </options>
         </field>           
-        <field name="int2" type="integer" column="int2" nullable="true">
+        <field name="int2" type="integer" column="`int2`" nullable="true">
             <options>
                 <option name="unsigned"/>
                 <option name="default">0</option>
             </options>
         </field>                 
-        <field name="int3" type="integer" column="int3" nullable="true">
+        <field name="int3" type="integer" column="`int3`" nullable="true">
             <options>
                 <option name="unsigned"/>
                 <option name="default">0</option>
             </options>
         </field>                         
-        <field name="int4" type="integer" column="int4" nullable="true">
+        <field name="int4" type="integer" column="`int4`" nullable="true">
             <options>
                 <option name="unsigned"/>
                 <option name="default">0</option>
             </options>
         </field>                                
-        <field name="int5" type="integer" column="int5" nullable="true">
+        <field name="int5" type="integer" column="`int5`" nullable="true">
             <options>
                 <option name="unsigned"/>
                 <option name="default">0</option>
