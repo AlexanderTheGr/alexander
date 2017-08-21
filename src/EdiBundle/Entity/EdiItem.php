@@ -743,6 +743,7 @@ class EdiItem extends Entity {
         $statement->execute();
         $data = $statement->fetch();
         $product = false;
+        $supplier = $em->getRepository("MegasoftBundle:Supplier")->find($this->getEdi()->getItemMtrsup());
         if ($data["id"] > 0)
             $product = $em->getRepository("MegasoftBundle:Product")->find($data["id"]);
 
@@ -750,7 +751,11 @@ class EdiItem extends Entity {
             $erpCode = $this->clearCode($this->partno) . "-" . $manufacturer->getCode();
             $product = $em->getRepository("MegasoftBundle:Product")->findOneBy(array("erpCode" => $erpCode));
         }
-        $supplier = $em->getRepository("MegasoftBundle:Supplier")->find($this->getEdi()->getItemMtrsup());
+        if (!$product) {
+            $erpCode = $this->clearCode($this->partno) . "-" . $manufacturer->getCode();
+            $product = $em->getRepository("MegasoftBundle:Product")->findOneBy(array("supplierCode" => $this->clearCode($this->partno),"manufacturer"=>$manufacturer));
+        }        
+        
         if ($product) {
             $product->setSupplierItemCode($this->itemCode);
             $product->setEdiId($this->getEdi()->getId());
