@@ -917,8 +917,8 @@ class ProductController extends Main {
         $fields["retailMarkup"] = array("label" => "Markup Λιανικής", "className" => "col-md-2", "required" => false);
 
 
-        $fields["remarks"] = array("label" => "Remarks", "required" => false, 'type' => "textarea", "className" => "col-md-6 col-sm-6");
-        $fields["sisxetisi"] = array("label" => "Κωδικός Συσχέτισης", "className" => "col-md-6", "required" => false);
+        //$fields["remarks"] = array("label" => "Remarks", "required" => false, 'type' => "textarea", "className" => "col-md-6 col-sm-6");
+        //$fields["sisxetisi"] = array("label" => "Κωδικός Συσχέτισης", "className" => "col-md-6", "required" => false);
 
 
         $forms = $this->getFormLyFields($entity, $fields);
