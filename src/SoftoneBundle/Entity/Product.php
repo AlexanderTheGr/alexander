@@ -2200,9 +2200,11 @@ class Product extends Entity {
         }
         //@$dataOut["ITEEXTRA"][0] = array("VARCHAR02" => $this->sisxetisi); 
         //print_r(@$dataOut);
+        file_put_contents("log/productIn_".$this->getId().".txt",print_r($dataOut,true));
         $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
+        file_put_contents("log/productOut_".$this->getId().".txt",print_r($out,true));
         //print_r($out);
-
+        
 
         if (@$out->id > 0) {
             $op = false;
