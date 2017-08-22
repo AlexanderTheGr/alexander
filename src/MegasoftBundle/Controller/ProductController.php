@@ -1006,7 +1006,7 @@ class ProductController extends Main {
 
     public function getCars($product) {
         $brands = $this->getDoctrine()
-                        ->getRepository('SoftoneBundle:Brand')->findBy(array(), array('brand' => 'ASC'));
+                        ->getRepository('SoftoneBundle:Brand')->findBy(array("id"=>24), array('brand' => 'ASC'));
 
 
         $cars = (array) $product->getCars();
@@ -1030,6 +1030,7 @@ class ProductController extends Main {
             $html .= "<a " . $style . " style='" . $style1 . "' data-ref='" . $brand->getId() . "' class='brandlia'>" . $brand->getBrand() . "</a>";
             $html .= "<ul  style='display:none' class='pbrandmodels pbrandmodels_" . $brand->getId() . "'>";
             foreach ($brandmodels as $brandmodel) {
+                
                 /*
                   $brandmodeltypes = $this->getDoctrine()
                   ->getRepository('SoftoneBundle:BrandModelType')->findBy(array("brandModel" => $brandmodel->getId()), array('brandModelType' => 'ASC'));
