@@ -58,7 +58,7 @@ class CustomergroupController extends Main {
         }
         $productsalejson = json_encode($productsaleArr);
 
-        $suppliers = $this->getDoctrine()->getRepository("MegasoftBundle:MegasoftSupplier")->findAll();
+        $suppliers = $this->getDoctrine()->getRepository("MegasoftBundle:Manufacturer")->findAll();
         $supplierArr = array();
         foreach ($suppliers as $supplier) {
             $supplierArr[$supplier->getId()] = $supplier->getTitle();
