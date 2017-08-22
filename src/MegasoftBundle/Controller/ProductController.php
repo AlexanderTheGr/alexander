@@ -1210,6 +1210,8 @@ class ProductController extends Main {
         $fields[] = array("name" => "Title", "index" => 'title');
         $fields[] = array("name" => "Code", "index" => 'erpCode');
         $fields[] = array("name" => "Store Code", "index" => 'erpCode2');
+        $fields[] = array("name" => "Article Name", "index" => 'tecdocArticleName');
+        
         //$fields[] = array("name" => "Supplier", "index" => 'supplier:title', 'type' => 'select', 'object' => 'MegasoftSupplier');
         $fields[] = array("name" => "Προσφορά", "index" => 'productSale:title', 'type' => 'select', 'object' => 'ProductSale');
         //$fields[] = array("name" => "Ράφι", "index" => 'itemMtrplace');
