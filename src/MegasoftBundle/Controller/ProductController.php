@@ -977,7 +977,7 @@ class ProductController extends Main {
             $tabs[] = array("title" => $this->getTranslation("Categories"), "datatables" => '', "form" => '', "content" => $this->getCategories($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
             $tabs[] = array("title" => $this->getTranslation("Models"), "datatables" => '', "form" => '', "content" => $this->getCars($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
             $tabs[] = array("title" => $this->getTranslation("Images"), "datatables" => '', "form" => '', "content" => $this->getImagesHtml($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
-            $tabs[] = array("title" => $this->getTranslation("Extra"), "datatables" => array(), "form" => $formsextra, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
+            $tabs[] = array("title" => $this->getTranslation("Extra"), "datatables" => array(), "form" => $formsextra, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
         }
 
         foreach ($tabs as $tab) {
