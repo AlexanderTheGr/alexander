@@ -99,7 +99,7 @@ setTimeout(function () {
     jQuery("select.form-control").chosen({width: "100%"});
     var obj = $(".synafiacode input");
     var $elem = jQuery(".synafiacode input").autocomplete({
-        source: "/product/autocompletesearch",
+        source: "/erp01/product/autocompletesearch",
         method: "POST",
         minLength: 2,
         select: function (event, ui) {
@@ -107,7 +107,7 @@ setTimeout(function () {
             data.erp_code = ui.item.value;
             data.id = obj.attr("id");
             $("#loaderer").show();
-            $.post("/product/addRelation", data, function (result) {
+            $.post("/erp01/product/addRelation", data, function (result) {
                 $("#loaderer").hide();
                 var table = dt_tables["ctrlgettabs"];
                 table.fnFilter();
