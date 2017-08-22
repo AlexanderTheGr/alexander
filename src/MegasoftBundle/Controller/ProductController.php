@@ -1501,10 +1501,10 @@ class ProductController extends Main {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $server_output = curl_exec($ch);
-        file_put_contents("downliad210.xml", $server_output);
+        file_put_contents("downliad20.xml", $server_output);
 
         //$StoreDetails = \simplexml_load_string($server_output);
-        $result = \simplexml_load_file("downliad210.xml");
+        $result = \simplexml_load_file("downliad20.xml");
 
         $StoreDetails = $result->StoreDetails;
         //print_r($xml);
