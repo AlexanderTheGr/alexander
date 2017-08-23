@@ -2289,6 +2289,15 @@ class Product extends Entity {
             $em->flush();            
             return;
         }
+        $product = $em->getRepository("MegasoftBundle:Product")
+                ->findOneBy(array("replaced" => $this->replaced));        
+        if (!$product) {
+            $this->replaced = '';
+            $em->persist($this);
+            $em->flush();            
+            return;
+        }
+        
         $product->lreplacer = $this->replaced;
         $em->persist($product);
         $em->flush();
