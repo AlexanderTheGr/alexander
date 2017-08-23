@@ -1128,7 +1128,7 @@ class Product extends Entity {
     }
 
     public function getForOrderCode() {
-        $r = $this->lreplacer != '' AND $this->lreplacer != $this->erpCode ? '['.$this->lreplacer.']' : '';
+        $r = ($this->lreplacer != '' AND $this->lreplacer != $this->erpCode) ? '['.$this->lreplacer.']' : '';
         $out = '<a title="' . $this->title . '" class="product_info" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->erpCode . ' '.$r.'</a>
         <br>
         <span class="text-sm text-info">' . $this->erpCode . '</span>';
