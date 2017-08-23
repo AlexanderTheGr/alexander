@@ -658,7 +658,7 @@ class OrderController extends Main {
                 } else {
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id, p.replaced, p.lreplacer
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where p.lreplacer = p.erpCode OR ' . $qsupplier . ' (' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . ')' . $extras . ' 
+                                where p.lreplacer = "'.$search[1].'" OR ' . $qsupplier . ' (' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . ')' . $extras . ' 
                                 ORDER BY ' . $this->orderBy;
                 }
 
