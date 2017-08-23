@@ -700,9 +700,9 @@ class OrderController extends Main {
                     
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id, p.replaced, p.lreplacer
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where p.lreplacer = "'.$resulttt["lreplacer"].'"';
+                                where p.lreplacer = \''.$resulttt["lreplacer"].'\'';
                     $sql = str_replace("p.*,", "", $sql);
-                    echo $sql;
+                    //echo $sql;
                     $query = $em->createQuery($sql);
                     $resulttts = $query->getResult();
                     foreach (@(array) $resulttts as $resultt) {
