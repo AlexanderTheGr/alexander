@@ -702,6 +702,7 @@ class OrderController extends Main {
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
                                 where p.lreplacer = "'.$resulttt["lreplacer"].'"';
                     $sql = str_replace("p.*,", "", $sql);
+                    echo $sql;
                     $query = $em->createQuery($sql);
                     $resulttts = $query->getResult();
                     foreach (@(array) $resulttts as $resultt) {
