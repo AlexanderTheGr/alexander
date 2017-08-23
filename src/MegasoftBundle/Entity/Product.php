@@ -491,8 +491,6 @@ class Product extends Entity {
         return $this->supplierCode;
     }
 
-    
-
     /**
      * Set erpSupplier
      *
@@ -1011,7 +1009,7 @@ class Product extends Entity {
         if ($this->supplierCode != '')
             $dataindexarr[] = $this->supplierCode;
 
-        
+
         if ($this->barcode != '')
             $dataindexarr[] = $this->barcode;
 
@@ -1074,18 +1072,18 @@ class Product extends Entity {
         //$em = $this->getDoctrine()->getManager();
         $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
 
-        if ($this->erpCode2 == "" ) {
+        if ($this->erpCode2 == "") {
             //$this->erpCode2 = $this->erpCode;
         }
-        
+
         if ($this->reference > 0)
-            $data["StoreId"] = $this->reference; 
-        
+            $data["StoreId"] = $this->reference;
+
         //if ($this->hasTransactions == 0) {
-            $data["StoreDescr"] = $this->title;
-            $data["StoreKwd"] = $this->erpCode;
+        $data["StoreDescr"] = $this->title;
+        $data["StoreKwd"] = $this->erpCode;
         //}
-        
+
         $data["StoreRetailPrice"] = (float) $this->storeRetailPrice;
         $data["StoreWholeSalePrice"] = (float) $this->storeWholeSalePrice;
         $data["RetailMarkup"] = (float) $this->retailMarkup;
@@ -1106,13 +1104,13 @@ class Product extends Entity {
         $data["mtrsup"] = $this->getSupplier() ? $this->getSupplier()->getReference() : "";
         $data["sisxetisi"] = $this->sisxetisi;
         $data["fwSupplierItemCode"] = $this->supplierItemCode;
-        $data["StoreCodeErp"] = "";//$this->erpCode2;
+        $data["StoreCodeErp"] = ""; //$this->erpCode2;
         /*
           $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
           $headerbody = array('Login' => "alexander", 'Date' => "2016-10-10");
           $header = new SOAPHeader($ns,"AuthHeader",$headerbody);
           $soap->__setSoapHeaders($header);
-        */
+         */
 
         $params["Login"] = $login;
         $params["JsonStrWeb"] = json_encode($data);
@@ -1554,11 +1552,11 @@ class Product extends Entity {
      * @var boolean
      */
     private $priceupd = '0';
-    
+
     /**
      * @var boolean
      */
-    private $hasTransactions = '0';    
+    private $hasTransactions = '0';
 
     /**
      * @var boolean
@@ -1587,7 +1585,6 @@ class Product extends Entity {
         return $this->priceupd;
     }
 
-    
     /**
      * Set hasTransactions
      *
@@ -1608,8 +1605,8 @@ class Product extends Entity {
      */
     public function getHasTransactions() {
         return $this->hasTransactions;
-    }    
-    
+    }
+
     /**
      * Set active
      *
@@ -1773,7 +1770,6 @@ class Product extends Entity {
      */
     private $text2;
 
-
     /**
      * Set var1
      *
@@ -1781,8 +1777,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setVar1($var1)
-    {
+    public function setVar1($var1) {
         $this->var1 = $var1;
 
         return $this;
@@ -1793,8 +1788,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getVar1()
-    {
+    public function getVar1() {
         return $this->var1;
     }
 
@@ -1805,8 +1799,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setVar2($var2)
-    {
+    public function setVar2($var2) {
         $this->var2 = $var2;
 
         return $this;
@@ -1817,8 +1810,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getVar2()
-    {
+    public function getVar2() {
         return $this->var2;
     }
 
@@ -1829,8 +1821,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setVar3($var3)
-    {
+    public function setVar3($var3) {
         $this->var3 = $var3;
 
         return $this;
@@ -1841,8 +1832,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getVar3()
-    {
+    public function getVar3() {
         return $this->var3;
     }
 
@@ -1853,8 +1843,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setVar4($var4)
-    {
+    public function setVar4($var4) {
         $this->var4 = $var4;
 
         return $this;
@@ -1865,8 +1854,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getVar4()
-    {
+    public function getVar4() {
         return $this->var4;
     }
 
@@ -1877,8 +1865,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setVar5($var5)
-    {
+    public function setVar5($var5) {
         $this->var5 = $var5;
 
         return $this;
@@ -1889,8 +1876,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getVar5()
-    {
+    public function getVar5() {
         return $this->var5;
     }
 
@@ -1901,8 +1887,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setInt1($int1)
-    {
+    public function setInt1($int1) {
         $this->int1 = $int1;
 
         return $this;
@@ -1913,8 +1898,7 @@ class Product extends Entity {
      *
      * @return integer
      */
-    public function getInt1()
-    {
+    public function getInt1() {
         return $this->int1;
     }
 
@@ -1925,8 +1909,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setInt2($int2)
-    {
+    public function setInt2($int2) {
         $this->int2 = $int2;
 
         return $this;
@@ -1937,8 +1920,7 @@ class Product extends Entity {
      *
      * @return integer
      */
-    public function getInt2()
-    {
+    public function getInt2() {
         return $this->int2;
     }
 
@@ -1949,8 +1931,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setInt3($int3)
-    {
+    public function setInt3($int3) {
         $this->int3 = $int3;
 
         return $this;
@@ -1961,8 +1942,7 @@ class Product extends Entity {
      *
      * @return integer
      */
-    public function getInt3()
-    {
+    public function getInt3() {
         return $this->int3;
     }
 
@@ -1973,8 +1953,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setInt4($int4)
-    {
+    public function setInt4($int4) {
         $this->int4 = $int4;
 
         return $this;
@@ -1985,8 +1964,7 @@ class Product extends Entity {
      *
      * @return integer
      */
-    public function getInt4()
-    {
+    public function getInt4() {
         return $this->int4;
     }
 
@@ -1997,8 +1975,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setInt5($int5)
-    {
+    public function setInt5($int5) {
         $this->int5 = $int5;
 
         return $this;
@@ -2009,8 +1986,7 @@ class Product extends Entity {
      *
      * @return integer
      */
-    public function getInt5()
-    {
+    public function getInt5() {
         return $this->int5;
     }
 
@@ -2021,8 +1997,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setText1($text1)
-    {
+    public function setText1($text1) {
         $this->text1 = $text1;
 
         return $this;
@@ -2033,8 +2008,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getText1()
-    {
+    public function getText1() {
         return $this->text1;
     }
 
@@ -2045,8 +2019,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setText2($text2)
-    {
+    public function setText2($text2) {
         $this->text2 = $text2;
 
         return $this;
@@ -2057,10 +2030,10 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getText2()
-    {
+    public function getText2() {
         return $this->text2;
     }
+
     /**
      * @var string
      */
@@ -2071,7 +2044,6 @@ class Product extends Entity {
      */
     private $int6 = '0';
 
-
     /**
      * Set var6
      *
@@ -2079,8 +2051,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setVar6($var6)
-    {
+    public function setVar6($var6) {
         $this->var6 = $var6;
 
         return $this;
@@ -2091,8 +2062,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getVar6()
-    {
+    public function getVar6() {
         return $this->var6;
     }
 
@@ -2103,8 +2073,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setInt6($int6)
-    {
+    public function setInt6($int6) {
         $this->int6 = $int6;
 
         return $this;
@@ -2115,10 +2084,10 @@ class Product extends Entity {
      *
      * @return integer
      */
-    public function getInt6()
-    {
+    public function getInt6() {
         return $this->int6;
     }
+
     /**
      * @var string
      */
@@ -2149,7 +2118,6 @@ class Product extends Entity {
      */
     private $decimal6 = '0';
 
-
     /**
      * Set decimal1
      *
@@ -2157,8 +2125,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setDecimal1($decimal1)
-    {
+    public function setDecimal1($decimal1) {
         $this->decimal1 = $decimal1;
 
         return $this;
@@ -2169,8 +2136,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getDecimal1()
-    {
+    public function getDecimal1() {
         return $this->decimal1;
     }
 
@@ -2181,8 +2147,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setDecimal2($decimal2)
-    {
+    public function setDecimal2($decimal2) {
         $this->decimal2 = $decimal2;
 
         return $this;
@@ -2193,8 +2158,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getDecimal2()
-    {
+    public function getDecimal2() {
         return $this->decimal2;
     }
 
@@ -2205,8 +2169,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setDecimal3($decimal3)
-    {
+    public function setDecimal3($decimal3) {
         $this->decimal3 = $decimal3;
 
         return $this;
@@ -2217,8 +2180,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getDecimal3()
-    {
+    public function getDecimal3() {
         return $this->decimal3;
     }
 
@@ -2229,8 +2191,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setDecimal4($decimal4)
-    {
+    public function setDecimal4($decimal4) {
         $this->decimal4 = $decimal4;
 
         return $this;
@@ -2241,8 +2202,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getDecimal4()
-    {
+    public function getDecimal4() {
         return $this->decimal4;
     }
 
@@ -2253,8 +2213,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setDecimal5($decimal5)
-    {
+    public function setDecimal5($decimal5) {
         $this->decimal5 = $decimal5;
 
         return $this;
@@ -2265,8 +2224,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getDecimal5()
-    {
+    public function getDecimal5() {
         return $this->decimal5;
     }
 
@@ -2277,8 +2235,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setDecimal6($decimal6)
-    {
+    public function setDecimal6($decimal6) {
         $this->decimal6 = $decimal6;
 
         return $this;
@@ -2289,8 +2246,60 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getDecimal6()
-    {
+    public function getDecimal6() {
         return $this->decimal6;
     }
+
+    /**
+     * @var string
+     */
+    private $replaced = '';
+
+    /**
+     * @var string
+     */
+    private $lreplacer = '';
+
+    /**
+     * Set replaced
+     *
+     * @param string $replaced
+     *
+     * @return Product
+     */
+    public function setReplaced($replaced) {
+        $this->replaced = $replaced;
+        return $this;
+    }
+
+    /**
+     * Get replaced
+     *
+     * @return string
+     */
+    public function getReplaced() {
+        return $this->replaced;
+    }
+
+    /**
+     * Set lreplacer
+     *
+     * @param string $lreplacer
+     *
+     * @return Product
+     */
+    public function setLreplacer($lreplacer) {
+        $this->lreplacer = $lreplacer;
+        return $this;
+    }
+
+    /**
+     * Get lreplacer
+     *
+     * @return string
+     */
+    public function getLreplacer() {
+        return $this->lreplacer;
+    }
+
 }
