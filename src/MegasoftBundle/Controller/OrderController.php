@@ -673,7 +673,7 @@ class OrderController extends Main {
                         ->setMaxResults($request->request->get("length"))
                         ->setFirstResult($request->request->get("start"));
 
-                //echo $sql."<BR>";    
+                echo $sql."<BR>";    
                 /*
                   echo 'SELECT  ' . $this->select . ', p.reference
                   FROM ' . $this->repository . ' ' . $this->prefix . '
