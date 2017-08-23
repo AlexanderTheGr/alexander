@@ -2274,6 +2274,7 @@ class Product extends Entity {
 
     public function setReplacer() {
         if (!$this->replaced) return;
+        if ($this->lreplacer != '' AND $this->lreplacer != $this->erpCode) return;
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
