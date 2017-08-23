@@ -921,7 +921,7 @@ class ProductController extends Main {
 
 
         //$fields["remarks"] = array("label" => "Remarks", "required" => false, 'type' => "textarea", "className" => "col-md-6 col-sm-6");
-        $fields["replaced"] = array("label" => "Replaced by", "className" => "col-md-6", "required" => false);
+        $fields["replaced"] = array("label" => "Replaced by", "disabled" => $entity->replaced == '' ? false : true, "className" => "col-md-6", "required" => false);
 
 
         $forms = $this->getFormLyFields($entity, $fields);
