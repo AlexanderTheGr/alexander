@@ -85,6 +85,21 @@
                 <option name="default"></option>
             </options>
         </field>
+        
+        <field name="replaced" type="string" column="replaced" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+                <option name="default"></option>
+            </options>
+        </field>
+        <field name="lreplacer" type="string" column="lreplacer" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+                <option name="default"></option>
+            </options>
+        </field>
+                        
+        
 
         <field name="tecdocArticleId" type="integer" column="tecdoc_article_id" nullable="true">
             <options>
