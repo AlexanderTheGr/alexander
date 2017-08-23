@@ -1129,7 +1129,7 @@ class Product extends Entity {
 
     public function getForOrderCode() {
 
-        $out = '<a title="' . $this->title . '" class="product_info" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
+        $out = '<a title="' . $this->title . '" class="product_info" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->erpCode . ' ['.$this->lreplacer.']</a>
         <br>
         <span class="text-sm text-info">' . $this->erpCode . '</span>';
 
@@ -2312,6 +2312,7 @@ class Product extends Entity {
             $em->persist($product);
             $em->flush();
         }
+        
         $em->persist($this);
         $em->flush();
         
