@@ -697,16 +697,19 @@ class OrderController extends Main {
                 if ($resulttt["lreplacer"] == '') {
                     $resultr[0] = $resulttt;
                 } else {
-                    
-                    $sql = 'SELECT  ' . $this->select . ', p.reference, p.id, p.replaced, p.lreplacer
+
+                    $sql = 'SELECT  ' . $this->select . ', p.reference, p.id, p.replaced, p.lreplacer, p.qty,p.reserved
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where p.lreplacer = \''.$resulttt["lreplacer"].'\'';
+                                where p.lreplacer = \'' . $resulttt["lreplacer"] . '\'';
                     $sql = str_replace("p.*,", "", $sql);
                     //echo $sql;
                     $query = $em->createQuery($sql);
                     $resulttts = $query->getResult();
                     foreach (@(array) $resulttts as $resultt) {
-                       $resultr[] = $resultt;    
+                        $qty = $resultt["qty"] - $resultt["reserved"];
+                        if ($qty > 0 OR $resultt["replaced"] == '') {
+                            $resultr[] = $resultt;
+                        }
                     }
                     //continue;
                 }
