@@ -2268,7 +2268,26 @@ class Product extends Entity {
      * @return Product
      */
     public function setReplaced($replaced) {
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        
         $this->replaced = $replaced;
+        $this->lreplacer = $replaced;
+
+        $products = $em->getRepository("SoftoneBundle:Product")
+                ->findBy(array("lreplacer" => $this->erpCode)); 
+        
+        foreach($products as $product) {
+            $product->lreplacer = $replaced;
+            $em->persist($product);
+            $em->flush();
+        }
+        $em->persist($this);
+        $em->flush();
+        
         return $this;
     }
 
@@ -2289,7 +2308,7 @@ class Product extends Entity {
      * @return Product
      */
     public function setLreplacer($lreplacer) {
-        $this->lreplacer = $lreplacer;
+        //$this->lreplacer = $lreplacer;
         return $this;
     }
 
