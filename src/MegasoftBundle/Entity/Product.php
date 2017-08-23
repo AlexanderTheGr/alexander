@@ -2273,6 +2273,10 @@ class Product extends Entity {
             $kernel = $kernel->getKernel();
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $product = $em->getRepository("SoftoneBundle:Orderitem")
+                ->findOneBy(array("erpCode" => $replaced));
+        
+        if (!$product) return;
         
         $this->replaced = $replaced;
         $this->lreplacer = $replaced;
