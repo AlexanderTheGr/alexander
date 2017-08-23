@@ -2298,7 +2298,7 @@ class Product extends Entity {
                 ->findBy(array("lreplacer" => $this->erpCode)); 
         
         foreach($products as $product) {
-            $product->lreplacer = $replaced;
+            $product->lreplacer = $this->replaced;
             $em->persist($product);
             $em->flush();
         }
