@@ -2268,6 +2268,12 @@ class Product extends Entity {
      * @return Product
      */
     public function setReplaced($replaced) {
+        $this->replaced = $replaced;
+        return $this;
+    }
+
+    public function setReplacer() {
+        if (!$this->replaced) return;
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
@@ -2277,9 +2283,11 @@ class Product extends Entity {
                 ->findOneBy(array("erpCode" => $replaced));
         
         if (!$product) return;
+        $product->lreplacer = $replaced;
+        $em->persist($product);
+        $em->flush();
         
-        $this->replaced = $replaced;
-        $this->lreplacer = $replaced;
+        $this->lreplacer = $this->replaced;
 
         $products = $em->getRepository("SoftoneBundle:Product")
                 ->findBy(array("lreplacer" => $this->erpCode)); 
@@ -2293,8 +2301,9 @@ class Product extends Entity {
         $em->flush();
         
         return $this;
-    }
-
+    }    
+    
+    
     /**
      * Get replaced
      *
