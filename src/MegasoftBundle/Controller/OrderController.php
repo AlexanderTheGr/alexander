@@ -663,7 +663,7 @@ class OrderController extends Main {
                 }
 
 
-                //echo $sql;
+                echo $sql;
                 //exit;
 
                 $sql = str_replace("p.*,", "", $sql);
