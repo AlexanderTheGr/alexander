@@ -2288,7 +2288,7 @@ class Product extends Entity {
             $em->flush();            
             return;
         }
-        $product->lreplacer = $replaced;
+        $product->lreplacer = $this->replaced;
         $em->persist($product);
         $em->flush();
         
