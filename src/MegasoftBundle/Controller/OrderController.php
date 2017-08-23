@@ -588,8 +588,8 @@ class OrderController extends Main {
                     $search[1] = $this->clearstring($search[1]);
                     $sqlearch = "Select o.id from MegasoftBundle:ProductSearch o where o.erpCode like '%" . $search[1] . "%' OR o.erpCode like '%" . $search[1] . "%' OR o.supplierCode like '%" . $search[1] . "%'";
                 }
-                
-                
+
+
                 $qsupplier = "";
                 if ($dt_columns[3]["search"]["value"] > 3) {
 
@@ -693,77 +693,80 @@ class OrderController extends Main {
             $r = explode(":", $this->repository);
             $i = 0;
             foreach (@(array) $results as $resulttt) {
-                
-                if ($resulttt["lreplacer"] == '') { 
-                    $result = $resulttt;
+
+                if ($resulttt["lreplacer"] == '') {
+                    $resultr[0] = $resulttt;
                 } else {
-                    continue;                    
+                    continue;
                 }
-                $json = array();
-                foreach ($data["fields"] as $field) {
-                    if (@$field["index"]) {
-                        $field_relation = explode(":", $field["index"]);
-                        if (count($field_relation) > 1) {
-                            //echo $this->repository;
-                            $obj = $em->getRepository($this->repository)->find($result["id"]);
-                            foreach ($field_relation as $relation) {
-                                if ($obj)
-                                    $obj = $obj->getField($relation);
-                            }
-                            $val = $obj;
-                        } else {
-                            $val = @$result[$field["index"]];
-                        }
-                        if (@$field["method"]) {
-                            $method = $field["method"] . "Method";
-                            $json[] = $this->$method($val);
-                        } else {
-                            if (@$field["input"]) {
+                foreach ($resultr as $result) {
+
+                    $json = array();
+                    foreach ($data["fields"] as $field) {
+                        if (@$field["index"]) {
+                            $field_relation = explode(":", $field["index"]);
+                            if (count($field_relation) > 1) {
+                                //echo $this->repository;
                                 $obj = $em->getRepository($this->repository)->find($result["id"]);
-                                $ref = $obj->getField('reference'); //$result[$field["reference"]];
-                                $f[] = $obj->getField('tecdocArticleId');
-                                //$articleIds[] = $obj->getField('tecdocArticleId');
-                                $value = $field["index"] == 'qty' ? 1 : 1;
-                                $value = $field["index"] == 'edi' ? 1 : 1;
-                                $json[] = "<input data-id='" . $result["id"] . "' data-rep='" . $this->repository . "' data-ref='" . $ref . "' id='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "_" . $result["id"] . "' data-id='" . $result["id"] . "' class='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "' type='" . $field["input"] . "' value='$value'>";
+                                foreach ($field_relation as $relation) {
+                                    if ($obj)
+                                        $obj = $obj->getField($relation);
+                                }
+                                $val = $obj;
                             } else {
-                                $json[] = $val;
+                                $val = @$result[$field["index"]];
                             }
+                            if (@$field["method"]) {
+                                $method = $field["method"] . "Method";
+                                $json[] = $this->$method($val);
+                            } else {
+                                if (@$field["input"]) {
+                                    $obj = $em->getRepository($this->repository)->find($result["id"]);
+                                    $ref = $obj->getField('reference'); //$result[$field["reference"]];
+                                    $f[] = $obj->getField('tecdocArticleId');
+                                    //$articleIds[] = $obj->getField('tecdocArticleId');
+                                    $value = $field["index"] == 'qty' ? 1 : 1;
+                                    $value = $field["index"] == 'edi' ? 1 : 1;
+                                    $json[] = "<input data-id='" . $result["id"] . "' data-rep='" . $this->repository . "' data-ref='" . $ref . "' id='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "_" . $result["id"] . "' data-id='" . $result["id"] . "' class='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "' type='" . $field["input"] . "' value='$value'>";
+                                } else {
+                                    $json[] = $val;
+                                }
+                            }
+                        } elseif (@$field["function"]) {
+                            $func = $field["function"];
+                            $obj = $em->getRepository($this->repository)->find($result["id"]);
+                            $json[] = $obj->$func($order);
                         }
-                    } elseif (@$field["function"]) {
-                        $func = $field["function"];
-                        $obj = $em->getRepository($this->repository)->find($result["id"]);
-                        $json[] = $obj->$func($order);
                     }
+                    $apothema = $obj->getQty() - $obj->getReserved();
+                    $colorcss = $apothema > 0 ? "instock" : "outofstock";
+                    $json["DT_RowClass"] = $colorcss . " dt_row_" . strtolower($r[1]);
+                    $json["DT_RowId"] = 'dt_id_' . strtolower($r[1]) . '_' . $result["id"];
+                    /*
+                      if ($result["reference"]) {
+                      $jsonarr[(int) $result["reference"]] = $json;
+                      } else {
+
+                      $json[5] = str_replace("value='---'", "value='" . $obj->getField("itemPricew") . "'", $json[5]);
+                      $json[6] = str_replace("value='---'", "value='1'", $json[6]);
+                      $jsonarrnoref[$result["id"]] = $json;
+                      }
+                     * 
+                     */
+                    $json[4] = $obj->getArticleAttributes2($articleIds2["linkingTargetId"]);
+                    $json[6] = number_format($obj->getStoreRetailPrice() * $vat, 2, '.', '');
+
+                    $json[7] = $obj->getDiscount($customer, $vat);
+                    $json[8] = $obj->getGroupedDiscountPrice($customer, $vat); //str_replace($obj->$priceField, $obj->getGroupedDiscountPrice($customer), $json[5]);
+                    $qty = "lll"; //$json[9];
+                    $json[9] = $obj->getSisxetisi();
+                    $json[10] = $obj->getApothiki();
+                    //$json[11] = $qty;
+                    $json[11] = '<input data-id="' . $obj->getId() . '" data-rep="MegasoftBundle:Product" data-ref="' . $obj->getId() . '" id="MegasoftBundleProductQty_' . $obj->getId() . '" class="MegasoftBundleProductQty" type="text" value="1">';
+                    $json[12] = $obj->getTick($order);
+                    //$json[6] = str_replace("value='---'", "value='1'", $json[6]);
+                    $jsonarrnoref[$result["id"]] = $json;
                 }
-                $apothema = $obj->getQty() - $obj->getReserved();
-                $colorcss = $apothema > 0 ? "instock" : "outofstock";
-                $json["DT_RowClass"] = $colorcss . " dt_row_" . strtolower($r[1]);
-                $json["DT_RowId"] = 'dt_id_' . strtolower($r[1]) . '_' . $result["id"];
-                /*
-                  if ($result["reference"]) {
-                  $jsonarr[(int) $result["reference"]] = $json;
-                  } else {
-
-                  $json[5] = str_replace("value='---'", "value='" . $obj->getField("itemPricew") . "'", $json[5]);
-                  $json[6] = str_replace("value='---'", "value='1'", $json[6]);
-                  $jsonarrnoref[$result["id"]] = $json;
-                  }
-                 * 
-                 */
-                $json[4] = $obj->getArticleAttributes2($articleIds2["linkingTargetId"]);
-                $json[6] = number_format($obj->getStoreRetailPrice() * $vat, 2, '.', '');
-
-                $json[7] = $obj->getDiscount($customer, $vat);
-                $json[8] = $obj->getGroupedDiscountPrice($customer, $vat); //str_replace($obj->$priceField, $obj->getGroupedDiscountPrice($customer), $json[5]);
-                $qty = "lll"; //$json[9];
-                $json[9] = $obj->getSisxetisi();
-                $json[10] = $obj->getApothiki();
-                //$json[11] = $qty;
-                $json[11] = '<input data-id="' . $obj->getId() . '" data-rep="MegasoftBundle:Product" data-ref="' . $obj->getId() . '" id="MegasoftBundleProductQty_' . $obj->getId() . '" class="MegasoftBundleProductQty" type="text" value="1">';
-                $json[12] = $obj->getTick($order);
-                //$json[6] = str_replace("value='---'", "value='1'", $json[6]);
-                $jsonarrnoref[$result["id"]] = $json;
             }
 
             //$jsonarr = $this->megasoftCalculate($jsonarr, $id);
@@ -1328,7 +1331,7 @@ class OrderController extends Main {
             $dt->matched_count = count($matched);
 
             if (count($matched) == 0) {
-                $sql = "SELECT a.product FROM `megasoft_productcategory` a, `megasoft_productcar` b where a.product = b.product AND car = '" . $params["linkingTargetId"]. "' AND category = '" . $dt->assemblyGroupNodeId . "'";
+                $sql = "SELECT a.product FROM `megasoft_productcategory` a, `megasoft_productcar` b where a.product = b.product AND car = '" . $params["linkingTargetId"] . "' AND category = '" . $dt->assemblyGroupNodeId . "'";
                 $connection = $this->getDoctrine()->getConnection();
                 $statement = $connection->prepare($sql);
                 $statement->execute();
