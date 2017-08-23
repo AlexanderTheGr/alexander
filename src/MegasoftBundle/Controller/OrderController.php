@@ -590,7 +590,7 @@ class OrderController extends Main {
                 }
                 
                 
-                $replacer = "Select r.id from MegasoftBundle:Product r where r.lreplacer != '' AND r.lreplacer = p.erpCode";
+                $replacer = "Select r.id from MegasoftBundle:Product r where r.lreplacer = p.erpCode";
                 
                 $qsupplier = "";
                 if ($dt_columns[3]["search"]["value"] > 3) {
