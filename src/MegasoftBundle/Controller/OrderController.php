@@ -693,11 +693,21 @@ class OrderController extends Main {
             $r = explode(":", $this->repository);
             $i = 0;
             foreach (@(array) $results as $resulttt) {
-
+                $resultr = array();
                 if ($resulttt["lreplacer"] == '') {
                     $resultr[0] = $resulttt;
                 } else {
-                    continue;
+                    
+                    $sql = 'SELECT  ' . $this->select . ', p.reference, p.id, p.replaced, p.lreplacer
+                                FROM ' . $this->repository . ' ' . $this->prefix . '
+                                where p.lreplacer = "'.$resulttt["lreplacer"].'"';
+                    $sql = str_replace("p.*,", "", $sql);
+                    $query = $em->createQuery($sql);
+                    $resulttts = $query->getResult();
+                    foreach (@(array) $resulttts as $resultt) {
+                       $resultr[] = $resultt;    
+                    }
+                    //continue;
                 }
                 foreach ($resultr as $result) {
 
