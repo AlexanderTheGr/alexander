@@ -658,12 +658,12 @@ class OrderController extends Main {
                 } else {
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id, p.replaced, p.lreplacer
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where ' . $qsupplier . ' (' . $this->prefix . '.id in (' . $sqlearch . ') OR (' . $this->prefix . '.id in (' . $replacer . ') OR ' . $sisxetisi . ')' . $extras . ' 
+                                where ' . $qsupplier . ' (' . $this->prefix . '.id in (' . $sqlearch . ') OR (' . $this->prefix . '.id in (' . $replacer . ')) OR ' . $sisxetisi . ')' . $extras . ' 
                                 ORDER BY ' . $this->orderBy;
                 }
 
 
-                echo $sql;
+                //echo $sql;
                 //exit;
 
                 $sql = str_replace("p.*,", "", $sql);
