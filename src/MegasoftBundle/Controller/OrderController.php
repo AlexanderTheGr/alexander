@@ -586,11 +586,9 @@ class OrderController extends Main {
                     $sqlearch = "Select o.id from MegasoftBundle:Product o where o.supplierCode like '" . $search[1] . "%'";
                 } else {
                     $search[1] = $this->clearstring($search[1]);
-                    $sqlearch = "Select o.id from MegasoftBundle:ProductSearch o where p.erpCode like '%" . $search[1] . "%' OR o.erpCode like '%" . $search[1] . "%' OR o.supplierCode like '%" . $search[1] . "%'";
+                    $sqlearch = "Select o.id from MegasoftBundle:ProductSearch o where o.erpCode like '%" . $search[1] . "%' OR o.erpCode like '%" . $search[1] . "%' OR o.supplierCode like '%" . $search[1] . "%'";
                 }
                 
-                
-                $replacer = "Select r.id from MegasoftBundle:Product r where r.lreplacer = p.erpCode";
                 
                 $qsupplier = "";
                 if ($dt_columns[3]["search"]["value"] > 3) {
@@ -658,7 +656,7 @@ class OrderController extends Main {
                 } else {
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id, p.replaced, p.lreplacer
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where OR ' . $qsupplier . ' (' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . ')' . $extras . ' 
+                                where ' . $qsupplier . ' (' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . ')' . $extras . ' 
                                 ORDER BY ' . $this->orderBy;
                 }
 
