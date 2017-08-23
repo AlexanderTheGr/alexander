@@ -2279,7 +2279,7 @@ class Product extends Entity {
             $kernel = $kernel->getKernel();
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
-        $product = $em->getRepository("SoftoneBundle:Product")
+        $product = $em->getRepository("MegasoftBundle:Product")
                 ->findOneBy(array("erpCode" => $replaced));
         
         if (!$product) {
@@ -2294,7 +2294,7 @@ class Product extends Entity {
         
         $this->lreplacer = $this->replaced;
 
-        $products = $em->getRepository("SoftoneBundle:Product")
+        $products = $em->getRepository("MegasoftBundle:Product")
                 ->findBy(array("lreplacer" => $this->erpCode)); 
         
         foreach($products as $product) {
