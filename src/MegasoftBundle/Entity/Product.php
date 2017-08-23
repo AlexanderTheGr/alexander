@@ -2282,7 +2282,12 @@ class Product extends Entity {
         $product = $em->getRepository("SoftoneBundle:Orderitem")
                 ->findOneBy(array("erpCode" => $replaced));
         
-        if (!$product) return;
+        if (!$product) {
+            $this->replaced = '';
+            $em->persist($this);
+            $em->flush();            
+            return;
+        }
         $product->lreplacer = $replaced;
         $em->persist($product);
         $em->flush();
