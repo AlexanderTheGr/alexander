@@ -10,6 +10,8 @@
             <index name="tecdoc_article_id" columns="tecdoc_article_id"/>
             <index name="tecdoc_code" columns="tecdoc_code"/>
             <index name="sisxetisi" columns="sisxetisi"/>
+            <index name="replaced" columns="replaced"/>
+            <index name="lreplacer" columns="lreplacer"/>
         </indexes>
         <unique-constraints>
             <unique-constraint name="u_erp_code" columns="erp_code"/>
