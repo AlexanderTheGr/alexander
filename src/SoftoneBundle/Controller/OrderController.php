@@ -1284,7 +1284,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
      */
     function getmodels(Request $request) {
         $repository = $this->getDoctrine()->getRepository('SoftoneBundle:BrandModel');
-        $brandsmodels = $repository->findBy(array('brand' => $request->request->get("brand")), array('brandModel' => 'ASC'));
+        $brandsmodels = $repository->findBy(array('brand' => $request->request->get("brand"),'enable'=>1), array('brandModel' => 'ASC'));
         $out = array();
         $o["id"] = 0;
         $o["name"] = "Select an Option";
