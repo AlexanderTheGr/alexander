@@ -2272,6 +2272,33 @@ class Product extends Entity {
         return $this;
     }
 
+    
+    public function setChainReplacer() {
+        //if (!$this->replaced) return;
+        //if ($this->lreplacer != '' AND $this->lreplacer != $this->erpCode) return;
+        
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $product = $em->getRepository("MegasoftBundle:Product")
+                ->findOneBy(array("replaced" => $this->erpCode));
+        
+        while ($product) {
+            $this->lreplacer = $this->erpCode;
+            $product->lreplacer = $this->erpCode;
+            $em->persist($this);
+            $em->flush();  
+            $product = $em->getRepository("MegasoftBundle:Product")->findOneBy(array("replaced" => $product->erpCode));
+            if ($i++ > 10) return;
+        }
+        $em->persist($this);
+        $em->flush(); 
+        return $this;        
+    }
+    
+    
     public function setReplacer() {
         if (!$this->replaced) return;
         if ($this->lreplacer != '' AND $this->lreplacer != $this->erpCode) return;
