@@ -1249,6 +1249,8 @@ class ProductController extends Main {
         $statement->execute();
         $results = $statement->fetchAll();
         $arr = array();
+        print_r($results);
+        exit;
         foreach ($results as $data) {
             //$arr[] = $data;
             $product = $this->getDoctrine()->getRepository("MegasoftBundle:Product")
