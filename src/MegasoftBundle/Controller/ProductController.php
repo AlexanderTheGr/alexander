@@ -1243,7 +1243,7 @@ class ProductController extends Main {
      * @Route("/erp01/product/getReplacedProducts")
      */
     public function getReplacedProducts(Request $request) {
-        exit;
+        //exit;
         $sql = "SELECT id FROM `megasoft_product` WHERE replaced = '' AND `erp_code` in (SELECT `replaced` FROM `megasoft_product` WHERE `replaced` != '')";
         $connection = $this->getDoctrine()->getConnection();
         $statement = $connection->prepare($sql);
