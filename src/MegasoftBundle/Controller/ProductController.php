@@ -1249,10 +1249,11 @@ class ProductController extends Main {
         $statement->execute();
         $results = $statement->fetchAll();
         $arr = array();
-        print_r($results);
-        exit;
+
         foreach ($results as $data) {
             //$arr[] = $data;
+            print_r($data);
+            exit;
             $product = $this->getDoctrine()->getRepository("MegasoftBundle:Product")
                 ->find(array("replaced" => $data["id"]));
             exit;
