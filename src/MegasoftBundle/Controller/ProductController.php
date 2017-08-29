@@ -1252,10 +1252,10 @@ class ProductController extends Main {
 
         foreach ($results as $data) {
             //$arr[] = $data;
-            print_r($data);
-            exit;
-            $product = $this->getDoctrine()->getRepository("MegasoftBundle:Product")
-                ->find(array("replaced" => $data["id"]));
+            //print_r($data);
+            //exit;
+            $product = $this->getDoctrine()->getRepository("MegasoftBundle:Product")->find(data["id"]);
+            $product->setChainReplacer();
             exit;
         }
     }
