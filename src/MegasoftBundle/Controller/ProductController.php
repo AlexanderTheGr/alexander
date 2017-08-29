@@ -1250,15 +1250,15 @@ class ProductController extends Main {
         $results = $statement->fetchAll();
         $arr = array();
 
-        foreach ($results as $data) {
+       // foreach ($results as $data) {
             //$arr[] = $data;
             //print_r($data);
             //exit;
-            $product = $this->getDoctrine()->getRepository("MegasoftBundle:Product")->find($data["id"]);
+            $product = $this->getDoctrine()->getRepository("MegasoftBundle:Product")->find(182326);
             $product->setChainReplacer();
             if ($i++ > 100)
             exit;
-        }
+       // }
     }
 
     /**
