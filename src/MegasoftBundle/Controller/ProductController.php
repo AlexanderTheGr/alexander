@@ -1256,8 +1256,8 @@ class ProductController extends Main {
             //exit;
             $product = $this->getDoctrine()->getRepository("MegasoftBundle:Product")->find(182326);
             $product->setChainReplacer();
-            if ($i++ > 100)
-            exit;
+            //if ($i++ > 100)
+            //exit;
         }
     }
 
