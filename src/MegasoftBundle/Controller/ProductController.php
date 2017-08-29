@@ -361,9 +361,9 @@ class ProductController extends Main {
         }
         $product->setSupplierCode($this->clearstring($product->getSupplierCode()));
         $this->flushpersist($product);
-        
-        $product->setReplacer(); 
-        
+
+        $product->setReplacer();
+
         //echo $product->id."\n";
         //echo $product->reference."\n";
         //$product = $this->newentity[$this->repository];
@@ -1009,7 +1009,7 @@ class ProductController extends Main {
 
     public function getCars($product) {
         $brands = $this->getDoctrine()
-                        ->getRepository('SoftoneBundle:Brand')->findBy(array("id"=>24), array('brand' => 'ASC'));
+                        ->getRepository('SoftoneBundle:Brand')->findBy(array("id" => 24), array('brand' => 'ASC'));
 
 
         $cars = (array) $product->getCars();
@@ -1033,7 +1033,7 @@ class ProductController extends Main {
             $html .= "<a " . $style . " style='" . $style1 . "' data-ref='" . $brand->getId() . "' class='brandlia'>" . $brand->getBrand() . "</a>";
             $html .= "<ul  style='display:none' class='pbrandmodels pbrandmodels_" . $brand->getId() . "'>";
             foreach ($brandmodels as $brandmodel) {
-                
+
                 /*
                   $brandmodeltypes = $this->getDoctrine()
                   ->getRepository('SoftoneBundle:BrandModelType')->findBy(array("brandModel" => $brandmodel->getId()), array('brandModelType' => 'ASC'));
@@ -1214,7 +1214,7 @@ class ProductController extends Main {
         $fields[] = array("name" => "Code", "index" => 'erpCode');
         $fields[] = array("name" => "Store Code", "index" => 'erpCode2');
         $fields[] = array("name" => "Article Name", "index" => 'tecdocArticleName');
-        
+
         //$fields[] = array("name" => "Supplier", "index" => 'supplier:title', 'type' => 'select', 'object' => 'MegasoftSupplier');
         $fields[] = array("name" => "Προσφορά", "index" => 'productSale:title', 'type' => 'select', 'object' => 'ProductSale');
         //$fields[] = array("name" => "Ράφι", "index" => 'itemMtrplace');
@@ -1238,7 +1238,26 @@ class ProductController extends Main {
     }
 
     /**
+     *  
      * 
+     * @Route("/erp01/product/getReplacedProducts")
+     */
+    public function getReplacedProducts(Request $request) {
+        $sql = "SELECT id FROM `megasoft_product` WHERE `erp_code` in (SELECT `replaced` FROM `megasoft_product` WHERE `replaced` != '')";
+        $connection = $this->getDoctrine()->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $results = $statement->fetchAll();
+        $arr = array();
+        foreach ($results as $data) {
+            //$arr[] = $data;
+            $product = $em->getRepository("MegasoftBundle:Product")
+                ->find(array("replaced" => $data["id"]));
+        }
+    }
+
+    /**
+     *  SELECT * FROM `megasoft_product` WHERE `erp_code` in (SELECT `replaced` FROM `megasoft_product` WHERE `replaced` != '')
      * 
      * @Route("/erp01/product/getFanoProducts")
      */
@@ -1575,7 +1594,7 @@ class ProductController extends Main {
                 ->findOneBy(array("erpCode" => $data["StoreKwd"]));
 
 
-        
+
         $dt = new \DateTime("now");
 
         if (!$entity) {
@@ -1584,7 +1603,7 @@ class ProductController extends Main {
             $entity->setCreated($dt);
             $entity->setModified($dt);
         } else {
-            echo $entity->getId()."<BR>";
+            echo $entity->getId() . "<BR>";
             return;
             //if ($entity->getId() < 172652)
             //    return;
