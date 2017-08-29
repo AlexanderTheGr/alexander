@@ -1253,6 +1253,7 @@ class ProductController extends Main {
             //$arr[] = $data;
             $product = $em->getRepository("MegasoftBundle:Product")
                 ->find(array("replaced" => $data["id"]));
+            exit;
         }
     }
 
