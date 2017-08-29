@@ -2288,7 +2288,7 @@ class Product extends Entity {
         while ($product) {
             $this->lreplacer = $this->erpCode;
             $product->lreplacer = $this->erpCode;
-            $em->persist($this);
+            $em->persist($product);
             $em->flush();  
             $product = $em->getRepository("MegasoftBundle:Product")->findOneBy(array("replaced" => $product->erpCode));
             if ($i++ > 10) return;
