@@ -1251,7 +1251,7 @@ class ProductController extends Main {
         $arr = array();
         foreach ($results as $data) {
             //$arr[] = $data;
-            $product = $em->getRepository("MegasoftBundle:Product")
+            $product = $this->getDoctrine()->getRepository("MegasoftBundle:Product")
                 ->find(array("replaced" => $data["id"]));
             exit;
         }
