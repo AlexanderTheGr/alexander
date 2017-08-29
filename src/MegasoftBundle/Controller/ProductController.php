@@ -1255,7 +1255,7 @@ class ProductController extends Main {
             //$arr[] = $data;
             //print_r($data);
             //exit;
-            $product = $this->getDoctrine()->getRepository("MegasoftBundle:Product")->find(182326);
+            $product = $this->getDoctrine()->getRepository("MegasoftBundle:Product")->find($data["id"]);
             $product->setChainReplacer();
             //if ($i++ > 100)
             //exit;
