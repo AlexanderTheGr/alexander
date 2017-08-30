@@ -1273,6 +1273,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //echo "<BR>";
             //exit;
             //echo $data["MTRL"]."<BR>";
+            if ($i++ < 23000) continue;
             $entity = $this->getDoctrine()
                     ->getRepository($this->repository)
                     ->findOneBy(array("reference" => (int) $data["MTRL"]));
@@ -1294,7 +1295,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $entity->setCreated($dt);
                 $entity->setModified($dt);
             } else {
-                //continue;
+                continue;
                 //$entity->setRepositories();                
             }
 
