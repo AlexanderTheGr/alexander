@@ -1355,7 +1355,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     //$entity->setField($baz, $val);
                 }
             }
-            print_r($data);
+            //print_r($data);
             if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
 
                 if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
