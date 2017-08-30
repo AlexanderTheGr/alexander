@@ -1404,7 +1404,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $em->getConnection()->exec($sql);
             } else {
                 $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->id . "'";
-                echo $sql . "<BR>";
+                echo ".";
+                //echo $sql . "<BR>";
+                //
                 //$em->getConnection()->exec($sql);
                 continue;
             }
