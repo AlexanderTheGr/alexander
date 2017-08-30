@@ -1263,6 +1263,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
         };         
         ini_set('memory_limit', '12256M');
+        
+        echo count($datas->data);
+        echo "<BR>";
+        
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
             //print_r($data);
