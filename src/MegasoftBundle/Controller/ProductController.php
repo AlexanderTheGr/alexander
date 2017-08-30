@@ -1244,7 +1244,7 @@ class ProductController extends Main {
      */
     public function getReplacedProducts(Request $request) {
         //exit;
-        $sql = "SELECT id FROM `megasoft_product` WHERE replaced = '' AND `erp_code` in (SELECT `replaced` FROM `megasoft_product` WHERE `replaced` != '')";
+        $sql = "SELECT id FROM `megasoft_product` WHERE lreplacer = '' AND replaced = '' AND `erp_code` in (SELECT `replaced` FROM `megasoft_product` WHERE `replaced` != '')";
         $connection = $this->getDoctrine()->getConnection();
         $statement = $connection->prepare($sql);
         $statement->execute();
