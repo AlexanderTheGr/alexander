@@ -1396,7 +1396,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $q[] = "`" . strtolower($params["softone_object"] . "_cccwebupd") . "` = '" . addslashes($data["CCCWEBUPD"]) . "'";
                 $q[] = "`" . strtolower($params["softone_object"] . "_cccref") . "` = '" . addslashes($data["CCCREF"]) . "'";
             }
-            print_r($q);
+            //print_r($q);
             if (@$entity->id == 0) {
                 $q[] = "`reference` = '" . $data[$params["softone_table"]] . "'";
                 $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
