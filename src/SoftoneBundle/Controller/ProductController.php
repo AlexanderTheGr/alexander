@@ -1405,8 +1405,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             } else {
                 $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->id . "'";
                 echo $sql . "<BR>";
-                $em->getConnection()->exec($sql);
-                //continue;
+                //$em->getConnection()->exec($sql);
+                continue;
             }
             $entity = $this->getDoctrine()
                     ->getRepository($params["repository"])
