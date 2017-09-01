@@ -2377,4 +2377,149 @@ class Product extends Entity {
         return $this->lreplacer;
     }
 
+    /**
+     * @var string
+     */
+    private $price1 = '0';
+
+    /**
+     * @var string
+     */
+    private $price2 = '0';
+
+    /**
+     * @var string
+     */
+    private $price3 = '0';
+
+    /**
+     * @var string
+     */
+    private $price4 = '0';
+
+    /**
+     * @var string
+     */
+    private $price5 = '0';
+
+
+    /**
+     * Set price1
+     *
+     * @param string $price1
+     *
+     * @return Product
+     */
+    public function setPrice1($price1)
+    {
+        $this->price1 = $price1;
+
+        return $this;
+    }
+
+    /**
+     * Get price1
+     *
+     * @return string
+     */
+    public function getPrice1()
+    {
+        return $this->price1;
+    }
+
+    /**
+     * Set price2
+     *
+     * @param string $price2
+     *
+     * @return Product
+     */
+    public function setPrice2($price2)
+    {
+        $this->price2 = $price2;
+
+        return $this;
+    }
+
+    /**
+     * Get price2
+     *
+     * @return string
+     */
+    public function getPrice2()
+    {
+        return $this->price2;
+    }
+
+    /**
+     * Set price3
+     *
+     * @param string $price3
+     *
+     * @return Product
+     */
+    public function setPrice3($price3)
+    {
+        $this->price3 = $price3;
+
+        return $this;
+    }
+
+    /**
+     * Get price3
+     *
+     * @return string
+     */
+    public function getPrice3()
+    {
+        return $this->price3;
+    }
+
+    /**
+     * Set price4
+     *
+     * @param string $price4
+     *
+     * @return Product
+     */
+    public function setPrice4($price4)
+    {
+        $this->price4 = $price4;
+
+        return $this;
+    }
+
+    /**
+     * Get price4
+     *
+     * @return string
+     */
+    public function getPrice4()
+    {
+        return $this->price4;
+    }
+
+    /**
+     * Set price5
+     *
+     * @param string $price5
+     *
+     * @return Product
+     */
+    public function setPrice5($price5)
+    {
+        $this->price5 = $price5;
+
+        return $this;
+    }
+
+    /**
+     * Get price5
+     *
+     * @return string
+     */
+    public function getPrice5()
+    {
+        return $this->price5;
+    }
 }
