@@ -1112,7 +1112,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         if (count($params) > 0) {
             if ($MTRL1 > 0) {
-                $where = " AND  UPDDATE >= '" . date("Y-m-d", strtotime("-2 days")) . "' ORDER BY MTRL";
+                $where = " AND  UPDDATE >= '" . date("Y-m-d", strtotime("-5 days")) . "' ORDER BY MTRL";
 
                 //$where = " AND UPDDATE = '" . date("Y-m-d") . "'";
             } else {
