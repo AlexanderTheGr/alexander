@@ -1116,7 +1116,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
                 //$where = " AND UPDDATE = '" . date("Y-m-d") . "'";
             } else {
-                $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-200 days")) . "' ORDER BY MTRL";
+                $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-2 days")) . "' ORDER BY MTRL";
             }
 
             if ($MTRL > 0) {
@@ -1432,8 +1432,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
              * 
              */
             $entity = null;
-            //if (@$i++ > 150)
-            //    break;
+            if (@$i++ > 150)
+                break;
         }
     }
 
