@@ -260,7 +260,10 @@ class CustomerController extends Main {
 
         $priceField[] = array("value" => "storeRetailPrice", "name" => "Λιανική");
         $priceField[] = array("value" => "storeWholeSalePrice", "name" => "Χονδρική");
-
+        
+        $priceField[] = array("value" => "price1", "name" => $this->getTranslation("price1"));
+        $priceField[] = array("value" => "price2", "name" => $this->getTranslation("price2"));
+        $priceField[] = array("value" => "price3", "name" => $this->getTranslation("price3"));
 
 
         $fields["priceField"] = array("label" => "Κατάλογος", "className" => "col-md-6", 'type' => "select", "required" => true, 'dataarray' => $priceField);
