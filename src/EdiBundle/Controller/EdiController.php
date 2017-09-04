@@ -51,13 +51,24 @@ class EdiController extends Main {
             $entity = new Edi;
         }
 
-        $suppliers = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")->findAll();
-        $supplierArr = array();
-        foreach ($suppliers as $supplier) {
-            $title = str_replace("'", "", $supplier->getTitle());
-            $supplierArr[$supplier->getId()] = $title;
+
+        if ($this->getSetting("AppBundle:Erp:erpprefix") == '/erp01') {
+            $suppliers = $this->getDoctrine()->getRepository("MegasoftBundle:Manufacturer")->findAll();
+            $supplierArr = array();
+            foreach ($suppliers as $supplier) {
+                $title = str_replace("'", "", $supplier->getTitle());
+                $supplierArr[$supplier->getId()] = $title;
+            }
+            $supplierjson = json_encode($supplierArr);
+        } else {
+            $suppliers = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")->findAll();
+            $supplierArr = array();
+            foreach ($suppliers as $supplier) {
+                $title = str_replace("'", "", $supplier->getTitle());
+                $supplierArr[$supplier->getId()] = $title;
+            }
+            $supplierjson = json_encode($supplierArr);
         }
-        $supplierjson = json_encode($supplierArr);
 
         $categories = $this->getDoctrine()->getRepository("SoftoneBundle:Category")->findBy(array("parent" => 0));
         $categoriesArr = array();
@@ -707,14 +718,14 @@ class EdiController extends Main {
                 //echo "."."[".$attributes['similarartnr']."][".$attributes['artnr']."]";
                 //if ($attributes['similarartnr'] == '')  continue;
                 //if ($attributes['artnr'] == '')  continue;
-                
-                
+
+
                 if ((int) $attributes['dlnr'] == 0)
                     $attributes['dlnr'] = $attributes['similardlnr'];
                 if ($attributes['artnr'] == '') {
                     $attributes['artnr'] = $attributes['similarartnr'];
                 }
-                
+
 
 
                 $attributes['wholesaleprice'] = $attributes['pricew'] > 0 ? $attributes['pricew'] : $attributes['netprice'];
