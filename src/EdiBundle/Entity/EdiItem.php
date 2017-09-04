@@ -1401,13 +1401,14 @@ class EdiItem extends Entity {
         //echo "-".$pricefield."-";
         foreach ($rules as $rule) {
             //echo "aaaa";
-            echo $rule->getVal().",";
+            //echo $rule->getVal().",";
            
             if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
                 $sortorder = $rule->getSortorder();
                 $markup = $rule->getVal();
                 $price = $rule->getPrice();
                 //echo $markup;
+                echo ";;;;;;";
             }
         }
         return $markup;
