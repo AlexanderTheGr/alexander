@@ -1403,6 +1403,7 @@ class EdiItem extends Entity {
             //echo "aaaa";
             //echo $rule->getVal().",";
             echo $this->getItemCode().",";
+            echo $this->getBrand().",";
             if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
                 $sortorder = $rule->getSortorder();
                 $markup = $rule->getVal();
