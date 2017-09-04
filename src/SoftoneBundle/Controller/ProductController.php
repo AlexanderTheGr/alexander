@@ -1112,8 +1112,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         if (count($params) > 0) {
             if ($MTRL1 > 0) {
-                $where = " AND  UPDDATE >= '" . date("Y-m-d", strtotime("-35 days")) . "' ORDER BY MTRL";
-
+                //$where = " AND  UPDDATE >= '" . date("Y-m-d", strtotime("-35 days")) . "' ORDER BY MTRL";
+                $where = " AND  MTRL >= ".$MTRL1." AND MTRL < ".$MTRL2."  ORDER BY MTRL"; 
                 //$where = " AND UPDDATE = '" . date("Y-m-d") . "'";
             } else {
                 $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-10 days")) . "' ORDER BY MTRL";
@@ -1267,7 +1267,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         
         echo count($datas->data);
         echo "<BR>";
-        
+        exit;
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
             //print_r($data);
