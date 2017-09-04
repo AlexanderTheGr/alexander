@@ -1099,7 +1099,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline' OR $this->getSetting("SoftoneBundle:Softone:merchant") == 'gianop') {
             //$MTRL = 263528;
             $MTRL1 = 1;
-            $MTRL2 = 230000;
+            $MTRL2 = 30000;
             $UPDDATE = date("-1 week");
         }
 
@@ -1107,7 +1107,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
 
 
-        $extra["foxline"] = array("CCCFXRELTDCODE" => "CCCFXRELTDCODE", "CCCFXRELBRAND" => "CCCFXRELBRAND", "CCCFXTDBRAND" => "CCCFXTDBRAND");
+        //$extra["foxline"] = array("CCCFXRELTDCODE" => "CCCFXRELTDCODE", "CCCFXRELBRAND" => "CCCFXRELBRAND", "CCCFXTDBRAND" => "CCCFXTDBRAND");
         //$extra["foxline"] = array("CCCFXRELTDCODE" => "CCCFXRELTDCODE", "CCCFXRELBRAND" => "CCCFXRELBRAND");
 
         if (count($params) > 0) {
