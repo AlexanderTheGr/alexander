@@ -1251,7 +1251,7 @@ class ProductController extends Main {
         $results = $statement->fetchAll();
         $arr = array();
 
-       foreach ($results as $data) {
+        foreach ($results as $data) {
             //$arr[] = $data;
             //print_r($data);
             //exit;
@@ -1522,7 +1522,7 @@ class ProductController extends Main {
         $header = array('Contect-Type:application/xml', 'Accept:application/xml');
         curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=2017-08-21&ParticipateInEshop=1");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=2017-09-01&ParticipateInEshop=1");
         curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
         // in real life you should use something like:
         // curl_setopt($ch, CURLOPT_POSTFIELDS,
@@ -1546,25 +1546,25 @@ class ProductController extends Main {
 
 
 
-        /*
-
-          if (count($response->DownloadStoreBaseResponse) == 1) {
-          $StoreDetails[] = $response->$response->DownloadStoreBaseResponse;
-          } elseif (count($response->$response->DownloadStoreBaseResponse) > 1) {
-          $StoreDetails = $response->$response->DownloadStoreBaseResponse;
-          }
 
 
+        if (count($response->DownloadStoreBaseResponse) == 1) {
+            $StoreDetails[] = $response->$response->DownloadStoreBaseResponse;
+        } elseif (count($response->$response->DownloadStoreBaseResponse) > 1) {
+            $StoreDetails = $response->$response->DownloadStoreBaseResponse;
+        }
 
-          //echo count($response->GetProductsResult->StoreDetails);
-          echo "<BR>";
-          exit;
-          if (count($response->GetProductsResult->StoreDetails) == 1) {
-          $StoreDetails[] = $response->GetProductsResult->StoreDetails;
-          } elseif (count($response->GetProductsResult->StoreDetails) > 1) {
-          $StoreDetails = $response->GetProductsResult->StoreDetails;
-          }
-         */
+
+
+        //echo count($response->GetProductsResult->StoreDetails);
+        echo "<BR>";
+        exit;
+        if (count($response->GetProductsResult->StoreDetails) == 1) {
+            $StoreDetails[] = $response->GetProductsResult->StoreDetails;
+        } elseif (count($response->GetProductsResult->StoreDetails) > 1) {
+            $StoreDetails = $response->GetProductsResult->StoreDetails;
+        }
+
         //print_r($StoreDetails);
         // exit;
 
