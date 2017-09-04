@@ -2,10 +2,13 @@
 
 namespace EdiBundle\Entity;
 
+use Symfony\Component\HttpFoundation\Session\Session;
+use AppBundle\Entity\Entity;
+
 /**
  * Edirule
  */
-class Edirule {
+class Edirule extends Entity {
 
     /**
      * @var string
