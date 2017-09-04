@@ -1116,7 +1116,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $where = " AND  MTRL >= ".$MTRL1." AND MTRL < ".$MTRL2."  ORDER BY MTRL"; 
                 //$where = " AND UPDDATE = '" . date("Y-m-d") . "'";
             } else {
-                $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-10 days")) . "' ORDER BY MTRL";
+                $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-5 days")) . "' ORDER BY MTRL";
             }
             
 
@@ -1267,7 +1267,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         ini_set('memory_limit', '12256M');
         
         echo count($datas->data);
-        //print_r($datas);
+        print_r($datas);
         echo "<BR>";
         exit;
         foreach ((array) $datas->data as $data) {
