@@ -1098,7 +1098,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline' OR $this->getSetting("SoftoneBundle:Softone:merchant") == 'gianop') {
             //$MTRL = 263528;
-            $MTRL1 = 1;
+            $MTRL1 = 0;
             $MTRL2 = 100;
             $UPDDATE = date("-1 week");
         }
@@ -1267,7 +1267,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         ini_set('memory_limit', '12256M');
         
         echo count($datas->data);
-        print_r($datas);
+        //print_r($datas);
         echo "<BR>";
         exit;
         foreach ((array) $datas->data as $data) {
