@@ -1610,7 +1610,7 @@ class ProductController extends Main {
             $entity->setModified($dt);
         } else {
             echo $entity->getId() . "<BR>";
-            return;
+            //return;
             //if ($entity->getId() < 172652)
             //    return;
             //continue;
