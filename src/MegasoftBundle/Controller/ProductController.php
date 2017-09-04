@@ -1571,7 +1571,7 @@ class ProductController extends Main {
         foreach ($StoreDetails as $data) {
             echo "[".$i++;
             echo "]<BR>";
-            if ($i < 43845)
+            if ($i < 88134)
                 continue;            
             $this->setProduct($data);
             //if ($i++ > 100) return;
