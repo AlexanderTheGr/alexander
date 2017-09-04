@@ -1394,7 +1394,7 @@ class EdiItem extends Entity {
     }
 
     function getEdiMarkup($pricefield = false) {
-
+        echo $pricefield;
         $rules = $this->getEdi()->loadEdirules($pricefield)->getRules();
         $sortorder = 0;
         $markup = $this->markup;
