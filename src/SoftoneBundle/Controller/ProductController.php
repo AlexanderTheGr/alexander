@@ -1884,7 +1884,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/product/getProducts")
      */
     public function getProducts(Request $request) {
-        $allowedips = $this->getSetting("MegasoftBundle:Product:Allowedips");
+        $allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
         $allowedipsArr = explode(",", $allowedips);
         if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
             $sql = "SELECT * FROM  `softone_product` where erp_supplier != 'GBG'";
