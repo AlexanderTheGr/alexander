@@ -1884,7 +1884,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/product/getProducts")
      */
     public function getProducts(Request $request) {
-        echo 'ssss';
+        //echo 'ssss';
         $allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
         $allowedipsArr = explode(",", $allowedips);
         //if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
