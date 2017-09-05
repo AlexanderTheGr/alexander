@@ -25,7 +25,7 @@ security:
         - { path: ^/product/retrieveSoftone, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/order/setb2border*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/customer/retrieve*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-
+        - { path: ^/product/getProducts*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         
         - { path: ^/erp01/customergroup/getrulesjson/*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/erp01/customer/getrulesjson/*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
