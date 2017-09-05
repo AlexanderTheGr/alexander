@@ -1887,7 +1887,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
         $allowedipsArr = explode(",", $allowedips);
         if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
-            $sql = "SELECT * FROM  `softone_product` where erp_supplier != 'GBG'";
+            $sql = "SELECT * FROM  `softone_product`";
             $connection = $this->getDoctrine()->getConnection();
             $statement = $connection->prepare($sql);
             $statement->execute();
