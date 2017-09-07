@@ -1792,9 +1792,9 @@ class Product extends Entity {
             return;
 
         //echo 'sss';	
-
-        $this->setTecdocArticleId($out->articleId);
-        $this->setTecdocArticleName($out->articleName);
+        if ($this->getTecdocArticleId() > 0) return;
+        //$this->setTecdocArticleId($out->articleId);
+        //$this->setTecdocArticleName($out->articleName);
 
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
