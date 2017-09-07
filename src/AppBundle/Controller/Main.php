@@ -85,20 +85,20 @@ class Main extends Controller {
                     $fields[] = $field["index"];
                     $field_relation = explode(":", $field["index"]);
                     if (count($field_relation) == 1) {
-                        if ($this->clearstring($dt_search["value"]) != "") {
-                            $this->q_or[] = $this->prefix . "." . $field["index"] . " LIKE '%" . $this->clearstring($dt_search["value"]) . "%'";
+                        if ($this->clearstring2($dt_search["value"]) != "") {
+                            $this->q_or[] = $this->prefix . "." . $field["index"] . " LIKE '%" . $this->clearstring2($dt_search["value"]) . "%'";
                             //$this->q_or[] = $this->prefix . "." . $field["index"] . " LIKE '%" . $dt_search["value"] . "%'";
                         }
                         if (@$field["method"] == 'yesno') {
-                            if (@$this->clearstring($dt_columns[$index]["search"]["value"]) == "0") {
+                            if (@$this->clearstring2($dt_columns[$index]["search"]["value"]) == "0") {
                                 $this->q_and[] = "(".$this->prefix . "." . $this->fields[$index]["index"] . " = 0 OR ".$this->prefix . "." . $this->fields[$index]["index"] . " IS NULL)";
                             }   
-                            if (@$this->clearstring($dt_columns[$index]["search"]["value"]) == "1") {
+                            if (@$this->clearstring2($dt_columns[$index]["search"]["value"]) == "1") {
                                 $this->q_and[] = $this->prefix . "." . $this->fields[$index]["index"] . " > '0'";
                             }                               
                         } else {
-                            if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != "") {
-                                $this->q_and[] = $this->prefix . "." . $this->fields[$index]["index"] . " LIKE '%" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "%'";
+                            if (@$this->clearstring2($dt_columns[$index]["search"]["value"]) != "") {
+                                $this->q_and[] = $this->prefix . "." . $this->fields[$index]["index"] . " LIKE '%" . $this->clearstring2($dt_columns[$index]["search"]["value"]) . "%'";
                                 //$this->q_and[] = $this->prefix . "." . $this->fields[$index]["index"] . " LIKE '%" . $dt_columns[$index]["search"]["value"] . "%'";
                             }
                         }
@@ -108,14 +108,14 @@ class Main extends Controller {
 
 
                         if ($dt_search["value"] === true) {
-                            if ($this->clearstring($dt_search["value"]) != "") {
-                                $this->q_or[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_search["value"]) . "'";
+                            if ($this->clearstring2($dt_search["value"]) != "") {
+                                $this->q_or[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring2($dt_search["value"]) . "'";
                                 //$this->q_or[] = $this->prefix . "." . $field_relation[0] . " = '" . $dt_search["value"] . "'";
                             }
                         }
-                        if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != "") {
+                        if (@$this->clearstring2($dt_columns[$index]["search"]["value"]) != "") {
                             $field_relation = explode(":", $this->fields[$index]["index"]);
-                            $this->q_and[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "'";
+                            $this->q_and[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring2($dt_columns[$index]["search"]["value"]) . "'";
                             //$this->q_and[] = $this->prefix . "." . $field_relation[0] . " = '" . $dt_columns[$index]["search"]["value"] . "'";
                             //$s[] = $this->prefix . "." . $field_relation[0];  
                         }
