@@ -30,6 +30,7 @@ security:
         
         - { path: ^/erp01/customergroup/getrulesjson/*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/erp01/customer/getrulesjson/*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/erp01/customer/retrieve*, roles: IS_AUTHENTICATED_ANONYMOUS }
         - { path: ^/erp01/product/retrieveMtrl/*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/erp01/edi/ediitem/getEdiMarkup, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/erp01/product/retrieveApothema, roles: IS_AUTHENTICATED_ANONYMOUSLY }
@@ -41,7 +42,6 @@ security:
         - { path: ^/edi/edi/getEdis*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/erp01/product/setb2bproduct*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/erp01/product/getFanoProducts*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/erp01/customer/retrieve*, roles: IS_AUTHENTICATED_ANONYMOUS }
         - { path: ^/, roles: ROLE_USER }
         
     firewalls:
