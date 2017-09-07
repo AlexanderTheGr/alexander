@@ -1019,8 +1019,8 @@ class ProductController extends Main {
         }
 
         $cars = (array) $product->getCars();
-        echo $product->cars;
-        print_r($cars);
+        //echo $product->cars;
+        //print_r($cars);
         $html = "<ul class='pbrands' data-prod='" . $product->getId() . "'>";
         foreach ($brands as $brand) {
             $style1 = "";
