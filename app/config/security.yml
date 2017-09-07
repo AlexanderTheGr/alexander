@@ -42,9 +42,8 @@ security:
         - { path: ^/erp01/product/setb2bproduct*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/erp01/product/getFanoProducts*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/erp01/customer/retrieve*, roles: IS_AUTHENTICATED_ANONYMOUS }
-       
-        
         - { path: ^/, roles: ROLE_USER }
+        
     firewalls:
         login_firewall:
             pattern:   ^/login$
