@@ -117,7 +117,7 @@ class Product extends Entity {
     /**
      * @var string
      */
-    private $cars;
+    var $cars;
 
     /**
      * @var string
