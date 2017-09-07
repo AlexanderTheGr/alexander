@@ -1099,7 +1099,7 @@ class ProductController extends Main {
         }
         $cars = (array) $product->getCars();
 
-        //print_r($cars);
+        print_r($cars);
         $brandmodeltypes = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:BrandModelType')->findBy(array("brandModel" => $request->request->get("brandModel")), array('brandModelType' => 'ASC'));
         $html = '';
