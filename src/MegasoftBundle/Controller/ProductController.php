@@ -1542,7 +1542,7 @@ class ProductController extends Main {
         //$params["Date"] = "2016-06-21";
         //$response = $soap->__soapCall("GetProducts", array($params));
         echo count($StoreDetails);
-        exit;
+        //exit;
 
 
 
@@ -1569,7 +1569,7 @@ class ProductController extends Main {
         // exit;
             
         foreach ($StoreDetails as $data) {
-            if ($i < 80000)
+            if ($i < 50000)
                 continue;            
             $this->setProduct($data);
             //if ($i++ > 100) return;
