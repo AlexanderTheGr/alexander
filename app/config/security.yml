@@ -27,7 +27,6 @@ security:
         - { path: ^/customer/retrieve*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/product/getProducts*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/product/getSoftoneSuppliers*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        
         - { path: ^/erp01/customergroup/getrulesjson/*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/erp01/customer/getrulesjson/*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/erp01/customer/retrieve, roles: IS_AUTHENTICATED_ANONYMOUS }
