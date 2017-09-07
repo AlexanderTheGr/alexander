@@ -115,7 +115,8 @@ class Main extends Controller {
                         }
                         if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != "") {
                             $field_relation = explode(":", $this->fields[$index]["index"]);
-                            $this->q_and[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "'";
+                            //$this->q_and[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "'";
+                            $this->q_and[] = $this->prefix . "." . $field_relation[0] . " = '" . $dt_columns[$index]["search"]["value"] . "'";
                             //$s[] = $this->prefix . "." . $field_relation[0];  
                         }
                     }
