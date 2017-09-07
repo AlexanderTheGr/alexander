@@ -99,6 +99,7 @@ class Main extends Controller {
                         } else {
                             if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != "") {
                                 $this->q_and[] = $this->prefix . "." . $this->fields[$index]["index"] . " LIKE '%" . $this->clearstring($dt_columns[$index]["search"]["value"]) . "%'";
+                                $this->q_and[] = $this->prefix . "." . $this->fields[$index]["index"] . " LIKE '%" . $dt_columns[$index]["search"]["value"] . "%'";
                             }
                         }
                         $s[] = $this->prefix . "." . $field_relation[0];
