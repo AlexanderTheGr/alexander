@@ -400,6 +400,9 @@ class CustomerController extends Main {
      */
     function retrieveMegasoftData($params = array()) {
         $this->getMegasoft();
+        return new Response(
+                json_encode(array()), 200, array('Content-Type' => 'application/json')
+        );        
     }
 
     /**
