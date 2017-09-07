@@ -87,6 +87,7 @@ class Main extends Controller {
                     if (count($field_relation) == 1) {
                         if ($this->clearstring($dt_search["value"]) != "") {
                             $this->q_or[] = $this->prefix . "." . $field["index"] . " LIKE '%" . $this->clearstring($dt_search["value"]) . "%'";
+                            $this->q_or[] = $this->prefix . "." . $field["index"] . " LIKE '%" . $dt_search["value"] . "%'";
                         }
                         if (@$field["method"] == 'yesno') {
                             if (@$this->clearstring($dt_columns[$index]["search"]["value"]) == "0") {
