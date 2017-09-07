@@ -1008,9 +1008,15 @@ class ProductController extends Main {
     }
 
     public function getCars($product) {
-        $brands = $this->getDoctrine()
-                        ->getRepository('SoftoneBundle:Brand')->findBy(array("id" => 24), array('brand' => 'ASC'));
 
+
+        if ($this->getSetting("AppBundle:Erp:brand") > 0) {
+            $brands = $this->getDoctrine()
+                            ->getRepository('SoftoneBundle:Brand')->findBy(array("id" => 24), array('brand' => 'ASC'));
+        } else {
+            $brands = $this->getDoctrine()
+                            ->getRepository('SoftoneBundle:Brand')->findBy(array("status"=>1), array('brand' => 'ASC'));
+        }
 
         $cars = (array) $product->getCars();
 
@@ -1251,7 +1257,7 @@ class ProductController extends Main {
         $results = $statement->fetchAll();
         $arr = array();
 
-       foreach ($results as $data) {
+        foreach ($results as $data) {
             //$arr[] = $data;
             //print_r($data);
             //exit;
@@ -1517,7 +1523,7 @@ class ProductController extends Main {
         }
         //ini_set("soap.wsdl_cache_enabled", "0");
         //exit;
-        
+
         $ch = \curl_init();
         $header = array('Contect-Type:application/xml', 'Accept:application/xml');
         curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
@@ -1532,7 +1538,7 @@ class ProductController extends Main {
 
         $server_output = curl_exec($ch);
         file_put_contents("downliad210.xml", $server_output);
-        
+
         //$StoreDetails = \simplexml_load_string($server_output);
         $result = \simplexml_load_file("downliad210.xml");
 
@@ -1541,10 +1547,10 @@ class ProductController extends Main {
         //echo count($xml);
         //$params["Date"] = "2016-06-21";
         //$response = $soap->__soapCall("GetProducts", array($params));
-        
-        
+
+
         echo count($StoreDetails);
-       // exit;
+        // exit;
 
 
 
@@ -1569,7 +1575,7 @@ class ProductController extends Main {
          */
         //print_r($StoreDetails);
         // exit;
-            
+
         foreach ($StoreDetails as $data) {
             //if ($i < 30000)
             //    continue;            
@@ -1611,7 +1617,7 @@ class ProductController extends Main {
             $entity->setCreated($dt);
             $entity->setModified($dt);
         } else {
-            echo "[".addslashes($data["SupplierCode"])."] ".$entity->getId() . "<BR>";
+            echo "[" . addslashes($data["SupplierCode"]) . "] " . $entity->getId() . "<BR>";
             return;
             //if ($entity->getId() < 172652)
             //    return;
