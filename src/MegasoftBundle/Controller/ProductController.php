@@ -1595,7 +1595,7 @@ class ProductController extends Main {
             echo $data["SupplierId"] . "<BR>";
         } else {
             echo "[" . $data["SupplierId"] . "]<BR>";
-            return;
+            //return;
         }
         $entity = $this->getDoctrine()
                 ->getRepository($this->repository)
@@ -1611,8 +1611,8 @@ class ProductController extends Main {
             $entity->setCreated($dt);
             $entity->setModified($dt);
         } else {
-            echo $entity->getId() . "<BR>";
-            //return;
+            echo addslashes($data["SupplierCode"])." ".$entity->getId() . "<BR>";
+            return;
             //if ($entity->getId() < 172652)
             //    return;
             //continue;
