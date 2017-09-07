@@ -398,7 +398,7 @@ class CustomerController extends Main {
     /**
      * @Route("/erp01/customer/retrieve")
      */
-    function retrieveMegasoftData($params = array()) {
+    function retrieve($params = array()) {
         //exit;
         $this->getMegasoft();
         return new Response(
