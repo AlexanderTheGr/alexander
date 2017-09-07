@@ -1015,7 +1015,7 @@ class ProductController extends Main {
                             ->getRepository('SoftoneBundle:Brand')->findBy(array("id" => 24), array('brand' => 'ASC'));
         } else {
             $brands = $this->getDoctrine()
-                            ->getRepository('SoftoneBundle:Brand')->findBy(array("status"=>1), array('brand' => 'ASC'));
+                            ->getRepository('SoftoneBundle:Brand')->findBy(array("enable"=>1), array('brand' => 'ASC'));
         }
 
         $cars = (array) $product->getCars();
