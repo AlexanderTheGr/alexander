@@ -1267,9 +1267,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         ini_set('memory_limit', '12256M');
         
         echo count($datas->data);
-        print_r($datas);
+        //print_r($datas);
         echo "<BR>";
-        exit;
+        //exit;
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
             //print_r($data);
