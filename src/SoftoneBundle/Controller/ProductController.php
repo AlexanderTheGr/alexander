@@ -1409,9 +1409,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             } else {
                 $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->id . "'";
                 echo ".";
-                //echo $sql . "<BR>";
+                echo $sql . "<BR>";
                 //
-                //$em->getConnection()->exec($sql);
+                $em->getConnection()->exec($sql);
                 continue;
             }
             $entity = $this->getDoctrine()
