@@ -399,6 +399,7 @@ class CustomerController extends Main {
      * @Route("/erp01/customer/retrieve")
      */
     function retrieveMegasoftData($params = array()) {
+        exit;
         $this->getMegasoft();
         return new Response(
                 json_encode(array()), 200, array('Content-Type' => 'application/json')
