@@ -1534,7 +1534,7 @@ class ProductController extends Main {
         file_put_contents("downliad210.xml", $server_output);
         */
         //$StoreDetails = \simplexml_load_string($server_output);
-        //$result = \simplexml_load_file("downliad210.xml");
+        $result = \simplexml_load_file("downliad210.xml");
 
         $StoreDetails = $result->StoreDetails;
         //print_r($xml);
@@ -1542,7 +1542,7 @@ class ProductController extends Main {
         //$params["Date"] = "2016-06-21";
         //$response = $soap->__soapCall("GetProducts", array($params));
         echo count($StoreDetails);
-        //exit;
+        exit;
 
 
 
@@ -1567,7 +1567,7 @@ class ProductController extends Main {
          */
         //print_r($StoreDetails);
         // exit;
-
+            
         foreach ($StoreDetails as $data) {
             if ($i < 80000)
                 continue;            
