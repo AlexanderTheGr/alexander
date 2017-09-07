@@ -110,6 +110,7 @@ class Main extends Controller {
                         if ($dt_search["value"] === true) {
                             if ($this->clearstring($dt_search["value"]) != "") {
                                 $this->q_or[] = $this->prefix . "." . $field_relation[0] . " = '" . $this->clearstring($dt_search["value"]) . "'";
+                                $this->q_or[] = $this->prefix . "." . $field_relation[0] . " = '" . $dt_search["value"] . "'";
                             }
                         }
                         if (@$this->clearstring($dt_columns[$index]["search"]["value"]) != "") {
