@@ -921,7 +921,7 @@ class Product extends Entity {
 
                 $cats = $tecdoc->getTreeForArticle($out->articleId);
 
-                //print_r((array) $cats);
+                print_r((array) $cats);
                 //echo "<BR>";
 
                 $params = array(
@@ -931,7 +931,7 @@ class Product extends Entity {
                 $cars = array();
                 $linkingTargetId = 0;
 
-                print_r($articleLinkedAllLinkingTarget->data->array );
+                //print_r($articleLinkedAllLinkingTarget->data->array );
                 
                 foreach ($articleLinkedAllLinkingTarget->data->array as $v) {
                     if ($linkingTargetId == 0)
