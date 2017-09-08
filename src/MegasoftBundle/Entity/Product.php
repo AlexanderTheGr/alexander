@@ -917,7 +917,7 @@ class Product extends Entity {
             //$em->execute();
             if (@$out->articleId) {
                 if ($getTecdocArticleId == $out->articleId) {
-                    echo "SSS";
+                    //echo "SSS";
                     return;
                 }
                 $this->setTecdocArticleId($out->articleId);
