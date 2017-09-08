@@ -826,6 +826,7 @@ class ProductController extends Main {
             $entity->setStoreRetailPrice("0.00");
             //$entity->setItemMarkupw("0.00");
             //$entity->setErpCode($this->generateRandomString());
+            $entity->setWebupd(1);
             $entity->setProductSale($productsale);
         }
         $customer = $this->getDoctrine()->getRepository('MegasoftBundle:Customer')->find(1);
