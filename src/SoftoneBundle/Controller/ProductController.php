@@ -1393,7 +1393,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         echo "<BR><BR><BR>----------<BR><BR>";
                     }
                 }
-                if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
+                if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis' AND addslashes($data["CCCFXRELBRAND"]) > 0) {
                     $q[] = "`" . strtolower($params["softone_object"] . "_mtrmark") . "` = '" . addslashes($data["CCCFXRELBRAND"]) . "'";
                 }
             } else {
