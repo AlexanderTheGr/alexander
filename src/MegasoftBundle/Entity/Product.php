@@ -916,7 +916,7 @@ class Product extends Entity {
             //$em->createQuery($sql)->getResult();
             //$em->execute();
             if (@$out->articleId) {
-                if ($getTecdocArticleId != $out->articleId) {
+                if ($getTecdocArticleId == $out->articleId) {
                     echo "SSS";
                     return;
                 }
