@@ -831,7 +831,10 @@ class Product extends Entity {
         if ($this->getTecdocSupplierId() == null AND $forceupdate == false)
             return;
         
-        if ($this->getTecdocArticleId() > 0) return;
+        if ($this->getTecdocArticleId() > 0) {
+            $getTecdocArticleId = $this->getTecdocArticleId();
+            //return;
+        }     
         //$this->setTecdocArticleId($out->articleId);
         //$this->setTecdocArticleName($out->articleName);
 
@@ -913,6 +916,10 @@ class Product extends Entity {
             //$em->createQuery($sql)->getResult();
             //$em->execute();
             if (@$out->articleId) {
+                if ($getTecdocArticleId != $out->articleId) {
+                    echo "SSS";
+                    return;
+                }
                 $this->setTecdocArticleId($out->articleId);
                 $this->setTecdocArticleName($out->articleName);
                 //$this->setTecdocGenericArticleId($out->articleName);
