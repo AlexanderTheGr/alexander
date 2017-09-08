@@ -830,7 +830,10 @@ class Product extends Entity {
             return;
         if ($this->getTecdocSupplierId() == null AND $forceupdate == false)
             return;
-        if ($this->getTecdocArticleId() > 0) return;
+        
+        if ($this->getTecdocArticleId() > 0) {
+            //return;
+        }
         //$this->setTecdocArticleId($out->articleId);
         //$this->setTecdocArticleName($out->articleName);
 
@@ -928,7 +931,8 @@ class Product extends Entity {
                 $cars = array();
                 $linkingTargetId = 0;
 
-
+                print_r($articleLinkedAllLinkingTarget->data->array );
+                
                 foreach ($articleLinkedAllLinkingTarget->data->array as $v) {
                     if ($linkingTargetId == 0)
                         $linkingTargetId = $v->linkingTargetId;
