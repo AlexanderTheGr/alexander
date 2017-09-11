@@ -1486,6 +1486,7 @@ class ProductController extends Main {
           $header = new SOAPHeader($ns,"AuthHeader",$headerbody);
           $soap->__setSoapHeaders($header);
          */
+        $login = $this->getSetting("MegasoftBundle:Webservice:Login");
         $params["Login"] = $login;
         $response = $soap->__soapCall("GetPriceLists", array($params));
         file_put_contents("GetPriceLists.xml", $response);
