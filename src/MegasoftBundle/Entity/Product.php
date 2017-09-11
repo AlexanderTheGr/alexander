@@ -1232,7 +1232,7 @@ class Product extends Entity {
 
     function getApothiki() {
         $qty = $this->qty - $this->reserved;
-        return $this->qty . ' / <span class="text-lg text-bold text-accent-dark">' . ($qty) . '</span>';
+        return $this->qty . ' / <span class="text-lg text-bold text-accent-dark">' . ($qty) . '</span> ('.$this->place.')';
     }
 
     function getGroupedDiscountPrice(\MegasoftBundle\Entity\Customer $customer, $vat = 1) {
