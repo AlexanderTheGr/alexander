@@ -1531,7 +1531,7 @@ class ProductController extends Main {
         $header = array('Contect-Type:application/xml', 'Accept:application/xml');
         curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=2017-08-21&ParticipateInEshop=1");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=2017-09-01&ParticipateInEshop=1");
         curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
         // in real life you should use something like:
         // curl_setopt($ch, CURLOPT_POSTFIELDS,
@@ -1540,10 +1540,10 @@ class ProductController extends Main {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $server_output = curl_exec($ch);
-        file_put_contents("downliad210.xml", $server_output);
+        file_put_contents("downliad21000.xml", $server_output);
 
         //$StoreDetails = \simplexml_load_string($server_output);
-        $result = \simplexml_load_file("downliad210.xml");
+        $result = \simplexml_load_file("downliad21000.xml");
 
         $StoreDetails = $result->StoreDetails;
         //print_r($xml);
@@ -1690,7 +1690,7 @@ class ProductController extends Main {
         if (@$entity->getId() == 0) {
             //$q[] = "`reference` = '" . $data[$params["megasoft_table"]] . "'";
             //$q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
-
+            $q[] = "`ts` = '" . date("Y-m-d") . "'";    
             $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
             echo $sql . "<BR>";
             echo "-";
@@ -1698,6 +1698,7 @@ class ProductController extends Main {
             $this->getDoctrine()->getManager()->getConnection()->exec($sql);
         } else {
             //return;
+            $q[] = "`ts` = '" . date("Y-m-d") . "'";
             $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
             echo $sql;
             echo $entity->getId() . "<BR>";
