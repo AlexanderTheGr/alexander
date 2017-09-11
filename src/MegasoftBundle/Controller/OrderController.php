@@ -707,9 +707,9 @@ class OrderController extends Main {
                     $resulttts = $query->getResult();
                     foreach (@(array) $resulttts as $resultt) {
                         $qty = $resultt["qty"] - $resultt["reserved"];
-                        if ($qty > 0 OR $resultt["replaced"] == '') {
+                        //if ($qty > 0 OR $resultt["replaced"] == '') {
                             $resultr[] = $resultt;
-                        }
+                        //}
                     }
                     //continue;
                 }
