@@ -1621,7 +1621,7 @@ class ProductController extends Main {
             $entity->setModified($dt);
         } else {
             echo "[" . addslashes($data["SupplierCode"]) . "] " . $entity->getId() . "<BR>";
-            return;
+            ///return;
             //if ($entity->getId() < 172652)
             //    return;
             //continue;
