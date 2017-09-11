@@ -1478,6 +1478,20 @@ class ProductController extends Main {
         }
     }
 
+    function retrieveProductPrices() {
+        $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
+        /*
+          $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
+          $headerbody = array('Login' => "alexander", 'Date' => "2016-10-10");
+          $header = new SOAPHeader($ns,"AuthHeader",$headerbody);
+          $soap->__setSoapHeaders($header);
+         */
+        $params["Login"] = $login;
+        $response = $soap->__soapCall("GetPriceLists", array($params));
+        file_put_contents("GetPriceLists.xml", $response);
+        
+    }
+    
     function retrieveProduct($params = array()) {
         $login = "W600-K78438624F8";
         $login = $this->getSetting("MegasoftBundle:Webservice:Login"); //"demo-fastweb-megasoft";
