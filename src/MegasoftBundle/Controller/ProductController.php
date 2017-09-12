@@ -1511,7 +1511,7 @@ class ProductController extends Main {
         $server_output = curl_exec($ch);
         file_put_contents("GetPriceLists.xml", $server_output);
         */
-        
+        $em = $this->getDoctrine()->getManager();
         $result = \simplexml_load_file("GetPriceLists.xml");
         $pricelists = $result->Pricelists;
         foreach($pricelists as $pricelist) {
@@ -1624,7 +1624,7 @@ class ProductController extends Main {
          */
         //print_r($StoreDetails);
         // exit;
-        $em = $this->getDoctrine()->getManager();
+        
         foreach ($StoreDetails as $data) {
             //if ($i < 30000)
             //    continue;            
