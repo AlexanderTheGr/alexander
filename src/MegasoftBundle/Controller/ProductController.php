@@ -1517,7 +1517,7 @@ class ProductController extends Main {
         
         
         foreach($pricelists as $pricelist) {
-            $sql = "update megasoft_product set price1 = '" . $pricelist->Pricelist1 . "', price2 = '" . $pricelist->Pricelist2 . "', price3 = '" . $pricelist->Pricelist3 . "' where reference = '" . $pricelist->StoreId . "'";
+            $sql = "update megasoft_product set price1 = '" . $pricelist->Value1 . "', price2 = '" . $pricelist->Value2 . "', price3 = '" . $pricelist->Value3 . "' where reference = '" . $pricelist->StoreId . "'";
             echo $sql . "<BR>";
             if ($i++ > 100) exit;
             //$em->getConnection()->exec($sql);
