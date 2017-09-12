@@ -1494,8 +1494,8 @@ class ProductController extends Main {
     }
     
     function retrieveProduct($params = array()) {
-        //$this->retrieveProductPrices();
-        //exit;
+        $this->retrieveProductPrices();
+        exit;
         $login = "W600-K78438624F8";
         $login = $this->getSetting("MegasoftBundle:Webservice:Login"); //"demo-fastweb-megasoft";
         $em = $this->getDoctrine()->getManager();
