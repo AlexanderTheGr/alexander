@@ -1494,7 +1494,7 @@ class ProductController extends Main {
           file_put_contents("GetPriceLists.xml", $response);
          * 
          */
-        /*
+        
         $ch = \curl_init();
         $login = $this->getSetting("MegasoftBundle:Webservice:Login");
         $header = array('Contect-Type:application/xml', 'Accept:application/xml');
@@ -1510,7 +1510,7 @@ class ProductController extends Main {
 
         $server_output = curl_exec($ch);
         file_put_contents("GetPriceLists.xml", $server_output);
-        */
+        
         $em = $this->getDoctrine()->getManager();
         $result = \simplexml_load_file("GetPriceLists.xml");
         $pricelists = $result->Pricelists;
