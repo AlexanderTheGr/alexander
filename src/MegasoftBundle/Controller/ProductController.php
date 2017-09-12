@@ -1377,7 +1377,71 @@ class ProductController extends Main {
             exit;
         }
     }
+    public function getSuppliers() {
+        //return;
+        //$login = "W600-K78438624F8";
+        $login = $this->getSetting("MegasoftBundle:Webservice:Login");
+        $em = $this->getDoctrine()->getManager();
+        //http://wsprisma.megasoft.gr/mgsft_ws.asmx
+        $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
 
+        /*
+          $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
+          $headerbody = array('Login' => "alexander", 'Date' => "2016-10-10");
+          $header = new SOAPHeader($ns,"AuthHeader",$headerbody);
+          $soap->__setSoapHeaders($header);
+         */
+
+        $params["Login"] = $login;
+        $params["Date"] = ""; //date("Y-m-d");
+        //$results = $soap->GetSuppliers();
+        $response = $soap->__soapCall("GetSuppliers", array($params));
+        //print_r($response);
+        //exit;
+        if ($response->GetSuppliersResult->SupplierDetails) {
+            echo count($response->GetSuppliersResult->SupplierDetails);
+            foreach ($response->GetSuppliersResult->SupplierDetails as $megasoft) {
+                //$supplier = Mage::getModel('b2b/supplier')->load($megasoft->SupplierId, "reference");
+                $data = (array) $megasoft;
+                $entity = $this->getDoctrine()
+                        ->getRepository('MegasoftBundle:Supplier')
+                        ->findOneBy(array("reference" => (int) $data["SupplierId"]));
+                $dt = new \DateTime("now");
+                if (!$entity) {
+                    $entity = new Supplier();
+                    $entity->setTs($dt);
+                    $entity->setCreated($dt);
+                    $entity->setModified($dt);
+                } else {
+                    //continue;
+                    //$entity->setRepositories();                
+                }
+                $params["table"] = "megasoft_supplier";
+                $q = array();
+                $q[] = "`supplier_code` = '" . addslashes($data["SupplierCode"]) . "'";
+                $q[] = "`supplier_name` = '" . addslashes($data["SupplierName"]) . "'";
+                $q[] = "`supplier_afm` = '" . addslashes($data["SupplierAfm"]) . "'";
+                $q[] = "`supplier_city` = '" . addslashes($data["SupplierCity"]) . "'";
+                $q[] = "`supplier_address` = '" . addslashes($data["SupplierAddress"]) . "'";
+                $q[] = "`supplier_zip` = '" . addslashes($data["SupplierZip"]) . "'";
+                $q[] = "`supplier_phone01` = '" . addslashes($data["SupplierPhone01"]) . "'";
+                $q[] = "`supplier_phone02` = '" . addslashes($data["SupplierPhone02"]) . "'";
+                if (@$entity->getId() == 0) {
+                    $q[] = "`reference` = '" . addslashes($data["SupplierId"]) . "'";
+                    //$q[] = "`suppliergroup` = '1'";
+
+                    $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
+                    echo $sql . "<BR>";
+                    $em->getConnection()->exec($sql);
+                } else {
+                    $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
+                    echo $sql . "<BR>";
+                    $em->getConnection()->exec($sql);
+                }
+            }
+        }
+    }
+    
     /**
      * 
      * 
@@ -1561,7 +1625,7 @@ class ProductController extends Main {
         $params["Login"] = $login;
 
         $response = $soap->__soapCall("GetManufacturers", array($params));
-
+        $this->getSuppliers();
 
 
         //exit;	
@@ -1657,7 +1721,7 @@ class ProductController extends Main {
         }
         $sql = 'UPDATE `megasoft_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
         $this->getDoctrine()->getConnection()->exec($sql);
-        $this->retrieveProductPrices();
+        //$this->retrieveProductPrices();
         //exit;
         //;
     }
