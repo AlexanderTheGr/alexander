@@ -1495,6 +1495,7 @@ class ProductController extends Main {
          * 
          */
         $ch = \curl_init();
+        $login = $this->getSetting("MegasoftBundle:Webservice:Login");
         $header = array('Contect-Type:application/xml', 'Accept:application/xml');
         curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/GetPriceLists");
         curl_setopt($ch, CURLOPT_POST, 1);
