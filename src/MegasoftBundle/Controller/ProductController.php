@@ -1513,7 +1513,7 @@ class ProductController extends Main {
         */
         
         $result = \simplexml_load_file("GetPriceLists.xml");
-        $pricelists = $result->GetPriceListsResult->Pricelists;
+        $pricelists = $result->Pricelists;
         
         
         foreach($pricelists as $pricelist) {
