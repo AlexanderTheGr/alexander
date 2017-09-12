@@ -1514,15 +1514,12 @@ class ProductController extends Main {
         
         $result = \simplexml_load_file("GetPriceLists.xml");
         $pricelists = $result->Pricelists;
-        
-        
         foreach($pricelists as $pricelist) {
             $sql = "update megasoft_product set price1 = '" . $pricelist->Value1 . "', price2 = '" . $pricelist->Value2 . "', price3 = '" . $pricelist->Value3 . "' where reference = '" . $pricelist->StoreId . "'";
             echo $sql . "<BR>";
-            if ($i++ > 100) exit;
-            //$em->getConnection()->exec($sql);
+            //if ($i++ > 100) exit;
+            $em->getConnection()->exec($sql);
         }
-        
     }
 
     function retrieveProduct($params = array()) {
