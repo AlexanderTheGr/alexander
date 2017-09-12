@@ -1510,7 +1510,6 @@ class ProductController extends Main {
 
         $server_output = curl_exec($ch);
         file_put_contents("GetPriceLists_".$databale[0].".xml", $server_output);
-        
         $em = $this->getDoctrine()->getManager();
         $result = \simplexml_load_file("GetPriceLists_".$databale[0].".xml");
         $pricelists = $result->Pricelists;
