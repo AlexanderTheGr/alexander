@@ -1624,7 +1624,7 @@ class ProductController extends Main {
          */
         //print_r($StoreDetails);
         // exit;
-
+        $em = $this->getDoctrine()->getManager();
         foreach ($StoreDetails as $data) {
             //if ($i < 30000)
             //    continue;            
