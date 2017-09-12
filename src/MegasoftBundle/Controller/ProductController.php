@@ -1297,7 +1297,33 @@ class ProductController extends Main {
             exit;
         }
     }
-
+    /**
+     * 
+     * 
+     * @Route("/erp01/product/getProductPrices")
+     */
+    public function getProductPrices(Request $request) {
+        $allowedips = $this->getSetting("MegasoftBundle:Product:Allowedips");
+        $allowedipsArr = explode(",", $allowedips);
+        if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
+            $sql = "SELECT id,reference,store_retail_price, store_wholesale_price, price1,price2,price3,price4,price5 FROM  `megasoft_product`";
+            $connection = $this->getDoctrine()->getConnection();
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            $results = $statement->fetchAll();
+            $arr = array();
+            foreach ($results as $data) {
+                $arr[] = $data;
+            }
+            $json = json_encode($arr);
+            return new Response(
+                    $json, 200, array('Content-Type' => 'application/json')
+            );
+        } else {
+            exit;
+        }
+    }
+    
     /**
      * 
      * 
