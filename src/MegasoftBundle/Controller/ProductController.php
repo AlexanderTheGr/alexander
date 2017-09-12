@@ -1494,7 +1494,7 @@ class ProductController extends Main {
           file_put_contents("GetPriceLists.xml", $response);
          * 
          */
-        
+        $databale = @explode(".", $_SERVER["HTTP_HOST"]);
         $ch = \curl_init();
         $login = $this->getSetting("MegasoftBundle:Webservice:Login");
         $header = array('Contect-Type:application/xml', 'Accept:application/xml');
@@ -1509,10 +1509,10 @@ class ProductController extends Main {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $server_output = curl_exec($ch);
-        file_put_contents("GetPriceLists.xml", $server_output);
+        file_put_contents("GetPriceLists_".$databale[0].".xml", $server_output);
         
         $em = $this->getDoctrine()->getManager();
-        $result = \simplexml_load_file("GetPriceLists.xml");
+        $result = \simplexml_load_file("GetPriceLists_".$databale[0].".xml");
         $pricelists = $result->Pricelists;
         foreach($pricelists as $pricelist) {
             $sql = "update megasoft_product set price1 = '" . $pricelist->Value1 . "', price2 = '" . $pricelist->Value2 . "', price3 = '" . $pricelist->Value3 . "', price4 = '" . $pricelist->Value4 . "' where reference = '" . $pricelist->StoreId . "'";
