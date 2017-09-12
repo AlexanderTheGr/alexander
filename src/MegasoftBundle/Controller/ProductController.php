@@ -1509,11 +1509,11 @@ class ProductController extends Main {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $server_output = curl_exec($ch);
-        file_put_contents("GetPriceLists_".$databale[0].".xml", $server_output);
+        file_put_contents("GetPriceLists_" . $databale[0] . ".xml", $server_output);
         $em = $this->getDoctrine()->getManager();
-        $result = \simplexml_load_file("GetPriceLists_".$databale[0].".xml");
+        $result = \simplexml_load_file("GetPriceLists_" . $databale[0] . ".xml");
         $pricelists = $result->Pricelists;
-        foreach($pricelists as $pricelist) {
+        foreach ($pricelists as $pricelist) {
             $sql = "update megasoft_product set price1 = '" . $pricelist->Value1 . "', price2 = '" . $pricelist->Value2 . "', price3 = '" . $pricelist->Value3 . "', price4 = '" . $pricelist->Value4 . "' where reference = '" . $pricelist->StoreId . "'";
             echo $sql . "<BR>";
             //if ($i++ > 100) exit;
@@ -1522,8 +1522,6 @@ class ProductController extends Main {
     }
 
     function retrieveProduct($params = array()) {
-        $this->retrieveProductPrices();
-        exit;
         $login = "W600-K78438624F8";
         $login = $this->getSetting("MegasoftBundle:Webservice:Login"); //"demo-fastweb-megasoft";
         $em = $this->getDoctrine()->getManager();
@@ -1586,10 +1584,10 @@ class ProductController extends Main {
 
         $server_output = curl_exec($ch);
         $databale = @explode(".", $_SERVER["HTTP_HOST"]);
-        file_put_contents("downliad_".$databale[0].".xml", $server_output);
+        file_put_contents("downliad_" . $databale[0] . ".xml", $server_output);
 
         //$StoreDetails = \simplexml_load_string($server_output);
-        $result = \simplexml_load_file("downliad_".$databale[0].".xml");
+        $result = \simplexml_load_file("downliad_" . $databale[0] . ".xml");
 
         $StoreDetails = $result->StoreDetails;
         //print_r($xml);
@@ -1624,7 +1622,7 @@ class ProductController extends Main {
          */
         //print_r($StoreDetails);
         // exit;
-        
+
         foreach ($StoreDetails as $data) {
             //if ($i < 30000)
             //    continue;            
@@ -1633,8 +1631,9 @@ class ProductController extends Main {
         }
         $sql = 'UPDATE `megasoft_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
         $this->getDoctrine()->getConnection()->exec($sql);
-
-        exit;
+        $this->retrieveProductPrices();
+        //exit;
+        //;
     }
 
     function setProduct($data) {
