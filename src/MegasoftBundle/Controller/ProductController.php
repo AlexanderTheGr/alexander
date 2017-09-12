@@ -1016,13 +1016,13 @@ class ProductController extends Main {
                             ->getRepository('SoftoneBundle:Brand')->findBy(array("id" => 24), array('brand' => 'ASC'));
         } else {
             $brands = $this->getDoctrine()
-                            ->getRepository('SoftoneBundle:Brand')->findBy(array("enable"=>1), array('brand' => 'ASC'));
+                            ->getRepository('SoftoneBundle:Brand')->findBy(array("enable" => 1), array('brand' => 'ASC'));
         }
 
         $cars = (array) $product->getCars();
         //echo $product->cars;
         //print_r($cars);
-        
+
         $html = "<ul class='pbrands' data-prod='" . $product->getId() . "'>";
         foreach ($brands as $brand) {
             $style1 = "";
@@ -1307,7 +1307,7 @@ class ProductController extends Main {
         $allowedips = $this->getSetting("MegasoftBundle:Product:Allowedips");
         $allowedipsArr = explode(",", $allowedips);
         if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
-            $sql = "SELECT * FROM  `megasoft_product` where erp_supplier != 'GBG' AND ts >= '".date("Y-m-d", strtotime("-2 days"))."'";
+            $sql = "SELECT * FROM  `megasoft_product` where erp_supplier != 'GBG' AND ts >= '" . date("Y-m-d", strtotime("-2 days")) . "'";
             $connection = $this->getDoctrine()->getConnection();
             $statement = $connection->prepare($sql);
             $statement->execute();
@@ -1479,20 +1479,37 @@ class ProductController extends Main {
     }
 
     function retrieveProductPrices() {
-        $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array("connection_timeout"=>1,'cache_wsdl' => WSDL_CACHE_NONE));
         /*
+          $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array("connection_timeout"=>1,'cache_wsdl' => WSDL_CACHE_NONE));
+          /*
           $ns = 'http://schemas.xmlsoap.org/soap/envelope/';
           $headerbody = array('Login' => "alexander", 'Date' => "2016-10-10");
           $header = new SOAPHeader($ns,"AuthHeader",$headerbody);
           $soap->__setSoapHeaders($header);
          */
-        $login = $this->getSetting("MegasoftBundle:Webservice:Login");
-        $params["Login"] = $login;
-        $response = $soap->__soapCall("GetPriceLists", array($params));
-        file_put_contents("GetPriceLists.xml", $response);
-        
+        /*
+          $login = $this->getSetting("MegasoftBundle:Webservice:Login");
+          $params["Login"] = $login;
+          $response = $soap->__soapCall("GetPriceLists", array($params));
+          file_put_contents("GetPriceLists.xml", $response);
+         * 
+         */
+        $ch = \curl_init();
+        $header = array('Contect-Type:application/xml', 'Accept:application/xml');
+        curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/GetPriceLists");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+        // in real life you should use something like:
+        // curl_setopt($ch, CURLOPT_POSTFIELDS,
+        //          http_build_query(array('postvar1' => 'value1')));
+        // receive server response ...
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $server_output = curl_exec($ch);
+        file_put_contents("GetPriceLists.xml", $server_output);
     }
-    
+
     function retrieveProduct($params = array()) {
         $this->retrieveProductPrices();
         exit;
@@ -1548,7 +1565,7 @@ class ProductController extends Main {
         $header = array('Contect-Type:application/xml', 'Accept:application/xml');
         curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=".date("Y-m-d", strtotime("-4 days"))."&ParticipateInEshop=1");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=" . date("Y-m-d", strtotime("-4 days")) . "&ParticipateInEshop=1");
         curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
         // in real life you should use something like:
         // curl_setopt($ch, CURLOPT_POSTFIELDS,
@@ -1707,7 +1724,7 @@ class ProductController extends Main {
         if (@$entity->getId() == 0) {
             //$q[] = "`reference` = '" . $data[$params["megasoft_table"]] . "'";
             //$q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
-            $q[] = "`ts` = '" . date("Y-m-d") . "'";    
+            $q[] = "`ts` = '" . date("Y-m-d") . "'";
             $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
             echo $sql . "<BR>";
             echo "-";
