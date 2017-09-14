@@ -359,6 +359,8 @@ class ProductController extends Main {
         if ($product->getErpCode() == '') {
             $product->setErpCode($erpCode);
         }
+        $dt = new \DateTime("now");
+        $product->setTs();
         $product->setSupplierCode($this->clearstring($product->getSupplierCode()));
         $this->flushpersist($product);
 
