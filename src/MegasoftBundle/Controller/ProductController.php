@@ -360,7 +360,7 @@ class ProductController extends Main {
             $product->setErpCode($erpCode);
         }
         $dt = new \DateTime("now");
-        $product->setTs();
+        $product->setTs($dt);
         $product->setSupplierCode($this->clearstring($product->getSupplierCode()));
         $this->flushpersist($product);
 
