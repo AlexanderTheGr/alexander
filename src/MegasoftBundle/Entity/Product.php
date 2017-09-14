@@ -825,9 +825,20 @@ class Product extends Entity {
 
     function updatetecdoc($tecdoc = false, $forceupdate = false) {
 
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        
         //$data = array("service" => "login", 'username' => 'dev', 'password' => 'dev', 'appId' => '2000');
-        if (!$this->getTecdocSupplierId())
+        if (!$this->getTecdocSupplierId() OR $this->tecdocCode == '') {
+            //$this->setTecdocArticleId("");
+            //$this->setTecdocArticleName("");  
+            $sql = "update `megasoft_product` set tecdoc_generic_article_id = '0', tecdoc_article_name = '', tecdoc_article_id = '', cars = '" . serialize(array()) . "', cats = '" . serialize(array()) . "' where id = '" . $this->id . "'";
+            $em->getConnection()->exec($sql);
             return;
+        }
         if ($this->getTecdocSupplierId() == null AND $forceupdate == false)
             return;
         
@@ -838,11 +849,6 @@ class Product extends Entity {
         //$this->setTecdocArticleId($out->articleId);
         //$this->setTecdocArticleName($out->articleName);
 
-        global $kernel;
-        if ('AppCache' == get_class($kernel)) {
-            $kernel = $kernel->getKernel();
-        }
-        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         //$data_string = json_encode($data);
         $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
