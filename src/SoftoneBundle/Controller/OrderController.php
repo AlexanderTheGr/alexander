@@ -1035,6 +1035,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //$objectArr[0]["TFPRMS"] = $model->tfprms;
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             $objectArr[0]["ACNMSK"] = $order->getUser()->getUsername();
+            $objectArr[0]["INT01"] = $order->getUser()->getId();
         }
         $objectArr[0]["SERIES"] = $order->getSoftoneStore()->getSeries();
         $objectArr[0]["VATSTS"] = $this->getSetting("SoftoneBundle:Order:Vat") != '' ? $this->getSetting("SoftoneBundle:Order:Vat") : $customer->getCustomerVatsts();
