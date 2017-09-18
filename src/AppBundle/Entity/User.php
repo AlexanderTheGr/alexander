@@ -123,7 +123,13 @@ class User extends Entity implements UserInterface, \Serializable {
      * @ORM\Column(name="actioneer", type="integer", nullable=true)
      */
     protected $actioneer;
-
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="reference", type="integer", nullable=true)
+     */
+    protected $reference;
     /**
      * @var \DateTime
      *
@@ -367,6 +373,30 @@ class User extends Entity implements UserInterface, \Serializable {
         return $this->actioneer;
     }
 
+    /**
+     * Set actioneer
+     *
+     * @param integer $actioneer
+     *
+     * @return User
+     */
+    public function setActioneer($reference) {
+        $this->reference = $reference;
+
+        return $this;
+    }
+
+    /**
+     * Get actioneer
+     *
+     * @return integer
+     */
+    public function getReference() {
+        return $this->reference;
+    }
+    
+    
+    
     /**
      * Set created
      *
