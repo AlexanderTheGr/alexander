@@ -1299,6 +1299,7 @@ class ProductController extends Main {
             exit;
         }
     }
+
     /**
      * 
      * 
@@ -1325,7 +1326,45 @@ class ProductController extends Main {
             exit;
         }
     }
-    
+
+    /**
+     * 
+     * 
+     * @Route("/erp01/product/getRproducts")
+     */
+    public function getRproducts(Request $request) {
+        $allowedips = $this->getSetting("MegasoftBundle:Product:Allowedips");
+        $allowedipsArr = explode(",", $allowedips);
+        if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
+            $sql = "SELECT * FROM `megasoft_product` WHERE `erp_code` in (Select CONCAT(`erp_code`, 'R') FROM megasoft_product)";
+            $connection = $this->getDoctrine()->getConnection();
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            $results = $statement->fetchAll();
+            $arr = array();
+            foreach ($results as $data) {
+                //$arr[] = $data;
+                $erpcode = substr_replace($data["erp_code"], "", -1);  //str_replace("","R",$data["erp_code"]);
+                $sql2 = "SELECT * FROM `megasoft_product` WHERE `erp_code`  = '" . $erpcode . "'";
+                $connection = $this->getDoctrine()->getConnection();
+                $statement = $connection->prepare($sql2);
+                $statement->execute();
+                $results2 = $statement->fetchAll();
+                echo "update megasoft_product set sisxetisi = '".$erpcode."' where erp_code = '".$data["erp_code"]."'<BR>";
+                foreach($results2 as $data2) {
+                    echo "update megasoft_product set sisxetisi = '".$data2["erp_code"]."' where erp_code = '".$data2["erp_code"]."'<BR>";
+                }
+            }
+            exit;
+            $json = json_encode($arr);
+            return new Response(
+                    $json, 200, array('Content-Type' => 'application/json')
+            );
+        } else {
+            exit;
+        }
+    }
+
     /**
      * 
      * 
@@ -1379,6 +1418,7 @@ class ProductController extends Main {
             exit;
         }
     }
+
     public function getSuppliers() {
         //return;
         //$login = "W600-K78438624F8";
@@ -1443,7 +1483,7 @@ class ProductController extends Main {
             }
         }
     }
-    
+
     /**
      * 
      * 
