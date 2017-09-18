@@ -1343,7 +1343,7 @@ class ProductController extends Main {
             $results = $statement->fetchAll();
             $arr = array();
             
-            echo "kwd;apoid;sisxetisi";
+            echo "kwd;apoid;sisxetisi<BR>";
             foreach ($results as $data) {
                 //$arr[] = $data;
                 $erpcode = substr_replace($data["erp_code"], "", -1);  //str_replace("","R",$data["erp_code"]);
