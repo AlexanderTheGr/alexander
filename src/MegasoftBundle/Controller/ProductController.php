@@ -1342,6 +1342,8 @@ class ProductController extends Main {
             $statement->execute();
             $results = $statement->fetchAll();
             $arr = array();
+            
+            echo "kwd;apoid;sisxetisi";
             foreach ($results as $data) {
                 //$arr[] = $data;
                 $erpcode = substr_replace($data["erp_code"], "", -1);  //str_replace("","R",$data["erp_code"]);
@@ -1350,9 +1352,11 @@ class ProductController extends Main {
                 $statement = $connection->prepare($sql2);
                 $statement->execute();
                 $results2 = $statement->fetchAll();
-                echo "update megasoft_product set sisxetisi = '".$erpcode."' where erp_code = '".$data["erp_code"]."'<BR>";
+                echo $data["erp_code"].";".$data["reference"].";".$erpcode."<BR>";
+                //echo "update megasoft_product set sisxetisi = '".$erpcode."' where erp_code = '".$data["erp_code"]."';<BR>";
                 foreach($results2 as $data2) {
-                    echo "update megasoft_product set sisxetisi = '".$data2["erp_code"]."' where erp_code = '".$data2["erp_code"]."'<BR>";
+                    echo $data2["erp_code"].";".$data2["reference"].";".$data2["erp_code"]."<BR>";
+                    //echo "update megasoft_product set sisxetisi = '".$data2["erp_code"]."' where erp_code = '".$data2["erp_code"]."';<BR>";
                 }
             }
             exit;
