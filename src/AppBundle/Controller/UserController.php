@@ -130,6 +130,7 @@ class UserController extends Main {
         $entity->setPassword('');
         $fields["email"] = array("label" => "Email");
         $fields["username"] = array("label" => "Username");
+        $fields["reference"] = array("label" => "Reference");
         $fields["password"] = array("label" => "Password", 'required' => 'no');
         $fields["softoneStore"] = array("label" => "Store", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Store', 'name' => 'title', 'value' => 'id'));
         //$fields["itemPricew01"] = array("label" => "Price Name");
