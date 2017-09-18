@@ -380,7 +380,7 @@ class User extends Entity implements UserInterface, \Serializable {
      *
      * @return User
      */
-    public function setActioneer($reference) {
+    public function setReference($reference) {
         $this->reference = $reference;
 
         return $this;
