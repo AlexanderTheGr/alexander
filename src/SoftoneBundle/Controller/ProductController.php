@@ -785,7 +785,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $path = $this->getSetting("SoftoneBundle:Product:Images");
         // /home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas
         //$path = "/home2/partsbox/public_html/partsbox/web/assets/media/" . $em->getConnection()->getDatabase() . "/" . $product->getId() . ".jpg";
-        $files = scandir($path."/".$product->getErpCode());
+        $files = scandir($path.$product->getErpCode());
         if ($files) {
             foreach($files as $file) {
                 if (strpos(".jpg", $file)) {
