@@ -795,7 +795,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             }
         }
 
-        $response = $this->get('twig')->render('MegasoftBundle:Product:images.html.twig', array(
+        $response = $this->get('twig')->render('SoftoneBundle:Product:images.html.twig', array(
             'img' => $img,
             'product' => $product->getId(),
         ));
