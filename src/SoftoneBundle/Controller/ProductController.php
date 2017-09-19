@@ -200,7 +200,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $tecdoc = new Tecdoc();
         if ($this->getSetting("AppBundle:Entity:lng") > 0) {
             $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
-        };         
+        };
         $data = $tecdoc->getArticlesSearchByIds($params);
         return $data->data->array;
         //return $data;
@@ -652,7 +652,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $fields["tecdocCode"] = array("label" => $this->getTranslation("Tecdoc Code"), "required" => false, "className" => "col-md-6");
 
 
-            $fields["supplierId"] = array("label" =>  $this->getTranslation("Supplier"), "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
+            $fields["supplierId"] = array("label" => $this->getTranslation("Supplier"), "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
 
             //$fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'dataarray' => $supplierId);
 
@@ -669,7 +669,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
             //$fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "className" => "col-md-2", "required" => false);        
             $fields["itemMtrsup"] = array("label" => $this->getTranslation("Συνήθης προμηθευτής"), "required" => false, "className" => "col-md-2", 'type' => "select", 'dataarray' => $itemMtrsup);
-            $fields["cccRef"] = array("label" =>  $this->getTranslation("Κωδικός Προμηθευτή"), "className" => "col-md-2", "required" => false);
+            $fields["cccRef"] = array("label" => $this->getTranslation("Κωδικός Προμηθευτή"), "className" => "col-md-2", "required" => false);
 
 
 
@@ -703,7 +703,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $fields["tecdocCode"] = array("label" => $this->getTranslation("Tecdoc Code"), "required" => false, "className" => "col-md-6");
 
 
-            $fields["supplierId"] = array("label" =>  $this->getTranslation("Supplier"), "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
+            $fields["supplierId"] = array("label" => $this->getTranslation("Supplier"), "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
 
             //$fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'dataarray' => $supplierId);
 
@@ -720,7 +720,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
             //$fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "className" => "col-md-2", "required" => false);        
             $fields["itemMtrsup"] = array("label" => $this->getTranslation("Συνήθης προμηθευτής"), "required" => false, "className" => "col-md-2", 'type' => "select", 'dataarray' => $itemMtrsup);
-            $fields["cccRef"] = array("label" =>  $this->getTranslation("Κωδικός Προμηθευτή"), "className" => "col-md-2", "required" => false);
+            $fields["cccRef"] = array("label" => $this->getTranslation("Κωδικός Προμηθευτή"), "className" => "col-md-2", "required" => false);
 
 
 
@@ -768,8 +768,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $tabs[] = array("title" => $this->getTranslation("Αντιστοιχίες Εντός Αποθήκης"), "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
             $tabs[] = array("title" => $this->getTranslation("Categories"), "datatables" => '', "form" => '', "content" => $this->getCategories($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
             $tabs[] = array("title" => $this->getTranslation("Fano Images"), "datatables" => '', "form" => '', "content" => $this->getFanoImagesHtml($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
-
-            
         }
 
         foreach ($tabs as $tab) {
@@ -785,28 +783,30 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $path = $this->getSetting("SoftoneBundle:Product:Images");
         // /home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas
         //$path = "/home2/partsbox/public_html/partsbox/web/assets/media/" . $em->getConnection()->getDatabase() . "/" . $product->getId() . ".jpg";
-        $files = scandir($path.$product->getErpCode());
-        $img .= "<ul>";
-        if ($files) {
-            foreach($files as $file) {
-                
-                if (strpos($file,".jpg")) {
-                    //$img .= $file;
-                    $urlpath = str_replace("/home2/partsbox/public_html/partsbox/web","",$path);
-                    //$img .= $urlpath.$product->getErpCode()."/".$file;
-                    $img .= "<li><img src='".$urlpath.$product->getErpCode()."/".$file."'></li>";
+        $img = "";
+        if (file_exists($path . $product->getErpCode())) {
+            $files = scandir($path . $product->getErpCode());
+            $img .= "<ul>";
+            if ($files) {
+                foreach ($files as $file) {
+
+                    if (strpos($file, ".jpg")) {
+                        //$img .= $file;
+                        $urlpath = str_replace("/home2/partsbox/public_html/partsbox/web", "", $path);
+                        //$img .= $urlpath.$product->getErpCode()."/".$file;
+                        $img .= "<li><img src='" . $urlpath . $product->getErpCode() . "/" . $file . "'></li>";
+                    }
                 }
             }
+            $img .= "</ul>";
         }
-        $img .= "</ul>";
         $response = $this->get('twig')->render('SoftoneBundle:Product:images.html.twig', array(
             'img' => $img,
             'product' => $product->getId(),
         ));
         return str_replace("\n", "", htmlentities($response));
-    }    
-    
-    
+    }
+
     public function getCategories($product) {
         $entities = $this->getDoctrine()
                 ->getRepository('SoftoneBundle:Category')
@@ -941,7 +941,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $tecdoc = new Tecdoc();
         if ($this->getSetting("AppBundle:Entity:lng") > 0) {
             $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
-        };         
+        };
         $article_id = $request->request->get("articleId");
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
@@ -1143,13 +1143,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         if (count($params) > 0) {
             if ($MTRL1 > 0) {
                 //$where = " AND  UPDDATE >= '" . date("Y-m-d", strtotime("-35 days")) . "' ORDER BY MTRL";
-                $where = " AND  MTRL >= ".$MTRL1." AND MTRL < ".$MTRL2."  ORDER BY MTRL"; 
+                $where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";
                 //$where = " AND UPDDATE = '" . date("Y-m-d") . "'";
             } else {
                 $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-8 days")) . "' ORDER BY MTRL";
                 //$where = " AND INSDATE = '2017-03-01' ORDER BY MTRL";
             }
-            
+
 
             if ($MTRL > 0) {
                 $where = ' AND MTRL = ' . $MTRL . ' ';
@@ -1173,7 +1173,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 } else {
                     $extra["foxline"] = array("CCCFXRELTDCODE" => "CCCFXRELTDCODE", "CCCFXRELBRAND" => "CCCFXRELBRAND");
                 }
-                $extra["foxline"] = array();//array("CCCFXRELTDCODE" => "CCCFXRELTDCODE");
+                $extra["foxline"] = array(); //array("CCCFXRELTDCODE" => "CCCFXRELTDCODE");
                 $params["filter"] = 'WHERE M.SODTYPE=51 ' . $where;
                 $params["extra"] = $this->getSetting("SoftoneBundle:Softone:merchant") ? $extra[$this->getSetting("SoftoneBundle:Softone:merchant")] : array("cccRef" => "cccRef", "cccWebUpd" => "cccWebUpd", "cccPriceUpd" => "cccPriceUpd");
             }
@@ -1212,7 +1212,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $tecdoc = new Tecdoc();
             if ($this->getSetting("AppBundle:Entity:lng") > 0) {
                 $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
-            };             
+            };
             $entity = $this->getDoctrine()
                     ->getRepository($params["repository"])
                     ->findOneBy(array("reference" => (int) $MTRL));
@@ -1294,9 +1294,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $tecdoc = new Tecdoc();
         if ($this->getSetting("AppBundle:Entity:lng") > 0) {
             $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
-        };         
+        };
         ini_set('memory_limit', '12256M');
-        
+
         echo count($datas->data);
         //print_r($datas);
         echo "<BR>";
@@ -1323,14 +1323,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
               }
              * 
              */
-            
+
             if (@$entity->id == 0) {
                 $entity = new $object();
                 $entity->setTs($dt);
                 $entity->setCreated($dt);
                 $entity->setModified($dt);
             } else {
-               // continue;
+                // continue;
                 //$entity->setRepositories();                
             }
 
@@ -1374,8 +1374,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                 //$q[] = "`" . strtolower($params["softone_object"] . "_" . $identifier) . "` = '" . addslashes($val) . "'";
                                 //echo $identifier."<BR>";
                             }
-                        //} elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
-                        //    $hasmark = true;
+                            //} elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
+                            //    $hasmark = true;
                         } else {
                             if ($identifier != 'mtrmark' AND $identifier != 'apvcode') {
                                 $q[] = "`" . strtolower($params["softone_object"] . "_" . $identifier) . "` = '" . addslashes($val) . "'";
@@ -1524,7 +1524,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $tecdoc = new Tecdoc();
         if ($this->getSetting("AppBundle:Entity:lng") > 0) {
             $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
-        };         
+        };
         foreach ($results as $result) {
             //if ($result["id"] > 41170) {
             $ediediitem = $em->getRepository($this->repository)->find($result["id"]);
@@ -1564,7 +1564,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $tecdoc = new Tecdoc();
         if ($this->getSetting("AppBundle:Entity:lng") > 0) {
             $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
-        };         
+        };
         echo "<BR>";
         foreach ($results as $result) {
             //if ($result["id"] > 41170) {
@@ -1908,7 +1908,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $out = json_decode(curl_exec($ch));
     }
 
-    
     /**
      * 
      * 
@@ -1933,11 +1932,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     $json, 200, array('Content-Type' => 'application/json')
             );
         } else {
-         //   
+            //   
             exit;
         }
-    } 
-    
+    }
+
     /**
      * 
      * 
@@ -1962,11 +1961,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     $json, 200, array('Content-Type' => 'application/json')
             );
         } else {
-         //   
+            //   
             exit;
         }
-    }    
-    
+    }
+
     /**
      * 
      * @Route("/product/getmodels")
