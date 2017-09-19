@@ -786,18 +786,19 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         // /home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas
         //$path = "/home2/partsbox/public_html/partsbox/web/assets/media/" . $em->getConnection()->getDatabase() . "/" . $product->getId() . ".jpg";
         $files = scandir($path.$product->getErpCode());
+        $img .= "<ul>";
         if ($files) {
             foreach($files as $file) {
                 
                 if (strpos($file,".jpg")) {
                     //$img .= $file;
                     $urlpath = str_replace("/home2/partsbox/public_html/partsbox/web","",$path);
-                    $img .= $urlpath.$product->getErpCode()."/".$file;
-                    $img .= "<img src='".$urlpath.$product->getErpCode()."/".$file."'>";
+                    //$img .= $urlpath.$product->getErpCode()."/".$file;
+                    $img .= "<li><img src='".$urlpath.$product->getErpCode()."/".$file."'></li>";
                 }
             }
         }
-
+        $img .= "</ul>";
         $response = $this->get('twig')->render('SoftoneBundle:Product:images.html.twig', array(
             'img' => $img,
             'product' => $product->getId(),
