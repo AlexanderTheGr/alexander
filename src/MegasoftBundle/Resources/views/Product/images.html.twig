@@ -6,8 +6,7 @@
         .imagearea img {max-width: 300px; max-height: 300px; margin: 10px;}
     </style>
     <div class="imagearea">{{img | raw}}</div>
-   
-    <!--div class="upload"></div>
+    <div class="upload"></div>
     <div class="filelists">
         <h5>Complete</h5>
         <ol class="filelist complete">
@@ -16,11 +15,11 @@
         <ol class="filelist queue">
         </ol>
         <span class="cancel_all">Cancel All</span>
-    </div-->
+    </div>
 {% endblock %}
 
 {% block javascripts %}
-    <!--script src="{{  asset('assets/js/libs/partsbox/core.js') }}"></script>
+    <script src="{{  asset('assets/js/libs/partsbox/core.js') }}"></script>
     <script src="{{  asset('assets/js/libs/partsbox/upload.js') }}"></script>
     <script>
         setTimeout(function () {
@@ -41,6 +40,6 @@
             $(".filelist.queue").on("click", ".cancel", onUploadCancel);
             $(".cancel_all").on("click", onUploadCancelAll);
         }, 100);
-    </script-->
+    </script>
 {% endblock %}
 
