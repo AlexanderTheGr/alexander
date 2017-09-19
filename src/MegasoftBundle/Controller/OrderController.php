@@ -1120,8 +1120,17 @@ class OrderController extends Main {
     }
 
     function getBrands() {
-        $repository = $this->getDoctrine()->getRepository('SoftoneBundle:Brand');
-        $brands = $repository->findAll(array(), array('brand' => 'ASC'));
+        
+        if ($this->getSetting("AppBundle:Erp:brand") > 0) {
+            $brands = $this->getDoctrine()
+                            ->getRepository('SoftoneBundle:Brand')->findBy(array("id" => 24), array('brand' => 'ASC'));
+        } else {
+            $brands = $this->getDoctrine()
+                            ->getRepository('SoftoneBundle:Brand')->findBy(array("enable" => 1), array('brand' => 'ASC'));
+        }        
+        
+        //$repository = $this->getDoctrine()->getRepository('SoftoneBundle:Brand');
+        //$brands = $repository->findAll(array(), array('brand' => 'ASC'));
         return $brands;
     }
 
