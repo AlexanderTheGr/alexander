@@ -930,6 +930,8 @@ class OrderController extends Main {
      */
     function saveMegasoft(Request $request) {
         $vat = 1.24;
+        $vat = 1;
+        $vat = $this->getSetting("MegasoftBundle:Order:Vat");
         $id = $request->request->get("id");
         //$megasoft = new Megasoft();
         $object = "SALDOC";
@@ -1576,6 +1578,9 @@ class OrderController extends Main {
     public function addorderitemAction(Request $request) {
 
         $vat = 1.24;
+        $vat = 1;
+        $vat = $this->getSetting("MegasoftBundle:Order:Vat");
+        
         $order = $this->getDoctrine()
                 ->getRepository('MegasoftBundle:Order')
                 ->find($request->request->get("order"));
@@ -1834,6 +1839,7 @@ class OrderController extends Main {
             $items = $ord["items"];
 
             $vat = 1.24;
+            $vat = $this->getSetting("MegasoftBundle:Order:Vat");
 
             foreach ($items as $item) {
                 $product = $this->getDoctrine()
