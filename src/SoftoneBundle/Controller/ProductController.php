@@ -790,8 +790,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             foreach($files as $file) {
                 
                 if (strpos($file,".jpg")) {
-                    $img .= $file;
+                    //$img .= $file;
                     $urlpath = str_replace("/home2/partsbox/public_html/partsbox/web","",$path);
+                    $img .= $urlpath.$file;
                     $img .= "<img src='".$urlpath.$file."'>";
                 }
             }
