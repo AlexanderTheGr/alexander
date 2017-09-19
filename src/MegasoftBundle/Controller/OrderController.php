@@ -1568,6 +1568,21 @@ class OrderController extends Main {
         $json[10] = "Total";
         $json[11] = $total;
 
+        if ($this->getSetting("MegasoftBundle:Order:Vat") == 1) {
+            $json[0] = "";
+            $json[1] = "";
+            $json[2] = "";
+            $json[3] = "";
+            $json[4] = "";
+            $json[5] = "";
+            $json[6] = "";
+            $json[7] = "";
+            $json[8] = "";
+            $json[9] = "";
+            $json[10] = "Total (VAT)";
+            $json[11] = $total*1.24; 
+        }
+        
         $data->data[] = $json;
         return json_encode($data);
     }
