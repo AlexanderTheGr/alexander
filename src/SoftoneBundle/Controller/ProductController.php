@@ -780,7 +780,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         return $json;
     }
 
-    public function getImagesHtml($product) {
+    public function getFanoImagesHtml($product) {
         $em = $this->getDoctrine()->getManager();
         $path = $this->getSetting("SoftoneBundle:Product:Images");
         // /home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas
