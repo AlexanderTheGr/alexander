@@ -792,8 +792,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 if (strpos($file,".jpg")) {
                     //$img .= $file;
                     $urlpath = str_replace("/home2/partsbox/public_html/partsbox/web","",$path);
-                    $img .= $urlpath.$file;
-                    $img .= "<img src='".$urlpath.$file."'>";
+                    $img .= $urlpath.$product->getErpCode()."/".$file;
+                    $img .= "<img src='".$urlpath.$product->getErpCode()."/".$file."'>";
                 }
             }
         }
