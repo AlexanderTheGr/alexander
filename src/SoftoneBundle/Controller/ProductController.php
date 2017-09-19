@@ -767,6 +767,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         if ($id > 0 AND count($entity) > 0) {
             $tabs[] = array("title" => $this->getTranslation("Αντιστοιχίες Εντός Αποθήκης"), "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
             $tabs[] = array("title" => $this->getTranslation("Categories"), "datatables" => '', "form" => '', "content" => $this->getCategories($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
+            $tabs[] = array("title" => $this->getTranslation("Fano Images"), "datatables" => '', "form" => '', "content" => $this->getFanoImagesHtml($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
+
+            
         }
 
         foreach ($tabs as $tab) {
@@ -777,6 +780,29 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         return $json;
     }
 
+    public function getImagesHtml($product) {
+        $em = $this->getDoctrine()->getManager();
+        $path = $this->getSetting("SoftoneBundle:Product:Images");
+        // /home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas
+        //$path = "/home2/partsbox/public_html/partsbox/web/assets/media/" . $em->getConnection()->getDatabase() . "/" . $product->getId() . ".jpg";
+        $files = scandir($path."/".$product->getErpCode());
+        if ($files) {
+            foreach($files as $file) {
+                if (strpos(".jpg", $file)) {
+                    $urlpath = str_replace("/home2/partsbox/public_html/partsbox/web","",$path);
+                    $img = "<img src='".$urlpath.$file."'>";
+                }
+            }
+        }
+
+        $response = $this->get('twig')->render('MegasoftBundle:Product:images.html.twig', array(
+            'img' => $img,
+            'product' => $product->getId(),
+        ));
+        return str_replace("\n", "", htmlentities($response));
+    }    
+    
+    
     public function getCategories($product) {
         $entities = $this->getDoctrine()
                 ->getRepository('SoftoneBundle:Category')
