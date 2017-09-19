@@ -788,9 +788,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $files = scandir($path.$product->getErpCode());
         if ($files) {
             foreach($files as $file) {
+                $img .= $file;
                 if (strpos(".jpg", $file)) {
                     $urlpath = str_replace("/home2/partsbox/public_html/partsbox/web","",$path);
-                    $img = "<img src='".$urlpath.$file."'>";
+                    $img .= "<img src='".$urlpath.$file."'>";
                 }
             }
         }
