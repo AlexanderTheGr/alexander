@@ -1784,7 +1784,7 @@ class ProductController extends Main {
         if ($data["SupplierId"] != "") {
             echo $data["SupplierId"] . "<BR>";
         } else {
-            echo "[" . $data["SupplierId"] . "]<BR>";
+            //echo "[" . $data["SupplierId"] . "]<BR>";
             //return;
         }
         $entity = $this->getDoctrine()
@@ -1801,7 +1801,7 @@ class ProductController extends Main {
             $entity->setCreated($dt);
             $entity->setModified($dt);
         } else {
-            echo "[" . addslashes($data["SupplierCode"]) . "] " . $entity->getId() . "<BR>";
+            //echo "[" . addslashes($data["SupplierCode"]) . "] " . $entity->getId() . "<BR>";
             ///return;
             //if ($entity->getId() < 172652)
             //    return;
@@ -1874,7 +1874,7 @@ class ProductController extends Main {
             $q[] = "`ts` = '" . date("Y-m-d") . "'";
             $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
             echo $sql . "<BR>";
-            echo "-";
+            //echo "-";
             //return;
             $this->getDoctrine()->getManager()->getConnection()->exec($sql);
         } else {
@@ -1882,8 +1882,8 @@ class ProductController extends Main {
             $q[] = "`ts` = '" . date("Y-m-d") . "'";
             $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
             echo $sql;
-            echo $entity->getId() . "<BR>";
-            echo ".";
+            //echo $entity->getId() . "<BR>";
+            //echo ".";
             $this->getDoctrine()->getManager()->getConnection()->exec($sql);
         }
         $entity = $this->getDoctrine()
