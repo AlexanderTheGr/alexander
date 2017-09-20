@@ -352,10 +352,12 @@ class EdiController extends Main {
             if (($handle = fopen($file, "r")) !== FALSE) {
                 //echo 'sss';
                 while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
-
+                    foreach($data as $key=>$d) {
+                        $data[$key] = $d;
+                    }
                     if ($data[0] != '') {
                         //echo $data[0]."<BR>";
-
+                        
                         $data[8] = str_replace(",", '.', $data[8]);
                         $data[2] = iconv("ISO-8859-7", "UTF-8", $data[2]);
                         $sql = "insert autoparts_fanopoiia_product set 
