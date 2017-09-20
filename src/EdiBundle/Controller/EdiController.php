@@ -406,7 +406,7 @@ class EdiController extends Main {
                         } else {
                             $sql = "update partsbox_db.edi_item set " . implode(",", $q) . " where id = '" . $ediedi_id . "'";
                             echo $sql . "<BR>";
-                            //$em->getConnection()->exec($sql);
+                            $em->getConnection()->exec($sql);
                         }
                         if ($i++ > 100)
                             return;
