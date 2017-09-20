@@ -344,6 +344,7 @@ class EdiController extends Main {
         //return;
         $em = $this->getDoctrine()->getManager();
         $zip = new \ZipArchive;
+        echo ".";
         if ($zip->open('/home2/partsbox/PRICELIST_07413.ZIP') === TRUE) {
             $zip->extractTo('/home2/partsbox/');
             $zip->close();
@@ -381,7 +382,7 @@ class EdiController extends Main {
                         $q = array();
                         $q[] = "`itemcode` = '" . $data[0] . "'";
                         $q[] = "`partno` = '" . $data[0] . "'";
-                        $q[] = "`fano_model` = '" . $data[7] . "'";
+                        $q[] = "`fano_model` = '" . $data[5] . "'";
                         $q[] = "`brand` = 'GBG'";
                         $q[] = "`description` = '" . $data[2] . "'";
                         $q[] = "`wholesaleprice` = '" . $data[8] . "'";
