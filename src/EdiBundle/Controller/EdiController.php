@@ -382,7 +382,7 @@ class EdiController extends Main {
                         $q = array();
                         $q[] = "`itemcode` = '" . $data[0] . "'";
                         $q[] = "`partno` = '" . $data[0] . "'";
-                        $q[] = "`fano_model` = '" . (int)$data[5] . "'";
+                        $q[] = "`fano_model` = '" . (int) $data[5] . "'";
                         $q[] = "`brand` = 'GBG'";
                         $q[] = "`description` = '" . $data[2] . "'";
                         $q[] = "`wholesaleprice` = '" . $data[8] . "'";
@@ -408,12 +408,15 @@ class EdiController extends Main {
                             echo $sql . "<BR>";
                             $em->getConnection()->exec($sql);
                         }
-                        
+
                         //$sql = "replace partsbox_db.fanopoiia_category2 set brand = brand, year = year, img = img, category_id = category_id, model_id = '".(int)$data[5]."', brand_str = '".$data[6].", model_str = '".$data[7]."'";
-                        
-                        $sql = "INSERT INTO partsbox_db.fanopoiia_category2 set model_id = '".(int)$data[5]."', brand = '".$data[6]." , brand_str = '".$data[6].", model_str = '".$data[7]."' ON DUPLICATE KEY UPDATE brand_str = '".$data[6].", model_str = '".$data[7]."'";
-                        
-                        echo $sql."<BR>";
+                        if (!$df[(int) $data[5]]) {
+                            $df[(int) $data[5]] = true;
+                            $sql = "INSERT INTO partsbox_db.fanopoiia_category2 set model_id = '" . (int) $data[5] . "', brand = '" . $data[6] . "', brand_str = '" . $data[6] . "', model_str = '" . $data[7] . "' ON DUPLICATE KEY UPDATE brand_str = '" . $data[6] . "', model_str = '" . $data[7] . "'";
+                            $em->getConnection()->exec($sql);
+                        }
+
+                        echo $sql . "<BR>";
                         if ($i++ > 100)
                             return;
                     }
