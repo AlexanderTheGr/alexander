@@ -345,10 +345,10 @@ class EdiController extends Main {
         $em = $this->getDoctrine()->getManager();
         $zip = new \ZipArchive;
         echo ".";
-        if ($zip->open('/home2/partsbox/PRICELIST_07413.ZIP') === TRUE) {
+        if ($zip->open('/home2/partsbox/PRICELIST_RETAIL.ZIP') === TRUE) {
             $zip->extractTo('/home2/partsbox/');
             $zip->close();
-            $file = "/home2/partsbox/PRICELIST_07413.txt";
+            $file = "/home2/partsbox/PRICELIST_RETAIL.txt";
             if (($handle = fopen($file, "r")) !== FALSE) {
                 //echo 'sss';
                 while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
