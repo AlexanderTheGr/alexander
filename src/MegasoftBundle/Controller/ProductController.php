@@ -1846,7 +1846,7 @@ class ProductController extends Main {
         $q[] = "`remarks` = '" . addslashes($data["remarks"]) . "'";
         $q[] = "`supref` = '" . addslashes($data["supref"]) . "'";
         $q[] = "`place` = '" . addslashes($data["place"]) . "'";
-        $q[] = "`sisxetisi` = '" . addslashes($data["sisxetisi"]) . "'";
+        $q[] = "`sisxetisi` = '" . addslashes($data["barcode"]) . "'";
         $q[] = "`supplier_item_code` = '" . addslashes($data["fwSupplierItemCode"]) . "'";
         $q[] = "`webupd` = '" . ($data["webupd"] == 'True' ? 1 : 0) . "'";
         $q[] = "`barcode` = '" . addslashes($data["barcode"]) . "'";
