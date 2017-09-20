@@ -1143,7 +1143,7 @@ class ProductController extends Main {
 
     public function getCategories($product) {
         $entities = $this->getDoctrine()
-                ->getRepository('MegasoftBundle:Category')
+                ->getRepository('SoftoneBundle:Category')
                 ->findBy(array("parent" => 0));
         $html = "<ul class='productcategory'>";
 
@@ -1154,7 +1154,7 @@ class ProductController extends Main {
 
 
             $entities2 = $this->getDoctrine()
-                    ->getRepository('MegasoftBundle:Category')
+                    ->getRepository('SoftoneBundle:Category')
                     ->findBy(array("parent" => $entity->getId()));
             $style = "";
             foreach ($entities2 as $entity2) {
