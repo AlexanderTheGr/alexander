@@ -412,7 +412,7 @@ class EdiController extends Main {
                         //$sql = "replace partsbox_db.fanopoiia_category2 set brand = brand, year = year, img = img, category_id = category_id, model_id = '".(int)$data[5]."', brand_str = '".$data[6].", model_str = '".$data[7]."'";
                         if (!$df[(int) $data[5]]) {
                             $df[(int) $data[5]] = true;
-                            $sql = "INSERT INTO partsbox_db.fanopoiia_category2 set model_id = '" . (int) $data[5] . "', brand = '" . $data[6] . "', brand_str = '" . $data[6] . "', model_str = '" . $data[7] . "' ON DUPLICATE KEY UPDATE brand_str = '" . $data[6] . "', model_str = '" . $data[7] . "'";
+                            $sql = "INSERT INTO partsbox_db.fanopoiia_category3 set model_id = '" . (int) $data[5] . "', brand = '" . $data[6] . "', brand_str = '" . $data[6] . "', model_str = '" . $data[7] . "' ON DUPLICATE KEY UPDATE brand_str = '" . $data[6] . "', model_str = '" . $data[7] . "'";
                             $em->getConnection()->exec($sql);
                         }
 
