@@ -2333,7 +2333,7 @@ class Product extends Entity {
         $products = $em->getRepository("MegasoftBundle:Product")
                 ->findBy(array("replaced" => $this->replaced));    
         
-        echo count($products);
+        //echo count($products);
         
         if (count($products) > 1) {
             $this->replaced = '';
