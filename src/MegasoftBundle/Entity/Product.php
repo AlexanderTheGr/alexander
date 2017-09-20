@@ -2323,7 +2323,7 @@ class Product extends Entity {
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         $product = $em->getRepository("MegasoftBundle:Product")
                 ->findOneBy(array("erpCode" => $this->replaced));
-        echo $product->getId();
+        //echo $product->getId();
         if (!$product) {
             $this->replaced = '';
             $em->persist($this);
@@ -2331,7 +2331,10 @@ class Product extends Entity {
             return;
         }
         $products = $em->getRepository("MegasoftBundle:Product")
-                ->findBy(array("replaced" => $this->replaced));        
+                ->findBy(array("replaced" => $this->replaced));    
+        
+        echo count($products);
+        
         if (count($products) > 1) {
             $this->replaced = '';
             $em->persist($this);
