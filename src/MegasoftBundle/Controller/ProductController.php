@@ -364,7 +364,7 @@ class ProductController extends Main {
         $product->setSupplierCode($this->clearstring($product->getSupplierCode()));
         $this->flushpersist($product);
 
-        $product->setReplacer();
+        //$product->setReplacer();
 
         //echo $product->id."\n";
         //echo $product->reference."\n";
