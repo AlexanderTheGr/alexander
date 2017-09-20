@@ -381,6 +381,7 @@ class EdiController extends Main {
                         $q = array();
                         $q[] = "`itemcode` = '" . $data[0] . "'";
                         $q[] = "`partno` = '" . $data[0] . "'";
+                        $q[] = "`fano_model` = '" . $data[7] . "'";
                         $q[] = "`brand` = 'GBG'";
                         $q[] = "`description` = '" . $data[2] . "'";
                         $q[] = "`wholesaleprice` = '" . $data[8] . "'";
