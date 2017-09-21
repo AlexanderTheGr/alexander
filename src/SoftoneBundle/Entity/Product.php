@@ -2743,9 +2743,18 @@ class Product extends Entity {
 
     public function getForOrderCode() {
 
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        
+        $sql = "Select * partsbox_db.edi_item a, edi b where a.id = b.edi where a.partno = '".$this->itemCode1."'";
+        
+        
         $out = '<a title="' . $this->title . '" class="product_info" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
         <br>
-        <span class="text-sm text-info">' . $this->erpCode . '</span>';
+        <span class="text-sm text-info">' . $this->erpCode . '</span>'.$sql;
 
         return $out;
     }
@@ -2899,8 +2908,8 @@ class Product extends Entity {
         //if (@$orderItem->id == 0) {
         $display = @$orderItem->id == 0 ? "display:none" : "display:block";
         //}
-        $sql = "Select * partsbox_db.edi_item a, edi b where a.id = b.edi where a.partno = '".$this->itemCode2."'";
-        return $sql.'<img width="20" style="width:20px; max-width:20px; ' . $display . '" class="tick_' . $this->id . '" src="/assets/img/tick.png">';
+        
+        return '<img width="20" style="width:20px; max-width:20px; ' . $display . '" class="tick_' . $this->id . '" src="/assets/img/tick.png">';
     }
 
     function getEdiPrices() {
@@ -2910,7 +2919,7 @@ class Product extends Entity {
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         
-        $sql = "Select * partsbox_db.edi_item a, edi b where a.id = b.edi where a.partno = '".$this->itemCode2."'";
+        $sql = "Select * partsbox_db.edi_item a, edi b where a.id = b.edi where a.partno = '".$this->itemCode1."'";
         return $sql;
     }
     
