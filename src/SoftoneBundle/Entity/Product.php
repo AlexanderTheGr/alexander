@@ -2903,6 +2903,18 @@ class Product extends Entity {
         return '<img width="20" style="width:20px; max-width:20px; ' . $display . '" class="tick_' . $this->id . '" src="/assets/img/tick.png">';
     }
 
+    function getEdiPrices() {
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        
+        $sql = "Select * partsbox_db.edi_item a, edi b where a.id = b.edi where a.partno = '".$this->itemCode2."'";
+        return $sql;
+    }
+    
+    
     /**
      * @var string
      */
