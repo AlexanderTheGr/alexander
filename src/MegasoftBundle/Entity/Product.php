@@ -1336,7 +1336,8 @@ class Product extends Entity {
                 $ruled = true;
             }
         }
-
+        
+        $rules = false;
         if (!$ruled) {
             $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
             $sortorder = 0;
