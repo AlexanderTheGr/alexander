@@ -2899,8 +2899,8 @@ class Product extends Entity {
         //if (@$orderItem->id == 0) {
         $display = @$orderItem->id == 0 ? "display:none" : "display:block";
         //}
-
-        return '<img width="20" style="width:20px; max-width:20px; ' . $display . '" class="tick_' . $this->id . '" src="/assets/img/tick.png">';
+        $sql = "Select * partsbox_db.edi_item a, edi b where a.id = b.edi where a.partno = '".$this->itemCode2."'";
+        return $sql.'<img width="20" style="width:20px; max-width:20px; ' . $display . '" class="tick_' . $this->id . '" src="/assets/img/tick.png">';
     }
 
     function getEdiPrices() {
