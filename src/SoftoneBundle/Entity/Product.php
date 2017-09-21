@@ -2767,6 +2767,7 @@ class Product extends Entity {
                     <td>Title</td>
                     <td>Qty</td>
                     <td>Price</td>
+                    <td></td>
                 </tr>
                 </thead>
                 <tbody>';
@@ -2783,6 +2784,7 @@ class Product extends Entity {
                             <td>' . $data["description"] . '</td>
                             <td>' . $entity->getEdiQtyAvailability() . '</td>
                             <td>' . $data["wholesaleprice"] . '</td>
+                            <td><input type="text" data-id="'.$data['id'].'" name="qty1_'.$data['id'].'" value="0" size="2" id="qty1_'.$data['id'].'" class="ediiteqty1"></td>    
                         </tr>';
             }
             $out .= '</tbody>
