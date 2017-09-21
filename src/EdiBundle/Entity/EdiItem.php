@@ -649,7 +649,7 @@ class EdiItem extends Entity {
     }
 
     public function toErp() {
-        
+
         if ($this->getSetting("AppBundle:Erp:erpprefix") == '/erp01') {
             $this->toMegasoftErp();
         } else {
@@ -662,15 +662,15 @@ class EdiItem extends Entity {
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
         }
-        
-        
-        
-        
+
+
+
+
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
-        
+
         $tecdocSupplier = $em->getRepository("MegasoftBundle:TecdocSupplier")
                 ->findOneBy(array('supplier' => $this->fixsuppliers($this->brand)));
-        
+
         $login = $this->getSetting("MegasoftBundle:Webservice:Login"); //"demo-fastweb-megasoft";
         $soap = new \SoapClient("http://wsprisma.megasoft.gr/mgsft_ws.asmx?WSDL", array('cache_wsdl' => WSDL_CACHE_NONE));
 
@@ -751,12 +751,12 @@ class EdiItem extends Entity {
             $erpCode = $this->clearCode($this->partno) . "-" . $manufacturer->getCode();
             $product = $em->getRepository("MegasoftBundle:Product")->findOneBy(array("erpCode" => $erpCode));
         }
-        
+
         if (!$product) {
             $erpCode = $this->clearCode($this->partno) . "-" . $manufacturer->getCode();
-            $product = $em->getRepository("MegasoftBundle:Product")->findOneBy(array("supplierCode" => $this->clearCode($this->partno),"manufacturer"=>$manufacturer));
+            $product = $em->getRepository("MegasoftBundle:Product")->findOneBy(array("supplierCode" => $this->clearCode($this->partno), "manufacturer" => $manufacturer));
         }
-        
+
         if ($product) {
             $product->setSupplierItemCode($this->itemCode);
             $product->setEdiId($this->getEdi()->getId());
@@ -984,7 +984,7 @@ class EdiItem extends Entity {
         $this->wholesaleprice = $this->getEdiQtyAvailability();
         $product->setItemPricer((double) $this->getEdiMarkupPrice("itemPricer"));
         $product->setItemPricew((double) $this->getEdiMarkupPrice("itemPricew"));
-        
+
         $product->setItemPricew01((double) $this->getEdiMarkupPrice("itemPricew01"));
 
 
@@ -1005,10 +1005,10 @@ class EdiItem extends Entity {
         $em->flush();
         $sql = 'UPDATE  `softone_product` SET `supplier_code` =  `item_code2`, `title` =  `item_name`, `tecdoc_code` =  `item_apvcode`, `erp_code` =  `item_code`';
         $em->getConnection()->exec($sql);
-        
+
         $sql = 'UPDATE  `softone_product` SET `supplier_id` =  `item_mtrmanfctr` where item_mtrmanfctr > 0 AND item_mtrmanfctr in (SELECT id FROM `softone_softone_supplier`)';
         $em->getConnection()->exec($sql);
-        
+
         $sql = 'update `softone_product` set product_sale = 1 where product_sale is null';
         $em->getConnection()->exec($sql);
         return;
@@ -1256,6 +1256,25 @@ class EdiItem extends Entity {
                 foreach ($re->Items as $Item) {
                     return number_format($Item->ListPrice, 2, '.', '');
                 }
+        } elseif ($this->getEdi()->getFunc() == 'getGbgEdiPartMaster') { // is viakar, liakopoulos
+            $zip = new \ZipArchive;
+            if ($zip->open('/home2/partsbox/OUTOFSTOCK_ATH.ZIP') === TRUE) {
+                $zip->extractTo('/home2/partsbox/');
+                $zip->close();
+                $file = "/home2/partsbox/OUTOFSTOCK_ATH.txt";
+                $availability = false;
+                if (($handle = fopen($file, "r")) !== FALSE) {
+                    //echo 'sss';
+                    while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
+                        if ($data[0] == $entity->getItemcode()) {
+                            if ($data[1] == 1)
+                                $availability = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            return $availability;
         } else {
             $elteka = $this->eltekaAuth();
             $response = $elteka->getPartPrice(array('CustomerNo' => $this->CustomerNo, "EltrekkaRef" => $this->getItemcode()));
@@ -1363,8 +1382,8 @@ class EdiItem extends Entity {
         }
         //$markup = $markup == 0 ? 0 : $markup; 
         //echo $markup."\n";
-        $markupedPrice = (double)$this->getWholesaleprice() * (1 + $markup / 100 );
-        return $price > 0 ? $price : round($markupedPrice,2);
+        $markupedPrice = (double) $this->getWholesaleprice() * (1 + $markup / 100 );
+        return $price > 0 ? $price : round($markupedPrice, 2);
     }
 
     function getRulesss($pricefield = false) {
@@ -1443,7 +1462,7 @@ class EdiItem extends Entity {
         }
         return $this->wholesaleprice;
     }
-    
+
     public function getEdiListPrice() {
         if ($this->getEdi()->getFunc() == 'getEdiPartMaster') { // is viakar, liakopoulos
             if (@!$datas[$this->getEdi()->getId()][$k]) {
@@ -1483,7 +1502,7 @@ class EdiItem extends Entity {
             }
         }
     }
-    
+
     public function getEdiUnitPrice() {
         if ($this->getEdi()->getFunc() == 'getEdiPartMaster') { // is viakar, liakopoulos
             if (@!$datas[$this->getEdi()->getId()][$k]) {
@@ -1559,7 +1578,7 @@ class EdiItem extends Entity {
                 $price = $rule->getPrice();
                 $ruled = true;
             }
-        }        
+        }
         if (!$ruled) {
             $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
             $sortorder = 0;
@@ -1571,16 +1590,159 @@ class EdiItem extends Entity {
                 }
             }
         }
-        
 
-        
+
+
         $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
         $markip = $this->getEdiMarkupPrice($pricefield);
         $price = $price > 0 ? $price : $this->getEdiMarkupPrice($pricefield);
         $discountedPrice = $this->getEdiMarkupPrice($pricefield) * (1 - $discount / 100 );
         $finalprice = $discount > 0 ? $discountedPrice : $price;
 
-        return $this->getEdiMarkupPrice($pricefield)." / ".number_format($finalprice, 2, '.', '') . " / ".number_format($finalprice * $vat, 2, '.', '') . " (" . (float) $discount . "%)";
+        return $this->getEdiMarkupPrice($pricefield) . " / " . number_format($finalprice, 2, '.', '') . " / " . number_format($finalprice * $vat, 2, '.', '') . " (" . (float) $discount . "%)";
+    }
+
+    function ggetEdiQtyAvailability() {
+        if ($this->getEdi()->getFunc() == 'getGbgEdiPartMaster') { // is viakar, liakopoulos
+            $zip = new \ZipArchive;
+            if ($zip->open('/home2/partsbox/OUTOFSTOCK_ATH.ZIP') === TRUE) {
+                $zip->extractTo('/home2/partsbox/');
+                $zip->close();
+                $file = "/home2/partsbox/OUTOFSTOCK_ATH.txt";
+                $availability = false;
+                if (($handle = fopen($file, "r")) !== FALSE) {
+                    //echo 'sss';
+                    while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
+                        if ($data[0] == $entity->getItemcode()) {
+                            if ($data[1] == 1)
+                                $availability = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            return $availability;
+        } elseif ($entity->getEdi()->getFunc() == 'getEdiPartMaster') { // is viakar, liakopoulos
+            if (@!$datas[$entity->getEdi()->getId()][$k]) {
+                $datas[$entity->getEdi()->getId()][$k]['ApiToken'] = $entity->getEdi()->getToken();
+                $datas[$entity->getEdi()->getId()][$k]['Items'] = array();
+            }
+            $Items[$entity->getEdi()->getId()][$k]["ItemCode"] = $entity->getItemcode();
+            $Items[$entity->getEdi()->getId()][$k]["ReqQty"] = 1;
+            $datas[$entity->getEdi()->getId()][$k]['Items'][] = $Items[$entity->getEdi()->getId()][$k];
+
+            $ands[$entity->getItemcode()] = $key;
+            $entities[$entity->getItemcode()] = $entity;
+        } elseif ($entity->getEdi()->getFunc() == 'getFibaEdiPartMaster') {
+            $AvailabilityDetailsHtml = '';
+            $entity->setFibaSoap();
+            if ($entity->soapStock >= 1) {
+                $availability = "Y";
+            }
+            @$jsonarr[$key]['6'] = $entity->getDiscount($customer, $vat);
+            @$jsonarr[$key]['7'] = number_format((float) $entity->soapPrice, 2, '.', '');
+            @$jsonarr[$key]['8'] = $jsonarr[$key]['8'] . $AvailabilityDetailsHtml;
+            @$jsonarr[$key]['DT_RowClass'] .= $availability == "Y" ? ' text-success ' : ' text-danger ';
+        } elseif ($entity->getEdi()->getFunc() == 'getComlineEdiPartMaster') {
+            $entity->setComlineSoap();
+            $AvailabilityDetailsHtml = '';
+            $availability = '';
+            $apoth = "";
+            $AvailabilityDetailsHtml = $entity->soapStock . "," . $entity->soapAvail1 . "," . $entity->soapAvail2;
+            if ($entity->soapStock >= 1 && $entity->soapAvail1 == 0 && $entity->soapAvail2 == 0) {
+                $availability = "Y";
+            }
+
+            if ($entity->soapStock < 1 && $entity->soapAvail1 == 0 && $entity->soapAvail2 == 0) {
+                $AvailabilityDetailsHtml = "Μη Διαθέσιμο&nbsp;";
+                //psColor = "Orange";
+                //$qty = "<img title='Μη Διαθέσιμο' alt='Μη Διαθέσιμο' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/oriakadiathesimo.png'><BR>Μη Διαθέσιμο".$apoth;
+            } else if ($entity->soapStock >= 1 && $entity->soapAvail1 == 0 && $entity->soapAvail2 == 0) {
+                $AvailabilityDetailsHtml = "&nbsp;Διαθέσιμο&nbsp;";
+                $availability = "Y";
+                //psColor = "Green";
+                //$qty = "<img title='Διαθέσιμο' alt='Διαθέσιμο' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/diathesimo.png'><br>Διαθέσιμο ".$apoth;
+            } else if ($entity->soapStock <= 0 && $entity->soapAvail1 > 0) {
+                $AvailabilityDetailsHtml = "&nbsp;Μη Διαθέσιμο&nbsp;";
+                //psColor = "Red";
+                //$qty = "<img title='Μη Διαθέσιμο' alt='Διαθέσιμο' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/midiathesimo.png'><BR>Μη Διαθέσιμο".$apoth;
+            } else if ($entity->soapStock > 0 && $entity->soapStock <= $entity->soapAvail1 && $entity->soapAvail1 > 0) {
+                $AvailabilityDetailsHtml = "&nbsp;Χαμηλή&nbsp;";
+                $availability = "Y";
+                //psColor = "Orange";
+                //$qty = "<img title='Χαμηλή' alt='Χαμηλή' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/oriakadiathesimo.png'><BR>Χαμηλή".$apoth;
+            } else if ($entity->soapStock > $entity->soapAvail1 && $entity->soapStock <= $entity->soapAvail2 && $entity->soapAvail1 > 0) {
+                $AvailabilityDetailsHtml = "&nbsp;Μεσαία&nbsp;";
+                $availability = "Y";
+                //psColor = "DodgerBlue";
+                //$qty = "<img title='Μεσαία' alt='Μεσαία' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/oriakadiathesimo.png'><BR>Μεσαία".$apoth;
+            } else if ($entity->soapStock > $entity->soapAvail2 && $entity->soapAvail2 > 0) {
+                $AvailabilityDetailsHtml = "&nbsp;Πλήρης&nbsp;";
+                $availability = "Y";
+                //psColor = "Green";
+                //$qty = "<img title='Πλήρης' alt='Πλήρης' src='".Mage::getBaseUrl('skin')."frontend/default/b2b/images/diathesimo.png'><BR>Πλήρης".$apoth;
+            }
+
+
+
+
+            @$jsonarr[$key]['6'] = $entity->getDiscount($customer, $vat);
+            @$jsonarr[$key]['7'] = number_format((float) $entity->soapPrice, 2, '.', '');
+            @$jsonarr[$key]['8'] = $jsonarr[$key]['8'] . $AvailabilityDetailsHtml;
+            @$jsonarr[$key]['DT_RowClass'] .= $availability == "Y" ? ' text-success ' : ' text-danger ';
+        } elseif ($entity->getEdi()->getFunc() == 'getRaskosEdiPartMaster') {
+
+            $json = file_get_contents("http://actedi.actae.gr/PartInfo/api/ActPriceAndAvail/c9ff4c75-2ef9-4dbd-9708-f8175d441f96/" . $entity->getItemCode());
+
+            $ed = json_decode($json);
+
+            $AvailabilityDetailsHtml = ""; //$json;//print_r($ed,true);
+            if ($ed[0]->price > 0) {
+                $entity->getWholesaleprice($ed[0]->price);
+            }
+            @$jsonarr[$key]['6'] = ""; //$entity->getDiscount($customer, $vat);
+            @$jsonarr[$key]['7'] = number_format((float) $entity->getWholesaleprice(), 2, '.', '');
+            @$jsonarr[$key]['8'] = $jsonarr[$key]['8'] . $AvailabilityDetailsHtml;
+            @$jsonarr[$key]['DT_RowClass'] .= $ed[0]->avail == "green" ? ' text-success ' : ' text-danger ';
+        } else {
+            /*
+              @$jsonarr[$key]['DT_RowClass'] .= $eltrekaavailability[$entity->getItemcode()] > 0 ? ' text-success ' : ' text-danger ';
+
+              $response = $elteka->getPartPrice(array('CustomerNo' => $this->CustomerNo, "EltrekkaRef" => $entity->getItemcode()));
+              $xml = $response->GetPartPriceResult->any;
+              $xml = simplexml_load_string($xml);
+              $price = (float) $xml->Item->PriceOnPolicy;
+              //echo "---".$xml->Item->WholePrice."\n";
+              @$jsonarr[$key]['6'] = number_format($price, 2, '.', '');
+              @$jsonarr[$key]['DT_RowClass'] .= $xml->Item->Header->Available == "Y" ? ' text-success ' : ' text-danger ';
+             */
+            if (count($jsonarr) < 50) {
+                $response = $elteka->getAvailability(
+                        array('CustomerNo' => $this->CustomerNo,
+                            "RequestedQty" => 1,
+                            "EltrekkaRef" => $entity->getItemcode()));
+                $xml = $response->GetAvailabilityResult->any;
+                $xml = simplexml_load_string($xml);
+                $AvailabilityDetailsHtml = "<select data-id='" . $entity->getId() . "' class='edistore' id='store_" . $entity->getId() . "' style=''>";
+                $asd = (array) $xml->Item;
+                foreach ((array) $asd["AvailabilityDetails"] as $details) {
+                    if ($details->IsAvailable == 'Y') {
+                        $selected = (int) $xml->Item->Header->SUGGESTED_STORE == (int) $details->StoreNo ? "selected" : "";
+                        $AvailabilityDetailsHtml .= "<option " . $selected . " value='" . $details->StoreNo . "' style='color:green'>" . $details->StoreNo . "</option>";
+                    } else {
+                        $AvailabilityDetailsHtml .= "<option value='" . $details->StoreNo . "' style='color:red'>" . $details->StoreNo . " (" . $details->EstimatedBODeliveryTime . ")</option>";
+                    }
+                }
+                $AvailabilityDetailsHtml .= "</select>";
+
+                //print_r($xml->Item->Header);
+                $entity->setWholesaleprice($xml->Item->Header->WholePrice);
+                @$jsonarr[$key]['6'] = $entity->getDiscount($customer, $vat);
+                @$jsonarr[$key]['7'] = number_format((float) $xml->Item->Header->WholePrice, 2, '.', '');
+                @$jsonarr[$key]['8'] = $jsonarr[$key]['8'] . $AvailabilityDetailsHtml;
+                @$jsonarr[$key]['DT_RowClass'] .= $xml->Item->Header->Available == "Y" ? ' text-success ' : ' text-danger ';
+            }
+        }
     }
 
 }
