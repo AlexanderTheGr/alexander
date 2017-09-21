@@ -460,7 +460,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $dtparams[] = array("name" => $this->getTranslation("QTY"), "index" => 'qty', "input" => 'text', 'search' => 'text');
         //$dtparams[] = array("name" => "EDI", "index" => 'edi', "input" => 'text', 'search' => 'text');
 
-        $dtparams[] = array("name" => "-", "function" => 'getTick', 'search' => 'text');
+        $dtparams[] = array("name" => "-", "function" => 'getEdiPrices', 'search' => 'text');
         
         $dtparams[] = array("name" => "-", "function" => 'getEdiPrices', 'search' => 'text');
 
