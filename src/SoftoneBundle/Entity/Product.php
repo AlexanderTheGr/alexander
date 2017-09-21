@@ -2749,7 +2749,7 @@ class Product extends Entity {
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         
-        $sql = "Select * partsbox_db.edi_item a, edi b where a.id = b.edi where a.partno = '".$this->itemCode1."'";
+        $sql = "Select * from partsbox_db.edi_item a, edi b where a.edi = b.id and a.partno =  '".$this->itemCode1."'";
         
         
         $out = '<a title="' . $this->title . '" class="product_info" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
