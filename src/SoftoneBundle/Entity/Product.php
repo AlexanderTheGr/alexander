@@ -2740,8 +2740,7 @@ class Product extends Entity {
 
         return number_format($price * $vat, 2, '.', '') . " (" . (float) $discount . "%)";
     }
-    
-    
+
     function getEdiPrices() {
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
@@ -2754,6 +2753,11 @@ class Product extends Entity {
         $statement->execute();
         $results = $statement->fetchAll();
         if ($results) {
+
+
+
+
+            
             $out = '<div class="ediprices style-primary-light" style="display: none;">
             <table class="table-striped">
                 <thead>
@@ -2766,23 +2770,28 @@ class Product extends Entity {
                 </tr>
                 </thead>
                 <tbody>';
-                foreach ($results as $data){
+            foreach ($results as $data) {
+
+                $entity = $this->getDoctrine()
+                    ->getRepository($this->repository)
+                    ->find($data["id"]);
+                $entity->getEdiQtyAvailability();
+
                 $out .= '<tr>
                             <td>73</td>
-                            <td>'.$data["itemcode"].'</td>
-                            <td>'.$data["description"].'</td>
-                            <td>'.$data["wholesaleprice"].'</td>
-                            <td>'.$data["wholesaleprice"].'</td>
+                            <td>' . $data["itemcode"] . '</td>
+                            <td>' . $data["description"] . '</td>
+                            <td>' . $entity->getEdiQtyAvailability() . '</td>
+                            <td>' . $data["wholesaleprice"] . '</td>
                         </tr>';
-                } 
-               $out .= '</tbody>
+            }
+            $out .= '</tbody>
             </table>
 
             </div>';
-            return $out;   
+            return $out;
         }
-        
-    }    
+    }
 
     public function getForOrderCode() {
 
@@ -2790,11 +2799,10 @@ class Product extends Entity {
 
         $out = '<a title="' . $this->title . '" class="product_info" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
         <br>
-        <span class="text-sm text-info">' . $this->erpCode . '</span>'.$this->getEdiPrices();
+        <span class="text-sm text-info">' . $this->erpCode . '</span>' . $this->getEdiPrices();
 
         return $out;
     }
-    
 
     public function getForOrderTitle() {
 
@@ -2948,7 +2956,6 @@ class Product extends Entity {
 
         return '<img width="20" style="width:20px; max-width:20px; ' . $display . '" class="tick_' . $this->id . '" src="/assets/img/tick.png">';
     }
-
 
     /**
      * @var string
