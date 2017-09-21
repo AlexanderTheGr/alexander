@@ -2773,7 +2773,7 @@ class Product extends Entity {
             foreach ($results as $data) {
 
                 $entity = $this->getDoctrine()
-                    ->getRepository($this->repository)
+                    ->getRepository("EdiBundle:EdiItem")
                     ->find($data["id"]);
                 $entity->getEdiQtyAvailability();
 
