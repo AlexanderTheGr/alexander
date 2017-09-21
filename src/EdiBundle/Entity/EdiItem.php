@@ -1266,7 +1266,7 @@ class EdiItem extends Entity {
                 if (($handle = fopen($file, "r")) !== FALSE) {
                     //echo 'sss';
                     while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
-                        if ($data[0] == $entity->getItemcode()) {
+                        if ($data[0] == $this->getItemcode()) {
                             if ($data[1] == 1)
                                 $availability = true;
                             break;
