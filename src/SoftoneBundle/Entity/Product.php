@@ -2758,7 +2758,7 @@ class Product extends Entity {
 
 
             
-            $out = '<div class="ediprices style-primary-light" style="display: none;">
+            $out = '<div class="orderitemstable style-primary-light" style="display: none;">
             <table class="table-striped">
                 <thead>
                 <tr>
