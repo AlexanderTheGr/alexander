@@ -2200,11 +2200,11 @@ class Product extends Entity {
         }
         //@$dataOut["ITEEXTRA"][0] = array("VARCHAR02" => $this->sisxetisi); 
         //print_r(@$dataOut);
-        file_put_contents("log/productIn_".$this->getId().".txt",print_r($dataOut,true));
+        file_put_contents("log/productIn_" . $this->getId() . ".txt", print_r($dataOut, true));
         $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
-        file_put_contents("log/productOut_".$this->getId().".txt",print_r($out,true));
+        file_put_contents("log/productOut_" . $this->getId() . ".txt", print_r($out, true));
         //print_r($out);
-        
+
 
         if (@$out->id > 0) {
             $op = false;
@@ -2748,13 +2748,18 @@ class Product extends Entity {
             $kernel = $kernel->getKernel();
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
-        
-        $sql = "Select * from partsbox_db.edi_item a, edi b where a.edi = b.id and a.partno =  '".$this->itemCode1."'";
-        
-        
+
+        $sql = "Select * from partsbox_db.edi_item a, edi b where a.edi = b.id and (a.itemcode =  '" . $this->cccRef . "' OR a.partno =  '" . $this->itemCode1 . "' OR a.partno =  '" . $this->itemCode2 . "')";
+
+        $connection = $em->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $results = $statement->fetchAll();
+
+
         $out = '<a title="' . $this->title . '" class="product_info" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
         <br>
-        <span class="text-sm text-info">' . $this->erpCode . '</span>'.$sql;
+        <span class="text-sm text-info">' . $this->erpCode . '</span><BR>' . print_r($results);
 
         return $out;
     }
@@ -2797,7 +2802,7 @@ class Product extends Entity {
         $tecdoc = new Tecdoc();
         if ($this->getSetting("AppBundle:Entity:lng") > 0) {
             $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
-        }; 
+        };
         $attributs = $tecdoc->getAssignedArticlesByIds(
                 array(
                     "articleId" => $this->tecdocArticleId,
@@ -2828,7 +2833,7 @@ class Product extends Entity {
         $tecdoc = new Tecdoc();
         if ($this->getSetting("AppBundle:Entity:lng") > 0) {
             $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
-        }; 
+        };
         $attributs = $tecdoc->getAssignedArticlesByIds(
                 array(
                     "articleId" => $this->tecdocArticleId,
@@ -2908,7 +2913,7 @@ class Product extends Entity {
         //if (@$orderItem->id == 0) {
         $display = @$orderItem->id == 0 ? "display:none" : "display:block";
         //}
-        
+
         return '<img width="20" style="width:20px; max-width:20px; ' . $display . '" class="tick_' . $this->id . '" src="/assets/img/tick.png">';
     }
 
@@ -2918,12 +2923,12 @@ class Product extends Entity {
             $kernel = $kernel->getKernel();
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
-        
-        $sql = "Select * partsbox_db.edi_item a, edi b where a.id = b.edi where a.partno = '".$this->itemCode1."'";
+
+        $sql = "Select * partsbox_db.edi_item a, edi b where a.id = b.edi where a.partno = '" . $this->itemCode1 . "'";
+
         return $sql;
     }
-    
-    
+
     /**
      * @var string
      */
