@@ -2740,29 +2740,61 @@ class Product extends Entity {
 
         return number_format($price * $vat, 2, '.', '') . " (" . (float) $discount . "%)";
     }
-
-    public function getForOrderCode() {
-
+    
+    
+    function getEdiPrices() {
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
-
-        $sql = "Select * from partsbox_db.edi_item a, edi b where a.edi = b.id and (a.itemcode =  '" . $this->cccRef . "' OR a.partno =  '" . $this->itemCode1 . "' OR a.partno =  '" . $this->itemCode2 . "')";
-
+        $sql = "Select a.* from partsbox_db.edi_item a, edi b where a.edi = b.id and (a.itemcode =  '" . $this->cccRef . "' OR a.partno =  '" . $this->itemCode1 . "' OR a.partno =  '" . $this->itemCode2 . "')";
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
         $statement->execute();
         $results = $statement->fetchAll();
+        if ($results) {
+            $out = '<div class="ediprices style-primary-light" style="display: none;">
+            <table class="table-striped">
+                <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Code</td>
+                    <td>Title</td>
+                    <td>Qty</td>
+                    <td>Price</td>
+                </tr>
+                </thead>
+                <tbody>';
+                foreach ($results as $data){
+                $out .= '<tr>
+                            <td>73</td>
+                            <td>'.$data["itemcode"].'</td>
+                            <td>'.$data["description"].'</td>
+                            <td>'.$data["wholesaleprice"].'</td>
+                            <td>'.$data["wholesaleprice"].'</td>
+                        </tr>';
+                } 
+               $out .= '</tbody>
+            </table>
+
+            </div>';
+            return $out;   
+        }
+        
+    }    
+
+    public function getForOrderCode() {
+
 
 
         $out = '<a title="' . $this->title . '" class="product_info" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
         <br>
-        <span class="text-sm text-info">' . $this->erpCode . '</span><BR>' . print_r($results,true);
+        <span class="text-sm text-info">' . $this->erpCode . '</span>'.$this->getEdiPrices();
 
         return $out;
     }
+    
 
     public function getForOrderTitle() {
 
@@ -2917,17 +2949,6 @@ class Product extends Entity {
         return '<img width="20" style="width:20px; max-width:20px; ' . $display . '" class="tick_' . $this->id . '" src="/assets/img/tick.png">';
     }
 
-    function getEdiPrices() {
-        global $kernel;
-        if ('AppCache' == get_class($kernel)) {
-            $kernel = $kernel->getKernel();
-        }
-        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
-
-        $sql = "Select * partsbox_db.edi_item a, edi b where a.id = b.edi where a.partno = '" . $this->itemCode1 . "'";
-
-        return $sql;
-    }
 
     /**
      * @var string
