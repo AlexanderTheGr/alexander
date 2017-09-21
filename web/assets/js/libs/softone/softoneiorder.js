@@ -520,13 +520,16 @@ jQuery(".edibutton").live('click', function () {
     }
 });
 
+
 jQuery(".alexander tr").live('mouseover', function () {
     //alert('sss');
     jQuery(this).find('.orderitemstable').show();
+    jQuery(this).find('.ediprices').show();
 });
 jQuery(".alexander tr").live('mouseout', function () {
     //alert('sss');
     jQuery('.orderitemstable').hide();
+    jQuery('.ediprices').hide();
 });
 
 jQuery(".offcanvas-tools .md-close").live("click", function () {
