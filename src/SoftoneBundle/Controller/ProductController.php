@@ -1128,8 +1128,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline' OR $this->getSetting("SoftoneBundle:Softone:merchant") == 'gianop') {
             //$MTRL = 263528;
-            $MTRL1 = 40000;
-            $MTRL2 = 70000;
+            $MTRL1 = 70000;
+            $MTRL2 = 120000;
             $UPDDATE = date("-1 week");
         }
 
