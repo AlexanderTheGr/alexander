@@ -376,13 +376,12 @@ class CustomerController extends Main {
                 $q[] = "`customer_phone2` = '" . addslashes($data["CustomerPhone2"]) . "'";
                 $q[] = "`customer_irsdata` = '" . addslashes($data["CustomerDoy"]) . "'";
                 $q[] = "`customer_jobtypetrd` = '" . addslashes($data["CustomerOccupation"]) . "'";
-                $q[] = "`price_field` = '" . ((int) $data["CustomerPricelist"] == 1 ? 'storeWholeSalePrice' : 'storeRetailPrice') . "'";
-
+                //$q[] = "`price_field` = '" . ((int) $data["CustomerPricelist"] == 1 ? 'storeWholeSalePrice' : 'storeRetailPrice') . "'";
 
                 if (@$entity->getId() == 0) {
                     $q[] = "`reference` = '" . addslashes($data["CustomerId"]) . "'";
                     $q[] = "`customergroup` = '1'";
-
+                    $q[] = "`price_field` = 'price3'";
                     $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
                     echo $sql . "<BR>";
                     $em->getConnection()->exec($sql);
