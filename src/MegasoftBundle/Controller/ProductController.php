@@ -1724,6 +1724,7 @@ class ProductController extends Main {
         */
 
         //$StoreDetails = \simplexml_load_string($server_output);
+        $databale = @explode(".", $_SERVER["HTTP_HOST"]);
         $result = \simplexml_load_file("downliad_" . $databale[0] . ".xml");
 
         $StoreDetails = $result->StoreDetails;
