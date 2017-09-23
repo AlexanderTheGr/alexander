@@ -1762,7 +1762,7 @@ class ProductController extends Main {
         // exit;
 
         foreach ($StoreDetails as $data) {
-            if ($i++ < 185201)
+            if ($i++ < 155201)
                 continue;            
             $this->setProduct($data);
             //if ($i++ > 100) return;
