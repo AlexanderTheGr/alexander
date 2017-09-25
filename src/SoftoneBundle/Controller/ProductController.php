@@ -1191,11 +1191,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $this->setSetting("SoftoneBundle:Product:retrieveMtrl", serialize($params));
         }
         //$this->retrieveProduct($params);
+        echo 'ss';
         $params["fSQL"] = "SELECT VARCHAR05, MTRL FROM MTREXTRA WHERE VARCHAR05 != ''";
         $softone = new Softone();
         $datas = $softone->createSql($params);
         echo count($datas);
-
+        exit;
         $sql = 'update `softone_product` set `tecdoc_supplier_id` =  `item_mtrmark` where tecdoc_supplier_id is null';
         $this->getDoctrine()->getConnection()->exec($sql);
 
