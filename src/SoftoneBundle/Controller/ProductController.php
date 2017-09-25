@@ -1195,7 +1195,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $params["fSQL"] = "SELECT VARCHAR05, MTRL FROM MTREXTRA WHERE VARCHAR05 != ''";
         $softone = new Softone();
         $datas = $softone->createSql($params);
-        echo count($datas);
+        echo count($datas->data);
         exit;
         $sql = 'update `softone_product` set `tecdoc_supplier_id` =  `item_mtrmark` where tecdoc_supplier_id is null';
         $this->getDoctrine()->getConnection()->exec($sql);
@@ -1474,7 +1474,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //if (@$i++ > 150)
             //    break;
         }
-        
     }
 
     /**
