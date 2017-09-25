@@ -1128,8 +1128,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline' OR $this->getSetting("SoftoneBundle:Softone:merchant") == 'gianop') {
             //$MTRL = 263528;
-            $MTRL1 = 70000;
-            $MTRL2 = 120000;
+            $MTRL1 = 0;
+            $MTRL2 = 1000;
             $UPDDATE = date("-1 week");
         }
 
@@ -1190,8 +1190,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $params["extrafunction"][] = "updatetecdoc";
             $this->setSetting("SoftoneBundle:Product:retrieveMtrl", serialize($params));
         }
-        $this->retrieveProduct($params);
-
+        //$this->retrieveProduct($params);
+        $params["fSQL"] = "SELECT VARCHAR05, MTRL FROM MTREXTRA WHERE VARCHAR05 != ''";
+        $softone = new Softone();
+        $datas = $softone->createSql($params);
+        echo count($datas);
 
         $sql = 'update `softone_product` set `tecdoc_supplier_id` =  `item_mtrmark` where tecdoc_supplier_id is null';
         $this->getDoctrine()->getConnection()->exec($sql);
@@ -1470,6 +1473,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //if (@$i++ > 150)
             //    break;
         }
+        
     }
 
     /**
