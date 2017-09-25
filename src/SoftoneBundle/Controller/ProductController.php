@@ -1198,7 +1198,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         echo count($datas->data);
         //print_r($datas->data);
         foreach($datas->data as $data) {
-            $sql = 'update `softone_product` set `catalogue` =  "'.(int)$data['VARCHAR05'].'" where reference = "'.$data['MTRL'].'"';
+            $sql = 'update `softone_product` set `catalogue` =  "'.(int)$data->VARCHAR05.'" where reference = "'.$data->MTRL.'"';
             echo $sql."<BR>";
             //$this->getDoctrine()->getConnection()->exec($sql);
         }
