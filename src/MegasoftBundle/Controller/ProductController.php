@@ -1342,7 +1342,7 @@ class ProductController extends Main {
             $statement->execute();
             $results = $statement->fetchAll();
             $arr = array();
-            
+
             echo "kwd;apoid;sisxetisi<BR>";
             foreach ($results as $data) {
                 //$arr[] = $data;
@@ -1352,10 +1352,10 @@ class ProductController extends Main {
                 $statement = $connection->prepare($sql2);
                 $statement->execute();
                 $results2 = $statement->fetchAll();
-                echo $data["erp_code"].";".$data["reference"].";".$erpcode."<BR>";
+                echo $data["erp_code"] . ";" . $data["reference"] . ";" . $erpcode . "<BR>";
                 //echo "update megasoft_product set sisxetisi = '".$erpcode."' where erp_code = '".$data["erp_code"]."';<BR>";
-                foreach($results2 as $data2) {
-                    echo $data2["erp_code"].";".$data2["reference"].";".$data2["erp_code"]."<BR>";
+                foreach ($results2 as $data2) {
+                    echo $data2["erp_code"] . ";" . $data2["reference"] . ";" . $data2["erp_code"] . "<BR>";
                     //echo "update megasoft_product set sisxetisi = '".$data2["erp_code"]."' where erp_code = '".$data2["erp_code"]."';<BR>";
                 }
             }
@@ -1705,7 +1705,7 @@ class ProductController extends Main {
         }
         //ini_set("soap.wsdl_cache_enabled", "0");
         //exit;
-        
+
         $ch = \curl_init();
         $header = array('Contect-Type:application/xml', 'Accept:application/xml');
         curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
@@ -1721,7 +1721,7 @@ class ProductController extends Main {
         $server_output = curl_exec($ch);
         $databale = @explode(".", $_SERVER["HTTP_HOST"]);
         file_put_contents("downliad_" . $databale[0] . ".xml", $server_output);
-        
+
 
         //$StoreDetails = \simplexml_load_string($server_output);
         $databale = @explode(".", $_SERVER["HTTP_HOST"]);
@@ -1734,7 +1734,7 @@ class ProductController extends Main {
         //$response = $soap->__soapCall("GetProducts", array($params));
 
 
-        echo "<BR>[".count($StoreDetails)."]<BR>";
+        echo "<BR>[" . count($StoreDetails) . "]<BR>";
         // exit;
 
 
@@ -1762,9 +1762,9 @@ class ProductController extends Main {
         // exit;
 
         foreach ($StoreDetails as $data) {
-            if ($i++ < 155201)
-                continue;            
-            //$this->setProduct($data);
+            //if ($i++ < 155201)
+            //   continue;            
+            $this->setProduct($data);
             //if ($i++ > 100) return;
         }
         $sql = 'UPDATE `megasoft_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
