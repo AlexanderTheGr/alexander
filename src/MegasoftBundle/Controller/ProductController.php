@@ -361,6 +361,7 @@ class ProductController extends Main {
         }
         $dt = new \DateTime("now");
         $product->setTs($dt);
+        $product->setBarcode($product->setSisxetisi());
         $product->setSupplierCode($this->clearstring($product->getSupplierCode()));
         $this->flushpersist($product);
 
@@ -886,7 +887,7 @@ class ProductController extends Main {
 
 
         $fields["erpCode2"] = array("label" => "Κωδικός Είδους 2", "required" => false, "className" => "col-md-2 col-sm-2");
-        $fields["barcode"] = array("label" => "Barcode", "required" => false, "className" => "col-md-2 col-sm-2");
+        $fields["sisxetisi"] = array("label" => "Sisxetisi", "required" => false, "className" => "col-md-2 col-sm-2");
 
         $fields["tecdocSupplierId"] = array("label" => "Tecdoc Supplier", "required" => false, "className" => "col-md-6", 'type' => "select", 'datasource' => array('repository' => 'MegasoftBundle:TecdocSupplier', 'name' => 'supplier', 'value' => 'id', 'suffix' => 'id'));
 
