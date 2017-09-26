@@ -361,7 +361,7 @@ class ProductController extends Main {
         }
         $dt = new \DateTime("now");
         $product->setTs($dt);
-        $product->setBarcode($product->setSisxetisi());
+        $product->setBarcode($product->getSisxetisi());
         $product->setSupplierCode($this->clearstring($product->getSupplierCode()));
         $this->flushpersist($product);
 
