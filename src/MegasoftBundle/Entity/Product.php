@@ -830,7 +830,7 @@ class Product extends Entity {
             $kernel = $kernel->getKernel();
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
-        
+
         //$data = array("service" => "login", 'username' => 'dev', 'password' => 'dev', 'appId' => '2000');
         if (!$this->getTecdocSupplierId() OR $this->tecdocCode == '') {
             //$this->setTecdocArticleId("");
@@ -841,15 +841,13 @@ class Product extends Entity {
         }
         if ($this->getTecdocSupplierId() == null AND $forceupdate == false)
             return;
-        
+
         if ($this->getTecdocArticleId() > 0) {
             $getTecdocArticleId = $this->getTecdocArticleId();
             //return;
-        }     
+        }
         //$this->setTecdocArticleId($out->articleId);
         //$this->setTecdocArticleName($out->articleName);
-
-
         //$data_string = json_encode($data);
         $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
         if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\webb') {
@@ -1142,8 +1140,8 @@ class Product extends Entity {
     }
 
     public function getForOrderCode() {
-        $r = ($this->lreplacer != '' AND $this->lreplacer != $this->erpCode) ? '['.$this->lreplacer.']' : '';
-        $out = '<a title="' . $this->title . '" class="product_info" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->erpCode . ' '.$r.'</a>
+        $r = ($this->lreplacer != '' AND $this->lreplacer != $this->erpCode) ? '[' . $this->lreplacer . ']' : '';
+        $out = '<a title="' . $this->title . '" class="product_info" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->erpCode . ' ' . $r . '</a>
         <br>
         <span class="text-sm text-info">' . $this->erpCode . '</span>';
 
@@ -1238,7 +1236,7 @@ class Product extends Entity {
 
     function getApothiki() {
         $qty = $this->qty - $this->reserved;
-        return $this->qty . ' / <span class="text-lg text-bold text-accent-dark">' . ($qty) . '</span> ('.$this->place.')';
+        return $this->qty . ' / <span class="text-lg text-bold text-accent-dark">' . ($qty) . '</span> (' . $this->place . ')';
     }
 
     function getGroupedDiscountPrice(\MegasoftBundle\Entity\Customer $customer, $vat = 1) {
@@ -1336,7 +1334,7 @@ class Product extends Entity {
                 $ruled = true;
             }
         }
-        
+
         //$rules = false;
         if (!$ruled) {
             $rules = $customer->getCustomergroup()->loadCustomergrouprules()->getRules();
@@ -2287,11 +2285,10 @@ class Product extends Entity {
         return $this;
     }
 
-    
     public function setChainReplacer() {
         //if (!$this->replaced) return;
         //if ($this->lreplacer != '' AND $this->lreplacer != $this->erpCode) return;
-        
+
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
@@ -2299,72 +2296,86 @@ class Product extends Entity {
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         $product = $em->getRepository("MegasoftBundle:Product")
                 ->findOneBy(array("replaced" => $this->erpCode));
-        
+
         while ($product) {
             $this->lreplacer = $this->erpCode;
             $product->lreplacer = $this->erpCode;
             $em->persist($product);
-            $em->flush();  
+            $em->flush();
             $product = $em->getRepository("MegasoftBundle:Product")->findOneBy(array("replaced" => $product->erpCode));
-            if ($i++ > 30) return;
+            if ($i++ > 30)
+                return;
         }
         $em->persist($this);
-        $em->flush(); 
-        return $this;        
+        $em->flush();
+        return $this;
     }
-    
-    
+
     public function setReplacer() {
-        if (!$this->replaced) return;
-        if ($this->lreplacer != '' AND $this->lreplacer != $this->erpCode) return;
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+
+        if (!$this->replaced) {
+            //if ($this->lreplacer != '' AND $this->lreplacer != $this->erpCode) return;
+            if ($this->lreplacer != '') {
+                $products = $em->getRepository("MegasoftBundle:Product")
+                        ->findBy(array("replaced" => $this->lreplacer));
+                if (!$products) {
+                    $this->lreplacer = '';
+                    $em->persist($this);
+                    
+                }
+            }
+
+            return;
+        }
+        if ($this->lreplacer != '' AND $this->lreplacer != $this->erpCode)
+            return;
         $product = $em->getRepository("MegasoftBundle:Product")
                 ->findOneBy(array("erpCode" => $this->replaced));
         //echo $product->getId();
         if (!$product) {
             $this->replaced = '';
             $em->persist($this);
-            $em->flush();            
+            $em->flush();
             return;
         }
         $products = $em->getRepository("MegasoftBundle:Product")
-                ->findBy(array("replaced" => $this->replaced));    
-        
+                ->findBy(array("replaced" => $this->replaced));
+
         //echo count($products);
-        
+
         if (count($products) > 1) {
             $this->replaced = '';
             $em->persist($this);
-            $em->flush();            
+            $em->flush();
             return;
         }
-        
+
         $product->lreplacer = $this->replaced;
         $em->persist($product);
         $em->flush();
-        
+
         $this->lreplacer = $this->replaced;
 
         $products = $em->getRepository("MegasoftBundle:Product")
-                ->findBy(array("lreplacer" => $this->erpCode)); 
-        
-        foreach($products as $product) {
+                ->findBy(array("lreplacer" => $this->erpCode));
+
+        foreach ($products as $product) {
             $product->lreplacer = $this->replaced;
             $em->persist($product);
             $em->flush();
         }
-        
+
         $em->persist($this);
         $em->flush();
-        
+
         return $this;
-    }    
-    
-    
+    }
+
     /**
      * Get replaced
      *
@@ -2420,7 +2431,6 @@ class Product extends Entity {
      */
     private $price5 = '0';
 
-
     /**
      * Set price1
      *
@@ -2428,8 +2438,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setPrice1($price1)
-    {
+    public function setPrice1($price1) {
         $this->price1 = $price1;
 
         return $this;
@@ -2440,8 +2449,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getPrice1()
-    {
+    public function getPrice1() {
         return $this->price1;
     }
 
@@ -2452,8 +2460,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setPrice2($price2)
-    {
+    public function setPrice2($price2) {
         $this->price2 = $price2;
 
         return $this;
@@ -2464,8 +2471,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getPrice2()
-    {
+    public function getPrice2() {
         return $this->price2;
     }
 
@@ -2476,8 +2482,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setPrice3($price3)
-    {
+    public function setPrice3($price3) {
         $this->price3 = $price3;
 
         return $this;
@@ -2488,8 +2493,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getPrice3()
-    {
+    public function getPrice3() {
         return $this->price3;
     }
 
@@ -2500,8 +2504,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setPrice4($price4)
-    {
+    public function setPrice4($price4) {
         $this->price4 = $price4;
 
         return $this;
@@ -2512,8 +2515,7 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getPrice4()
-    {
+    public function getPrice4() {
         return $this->price4;
     }
 
@@ -2524,8 +2526,7 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function setPrice5($price5)
-    {
+    public function setPrice5($price5) {
         $this->price5 = $price5;
 
         return $this;
@@ -2536,8 +2537,8 @@ class Product extends Entity {
      *
      * @return string
      */
-    public function getPrice5()
-    {
+    public function getPrice5() {
         return $this->price5;
     }
+
 }
