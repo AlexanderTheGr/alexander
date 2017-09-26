@@ -526,7 +526,7 @@ class ProductController extends Main {
         $cars2 = array();
 
         $brandmodeltypes = $this->getDoctrine()
-                        ->getRepository('SoftoneBundle:BrandModelType')->findBy(array("brandModel" => $request->request->get("model")), array('brandModelType' => 'ASC'));
+                        ->getRepository('SoftoneBundle:BrandModelType')->findBy(array("brandModel" => $request->request->get("model"),'enable'=>1), array('brandModelType' => 'ASC'));
 
         foreach ($brandmodeltypes as $brandmodeltype) {
             $cars[] = $brandmodeltype->getId();
