@@ -2323,7 +2323,7 @@ class Product extends Entity {
             if ($this->lreplacer != '') {
                 $products = $em->getRepository("MegasoftBundle:Product")
                         ->findBy(array("replaced" => $this->lreplacer));
-                if (!$products) {
+                if (!count($products)) {
                     $this->lreplacer = '';
                     $em->persist($this);
                     $em->flush();
