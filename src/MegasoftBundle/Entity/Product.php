@@ -2318,7 +2318,7 @@ class Product extends Entity {
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
 
-        echo $this->replaced;
+        //echo $this->replaced;
         //echo 0;
         if (!$this->replaced) {
             //if ($this->lreplacer != '' AND $this->lreplacer != $this->erpCode) return;
