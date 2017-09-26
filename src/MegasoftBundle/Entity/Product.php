@@ -2326,7 +2326,6 @@ class Product extends Entity {
                 if (!$products) {
                     $this->lreplacer = '';
                     $em->persist($this);
-                    
                 }
             }
 
