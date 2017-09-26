@@ -526,7 +526,7 @@ class ProductController extends Main {
         $cars2 = array();
 
         $brandmodeltypes = $this->getDoctrine()
-                        ->getRepository('SoftoneBundle:BrandModelType')->findBy(array("brandModel" => $request->request->get("model"),'enable'=>1), array('brandModelType' => 'ASC'));
+                        ->getRepository('SoftoneBundle:BrandModelType')->findBy(array("brandModel" => $request->request->get("model")), array('brandModelType' => 'ASC'));
 
         foreach ($brandmodeltypes as $brandmodeltype) {
             $cars[] = $brandmodeltype->getId();
@@ -1038,7 +1038,7 @@ class ProductController extends Main {
             }
 
             $brandmodels = $this->getDoctrine()
-                            ->getRepository('SoftoneBundle:BrandModel')->findBy(array("brand" => $brand->getId()), array('brandModel' => 'ASC'));
+                            ->getRepository('SoftoneBundle:BrandModel')->findBy(array("brand" => $brand->getId(),'enable'=>1), array('brandModel' => 'ASC'));
             if (count($brandmodels) == 0)
                 continue;
             $html .= "<li class='brandli' data-ref='" . $brand->getId() . "'>";
