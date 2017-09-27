@@ -470,14 +470,13 @@ class Main extends Controller {
         return $out;
     }
 
-    
     function initialazeNewEntity($entity) {
         if (@$this->newentity[$this->repository]) {
             $dt = new \DateTime("now");
             $this->newentity[$this->repository] = $entity;
-            //$this->newentity[$this->repository]->setTs($dt);
-            //$this->newentity[$this->repository]->setCreated($dt);
-            //$this->newentity[$this->repository]->setModified($dt);
+            $this->newentity[$this->repository]->setTs($dt);
+            $this->newentity[$this->repository]->setCreated($dt);
+            $this->newentity[$this->repository]->setModified($dt);
         }
     }
 
