@@ -470,6 +470,7 @@ class Main extends Controller {
         return $out;
     }
 
+    
     function initialazeNewEntity($entity) {
         if (@$this->newentity[$this->repository]) {
             $dt = new \DateTime("now");
