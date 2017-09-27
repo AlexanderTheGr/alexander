@@ -1713,6 +1713,8 @@ class ProductController extends Main {
         curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=" . date("Y-m-d", strtotime("-1 days")) . "&ParticipateInEshop=1");
+        echo "login=" . $login . "&Date=" . date("Y-m-d", strtotime("-1 days")) . "&ParticipateInEshop=1<BR>";
+        exit;
         curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
         // in real life you should use something like:
         // curl_setopt($ch, CURLOPT_POSTFIELDS,
