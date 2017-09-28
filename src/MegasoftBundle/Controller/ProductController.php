@@ -1707,7 +1707,7 @@ class ProductController extends Main {
         }
         //ini_set("soap.wsdl_cache_enabled", "0");
         //exit;
-        /*
+
         $ch = \curl_init();
         $header = array('Contect-Type:application/xml', 'Accept:application/xml');
         curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
@@ -1737,8 +1737,8 @@ class ProductController extends Main {
         //$params["Date"] = "2016-06-21";
         //$response = $soap->__soapCall("GetProducts", array($params));
 
-
-        echo "<BR>[" . count($StoreDetails) . "]<BR>";
+        $cnt = count($StoreDetails);
+        echo "<BR>[" . $cnt . "]<BR>";
         // exit;
 
 
@@ -1764,15 +1764,13 @@ class ProductController extends Main {
          */
         //print_r($StoreDetails);
         // exit;
-        /*
+
         foreach ($StoreDetails as $data) {
-            //if ($i++ < 155201)
+            if ($i++ < ($cnt-20000))
             //   continue;            
-            //$this->setProduct($data);
+            $this->setProduct($data);
             //if ($i++ > 100) return;
         }
-         * 
-         */
         $sql = 'UPDATE `megasoft_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
         $this->getDoctrine()->getConnection()->exec($sql);
         $this->retrieveProductPrices();
