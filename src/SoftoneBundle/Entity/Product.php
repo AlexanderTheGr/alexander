@@ -2742,6 +2742,8 @@ class Product extends Entity {
     }
 
     function getEdiPrices() {
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis')
+            return;
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
@@ -2755,7 +2757,7 @@ class Product extends Entity {
         if ($results) {
 
 
-
+            
 
             
             $out = '<div class="orderitemstable style-primary-light" style="display: none;">
@@ -2772,7 +2774,7 @@ class Product extends Entity {
                 </thead>
                 <tbody>';
             foreach ($results as $data) {
-
+                
                 $entity = $em
                     ->getRepository("EdiBundle:EdiItem")
                     ->find($data["id"]);
