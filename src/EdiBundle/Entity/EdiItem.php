@@ -1277,12 +1277,15 @@ class EdiItem extends Entity {
             return $availability;
         } else {
             $elteka = $this->eltekaAuth();
+            /*
             $response = $elteka->getPartPrice(array('CustomerNo' => $this->CustomerNo, "EltrekkaRef" => $this->getItemcode()));
             $xml = $response->GetPartPriceResult->any;
             $xml = simplexml_load_string($xml);
             //print_r($xml);
 
             return $xml->Item->WholePrice;
+             * 
+             */
         }
         //print_r($jsonarr);
     }
