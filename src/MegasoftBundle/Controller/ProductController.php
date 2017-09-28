@@ -1479,11 +1479,11 @@ class ProductController extends Main {
                     //$q[] = "`suppliergroup` = '1'";
 
                     $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
-                    echo $sql . "<BR>";
+                    //echo $sql . "<BR>";
                     $em->getConnection()->exec($sql);
                 } else {
                     $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
-                    echo $sql . "<BR>";
+                    //echo $sql . "<BR>";
                     $em->getConnection()->exec($sql);
                 }
             }
@@ -1764,16 +1764,18 @@ class ProductController extends Main {
          */
         //print_r($StoreDetails);
         // exit;
-
+        /*
         foreach ($StoreDetails as $data) {
             //if ($i++ < 155201)
             //   continue;            
-            $this->setProduct($data);
+            //$this->setProduct($data);
             //if ($i++ > 100) return;
         }
+         * 
+         */
         $sql = 'UPDATE `megasoft_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
         $this->getDoctrine()->getConnection()->exec($sql);
-        //$this->retrieveProductPrices();
+        $this->retrieveProductPrices();
         //exit;
         //;
     }
