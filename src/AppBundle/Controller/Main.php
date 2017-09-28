@@ -475,9 +475,9 @@ class Main extends Controller {
         if (@$this->newentity[$this->repository]) {
             $dt = new \DateTime("now");
             $this->newentity[$this->repository] = $entity;
-            //$this->newentity[$this->repository]->setTs($dt);
-            //$this->newentity[$this->repository]->setCreated($dt);
-            //$this->newentity[$this->repository]->setModified($dt);
+            $this->newentity[$this->repository]->setTs($dt);
+            $this->newentity[$this->repository]->setCreated($dt);
+            $this->newentity[$this->repository]->setModified($dt);
         }
     }
 
