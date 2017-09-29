@@ -1769,7 +1769,6 @@ class ProductController extends Main {
             //if ($i++ < ($cnt-10000))
             //   continue;  
             $data = (array) $data;
-            ;
             $storeIds[] = array("storeid"=>addslashes($data["StoreId"]));
             //$this->setProduct($data);
             //if ($i++ > 100) return;
@@ -1790,7 +1789,6 @@ class ProductController extends Main {
         
         $params["table"] = "megasoft_product";
         foreach($response->GetCustomFieldsPerItemResult->CustomFields as $data) {
-
             $data = (array) $data;
             $q = array();
             $q[] = "`decimal1` = '" . addslashes($data["CustomField_5"]) . "'";
@@ -1800,15 +1798,14 @@ class ProductController extends Main {
             $q[] = "`var2` = '" . addslashes($data["CustomField_8"]) . "'";
             $q[] = "`var3` = '" . addslashes($data["CustomField_9"]) . "'";
             $q[] = "`var4` = '" . addslashes($data["CustomField_1"]) . "'";
-            $q[] = "`replaced` = '" . addslashes($data["CustomField_1"]) . "'";
+            //$q[] = "`replaced` = '" . addslashes($data["CustomField_1"]) . "'";
             $q[] = "`int1` = '" . addslashes($data["CustomField_3"]) . "'";
             $q[] = "`int2` = '" . addslashes($data["CustomField_4"]) . "'";
             $q[] = "`int3` = '" . addslashes($data["CustomField_7"]) . "'";
-            
             $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where reference = '" . addslashes($data["ApoId"]) . "'";
+            $this->getDoctrine()->getManager()->getConnection()->exec($sql);
             echo $sql."<BR><BR><BR>";
         }
-
         //$this->getDoctrine()->getManager()->getConnection()->exec($sql);
     }
 
