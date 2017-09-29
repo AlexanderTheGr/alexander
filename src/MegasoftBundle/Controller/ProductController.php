@@ -1767,8 +1767,10 @@ class ProductController extends Main {
         $storeIds = array();
         foreach ($StoreDetails as $data) {
             //if ($i++ < ($cnt-10000))
-            //   continue;   
-            $storeIds[] = array("storeid"=>$data->StoreId);
+            //   continue;  
+            $data = (array) $data;
+            ;
+            $storeIds[] = array("storeid"=>addslashes($data["StoreId"]));
             //$this->setProduct($data);
             //if ($i++ > 100) return;
         }
