@@ -1764,16 +1764,22 @@ class ProductController extends Main {
          */
         //print_r($StoreDetails);
         // exit;
-
+        $storeIds = array();
         foreach ($StoreDetails as $data) {
             //if ($i++ < ($cnt-10000))
-            //   continue;            
-            $this->setProduct($data);
+            //   continue;   
+            $storeIds[] = array("storeid"=>$data->StoreId);
+            //$this->setProduct($data);
             //if ($i++ > 100) return;
         }
-        $sql = 'UPDATE `megasoft_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
-        $this->getDoctrine()->getConnection()->exec($sql);
-        $this->retrieveProductPrices();
+        $params["items"] = $storeIds;
+        
+        
+        $response = $soap->__soapCall("GetCustomFieldsPerItem", array($params));
+        print_r($response->GetCustomFieldsPerItemResult->CustomFields);
+        //$sql = 'UPDATE `megasoft_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
+        //$this->getDoctrine()->getConnection()->exec($sql);
+        //$this->retrieveProductPrices();
         //exit;
         //;
     }
