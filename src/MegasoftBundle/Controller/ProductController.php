@@ -1775,15 +1775,40 @@ class ProductController extends Main {
             //if ($i++ > 100) return;
         }
         $params["JsonStrWeb"] = json_encode(array("items"=>$storeIds));
+        $this->setCustomFields($params);
         
         
-        $response = $soap->__soapCall("GetCustomFieldsPerItem", array($params));
-        print_r($response->GetCustomFieldsPerItemResult->CustomFields);
         //$sql = 'UPDATE `megasoft_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
         //$this->getDoctrine()->getConnection()->exec($sql);
         //$this->retrieveProductPrices();
         //exit;
         //;
+    }
+    function setCustomFields($params) {
+        $response = $soap->__soapCall("GetCustomFieldsPerItem", array($params));
+        //print_r($response->GetCustomFieldsPerItemResult->CustomFields);
+        
+        $params["table"] = "megasoft_product";
+        foreach($response->GetCustomFieldsPerItemResult->CustomFields as $data) {
+
+            $data = (array) $data;
+            $q[] = "`decimal1` = '" . addslashes($data["CustomField_5"]) . "'";
+            $q[] = "`decimal2` = '" . addslashes($data["CustomField_10"]) . "'";
+            $q[] = "`decimal3` = '" . addslashes($data["CustomField_11"]) . "'";
+            $q[] = "`var1` = '" . addslashes($data["CustomField_6"]) . "'";
+            $q[] = "`var2` = '" . addslashes($data["CustomField_8"]) . "'";
+            $q[] = "`var3` = '" . addslashes($data["CustomField_9"]) . "'";
+            $q[] = "`var4` = '" . addslashes($data["CustomField_1"]) . "'";
+            $q[] = "`replaced` = '" . addslashes($data["CustomField_1"]) . "'";
+            $q[] = "`int1` = '" . addslashes($data["CustomField_3"]) . "'";
+            $q[] = "`int2` = '" . addslashes($data["CustomField_4"]) . "'";
+            $q[] = "`int3` = '" . addslashes($data["CustomField_7"]) . "'";
+            
+            $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where reference = '" . addslashes($data["ApoId"]) . "'";
+            echo $sql;
+        }
+
+        //$this->getDoctrine()->getManager()->getConnection()->exec($sql);
     }
 
     function setProduct($data) {
