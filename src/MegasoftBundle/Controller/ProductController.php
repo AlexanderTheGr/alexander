@@ -1777,7 +1777,7 @@ class ProductController extends Main {
         $params["JsonStrWeb"] = json_encode(array("items"=>$storeIds));
         
         
-        $response = $soap->__soapCall("GetCustomFieldsPerItem", $params);
+        $response = $soap->__soapCall("GetCustomFieldsPerItem", array($params));
         print_r($response->GetCustomFieldsPerItemResult->CustomFields);
         //$sql = 'UPDATE `megasoft_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
         //$this->getDoctrine()->getConnection()->exec($sql);
