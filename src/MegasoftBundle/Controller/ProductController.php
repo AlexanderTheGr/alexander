@@ -1775,7 +1775,7 @@ class ProductController extends Main {
             //if ($i++ > 100) return;
         }
         $params["JsonStrWeb"] = json_encode(array("items"=>$storeIds));
-        $this->setCustomFields($params);
+        $this->setCustomFields($soap,$params);
         
         
         //$sql = 'UPDATE `megasoft_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
@@ -1784,7 +1784,7 @@ class ProductController extends Main {
         //exit;
         //;
     }
-    function setCustomFields($params) {
+    function setCustomFields($soap,$params) {
         $response = $soap->__soapCall("GetCustomFieldsPerItem", array($params));
         //print_r($response->GetCustomFieldsPerItemResult->CustomFields);
         
