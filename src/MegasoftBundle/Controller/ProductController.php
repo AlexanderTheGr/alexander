@@ -1772,7 +1772,7 @@ class ProductController extends Main {
             //$this->setProduct($data);
             //if ($i++ > 100) return;
         }
-        $params["JsonStrWeb"] = json_decode(array("items"=>$storeIds));
+        $params["JsonStrWeb"] = json_encode(array("items"=>$storeIds));
         
         
         $response = $soap->__soapCall("GetCustomFieldsPerItem", array($params));
