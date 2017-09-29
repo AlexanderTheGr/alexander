@@ -1805,7 +1805,7 @@ class ProductController extends Main {
             $q[] = "`int3` = '" . addslashes($data["CustomField_7"]) . "'";
             
             $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where reference = '" . addslashes($data["ApoId"]) . "'";
-            echo $sql;
+            echo $sql."<BR>";
         }
 
         //$this->getDoctrine()->getManager()->getConnection()->exec($sql);
