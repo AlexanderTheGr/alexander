@@ -1792,6 +1792,7 @@ class ProductController extends Main {
         foreach($response->GetCustomFieldsPerItemResult->CustomFields as $data) {
 
             $data = (array) $data;
+            $q = array();
             $q[] = "`decimal1` = '" . addslashes($data["CustomField_5"]) . "'";
             $q[] = "`decimal2` = '" . addslashes($data["CustomField_10"]) . "'";
             $q[] = "`decimal3` = '" . addslashes($data["CustomField_11"]) . "'";
