@@ -1770,16 +1770,15 @@ class ProductController extends Main {
             //   continue;  
             $data = (array) $data;
             $storeIds[] = array("storeid"=>addslashes($data["StoreId"]));
-            //$this->setProduct($data);
+            $this->setProduct($data);
             //if ($i++ > 100) return;
         }
         $params["JsonStrWeb"] = json_encode(array("items"=>$storeIds));
         $this->setCustomFields($soap,$params);
         
-        
-        //$sql = 'UPDATE `megasoft_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
-        //$this->getDoctrine()->getConnection()->exec($sql);
-        //$this->retrieveProductPrices();
+        $sql = 'UPDATE `megasoft_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
+        $this->getDoctrine()->getConnection()->exec($sql);
+        $this->retrieveProductPrices();
         //exit;
         //;
     }
