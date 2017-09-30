@@ -9,9 +9,6 @@ $("#loaderer").hide();
         var $dialog = {}
         var settings = $.extend({}, defaults, custom);
         tabs(app, ctrl, url, content);
-        
-        alert(content);
-        
         function tabs(app, ctrl, url, content) {
             var app = angular.module(app, ['ngSanitize', 'ui.bootstrap', 'base64', 'formly', 'formlyBootstrap', 'ngMessages']).config(function ($interpolateProvider) {
                 $interpolateProvider.startSymbol('[[').endSymbol(']]');
