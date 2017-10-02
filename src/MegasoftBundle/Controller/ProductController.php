@@ -1708,7 +1708,7 @@ class ProductController extends Main {
         }
         //ini_set("soap.wsdl_cache_enabled", "0");
         //exit;
-
+        /*
         $ch = \curl_init();
         $header = array('Contect-Type:application/xml', 'Accept:application/xml');
         curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
@@ -1726,7 +1726,7 @@ class ProductController extends Main {
         $server_output = curl_exec($ch);
         $databale = @explode(".", $_SERVER["HTTP_HOST"]);
         file_put_contents("downliad_" . $databale[0] . ".xml", $server_output);
-
+        */
 
         //$StoreDetails = \simplexml_load_string($server_output);
         $databale = @explode(".", $_SERVER["HTTP_HOST"]);
@@ -1768,7 +1768,9 @@ class ProductController extends Main {
         $storeIds = array();
         foreach ($StoreDetails as $data) {
             //if ($i++ < ($cnt-10000))
-            //   continue;  
+            //   continue;
+            if ($i++ < 50000) continue;
+            
             $data = (array) $data;
             $storeIds[] = array("storeid"=>addslashes($data["StoreId"]));
             $this->setProduct($data);
