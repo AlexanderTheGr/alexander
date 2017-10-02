@@ -1772,7 +1772,7 @@ class ProductController extends Main {
             //   continue;
             $i++;
             $storeIds = array();
-            if ($i > 50000 AND $i<100000) {            
+            if ($i > 100000 AND $i<150000) {            
                 $data = (array) $data;
                 $storeIds[] = array("storeid"=>addslashes($data["StoreId"]));
                 $this->setProduct($data);
