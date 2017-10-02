@@ -1765,6 +1765,7 @@ class ProductController extends Main {
          */
         //print_r($StoreDetails);
         // exit;
+        
         $storeIds = array();
         foreach ($StoreDetails as $data) {
             //if ($i++ < ($cnt-10000))
