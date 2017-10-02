@@ -1040,7 +1040,7 @@ class ProductController extends Main {
             }
 
             $brandmodels = $this->getDoctrine()
-                            ->getRepository('SoftoneBundle:BrandModel')->findBy(array("brand" => $brand->getId(),'enable'=>1), array('brandModel' => 'ASC'));
+                            ->getRepository('SoftoneBundle:BrandModel')->findBy(array("brand" => $brand->getId(), 'enable' => 1), array('brandModel' => 'ASC'));
             if (count($brandmodels) == 0)
                 continue;
             $html .= "<li class='brandli' data-ref='" . $brand->getId() . "'>";
@@ -1709,24 +1709,24 @@ class ProductController extends Main {
         //ini_set("soap.wsdl_cache_enabled", "0");
         //exit;
         /*
-        $ch = \curl_init();
-        $header = array('Contect-Type:application/xml', 'Accept:application/xml');
-        curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=" . date("Y-m-d", strtotime("-1 days")) . "&ParticipateInEshop=1");
-        //echo "login=" . $login . "&Date=" . date("Y-m-d", strtotime("-1 days")) . "&ParticipateInEshop=1<BR>";
-       // exit;
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-        // in real life you should use something like:
-        // curl_setopt($ch, CURLOPT_POSTFIELDS,
-        //          http_build_query(array('postvar1' => 'value1')));
-        // receive server response ...
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+          $ch = \curl_init();
+          $header = array('Contect-Type:application/xml', 'Accept:application/xml');
+          curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
+          curl_setopt($ch, CURLOPT_POST, 1);
+          curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=" . date("Y-m-d", strtotime("-1 days")) . "&ParticipateInEshop=1");
+          //echo "login=" . $login . "&Date=" . date("Y-m-d", strtotime("-1 days")) . "&ParticipateInEshop=1<BR>";
+          // exit;
+          curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+          // in real life you should use something like:
+          // curl_setopt($ch, CURLOPT_POSTFIELDS,
+          //          http_build_query(array('postvar1' => 'value1')));
+          // receive server response ...
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-        $server_output = curl_exec($ch);
-        $databale = @explode(".", $_SERVER["HTTP_HOST"]);
-        file_put_contents("downliad_" . $databale[0] . ".xml", $server_output);
-        */
+          $server_output = curl_exec($ch);
+          $databale = @explode(".", $_SERVER["HTTP_HOST"]);
+          file_put_contents("downliad_" . $databale[0] . ".xml", $server_output);
+         */
 
         //$StoreDetails = \simplexml_load_string($server_output);
         $databale = @explode(".", $_SERVER["HTTP_HOST"]);
@@ -1765,38 +1765,39 @@ class ProductController extends Main {
          */
         //print_r($StoreDetails);
         // exit;
-        
+
         $storeIds = array();
         foreach ($StoreDetails as $data) {
             //if ($i++ < ($cnt-10000))
             //   continue;
             $i++;
             $storeIds = array();
-            if ($i > 180000 AND $i<250000) {            
-                $data = (array) $data;
-                $storeIds[] = array("storeid"=>addslashes($data["StoreId"]));
-                $this->setProduct($data);
-            } else {
-                continue;
-            }
+            //if ($i > 180000 AND $i<250000) {            
+            $data = (array) $data;
+            $storeIds[] = array("storeid" => addslashes($data["StoreId"]));
+            $this->setProduct($data);
+            //} else {
+            // continue;
+            //}
             //if ($i++ > 100) return;
         }
-        
-        $params["JsonStrWeb"] = json_encode(array("items"=>$storeIds));
-        $this->setCustomFields($soap,$params);
-        
+
+        $params["JsonStrWeb"] = json_encode(array("items" => $storeIds));
+        $this->setCustomFields($soap, $params);
+
         $sql = 'UPDATE `megasoft_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
         $this->getDoctrine()->getConnection()->exec($sql);
         $this->retrieveProductPrices();
         //exit;
         //;
     }
-    function setCustomFields($soap,$params) {
+
+    function setCustomFields($soap, $params) {
         $response = $soap->__soapCall("GetCustomFieldsPerItem", array($params));
         //print_r($response->GetCustomFieldsPerItemResult->CustomFields);
-        
+
         $params["table"] = "megasoft_product";
-        foreach((array)$response->GetCustomFieldsPerItemResult->CustomFields as $data) {
+        foreach ((array) $response->GetCustomFieldsPerItemResult->CustomFields as $data) {
             $data = (array) $data;
             $q = array();
             $q[] = "`decimal1` = '" . addslashes($data["CustomField_5"]) . "'";
@@ -1812,7 +1813,7 @@ class ProductController extends Main {
             $q[] = "`int3` = '" . addslashes($data["CustomField_7"]) . "'";
             $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where reference = '" . addslashes($data["ApoId"]) . "'";
             $this->getDoctrine()->getManager()->getConnection()->exec($sql);
-            echo $sql."<BR><BR><BR>";
+            echo $sql . "<BR><BR><BR>";
         }
         //$this->getDoctrine()->getManager()->getConnection()->exec($sql);
     }
