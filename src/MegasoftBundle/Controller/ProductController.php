@@ -1777,7 +1777,7 @@ class ProductController extends Main {
                 $storeIds[] = array("storeid"=>addslashes($data["StoreId"]));
                 $this->setProduct($data);
             } else {
-                break;
+                continue;
             }
             //if ($i++ > 100) return;
         }
