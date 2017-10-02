@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Controller\Main as Main;
 use MegasoftBundle\Entity\Product as Product;
 use MegasoftBundle\Entity\Manufacturer as Manufacturer;
+use MegasoftBundle\Entity\Supplier as Supplier;
 use MegasoftBundle\Entity\Productcategory as Productcategory;
 use MegasoftBundle\Entity\Productcar as Productcar;
 use AppBundle\Entity\Tecdoc as Tecdoc;
