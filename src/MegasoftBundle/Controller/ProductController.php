@@ -1787,7 +1787,7 @@ class ProductController extends Main {
         
         $sql = 'UPDATE `megasoft_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
         $this->getDoctrine()->getConnection()->exec($sql);
-        //$this->retrieveProductPrices();
+        $this->retrieveProductPrices();
         //exit;
         //;
     }
