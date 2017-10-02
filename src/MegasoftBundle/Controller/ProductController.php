@@ -1770,11 +1770,14 @@ class ProductController extends Main {
         foreach ($StoreDetails as $data) {
             //if ($i++ < ($cnt-10000))
             //   continue;
-            if ($i++ < 50000) continue;
-            
-            $data = (array) $data;
-            $storeIds[] = array("storeid"=>addslashes($data["StoreId"]));
-            $this->setProduct($data);
+            $i++;
+            if ($i > 0 AND $i<50000) {            
+                $data = (array) $data;
+                $storeIds[] = array("storeid"=>addslashes($data["StoreId"]));
+                $this->setProduct($data);
+            } else {
+                break;
+            }
             //if ($i++ > 100) return;
         }
         $params["JsonStrWeb"] = json_encode(array("items"=>$storeIds));
@@ -1782,7 +1785,7 @@ class ProductController extends Main {
         
         $sql = 'UPDATE `megasoft_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
         $this->getDoctrine()->getConnection()->exec($sql);
-        $this->retrieveProductPrices();
+        //$this->retrieveProductPrices();
         //exit;
         //;
     }
