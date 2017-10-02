@@ -1795,7 +1795,7 @@ class ProductController extends Main {
         //print_r($response->GetCustomFieldsPerItemResult->CustomFields);
         
         $params["table"] = "megasoft_product";
-        foreach($response->GetCustomFieldsPerItemResult->CustomFields as $data) {
+        foreach((array)$response->GetCustomFieldsPerItemResult->CustomFields as $data) {
             $data = (array) $data;
             $q = array();
             $q[] = "`decimal1` = '" . addslashes($data["CustomField_5"]) . "'";
