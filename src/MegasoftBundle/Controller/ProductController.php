@@ -1713,7 +1713,7 @@ class ProductController extends Main {
         $header = array('Contect-Type:application/xml', 'Accept:application/xml');
         curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=" . date("Y-m-d", strtotime("0 days")) . "&ParticipateInEshop=1");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=" . date("Y-m-d", strtotime("-1 days")) . "&ParticipateInEshop=1");
         //echo "login=" . $login . "&Date=" . date("Y-m-d", strtotime("-1 days")) . "&ParticipateInEshop=1<BR>";
         // exit;
         curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
