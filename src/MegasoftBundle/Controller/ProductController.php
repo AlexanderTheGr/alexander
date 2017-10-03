@@ -1744,25 +1744,25 @@ class ProductController extends Main {
 
 
 
-        /*
-
-          if (count($response->DownloadStoreBaseResponse) == 1) {
-          $StoreDetails[] = $response->$response->DownloadStoreBaseResponse;
-          } elseif (count($response->$response->DownloadStoreBaseResponse) > 1) {
-          $StoreDetails = $response->$response->DownloadStoreBaseResponse;
-          }
 
 
+        if (count($response->DownloadStoreBaseResponse) == 1) {
+            $StoreDetails[] = $response->$response->DownloadStoreBaseResponse;
+        } elseif (count($response->$response->DownloadStoreBaseResponse) > 1) {
+            $StoreDetails = $response->$response->DownloadStoreBaseResponse;
+        }
 
-          //echo count($response->GetProductsResult->StoreDetails);
-          echo "<BR>";
-          exit;
-          if (count($response->GetProductsResult->StoreDetails) == 1) {
-          $StoreDetails[] = $response->GetProductsResult->StoreDetails;
-          } elseif (count($response->GetProductsResult->StoreDetails) > 1) {
-          $StoreDetails = $response->GetProductsResult->StoreDetails;
-          }
-         */
+
+
+        //echo count($response->GetProductsResult->StoreDetails);
+        echo "<BR>";
+        //exit;
+        if (count($response->GetProductsResult->StoreDetails) == 1) {
+            $StoreDetails[] = $response->GetProductsResult->StoreDetails;
+        } elseif (count($response->GetProductsResult->StoreDetails) > 1) {
+            $StoreDetails = $response->GetProductsResult->StoreDetails;
+        }
+
         //print_r($StoreDetails);
         // exit;
 
