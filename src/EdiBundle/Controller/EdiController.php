@@ -816,7 +816,7 @@ class EdiController extends Main {
                     $attributes[$attrs[$key]] = trim(addslashes($val));
                 }
 
-                //if ($attributes["partno"] != 'SC290959') continue;
+                if ($attributes["partno"] != 'VL732316') continue;
                 //print_r($attributes);
                 $attributes["wholeprice"] = str_replace(",", ".", $attributes["wholeprice"]);
                 $attributes["retailprice"] = str_replace(",", ".", $attributes["retailprice"]);
