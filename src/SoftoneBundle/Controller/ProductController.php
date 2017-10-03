@@ -1179,7 +1179,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             }
             $params["relation"] = array();
             $params["extrafunction"] = array();
-            //$params["extra"]["CCCFXRELTDCODE"] = "CCCFXRELTDCODE";
+            $params["extra"]["CCCFXRELTDCODE"] = "CCCFXRELTDCODE";
             //$params["extra"]["CCCFXRELBRAND"] = "CCCFXRELBRAND";
             $params["relation"]["reference"] = "MTRL";
             $params["relation"]["erpCode"] = "CODE";
