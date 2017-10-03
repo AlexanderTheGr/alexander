@@ -1190,8 +1190,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $params["extrafunction"][] = "updatetecdoc";
             $this->setSetting("SoftoneBundle:Product:retrieveMtrl", serialize($params));
         }
-        //$this->retrieveProduct($params);
-        echo 'ss';
+        $this->retrieveProduct($params);
+        //echo 'ss';
         $params["fSQL"] = "SELECT VARCHAR05, MTRL FROM MTREXTRA WHERE VARCHAR05 != ''";
         $softone = new Softone();
         $datas = $softone->createSql($params);
@@ -1204,7 +1204,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $this->getDoctrine()->getConnection()->exec($sql);
             }
         }
-        exit;
+        //exit;
         $sql = 'update `softone_product` set `tecdoc_supplier_id` =  `item_mtrmark` where tecdoc_supplier_id is null';
         $this->getDoctrine()->getConnection()->exec($sql);
 
