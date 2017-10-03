@@ -1708,25 +1708,25 @@ class ProductController extends Main {
         }
         //ini_set("soap.wsdl_cache_enabled", "0");
         //exit;
-        /*
-          $ch = \curl_init();
-          $header = array('Contect-Type:application/xml', 'Accept:application/xml');
-          curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
-          curl_setopt($ch, CURLOPT_POST, 1);
-          curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=" . date("Y-m-d", strtotime("-1 days")) . "&ParticipateInEshop=1");
-          //echo "login=" . $login . "&Date=" . date("Y-m-d", strtotime("-1 days")) . "&ParticipateInEshop=1<BR>";
-          // exit;
-          curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-          // in real life you should use something like:
-          // curl_setopt($ch, CURLOPT_POSTFIELDS,
-          //          http_build_query(array('postvar1' => 'value1')));
-          // receive server response ...
-          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-          $server_output = curl_exec($ch);
-          $databale = @explode(".", $_SERVER["HTTP_HOST"]);
-          file_put_contents("downliad_" . $databale[0] . ".xml", $server_output);
-         */
+        $ch = \curl_init();
+        $header = array('Contect-Type:application/xml', 'Accept:application/xml');
+        curl_setopt($ch, CURLOPT_URL, "http://wsprisma.megasoft.gr/mgsft_ws.asmx/DownloadStoreBase");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=" . date("Y-m-d", strtotime("-1 days")) . "&ParticipateInEshop=1");
+        //echo "login=" . $login . "&Date=" . date("Y-m-d", strtotime("-1 days")) . "&ParticipateInEshop=1<BR>";
+        // exit;
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+        // in real life you should use something like:
+        // curl_setopt($ch, CURLOPT_POSTFIELDS,
+        //          http_build_query(array('postvar1' => 'value1')));
+        // receive server response ...
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $server_output = curl_exec($ch);
+        $databale = @explode(".", $_SERVER["HTTP_HOST"]);
+        file_put_contents("downliad_" . $databale[0] . ".xml", $server_output);
+
 
         //$StoreDetails = \simplexml_load_string($server_output);
         $databale = @explode(".", $_SERVER["HTTP_HOST"]);
