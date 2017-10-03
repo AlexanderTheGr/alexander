@@ -1892,13 +1892,11 @@ class ProductController extends Main {
         $q[] = "`remarks` = '" . addslashes($data["remarks"]) . "'";
         $q[] = "`supref` = '" . addslashes($data["supref"]) . "'";
         $q[] = "`place` = '" . addslashes($data["place"]) . "'";
-        $q[] = "`sisxetisi` = '" . addslashes($data["barcode"]) . "'";
+        //$q[] = "`sisxetisi` = '" . addslashes($data["barcode"]) . "'";
         $q[] = "`supplier_item_code` = '" . addslashes($data["fwSupplierItemCode"]) . "'";
         $q[] = "`webupd` = '" . ($data["webupd"] == 'True' ? 1 : 0) . "'";
         $q[] = "`barcode` = '" . addslashes($data["barcode"]) . "'";
         $q[] = "`has_transactions` = '" . addslashes($data["HasTransactions"]) . "'";
-
-
 
         if ($supplier) {
             $q[] = "`supplier` = '" . $supplier->getId() . "'";
@@ -1911,13 +1909,14 @@ class ProductController extends Main {
              */
         }
 
-        $q[] = "`product_sale` = '1'";
+        //$q[] = "`product_sale` = '1'";
         //echo @$entity->getId()." ".$data["StoreKwd"]."<BR>";
         //return;
         if (@$entity->getId() == 0) {
             //$q[] = "`reference` = '" . $data[$params["megasoft_table"]] . "'";
             //$q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
             $q[] = "`ts` = '" . date("Y-m-d") . "'";
+            $q[] = "`product_sale` = '1'";
             $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
             echo $sql . "<BR>";
             //echo "-";
