@@ -1913,6 +1913,7 @@ class ProductController extends Main {
         //echo @$entity->getId()." ".$data["StoreKwd"]."<BR>";
         //return;
         if (@$entity->getId() == 0) {
+            
             //$q[] = "`reference` = '" . $data[$params["megasoft_table"]] . "'";
             //$q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
             $q[] = "`ts` = '" . date("Y-m-d") . "'";
