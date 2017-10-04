@@ -45,7 +45,7 @@
                                 </div>
                             </div>
                         </div><!--end .panel -->
-
+                        
                         <div class="card panel">
                             <div class="card-head style-info card-head collapsed" data-toggle="collapse" data-parent="#accordion5" data-target="#accordion5-3">
                                 <header>
@@ -64,8 +64,8 @@
                                 </div>
                             </div>
                         </div><!--end .panel -->
-
-
+                        
+                        
                         <div class="card panel" style="{{fanoshow}}">
                             <div class="card-head style-info card-head collapsed" data-toggle="collapse" data-parent="#accordion5" data-target="#accordion5-4">
                                 <header>
@@ -79,26 +79,15 @@
                             <div id="accordion5-4" class="collapse">
                                 <div class="card-body">
                                     <div class='plaisio'>
-                                        <ul style='width:100%; float:left;'>
-                                            {% for brand in fbrands %}
-                                                <li style='width:80px; height: 50px; float: left; list-style: none'><a class="fbrandselect" href='#' data-ref='{{brand.brand}}'>{{brand.brand}}</a></li>
-                                                {% endfor %}   
-                                        </ul>
-                                        <!--select style="width:100%" name="fbrand_id" class="fbrand-select"  title="" onchange="">
+                                        <select style="width:100%" name="fbrand_id" class="fbrand-select"  title="" onchange="">
                                             <option value="0">Επιλέξτε Μάρκα</option>
-                                        {% for brand in fbrands %}
-                                            <option value="{{brand.brand}}">{{brand.brand}}</option>
-                                        {% endfor %}    
-                                    </select-->
+                                            {% for brand in fbrands %}
+                                                <option value="{{brand.brand}}">{{brand.brand}}</option>
+                                            {% endfor %}    
+                                            
+                                        </select>
                                     </div>
-
-
-                                    <div class="panel-group" id="accordion51" style='width:100%; float:left;'>
-                                        <div class="card panel"><div class="card-head style-info card-head collapsed" data-toggle="collapse" data-parent="#accordion51" data-target="#accordion51-1"><header>Αναζήτηση με Όχημα</header> <div class="tools"><a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a></div></div><div id="accordion51-1" class="collapse"><div class="card-body"></div></div></div>  
-                                    </div>  
-
-
-                                    <!--div class='plaisio'>
+                                    <div class='plaisio'>
                                         <select style="width:100%" name="fbrand_model_id" class="fbrand_model-select inactive" title="" onchange="">
 
                                         </select>   
@@ -106,14 +95,14 @@
                                     <div class='plaisio'>
                                         <select  style="width:100%" name="fbrand_model_type_id" class="fbrand_model_type-select inactive" title="" onchange="">
                                         </select>  
-                                    </div-->
+                                    </div>
                                     <button type="btn" id="fgogo" title="Αναζήτηση" class="fgogo button"><span><span>Αναζήτηση</span></span></button>                  
                                 </div>
                             </div>
                         </div><!--end .panel -->                        
-
-
-
+                        
+                        
+                        
                         <div class="card panel">
                             <div class="card-head style-info card-head collapsed" data-toggle="collapse" data-parent="#accordion5" data-target="#accordion5-2">
                                 <header>
@@ -143,15 +132,15 @@
 
 {% block javascripts %}
     <script>
-
+        
         jQuery(".brand-select").chosen({width: '100%'});
         jQuery(".brand_model-select").chosen({width: '100%'});
         jQuery(".brand_model_type-select").chosen({width: '100%'});
-
+        
         jQuery(".fbrand-select").chosen({width: '100%'});
         jQuery(".fbrand_model-select").chosen({width: '100%'});
         jQuery(".fbrand_model_type-select").chosen({width: '100%'});
-
+        
         order = '{{order}}';
 
         jQuery(".brand-select").change(function () {
@@ -184,18 +173,14 @@
                 jQuery(".brand-select").trigger("chosen:updated");
                 jQuery(".brand_model-select").trigger("chosen:updated");
                 jQuery(".brand_model_type-select").trigger("chosen:updated");
-
+                
                 jQuery(".fbrand-select").trigger("chosen:updated");
                 jQuery(".fbrand_model-select").trigger("chosen:updated");
                 jQuery(".fbrand_model_type-select").trigger("chosen:updated");
 
             });
         });
-
-
-
-
-
+        
         jQuery(".fbrand-select").change(function () {
             var data = {};
             data.brand = jQuery(this).val();
@@ -224,16 +209,16 @@
                 jQuery(".fbrand-select").trigger("chosen:updated");
                 jQuery(".fbrand_model-select").trigger("chosen:updated");
                 jQuery(".fbrand_model_type-select").trigger("chosen:updated");
-
-
-
+                
+                
+                
 
             });
-        });
-
-
-
-
+        });        
+        
+        
+        
+        
         jQuery(".brand_model-select").change(function () {
             var data = {};
             data.brand = jQuery(".brand-select").val();
@@ -256,7 +241,7 @@
                 jQuery(".brand_model_type-select").trigger("chosen:updated");
             })
         });
-
+        
         jQuery(".fbrand_model-select").change(function () {
             var data = {};
             data.brand = jQuery(".fbrand-select").val();
@@ -279,12 +264,12 @@
                 jQuery(".fbrand_model_type-select").trigger("chosen:updated");
             })
         });
-
-
-
-
-
-
+        
+        
+        
+        
+        
+        
         jQuery(".modelhistory").click(function () {
             asdda(jQuery(this).attr("data-order"), jQuery(this).attr("data-ref"), jQuery(this).text());
         });
@@ -294,17 +279,17 @@
         });
         jQuery(".fgogo").click(function () {
             var data = {};
-            b = true;
+            b=true;
             data.car = jQuery(".fbrand_model_type-select").val();
             data.order = '{{order}}';
-            data.all = "productfano:" + jQuery(".fbrand_model_type-select").val();
+            data.all = "productfano:"+jQuery(".fbrand_model_type-select").val();
             $("#loaderer").show();
             asdf2(data);
-        });
-
+        });        
+        
         jQuery(".subcategoriesli").live('click', function () {
             var data = {};
-            b = true;
+            b=true;
             data.car = jQuery(".brand_model_type-select").val();
             data.order = '{{order}}';
             data.all = jQuery(this).attr('data-all');
