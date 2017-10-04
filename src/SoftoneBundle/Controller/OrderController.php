@@ -1349,7 +1349,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ($brands as $brand) {
              $out .= "<li>".$brand["year"]."</li>";
         }
-        $out = "</ul>";
+        $out .= "</ul>";
         return $out;
     }
 
