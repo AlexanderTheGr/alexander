@@ -1320,8 +1320,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $statement->execute();
         $brands = $statement->fetchAll();
         $out = array();
-        $o["id"] = 0;
-        $o["name"] = "Select an Option";
+        //$o["id"] = 0;
+        //$o["name"] = "Select an Option";
         $out[] = $o;
         foreach ($brands as $brand) {
             $o["id"] = $brand["id"];
