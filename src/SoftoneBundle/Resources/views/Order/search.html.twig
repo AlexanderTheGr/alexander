@@ -274,7 +274,7 @@
             var cartext = $(".brand-select option:selected").text() + ' ' + $(".brand_model-select option:selected").text() + ' ' + $(".brand_model_type-select option:selected").text();
             asdda('{{order}}', jQuery(".brand_model_type-select").val(), cartext)
         });
-        jQuery(".fgogo").click(function () {
+        jQuery(".fgogo").live('click',function () {
             var data = {};
             b = true;
             var car = jQuery(this).attr("data-ref");
