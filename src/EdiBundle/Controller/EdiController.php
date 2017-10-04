@@ -792,14 +792,14 @@ class EdiController extends Main {
 
     public function getEltrekaPartMaster($entity) {
         //return;
-        echo 'ssss';
+        //echo 'ssss';
         //exit;
         set_time_limit(100000);
 
         $eltrekaedi = new Eltrekaedi();
         $file = $eltrekaedi->getPartMasterFile();
         echo $file;
-        //exit;
+        exit;
         // 801086
         //exit;
         //$file = 'http://195.144.16.7/EltrekkaEDI/Temp/Parts/13NADFL4.txt';
@@ -817,7 +817,7 @@ class EdiController extends Main {
                 }
 
                 if ($attributes["partno"] != 'VL732316') continue;
-                print_r($attributes);
+                //print_r($attributes);
                 $attributes["wholeprice"] = str_replace(",", ".", $attributes["wholeprice"]);
                 $attributes["retailprice"] = str_replace(",", ".", $attributes["retailprice"]);
                 $attributes["gross_weight_gr"] = str_replace(",", ".", $attributes["gross_weight_gr"]);
