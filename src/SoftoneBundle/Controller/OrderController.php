@@ -1322,7 +1322,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $out = array();
         //$o["id"] = 0;
         //$o["name"] = "Select an Option";
-        $out[] = $o;
+        //$out[] = $o;
         foreach ($brands as $brand) {
             $o["id"] = $brand["id"];
             $o["name"] = $brand["model"];
