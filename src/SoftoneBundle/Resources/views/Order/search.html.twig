@@ -300,7 +300,7 @@
             jQuery("#accordion51").html("");
             jQuery.post("/order/getfmodels", data, function (json) {
                 jQuery.each(json, function (i, optionHtml) {
-                    var ass = "<div class='card panel'><div class='card-head style-info card-head collapsed' data-toggle='collapse' data-parent='#accordion51' data-target='#accordion51-" + optionHtml.id + "'><header>" + optionHtml.name + "</header> <div class='tools'><a class='btn btn-icon-toggle'><i class='fa fa-angle-down'></i></a></div></div><div id='accordion51-" + optionHtml.id + "' class='collapse'><div class='card-body'></div></div></div>";
+                    var ass = "<div class='card panel'><div class='card-head style-info card-head collapsed' data-toggle='collapse' data-parent='#accordion51' data-target='#accordion51-" + optionHtml.id + "'><header>" + optionHtml.name + "</header> <div class='tools'><a class='btn btn-icon-toggle'><i class='fa fa-angle-down'></i></a></div></div><div id='accordion51-" + optionHtml.id + "' class='collapse'><div class='card-body'>"+optionHtml.content+"</div></div></div>";
                     jQuery('#accordion51').append(ass);
                 })
             })
