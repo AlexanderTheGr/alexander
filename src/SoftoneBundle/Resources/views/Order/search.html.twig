@@ -77,27 +77,24 @@
                                 </div>
                             </div>
                             <div id="accordion5-4" class="collapse">
-                                <div class="card-body">
-                                    <div class='plaisio'>
-                                        <select style="width:100%" name="fbrand_id" class="fbrand-select"  title="" onchange="">
-                                            <option value="0">Επιλέξτε Μάρκα</option>
+                                <div class='plaisio'>
+                                        <ul style='width:100%; float:left;'>
                                             {% for brand in fbrands %}
-                                                <option value="{{brand.brand}}">{{brand.brand}}</option>
-                                            {% endfor %}    
-                                            
-                                        </select>
+                                                <li style='width:80px; height: 50px; float: left; list-style: none'><a class="fbrandselect" href='#' data-ref='{{brand.brand}}'>{{brand.brand}}</a></li>
+                                                {% endfor %}   
+                                        </ul>
+                                        <!--select style="width:100%" name="fbrand_id" class="fbrand-select"  title="" onchange="">
+                                            <option value="0">Επιλέξτε Μάρκα</option>
+                                        {% for brand in fbrands %}
+                                            <option value="{{brand.brand}}">{{brand.brand}}</option>
+                                        {% endfor %}    
+                                    </select-->
                                     </div>
-                                    <div class='plaisio'>
-                                        <select style="width:100%" name="fbrand_model_id" class="fbrand_model-select inactive" title="" onchange="">
 
-                                        </select>   
-                                    </div>
-                                    <div class='plaisio'>
-                                        <select  style="width:100%" name="fbrand_model_type_id" class="fbrand_model_type-select inactive" title="" onchange="">
-                                        </select>  
-                                    </div>
-                                    <button type="btn" id="fgogo" title="Αναζήτηση" class="fgogo button"><span><span>Αναζήτηση</span></span></button>                  
-                                </div>
+
+                                    <div class="panel-group" id="accordion51" style='width:100%; float:left;'>
+                                        <div class="card panel"><div class="card-head style-info card-head collapsed" data-toggle="collapse" data-parent="#accordion51" data-target="#accordion51-1"><header>Αναζήτηση με Όχημα</header> <div class="tools"><a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a></div></div><div id="accordion51-1" class="collapse"><div class="card-body"></div></div></div>  
+                                    </div> 
                             </div>
                         </div><!--end .panel -->                        
                         
