@@ -197,12 +197,12 @@
             var data = {};
             data.brand = jQuery(this).attr("data-ref");
             jQuery("#accordion51").val("");
-            jQuery.post("/order/getfmodels", data, function (json) {
-                jQuery.each(json, function (i, optionHtml) {
-                    var ass = "<div class='card panel'><div class='card-head style-info card-head collapsed' data-toggle='collapse' data-parent='#accordion51' data-target='#accordion51-"+optionHtml.i+"'><header>"+optionHtml.name+"</header> <div class='tools'><a class='btn btn-icon-toggle'><i class='fa fa-angle-down'></i></a></div></div><div id='accordion51-"+optionHtml.i+"' class='collapse'><div class='card-body'></div></div></div>";
-                    jQuery('#accordion51').append(ass);
-                })
-            })
+           // jQuery.post("/order/getfmodels", data, function (json) {
+                //jQuery.each(json, function (i, optionHtml) {
+                    //var ass = "<div class='card panel'><div class='card-head style-info card-head collapsed' data-toggle='collapse' data-parent='#accordion51' data-target='#accordion51-"+optionHtml.i+"'><header>"+optionHtml.name+"</header> <div class='tools'><a class='btn btn-icon-toggle'><i class='fa fa-angle-down'></i></a></div></div><div id='accordion51-"+optionHtml.i+"' class='collapse'><div class='card-body'></div></div></div>";
+                    //jQuery('#accordion51').append(ass);
+                //})
+           // })
         })
 
 
