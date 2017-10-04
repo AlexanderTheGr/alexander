@@ -277,9 +277,10 @@
         jQuery(".fgogo").click(function () {
             var data = {};
             b = true;
-            data.car = jQuery(".fbrand_model_type-select").val();
+            var car = jQuery(this).attr("data-ref");
+            data.car = car;
             data.order = '{{order}}';
-            data.all = "productfano:" + jQuery(".fbrand_model_type-select").val();
+            data.all = "productfano:" + car;
             $("#loaderer").show();
             asdf2(data);
         });
