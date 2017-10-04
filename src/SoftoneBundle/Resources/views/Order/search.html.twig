@@ -94,23 +94,7 @@
 
 
                                     <div class="panel-group" id="accordion51" style='width:100%; float:left;'>
-                                        <div class="card panel">
-                                            <div class="card-head style-info card-head collapsed" data-toggle="collapse" data-parent="#accordion51" data-target="#accordion51-1">
-                                                <header>
-                                                    <i class="fa fa-automobile"></i> Αναζήτηση με Όχημα
-                                                </header>
-                                                <div class="tools">
-
-                                                    <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
-                                                </div>
-                                            </div>
-                                            <div id="accordion51-1" class="collapse">
-                                                <div class="card-body">
-                                                    
-                                                    <button type="btn" id="gogo" title="Αναζήτηση" class="gogo button"><span><span>Αναζήτηση</span></span></button>                  
-                                                </div>
-                                            </div>
-                                        </div>  
+                                        <div class="card panel"><div class="card-head style-info card-head collapsed" data-toggle="collapse" data-parent="#accordion51" data-target="#accordion51-1"><header>Αναζήτηση με Όχημα</header> <div class="tools"><a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a></div></div><div id="accordion51-1" class="collapse"><div class="card-body"></div></div></div>  
                                     </div>  
 
 
@@ -207,6 +191,21 @@
 
             });
         });
+
+
+        jQuery(".fbrandselect").click(function () {
+            var data = {};
+            data.brand = jQuery(this).val();
+            jQuery("#accordion51").val("");
+            jQuery.post("/order/getfmodels", data, function (json) {
+                jQuery.each(json, function (i, optionHtml) {
+                    var ass = "<div class=\"card panel\"><div class=\"card-head style-info card-head collapsed\" data-toggle=\"collapse\" data-parent=\"#accordion51\" data-target=\"#accordion51-"+optionHtml.i+"\"><header>"+optionHtml.name+"</header> <div class=\"tools\"><a class=\"btn btn-icon-toggle\"><i class=\"fa fa-angle-down\"></i></a></div></div><div id=\"accordion51-"+optionHtml.i+"\" class=\"collapse\"><div class=\"card-body\"></div></div></div>";
+                    jQuery('#accordion51').append(ass);
+                })
+            })
+        }
+
+
 
         jQuery(".fbrand-select").change(function () {
             var data = {};
