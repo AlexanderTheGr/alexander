@@ -1314,7 +1314,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     function getfmodels(Request $request) {
         //$request->request->get("brand")
         $em = $this->getDoctrine()->getManager();
-        $sql = "SELECT model,id FROM  partsbox_db.fanopoiia_category where brand = '" . $request->request->get("brand") . "'  group by model";
+        $sql = "SELECT model,id,brand FROM  partsbox_db.fanopoiia_category where brand = '" . $request->request->get("brand") . "'  group by model";
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
         $statement->execute();
@@ -1326,6 +1326,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ($brands as $brand) {
             $o["id"] = $brand["id"];
             $o["name"] = $brand["model"];
+            $o["content"] = $this->getfmodeltypes($brand);
             $out[] = $o;
         }
 
@@ -1335,31 +1336,21 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         );
     }
 
-    /**
-     * @Route("/order/getfmodeltypes")
-     */
-    function getfmodeltypes(Request $request) {
+
+    function getfmodeltypes($brand) {
         //$request->request->get("brand")
         $em = $this->getDoctrine()->getManager();
-        $sql = "SELECT model_id, year  FROM  partsbox_db.fanopoiia_category where brand = '" . $request->request->get("brand") . "' AND model = '" . $request->request->get("model") . "'";
+        $sql = "SELECT model_id, year  FROM  partsbox_db.fanopoiia_category where brand = '" . $brand["brand"] . "' AND model = '" . $brand["model"] . "'";
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
         $statement->execute();
         $brands = $statement->fetchAll();
-        $out = array();
-        $o["id"] = 0;
-        $o["name"] = "Select an Option";
-        $out[] = $o;
+        $out = "<ul>";
         foreach ($brands as $brand) {
-            $o["id"] = $brand["model_id"];
-            $o["name"] = $brand["year"];
-            $out[] = $o;
+             $out .= "<li>".$brand["year"]."</li>";
         }
-
-        $json = json_encode($out);
-        return new Response(
-                $json, 200, array('Content-Type' => 'application/json')
-        );
+        $out = "</ul>";
+        return $out;
     }
 
     /**
