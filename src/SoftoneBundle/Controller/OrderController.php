@@ -1345,9 +1345,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $statement = $connection->prepare($sql);
         $statement->execute();
         $brands = $statement->fetchAll();
-        $out = "<ul>";
+        $out = "<ul style='width:100%; float:left;'>";
         foreach ($brands as $brand) {
-             $out .= "<li>".$brand["year"]."</li>";
+             $out .= "<li style='width:80px; height: 50px; float: left; list-style: none'>".$brand["year"]."</li>";
         }
         $out .= "</ul>";
         return $out;
