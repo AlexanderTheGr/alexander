@@ -195,7 +195,7 @@
 
         jQuery(".fbrandselect").click(function () {
             var data = {};
-            data.brand = jQuery(this).val();
+            data.brand = jQuery(this).attr("data-ref");
             jQuery("#accordion51").val("");
             jQuery.post("/order/getfmodels", data, function (json) {
                 jQuery.each(json, function (i, optionHtml) {
