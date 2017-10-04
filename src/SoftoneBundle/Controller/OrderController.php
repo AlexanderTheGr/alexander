@@ -1347,7 +1347,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $brands = $statement->fetchAll();
         $out = "<ul style='width:100%; float:left;'>";
         foreach ($brands as $brand) {
-             $out .= "<li style='width:80px; height: 50px; float: left; list-style: none'>".$brand["year"]."</li>";
+             $out .= "<li class='fgogo' data-ref='".$brand["id"]."' style='width:80px; height: 50px; float: left; list-style: none'>".$brand["year"]."</li>";
         }
         $out .= "</ul>";
         return $out;
