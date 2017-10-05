@@ -1355,6 +1355,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         }
         $out .= "</ul>";
         return $out;
+        
     }
 
     /**
