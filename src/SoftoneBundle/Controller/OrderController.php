@@ -1351,7 +1351,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $urlpath = str_replace("/home2/partsbox/public_html/partsbox/web", "", $path);
             $out .= "<li class='fgogo' data-ref='".$brand["model_id"]."' style='width:120px; height: 120px; float: left; list-style: none'>"
                      . "<img style='max-width:120px; max-height: 120px;' src='" . $urlpath . "cars" . "/" . $brand["model_id"] . ".jpg'>"
-                     . "".$brand["year"]."</li>";
+                     . "<BR><center>".$brand["year"]."</center></li>";
         }
         $out .= "</ul>";
         return $out;
