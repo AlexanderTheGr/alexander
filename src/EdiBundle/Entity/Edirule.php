@@ -216,6 +216,8 @@ class Edirule extends Entity {
         } else {
             $SoftoneSupplier = $em->getRepository("SoftoneBundle:SoftoneSupplier")
                     ->findOneBy(array('title' => $this->fix($ediitem->getBrand())));
+            echo $this->fix($ediitem->getBrand());
+            
         }
         //print_r($rule);
 
