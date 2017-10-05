@@ -636,7 +636,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $sqlearch = "Select so.id from SoftoneBundle:ProductFreesearch so where " . $like . "";
                 } elseif ($search[0] == 'productfano') {
 
-                    $sqlearch = "Select o.id from SoftoneBundle:Product o where o.supplierCode like '" . $search[1] . "%'";
+                    $sqlearch = "Select o.id from SoftoneBundle:Product o where o.itemMtrgroup = '" . (int)$search[1] . "%'";
                 } else {
                     $search[1] = $this->clearstring($search[1]);
                     $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
