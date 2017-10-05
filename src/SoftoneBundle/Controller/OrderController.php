@@ -1339,6 +1339,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
     function getfmodeltypes($brand) {
         //$request->request->get("brand")
+        $path = $this->getSetting("SoftoneBundle:Product:Images");
         $em = $this->getDoctrine()->getManager();
         $sql = "SELECT model_id, year,id  FROM  partsbox_db.fanopoiia_category where brand = '" . $brand["brand"] . "' AND model = '" . $brand["model"] . "'";
         $connection = $em->getConnection();
@@ -1347,7 +1348,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $brands = $statement->fetchAll();
         $out = "<ul style='width:100%; float:left;'>";
         foreach ($brands as $brand) {
-             $out .= "<li class='fgogo' data-ref='".$brand["model_id"]."' style='width:120px; height: 120px; float: left; list-style: none'>".$brand["year"]."</li>";
+            $urlpath = str_replace("/home2/partsbox/public_html/partsbox/web", "", $path);
+            $out .= "<li class='fgogo' data-ref='".$brand["model_id"]."' style='width:120px; height: 120px; float: left; list-style: none'>"
+                     . "<img style='max-width:120px; max-height: 120px;' src='" . $urlpath . "cars" . "/" . $brand["model_id"] . ".jpg'>"
+                     . "".$brand["year"]."</li>";
         }
         $out .= "</ul>";
         return $out;
