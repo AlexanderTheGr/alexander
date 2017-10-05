@@ -2745,7 +2745,7 @@ class Product extends Entity {
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis')
             return;
         
-        return;
+        
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
