@@ -1351,7 +1351,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ($brands as $brand) {
             $urlpath = str_replace("/home2/partsbox/public_html/partsbox/web", "", $path);
             $out .= "<li class='fgogo' data-ref='".$brand["model_id"]."' style='width:120px; height: 120px; float: left; list-style: none'>"
-                    . "<div class='modeldiv'><img class='modelitem' style='border: 1px; position:absolute; display: none; left:0;' style='max-width:820px; max-height: 820px;' src='" . $urlpath . "cars" . "/" . $brand["model_id"] . ".jpg'>"
+                    . "<div class='modeldiv'><img class='modelitem' style='border: z-index:100; 1px; position:absolute; display: none; left:0;' style='max-width:820px; max-height: 820px;' src='" . $urlpath . "cars" . "/" . $brand["model_id"] . ".jpg'>"
                      . "<center><img style='max-width:120px; max-height: 120px;' src='" . $urlpath . "cars" . "/" . $brand["model_id"] . ".jpg'></div>"
                      . "<BR>".$brand["year"]."</center></li>";
         }
