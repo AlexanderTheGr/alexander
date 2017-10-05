@@ -636,6 +636,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $sqlearch = "Select so.id from SoftoneBundle:ProductFreesearch so where " . $like . "";
                 } elseif ($search[0] == 'productfano') {
 
+                    $sqlearch = "Select o.id from SoftoneBundle:Product o where o.supplierCode like '" . $search[1] . "%'";
                     $sqlearch = "Select o.id from SoftoneBundle:Product o where o.itemMtrgroup = '" . (int)$search[1] . "%'";
                 } else {
                     $search[1] = $this->clearstring($search[1]);
@@ -1336,7 +1337,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         );
     }
 
-
+    
     function getfmodeltypes($brand) {
         //$request->request->get("brand")
         $path = $this->getSetting("SoftoneBundle:Product:Images");
@@ -1350,7 +1351,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ($brands as $brand) {
             $urlpath = str_replace("/home2/partsbox/public_html/partsbox/web", "", $path);
             $out .= "<li class='fgogo' data-ref='".$brand["model_id"]."' style='width:120px; height: 120px; float: left; list-style: none'>"
-                     . "<center><img style='max-width:120px; max-height: 120px;' src='" . $urlpath . "cars" . "/" . $brand["model_id"] . ".jpg'>"
+                    . "<div class='modeldiv'><img class='modelitem' style='border: 1px; position:absolute; display: none; left:0;' style='max-width:820px; max-height: 820px;' src='" . $urlpath . "cars" . "/" . $brand["model_id"] . ".jpg'>"
+                     . "<center><img style='max-width:120px; max-height: 120px;' src='" . $urlpath . "cars" . "/" . $brand["model_id"] . ".jpg'></div>"
                      . "<BR>".$brand["year"]."</center></li>";
         }
         $out .= "</ul>";
