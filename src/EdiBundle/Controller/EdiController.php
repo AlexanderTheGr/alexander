@@ -331,7 +331,7 @@ class EdiController extends Main {
         $i = 0;
         foreach ($collection as $entity) {
             //if ($i++ <= 1) continue;
-            if ($entity["id"] == 11) {
+            if ($entity["id"] == 4) {
                 $func = $entity["func"];
                 $this->$func($entity);
             }
@@ -792,14 +792,14 @@ class EdiController extends Main {
 
     public function getEltrekaPartMaster($entity) {
         //return;
-        echo 'ssss';
+        //echo 'ssss';
         //exit;
         set_time_limit(100000);
 
         $eltrekaedi = new Eltrekaedi();
         $file = $eltrekaedi->getPartMasterFile();
         echo $file;
-        //exit;
+        exit;
         // 801086
         //exit;
         //$file = 'http://195.144.16.7/EltrekkaEDI/Temp/Parts/13NADFL4.txt';
@@ -816,7 +816,7 @@ class EdiController extends Main {
                     $attributes[$attrs[$key]] = trim(addslashes($val));
                 }
 
-                //if ($attributes["partno"] != 'SC290959') continue;
+                if ($attributes["partno"] != 'VL732316') continue;
                 //print_r($attributes);
                 $attributes["wholeprice"] = str_replace(",", ".", $attributes["wholeprice"]);
                 $attributes["retailprice"] = str_replace(",", ".", $attributes["retailprice"]);

@@ -637,6 +637,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 } elseif ($search[0] == 'productfano') {
 
                     $sqlearch = "Select o.id from SoftoneBundle:Product o where o.supplierCode like '" . $search[1] . "%'";
+                    $sqlearch = "Select o.id from SoftoneBundle:Product o where o.itemMtrgroup = '" . (int)$search[1] . "%'";
                 } else {
                     $search[1] = $this->clearstring($search[1]);
                     $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
@@ -1314,18 +1315,19 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     function getfmodels(Request $request) {
         //$request->request->get("brand")
         $em = $this->getDoctrine()->getManager();
-        $sql = "SELECT model FROM  partsbox_db.fanopoiia_category where brand = '" . $request->request->get("brand") . "'  group by model";
+        $sql = "SELECT model,id,brand FROM  partsbox_db.fanopoiia_category where brand = '" . $request->request->get("brand") . "'  group by model";
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
         $statement->execute();
         $brands = $statement->fetchAll();
         $out = array();
-        $o["id"] = 0;
-        $o["name"] = "Select an Option";
-        $out[] = $o;
+        //$o["id"] = 0;
+        //$o["name"] = "Select an Option";
+        //$out[] = $o;
         foreach ($brands as $brand) {
-            $o["id"] = $brand["model"];
+            $o["id"] = $brand["id"];
             $o["name"] = $brand["model"];
+            $o["content"] = $this->getfmodeltypes($brand);
             $out[] = $o;
         }
 
@@ -1335,31 +1337,27 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         );
     }
 
-    /**
-     * @Route("/order/getfmodeltypes")
-     */
-    function getfmodeltypes(Request $request) {
+    
+    function getfmodeltypes($brand) {
         //$request->request->get("brand")
+        $path = $this->getSetting("SoftoneBundle:Product:Images");
         $em = $this->getDoctrine()->getManager();
-        $sql = "SELECT model_id, year  FROM  partsbox_db.fanopoiia_category where brand = '" . $request->request->get("brand") . "' AND model = '" . $request->request->get("model") . "'";
+        $sql = "SELECT model_id, year,id  FROM  partsbox_db.fanopoiia_category where brand = '" . $brand["brand"] . "' AND model = '" . $brand["model"] . "'";
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
         $statement->execute();
         $brands = $statement->fetchAll();
-        $out = array();
-        $o["id"] = 0;
-        $o["name"] = "Select an Option";
-        $out[] = $o;
+        $out = "<ul style='width:100%; float:left;'>";
         foreach ($brands as $brand) {
-            $o["id"] = $brand["model_id"];
-            $o["name"] = $brand["year"];
-            $out[] = $o;
+            $urlpath = str_replace("/home2/partsbox/public_html/partsbox/web", "", $path);
+            $out .= "<li style='width:120px; height: 120px; float: left; list-style: none'>"
+                    . "<div style='float:left; width:100%' class='modeldiv'><img class='modelitem' style='border: 1px; z-index:100; position:absolute; display: none; left:0;' style='max-width:820px; max-height: 820px;' src='" . $urlpath . "cars" . "/" . $brand["model_id"] . ".jpg'>"
+                     . "<center><img style='max-width:120px; max-height: 120px;' src='" . $urlpath . "cars" . "/" . $brand["model_id"] . ".jpg'></div>"
+                     . "<BR><BR><center><a class='fgogo' data-ref='".$brand["model_id"]."' href='#'>".$brand["year"]."</a></center></li>";
         }
-
-        $json = json_encode($out);
-        return new Response(
-                $json, 200, array('Content-Type' => 'application/json')
-        );
+        $out .= "</ul>";
+        return $out;
+        
     }
 
     /**

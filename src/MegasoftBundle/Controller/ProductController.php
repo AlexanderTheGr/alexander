@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Controller\Main as Main;
 use MegasoftBundle\Entity\Product as Product;
 use MegasoftBundle\Entity\Manufacturer as Manufacturer;
+use MegasoftBundle\Entity\Supplier as Supplier;
 use MegasoftBundle\Entity\Productcategory as Productcategory;
 use MegasoftBundle\Entity\Productcar as Productcar;
 use AppBundle\Entity\Tecdoc as Tecdoc;
@@ -1039,7 +1040,7 @@ class ProductController extends Main {
             }
 
             $brandmodels = $this->getDoctrine()
-                            ->getRepository('SoftoneBundle:BrandModel')->findBy(array("brand" => $brand->getId(),'enable'=>1), array('brandModel' => 'ASC'));
+                            ->getRepository('SoftoneBundle:BrandModel')->findBy(array("brand" => $brand->getId(), 'enable' => 1), array('brandModel' => 'ASC'));
             if (count($brandmodels) == 0)
                 continue;
             $html .= "<li class='brandli' data-ref='" . $brand->getId() . "'>";
@@ -1380,7 +1381,7 @@ class ProductController extends Main {
         $allowedips = $this->getSetting("MegasoftBundle:Product:Allowedips");
         $allowedipsArr = explode(",", $allowedips);
         if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
-            $sql = "SELECT * FROM  `megasoft_product` where erp_supplier != 'GBG' AND ts >= '" . date("Y-m-d", strtotime("-1 days")) . "' order by id desc";
+            $sql = "SELECT * FROM  `megasoft_product` where erp_supplier != 'GBG' AND ts >= '" . date("Y-m-d", strtotime("-0 days")) . "' order by id desc";
             $connection = $this->getDoctrine()->getConnection();
             $statement = $connection->prepare($sql);
             $statement->execute();
@@ -1479,11 +1480,11 @@ class ProductController extends Main {
                     //$q[] = "`suppliergroup` = '1'";
 
                     $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
-                    echo $sql . "<BR>";
+                    //echo $sql . "<BR>";
                     $em->getConnection()->exec($sql);
                 } else {
                     $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
-                    echo $sql . "<BR>";
+                    //echo $sql . "<BR>";
                     $em->getConnection()->exec($sql);
                 }
             }
@@ -1714,7 +1715,7 @@ class ProductController extends Main {
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, "login=" . $login . "&Date=" . date("Y-m-d", strtotime("-1 days")) . "&ParticipateInEshop=1");
         //echo "login=" . $login . "&Date=" . date("Y-m-d", strtotime("-1 days")) . "&ParticipateInEshop=1<BR>";
-       // exit;
+        // exit;
         curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
         // in real life you should use something like:
         // curl_setopt($ch, CURLOPT_POSTFIELDS,
@@ -1737,45 +1738,84 @@ class ProductController extends Main {
         //$params["Date"] = "2016-06-21";
         //$response = $soap->__soapCall("GetProducts", array($params));
 
-
-        echo "<BR>[" . count($StoreDetails) . "]<BR>";
+        $cnt = count($StoreDetails);
+        echo "<BR>[" . $cnt . "]<BR>";
         // exit;
+
 
 
 
         /*
-
-          if (count($response->DownloadStoreBaseResponse) == 1) {
-          $StoreDetails[] = $response->$response->DownloadStoreBaseResponse;
-          } elseif (count($response->$response->DownloadStoreBaseResponse) > 1) {
-          $StoreDetails = $response->$response->DownloadStoreBaseResponse;
-          }
-
+        if (count($response->DownloadStoreBaseResponse) == 1) {
+            $StoreDetails[] = $response->DownloadStoreBaseResponse;
+        } elseif (count($response->DownloadStoreBaseResponse) > 1) {
+            $StoreDetails = $response->DownloadStoreBaseResponse;
+        }
 
 
-          //echo count($response->GetProductsResult->StoreDetails);
-          echo "<BR>";
-          exit;
-          if (count($response->GetProductsResult->StoreDetails) == 1) {
-          $StoreDetails[] = $response->GetProductsResult->StoreDetails;
-          } elseif (count($response->GetProductsResult->StoreDetails) > 1) {
-          $StoreDetails = $response->GetProductsResult->StoreDetails;
-          }
-         */
+
+        //echo count($response->GetProductsResult->StoreDetails);
+        echo "<BR>";
+        //exit;
+        if (count($response->GetProductsResult->StoreDetails) == 1) {
+            $StoreDetails[] = $response->GetProductsResult->StoreDetails;
+        } elseif (count($response->GetProductsResult->StoreDetails) > 1) {
+            $StoreDetails = $response->GetProductsResult->StoreDetails;
+        }
+        */
         //print_r($StoreDetails);
         // exit;
 
+        $storeIds = array();
         foreach ($StoreDetails as $data) {
-            //if ($i++ < 155201)
-            //   continue;            
+            //if ($i++ < ($cnt-10000))
+            //   continue;
+            $i++;
+            $storeIds = array();
+            //if ($i > 180000 AND $i<250000) {            
+            $data = (array) $data;
+            $storeIds[] = array("storeid" => addslashes($data["StoreId"]));
             $this->setProduct($data);
+            //} else {
+            // continue;
+            //}
             //if ($i++ > 100) return;
         }
+
+        $params["JsonStrWeb"] = json_encode(array("items" => $storeIds));
+        $this->setCustomFields($soap, $params);
+
         $sql = 'UPDATE `megasoft_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
         $this->getDoctrine()->getConnection()->exec($sql);
-        //$this->retrieveProductPrices();
+        $this->retrieveProductPrices();
         //exit;
         //;
+    }
+
+    function setCustomFields($soap, $params) {
+        $response = $soap->__soapCall("GetCustomFieldsPerItem", array($params));
+        //print_r($response->GetCustomFieldsPerItemResult->CustomFields);
+
+        $params["table"] = "megasoft_product";
+        foreach ((array) $response->GetCustomFieldsPerItemResult->CustomFields as $data) {
+            $data = (array) $data;
+            $q = array();
+            $q[] = "`decimal1` = '" . addslashes($data["CustomField_5"]) . "'";
+            $q[] = "`decimal2` = '" . addslashes($data["CustomField_10"]) . "'";
+            $q[] = "`decimal3` = '" . addslashes($data["CustomField_11"]) . "'";
+            $q[] = "`var1` = '" . addslashes($data["CustomField_6"]) . "'";
+            $q[] = "`var2` = '" . addslashes($data["CustomField_8"]) . "'";
+            $q[] = "`var3` = '" . addslashes($data["CustomField_9"]) . "'";
+            $q[] = "`var4` = '" . addslashes($data["CustomField_1"]) . "'";
+            //$q[] = "`replaced` = '" . addslashes($data["CustomField_1"]) . "'";
+            $q[] = "`int1` = '" . addslashes($data["CustomField_3"]) . "'";
+            $q[] = "`int2` = '" . addslashes($data["CustomField_4"]) . "'";
+            $q[] = "`int3` = '" . addslashes($data["CustomField_7"]) . "'";
+            $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where reference = '" . addslashes($data["ApoId"]) . "'";
+            $this->getDoctrine()->getManager()->getConnection()->exec($sql);
+            echo $sql . "<BR><BR><BR>";
+        }
+        //$this->getDoctrine()->getManager()->getConnection()->exec($sql);
     }
 
     function setProduct($data) {
@@ -1852,13 +1892,11 @@ class ProductController extends Main {
         $q[] = "`remarks` = '" . addslashes($data["remarks"]) . "'";
         $q[] = "`supref` = '" . addslashes($data["supref"]) . "'";
         $q[] = "`place` = '" . addslashes($data["place"]) . "'";
-        $q[] = "`sisxetisi` = '" . addslashes($data["barcode"]) . "'";
+        //$q[] = "`sisxetisi` = '" . addslashes($data["barcode"]) . "'";
         $q[] = "`supplier_item_code` = '" . addslashes($data["fwSupplierItemCode"]) . "'";
         $q[] = "`webupd` = '" . ($data["webupd"] == 'True' ? 1 : 0) . "'";
         $q[] = "`barcode` = '" . addslashes($data["barcode"]) . "'";
         $q[] = "`has_transactions` = '" . addslashes($data["HasTransactions"]) . "'";
-
-
 
         if ($supplier) {
             $q[] = "`supplier` = '" . $supplier->getId() . "'";
@@ -1871,13 +1909,15 @@ class ProductController extends Main {
              */
         }
 
-        $q[] = "`product_sale` = '1'";
+        //$q[] = "`product_sale` = '1'";
         //echo @$entity->getId()." ".$data["StoreKwd"]."<BR>";
         //return;
         if (@$entity->getId() == 0) {
+            
             //$q[] = "`reference` = '" . $data[$params["megasoft_table"]] . "'";
             //$q[] = "`reference` = '" . addslashes($data["StoreId"]) . "'";
             $q[] = "`ts` = '" . date("Y-m-d") . "'";
+            $q[] = "`product_sale` = '1'";
             $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
             echo $sql . "<BR>";
             //echo "-";

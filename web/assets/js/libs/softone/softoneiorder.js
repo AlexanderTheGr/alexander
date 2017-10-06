@@ -521,6 +521,16 @@ jQuery(".edibutton").live('click', function () {
 });
 
 
+jQuery(".modeldiv").live('click', function () {
+    //alert('sss');
+    jQuery(this).find('.modelitem').show();
+});
+jQuery(".modeldiv").live('mouseout', function () {
+    //alert('sss');
+    jQuery('.modelitem').hide();
+});
+
+
 jQuery(".alexander tr").live('mouseover', function () {
     //alert('sss');
     jQuery(this).find('.orderitemstable').show();

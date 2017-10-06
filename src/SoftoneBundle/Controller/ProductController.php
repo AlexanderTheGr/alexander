@@ -986,6 +986,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         ));
     }
 
+    
+    
+    
+    
+    
+    
+    
     public function media($tecdocArticleId) {
 
         //$product = json_decode($this->flat_data);
@@ -1122,6 +1129,86 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
         //exit;
     }
+    
+    function fixSupplier($supplier) {
+        if ($supplier == "FEBI")
+            $supplier = str_replace("FEBI", "FEBI BILSTEIN", $supplier);
+        if ($supplier == "MANN")
+            $supplier = str_replace("MANN", "MANN-FILTER", $supplier);
+        if ($supplier == "MEAT&DORIA")
+            $supplier = str_replace("MEAT&DORIA", "MEAT & DORIA", $supplier);
+        if ($supplier == "BEHR-HELLA")
+            $supplier = str_replace("BEHR-HELLA", "BEHR HELLA SERVICE", $supplier);
+        if ($supplier == "BLUEPRINT")
+            $supplier = str_replace("BLUEPRINT", "BLUE-PRINT", $supplier);
+        if ($supplier == "BLUE PRINT")
+            $supplier = str_replace("BLUE PRINT", "BLUE-PRINT", $supplier);
+        if ($supplier == "BENDIX WBK")
+            $supplier = str_replace("BENDIX WBK", "BENDIX", $supplier);
+        if ($supplier == "CONTI-TECH")
+            $supplier = str_replace("CONTI-TECH", "CONTITECH", $supplier);
+        if ($supplier == "Fai AutoParts")
+            $supplier = str_replace("Fai AutoParts", "FAI AutoParts", $supplier);
+        if ($supplier == "FIAAM")
+            $supplier = str_replace("FIAAM", "COOPERSFIAAM FILTERS", $supplier);
+        if ($supplier == "FIBA")
+            $supplier = str_replace("FIBA", "FI.BA", $supplier);
+        if ($supplier == "FLENOR")
+            $supplier = str_replace("FLENOR", "FLENNOR", $supplier);
+        if ($supplier == "FRITECH")
+            $supplier = str_replace("FRITECH", "fri.tech.", $supplier);
+        if ($supplier == "HERTH & BUSS JAKOPARTS")
+            $supplier = str_replace("HERTH & BUSS JAKOPARTS", "HERTH+BUSS JAKOPARTS", $supplier);
+        if ($supplier == "KAYABA")
+            $supplier = str_replace("KAYABA", "KYB", $supplier);
+        if ($supplier == "KM")
+            $supplier = str_replace("KM", "KM Germany", $supplier);
+        if ($supplier == "LUK")
+            $supplier = str_replace("LUK", "LuK", $supplier);
+        if ($supplier == "FEBI BILSTEIN BILSTEIN")
+            $supplier = str_replace("FEBI BILSTEIN BILSTEIN", "FEBI BILSTEIN", $supplier);
+        if ($supplier == "COOPERSCOOPERSCOOPERSCOOPERSFIAAM FILTERS FILTERS FILTERS FILTERS")
+            $supplier = str_replace("COOPERSCOOPERSCOOPERSCOOPERSFIAAM FILTERS FILTERS FILTERS FILTERS", "COOPERSFIAAM FILTERS", $supplier);
+        if ($supplier == "COOPERSCOOPERSCOOPERSFIAAM FILTERS FILTERS FILTERS")
+            $supplier = str_replace("COOPERSCOOPERSCOOPERSFIAAM FILTERS FILTERS FILTERS", "COOPERSFIAAM FILTERS", $supplier);
+        if ($supplier == "COOPERSCOOPERSFIAAM FILTERS FILTERS")
+            $supplier = str_replace("COOPERSCOOPERSFIAAM FILTERS FILTERS", "COOPERSFIAAM FILTERS", $supplier);
+        if ($supplier == "CoopersFiaam")
+            $supplier = str_replace("CoopersFiaam", "COOPERSFIAAM FILTERS", $supplier);
+        if ($supplier == "MANN")
+            $supplier = str_replace("MANN", "MANN-FILTER", $supplier);
+        if ($supplier == "MANN-FILTER-FILTER-FILTER-FILTER")
+            $supplier = str_replace("MANN-FILTER-FILTER-FILTER-FILTER", "MANN-FILTER", $supplier);
+        if ($supplier == "MANN-FILTER-FILTER")
+            $supplier = str_replace("MANN-FILTER-FILTER", "MANN-FILTER", $supplier);
+        if ($supplier == "MANN-FILTER-FILTER")
+            $supplier = str_replace("MANN-FILTER-FILTER", "MANN-FILTER", $supplier);
+        if ($supplier == "MANN-FILTEREX")
+            $supplier = str_replace("MANN-FILTEREX", "MANN-FILTER", $supplier);
+        if ($supplier == "METALCAUCHO")
+            $supplier = str_replace("METALCAUCHO", "Metalcaucho", $supplier);
+        if ($supplier == "MULLER")
+            $supplier = str_replace("MULLER", "MULLER FILTER", $supplier);
+        if ($supplier == "RICAMBI")
+            $supplier = str_replace("RICAMBI", "GENERAL RICAMBI", $supplier);
+        if ($supplier == "ZIMMERMANN-FILTER")
+            $supplier = str_replace("VERNET", "CALORSTAT by Vernet", $supplier);
+        if ($supplier == "ZIMMERMANN-FILTER")
+            $supplier = str_replace("ZIMMERMANN-FILTER", "ZIMMERMANN", $supplier);
+        if ($supplier == "LESJ?FORS")
+            $supplier = str_replace("LESJ?FORS", "LESJOFORS", $supplier);
+        if ($supplier == "LEMF?RDER")
+            $supplier = str_replace("LEMF?RDER", "LEMFORDER", $supplier);
+        if ($supplier == "SALERI")
+            $supplier = str_replace("SALERI", "Saleri SIL", $supplier);
+        if ($supplier == "CASTROL LUBRICANTS")
+            $supplier = str_replace("CASTROL LUBRICANTS", "CASTROL", $supplier);
+        if ($supplier == "FEBI BILSTEIN BILSTEIN")
+            $supplier = str_replace("FEBI BILSTEIN BILSTEIN", "FEBI BILSTEIN", $supplier);
+        if ($supplier == "KM Germany Germany")
+            $supplier = str_replace("KM Germany Germany", "KM Germany", $supplier);
+        return $supplier;
+    }    
 
     function retrieveMtrl($MTRL = 0) {
         ini_set('memory_limit', '12256M');
@@ -1146,7 +1233,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";
                 //$where = " AND UPDDATE = '" . date("Y-m-d") . "'";
             } else {
-                $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-8 days")) . "' ORDER BY MTRL";
+                $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-90 days")) . "' ORDER BY MTRL";
                 //$where = " AND INSDATE = '2017-03-01' ORDER BY MTRL";
             }
 
@@ -1179,7 +1266,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             }
             $params["relation"] = array();
             $params["extrafunction"] = array();
-            //$params["extra"]["CCCFXRELTDCODE"] = "CCCFXRELTDCODE";
+            $params["extra"]["CCCFXRELTDCODE"] = "CCCFXRELTDCODE";
             //$params["extra"]["CCCFXRELBRAND"] = "CCCFXRELBRAND";
             $params["relation"]["reference"] = "MTRL";
             $params["relation"]["erpCode"] = "CODE";
@@ -1190,8 +1277,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $params["extrafunction"][] = "updatetecdoc";
             $this->setSetting("SoftoneBundle:Product:retrieveMtrl", serialize($params));
         }
-        //$this->retrieveProduct($params);
-        echo 'ss';
+        $this->retrieveProduct($params);
+        //echo 'ss';
         $params["fSQL"] = "SELECT VARCHAR05, MTRL FROM MTREXTRA WHERE VARCHAR05 != ''";
         $softone = new Softone();
         $datas = $softone->createSql($params);
@@ -1204,7 +1291,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $this->getDoctrine()->getConnection()->exec($sql);
             }
         }
-        exit;
+        //exit;
         $sql = 'update `softone_product` set `tecdoc_supplier_id` =  `item_mtrmark` where tecdoc_supplier_id is null';
         $this->getDoctrine()->getConnection()->exec($sql);
 
