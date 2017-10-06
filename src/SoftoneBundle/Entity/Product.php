@@ -2197,6 +2197,8 @@ class Product extends Entity {
             @$dataOut["ITEEXTRA"][0] = array("VARCHAR05" => $this->cccRef);
             @$dataOut["ITEEXTRA"][0] = array("BOOL01" => $this->cccWebUpd);
             @$dataOut["ITEEXTRA"][0] = array("BOOL02" => $this->cccPriceUpd);
+            $objectArr2["MTRPCATEGORY"] = 1000;
+	    $objectArr2["MTRACN"] = 101;
         }
         //@$dataOut["ITEEXTRA"][0] = array("VARCHAR02" => $this->sisxetisi); 
         //print_r(@$dataOut);
