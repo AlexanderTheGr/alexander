@@ -19,6 +19,7 @@ class CustomerController extends Main {
     /**
      * @Route("/erp01/customer/customer")
      */
+    
     public function indexAction() {
         return $this->render('MegasoftBundle:Customer:index.html.twig', array(
                     'pagename' => 'Customers',
