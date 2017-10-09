@@ -2839,8 +2839,8 @@ class Product extends Entity {
                             <td>' . $data["edi"] . '</td>
                             <td>' . $data["itemcode"] . '</td>
                             <td>' . $data["description"] . '</td>
-                            <td>(' . $availabilityf . ')</td>
-                            <td>[' . $pricef . ']</td>
+                            <td>' . $availabilityf . '</td>
+                            <td>' . $pricef . '</td>
                             <td><input type="text" data-id="' . $data['id'] . '" name="qty1_' . $data['id'] . '" value="0" size="2" id="qty1_' . $data['id'] . '" class="ediiteqty1"></td>    
                         </tr>';
             }
