@@ -2794,7 +2794,7 @@ class Product extends Entity {
                         $qty = $Item->Availability == 'green' ? 100 : 0;
                         $Item->UnitPrice;
 
-                        $itemcode = $Item->ItemCode."\n";
+                        $itemcode = $Item->ItemCode;
                         break;
                     }
                 }
@@ -2805,7 +2805,7 @@ class Product extends Entity {
 
         $sql = "Select a.* from partsbox_db.edi_item a, edi b where a.edi = b.id and (a.itemcode =  '" . $itemcode . "' OR  a.itemcode =  '" . $this->cccRef . "' OR a.partno =  '" . $this->itemCode1 . "' OR a.partno =  '" . $this->itemCode2 . "')";
         
-        echo $sql;
+        //echo $sql;
         
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
