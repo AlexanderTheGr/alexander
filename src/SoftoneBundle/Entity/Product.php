@@ -2762,7 +2762,7 @@ class Product extends Entity {
             $datas[$entity->getId()][$k]['ApiToken'] = $entity->getToken();
             $datas[$entity->getId()][$k]['Items'] = array();
         }
-        $Items[$entity->getId()][$k]["ItemCode"] = $this->getItemCode2();
+        $Items[$entity->getId()][$k]["PartNo"] = $this->getItemCode2();
         $Items[$entity->getId()][$k]["ReqQty"] = 1;
         $Items[$entity->getId()][$k]["Brand"] = "GBG";
         $datas[$entity->getId()][$k]['Items'][] = $Items[$entity->getId()][$k];
