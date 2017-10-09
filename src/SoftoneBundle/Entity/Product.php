@@ -2804,7 +2804,7 @@ class Product extends Entity {
         }
 
 
-        $sql = "Select a.* from partsbox_db.edi_item a, edi b where a.edi = b.id and (a.itemcode =  '" . $itemcode . "' OR  a.itemcode =  '" . $this->cccRef . "' OR a.partno =  '" . $this->itemCode1 . "' OR a.partno =  '" . $this->itemCode2 . "')";
+        $sql = "Select a.*, b.name from partsbox_db.edi_item a, edi b where a.edi = b.id and (a.itemcode =  '" . $itemcode . "' OR  a.itemcode =  '" . $this->cccRef . "' OR a.partno =  '" . $this->itemCode1 . "' OR a.partno =  '" . $this->itemCode2 . "')";
         
         //echo $sql;
         
@@ -2836,7 +2836,7 @@ class Product extends Entity {
                 $pricef = $price[$data["itemcode"]] > 0 ? $price[$data["itemcode"]] : $data["wholesaleprice"]; 
                 $availabilityf = $availability[$data["itemcode"]] != '' ? $availability[$data["itemcode"]] : $entity->getEdiQtyAvailability() ; 
                 $out .= '<tr>
-                            <td>' . $data["edi"] . '</td>
+                            <td>' . $data["name"] . '</td>
                             <td>' . $data["itemcode"] . '</td>
                             <td>' . $data["description"] . '</td>
                             <td>' . $availabilityf . '</td>
