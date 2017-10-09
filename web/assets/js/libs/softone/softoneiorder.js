@@ -530,6 +530,19 @@ jQuery(".modeldiv").live('mouseout', function () {
     jQuery('.modelitem').hide();
 });
 
+jQuery(".alexander tr").live('click', function () {
+    //alert('sss');
+    var data = {}
+    data.id = jQuery(this).attr("data-ref");
+    //jQuery(this).find('.orderitemstable').show();
+    jQuery('.ediprices').hide();
+    var obj = this;
+    jQuery.post("/product/getediprices", data, function (result) {
+        jQuery(obj).find('.ediprices').html(result);
+        jQuery(obj).find('.ediprices').show();
+        jQuery(obj).find('.orderitemstable').show();
+    })  
+});
 
 jQuery(".alexander tr").live('mouseover', function () {
     //alert('sss');
@@ -537,17 +550,12 @@ jQuery(".alexander tr").live('mouseover', function () {
     data.id = jQuery(this).attr("data-ref");
     jQuery(this).find('.orderitemstable').show();
     var obj = this;
-    jQuery.post("/product/getediprices", data, function (result) {
-        jQuery(obj).find('.ediprices').html(result);
-        jQuery(obj).find('.ediprices').show();
-        jQuery(obj).find('.orderitemstable').show();
-    })
-    
+ 
 });
 jQuery(".alexander tr").live('mouseout', function () {
     //alert('sss');
     jQuery('.orderitemstable').hide();
-    jQuery('.ediprices').hide();
+    
 });
 
 jQuery(".offcanvas-tools .md-close").live("click", function () {
