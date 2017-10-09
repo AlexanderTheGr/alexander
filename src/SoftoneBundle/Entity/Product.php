@@ -2881,9 +2881,9 @@ class Product extends Entity {
     public function getForOrderTitle() {
 
 
-        $out = '<a target="_blank" title="' . $this->title . '" class="" car="" data-articleId="' . $this->tecdocArticleId . '" ref="' . $this->id . '" href="/product/view/' . $this->id . '">' . $this->title . '</a>
+        $out = '<div style="width:400px;"><a target="_blank" title="' . $this->title . '" class="" car="" data-articleId="' . $this->tecdocArticleId . '" ref="' . $this->id . '" href="/product/view/' . $this->id . '">' . $this->title . '</a>
         <br>
-        <span class="text-sm tecdocArticleName text-info">' . $this->tecdocArticleName . '</span>';
+        <span class="text-sm tecdocArticleName text-info">' . $this->tecdocArticleName . '</span></div>';
 
         return $out;
     }
