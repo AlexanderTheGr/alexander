@@ -34,7 +34,7 @@ class DefaultController extends Main {
             $usersarr .= "<option value='" . $user->getUsername() . "'>" . $user->getUsername() . "</option>"; //array("value" => (string) $supplier->getReference(), "name" => $supplier->getSupplierName()); // $supplier->getSupplierName();
         }
         $usersarr .= "</select>";
-        
+
         return $this->render('default/chat.html.twig', array(
                     'usersarr' => $usersarr,
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
@@ -57,10 +57,15 @@ class DefaultController extends Main {
         }
         $usersarr .= "</select>";
 
-
-        $orders = $this->getDoctrine()
-                        ->getRepository("SoftoneBundle:Order")->findBy(array("isnew" => 1));
-        $alerts += count($orders);
+        if ($this->getSetting("AppBundle:Erp:erpprefix") == '/erp01') {
+            $orders = $this->getDoctrine()
+                            ->getRepository("MegasoftBundle:Order")->findBy(array("isnew" => 1));
+            $alerts += count($orders);
+        } else {
+            $orders = $this->getDoctrine()
+                            ->getRepository("SoftoneBundle:Order")->findBy(array("isnew" => 1));
+            $alerts += count($orders);
+        }
 
 
 
@@ -83,7 +88,7 @@ class DefaultController extends Main {
         return $this->render('default/alerts.html.twig', array(
                     'pagename' => '',
                     'orderscnt' => "Orders: " . count($orders),
-                    'orderscntbkg' => count($orders) > 0 ? "#ff1100": "#ff9800",
+                    'orderscntbkg' => count($orders) > 0 ? "#ff1100" : "#ff9800",
                     'edicnt' => "EDI: " . count($ediorders),
                     'orders' => $ordersHtml,
                     'usersarr' => $usersarr,
@@ -91,27 +96,28 @@ class DefaultController extends Main {
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
-    
+
     /**
      * @Route("/tranlation/{id}")
      */
     public function tranlation($id) {
-        echo $this->getTranslation($id);     
+        echo $this->getTranslation($id);
         return $this->render('default/erpprefix.html.twig', array(
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
-        ));          
-    }    
-    
+        ));
+    }
+
     /**
      * @Route("/erpprefix", name="erpprefix")
      */
     public function erpprefix() {
-       echo $this->getSetting("AppBundle:Erp:erpprefix");
-       return $this->render('default/erpprefix.html.twig', array(
-                   'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
-       ));        
-       //return  $this->getSetting("AppBundle:Erp:erpprefix") ?  $this->getSetting("AppBundle:Erp:erp") : $this->setSetting("AppBundle:Erp:erp", "");
+        echo $this->getSetting("AppBundle:Erp:erpprefix");
+        return $this->render('default/erpprefix.html.twig', array(
+                    'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
+        ));
+        //return  $this->getSetting("AppBundle:Erp:erpprefix") ?  $this->getSetting("AppBundle:Erp:erp") : $this->setSetting("AppBundle:Erp:erp", "");
     }
+
     function getSetting($path) {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('AppBundle:Setting');
@@ -131,7 +137,7 @@ class DefaultController extends Main {
     }
 
     function setSetting($path, $value) {
-        
+
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('AppBundle:Setting');
         $setting = $repository->findOneBy(
@@ -149,5 +155,6 @@ class DefaultController extends Main {
         $setting->setValue($value);
         $this->flushpersist($setting);
         return $setting->getValue();
-    }    
+    }
+
 }
