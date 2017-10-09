@@ -2774,7 +2774,7 @@ class Product extends Entity {
         foreach ($datas as $catalogue => $packs) {
             foreach ($packs as $k => $data) {
                 $data_string = json_encode($data);
-
+                echo $data_string;
                 //continue;
                 $result = file_get_contents($requerstUrl, null, stream_context_create(array(
                     'http' => array(
