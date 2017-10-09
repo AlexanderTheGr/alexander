@@ -2795,7 +2795,7 @@ class Product extends Entity {
                         $Item->UnitPrice;
                         $itemcode = $Item->ItemCode;
                         $price[$itemcode] = $Item->ListPrice;
-                        $availability[$itemcode] = $Item->Availability == 'green' ? 100 : 0; 
+                        $availability[$itemcode] = $Item->Availability; 
                         break;
                     }
                 }
