@@ -2835,7 +2835,7 @@ class Product extends Entity {
                 $entity->getEdiQtyAvailability();
                 $pricef = $price[$data["itemcode"]] > 0 ? $price[$data["itemcode"]] : $data["wholesaleprice"]; 
                 $availabilityf = $availability[$data["itemcode"]] != '' ? $availability[$data["itemcode"]] : $entity->getEdiQtyAvailability() ; 
-                $availabilityf = $availabilityf == 'green' OR $availabilityf == 1 ? "YES" : "NO";
+                //$availabilityf = $availabilityf == 'green' OR $availabilityf == 1 ? "YES" : "NO";
                 $out .= '<tr>
                             <td>' . $data["name"] . '</td>
                             <td>' . $data["itemcode"] . '</td>
