@@ -2833,14 +2833,14 @@ class Product extends Entity {
                         ->getRepository("EdiBundle:EdiItem")
                         ->find($data["id"]);
                 $entity->getEdiQtyAvailability();
-                $price = $price[$data["itemcode"]] > 0 ? $price[$data["itemcode"]] : $data["wholesaleprice"]; 
-                $availability = $availability[$data["itemcode"]] > 0 ? $availability[$data["itemcode"]] : $entity->getEdiQtyAvailability() ; 
+                $pricef = $price[$data["itemcode"]] > 0 ? $price[$data["itemcode"]] : $data["wholesaleprice"]; 
+                $availabilityf = $availability[$data["itemcode"]] > 0 ? $availability[$data["itemcode"]] : $entity->getEdiQtyAvailability() ; 
                 $out .= '<tr>
                             <td>' . $data["edi"] . '</td>
                             <td>' . $data["itemcode"] . '</td>
                             <td>' . $data["description"] . '</td>
-                            <td>(' . $availability . ')</td>
-                            <td>[' . $price . ']</td>
+                            <td>(' . $availabilityf . ')</td>
+                            <td>[' . $pricef . ']</td>
                             <td><input type="text" data-id="' . $data['id'] . '" name="qty1_' . $data['id'] . '" value="0" size="2" id="qty1_' . $data['id'] . '" class="ediiteqty1"></td>    
                         </tr>';
             }
