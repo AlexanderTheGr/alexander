@@ -2759,7 +2759,7 @@ class Product extends Entity {
                 ->find(6);
 
         if (@!$datas[$entity->getId()][$k]) {
-            $datas[$entity->getId()][$k]['ApiToken'] = $entity->getToken();
+            $datas[$entity->getId()][$k]['ApiToken'] = "9ec620d3-5888-436d-b9cd-da983ed0b7c5";//$entity->getToken();
             $datas[$entity->getId()][$k]['Items'] = array();
         }
         $Items[$entity->getId()][$k]["PartNo"] = $this->getItemCode2();
