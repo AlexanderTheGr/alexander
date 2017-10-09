@@ -2198,7 +2198,7 @@ class Product extends Entity {
             @$dataOut["ITEEXTRA"][0] = array("BOOL01" => $this->cccWebUpd);
             @$dataOut["ITEEXTRA"][0] = array("BOOL02" => $this->cccPriceUpd);
             $objectArr2["MTRPCATEGORY"] = 1000;
-	    $objectArr2["MTRACN"] = 101;
+            $objectArr2["MTRACN"] = 101;
         }
         //@$dataOut["ITEEXTRA"][0] = array("VARCHAR02" => $this->sisxetisi); 
         //print_r(@$dataOut);
@@ -2746,13 +2746,83 @@ class Product extends Entity {
     function getEdiPrices() {
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis')
             return;
-        
-        
+
+
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+
+        $entity = $this->getDoctrine()
+                ->getRepository('EdiBundle:Edi')
+                ->find(6);
+
+        if (@!$datas[$entity->getEdi()->getId()][$k]) {
+            $datas[$entity->getEdi()->getId()][$k]['ApiToken'] = $entity->getToken();
+            $datas[$entity->getEdi()->getId()][$k]['Items'] = array();
+        }
+        $Items[$entity->getEdi()->getId()][$k]["ItemCode"] = $this->getItemCode2();
+        $Items[$entity->getEdi()->getId()][$k]["ReqQty"] = 1;
+        $Items[$entity->getEdi()->getId()][$k]["Brand"] = "GBG";
+        $datas[$entity->getEdi()->getId()][$k]['Items'][] = $Items[$entity->getId()][$k];
+
+        $ands[$this->getItemCode2()] = $key;
+        $entities[$this->getItemCode2()] = $entity;
+
+        $requerstUrl = 'http://zerog.gr/edi/fw.ashx?method=getiteminfo';
+        foreach ($datas as $catalogue => $packs) {
+            foreach ($packs as $k => $data) {
+                $data_string = json_encode($data);
+
+                //continue;
+                $result = file_get_contents($requerstUrl, null, stream_context_create(array(
+                    'http' => array(
+                        'method' => 'POST',
+                        'header' =>
+                        'Content-Type: application/json' . "\r\n"
+                        . 'Content-Length: ' . strlen($data_string) . "\r\n",
+                        'content' => $data_string,
+                    ),
+                )));
+                $re = json_decode($result);
+
+                print_r($re);
+                /*
+                if (@count($re->Items)) {
+                    foreach ($re->Items as $Item) {
+                        $qty = $Item->Availability == 'green' ? 100 : 0;
+                        $Item->UnitPrice;
+
+                        //echo $Item->ItemCode."\n";
+                        if (@$jsonarr[$ands[$Item->ItemCode]]) {
+                            $entity = $entities[$Item->ItemCode];
+                            //if ()
+                            $entity->setWholesaleprice($Item->ListPrice);
+
+
+
+
+                            //$entity->setRetailprice(number_format($Item->UnitPrice, 2, '.', ''));
+                            //$this->flushpersist($entity);
+                            //echo $Item->Availability;    
+                            if ($Item->Availability == 'green') {
+
+                                @$jsonarr[$ands[$Item->ItemCode]]['DT_RowClass'] .= ' text-success ';
+                            }
+                        }
+                    }
+                }
+                 * 
+                 */
+            }
+        }
+
+
+
+
+
+
         $sql = "Select a.* from partsbox_db.edi_item a, edi b where a.edi = b.id and (a.itemcode =  '" . $this->cccRef . "' OR a.partno =  '" . $this->itemCode1 . "' OR a.partno =  '" . $this->itemCode2 . "')";
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
@@ -2774,10 +2844,10 @@ class Product extends Entity {
                 </thead>
                 <tbody>';
             foreach ($results as $data) {
-                
+
                 $entity = $em
-                    ->getRepository("EdiBundle:EdiItem")
-                    ->find($data["id"]);
+                        ->getRepository("EdiBundle:EdiItem")
+                        ->find($data["id"]);
                 $entity->getEdiQtyAvailability();
 
                 $out .= '<tr>
@@ -2786,7 +2856,7 @@ class Product extends Entity {
                             <td>' . $data["description"] . '</td>
                             <td>' . $entity->getEdiQtyAvailability() . '</td>
                             <td>' . $data["wholesaleprice"] . '</td>
-                            <td><input type="text" data-id="'.$data['id'].'" name="qty1_'.$data['id'].'" value="0" size="2" id="qty1_'.$data['id'].'" class="ediiteqty1"></td>    
+                            <td><input type="text" data-id="' . $data['id'] . '" name="qty1_' . $data['id'] . '" value="0" size="2" id="qty1_' . $data['id'] . '" class="ediiteqty1"></td>    
                         </tr>';
             }
             $out .= '</tbody>
