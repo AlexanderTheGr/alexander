@@ -536,7 +536,7 @@ jQuery(".alexander tr").live('click', function () {
     data.id = jQuery(this).attr("data-ref");
     //jQuery(this).find('.orderitemstable').show();
     if (data.id > 0 && jQuery(this).find('.ediprices').text() == '') {
-        jQuery('.ediprices').hide();
+        //jQuery('.ediprices').hide();
         var obj = this;
         jQuery.post("/product/getediprices", data, function (result) {
             jQuery(obj).find('.ediprices').html(result);
