@@ -2787,34 +2787,18 @@ class Product extends Entity {
                 )));
                 $re = json_decode($result);
 
-                print_r($re);
-                /*
+                //print_r($re);
+                
                 if (@count($re->Items)) {
                     foreach ($re->Items as $Item) {
                         $qty = $Item->Availability == 'green' ? 100 : 0;
                         $Item->UnitPrice;
 
-                        //echo $Item->ItemCode."\n";
-                        if (@$jsonarr[$ands[$Item->ItemCode]]) {
-                            $entity = $entities[$Item->ItemCode];
-                            //if ()
-                            $entity->setWholesaleprice($Item->ListPrice);
-
-
-
-
-                            //$entity->setRetailprice(number_format($Item->UnitPrice, 2, '.', ''));
-                            //$this->flushpersist($entity);
-                            //echo $Item->Availability;    
-                            if ($Item->Availability == 'green') {
-
-                                @$jsonarr[$ands[$Item->ItemCode]]['DT_RowClass'] .= ' text-success ';
-                            }
-                        }
+                        $itemcode = $Item->ItemCode."\n";
+                        
                     }
                 }
-                 * 
-                 */
+
             }
         }
 
@@ -2823,7 +2807,7 @@ class Product extends Entity {
 
 
 
-        $sql = "Select a.* from partsbox_db.edi_item a, edi b where a.edi = b.id and (a.itemcode =  '" . $this->cccRef . "' OR a.partno =  '" . $this->itemCode1 . "' OR a.partno =  '" . $this->itemCode2 . "')";
+        $sql = "Select a.* from partsbox_db.edi_item a, edi b where a.edi = b.id and (a.itemcode =  '" . $itemcode . "' OR  a.itemcode =  '" . $this->cccRef . "' OR a.partno =  '" . $this->itemCode1 . "' OR a.partno =  '" . $this->itemCode2 . "')";
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
         $statement->execute();
