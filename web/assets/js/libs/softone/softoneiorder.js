@@ -533,8 +533,14 @@ jQuery(".modeldiv").live('mouseout', function () {
 
 jQuery(".alexander tr").live('mouseover', function () {
     //alert('sss');
+    var data = {}
+    data.id = jQuery(this).attr("data-ref");
     jQuery(this).find('.orderitemstable').show();
-    jQuery(this).find('.ediprices').show();
+    jQuery.post("/product/getediprices", data, function (json) {
+        
+        jQuery(this).find('.ediprices').show();
+    })
+    
 });
 jQuery(".alexander tr").live('mouseout', function () {
     //alert('sss');
