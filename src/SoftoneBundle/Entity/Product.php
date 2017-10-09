@@ -2787,7 +2787,7 @@ class Product extends Entity {
                 )));
                 $re = json_decode($result);
 
-                //print_r($re);
+                print_r($re);
                 
                 if (@count($re->Items)) {
                     foreach ($re->Items as $Item) {
