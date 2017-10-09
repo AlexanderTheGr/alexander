@@ -536,8 +536,8 @@ jQuery(".alexander tr").live('mouseover', function () {
     var data = {}
     data.id = jQuery(this).attr("data-ref");
     jQuery(this).find('.orderitemstable').show();
-    jQuery.post("/product/getediprices", data, function (json) {
-        
+    jQuery.post("/product/getediprices", data, function (result) {
+        jQuery(this).find('.ediprices').html(result);
         jQuery(this).find('.ediprices').show();
     })
     
