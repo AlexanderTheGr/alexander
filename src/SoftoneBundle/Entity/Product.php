@@ -2834,7 +2834,7 @@ class Product extends Entity {
                         ->find($data["id"]);
                 $entity->getEdiQtyAvailability();
                 $pricef = $price[$data["itemcode"]] > 0 ? $price[$data["itemcode"]] : $data["wholesaleprice"]; 
-                $availabilityf = $availability[$data["itemcode"]] > 0 ? $availability[$data["itemcode"]] : $entity->getEdiQtyAvailability() ; 
+                $availabilityf = $availability[$data["itemcode"]] != '' ? $availability[$data["itemcode"]] : $entity->getEdiQtyAvailability() ; 
                 $out .= '<tr>
                             <td>' . $data["edi"] . '</td>
                             <td>' . $data["itemcode"] . '</td>
