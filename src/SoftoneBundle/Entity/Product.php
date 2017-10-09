@@ -2774,7 +2774,7 @@ class Product extends Entity {
         foreach ($datas as $catalogue => $packs) {
             foreach ($packs as $k => $data) {
                 $data_string = json_encode($data);
-                echo $data_string;
+                //echo $data_string;
                 //continue;
                 $result = file_get_contents($requerstUrl, null, stream_context_create(array(
                     'http' => array(
@@ -2801,10 +2801,6 @@ class Product extends Entity {
 
             }
         }
-
-
-
-
 
 
         $sql = "Select a.* from partsbox_db.edi_item a, edi b where a.edi = b.id and (a.itemcode =  '" . $itemcode . "' OR  a.itemcode =  '" . $this->cccRef . "' OR a.partno =  '" . $this->itemCode1 . "' OR a.partno =  '" . $this->itemCode2 . "')";
@@ -2835,7 +2831,7 @@ class Product extends Entity {
                 $entity->getEdiQtyAvailability();
 
                 $out .= '<tr>
-                            <td>73</td>
+                            <td>' . $data["edi"] . '</td>
                             <td>' . $data["itemcode"] . '</td>
                             <td>' . $data["description"] . '</td>
                             <td>' . $entity->getEdiQtyAvailability() . '</td>
