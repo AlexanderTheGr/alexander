@@ -2764,7 +2764,7 @@ class Product extends Entity {
         }
         $Items[$entity->getId()][$k]["PartNo"] = $this->getItemCode2();
         $Items[$entity->getId()][$k]["ReqQty"] = 1;
-        $Items[$entity->getId()][$k]["Brand"] = "GBG";
+        $Items[$entity->getId()][$k]["BrandName"] = "GBG";
         $datas[$entity->getId()][$k]['Items'][] = $Items[$entity->getId()][$k];
 
         $ands[$this->getItemCode2()] = $key;
