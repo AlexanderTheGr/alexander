@@ -2760,7 +2760,7 @@ class Product extends Entity {
         $results = $statement->fetchAll();
         if ($results) {
 
-            $out = '<div class="orderitemstable style-primary-light" style="display: none;">
+            $out = '<div class="orderitemstable style-primary-light" style="">
             <table class="table-striped">
                 <thead>
                 <tr>
