@@ -2754,7 +2754,7 @@ class Product extends Entity {
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
 
-        $entity = $this->getDoctrine()
+        $entity = $em
                 ->getRepository('EdiBundle:Edi')
                 ->find(6);
 
