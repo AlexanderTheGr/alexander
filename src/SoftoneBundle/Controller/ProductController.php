@@ -931,8 +931,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/product/getediprices")
      */
     public function getEdiPrices(Request $request) {
-        
-        
+        $product = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->find($request->request->get("id"));        
+        echo $this->getEdiPrices();
+        exit;
     }
     /**
      * 
