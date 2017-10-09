@@ -925,7 +925,15 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
-
+    /**
+     * 
+     * 
+     * @Route("/product/getediprices")
+     */
+    public function getEdiPrices(Request $request) {
+        
+        
+    }
     /**
      * 
      * 
@@ -1321,6 +1329,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             }
         }
     }
+    
+    
 
     function retrieveProduct($params = array()) {
         ini_set('memory_limit', '12256M');
