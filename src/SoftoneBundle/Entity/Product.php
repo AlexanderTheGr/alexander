@@ -2744,7 +2744,7 @@ class Product extends Entity {
     }
 
     function getEdiPrices() {
-        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis')
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") != 'tsakonas')
             return;
 
 
