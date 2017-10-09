@@ -540,6 +540,7 @@ jQuery(".alexander tr").live('mouseover', function () {
     jQuery.post("/product/getediprices", data, function (result) {
         jQuery(obj).find('.ediprices').html(result);
         jQuery(obj).find('.ediprices').show();
+        jQuery(obj).find('.orderitemstable').show();
     })
     
 });
