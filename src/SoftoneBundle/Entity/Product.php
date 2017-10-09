@@ -2758,14 +2758,14 @@ class Product extends Entity {
                 ->getRepository('EdiBundle:Edi')
                 ->find(6);
 
-        if (@!$datas[$entity->getEdi()->getId()][$k]) {
-            $datas[$entity->getEdi()->getId()][$k]['ApiToken'] = $entity->getToken();
-            $datas[$entity->getEdi()->getId()][$k]['Items'] = array();
+        if (@!$datas[$entity->getId()][$k]) {
+            $datas[$entity->getId()][$k]['ApiToken'] = $entity->getToken();
+            $datas[$entity->getId()][$k]['Items'] = array();
         }
-        $Items[$entity->getEdi()->getId()][$k]["ItemCode"] = $this->getItemCode2();
-        $Items[$entity->getEdi()->getId()][$k]["ReqQty"] = 1;
-        $Items[$entity->getEdi()->getId()][$k]["Brand"] = "GBG";
-        $datas[$entity->getEdi()->getId()][$k]['Items'][] = $Items[$entity->getId()][$k];
+        $Items[$entity->getId()][$k]["ItemCode"] = $this->getItemCode2();
+        $Items[$entity->getId()][$k]["ReqQty"] = 1;
+        $Items[$entity->getId()][$k]["Brand"] = "GBG";
+        $datas[$entity->getId()][$k]['Items'][] = $Items[$entity->getId()][$k];
 
         $ands[$this->getItemCode2()] = $key;
         $entities[$this->getItemCode2()] = $entity;
