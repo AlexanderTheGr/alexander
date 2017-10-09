@@ -2803,7 +2803,7 @@ class Product extends Entity {
 
         $out = '<a title="' . $this->title . '" class="product_info" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
         <br>
-        <span class="text-sm text-info">' . $this->erpCode . '</span>' . $this->getEdiPrices();
+        <span class="text-sm text-info">' . $this->erpCode . '</span><div class="ediprices"></div>';
 
         return $out;
     }
