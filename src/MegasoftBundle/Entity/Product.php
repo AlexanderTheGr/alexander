@@ -875,7 +875,7 @@ class Product extends Entity {
             //echo $out;
             //echo 'sssssssssss';
         } else {
-            echo 'ss';
+
             $postparams = array(
                 "articleNumber" => $this->tecdocCode,
                 "brandno" => $this->getTecdocSupplierId()->getId()
@@ -909,7 +909,7 @@ class Product extends Entity {
 
             $out = $articleDirectSearchAllNumbers->data->array[0];
 
-            print_r($out);
+            print_r($articleDirectSearchAllNumbers);
         }
 
 
