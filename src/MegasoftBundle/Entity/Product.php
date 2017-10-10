@@ -875,7 +875,7 @@ class Product extends Entity {
             //echo $out;
             //echo 'sssssssssss';
         } else {
-
+            echo 'ss';
             $postparams = array(
                 "articleNumber" => $this->tecdocCode,
                 "brandno" => $this->getTecdocSupplierId()->getId()
