@@ -909,7 +909,7 @@ class Product extends Entity {
 
             $out = $articleDirectSearchAllNumbers->data->array[0];
 
-            print_r($articleDirectSearchAllNumbers);
+            //print_r($articleDirectSearchAllNumbers);
         }
 
 
@@ -966,6 +966,13 @@ class Product extends Entity {
                  * 
                  */
                 $sql = "update `megasoft_product` set tecdoc_generic_article_id = '" . $out->genericArticleId . "', tecdoc_article_name = '" . addslashes($out->articleName) . "', tecdoc_article_id = '" . $out->articleId . "', cars = '" . serialize($cars) . "', cats = '" . serialize($categories) . "' where id = '" . $this->id . "'";
+                $em->getConnection()->exec($sql);
+            } else {
+                //$this->setCats(array());
+                //$this->setCars(array());
+                //$this->setTecdocArticleId($out->articleId);
+                //$this->setTecdocArticleName($out->articleName);
+                $sql = "update `megasoft_product` set tecdoc_generic_article_id = '0', tecdoc_article_name = '', tecdoc_article_id = '', cars = '" . serialize(array()) . "', cats = '" . serialize(array()) . "' where id = '" . $this->id . "'";
                 $em->getConnection()->exec($sql);
             }
         } catch (Exception $e) {
