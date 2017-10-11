@@ -423,7 +423,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $html .= "<tr><th>".$this->getTranslation("Customer Address")."</th><td>".$customer->getCustomerAddress()."</td></tr>";
         $html .= "<tr><th>".$this->getTranslation("Customer City")."</th><td>".$customer->getCustomerCity()."</td></tr>";
         $html .= "<tr><th>".$this->getTranslation("Customer Phones")."</th><td>".$customer->getCustomerPhone01()."</td></tr>";
-        $html .= "<tr><th>".$this->getTranslation("Customer Phones")."</th><td>".$customer->getCustomerPhone01()."</td></tr>";
         $html .= "</table>";
     }
     function getTotals($entity) {
