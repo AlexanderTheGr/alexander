@@ -361,6 +361,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $this->repository = 'SoftoneBundle:Customer';
         $this->addField(array("name" => "ID", "index" => 'id'))
                 ->addField(array("name" => "Name", "index" => 'customerName', 'search' => 'text'))
+                ->addField(array("name" => "Code", "index" => 'customerCode', 'search' => 'text'))
                 ->addField(array("name" => "ΑΦΜ", "index" => 'customerAfm', 'search' => 'text'))
                 ->addField(array("name" => "Address", "index" => 'customerAddress', 'search' => 'text'))
                 ->addField(array("name" => "Group", "index" => 'customergroup:title'));
