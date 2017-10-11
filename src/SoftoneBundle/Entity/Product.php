@@ -3178,7 +3178,31 @@ class Product extends Entity {
     public function getCccWebUpd() {
         return $this->cccWebUpd;
     }
+    
+    private $gbg = '0';
 
+    /**
+     * Set gbg
+     *
+     * @param integer $gbg
+     *
+     * @return Product
+     */
+    public function setGbg($gbg) {
+        $this->gbg = $gbg;
+
+        return $this;
+    }
+
+    /**
+     * Get gbg
+     *
+     * @return integer
+     */
+    public function getGbg() {
+        return $this->gbg;
+    }
+    
     /**
      * @var integer
      */
