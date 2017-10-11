@@ -158,6 +158,14 @@
                 <option name="default">0</option>
             </options>
         </field>   
+        
+        <field name="gbg" type="integer" column="gbg" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="default">0</option>
+            </options>
+        </field> 
+                  
         <field name="reserved" type="integer" column="reserved" nullable="true">
             <options>
                 <option name="unsigned"/>
