@@ -59,7 +59,7 @@
                 }
                 location.href = view + "/" + $(this).attr("ref");
             });
-            jQuery("select.search_init").chosen();
+            jQuery("select.search_init").chosen({width: "100px"});
             $(".btn_new_"+ctrl).live('click', function () {
                 location.href = view + "/new";
             });
