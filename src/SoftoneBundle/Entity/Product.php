@@ -2995,6 +2995,9 @@ class Product extends Entity {
             return $this->edis;
         } elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
             return $this->edis;
+        } elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'tsakonas') {
+            $qty = $this->qty - $this->reserved;
+            return $this->gbg . ' / '.$this->qty . ' / <span class="text-lg text-bold text-accent-dark">' . ($qty) . '</span> (' . $this->itemMtrplace . ")";           
         } else {
             $qty = $this->qty - $this->reserved;
             return $this->qty . ' / <span class="text-lg text-bold text-accent-dark">' . ($qty) . '</span> (' . $this->itemMtrplace . ")";
