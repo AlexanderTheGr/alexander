@@ -414,15 +414,15 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     function getCustomerDetails($entity) {
         $customer = $entity->getCustomer();
         $html = "<table>";
-        $html .= "<tr><th>".$this->getTranslation("Customer Code")."</th><td>".$customer->getCustomerCode()."</td></tr>";
-        $html .= "<tr><th>".$this->getTranslation("Customer Name")."</th><td>".$customer->getCustomerName()."</td></tr>";
-        $html .= "<tr><th>".$this->getTranslation("Customer Afm")."</th><td>".$customer->getCustomerAfm()."</td></tr>";
-        $html .= "<tr><th>".$this->getTranslation("Customer Email")."</th><td>".$customer->getCustomerEmail()."</td></tr>";
-        $html .= "<tr><th>".$this->getTranslation("Customer DOY")."</th><td>".$customer->getCustomerIrsdata()."</td></tr>";
-        $html .= "<tr><th>".$this->getTranslation("Customer Occupation")."</th><td>".$customer->getCustomerJobtypetrd()."</td></tr>";
-        $html .= "<tr><th>".$this->getTranslation("Customer Address")."</th><td>".$customer->getCustomerAddress()."</td></tr>";
-        $html .= "<tr><th>".$this->getTranslation("Customer City")."</th><td>".$customer->getCustomerCity()."</td></tr>";
-        $html .= "<tr><th>".$this->getTranslation("Customer Phones")."</th><td>".$customer->getCustomerPhone01()."</td></tr>";
+        $html .= "<tr><th>".$this->getTranslation("Customer Code").": </th><td>".$customer->getCustomerCode()."</td></tr>";
+        $html .= "<tr><th>".$this->getTranslation("Customer Name").": </th><td>".$customer->getCustomerName()."</td></tr>";
+        $html .= "<tr><th>".$this->getTranslation("Customer Afm").": </th><td>".$customer->getCustomerAfm()."</td></tr>";
+        $html .= "<tr><th>".$this->getTranslation("Customer Email").": </th><td>".$customer->getCustomerEmail()."</td></tr>";
+        $html .= "<tr><th>".$this->getTranslation("Customer DOY").": </th><td>".$customer->getCustomerIrsdata()."</td></tr>";
+        $html .= "<tr><th>".$this->getTranslation("Customer Occupation").": </th><td>".$customer->getCustomerJobtypetrd()."</td></tr>";
+        $html .= "<tr><th>".$this->getTranslation("Customer Address").": </th><td>".$customer->getCustomerAddress()."</td></tr>";
+        $html .= "<tr><th>".$this->getTranslation("Customer City").": </th><td>".$customer->getCustomerCity()."</td></tr>";
+        $html .= "<tr><th>".$this->getTranslation("Customer Phones").": </th><td>".$customer->getCustomerPhone01()."</td></tr>";
         $html .= "</table>";
         return $html;
     }
