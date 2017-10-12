@@ -361,7 +361,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
             $fields["fincode"] = array("label" => $this->getTranslation("Customer Code"), 'className' => 'asdfg', "required" => true);
 
-            $fields["trdbranch"] = array("label" => $this->getTranslation("Send to"), 'type' => "select", 'dataarray' => $trdbranch, 'className' => 'asdfg', "required" => true);
+            $fields["trdbranch"] = array("label" => $this->getTranslation("Send to"), 'type' => "select", 'dataarray' => $trdbranch, 'className' => 'asdfg', "required" => false);
 
             $fields["customerName"] = array("label" => $this->getTranslation("Customer Name"), "required" => true, 'className' => 'asdfg');
             $fields["route"] = array("label" => "Route", "required" => false, 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Route', 'name' => 'route', 'value' => 'id'));
