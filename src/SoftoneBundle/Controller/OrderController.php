@@ -2036,10 +2036,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository("SoftoneBundle:Vat")
                 ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
 
+        $store = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Store")
+                ->find(1);
         $user = $this->getDoctrine()
                 ->getRepository("AppBundle:User")
                 ->find(2);
-
 
         $entity = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Order")
@@ -2054,6 +2056,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
         $entity->setCustomer($customer);
         $entity->setUser($user);
+        $entity->setSoftoneStore($store);
         $entity->setReference($ord["ID"]);
         $entity->setFincode($ord["FINCODE"]);
         $entity->setSeries($ord["SERIES"]);
