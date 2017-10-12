@@ -1872,6 +1872,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     function retrieveApothemaGbg($filters = false) {
+        $em = $this->getDoctrine()->getManager();
         $zip = new \ZipArchive;
         if ($zip->open('/home2/partsbox/OUTOFSTOCK_ATH.ZIP') === TRUE) {
             $zip->extractTo('/home2/partsbox/');
