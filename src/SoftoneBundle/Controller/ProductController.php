@@ -1884,6 +1884,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     
                     $sql = "update softone_product set gbg = '" . $data[1] . "' where item_code = '".$data[1]."'";
                     echo $sql . "<BR>";
+                    if ($i++ > 100) exit;
                     //$em->getConnection()->exec($sql);                    
                     /*
                     if ($data[0] == $this->getItemcode()) {
