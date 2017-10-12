@@ -23,7 +23,9 @@ class Order extends Entity {
         $this->repositories['customer'] = 'SoftoneBundle:Customer';
         $this->repositories['softoneStore'] = 'SoftoneBundle:Store';
         $this->types['route'] = 'object';
+        $this->types['softoneStore'] = 'object';
         $this->route = new \SoftoneBundle\Entity\Route;
+        $this->softoneStore = new \SoftoneBundle\Entity\Store;
         $this->items = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
