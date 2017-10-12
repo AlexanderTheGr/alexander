@@ -1871,7 +1871,38 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //}
     }
 
+    function retrieveApothemaGbg($filters = false) {
+        $zip = new \ZipArchive;
+        if ($zip->open('/home2/partsbox/OUTOFSTOCK_ATH.ZIP') === TRUE) {
+            $zip->extractTo('/home2/partsbox/');
+            $zip->close();
+            $file = "/home2/partsbox/OUTOFSTOCK_ATH.txt";
+            $availability = false;
+            if (($handle = fopen($file, "r")) !== FALSE) {
+                //echo 'sss';
+                while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
+                    
+                    $sql = "update softone_product set gbg = '" . $data[1] . "' where item_code = '".$data[1]."'";
+                    echo $sql . "<BR>";
+                    //$em->getConnection()->exec($sql);                    
+                    /*
+                    if ($data[0] == $this->getItemcode()) {
+                        if ($data[1] == 1)
+                            $availability = true;
+                        break;
+                    }
+                     * 
+                     */
+                }
+            }
+        }
+        return $availability;
+    }
+
     function retrieveApothema($filters = false) {
+        $this->retrieveApothemaGbg();
+        exit;
+
         //function retrieveProducts($filters=false) {
         //$this->catalogue = 4;
         //$filters = "ITEM.V3=".date("Y-m-d")."&ITEM.V4=1";//. date("Y-m-d");
