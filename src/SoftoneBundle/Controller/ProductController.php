@@ -1882,7 +1882,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 //echo 'sss';
                 while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
                     
-                    $sql = "update softone_product set gbg = '" . $data[1] . "' where item_code = '".$data[0]."'";
+                    $sql = "update softone_product set gbg = '" . $data[1] . "' where item_code2 = '".$data[0]."'";
                     echo $sql . "<BR>";
                     if ($i++ > 100) exit;
                     //$em->getConnection()->exec($sql);                    
