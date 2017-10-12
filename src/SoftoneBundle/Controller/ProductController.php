@@ -925,6 +925,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+
     /**
      * 
      * 
@@ -933,10 +934,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     public function getEdiPrices(Request $request) {
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
-                ->find($request->request->get("id"));        
+                ->find($request->request->get("id"));
         echo $product->getEdiPrices();
         exit;
     }
+
     /**
      * 
      * 
@@ -997,13 +999,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         ));
     }
 
-    
-    
-    
-    
-    
-    
-    
     public function media($tecdocArticleId) {
 
         //$product = json_decode($this->flat_data);
@@ -1140,7 +1135,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
         //exit;
     }
-    
+
     function fixSupplier($supplier) {
         if ($supplier == "FEBI")
             $supplier = str_replace("FEBI", "FEBI BILSTEIN", $supplier);
@@ -1219,7 +1214,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         if ($supplier == "KM Germany Germany")
             $supplier = str_replace("KM Germany Germany", "KM Germany", $supplier);
         return $supplier;
-    }    
+    }
 
     function retrieveMtrl($MTRL = 0) {
         ini_set('memory_limit', '12256M');
@@ -1295,10 +1290,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $datas = $softone->createSql($params);
         echo count($datas->data);
         //print_r($datas->data);
-        foreach($datas->data as $data) {
-            if ((int)$data->VARCHAR05 > 0) {
-                $sql = 'update `softone_product` set `catalogue` =  "'.(int)$data->VARCHAR05.'" where reference = "'.$data->MTRL.'"';
-                echo $sql."<BR>";
+        foreach ($datas->data as $data) {
+            if ((int) $data->VARCHAR05 > 0) {
+                $sql = 'update `softone_product` set `catalogue` =  "' . (int) $data->VARCHAR05 . '" where reference = "' . $data->MTRL . '"';
+                echo $sql . "<BR>";
                 $this->getDoctrine()->getConnection()->exec($sql);
             }
         }
@@ -1332,8 +1327,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             }
         }
     }
-    
-    
 
     function retrieveProduct($params = array()) {
         ini_set('memory_limit', '12256M');
@@ -2038,6 +2031,47 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $arr = array();
             foreach ($results as $data) {
                 $arr[] = $data;
+            }
+            $json = json_encode($arr);
+            return new Response(
+                    $json, 200, array('Content-Type' => 'application/json')
+            );
+        } else {
+            //   
+            exit;
+        }
+    }
+
+    /**
+     * 
+     * 
+     * @Route("/product/getProductsCsv")
+     */
+    public function getProductsCsv(Request $request) {
+        //echo 'ssss';
+        $allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
+        $allowedipsArr = explode(",", $allowedips);
+        if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
+            $sql = "SELECT * FROM  `softone_product`";
+            $connection = $this->getDoctrine()->getConnection();
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            $results = $statement->fetchAll();
+            $arr = array();
+            foreach ($results as $data) {
+
+                $cats = unserialize($data["cats"]);
+
+                $data["cat"] = $cats[0];
+
+                $out["mtrl"] = $data["reference"];
+                $out["code"] = $data["item_code"];
+                $out["category"] = $data["cat"];
+
+                echo implode(";", $out) . "\n";
+
+                //$arr[] = $data;
+                //if ($i++ > 100) break;
             }
             $json = json_encode($arr);
             return new Response(
