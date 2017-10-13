@@ -1903,7 +1903,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
     function retrieveApothema($filters = false) {
         $this->retrieveApothemaGbg();
-        exit;
+        //exit;
 
         //function retrieveProducts($filters=false) {
         //$this->catalogue = 4;
