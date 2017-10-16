@@ -1890,7 +1890,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
                     if ($data[1] > 1 OR $data[2] > 1) {
                         $sql = "update partsbox_db.edi_item set gbg1 = '" . $data[1] . "', gbg2 = '" . $data[2] . "' where edi = 11 and itemcode = '" . $data[0] . "'";
-                        //echo $sql . "<BR>";
+                        echo $sql . "<BR>";
                         //if ($i++ > 100) exit;
                         $em->getConnection()->exec($sql);
                     }
