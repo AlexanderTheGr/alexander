@@ -780,6 +780,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
     public function getFanoImagesHtml($product) {
         $em = $this->getDoctrine()->getManager();
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") != 'tsakonas') return;
         $path = $this->getSetting("SoftoneBundle:Product:Images");
         // /home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas
         //$path = "/home2/partsbox/public_html/partsbox/web/assets/media/" . $em->getConnection()->getDatabase() . "/" . $product->getId() . ".jpg";
@@ -1893,7 +1894,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     echo $sql . "<BR>";
                     //if ($i++ > 100) exit;
                     $em->getConnection()->exec($sql); 
-                    if ($i++ > 100) return;
+                    //if ($i++ > 100) return;
                     /*
                     if ($data[0] == $this->getItemcode()) {
                         if ($data[1] == 1)
