@@ -1898,7 +1898,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             }
         }
 
-
+        return;
 
         if ($zip->open('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/OUTOFSTOCK_ATH_KAR.ZIP') === TRUE) {
             //echo 'sssss';
