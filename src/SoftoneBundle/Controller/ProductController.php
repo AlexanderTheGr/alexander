@@ -1875,10 +1875,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $em = $this->getDoctrine()->getManager();
         $zip = new \ZipArchive;
         // OUTOFSTOCK_ALL.ZIP
-        if ($zip->open('/home2/partsbox/files/partsboxtsakonas/OUTOFSTOCK_ALL.ZIP') === TRUE) {
-            $zip->extractTo('/home2/partsbox/files/partsboxtsakonas/');
+        if ($zip->open('/public_html/partsbox/web/files/partsboxtsakonas/OUTOFSTOCK_ALL.ZIP') === TRUE) {
+            echo 'sssss';
+            $zip->extractTo('/public_html/partsbox/web/files/partsboxtsakonas/');
             $zip->close();
-            $file = "/home2/partsbox/files/partsboxtsakonas/OUTOFSTOCK_ALL.txt";
+            $file = "/public_html/partsbox/web/files/partsboxtsakonas/OUTOFSTOCK_ALL.txt";
             $availability = false;
             if (($handle = fopen($file, "r")) !== FALSE) {
                 //echo 'sss';
