@@ -780,7 +780,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
     public function getFanoImagesHtml($product) {
         $em = $this->getDoctrine()->getManager();
-        if ($this->getSetting("SoftoneBundle:Softone:apothiki") != 'tsakonas') return;
         $path = $this->getSetting("SoftoneBundle:Product:Images");
         // /home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas
         //$path = "/home2/partsbox/public_html/partsbox/web/assets/media/" . $em->getConnection()->getDatabase() . "/" . $product->getId() . ".jpg";
@@ -1876,6 +1875,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $em = $this->getDoctrine()->getManager();
         $zip = new \ZipArchive;
         // OUTOFSTOCK_ALL.ZIP
+        $start = microtime(true);
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") != 'tsakonas') return;
         if ($zip->open('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/OUTOFSTOCK_ALL.ZIP') === TRUE) {
             echo 'sssss';
             $zip->extractTo('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/');
@@ -1887,11 +1888,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
                     $gbg = ($data[1]+$data[2])*10;
                     $sql = "update softone_product set gbg = '" . $gbg . "' where item_code2 = '".$data[0]."'";
-                    echo $sql . "<BR>";
+                    //echo $sql . "<BR>";
                     //if ($i++ > 100) exit;
                     $em->getConnection()->exec($sql);    
                     $sql = "update partsbox_db.edi_item set gbg1 = '".$data[1]."', gbg2 = '".$data[2]."' where edi = 11 and itemcode = '".$data[0]."'";
-                    echo $sql . "<BR>";
+                    //echo $sql . "<BR>";
                     //if ($i++ > 100) exit;
                     $em->getConnection()->exec($sql); 
                     //if ($i++ > 100) return;
@@ -1906,6 +1907,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 }
             }
         }
+        $time_elapsed_secs = microtime(true) - $start;
         return $availability;
     }
 
