@@ -1908,7 +1908,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             }
         }
         $time_elapsed_secs = microtime(true) - $start;
-        echo $time_elapsed_secs;
+        echo "<BR>[".$time_elapsed_secs."]";
         return $availability;
     }
 
