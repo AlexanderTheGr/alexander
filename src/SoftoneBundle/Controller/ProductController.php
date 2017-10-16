@@ -1886,7 +1886,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/OUTOFSTOCK_ALL.txt";
             $availability = false;
             if (($handle = fopen($file, "r")) !== FALSE) {
-                echo 'sss';
+                //echo 'sss';
                 while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
                     //echo "aa";
                     if ($data[1] > 0 OR $data[2] > 0) {
@@ -1899,7 +1899,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             }
         }
 
-        return;
+        //return;
 
         if ($zip->open('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/OUTOFSTOCK_ATH_KAR.ZIP') === TRUE) {
             //echo 'sssss';
