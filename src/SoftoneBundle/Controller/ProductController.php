@@ -1874,19 +1874,27 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     function retrieveApothemaGbg($filters = false) {
         $em = $this->getDoctrine()->getManager();
         $zip = new \ZipArchive;
-        if ($zip->open('/home2/partsbox/OUTOFSTOCK_ATH.ZIP') === TRUE) {
-            $zip->extractTo('/home2/partsbox/');
+        // OUTOFSTOCK_ALL.ZIP
+        if ($zip->open('/home2/partsbox//files/partsboxtsakonas/OUTOFSTOCK_ALL.ZIP') === TRUE) {
+            $zip->extractTo('/home2/partsbox/files/partsboxtsakonas/');
             $zip->close();
-            $file = "/home2/partsbox/OUTOFSTOCK_ATH.txt";
+            $file = "/home2/partsbox/files/partsboxtsakonas/OUTOFSTOCK_ALL.txt";
             $availability = false;
             if (($handle = fopen($file, "r")) !== FALSE) {
                 //echo 'sss';
                 while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
-                    
-                    $sql = "update softone_product set gbg = '" . $data[1]*10 . "' where item_code2 = '".$data[0]."'";
+                    $gbg = ($data[1]+$data[2])*10;
+                    $sql = "update softone_product set gbg = '" . $gbg . "' where item_code2 = '".$data[0]."'";
                     echo $sql . "<BR>";
                     //if ($i++ > 100) exit;
-                    $em->getConnection()->exec($sql);                    
+                    
+                    
+                    $em->getConnection()->exec($sql);    
+                    $sql = "update partsbox_db.edi_item set gbg1 = '".$data[1]."', gbg2 = '".$data[2]."' where edi = 11 and itemcode = '".$data[0]."'";
+                    echo $sql . "<BR>";
+                    //if ($i++ > 100) exit;
+                    $em->getConnection()->exec($sql); 
+                    if ($i++ > 100) return;
                     /*
                     if ($data[0] == $this->getItemcode()) {
                         if ($data[1] == 1)
@@ -1903,7 +1911,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
     function retrieveApothema($filters = false) {
         $this->retrieveApothemaGbg();
-        //exit;
+        exit;
 
         //function retrieveProducts($filters=false) {
         //$this->catalogue = 4;
