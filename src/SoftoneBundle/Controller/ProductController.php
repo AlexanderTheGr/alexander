@@ -1887,20 +1887,20 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $availability = false;
             if (($handle = fopen($file, "r")) !== FALSE) {
                 //echo 'sss';
+                $sql = "update partsbox_db.edi_item set gbg1 = '0', gbg2 = '0' where edi = 11";
+                $em->getConnection()->exec($sql);                
                 while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
                     //echo "aa";
                     if ($data[1] > 0 OR $data[2] > 0) {
                         $sql = "update partsbox_db.edi_item set gbg1 = '" . $data[1] . "', gbg2 = '" . $data[2] . "' where edi = 11 and itemcode = '" . $data[0] . "'";
-                        echo $sql . "<BR>";
+                        //echo $sql . "<BR>";
                         //if ($i++ > 100) exit;
                         $em->getConnection()->exec($sql);
                     }
                 }
             }
         }
-
         //return;
-
         if ($zip->open('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/OUTOFSTOCK_ATH_KAR.ZIP') === TRUE) {
             //echo 'sssss';
             $zip->extractTo('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/');
