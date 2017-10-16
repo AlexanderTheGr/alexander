@@ -1875,7 +1875,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $em = $this->getDoctrine()->getManager();
         $zip = new \ZipArchive;
         // OUTOFSTOCK_ALL.ZIP
-        if ($zip->open('/home2/partsbox//files/partsboxtsakonas/OUTOFSTOCK_ALL.ZIP') === TRUE) {
+        if ($zip->open('/home2/partsbox/files/partsboxtsakonas/OUTOFSTOCK_ALL.ZIP') === TRUE) {
             $zip->extractTo('/home2/partsbox/files/partsboxtsakonas/');
             $zip->close();
             $file = "/home2/partsbox/files/partsboxtsakonas/OUTOFSTOCK_ALL.txt";
