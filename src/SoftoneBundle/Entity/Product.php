@@ -2852,26 +2852,31 @@ class Product extends Entity {
         }
     }
 
-    
     public function getFanoImageUrl() {
-        return $this->getSetting("SoftoneBundle:Product:Images") . "Photos/PARTS/".substr($this->itemCode2, 0,4)."/".$this->itemCode2.".jpg";
+        return $this->getSetting("SoftoneBundle:Product:Images") . "Photos/PARTS/" . substr($this->itemCode2, 0, 4) . "/" . $this->itemCode2 . ".jpg";
     }
+
     public function getForOrderImage() {
-       
+
         $url = $this->getFanoImageUrl();
         if (file_exists($url)) {
             $urlpath = str_replace("/home2/partsbox/public_html/partsbox/web", "", $url);
-            return '<div style="display:none; position: absolute;" class="productfanoimg productfanoimg_' . $this->id . '"><img width=200 src="'.$urlpath.'" /></div>';
+            return '<div style="display:none; position: absolute;" class="productfanoimg productfanoimg_' . $this->id . '"><img width=200 src="' . $urlpath . '" /></div>';
         }
     }
 
     public function getForOrderCode() {
 
 
-
-        $out = '<a title="' . $this->title . '" class="product_info" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'tsakonas') {
+            $out = '<a title="' . $this->title . '" class="productfano_info" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
+        <br>
+        <span class="text-sm text-info">' . $this->erpCode . '</span><div class="ediprices ediprices_' . $this->id . '"></div>';            
+        } else {
+            $out = '<a title="' . $this->title . '" class="product_info" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
         <br>
         <span class="text-sm text-info">' . $this->erpCode . '</span><div class="ediprices ediprices_' . $this->id . '"></div>';
+        }
         $out .= $this->getForOrderImage();
         return $out;
     }
