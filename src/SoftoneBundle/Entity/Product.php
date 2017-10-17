@@ -2883,11 +2883,11 @@ class Product extends Entity {
 
         $ti = $this->getSupplierId() ? $this->getSupplierId()->getTitle() : "";
         if ($this->tecdocArticleId == 0) {
-            $out = '<a target="_blank" title="' . $ti . '"  class="forordersupplier" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $ti . '</a>';
+            $out = '<a title="' . $ti . '"  class="forordersupplier" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $ti . '</a>';
             return $out;
         }
         @$tecdoc = $this->getTecdocSupplierId() ? $this->getTecdocSupplierId()->getSupplier() : "";
-        $out = '<a target="_blank" title="' . $ti . '"  class="forordersupplier" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $ti . '</a>
+        $out = '<a title="' . $ti . '"  class="forordersupplier" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $ti . '</a>
         <br>
         <span class="text-sm text-info">' . $tecdoc . '</span>';
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
