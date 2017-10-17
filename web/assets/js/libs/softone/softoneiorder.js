@@ -539,9 +539,9 @@ jQuery(".forordersupplier").live('click', function () {
         //jQuery('.ediprices').hide();
         var obj = this;
         jQuery.post("/product/getediprices", data, function (result) {
-            jQuery(obj).find('.ediprices').html(result);
-            jQuery(obj).find('.ediprices').show();
-            jQuery(obj).find('.orderitemstable').show();
+            jQuery('.ediprices_'+data.id).html(result);
+            jQuery('.ediprices_'+data.id).show();
+            //jQuery('.orderitemstable').show();
         })
     }
 });
