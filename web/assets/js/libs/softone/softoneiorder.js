@@ -541,6 +541,7 @@ jQuery(".forordersupplier").live('click', function () {
         jQuery.post("/product/getediprices", data, function (result) {
             jQuery('.ediprices_'+data.id).html(result);
             jQuery('.ediprices_'+data.id).show();
+            jQuery('.ediprices_'+data.id).find('.orderitemstable').show();
             //jQuery('.orderitemstable').show();
         })
     }
