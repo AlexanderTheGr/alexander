@@ -485,7 +485,7 @@ jQuery(".productfano_info").live('click', function () {
     jQuery('.productfanoimg_'+ref).show();
 })
 jQuery(".productfanoimg").live('click', function () {
-    Query(this).hide();
+    jQuery(this).hide();
 })
 
 
