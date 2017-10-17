@@ -2788,26 +2788,25 @@ class Product extends Entity {
                 $re = json_decode($result);
 
                 //print_r($re);
-                
+
                 if (@count($re->Items)) {
                     foreach ($re->Items as $Item) {
                         $qty = $Item->Availability == 'green' ? 100 : 0;
                         $Item->UnitPrice;
                         $itemcode = $Item->ItemCode;
                         $price[$itemcode] = $Item->ListPrice;
-                        $availability[$itemcode] = $Item->Availability; 
+                        $availability[$itemcode] = $Item->Availability;
                         break;
                     }
                 }
-
             }
         }
 
 
         $sql = "Select a.*, b.name from partsbox_db.edi_item a, edi b where a.edi = b.id and (a.itemcode =  '" . $itemcode . "' OR  a.itemcode =  '" . $this->cccRef . "' OR a.partno =  '" . $this->itemCode1 . "' OR a.partno =  '" . $this->itemCode2 . "')";
-        
+
         //echo $sql;
-        
+
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
         $statement->execute();
@@ -2833,8 +2832,8 @@ class Product extends Entity {
                         ->getRepository("EdiBundle:EdiItem")
                         ->find($data["id"]);
                 $entity->getEdiQtyAvailability();
-                $pricef = $price[$data["itemcode"]] > 0 ? $price[$data["itemcode"]] : $data["wholesaleprice"]; 
-                $availabilityf = $availability[$data["itemcode"]] != '' ? $availability[$data["itemcode"]] : $entity->getEdiQtyAvailability() ; 
+                $pricef = $price[$data["itemcode"]] > 0 ? $price[$data["itemcode"]] : $data["wholesaleprice"];
+                $availabilityf = $availability[$data["itemcode"]] != '' ? $availability[$data["itemcode"]] : $entity->getEdiQtyAvailability();
                 //$availabilityf = $availabilityf == 'green' OR $availabilityf == 1 ? "YES" : "NO";
                 $out .= '<tr>
                             <td>' . $data["name"] . '</td>
@@ -2853,14 +2852,26 @@ class Product extends Entity {
         }
     }
 
+    
+    public function getFanoImageUrl() {
+        return $this->getSetting("SoftoneBundle:Product:Images") . "Photos/PARTS/".substr($this->itemCode2, 0,4)."/".$this->itemCode2.".jpg";
+    }
+    public function getForOrderImage() {
+       
+        $url = $this->getFanoImageUrl();
+        if (file_exists($url)) {
+            return '<div class="productfanoimg productfanoimg_' . $this->id . '"><img src="'.$url.'" /></div>';
+        }
+    }
+
     public function getForOrderCode() {
 
 
 
         $out = '<a title="' . $this->title . '" class="product_info" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
         <br>
-        <span class="text-sm text-info">' . $this->erpCode . '</span><div class="ediprices ediprices_'.$this->id.'"></div>';
-
+        <span class="text-sm text-info">' . $this->erpCode . '</span><div class="ediprices ediprices_' . $this->id . '"></div>';
+        $out .= $this->getForOrderImage();
         return $out;
     }
 
@@ -2997,7 +3008,7 @@ class Product extends Entity {
             return $this->edis;
         } elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'tsakonas') {
             $qty = $this->qty - $this->reserved;
-            return $this->gbg . ' / '.$this->qty . ' / <span class="text-lg text-bold text-accent-dark">' . ($qty) . '</span> (' . $this->itemMtrplace . ")";           
+            return $this->gbg . ' / ' . $this->qty . ' / <span class="text-lg text-bold text-accent-dark">' . ($qty) . '</span> (' . $this->itemMtrplace . ")";
         } else {
             $qty = $this->qty - $this->reserved;
             return $this->qty . ' / <span class="text-lg text-bold text-accent-dark">' . ($qty) . '</span> (' . $this->itemMtrplace . ")";
@@ -3181,7 +3192,7 @@ class Product extends Entity {
     public function getCccWebUpd() {
         return $this->cccWebUpd;
     }
-    
+
     private $gbg = '0';
 
     /**
@@ -3205,7 +3216,7 @@ class Product extends Entity {
     public function getGbg() {
         return $this->gbg;
     }
-    
+
     /**
      * @var integer
      */
