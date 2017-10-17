@@ -480,6 +480,10 @@ jQuery(".product_info").live('click', function () {
 
     })
 })
+jQuery(".productfano_info").live('click', function () {
+    var ref = jQuery(this).attr("data-ref");
+    jQuery('.productfanoimg_'+ref).show();
+})
 
 
 
