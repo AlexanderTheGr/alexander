@@ -2860,7 +2860,8 @@ class Product extends Entity {
        
         $url = $this->getFanoImageUrl();
         if (file_exists($url)) {
-            return '<div class="productfanoimg productfanoimg_' . $this->id . '"><img src="'.$url.'" /></div>';
+            $urlpath = str_replace("/home2/partsbox/public_html/partsbox/web", "", $path);
+            return '<div class="productfanoimg productfanoimg_' . $this->id . '"><img src="'.$urlpath.'" /></div>';
         }
     }
 
