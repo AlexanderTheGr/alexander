@@ -530,7 +530,7 @@ jQuery(".modeldiv").live('mouseout', function () {
     jQuery('.modelitem').hide();
 });
 
-jQuery(".alexander tr").live('click', function () {
+jQuery(".alexander a.forordersupplier").live('click', function () {
     //alert('sss');
     var data = {}
     data.id = jQuery(this).attr("data-ref");
