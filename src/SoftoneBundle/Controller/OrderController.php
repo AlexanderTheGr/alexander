@@ -1246,6 +1246,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $statement->execute();
         $brands = $statement->fetchAll();
 
+        foreach ($brands as $brand) {
+            $brand['img'] = str_replace(" ","-",strtolower($brand["brand"]));
+            $out[] = $brand;
+        }
+        
         return $brands;
     }
 
