@@ -1251,7 +1251,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $out[] = $brand;
         }
         
-        return $brands;
+        return $out;
     }
 
     function getBrands() {
