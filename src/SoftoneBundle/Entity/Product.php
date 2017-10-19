@@ -2859,10 +2859,10 @@ class Product extends Entity {
     public function getForOrderImage() {
 
         $url = $this->getFanoImageUrl();
-        if (file_exists($url)) {
+        //if (file_exists($url)) {
             $urlpath = str_replace("/home2/partsbox/public_html/partsbox/web", "", $url);
             return '<div style="display:none; position: absolute;" class="productfanoimg productfanoimg_' . $this->id . '"><img width=200 src="' . $urlpath . '" /></div>';
-        }
+        //}
     }
 
     public function getForOrderCode() {
