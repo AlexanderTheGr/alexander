@@ -85,7 +85,7 @@
                                                     <img alt="{{brand.brand}}" title="{{brand.brand}}" style='width:71px; height: 59px;' src='/assets/img/manufacturers/{{brand.img}}.jpg' />
                                                 </a>
                                             </li>
-                                            {% endfor %}   
+                                        {% endfor %}   
                                     </ul>
                                     <!--select style="width:100%" name="fbrand_id" class="fbrand-select"  title="" onchange="">
                                         <option value="0">Επιλέξτε Μάρκα</option>
@@ -298,6 +298,7 @@
             $("#loaderer").show();
             asdf2(data);
         });
+
         jQuery(".fbrandselect").click(function () {
             var data = {};
             data.brand = jQuery(this).attr("data-ref");
@@ -307,8 +308,8 @@
                     var ass = "<div class='card panel'><div class='card-head style-info card-head collapsed' data-toggle='collapse' data-parent='#accordion51' data-target='#accordion51-" + optionHtml.id + "'><header>" + optionHtml.name + "</header> <div class='tools'><a class='btn btn-icon-toggle'><i class='fa fa-angle-down'></i></a></div></div><div id='accordion51-" + optionHtml.id + "' class='collapse'><div class='card-body'>" + optionHtml.content + "</div></div></div>";
                     jQuery('#accordion51').append(ass);
                 })
-                jQuery('html, body').animate({
-                    scrollTop: jQuery("#accordion51").offset().top
+                $('html, body').animate({
+                    scrollTop: $("#accordion51").offset().top
                 }, 500);
             })
         });
