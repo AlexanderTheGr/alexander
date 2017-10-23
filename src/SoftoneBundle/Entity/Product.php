@@ -2833,6 +2833,39 @@ class Product extends Entity {
                         ->find($data["id"]);
                 $entity->getEdiQtyAvailability();
                 $pricef = $price[$data["itemcode"]] > 0 ? $price[$data["itemcode"]] : $data["wholesaleprice"];
+                
+                if ($data["edi"] == 11) {
+                    
+                    
+                
+                    //$availabilityf = $availability[$data["itemcode"]] != '' ? $availability[$data["itemcode"]] : $entity->getEdiQtyAvailability();
+                    //$availabilityf = $availabilityf == 'green' OR $availabilityf == 1 ? "YES" : "NO";
+                    $out .= '<tr>
+                                <td>' . $data["name"] . '</td>
+                                <td>' . $data["itemcode"] . '</td>
+                                <td>' . $data["description"] . '</td>
+                                <td>' . $data["gbg1"] . '</td>
+                                <td>' . $pricef . '</td>
+                                <td><input type="text" data-id="' . $data['id'] . '" name="qty1_' . $data['id'] . '" value="0" size="2" id="qty1_' . $data['id'] . '" class="ediiteqty1"></td>    
+                            </tr>';
+                    $out .= '<tr>
+                                <td>' . $data["name"] . '</td>
+                                <td>' . $data["itemcode"] . '</td>
+                                <td>' . $data["description"] . '</td>
+                                <td>' . $data["gbg2"] . '</td>
+                                <td>' . $pricef . '</td>
+                                <td><input type="text" data-id="' . $data['id'] . '" name="qty1_' . $data['id'] . '" value="0" size="2" id="qty1_' . $data['id'] . '" class="ediiteqty1"></td>    
+                            </tr>';
+                    $out .= '<tr>
+                                <td>' . $data["name"] . '</td>
+                                <td>' . $data["itemcode"] . '</td>
+                                <td>' . $data["description"] . '</td>
+                                <td>' . $data["gbg3"] . '</td>
+                                <td>' . $pricef . '</td>
+                                <td><input type="text" data-id="' . $data['id'] . '" name="qty1_' . $data['id'] . '" value="0" size="2" id="qty1_' . $data['id'] . '" class="ediiteqty1"></td>    
+                            </tr>';                    
+                }  else {
+                
                 $availabilityf = $availability[$data["itemcode"]] != '' ? $availability[$data["itemcode"]] : $entity->getEdiQtyAvailability();
                 //$availabilityf = $availabilityf == 'green' OR $availabilityf == 1 ? "YES" : "NO";
                 $out .= '<tr>
@@ -2843,6 +2876,7 @@ class Product extends Entity {
                             <td>' . $pricef . '</td>
                             <td><input type="text" data-id="' . $data['id'] . '" name="qty1_' . $data['id'] . '" value="0" size="2" id="qty1_' . $data['id'] . '" class="ediiteqty1"></td>    
                         </tr>';
+                }
             }
             $out .= '</tbody>
             </table>
