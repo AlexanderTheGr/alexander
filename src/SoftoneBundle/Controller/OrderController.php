@@ -181,6 +181,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $user = $this->get('security.token_storage')->getToken()->getUser();
             $entity->setUser($user);
             $entity->setSoftoneStore($user->getSoftoneStore());
+            if (!$user->getSoftoneStore()) {
+                $store = $this->getDoctrine()
+                        ->getRepository("SoftoneBundle:Store")
+                        ->find(1);
+                $entity->setSoftoneStore($store);
+            } else {
+                $entity->setSoftoneStore($user->getSoftoneStore());
+            }
 
             $vat = $this->getDoctrine()
                     ->getRepository("SoftoneBundle:Vat")
@@ -1247,10 +1255,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $brands = $statement->fetchAll();
 
         foreach ($brands as $brand) {
-            $brand['img'] = str_replace(" ","-",strtolower($brand["brand"]));
+            $brand['img'] = str_replace(" ", "-", strtolower($brand["brand"]));
             $out[] = $brand;
         }
-        
+
         return $out;
     }
 
@@ -1370,8 +1378,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ($brands as $brand) {
             $urlpath = str_replace("/home2/partsbox/public_html/partsbox/web", "", $path);
             $out .= "<li style='margin:3px; width:120px; height: 120px; float: left; list-style: none'>"
-                    . "<div style='float:left; width:100%' class='modeldiv'><img class='modelitem' style='border: 1px; z-index:100; position:absolute; display: none; left:0;' style='max-width:820px; max-height: 820px;' src='" . $urlpath . "Photos/EFAR" . "/" . str_pad( $brand["model_id"], 4, "0", STR_PAD_LEFT) . ".jpg'>"
-                    . "<center><img style='max-width:120px; max-height: 120px;' src='" . $urlpath . "Photos/EFAR" . "/" . str_pad( $brand["model_id"], 4, "0", STR_PAD_LEFT) . ".jpg'></div>"
+                    . "<div style='float:left; width:100%' class='modeldiv'><img class='modelitem' style='border: 1px; z-index:100; position:absolute; display: none; left:0;' style='max-width:820px; max-height: 820px;' src='" . $urlpath . "Photos/EFAR" . "/" . str_pad($brand["model_id"], 4, "0", STR_PAD_LEFT) . ".jpg'>"
+                    . "<center><img style='max-width:120px; max-height: 120px;' src='" . $urlpath . "Photos/EFAR" . "/" . str_pad($brand["model_id"], 4, "0", STR_PAD_LEFT) . ".jpg'></div>"
                     . "<BR><BR><center><a class='fgogo' data-ref='" . $brand["model_id"] . "' href='#'>" . $brand["year"] . "</a></center></li>";
         }
         $out .= "</ul>";
