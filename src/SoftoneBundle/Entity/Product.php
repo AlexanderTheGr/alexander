@@ -2841,7 +2841,7 @@ class Product extends Entity {
                     //$availabilityf = $availability[$data["itemcode"]] != '' ? $availability[$data["itemcode"]] : $entity->getEdiQtyAvailability();
                     //$availabilityf = $availabilityf == 'green' OR $availabilityf == 1 ? "YES" : "NO";
                     $out .= '<tr>
-                                <td>' . $data["name"] . '</td>
+                                <td>' . $data["name"] . ' (ΚΑΡΠΟΥ)</td>
                                 <td>' . $data["itemcode"] . '</td>
                                 <td>' . $data["description"] . '</td>
                                 <td>' . $data["gbg1"] . '</td>
