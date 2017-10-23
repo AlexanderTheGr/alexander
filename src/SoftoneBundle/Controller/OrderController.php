@@ -1074,7 +1074,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $dataOut["ITELINES"] = array();
 
         $k = 0;
-        //print_r($dataOut);
+        print_r($dataOut);
         foreach ($order->getItems() as $item) {
             //$dataOut["ITELINES"][] = array("QTY1" => $item->getQty(), "VAT" => $vat, "LINENUM" => $item->getLineval(), "MTRL" => $item->getProduct()->getReference());
             $dataOut["ITELINES"][] = array(
