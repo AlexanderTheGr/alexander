@@ -1377,7 +1377,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $out = "<ul style='width:100%; float:left;'>";
         foreach ($brands as $brand) {
             $urlpath = str_replace("/home2/partsbox/public_html/partsbox/web", "", $path);
-            if (file_exists($urlpath . "Photos/EFAR" . "/" . str_pad($brand["model_id"], 4, "0", STR_PAD_LEFT) . ".jpg")) {
+            if (file_exists($path . "Photos/EFAR" . "/" . str_pad($brand["model_id"], 4, "0", STR_PAD_LEFT) . ".jpg")) {
                 $out .= "<li style='margin:3px; width:120px; height: 120px; float: left; list-style: none'>"
                         . "<div style='float:left; width:100%' class='modeldiv'><img class='modelitem' style='border: 1px; z-index:100; position:absolute; display: none; left:0;' style='max-width:820px; max-height: 820px;' src='" . $urlpath . "Photos/EFAR" . "/" . str_pad($brand["model_id"], 4, "0", STR_PAD_LEFT) . ".jpg'>"
                         . "<center><img style='max-width:120px; max-height: 120px;' src='" . $urlpath . "Photos/EFAR" . "/" . str_pad($brand["model_id"], 4, "0", STR_PAD_LEFT) . ".jpg'></div>"
