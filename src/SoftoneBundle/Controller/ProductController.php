@@ -1578,6 +1578,62 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     /**
+     * @Route("/product/crossbase")
+     */
+    public function crossbaseAction() {
+
+        $dir = '/home2/service6/crossbase/';
+        if ($handledir = opendir($dir)) {
+
+            while (false !== ($file = readdir($handledir))) {
+                //echo '<img src="' . $dir . $file . '"/>';
+                if ($file != '.' && $file != '..') {
+                    //if ($i++ > 1120)
+                    //    exit;
+                    $oem = strpos($file, "OEM") ? 1 : 0;
+                    echo $i . " " . $file . "<BR>";
+                    //if ($i <= 121)
+                    //    continue;
+                    continue;
+                    $file = "/home2/service6/crossbase/" . $file;
+                    $em = $this->getDoctrine()->getManager();
+                    if ((($handle = fopen($file, "r")) !== FALSE)) {
+                        fgetcsv($handle, 1000, ";");
+                        while ($data = fgetcsv($handle, 1000, ";")) {
+
+                            foreach ($data as $key => $val) {
+                                $data[$key] = trim($val);
+                                $data[$key] = str_replace("=", "", $data[$key]);
+                                $data[$key] = str_replace('"', "", $data[$key]);
+                                $data[$key] = trim(addslashes($data[$key]));
+                            }
+                            $sql = "insert ignore partsbox_db.crossestecdoc set "
+                                    . "art_brand = '" . $data[1] . "',"
+                                    . "art_code = '" . $data[2] . "',"
+                                    . "art_id = '" . $data[3] . "',"
+                                    . "brand = '" . $data[4] . "',"
+                                    . "code = '" . $data[5] . "',"
+                                    . "code_adv = '" . $data[6] . "',"
+                                    . "oem = '" . $oem . "'";
+                            //echo $sql . "<BR>";
+                            //if ($k++ > 100) {
+                            echo ".";
+                            //$k = 0;
+                            //}
+                            $em->getConnection()->exec($sql);
+                        }
+                    }
+                    echo "<BR>";
+                }
+            }
+
+            closedir($handledir);
+        }
+
+        exit;
+    }    
+    
+    /**
      * @Route("/product/crossestecdoc")
      */
     public function crossestecdocAction() {
@@ -1592,11 +1648,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         exit;
                     $oem = strpos($file, "OEM") ? 1 : 0;
                     echo $i . " " . $file . "<BR>";
-                    if ($i <= 121)
+                    if ($i <= 181)
                         continue;
-                    
-                    
-
                     //continue;
                     $file = "/home2/service6/crossestecdoc2017/" . $file;
                     $em = $this->getDoctrine()->getManager();
