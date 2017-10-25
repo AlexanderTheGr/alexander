@@ -1588,9 +1588,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             while ($data = fgetcsv($handle, 1000, ";")) {
                 
                 foreach ($data as $key => $val) {
-                    $data[$key] = trim(addslashes($val));
                     $data[$key] = str_replace("=","",$data[$key]);
-                    $data[$key] = str_replace("\"","",$data[$key]);
+                    $data[$key] = str_replace('"',"",$data[$key]);
+                    $data[$key] = trim(addslashes($val));
                 }
                 $sql = "insert ignore partsbox_db.crossestecdoc set "
                         . "art_brand = '".$data[1]."',"
