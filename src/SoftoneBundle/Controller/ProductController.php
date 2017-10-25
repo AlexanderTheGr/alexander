@@ -1588,7 +1588,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             while (false !== ($file = readdir($handledir))) {
                 //echo '<img src="' . $dir . $file . '"/>';
                 if ($file != '.' && $file != '..') {
-                    if ($i++ > 28) exit;
+                    if ($i++ > 48) exit;
                     $oem = strpos($file, "OEM") ? 1 : 0;
                     echo $i." ".$file."<BR>";
                     if ($i <= 19) continue;
