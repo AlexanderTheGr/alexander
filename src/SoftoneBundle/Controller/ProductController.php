@@ -1626,7 +1626,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 }
             }
 
-            closedir($handle);
+            closedir($handledir);
         }
 
         exit;
