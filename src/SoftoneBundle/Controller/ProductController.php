@@ -1588,9 +1588,33 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             while (false !== ($file = readdir($handle))) {
                 //echo '<img src="' . $dir . $file . '"/>';
                 if ($file != '.' && $file != '..') {
-                    if (strpos($file,"OEM")) {
-                        echo $file."<BR>";
+                    $oem = strpos($file, "OEM") ? 1 : 0;
+
+                    $file = "/home2/service6/crossestecdoc2017/".$file;
+                    $em = $this->getDoctrine()->getManager();
+                    if ((($handle = fopen($file, "r")) !== FALSE)) {
+                        fgetcsv($handle, 1000, ";");
+                        while ($data = fgetcsv($handle, 1000, ";")) {
+
+                            foreach ($data as $key => $val) {
+                                $data[$key] = trim($val);
+                                $data[$key] = str_replace("=", "", $data[$key]);
+                                $data[$key] = str_replace('"', "", $data[$key]);
+                                $data[$key] = trim(addslashes($data[$key]));
+                            }
+                            $sql = "insert ignore partsbox_db.crossestecdoc set "
+                                    . "art_brand = '" . $data[1] . "',"
+                                    . "art_code = '" . $data[2] . "',"
+                                    . "art_id = '" . $data[3] . "',"
+                                    . "brand = '" . $data[4] . "',"
+                                    . "code = '" . $data[5] . "',"
+                                    . "code_adv = '" . $data[6] . "',"
+                                    . "oen = '".$oem."'";
+                            echo $sql . "<BR>";
+                            $em->getConnection()->exec($sql);
+                        }
                     }
+                    if ($i++ > 4) exit;
                 }
             }
 
@@ -1598,29 +1622,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
 
         exit;
-        $file = "/home2/service6/crossestecdoc2017/crosses_3F QUALITY.csv";
-        $em = $this->getDoctrine()->getManager();
-        if ((($handle = fopen($file, "r")) !== FALSE)) {
-            fgetcsv($handle, 1000, ";");
-            while ($data = fgetcsv($handle, 1000, ";")) {
-
-                foreach ($data as $key => $val) {
-                    $data[$key] = trim($val);
-                    $data[$key] = str_replace("=", "", $data[$key]);
-                    $data[$key] = str_replace('"', "", $data[$key]);
-                    $data[$key] = trim(addslashes($data[$key]));
-                }
-                $sql = "insert ignore partsbox_db.crossestecdoc set "
-                        . "art_brand = '" . $data[1] . "',"
-                        . "art_code = '" . $data[2] . "',"
-                        . "art_id = '" . $data[3] . "',"
-                        . "brand = '" . $data[4] . "',"
-                        . "code = '" . $data[5] . "',"
-                        . "code_adv = '" . $data[6] . "'";
-                echo $sql . "<BR>";
-                $em->getConnection()->exec($sql);
-            }
-        }
     }
 
     /**
