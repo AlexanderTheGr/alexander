@@ -1595,6 +1595,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     if ($i <= 121)
                         continue;
                     
+                    
 
                     //continue;
                     $file = "/home2/service6/crossestecdoc2017/" . $file;
