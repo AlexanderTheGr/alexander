@@ -1609,7 +1609,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                     . "brand = '" . $data[4] . "',"
                                     . "code = '" . $data[5] . "',"
                                     . "code_adv = '" . $data[6] . "',"
-                                    . "oen = '".$oem."'";
+                                    . "oem = '".$oem."'";
                             echo $sql . "<BR>";
                             $em->getConnection()->exec($sql);
                         }
