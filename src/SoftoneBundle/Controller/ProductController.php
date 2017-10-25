@@ -1578,6 +1578,27 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     /**
+     * @Route("/product/crossestecdoc")
+     */
+    public function crossestecdocAction() {
+        $file = "/home2/partsbox/raskos.csv";
+        $em = $this->getDoctrine()->getManager();
+        if ((($handle = fopen($file, "r")) !== FALSE)) {
+            while ($data = fgetcsv($handle, 1000, ";")) {
+                $sql = "insert ignore partsbox_db.crossestecdoc set "
+                        . "art_brand = '".$data[1]."',"
+                        . "art_code = '".$data[2]."',"
+                        . "art_id = '".$data[3]."',"
+                        . "brand = '".$data[4]."',"
+                        . "code = '".$data[5]."',"
+                        . "code_adv = '".$data[6]."'";
+                echo $sql . "<BR>";
+                $em->getConnection()->exec($sql);
+            }
+        }
+    }
+
+    /**
      * @Route("/product/autocompletesearch")
      */
     public function autocompletesearchAction() {
@@ -1888,7 +1909,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             if (($handle = fopen($file, "r")) !== FALSE) {
                 //echo 'sss';
                 $sql = "update partsbox_db.edi_item set gbg1 = '0', gbg2 = '0', gbg3 = '0' where edi = 11";
-                $em->getConnection()->exec($sql);                
+                $em->getConnection()->exec($sql);
                 while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
                     //echo "aa";
                     if ($data[1] > 0 OR $data[2] > 0 OR $data[3] > 0) {
