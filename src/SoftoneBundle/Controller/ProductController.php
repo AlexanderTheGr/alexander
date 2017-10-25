@@ -1588,10 +1588,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             while (false !== ($file = readdir($handledir))) {
                 //echo '<img src="' . $dir . $file . '"/>';
                 if ($file != '.' && $file != '..') {
-                    if ($i++ > 18) exit;
+                    if ($i++ > 28) exit;
                     $oem = strpos($file, "OEM") ? 1 : 0;
                     echo $i." ".$file."<BR>";
-                    if ($i < 9) continue;
+                    if ($i < 19) continue;
                     $file = "/home2/service6/crossestecdoc2017/".$file;
                     $em = $this->getDoctrine()->getManager();
                     if ((($handle = fopen($file, "r")) !== FALSE)) {
