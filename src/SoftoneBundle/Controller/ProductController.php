@@ -1581,10 +1581,16 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/product/crossestecdoc")
      */
     public function crossestecdocAction() {
-        $file = "/home2/service6/crossestecdoc2017/crosses_3F QUALITY.csv";
+        $file = "/home2/service6/crossestecdoc2017/raskos.csv";
         $em = $this->getDoctrine()->getManager();
         if ((($handle = fopen($file, "r")) !== FALSE)) {
             while ($data = fgetcsv($handle, 1000, ";")) {
+                
+                foreach ($data as $key => $val) {
+                    $data[$key] = trim(addslashes($val));
+                    $data[$key] = str_replace("=","",$data[$key]);
+                    $data[$key] = str_replace('"',"",$data[$key]);
+                }
                 $sql = "insert ignore partsbox_db.crossestecdoc set "
                         . "art_brand = '".$data[1]."',"
                         . "art_code = '".$data[2]."',"
