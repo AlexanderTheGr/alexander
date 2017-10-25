@@ -1611,10 +1611,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                     . "code_adv = '" . $data[6] . "',"
                                     . "oem = '".$oem."'";
                             //echo $sql . "<BR>";
-
+                            echo ".";
                             $em->getConnection()->exec($sql);
                         }
                     }
+                    echo "<BR>";
                     if ($i++ > 2) exit;
                 }
             }
