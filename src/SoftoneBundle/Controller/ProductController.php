@@ -1581,25 +1581,38 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/product/crossestecdoc")
      */
     public function crossestecdocAction() {
+
+        $dir = '/home2/service6/crossestecdoc2017/';
+        if ($handle = opendir($dir)) {
+
+            while (false !== ($file = readdir($handle))) {
+                //echo '<img src="' . $dir . $file . '"/>';
+                echo $file."<BR>";
+            }
+
+            closedir($handle);
+        }
+
+        exit;
         $file = "/home2/service6/crossestecdoc2017/crosses_3F QUALITY.csv";
         $em = $this->getDoctrine()->getManager();
         if ((($handle = fopen($file, "r")) !== FALSE)) {
             fgetcsv($handle, 1000, ";");
             while ($data = fgetcsv($handle, 1000, ";")) {
-                
+
                 foreach ($data as $key => $val) {
                     $data[$key] = trim($val);
-                    $data[$key] = str_replace("=","",$data[$key]);
-                    $data[$key] = str_replace('"',"",$data[$key]);
+                    $data[$key] = str_replace("=", "", $data[$key]);
+                    $data[$key] = str_replace('"', "", $data[$key]);
                     $data[$key] = trim(addslashes($data[$key]));
                 }
                 $sql = "insert ignore partsbox_db.crossestecdoc set "
-                        . "art_brand = '".$data[1]."',"
-                        . "art_code = '".$data[2]."',"
-                        . "art_id = '".$data[3]."',"
-                        . "brand = '".$data[4]."',"
-                        . "code = '".$data[5]."',"
-                        . "code_adv = '".$data[6]."'";
+                        . "art_brand = '" . $data[1] . "',"
+                        . "art_code = '" . $data[2] . "',"
+                        . "art_id = '" . $data[3] . "',"
+                        . "brand = '" . $data[4] . "',"
+                        . "code = '" . $data[5] . "',"
+                        . "code_adv = '" . $data[6] . "'";
                 echo $sql . "<BR>";
                 $em->getConnection()->exec($sql);
             }
