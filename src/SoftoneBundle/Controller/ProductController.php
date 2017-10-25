@@ -1589,7 +1589,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 //echo '<img src="' . $dir . $file . '"/>';
                 if ($file != '.' && $file != '..') {
                     $oem = strpos($file, "OEM") ? 1 : 0;
-
+                    echo $file."<BR>";
                     $file = "/home2/service6/crossestecdoc2017/".$file;
                     $em = $this->getDoctrine()->getManager();
                     if ((($handle = fopen($file, "r")) !== FALSE)) {
@@ -1610,11 +1610,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                     . "code = '" . $data[5] . "',"
                                     . "code_adv = '" . $data[6] . "',"
                                     . "oem = '".$oem."'";
-                            echo $sql . "<BR>";
+                            //echo $sql . "<BR>";
+
                             $em->getConnection()->exec($sql);
                         }
                     }
-                    if ($i++ > 4) exit;
+                    //if ($i++ > 4) exit;
                 }
             }
 
