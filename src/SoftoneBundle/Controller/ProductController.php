@@ -1584,6 +1584,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $file = "/home2/service6/crossestecdoc2017/raskos.csv";
         $em = $this->getDoctrine()->getManager();
         if ((($handle = fopen($file, "r")) !== FALSE)) {
+            fgetcsv($handle, 1000, ";");
             while ($data = fgetcsv($handle, 1000, ";")) {
                 
                 foreach ($data as $key => $val) {
