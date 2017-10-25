@@ -1581,7 +1581,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/product/crossestecdoc")
      */
     public function crossestecdocAction() {
-        $file = "/home2/partsbox/raskos.csv";
+        $file = "/home2/service6/crossestecdoc2017/crosses_3F QUALITY.csv";
         $em = $this->getDoctrine()->getManager();
         if ((($handle = fopen($file, "r")) !== FALSE)) {
             while ($data = fgetcsv($handle, 1000, ";")) {
