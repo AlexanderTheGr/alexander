@@ -1996,7 +1996,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //$filters = "ITEM.ISACTIVE=1";  
         //return;
         $softone = new Softone();
-        $datas = $softone->retrieveData("ITEM", "apothema");
+        //$datas = $softone->retrieveData("ITEM", "apothema");
 
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             $filters = "ITEM.V5=*";
