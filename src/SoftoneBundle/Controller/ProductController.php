@@ -1588,12 +1588,15 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             while (false !== ($file = readdir($handledir))) {
                 //echo '<img src="' . $dir . $file . '"/>';
                 if ($file != '.' && $file != '..') {
-                    if ($i++ > 1178) exit;
+                    if ($i++ > 1178)
+                        exit;
                     $oem = strpos($file, "OEM") ? 1 : 0;
-                    echo $i." ".$file."<BR>";
-                    if ($i <= 79) continue;
-                    
-                    $file = "/home2/service6/crossestecdoc2017/".$file;
+                    echo $i . " " . $file . "<BR>";
+                    if ($i <= 79)
+                        continue;
+
+                    continue;
+                    $file = "/home2/service6/crossestecdoc2017/" . $file;
                     $em = $this->getDoctrine()->getManager();
                     if ((($handle = fopen($file, "r")) !== FALSE)) {
                         fgetcsv($handle, 1000, ";");
@@ -1612,17 +1615,16 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                     . "brand = '" . $data[4] . "',"
                                     . "code = '" . $data[5] . "',"
                                     . "code_adv = '" . $data[6] . "',"
-                                    . "oem = '".$oem."'";
+                                    . "oem = '" . $oem . "'";
                             //echo $sql . "<BR>";
                             //if ($k++ > 100) {
-                                echo ".";
-                               //$k = 0;
+                            echo ".";
+                            //$k = 0;
                             //}
                             $em->getConnection()->exec($sql);
                         }
                     }
                     echo "<BR>";
-                    
                 }
             }
 
@@ -1989,7 +1991,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     function retrieveApothema($filters = false) {
         //$this->retrieveApothemaGbg();
         //exit;
-
         //function retrieveProducts($filters=false) {
         //$this->catalogue = 4;
         //$filters = "ITEM.V3=".date("Y-m-d")."&ITEM.V4=1";//. date("Y-m-d");
