@@ -1639,6 +1639,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     public function crossestecdocAction() {
         $iddd = (int)$_GET["iddd"];
         $dir = '/home2/service6/crossestecdoc2017/';
+        $k = 0;
         if ($handledir = opendir($dir)) {
 
             while (false !== ($file = readdir($handledir))) {
@@ -1672,9 +1673,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                     . "code_adv = '" . $data[6] . "',"
                                     . "oem = '" . $oem . "'";
                             //echo $sql . "<BR>";
-                            if ($k++ > 100) {
+                            if ($k++ % 50 == 0) {
                                 echo ".";
-                                $k = 0;
+                                //$k = 0;
                             }
                             $em->getConnection()->exec($sql);
                         }
