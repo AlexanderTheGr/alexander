@@ -1590,7 +1590,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 foreach ($data as $key => $val) {
                     $data[$key] = trim(addslashes($val));
                     $data[$key] = str_replace("=","",$data[$key]);
-                    $data[$key] = str_replace('"',"",$data[$key]);
+                    $data[$key] = str_replace("\"","",$data[$key]);
                 }
                 $sql = "insert ignore partsbox_db.crossestecdoc set "
                         . "art_brand = '".$data[1]."',"
