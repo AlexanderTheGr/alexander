@@ -1591,7 +1591,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     if ($i++ > 28) exit;
                     $oem = strpos($file, "OEM") ? 1 : 0;
                     echo $i." ".$file."<BR>";
-                    if ($i < 19) continue;
+                    if ($i <= 19) continue;
                     $file = "/home2/service6/crossestecdoc2017/".$file;
                     $em = $this->getDoctrine()->getManager();
                     if ((($handle = fopen($file, "r")) !== FALSE)) {
