@@ -1587,7 +1587,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
             while (false !== ($file = readdir($handle))) {
                 //echo '<img src="' . $dir . $file . '"/>';
-                echo $file."<BR>";
+                if ($file != '.' && $file != '..') {
+                    echo $file."<BR>";
+                }
             }
 
             closedir($handle);
