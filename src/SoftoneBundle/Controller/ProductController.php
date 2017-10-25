@@ -1637,7 +1637,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/product/crossestecdoc")
      */
     public function crossestecdocAction() {
-
+        $iddd = (int)$_GET["iddd"];
         $dir = '/home2/service6/crossestecdoc2017/';
         if ($handledir = opendir($dir)) {
 
@@ -1648,7 +1648,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         exit;
                     $oem = strpos($file, "OEM") ? 1 : 0;
                     echo $i . " " . $file . "<BR>";
-                    if ($i <= 181)
+                    if ($i <= $iddd)
                         continue;
                     //continue;
                     $file = "/home2/service6/crossestecdoc2017/" . $file;
