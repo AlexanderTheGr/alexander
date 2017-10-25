@@ -1615,7 +1615,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                             $em->getConnection()->exec($sql);
                         }
                     }
-                    //if ($i++ > 4) exit;
+                    if ($i++ > 2) exit;
                 }
             }
 
