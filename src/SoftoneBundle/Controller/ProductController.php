@@ -1592,7 +1592,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         exit;
                     $oem = strpos($file, "OEM") ? 1 : 0;
                     echo $i . " " . $file . "<BR>";
-                    if ($i <= 93)
+                    if ($i <= 92)
                         continue;
 
                     //continue;
