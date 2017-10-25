@@ -1583,9 +1583,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     public function crossestecdocAction() {
 
         $dir = '/home2/service6/crossestecdoc2017/';
-        if ($handle = opendir($dir)) {
+        if ($handledir = opendir($dir)) {
 
-            while (false !== ($file = readdir($handle))) {
+            while (false !== ($file = readdir($handledir))) {
                 //echo '<img src="' . $dir . $file . '"/>';
                 if ($file != '.' && $file != '..') {
                     $oem = strpos($file, "OEM") ? 1 : 0;
