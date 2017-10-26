@@ -1593,11 +1593,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     $oem = strpos($file, "NOT_OE") ? 1 : 0;
                     
                     if ($oem == 0) continue;
-                    echo $i . " " . basename($file) . "<BR>";
+                    //echo $i . " " . basename($file) . "<BR>";
                     //if ($i <= 121)
                     //    continue;
                     $sqlfile = str_replace(".csv",".sql",basename($file));
                     //continue;
+                    echo $i . " " . basename($sqlfile) . "<BR>";
                     if (file_exists("/home2/service6/crossbasesql/".$sqlfile)) continue;
                     
                     $file = "/home2/service6/crossbase/" . $file;
