@@ -1596,8 +1596,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     echo $i . " " . basename($file) . "<BR>";
                     //if ($i <= 121)
                     //    continue;
-                    continue;
-                    if (file_exists("/home2/service6/crossbasesql/crossbase.sql")) continue;
+                    $sqlfile = str_replace(".csv",".sql",basename($file));
+                    //continue;
+                    if (file_exists("/home2/service6/crossbasesql/".$sqlfile)) continue;
                     
                     $file = "/home2/service6/crossbase/" . $file;
                     $em = $this->getDoctrine()->getManager();
@@ -1622,7 +1623,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                     . "oem = '" . $oem . "';\n";
                             
                             //echo $sql . "<BR>";
-                            file_put_contents("/home2/service6/crossbasesql/crossbase.sql", $sql, FILE_APPEND | LOCK_EX);
+                            file_put_contents("/home2/service6/crossbasesql/".$sqlfile, $sql, FILE_APPEND | LOCK_EX);
                             //if ($i++ > 100) exit;
                             //if ($k++ > 100) {
                             
