@@ -1590,7 +1590,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 if ($file != '.' && $file != '..') {
                     //if ($i++ > 1120)
                     //    exit;
-                    $oem = strpos($file, "OEM") ? 1 : 0;
+                    $oem = strpos($file, "NOT_OE") ? 1 : 0;
+                    
+                    if ($oem == 0) continue;
                     echo $i . " " . $file . "<BR>";
                     //if ($i <= 121)
                     //    continue;
@@ -1607,7 +1609,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                 $data[$key] = str_replace('"', "", $data[$key]);
                                 $data[$key] = trim(addslashes($data[$key]));
                             }
-                            $sql = "insert ignore partsbox_db.crossestecdoc set "
+                            $sql = "insert ignore partsbox_db.crossbase set "
                                     . "title = '" . $data[0] . "',"
                                     . "art_brand = '" . $data[1] . "',"
                                     . "art_code = '" . $data[2] . "',"
@@ -1616,12 +1618,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                     . "code = '" . $data[5] . "',"
                                     . "code_adv = '" . $data[6] . "',"
                                     . "oem = '" . $oem . "'";
-                            //echo $sql . "<BR>";
+                            echo $sql . "<BR>";
+                            if ($i++ > 100) exit;
                             //if ($k++ > 100) {
                             echo ".";
                             //$k = 0;
                             //}
-                            $em->getConnection()->exec($sql);
+                            //$em->getConnection()->exec($sql);
                         }
                     }
                     echo "<BR>";
