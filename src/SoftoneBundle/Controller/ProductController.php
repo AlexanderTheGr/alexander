@@ -1590,7 +1590,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 if ($file != '.' && $file != '..') {
                     if ($i++ > 1120)
                         exit;
-                    $oem = strpos($file, "NOT_OE") ? 1 : 0;
+                    $oem = strpos($file, "NOT_OE") ? 0 : 1;
                     
                     if ($oem == 0) continue;
                     //echo $i . " " . basename($file) . "<BR>";
