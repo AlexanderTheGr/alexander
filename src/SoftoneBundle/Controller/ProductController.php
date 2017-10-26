@@ -1608,6 +1608,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                 $data[$key] = trim(addslashes($data[$key]));
                             }
                             $sql = "insert ignore partsbox_db.crossestecdoc set "
+                                    . "title = '" . $data[0] . "',"
                                     . "art_brand = '" . $data[1] . "',"
                                     . "art_code = '" . $data[2] . "',"
                                     . "art_id = '" . $data[3] . "',"
