@@ -1635,7 +1635,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         }
                     }
                     echo "<BR>";
-                    if ($k++ > 3)
+                    if ($k++ > 5)
                     exit;
                 }
             }
