@@ -1620,7 +1620,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                     . "oem = '" . $oem . "';\n";
                             //echo $sql . "<BR>";
                             file_put_contents("/home2/service6/crossbasesql/crossbase.sql", $sql, FILE_APPEND | LOCK_EX);
-                            if ($i++ > 100) exit;
+                            //if ($i++ > 100) exit;
                             //if ($k++ > 100) {
                             
                             echo ".";
@@ -1630,6 +1630,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         }
                     }
                     echo "<BR>";
+                    exit;
                 }
             }
 
