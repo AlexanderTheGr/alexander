@@ -1596,7 +1596,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     echo $i . " " . $file . "<BR>";
                     //if ($i <= 121)
                     //    continue;
-                    continue;
+                    //continue;
                     $file = "/home2/service6/crossbase/" . $file;
                     $em = $this->getDoctrine()->getManager();
                     if ((($handle = fopen($file, "r")) !== FALSE)) {
