@@ -1588,15 +1588,17 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             while (false !== ($file = readdir($handledir))) {
                 //echo '<img src="' . $dir . $file . '"/>';
                 if ($file != '.' && $file != '..') {
-                    //if ($i++ > 1120)
-                    //    exit;
+                    if ($i++ > 1120)
+                        exit;
                     $oem = strpos($file, "NOT_OE") ? 1 : 0;
                     
                     if ($oem == 0) continue;
-                    echo $i . " " . $file . "<BR>";
+                    echo $i . " " . basename($file) . "<BR>";
                     //if ($i <= 121)
                     //    continue;
-                    //continue;
+                    continue;
+                    if (file_exists("/home2/service6/crossbasesql/crossbase.sql")) continue;
+                    
                     $file = "/home2/service6/crossbase/" . $file;
                     $em = $this->getDoctrine()->getManager();
                     if ((($handle = fopen($file, "r")) !== FALSE)) {
