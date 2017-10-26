@@ -1618,6 +1618,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                     . "code = '" . $data[5] . "',"
                                     . "code_adv = '" . $data[6] . "',"
                                     . "oem = '" . $oem . "';\n";
+                            
                             //echo $sql . "<BR>";
                             file_put_contents("/home2/service6/crossbasesql/crossbase.sql", $sql, FILE_APPEND | LOCK_EX);
                             //if ($i++ > 100) exit;
@@ -1652,7 +1653,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             while (false !== ($file = readdir($handledir))) {
                 //echo '<img src="' . $dir . $file . '"/>';
                 if ($file != '.' && $file != '..') {
-                    if ($i++ > 1120)
+                    if ($i++ > $iddd+15)
                         exit;
                     $oem = strpos($file, "OEM") ? 1 : 0;
                     echo $i . " " . $file . "<BR>";
