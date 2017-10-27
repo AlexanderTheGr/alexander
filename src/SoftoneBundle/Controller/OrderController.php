@@ -1085,6 +1085,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 "VAT" => $vatsst,
                 "QTY1" => $item->getQty(),
                 "LINENUM" => $k++,
+                "COMMENTS2" => $item->getRemarks(),
                 "MTRL" => $item->getProduct()->getReference(),
                 "PRICE" => $item->getPrice() / $vat,
                 "LINEVAL" => $item->getLineval() / $vat,
