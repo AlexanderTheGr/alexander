@@ -243,7 +243,27 @@ class Orderitem {
         return $this->product;
     }
 
-
+    public function getForOrderSupplier() {
+        return $this->getProduct()->getForOrderSupplier();
+        /*
+        $ti = $this->getProduct()->getSupplierId() ? $this->getSupplierId()->getTitle() : "";
+        if ($this->getProduct()->getTecdocArticleId() == 0) {
+            $out = '<a title="' . $ti . '"  class="forordersupplier" car="" data-articleId="' . $this->getProduct()->getTecdocArticleId() . '" data-ref="' . $this->getProduct()->getId() . '" href="#">' . $ti . '</a>';
+            return $out;
+        }
+        @$tecdoc = $this->getProduct()->getTecdocSupplierId() ? $this->getProduct()->getTecdocSupplierId()->getSupplier() : "";
+        $out = '<a title="' . $ti . '"  class="forordersupplier" car="" data-articleId="' . $this->getProduct()->getTecdocArticleId() . '" data-ref="' . $this->getProduct()->getId() . '" href="#">' . $ti . '</a>
+        <br>
+        <span class="text-sm text-info">' . $tecdoc . '</span>';
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
+            return $out;
+        } else {
+            return $out;
+        }
+         * 
+         */
+    }
+    
     /**
      * Set order
      *
