@@ -389,7 +389,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
         $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
         $dtparams[] = array("name" => "", "function" => 'deleteitem');
-        $dtparams[] = array("name" => $this->getTranslation("Product Name"), "index" => 'product:title');
+        // $dtparams[] = array("name" => $this->getTranslation("Product Name"), "index" => 'product:title');
+        $dtparams[] = array("name" => $this->getTranslation("Product Name"), "function" => 'getForOrderItemsTitle', 'search' => 'text');
         $dtparams[] = array("name" => $this->getTranslation("Product Code"), "index" => 'product:erpCode');
         $dtparams[] = array("name" => $this->getTranslation("Place"), "index" => 'product:itemMtrplace');
         //$dtparams[] = array("name" => $this->getTranslation("Supplier"), "index" => 'product:supplierId:title');
