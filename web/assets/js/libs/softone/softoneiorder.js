@@ -558,13 +558,13 @@ jQuery(".alexander tr").live('mouseover', function () {
     var data = {}
     data.id = jQuery(this).attr("data-ref");
     jQuery(this).find('.orderitemstable').show();
+    jQuery('.ediprices').html('');
     var obj = this;
  
 });
 jQuery(".alexander tr").live('mouseout', function () {
     //alert('sss');
     jQuery('.orderitemstable').hide();
-    jQuery('.ediprices').html('');
     
 });
 
