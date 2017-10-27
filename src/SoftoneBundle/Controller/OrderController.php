@@ -1882,8 +1882,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $orderItem = new Orderitem;
             $orderItem->setOrder($order);
             $orderItem->setProduct($product);
+            $session = new Session();
             if ($session->get("fanomodel")) {
                 $em = $this->getDoctrine()->getManager();
+                
                 $sql = "SELECT *  FROM  partsbox_db.fanopoiia_category where model_id = '" . $session->get("fanomodel") . "'";
                 $connection = $em->getConnection();
                 $statement = $connection->prepare($sql);
