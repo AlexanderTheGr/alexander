@@ -565,7 +565,7 @@ jQuery(".alexander tr").live('mouseover', function () {
 jQuery(".alexander tr").live('mouseout', function () {
     //alert('sss');
     jQuery('.orderitemstable').hide();
-    jQuery(obj).find('.ediprices').show();
+    jQuery(obj).find('.ediprices').hide();
     
 });
 
