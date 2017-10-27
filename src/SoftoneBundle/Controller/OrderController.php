@@ -672,7 +672,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $brands = $statement->fetchAll();
                     
                     if ($brands) {
-                        echo $brands[0]["model_str"];
+                        //echo $brands[0]["model_str"];
+                        $order->setRemarks($brands[0]["model_str"]);
+                        $this->flushpersist($order);
                     }
                     
                     $sqlearch = "Select o.id from SoftoneBundle:Product o where o.supplierCode like '" . $search[1] . "%'";
