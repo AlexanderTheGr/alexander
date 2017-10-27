@@ -651,8 +651,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         }
                     }
                 }
-
-
+                $session = new Session();
+                $session->set("fanomode", '');
                 if ($search[0] == 'productfreesearch') {
                     $garr = explode(" ", $search[1]);
                     foreach ($garr as $d) {
@@ -661,6 +661,18 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $like = implode(" AND ", $likearr);
                     $sqlearch = "Select so.id from SoftoneBundle:ProductFreesearch so where " . $like . "";
                 } elseif ($search[0] == 'productfano') {
+                    
+                    $session = new Session();
+                    $session->set("fanomode", $search[1]);
+
+                    $sql = "SELECT *  FROM  partsbox_db.fanopoiia_category where model_id = '" . $search[1] . "'";
+                    $connection = $em->getConnection();
+                    $statement = $connection->prepare($sql);
+                    $statement->execute();
+                    $brands = $statement->fetchAll();
+
+                    echo $brands[0]["model_str"];
+                    
                     $sqlearch = "Select o.id from SoftoneBundle:Product o where o.supplierCode like '" . $search[1] . "%'";
                     //$sqlearch = "Select o.id from SoftoneBundle:Product o where o.itemMtrgroup = '" . (int) $search[1] . "%'";
                 } else {
