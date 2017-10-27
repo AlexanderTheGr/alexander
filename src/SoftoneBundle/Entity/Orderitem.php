@@ -279,4 +279,33 @@ class Orderitem {
         return $this->order;
     }
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="remarks", type="text", length=65535, nullable=false)
+     */
+    protected $remarks;
+
+    /**
+     * Set remarks
+     *
+     * @param string $remarks
+     *
+     * @return Order
+     */
+    public function setRemarks($remarks) {
+        $this->remarks = $remarks;
+
+        return $this;
+    }
+
+    /**
+     * Get remarks
+     *
+     * @return string
+     */
+    public function getRemarks() {
+        return $this->remarks;
+    }
+
 }
