@@ -254,6 +254,7 @@ class Orderitem {
 
         $out = '<a title="' . $this->getProduct()->getTitle() . '" class="productfano_info" car="" data-articleId="' . $this->getProduct()->getTecdocArticleId() . '" data-ref="' . $this->getProduct()->getId() . '" href="#">' . $this->getProduct()->getTitle() . '</a>';
         $out .= '<div class="ediprices ediprices_' . $this->getProduct()->getId() . '"></div>';
+        $out .=  $this->remarks;
         return $out;
     }
 
