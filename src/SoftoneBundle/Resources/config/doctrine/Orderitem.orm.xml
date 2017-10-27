@@ -21,7 +21,7 @@
         <field name="remarks" type="string" column="remarks" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
-                <option name="default">0</option>
+                <option name="default"></option>
             </options>
         </field>   
          
