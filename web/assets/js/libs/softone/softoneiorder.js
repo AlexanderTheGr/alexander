@@ -292,6 +292,26 @@ jQuery(".livevalqty").live('keyup', function (e) {
 })
 
 
+jQuery(".SoftoneBundleProductAdd").live('click', function (e) {
+        var data = {}
+        data.order = orderid;
+        data.item = jQuery(this).attr('data-id');
+        data.price = jQuery("#SoftoneBundleProductItemPricew01_" + data.item).val();
+        data.qty = 1;
+        $("#loaderer").show();
+        $.post("/order/addorderitem/", data, function (result) {
+            $(".tick_" + data.item).show();
+            $("#loaderer").hide();
+            var json = angular.fromJson(result);
+            if (json.error) {
+                toastr.error(json.message, "Error");
+            }
+            var table = dt_tables["ctrlgettabs"];
+            //$(".offcanvas-search").click();
+            table.fnFilter();
+        })
+    
+})
 
 jQuery(".SoftoneBundleProductQty").live('keyup', function (e) {
     if (e.keyCode == 13) {
