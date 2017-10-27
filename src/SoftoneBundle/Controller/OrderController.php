@@ -883,11 +883,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 //$json[6] = str_replace("value='---'", "value='1'", $json[6]);
                 $json[9] = $obj->getSisxetisi();
                 $json[10] = $obj->getApothiki();
-                $json[11] = '<input data-id="' . $obj->getId() . '" data-rep="SoftoneBundle:Product" data-ref="' . $obj->getId() . '" id="SoftoneBundleProductQty_' . $obj->getId() . '" class="SoftoneBundleProductQty" type="text" value="1">';
+                $json[11] = '<input data-id="' . $obj->getId() . '" data-rep="SoftoneBundle:Product" data-ref="' . $obj->getId() . '" id="SoftoneBundleProductQty_' . $obj->getId() . '" class="SoftoneBundleProductQty" type="text" value="1"><button class="btn btn-success btn-raised ink-reaction"><div class="gui-icon"><i class="fa fa-database"></i></div></button>';
                 $json[12] = $obj->getTick($order); //'<img width="20" style="width:20px; max-width:20px; display:none" class="tick_'.$obj->getId().'" src="/assets/img/tick.png">';
                 $jsonarrnoref[$result["id"]] = $json;
             }
-
 
             //$jsonarr = $this->softoneCalculate($jsonarr, $id);
             //echo count($jsonarr);
