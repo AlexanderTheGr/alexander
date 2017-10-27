@@ -670,8 +670,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $statement = $connection->prepare($sql);
                     $statement->execute();
                     $brands = $statement->fetchAll();
-
-                    echo $brands[0]["model_str"];
+                    
+                    if ($brands) {
+                        echo $brands[0]["model_str"];
+                    }
                     
                     $sqlearch = "Select o.id from SoftoneBundle:Product o where o.supplierCode like '" . $search[1] . "%'";
                     //$sqlearch = "Select o.id from SoftoneBundle:Product o where o.itemMtrgroup = '" . (int) $search[1] . "%'";
