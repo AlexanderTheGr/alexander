@@ -670,7 +670,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $statement = $connection->prepare($sql);
                     $statement->execute();
                     $brands = $statement->fetchAll();
-                    
                     if ($brands) {
                         //echo $brands[0]["model_str"];
                         $order->setRemarks($brands[0]["model_str"]);
