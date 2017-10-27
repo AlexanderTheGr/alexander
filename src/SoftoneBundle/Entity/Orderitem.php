@@ -3,6 +3,7 @@
 namespace SoftoneBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Orderitem
  */
@@ -61,8 +62,6 @@ class Orderitem {
      * @var \SoftoneBundle\Entity\Product
      */
     protected $product;
-
-
 
     /**
      * Set qty
@@ -160,14 +159,17 @@ class Orderitem {
     public function getLinevalQty() {
         return number_format($this->lineval / $this->qty, 2, '.', '');
         //return $this->lineval / $this->qty;
-    }  
-    public function deleteitem() {
-        return '<a style="font-size:20px; color:red; cursor: pointer" data-id="'.$this->id.'" class="deleteitem"><i class="md md-delete"></i></a>';
     }
+
+    public function deleteitem() {
+        return '<a style="font-size:20px; color:red; cursor: pointer" data-id="' . $this->id . '" class="deleteitem"><i class="md md-delete"></i></a>';
+    }
+
     public function getProductApothiki() {
         return $this->getProduct()->getApothiki();
         //return $this->lineval / $this->qty;
-    } 
+    }
+
     /**
      * Set store
      *
@@ -245,25 +247,16 @@ class Orderitem {
 
     public function getForOrderSupplier() {
         return $this->getProduct()->getForOrderSupplier();
-        /*
-        $ti = $this->getProduct()->getSupplierId() ? $this->getSupplierId()->getTitle() : "";
-        if ($this->getProduct()->getTecdocArticleId() == 0) {
-            $out = '<a title="' . $ti . '"  class="forordersupplier" car="" data-articleId="' . $this->getProduct()->getTecdocArticleId() . '" data-ref="' . $this->getProduct()->getId() . '" href="#">' . $ti . '</a>';
-            return $out;
-        }
-        @$tecdoc = $this->getProduct()->getTecdocSupplierId() ? $this->getProduct()->getTecdocSupplierId()->getSupplier() : "";
-        $out = '<a title="' . $ti . '"  class="forordersupplier" car="" data-articleId="' . $this->getProduct()->getTecdocArticleId() . '" data-ref="' . $this->getProduct()->getId() . '" href="#">' . $ti . '</a>
-        <br>
-        <span class="text-sm text-info">' . $tecdoc . '</span>';
-        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
-            return $out;
-        } else {
-            return $out;
-        }
-         * 
-         */
     }
-    
+
+    public function getForOrderItemsTitle() {
+
+
+        $out = '<a title="' . $this->getProduct()->getTitle() . '" class="productfano_info" car="" data-articleId="' . $this->getProduct()->getTecdocArticleId() . '" data-ref="' . $this->getProduct()->getId() . '" href="#">' . $this->getProduct()->getTitle() . '</a>';
+        $out .= '<div class="ediprices ediprices_' . $this->getProduct()->getId() . '"></div>';
+        return $out;
+    }
+
     /**
      * Set order
      *
@@ -271,8 +264,7 @@ class Orderitem {
      *
      * @return Orderitem
      */
-    public function setOrder(\SoftoneBundle\Entity\Order $order = null)
-    {
+    public function setOrder(\SoftoneBundle\Entity\Order $order = null) {
         $this->order = $order;
 
         return $this;
@@ -283,8 +275,8 @@ class Orderitem {
      *
      * @return \SoftoneBundle\Entity\Order
      */
-    public function getOrder()
-    {
+    public function getOrder() {
         return $this->order;
     }
+
 }
