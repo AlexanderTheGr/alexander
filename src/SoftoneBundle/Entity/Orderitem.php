@@ -284,7 +284,7 @@ class Orderitem {
      *
      * @ORM\Column(name="remarks", type="text", length=65535, nullable=false)
      */
-    protected $remarks;
+    protected $remarks = '';
 
     /**
      * Set remarks
