@@ -562,9 +562,15 @@ jQuery(".alexander tr").live('mouseover', function () {
     var obj = this;
  
 });
+jQuery(".ediprices").live('mouseout', function () {
+    jQuery(this).hide();
+})
+jQuery(".ediprices").live('mouseover', function () {
+    jQuery(this).show();
+})
 
 jQuery(".alexander").live('mouseout', function () {
-    jQuery('.ediprices').html('');
+    jQuery('.ediprices').hide();
 });
 
 jQuery(".alexander tr").live('mouseout', function () {
