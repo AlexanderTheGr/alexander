@@ -2904,12 +2904,14 @@ class Product extends Entity {
 
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'tsakonas') {
             $out = '<a title="' . $this->title . '" class="productfano_info" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
+        <div class="ediprices ediprices_' . $this->id . '"></div>
         <br>
-        <span class="text-sm text-info">' . $this->erpCode . '</span><div class="ediprices ediprices_' . $this->id . '"></div>';            
+        <span class="text-sm text-info">' . $this->erpCode . '</span>';            
         } else {
             $out = '<a title="' . $this->title . '" class="product_info" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
+        <div class="ediprices ediprices_' . $this->id . '"></div>
         <br>
-        <span class="text-sm text-info">' . $this->erpCode . '</span><div class="ediprices ediprices_' . $this->id . '"></div>';
+        <span class="text-sm text-info">' . $this->erpCode . '</span>';
         }
         $out .= $this->getForOrderImage();
         return $out;
