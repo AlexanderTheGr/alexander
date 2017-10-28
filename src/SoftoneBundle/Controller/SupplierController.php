@@ -1,42 +1,61 @@
 <?php
 
-namespace ServicebookBundle\Controller;
+namespace SoftoneBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Controller\Main as Main;
 
-class WorkshopController extends \ServicebookBundle\Controller\SoftoneController {
+class SupplierController extends \SoftoneBundle\Controller\SoftoneController  {
 
-    var $repository = 'ServicebookBundle:Workshop';
+    var $repository = 'SoftoneBundle:Supplier';
 
     /**
-     * @Route("/servicebook/workshop/servicebook/workshop")
+     * @Route("/supplier/supplier")
      */
     public function indexAction() {
 
-        return $this->render('ServicebookBundle:Workshop:index.html.twig', array(
+        return $this->render('SoftoneBundle:Supplier:index.html.twig', array(
                     'pagename' => $this->getTranslation('Προμηθευτές'),
-                    'url' => '/servicebook/workshop/getdatatable',
-                    'view' => '/servicebook/workshop/view',
+                    'url' => '/supplier/getdatatable',
+                    'view' => '/supplier/view',
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
 
-
+    
+        /**
+     * @Route("/supplier/synchronize/{id}")
+     */
+    public function synchronizeAction($id) {
+        $entity = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->find($id);  
+        if ($entity->getReference()) {
+            $edi = $this->getDoctrine()
+                    ->getRepository("EdiBundle:Edi")
+                    ->findOneBy(array("itemMtrsup"=>$entity->getReference()));  
+            if ($edi) {
+                //echo $edi->getId();
+                $edi->synchronize();
+            }
+        }
+        exit;
+    }
+    
     /**
-     * @Route("/servicebook/workshop/view/{id}")
+     * @Route("/supplier/view/{id}")
      */
     public function viewAction($id) {
 
         $content = $this->gettabs($id);
         $content = $this->content();
-        return $this->render('ServicebookBundle:Workshop:view.html.twig', array(
-                    'pagename' => $this->getTranslation('Workshop'),
-                    'url' => '/servicebook/workshop/save',
+        return $this->render('SoftoneBundle:Supplier:view.html.twig', array(
+                    'pagename' => $this->getTranslation('Supplier'),
+                    'url' => '/erp01/supplier/save',
                     'supplierid' => $id,
                     'content' => $content,
                     'ctrl' => $this->generateRandomString(),
@@ -47,7 +66,7 @@ class WorkshopController extends \ServicebookBundle\Controller\SoftoneController
     }
 
     /**
-     * @Route("/servicebook/workshop/save")
+     * @Route("/supplier/save")
      */
     public function savection() {
         $this->save();
@@ -58,7 +77,7 @@ class WorkshopController extends \ServicebookBundle\Controller\SoftoneController
     }
 
     /**
-     * @Route("/servicebook/workshop/gettab")
+     * @Route("/supplier/gettab")
      */
     public function gettabs($id) {
 
@@ -67,8 +86,8 @@ class WorkshopController extends \ServicebookBundle\Controller\SoftoneController
                 ->getRepository($this->repository)
                 ->find($id);
 
-        $fields["code"] = array("label" => $this->getTranslation("Code"));
-        $fields["name"] = array("label" => $this->getTranslation("Workshop Name"));
+        $fields["supplierCode"] = array("label" => $this->getTranslation("Code"));
+        $fields["supplierName"] = array("label" => $this->getTranslation("Supplier Name"));
 
         $forms = $this->getFormLyFields($entity, $fields);
 
@@ -78,19 +97,40 @@ class WorkshopController extends \ServicebookBundle\Controller\SoftoneController
     }
 
     /**
-     * @Route("/servicebook/workshop/getdatatable")
+     * @Route("/supplier/getdatatable")
      */
     public function getdatatableAction(Request $request) {
-        $this->repository = 'ServicebookBundle:Workshop';
+        $this->repository = 'SoftoneBundle:Supplier';
 
         $this->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
-                ->addField(array("name" => $this->getTranslation("Code"), "index" => 'code'))
-                ->addField(array("name" => $this->getTranslation("Name"), "index" => 'name'));
+                ->addField(array("name" => $this->getTranslation("Code"), "index" => 'supplierCode'))
+                ->addField(array("name" => $this->getTranslation("Name"), "index" => 'supplierName'));
         $json = $this->datatable();
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+    /**
+     * @Route("/supplier/retrieve")
+     */    
+    function retrieveSupplier() {
+        $where = '';
+        $params["softone_object"] = 'supplier';
+        $params["repository"] = 'SoftoneBundle:Supplier';
+        $params["softone_table"] = 'TRDR';
+        $params["table"] = 'softone_supplier';
+        $params["object"] = 'SoftoneBundle\Entity\Supplier';
+        $params["filter"] = '';
+        $params["filter"] = 'WHERE M.SODTYPE=12 ' . $where;
+        $params["relation"] = array();
+        $params["extra"] = array();
+        $params["extrafunction"] = array();
+        $this->setSetting("SoftoneBundle:Supplier:retrieveSupplier", serialize($params));
 
-
+        $params = unserialize($this->getSetting("SoftoneBundle:Supplier:retrieveSupplier"));
+        $this->retrieve($params);
+        return new Response(
+                json_encode(array()), 200, array('Content-Type' => 'application/json')
+        );        
+    }
 }
