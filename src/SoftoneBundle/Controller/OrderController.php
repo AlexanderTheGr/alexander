@@ -660,7 +660,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     }
                     $like = implode(" AND ", $likearr);
                     $sqlearch = "Select so.id from SoftoneBundle:ProductFreesearch so where " . $like . "";
-                    echo $sqlearch; 
+                    echo $sqlearch;
                 } elseif ($search[0] == 'productfano') {
 
                     $session->set("fanomodel", $search[1]);
@@ -677,7 +677,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     }
                     //echo $sql11;
                     if (count($sa)) {
-                        $sqlearch = "Select o.id from SoftoneBundle:Product o where o.supplierCode in ('".  implode("','", $sa)."') OR o.supplierCode like '" . $search[1] . "%'";
+                        $sqlearch = "Select o.id from SoftoneBundle:Product o where o.supplierCode in ('" . implode("','", $sa) . "') OR o.supplierCode like '" . $search[1] . "%'";
                     } else {
                         $sqlearch = "Select o.id from SoftoneBundle:Product o where o.supplierCode like '" . $search[1] . "%'";
                     }
@@ -685,9 +685,23 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     //$sqlearch = "Select o.id from SoftoneBundle:Product o where o.itemMtrgroup = '" . (int) $search[1] . "%'";
                 } else {
                     $search[1] = $this->clearstring($search[1]);
-                    $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
+                    $sql11 = "SELECT * FROM  partsbox_db.fanocrosses where cross1 LIKE '" . $search[1] . "%' OR cross2 LIKE '" . $search[1] . "%'";
+                    $connection = $em->getConnection();
+                    $statement = $connection->prepare($sql11);
+                    $statement->execute();
+                    $crosses = $statement->fetchAll();
+                    $sa = array();
+                    foreach ($crosses as $cross) {
+                        $sa[trim($cross["cross2"])] = trim($cross["cross2"]);
+                        $sa[trim($cross["cross1"])] = trim($cross["cross1"]);
+                    }
+                    if (count($sa)) {
+                        $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where OR so.itemCode2 in ('" . implode("','", $sa) . "') OR so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";                        
+                    } else {
+                        $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
+                    }
                 }
-                echo $sqlearch; 
+                //echo $sqlearch; 
                 $qsupplier = "";
                 if ($dt_columns[3]["search"]["value"] > 3) {
 
