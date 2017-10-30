@@ -1298,7 +1298,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $this->getDoctrine()->getConnection()->exec($sql);
             }
         }
-         
+        
          
         //exit;
         $sql = 'update `softone_product` set `tecdoc_supplier_id` =  `item_mtrmark` where tecdoc_supplier_id is null';
