@@ -701,7 +701,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
                     }
                 }
-                //echo $sqlearch; 
+                echo $sqlearch; 
                 $qsupplier = "";
                 if ($dt_columns[3]["search"]["value"] > 3) {
 
