@@ -43,7 +43,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         }
     }
 
-    
     /**
      * @Route("/order/order")
      */
@@ -665,8 +664,20 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                     $session->set("fanomodel", $search[1]);
 
-
-                    $sqlearch = "Select o.id from SoftoneBundle:Product o where o.supplierCode like '" . $search[1] . "%'";
+                    $sql = "SELECT cross2 FROM  partsbox_db.fanocrosses where cross1 = '" . $search[1] . "'";
+                    $connection = $em->getConnection();
+                    $statement = $connection->prepare($sql);
+                    $statement->execute();
+                    $crosses = $statement->fetchAll();
+                    $sa = array();
+                    foreach ($crosses as $cross) {
+                        $sa[] = $cross;
+                    }
+                    if (count()) {
+                        $sqlearch = "Select o.id from SoftoneBundle:Product o where o.supplierCode in (".  implode(",", $sa).") OR o.supplierCode like '" . $search[1] . "%'";
+                    } else {
+                        $sqlearch = "Select o.id from SoftoneBundle:Product o where o.supplierCode like '" . $search[1] . "%'";
+                    }
                     //$sqlearch = "Select o.id from SoftoneBundle:Product o where o.itemMtrgroup = '" . (int) $search[1] . "%'";
                 } else {
                     $search[1] = $this->clearstring($search[1]);
@@ -1886,7 +1897,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $session = new Session();
             if ($session->get("fanomodel")) {
                 $em = $this->getDoctrine()->getManager();
-                
+
                 $sql = "SELECT *  FROM  partsbox_db.fanopoiia_category where model_id = '" . $session->get("fanomodel") . "'";
                 $connection = $em->getConnection();
                 $statement = $connection->prepare($sql);
