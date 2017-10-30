@@ -660,6 +660,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     }
                     $like = implode(" AND ", $likearr);
                     $sqlearch = "Select so.id from SoftoneBundle:ProductFreesearch so where " . $like . "";
+                    echo $sqlearch; 
                 } elseif ($search[0] == 'productfano') {
 
                     $session->set("fanomodel", $search[1]);
