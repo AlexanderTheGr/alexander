@@ -1413,6 +1413,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //exit;
             //echo $data["MTRL"]."<BR>";
             //if ($i++ < 23000) continue;
+            
+            if ($data["MTRL"] < 149842) continue;
+            
             $entity = $this->getDoctrine()
                     ->getRepository($this->repository)
                     ->findOneBy(array("reference" => (int) $data["MTRL"]));
@@ -1546,9 +1549,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             } else {
                 $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->id . "'";
                 echo ".";
-                echo $sql . "<BR>";
+                //echo $sql . "<BR>";
                 //
-                $em->getConnection()->exec($sql);
+                //$em->getConnection()->exec($sql);
                 continue;
             }
             $entity = $this->getDoctrine()
@@ -1556,7 +1559,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     ->findOneBy(array("reference" => (int) $data[$params["softone_table"]]));
             if (@$entity->id > 0) {
                 $entity->tecdoc = $tecdoc;
-                $entity->updatetecdoc();
+                //$entity->updatetecdoc();
                 $entity->setProductFreesearch();
             }
             /*
