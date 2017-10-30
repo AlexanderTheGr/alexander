@@ -665,9 +665,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                     $session->set("fanomodel", $search[1]);
 
-                    $sql = "SELECT cross2 FROM  partsbox_db.fanocrosses where cross1 = '" . $search[1] . "%'";
+                    $sql11 = "SELECT cross2 FROM  partsbox_db.fanocrosses where cross1 = '" . $search[1] . "%'";
                     $connection = $em->getConnection();
-                    $statement = $connection->prepare($sql);
+                    $statement = $connection->prepare($sql11);
                     $statement->execute();
                     $crosses = $statement->fetchAll();
                     $sa = array();
