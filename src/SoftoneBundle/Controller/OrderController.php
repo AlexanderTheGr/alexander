@@ -672,11 +672,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $crosses = $statement->fetchAll();
                     $sa = array();
                     foreach ($crosses as $cross) {
-                        $sa[] = $cross["cross2"];
+                        $sa[] = trim($cross["cross2"]);
                     }
                     echo $sql11;
                     if (count($sa)) {
-                        $sqlearch = "Select o.id from SoftoneBundle:Product o where o.supplierCode in (".  implode(",", $sa).") OR o.supplierCode like '" . $search[1] . "%'";
+                        $sqlearch = "Select o.id from SoftoneBundle:Product o where o.supplierCode in ('".  implode("','", $sa)."') OR o.supplierCode like '" . $search[1] . "%'";
                     } else {
                         $sqlearch = "Select o.id from SoftoneBundle:Product o where o.supplierCode like '" . $search[1] . "%'";
                     }
