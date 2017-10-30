@@ -1413,6 +1413,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //exit;
             //echo $data["MTRL"]."<BR>";
             //if ($i++ < 23000) continue;
+            
+            if ($data["MTRL"] < 127789) continue;
+            
             $entity = $this->getDoctrine()
                     ->getRepository($this->repository)
                     ->findOneBy(array("reference" => (int) $data["MTRL"]));
