@@ -1283,6 +1283,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $params["extrafunction"][] = "updatetecdoc";
             $this->setSetting("SoftoneBundle:Product:retrieveMtrl", serialize($params));
         }
+        /*
         $this->retrieveProduct($params);
         //echo 'ss';
         $params["fSQL"] = "SELECT VARCHAR05, MTRL FROM MTREXTRA WHERE VARCHAR05 != ''";
@@ -1290,13 +1291,15 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $datas = $softone->createSql($params);
         echo count($datas->data);
         //print_r($datas->data);
-        foreach ((array)$datas->data as $data) {
+        foreach ($datas->data as $data) {
             if ((int) $data->VARCHAR05 > 0) {
                 $sql = 'update `softone_product` set `catalogue` =  "' . (int) $data->VARCHAR05 . '" where reference = "' . $data->MTRL . '"';
                 echo $sql . "<BR>";
                 $this->getDoctrine()->getConnection()->exec($sql);
             }
         }
+         * 
+         */
         //exit;
         $sql = 'update `softone_product` set `tecdoc_supplier_id` =  `item_mtrmark` where tecdoc_supplier_id is null';
         $this->getDoctrine()->getConnection()->exec($sql);
@@ -1413,9 +1416,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //exit;
             //echo $data["MTRL"]."<BR>";
             //if ($i++ < 23000) continue;
-            
-            if ($data["MTRL"] < 149842) continue;
-            
             $entity = $this->getDoctrine()
                     ->getRepository($this->repository)
                     ->findOneBy(array("reference" => (int) $data["MTRL"]));
@@ -1549,9 +1549,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             } else {
                 $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->id . "'";
                 echo ".";
-                //echo $sql . "<BR>";
+                echo $sql . "<BR>";
                 //
-                //$em->getConnection()->exec($sql);
+                $em->getConnection()->exec($sql);
                 continue;
             }
             $entity = $this->getDoctrine()
@@ -1559,7 +1559,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     ->findOneBy(array("reference" => (int) $data[$params["softone_table"]]));
             if (@$entity->id > 0) {
                 $entity->tecdoc = $tecdoc;
-                //$entity->updatetecdoc();
+                $entity->updatetecdoc();
                 $entity->setProductFreesearch();
             }
             /*
