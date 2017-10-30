@@ -665,7 +665,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                     $session->set("fanomodel", $search[1]);
 
-                    $sql11 = "SELECT cross2 FROM  partsbox_db.fanocrosses where cross1 = '" . $search[1] . "%'";
+                    $sql11 = "SELECT cross2 FROM  partsbox_db.fanocrosses where cross1 LIKE '" . $search[1] . "%'";
                     $connection = $em->getConnection();
                     $statement = $connection->prepare($sql11);
                     $statement->execute();
@@ -680,7 +680,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     } else {
                         $sqlearch = "Select o.id from SoftoneBundle:Product o where o.supplierCode like '" . $search[1] . "%'";
                     }
-                    //echo $sqlearch; 
+                    echo $sqlearch; 
                     //$sqlearch = "Select o.id from SoftoneBundle:Product o where o.itemMtrgroup = '" . (int) $search[1] . "%'";
                 } else {
                     $search[1] = $this->clearstring($search[1]);
