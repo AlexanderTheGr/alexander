@@ -1290,7 +1290,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $datas = $softone->createSql($params);
         echo count($datas->data);
         //print_r($datas->data);
-        foreach ($datas->data as $data) {
+        foreach ((array)$datas->data as $data) {
             if ((int) $data->VARCHAR05 > 0) {
                 $sql = 'update `softone_product` set `catalogue` =  "' . (int) $data->VARCHAR05 . '" where reference = "' . $data->MTRL . '"';
                 echo $sql . "<BR>";
