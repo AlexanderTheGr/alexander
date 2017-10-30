@@ -678,6 +678,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     } else {
                         $sqlearch = "Select o.id from SoftoneBundle:Product o where o.supplierCode like '" . $search[1] . "%'";
                     }
+                    echo $sqlearch; 
                     //$sqlearch = "Select o.id from SoftoneBundle:Product o where o.itemMtrgroup = '" . (int) $search[1] . "%'";
                 } else {
                     $search[1] = $this->clearstring($search[1]);
