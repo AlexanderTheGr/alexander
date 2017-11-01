@@ -452,7 +452,7 @@ jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .SoftoneBundleGBGProductAdd .Soft
         data.qty = jQuery(this).val();
         data.store = jQuery("#store_" + store).val();
         $("#loaderer").show();
-        $.post("/edi/order/addorderitem/", data, function (result) {
+        $.post("/edi/order/addorderitemm/", data, function (result) {
             $("#loaderer").hide();
             if (result.error) {
                 toastr.error(result.message, result.message);
