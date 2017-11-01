@@ -439,10 +439,10 @@ function fororder(order) {
 }
 
 
-jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .SoftoneBundleProductEdi').live("keyup", function (e) {
+jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .SoftoneBundleGBGProductAdd .SoftoneBundleProductEdi').live("keyup", function (e) {
     if (e.keyCode == 13) {
         var data = {};
-        if (jQuery(this).attr('class') == 'SoftoneBundleProductEdi') {
+        if (jQuery(this).attr('class') == 'SoftoneBundleProductEdi' || jQuery(this).attr('class') == 'SoftoneBundleGBGProductAdd' ) {
             data.product = jQuery(this).attr('data-id');
             var store = data.product;
         } else {
