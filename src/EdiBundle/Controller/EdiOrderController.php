@@ -50,7 +50,7 @@ class EdiOrderController extends Main {
         $params['url'] = '/edi/edi/order/getitems/' . $id;
 
         $buttons = array();
-        
+
 
         $json = json_encode(array());
         $EdiOrder = $this->getDoctrine()
@@ -109,16 +109,16 @@ class EdiOrderController extends Main {
         }
         $buttons = array();
         $buttons[] = array("label" => 'Get PartMaster', 'position' => 'right', 'class' => 'btn-success');
-        
+
         $dataarray[] = array("value" => "06", "name" => "06");
         $dataarray[] = array("value" => "10", "name" => "10");
         $dataarray[] = array("value" => "12", "name" => "12");
         $dataarray[] = array("value" => "14", "name" => "14");
         $dataarray[] = array("value" => "15", "name" => "15");
-        
+
         //$tabfields["PurchaseOrderNo"] = array("label" => "Purchase Order No","value"=>1);
         $tabfields["remarks"] = array("label" => "Remarks");
-        $tabfields["store"] = array("label" => "Store",'type' => "select", 'dataarray' => $dataarray);
+        $tabfields["store"] = array("label" => "Store", 'type' => "select", 'dataarray' => $dataarray);
         $tabfields["ship"] = array("label" => "Ship");
 
         $tabforms = $this->getFormLyFields($entity, $tabfields);
@@ -175,7 +175,7 @@ class EdiOrderController extends Main {
     }
 
     function getTabContentSearch($edi) {
-        $response = $this->get('twig')->render('EdiBundle:Edi:ediordersearch.html.twig', array('edi'=>$edi));
+        $response = $this->get('twig')->render('EdiBundle:Edi:ediordersearch.html.twig', array('edi' => $edi));
         return str_replace("\n", "", htmlentities($response));
     }
 
@@ -194,6 +194,9 @@ class EdiOrderController extends Main {
             $Ediitem = $this->getDoctrine()
                     ->getRepository('EdiBundle:EdiItem')
                     ->findOneBy(array("product" => $request->request->get("product")));
+            $Ediitem = $this->getDoctrine()
+                    ->getRepository('EdiBundle:EdiItem')
+                    ->find($request->request->get("product"));
         } else {
             return;
         }
@@ -208,37 +211,37 @@ class EdiOrderController extends Main {
         } elseif ($request->request->get("order") == 0) {
 
             /*
-            $query = $em->createQuery(
-                            'SELECT p
-                            FROM EdiBundle:EdiOrder p
-                            WHERE 
-                            p.reference = 0
-                            AND p.Edi = :edi AND p.store = :store'
-                    )->setParameter('edi', $Ediitem->getEdi());
-            $EdiOrder = $query->setMaxResults(1)->getOneOrNullResult();
-            */
+              $query = $em->createQuery(
+              'SELECT p
+              FROM EdiBundle:EdiOrder p
+              WHERE
+              p.reference = 0
+              AND p.Edi = :edi AND p.store = :store'
+              )->setParameter('edi', $Ediitem->getEdi());
+              $EdiOrder = $query->setMaxResults(1)->getOneOrNullResult();
+             */
             $EdiOrder = $this->getDoctrine()
-                    ->getRepository('EdiBundle:EdiOrder')->findOneBy(array("reference"=>'',"store"=>$request->request->get("store"),"Edi"=>$Ediitem->getEdi()));
+                            ->getRepository('EdiBundle:EdiOrder')->findOneBy(array("reference" => '', "store" => $request->request->get("store"), "Edi" => $Ediitem->getEdi()));
             if (!$EdiOrder) {
                 $EdiOrder = new EdiOrder;
                 $dt = new \DateTime("now");
                 $this->newentity[$this->repository] = $EdiOrder;
                 $EdiOrder->setEdi($Ediitem->getEdi());
-                $EdiOrder->setStore($request->request->get("store")?$request->request->get("store"):"Default");
+                $EdiOrder->setStore($request->request->get("store") ? $request->request->get("store") : "Default");
                 $EdiOrder->setShip("");
-                $EdiOrder->setRemarks($Ediitem->getEdi()->getName()."_".$request->request->get("store"));
+                $EdiOrder->setRemarks($Ediitem->getEdi()->getName() . "_" . $request->request->get("store"));
                 $EdiOrder->setInsdate($dt);
                 $EdiOrder->setCreated($dt);
                 $EdiOrder->setModified($dt);
                 $this->flushpersist($EdiOrder);
-                $EdiOrder->setRemarks("EL1-" . $EdiOrder->getId()." ".$Ediitem->getEdi()->getName()."_".$request->request->get("store"));
-                $this->flushpersist($EdiOrder);                
+                $EdiOrder->setRemarks("EL1-" . $EdiOrder->getId() . " " . $Ediitem->getEdi()->getName() . "_" . $request->request->get("store"));
+                $this->flushpersist($EdiOrder);
             }
-            $EdiOrder->setRemarks("EL1-" . $EdiOrder->getId()." ".$Ediitem->getEdi()->getName()."_".$request->request->get("store"));
-            $this->flushpersist($EdiOrder);   
+            $EdiOrder->setRemarks("EL1-" . $EdiOrder->getId() . " " . $Ediitem->getEdi()->getName() . "_" . $request->request->get("store"));
+            $this->flushpersist($EdiOrder);
         }
 
-        
+
         //$availability = $Ediitem->getQtyAvailability($request->request->get("qty"));
         //$Available = (array) $availability["Header"];
         //$price = $availability["PriceOnPolicy"];
@@ -280,14 +283,14 @@ class EdiOrderController extends Main {
         $EdiOrderItem->setEdiItem($Ediitem);
         $EdiOrderItem->setField("qty", $qty);
         $EdiOrderItem->setField("price", $price);
-        $EdiOrderItem->setField("fprice", (float)$price * $qty);
+        $EdiOrderItem->setField("fprice", (float) $price * $qty);
         $EdiOrderItem->setField("discount", 0);
         $EdiOrderItem->setField("store", $store);
         $EdiOrderItem->setField("chk", 1);
 
         try {
             $this->flushpersist($EdiOrderItem);
-            $json = json_encode(array("error" => false,"message"=>$Ediitem->getEdi()->getName()." ".$Ediitem->getItemCode()." ανοιχτηκε επιτυχώς"));
+            $json = json_encode(array("error" => false, "message" => $Ediitem->getEdi()->getName() . " " . $Ediitem->getItemCode() . " ανοιχτηκε επιτυχώς"));
         } catch (\Exception $e) {
             $json = json_encode(array("error" => true, "message" => "Product Exists"));
         }
@@ -478,7 +481,7 @@ class EdiOrderController extends Main {
             }
             $data["orginal"] .= "</ul>";
 
-            
+
             $attributs = $tecdoc->getAssignedArticlesByIds(
                     array(
                         "articleId" => $item->getTecdocArticleId(),
@@ -501,9 +504,9 @@ class EdiOrderController extends Main {
                 //}
             }
             $descrption .= "</ul>";
-            
-            $data["img"] = $descrption ;
-            
+
+            $data["img"] = $descrption;
+
             echo $descrption;
         }
 
