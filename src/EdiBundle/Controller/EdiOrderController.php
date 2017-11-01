@@ -276,8 +276,9 @@ class EdiOrderController extends Main {
             $EdiOrderItem = new EdiOrderItem;
         }
         $qty = $request->request->get("qty");
+        $price = $request->request->get("price");
 
-        $price = $Ediitem->getEdiQtyAvailability($qty);
+        $price = $price > 0 ? $price : $Ediitem->getEdiQtyAvailability($qty);
         //echo $price;
         $EdiOrderItem->setEdiOrder($EdiOrder);
         $EdiOrderItem->setEdiItem($Ediitem);
