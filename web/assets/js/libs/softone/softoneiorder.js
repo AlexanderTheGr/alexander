@@ -469,7 +469,7 @@ jQuery('.SoftoneBundleGBGProductAdd').live("click", function (e) {
         var data = {};
         data.product = jQuery(this).attr('data-id');
         var store = data.product;
-        data.qty = jQuery(this).val();
+        data.qty = 1;
         data.store = jQuery("#store_" + store).val();
         $("#loaderer").show();
         $.post("/edi/order/addorderitemm/", data, function (result) {
