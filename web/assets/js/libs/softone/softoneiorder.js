@@ -439,6 +439,7 @@ function fororder(order) {
 }
 
 
+
 jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .SoftoneBundleGBGProductAdd .SoftoneBundleProductEdi').live("keyup", function (e) {
     if (e.keyCode == 13) {
         var data = {};
