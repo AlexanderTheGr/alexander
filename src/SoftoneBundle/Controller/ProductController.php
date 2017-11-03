@@ -891,9 +891,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $fields[] = array("name" => $this->getTranslation("Product Code"), "index" => 'erpCode');
         $fields[] = array("name" => $this->getTranslation("Product Supplier"), "index" => 'supplierId:title', 'type' => 'select', 'object' => 'SoftoneSupplier');
         $fields[] = array("name" => $this->getTranslation("Offer"), "index" => 'productSale:title', 'type' => 'select', 'object' => 'ProductSale');
+        $fields[] = array("name" => "Article Name", "index" => 'tecdocArticleName');
         $fields[] = array("name" => $this->getTranslation("Product Place"), "index" => 'itemMtrplace');
         $fields[] = array("name" => $this->getTranslation("Syncrhonize"), "index" => 'cccPriceUpd', 'method' => 'yesno');
-
+        
 
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'foxline') {
             $fields[] = array("name" => $this->getTranslation("Retail"), "index" => 'itemPricew02');
