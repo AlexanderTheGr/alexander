@@ -2024,10 +2024,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $availability = false;
             if (($handle = fopen($file, "r")) !== FALSE) {
                 //echo 'sss';
-                $sql = "update softone_product set gbg = '0'";
-                echo $sql . "<BR>";
+                //$sql = "update softone_product set gbg = '0'";
+                //echo $sql . "<BR>";
                 //if ($i++ > 100) exit;
-                $em->getConnection()->exec($sql);
+                //$em->getConnection()->exec($sql);
                 while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
                     //$gbg = ($data[1] + $data[2]) * 10;
                     if ($gbg > 0) {
