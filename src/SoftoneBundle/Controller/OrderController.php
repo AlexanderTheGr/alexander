@@ -847,6 +847,22 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $i = 0;
             $recordsTotal = count($results);
             $recordsFiltered = count($results);
+            $model_str = "";
+            if ($this->getSetting("SoftoneBundle:Softone:apothiki") != 'tsakonas') {
+                $sql = "SELECT *  FROM  partsbox_db.fanopoiia_category where model_id = '" . $session->get("fanomodel") . "'";
+                $connection = $em->getConnection();
+                $statement = $connection->prepare($sql);
+                $statement->execute();
+                $brands = $statement->fetchAll();
+                if ($brands) {
+                    //echo $brands[0]["model_str"];
+                    //$orderItem->setRemarks($brands[0]["model_str"]);
+                    //$this->flushpersist($order);
+                    $model_str = $brands[0]["model_str"];
+                }
+            }
+            
+            
             foreach (@(array) $results as $result) {
                 $json = array();
                 foreach ($data["fields"] as $field) {
@@ -909,6 +925,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $pricer = number_format($pricer * $vat, 2, '.', '');
                 }
                 $json[4] = $obj->getArticleAttributes2($articleIds2["linkingTargetId"]);
+                if ($model_str) {
+                    $json[5] = $model_str;
+                }
                 $json[6] = $pricer;
                 ;
                 $json[7] = $obj->getDiscount($customer, $vat);
