@@ -845,6 +845,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
             $r = explode(":", $this->repository);
             $i = 0;
+            $recordsTotal = count($results);
+            $recordsFiltered = count($results);
             foreach (@(array) $results as $result) {
                 $json = array();
                 foreach ($data["fields"] as $field) {
