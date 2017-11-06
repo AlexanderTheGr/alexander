@@ -973,6 +973,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $data["data"] = $jsonarr;
         $data["recordsTotal"] = $recordsTotal;
         $data["recordsFiltered"] = $recordsFiltered;
+        $data["length"] = 1000;
         return json_encode($data);
     }
 
