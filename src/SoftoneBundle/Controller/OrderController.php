@@ -820,8 +820,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $query = $em->createQuery(
                                 $sql
                         )
-                        ->setMaxResults($request->request->get("length"))
-                        ->setFirstResult($request->request->get("start"))
+                        //->setMaxResults($request->request->get("length"))
+                        //->setFirstResult($request->request->get("start"))
                 ;
                 //echo $sql."<BR>";    
                 /*
