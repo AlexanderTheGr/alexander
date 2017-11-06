@@ -2047,7 +2047,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         return $availability;
     }
     
-    
+    /**
+     * 
+     * @Route("/product/retrieveApothemaGbg")
+     */    
     function retrieveApothemaGbg($filters = false) {
         $em = $this->getDoctrine()->getManager();
         $zip = new \ZipArchive;
