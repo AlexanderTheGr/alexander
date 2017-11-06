@@ -2002,6 +2002,51 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //}
     }
 
+    /**
+     * 
+     * @Route("/product/retrievePricesGbg")
+     */
+    
+    function retrievePricesGbg() {
+        $em = $this->getDoctrine()->getManager();
+        $zip = new \ZipArchive;
+        // OUTOFSTOCK_ALL.ZIP
+        $start = microtime(true);
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") != 'tsakonas')
+            return;
+        
+        
+        if ($zip->open('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/PRICELIST_RETAIL.ZIP') === TRUE) {
+            //echo 'sssss';
+            $zip->extractTo('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/');
+            $zip->close();
+            $file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/PRICELIST_RETAIL.txt";
+            $availability = false;
+            if (($handle = fopen($file, "r")) !== FALSE) {
+                //echo 'sss';
+                $sql = "update softone_product set gbg = '0'";
+                echo $sql . "<BR>";
+                //if ($i++ > 100) exit;
+                $em->getConnection()->exec($sql);
+                while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
+                    //$gbg = ($data[1] + $data[2]) * 10;
+                    if ($gbg > 0) {
+                        $sql = "update softone_product set item_pricer = '" . $data[8] . "' where item_code2 = '" . $data[0] . "'";
+                        echo $sql . "<BR>";
+                        if ($i++ > 100) exit;
+                        //$em->getConnection()->exec($sql);
+                    }
+                }
+            }
+        }
+
+
+        $time_elapsed_secs = microtime(true) - $start;
+        echo "<BR>[" . $time_elapsed_secs . "]";
+        return $availability;
+    }
+    
+    
     function retrieveApothemaGbg($filters = false) {
         $em = $this->getDoctrine()->getManager();
         $zip = new \ZipArchive;
