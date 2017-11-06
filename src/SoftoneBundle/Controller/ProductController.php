@@ -2030,12 +2030,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 //$em->getConnection()->exec($sql);
                 while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
                     //$gbg = ($data[1] + $data[2]) * 10;
-                    if ($gbg > 0) {
+                    //if ($gbg > 0) {
                         $sql = "update softone_product set item_pricer = '" . $data[8] . "' where item_code2 = '" . $data[0] . "'";
                         echo $sql . "<BR>";
                         if ($i++ > 100) exit;
                         //$em->getConnection()->exec($sql);
-                    }
+                    //}
                 }
             }
         }
@@ -2043,6 +2043,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $time_elapsed_secs = microtime(true) - $start;
         echo "<BR>[" . $time_elapsed_secs . "]";
+        exit;
         return $availability;
     }
     
