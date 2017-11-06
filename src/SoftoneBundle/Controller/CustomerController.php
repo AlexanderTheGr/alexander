@@ -249,7 +249,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ($vats as $vat) {
             $vatsts[] = array("value" => (string) $vat->getId(), "name" => $vat->getVat()); // $supplier->getSupplierName();
         }
-        
+
         $fields["customerCode"] = array("label" => $this->getTranslation("Customer Code"), "className" => "col-md-6", "required" => true);
         $fields["customerName"] = array("label" => $this->getTranslation("Customer Name"), "className" => "col-md-6", "required" => true);
         $fields["customerAfm"] = array("label" => $this->getTranslation("Customer Afm"), "className" => "col-md-6", "required" => true);
@@ -525,6 +525,10 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             }
             $sql = "update `softone_customer` SET `customer_payment` = '1000' WHERE `customer_payment` IS NULL";
             $this->getDoctrine()->getConnection()->exec($sql);
+        }
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") != 'tsakonas') {
+            $sql = "update `softone_customer` set `price_field` = 'itemPricer' WHERE `price_field` IS NULL";
+            $this->getDoctrine()->getConnection()->exec($sql);            
         }
     }
 
