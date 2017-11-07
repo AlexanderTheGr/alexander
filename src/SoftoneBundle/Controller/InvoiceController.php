@@ -333,6 +333,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
 
         $this->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
                 ->addField(array("name" => $this->getTranslation("Invoice"), "index" => 'invoice'))
+                 ->addField(array("name" => $this->getTranslation("Supplier"), "index" => 'supplier:supplierName'))
                 ->addField(array("name" => $this->getTranslation("To Softone"), "index" => 'reference', 'method' => 'yesno'))
                 ->addField(array("name" => $this->getTranslation("Date Time"), 'datetime' => 'Y-m-d H:s:i', "index" => 'created'));
 
@@ -372,7 +373,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
          * 
          */
         $objectArr = array();
-        $objectArr[0]["TRDR"] = 9818; //$customer->getReference();
+        $objectArr[0]["TRDR"] = $invoice->getSupplier()->getReference(); //9818; //$customer->getReference();
         $objectArr[0]["SERIESNUM"] = $invoice->getId();
         $objectArr[0]["FINCODE"] = $invoice->getInvoice();
         //$objectArr[0]["TRDBRANCH"] = $order->getTrdbranch();
