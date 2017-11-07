@@ -62,7 +62,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         $out = $this->save();
         $jsonarr = array();
         if ($this->newentity[$this->repository]->getId()) {
-            $jsonarr["returnurl"] = "/invoice/view/" . $this->newentity[$this->repository]->getId();
+            //$jsonarr["returnurl"] = "/invoice/view/" . $this->newentity[$this->repository]->getId();
         }
         $json = json_encode($jsonarr);
         return new Response(
