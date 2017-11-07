@@ -188,7 +188,6 @@ class InvoiceItem {
      */
     private $code;
 
-
     /**
      * Set code
      *
@@ -196,8 +195,7 @@ class InvoiceItem {
      *
      * @return InvoiceItem
      */
-    public function setCode($code)
-    {
+    public function setCode($code) {
         $this->code = $code;
 
         return $this;
@@ -208,15 +206,14 @@ class InvoiceItem {
      *
      * @return string
      */
-    public function getCode()
-    {
+    public function getCode() {
         return $this->code;
     }
+
     /**
      * @var \SoftoneBundle\Entity\Product
      */
     private $product;
-
 
     /**
      * Set product
@@ -225,8 +222,7 @@ class InvoiceItem {
      *
      * @return InvoiceItem
      */
-    public function setProduct(\SoftoneBundle\Entity\Product $product = null)
-    {
+    public function setProduct(\SoftoneBundle\Entity\Product $product = null) {
         $this->product = $product;
 
         return $this;
@@ -237,8 +233,16 @@ class InvoiceItem {
      *
      * @return \SoftoneBundle\Entity\Product
      */
-    public function getProduct()
-    {
+    public function getProduct() {
         return $this->product;
     }
+
+    public function getForOrderItemsTitle() {
+        $out = '<a title="' . $this->getProduct()->getTitle() . '" class="productfano_info" car="" data-articleId="' . $this->getProduct()->getTecdocArticleId() . '" data-ref="' . $this->getProduct()->getId() . '">' . $this->getProduct()->getTitle() . '</a>';
+        $out .= '<div class="ediprices ediprices_' . $this->getProduct()->getId() . '"></div>';
+        if ($this->remarks)
+            $out .= '<BR><span class="text-sm text-info">' . $this->remarks . '</span>'; // "<BR>".$this->remarks;
+        return $out;
+    }
+
 }
