@@ -313,7 +313,9 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         $this->repository = 'SoftoneBundle:Invoice';
 
         $this->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
-                ->addField(array("name" => $this->getTranslation("Invoice"), "index" => 'invoice'));
+                ->addField(array("name" => $this->getTranslation("Invoice"), "index" => 'invoice'))
+                ->addField(array("name" => $this->getTranslation("Date Time"), 'datetime' => 'Y-m-d H:s:i', "index" => 'created'));
+        
         $json = $this->datatable();
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
