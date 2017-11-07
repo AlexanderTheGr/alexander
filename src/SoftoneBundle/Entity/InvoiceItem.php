@@ -7,6 +7,15 @@ namespace SoftoneBundle\Entity;
  */
 class InvoiceItem {
 
+    public function getField($field) {
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
+
     /**
      * @var integer
      */
