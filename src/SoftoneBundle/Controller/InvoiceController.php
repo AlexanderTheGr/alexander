@@ -77,7 +77,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function editorderitemAction(Request $request) {
         $orderItem = $this->getDoctrine()
-                ->getRepository('SoftoneBundle:InvoiceImte')
+                ->getRepository('SoftoneBundle:InvoiceItem')
                 ->find($request->request->get("id"));
         if ($request->request->get("qty") != '') {
             $orderItem->setQty($request->request->get("qty"));
