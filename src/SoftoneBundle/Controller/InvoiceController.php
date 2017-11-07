@@ -95,6 +95,8 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
             //$dtparams[] = array("name" => "Code", "index" => 'code');
             $dtparams[] = array("name" => $this->getTranslation("Product Name"), "function" => 'getForOrderItemsTitle', 'search' => 'text');
             $dtparams[] = array("name" => $this->getTranslation("Product Code"), "index" => 'product:erpCode');
+            $dtparams[] = array("name" => $this->getTranslation("Supplier"), "function" => 'getForOrderSupplier', 'search' => 'text');
+            $dtparams[] = array("name" => $this->getTranslation("Invetory"), "function" => 'getProductApothiki', 'search' => 'text');
             $dtparams[] = array("name" => $this->getTranslation("Qty"), "input" => "text", "index" => 'qty');
             //$dtparams[] = array("name" => "Title", "index" => 'km');
             //$dtparams[] = array("name" => "Price", "index" => 'storeWholeSalePrice');
@@ -113,14 +115,14 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         $this->addTab(array("title" => $this->getTranslation("General"), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         if ($id > 0 AND count($entity) > 0) {
             $tabs[] = array("title" => $this->getTranslation("Items"), "datatables" => $datatables, "form" => '', "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
-        } 
+        }
         foreach ((array) $tabs as $tab) {
             $this->addTab($tab);
-        }        
+        }
         $json = $this->tabs();
         return $json;
     }
-    
+
     /**
      * @Route("/invoice/invoice/getitems/{id}")
      */
@@ -148,7 +150,6 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
-    
 
     /**
      * @Route("/invoice/getdatatable")
