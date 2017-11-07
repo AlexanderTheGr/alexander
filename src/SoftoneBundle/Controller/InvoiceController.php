@@ -189,11 +189,24 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     /**
-     * @Route("/invoice/readInvoiceFile")
+     * @Route("/invoice/readInvoices")
      */
-    public function readInvoiceFile() {
+    public function readInvoices() {
+        $inv = '/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/invoices';
+        $files1 = scandir($dir);
+        foreach($files1 as $file) {
+            if (!in_array($file,array(".",".."))) {
+                echo $file."<BR>";
+            }   
+        }
+        exit;
+        //$this->readInvoiceFile($file);
+    }
+    
+    
+    public function readInvoiceFile($file) {
         $em = $this->getDoctrine()->getManager();
-        $file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/invoice.csv";
+        //$file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/invoice.csv";
         $availability = false;
         $inv = array();
         if (($handle = fopen($file, "r")) !== FALSE) {
