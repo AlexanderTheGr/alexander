@@ -17,7 +17,7 @@
             </options>
         </field>
         <many-to-one
-            field="Invoice"
+            field="invoice"
             target-entity="Invoice"
             inversed-by="InvoiceItem"
             join-column="invoice">
