@@ -212,4 +212,33 @@ class InvoiceItem {
     {
         return $this->code;
     }
+    /**
+     * @var \SoftoneBundle\Entity\Product
+     */
+    private $product;
+
+
+    /**
+     * Set product
+     *
+     * @param \SoftoneBundle\Entity\Product $product
+     *
+     * @return InvoiceItem
+     */
+    public function setProduct(\SoftoneBundle\Entity\Product $product = null)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \SoftoneBundle\Entity\Product
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
 }
