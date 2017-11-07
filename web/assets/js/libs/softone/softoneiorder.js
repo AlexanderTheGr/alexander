@@ -124,6 +124,22 @@ jQuery(".savesoftone").live('click', function (e) {
         }
     })
 })
+jQuery(".saveinvoicesoftone").live('click', function (e) {
+    var data = {}
+    data.id = jQuery(this).attr('data-id');
+    $("#loaderer").show();
+    $.post("/invoice/saveSoftone", data, function (result) {
+        $("#loaderer").hide();
+        var json = angular.fromJson(result);
+        if (json.error) {
+            toastr.error(json.error, "Error");
+        } else {
+            toastr.success(json.error, "Success");
+            $(".apestaleni").show();
+        }
+    })
+})
+
 
 jQuery(".EdiSendOrder").live('click', function (e) {
     var data = {}
