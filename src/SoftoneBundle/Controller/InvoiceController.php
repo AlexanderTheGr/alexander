@@ -196,7 +196,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         $files1 = scandir($dir);
         foreach($files1 as $file) {
             if (!in_array($file,array(".",".."))) {
-                echo $file."<BR>";
+                echo $dir.$file."<BR>";
             }   
         }
         exit;
