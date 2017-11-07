@@ -221,9 +221,9 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                     $invoiceItem->setInvoice($invoice);
                     $invoiceItem->setProduct($product);
                     $invoiceItem->setCode($product->getErpCode());
-                    $invoiceItem->setQty($data[9]);
+                    $invoiceItem->setQty($data[5]);
                     $invoiceItem->setPrice($data[7]);
-                    $invoiceItem->setFprice($data[7] * $data[9]);
+                    $invoiceItem->setFprice($data[7] * $data[5]);
                     $invoiceItem->setDiscount(0);
                     $invoiceItem->setChk(1);
                     $this->flushpersist($invoiceItem);
