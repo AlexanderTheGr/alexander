@@ -9,7 +9,7 @@ use AppBundle\Controller\Main as Main;
 
 class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
 
-    var $repository = 'SoftoneBundle:Route';
+    var $repository = 'SoftoneBundle:Invoice';
     var $newentity = '';
 
     /**
