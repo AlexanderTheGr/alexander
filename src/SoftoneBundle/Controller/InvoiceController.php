@@ -322,5 +322,107 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+    /**
+     * @Route("/invoice/saveSoftone")
+     */
+    function saveSoftone(Request $request) {
+        $vat = 1; //1.24;
+        $id = $request->request->get("id");
+        $softone = new Softone();
+        $object = "PURDOC";
+        $invoice = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Invoice")
+                ->find($id);
+        /*
+        $customer = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Customer")
+                ->find($order->getCustomer());
+        */
+        if ($order->getVat())
+            $vatsst = $id > 0 ? $order->getVat()->getVatsts() : $this->getSetting("SoftoneBundle:Order:Vat");
+        else
+            $vatsst = 1410; //$this->getSetting("SoftoneBundle:Product:Vat");
 
+        if ($order->getReference() > 0) {
+            $data = $softone->delData($object, (int) $order->getReference());
+        }
+        $objectArr = array();
+        $objectArr[0]["SUPPLIER"] = 9818;//$customer->getReference();
+        $objectArr[0]["SERIESNUM"] = $order->getId();
+        $objectArr[0]["FINCODE"] = $invoice->getInvoice();
+        //$objectArr[0]["TRDBRANCH"] = $order->getTrdbranch();
+        //$objectArr[0]["PAYMENT"] = $customer->getCustomerPayment() > 0 ? $customer->getCustomerPayment() : 1003;
+        //$objectArr[0]["TFPRMS"] = $model->tfprms;
+        /*
+        if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
+            $objectArr[0]["ACNMSK"] = $order->getUser()->getUsername();
+            $objectArr[0]["INT01"] = $order->getUser()->getReference();
+        }
+        */
+        $objectArr[0]["SERIES"] = 7021;//$order->getSoftoneStore()->getSeries();
+        $objectArr[0]["VATSTS"] = $this->getSetting("SoftoneBundle:Order:Vat") != '' ? $this->getSetting("SoftoneBundle:Order:Vat") : $customer->getCustomerVatsts();
+        $objectArr[0]["COMMENTS"] = "";//$order->getRemarks(); //$customer->getCustomerPayment() > 0 ? $customer->getCustomerPayment() : 1003; // Mage::app()->getRequest()->getParam('comments');
+        $objectArr[0]["REMARKS"] = "";//$order->getRemarks();
+        $objectArr[0]["COMMENTS"] = "";//$order->getComments();
+        //$objectArr[0]["WHOUSE"] = 1101;
+        //$objectArr[0]["DISC1PRC"] = 10;   
+        $dataOut[$object] = (array) $objectArr;
+
+
+        $dataOut["ITELINES"] = array();
+
+        $k = 0;
+        //print_r($dataOut);
+        foreach ($order->getItems() as $item) {
+            //$dataOut["ITELINES"][] = array("QTY1" => $item->getQty(), "VAT" => $vat, "LINENUM" => $item->getLineval(), "MTRL" => $item->getProduct()->getReference());
+            $dataOut["ITELINES"][] = array(
+                "VAT" => $vatsst,
+                "QTY1" => $item->getQty(),
+                "LINENUM" => $k++,
+                "MTRL" => $item->getProduct()->getReference(),
+                "PRICE" => $item->getPrice() / $vat,
+                "LINEVAL" => $item->getFprice() / $vat,
+                "DISC1PRC" => 0//$item->getDisc1prc()
+            );
+        }
+
+        $locateinfo = "MTRL,NAME,PRICE,QTY1,VAT;ITELINES:DISC1PRC,ITELINES:LINEVAL,MTRL,MTRL_ITEM_CODE,MTRL_ITEM_CODE1,MTRL_ITEM_NAME,MTRL_ITEM_NAME1,PRICE,QTY1;SALDOC:BUSUNITS,EXPN,TRDR,MTRL,PRICE,QTY1,VAT";
+        print_r($dataOut);
+        file_put_contents("/home2/partsbox/public_html/OrderdatIn.txt", print_r($dataOut, true));
+        //$out = $softone->setData((array) $dataOut, $object, (int) 0);
+        print_r($out);
+        exit;
+        if (@$out->id == 0) {
+            $out = $softone->setData((array) $dataOut, $object, (int) 0);
+        }
+        if (@$out->id == 0) {
+            $out = $softone->setData((array) $dataOut, $object, (int) 0);
+        }
+        if (@$out->id == 0) {
+            $out = $softone->setData((array) $dataOut, $object, (int) 0);
+        }
+        if (@$out->id > 0) {
+            if ($order->getReference() == 0) {
+                foreach ($order->getItems() as $item) {
+                    $product = $item->getProduct();
+                    if ($product) {
+                        $reserved = (int) $product->getReserved();
+                        $reserved += $item->getQty();
+                        $product->setReserved($reserved);
+                        $this->flushpersist($product);
+                        //echo "\n(" . $reserved . ")\n";
+                    }
+                }
+            }
+
+            $order->setReference($out->id);
+            $this->flushpersist($order);
+        }
+        //exit;
+
+        $json = json_encode($out);
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+    }
 }
