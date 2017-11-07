@@ -91,6 +91,27 @@ setTimeout(function () {
             })
         }
     })
+    jQuery("select.form-control").chosen({width: "100%"});
+    var obj = $(".invoicecode input");
+    var $elem = jQuery(".invoicecode input").autocomplete({
+        source: "/product/autocompletesearch",
+        method: "POST",
+        minLength: 2,
+        select: function (event, ui) {
+            var data = {};
+            data.erp_code = ui.item.value;
+            data.id = obj.attr("id");
+            $("#loaderer").show();
+            $.post("/invoice/addItem", data, function (result) {
+                $("#loaderer").hide();
+                var table = dt_tables["ctrlgettabs"];
+                table.fnFilter();
+                jQuery('.synafiacode input').val('')
+                jQuery("#SoftoneBundle:Product:sisxetisi:"+data.id).val(result.sisxetisi);
+            })
+        }
+    })
+    
 }, 1000)
 
 jQuery('.brandlia').live('click', function () {
