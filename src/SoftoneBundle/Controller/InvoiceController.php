@@ -105,7 +105,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
             );
         }
         $fprice = ($orderItem->getPrice() * $orderItem->getQty()) * (1 - ($orderItem->getField('disc1prc') / 100));
-        $orderItem->setLineval($fprice);
+        $orderItem->setFprice($fprice);
         try {
             $this->flushpersist($orderItem);
             $json = json_encode(array("error" => false));
