@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="SoftoneBundle\Entity\InvoiceItem" repository-class="SoftoneBundle\Entity\InvoiceItemRepository"  table="edi_order_item">
+        <indexes>
+            <index name="invoice" columns="invoice"/>
+        </indexes>
+        <unique-constraints>
+            <unique-constraint name="invoiceitem" columns="ediitem,invoice"/>
+        </unique-constraints>    
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+      
+        <field name="invoice" type="string" column="invoice" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+            </options>
+        </field>
+        <many-to-one
+            field="Invoice"
+            target-entity="Invoice"
+            inversed-by="InvoiceItem"
+            join-column="invoice">
+            <join-column name="invoice" referenced-column-name="id" />
+        </many-to-one> 
+       
+        <field name="qty" type="integer" column="qty" nullable="false">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field name="price" type="decimal" column="price" precision="10" scale="2" nullable="false"/>
+        <field name="discount" type="decimal" column="discount" precision="10" scale="2" nullable="false"/>
+        <field name="fprice" type="decimal" column="fprice" precision="10" scale="2" nullable="false"/>
+        <field name="chk" type="boolean" column="chk" nullable="false"/>
+    </entity>
+</doctrine-mapping>
