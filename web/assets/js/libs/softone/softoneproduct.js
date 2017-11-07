@@ -106,8 +106,7 @@ setTimeout(function () {
                 $("#loaderer").hide();
                 var table = dt_tables["ctrlgettabs"];
                 table.fnFilter();
-                jQuery('.synafiacode input').val('')
-                jQuery("#SoftoneBundle:Product:sisxetisi:"+data.id).val(result.sisxetisi);
+                jQuery('.invoicecode input').val('')
             })
         }
     })
