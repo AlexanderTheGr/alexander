@@ -1,5 +1,5 @@
 <?php
-// php app/console doctrine:generate:entities ServicebookBundle
+// php app/console doctrine:generate:entities SoftoneBundle
 
 // php app/console doctrine:schema:update
 /**
