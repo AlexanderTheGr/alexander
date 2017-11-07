@@ -198,6 +198,24 @@ jQuery(".SoftoneBundleInvoiceItemQty").live('keyup', function (e) {
  
 
 
+jQuery(".deleteinvoiceitem").live('click', function (e) {
+
+    var data = {}
+    data.id = jQuery(this).attr('data-id');
+    data.qty = 0;
+    $("#loaderer").show();
+    $.post("/invoice/editinvoiceitem/", data, function (result) {
+        $("#loaderer").hide();
+        var json = angular.fromJson(result);
+        if (json.error) {
+            toastr.error(json.message, "Error");
+        }
+        var table = dt_tables["ctrlgettabs"];
+        //$(".offcanvas-search").click();
+        table.fnFilter();
+    })
+
+})
 
 jQuery(".deleteitem").live('click', function (e) {
 
