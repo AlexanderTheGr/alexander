@@ -220,10 +220,15 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                         ->getRepository($this->repository)
                         ->findOneBy(array('invoice' => $data[0]));
 
+
                 if (!$invoice) {
+                    $supplier = $this->getDoctrine()
+                            ->getRepository("SoftoneBundle:Supplier")
+                            ->find(1);
                     $dt = new \DateTime("now");
                     $invoice = new Invoice;
                     $invoice->setInvoice($data[0]);
+                    $invoice->setSupplier($supplier);
                     $invoice->setTs($dt);
                     $invoice->setCreated($dt);
                     $invoice->setModified($dt);
@@ -333,7 +338,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
 
         $this->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
                 ->addField(array("name" => $this->getTranslation("Invoice"), "index" => 'invoice'))
-                 ->addField(array("name" => $this->getTranslation("Supplier"), "index" => 'supplier:supplierName'))
+                ->addField(array("name" => $this->getTranslation("Supplier"), "index" => 'supplier:supplierName'))
                 ->addField(array("name" => $this->getTranslation("To Softone"), "index" => 'reference', 'method' => 'yesno'))
                 ->addField(array("name" => $this->getTranslation("Date Time"), 'datetime' => 'Y-m-d H:s:i', "index" => 'created'));
 
