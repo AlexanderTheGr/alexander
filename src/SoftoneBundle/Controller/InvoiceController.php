@@ -192,7 +192,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/invoice/readInvoices")
      */
     public function readInvoices() {
-        $dir = '/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/invoices';
+        $dir = '/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/invoices/';
         $files1 = scandir($dir);
         foreach($files1 as $file) {
             if (!in_array($file,array(".",".."))) {
