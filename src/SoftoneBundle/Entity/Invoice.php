@@ -289,4 +289,33 @@ class Invoice extends Entity {
     {
         return $this->items;
     }
+    /**
+     * @var integer
+     */
+    private $reference = '0';
+
+
+    /**
+     * Set reference
+     *
+     * @param integer $reference
+     *
+     * @return Invoice
+     */
+    public function setReference($reference)
+    {
+        $this->reference = $reference;
+
+        return $this;
+    }
+
+    /**
+     * Get reference
+     *
+     * @return integer
+     */
+    public function getReference()
+    {
+        return $this->reference;
+    }
 }
