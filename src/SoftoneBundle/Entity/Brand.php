@@ -1,5 +1,10 @@
 <?php
+// php app/console doctrine:generate:entities ServicebookBundle
 
+// php app/console doctrine:schema:update
+/**
+ * Brand
+ */
 namespace SoftoneBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
