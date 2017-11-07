@@ -147,7 +147,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
             $dtparams[] = array("name" => $this->getTranslation("Invetory"), "function" => 'getProductApothiki', 'search' => 'text');
             $dtparams[] = array("name" => $this->getTranslation("Qty"), "input" => "text", "index" => 'qty');
             $dtparams[] = array("name" => $this->getTranslation("Price"), "input" => "text", "index" => 'price');
-            //$dtparams[] = array("name" => "Title", "index" => 'km');
+            $dtparams[] = array("name" => $this->getTranslation("Final Price"), "index" => 'fprice');
             //$dtparams[] = array("name" => "Price", "index" => 'storeWholeSalePrice');
             $params['dtparams'] = $dtparams;
             $params['id'] = $dtparams;
