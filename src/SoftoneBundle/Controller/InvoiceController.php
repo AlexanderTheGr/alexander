@@ -209,7 +209,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                             ->getRepository($this->repository)
                             ->findOneBy(array('invoice' => $data[0]));
                 }
-                if (!$inv[$invoice->getId()]) {
+                if (!$inv[$invoice->getId()] AND $invoice->getReference() == 0 ) {
                     $sql = "delete from  softone_invoice_item where invoice = '" . $invoice->getId() . "'";
                     $em->getConnection()->exec($sql);
                     $inv[$invoice->getId()] = true;
