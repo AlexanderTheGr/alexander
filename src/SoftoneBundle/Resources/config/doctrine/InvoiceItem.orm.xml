@@ -5,7 +5,7 @@
             <index name="invoice" columns="invoice"/>
         </indexes>
         <unique-constraints>
-            <unique-constraint name="invoiceitem" columns="ediitem,invoice"/>
+            <unique-constraint name="invoiceitem" columns="code,invoice"/>
         </unique-constraints>    
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
