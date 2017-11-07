@@ -101,8 +101,8 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
             $params['dtparams'] = $dtparams;
             $params['id'] = $dtparams;
             $params['url'] = '/invoice/invoice/getitems/' . $id;
-            $params['view'] = '/invoice/invoice/item/view';
-            $params['viewnew'] = '/invoice/invoice/item/view/new/' . $id;
+            //$params['view'] = '/invoice/invoice/item/view';
+            //$params['viewnew'] = '/invoice/invoice/item/view/new/' . $id;
 
             $params['key'] = 'gettabs_' . $id;
             $params["ctrl"] = 'ctrlgettabs';
