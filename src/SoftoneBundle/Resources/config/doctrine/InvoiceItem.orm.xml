@@ -11,7 +11,7 @@
             <generator strategy="IDENTITY"/>
         </id>
       
-        <field name="invoice" type="string" column="invoice" length="255" nullable="false">
+        <field name="code" type="string" column="code" length="255" nullable="false">
             <options>
                 <option name="fixed"/>
             </options>
