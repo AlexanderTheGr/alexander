@@ -8,12 +8,12 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Controller\Main as Main;
 
 
-class InvoiceController extends \SoftoneBundle\Controller\SoftoneController  {
+class RouteController extends \SoftoneBundle\Controller\SoftoneController  {
 
-    var $repository = 'SoftoneBundle:Invoice';
+    var $repository = 'SoftoneBundle:Route';
     var $newentity = '';
     /**
-     * @Invoice("/invoice/invoice")
+     * @Route("/invoice/invoice")
      */
     public function indexAction() {
 
@@ -28,7 +28,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController  {
     }
 
     /**
-     * @Invoice("/invoice/view/{id}")
+     * @Route("/invoice/view/{id}")
      */
     public function viewAction($id) {
 
@@ -51,7 +51,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController  {
     }
 
     /**
-     * @Invoice("/invoice/save")
+     * @Route("/invoice/save")
      */
     public function saveAction() {
         $entity = new \SoftoneBundle\Entity\Invoice;
@@ -70,7 +70,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController  {
     }
 
     /**
-     * @Invoice("/invoice/gettab")
+     * @Route("/invoice/gettab")
      */
     public function gettabs($id) {
 
@@ -85,7 +85,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController  {
         }
 
         $fields["invoice"] = array("label" => $this->getTranslation("Invoice"));
-        //$fields["invoiceName"] = array("label" => "Name");
+        //$fields["routeName"] = array("label" => "Name");
 
         $forms = $this->getFormLyFields($entity, $fields);
 
@@ -95,7 +95,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController  {
     }
 
     /**
-     * @Invoice("/invoice/getdatatable")
+     * @Route("/invoice/getdatatable")
      */
     public function getdatatableAction(Request $request) {
         $this->repository = 'SoftoneBundle:Invoice';
