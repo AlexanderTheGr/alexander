@@ -3,6 +3,7 @@
     <entity name="SoftoneBundle\Entity\Invoice" repository-class="SoftoneBundle\Entity\InvoiceRepository" table="softone_invoice">
         <indexes>
             <index name="invoice" columns="invoice"/>
+            <index name="supplier" columns="supplier"/>
             <index name="reference" columns="reference"/>
         </indexes>        
         <id name="id" type="integer" column="id">
@@ -34,6 +35,15 @@
                 <option name="unsigned"/>
             </options>
         </field>
+        
+        
+        <many-to-one
+            field="supplier"
+            target-entity="SoftoneBundle\Entity\Supplier"
+            inversed-by="Supplier"
+            join-column="supplier">
+            <join-column name="supplier" referenced-column-name="id" />
+        </many-to-one>         
         
         <field name="ts" type="datetime" column="ts" nullable="true">
             <options>
