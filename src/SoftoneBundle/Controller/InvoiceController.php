@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use SoftoneBundle\Entity\Invoice as Invoice;
 use SoftoneBundle\Entity\InvoiceItem as InvoiceItem;
+use SoftoneBundle\Entity\Softone as Softone;
 use AppBundle\Controller\Main as Main;
 
 class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
