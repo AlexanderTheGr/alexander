@@ -8,11 +8,6 @@ namespace SoftoneBundle\Entity;
 class InvoiceItem {
 
     /**
-     * @var string
-     */
-    private $invoice;
-
-    /**
      * @var integer
      */
     private $qty;
