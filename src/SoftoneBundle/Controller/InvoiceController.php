@@ -213,6 +213,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         $invoiceItem->setPrice(0);
         $invoiceItem->setFprice(0);
         $invoiceItem->setDiscount(0);
+        $invoiceItem->setChk(1);
         $this->flushpersist($invoiceItem);
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
