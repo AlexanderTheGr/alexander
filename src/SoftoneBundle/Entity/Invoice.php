@@ -86,7 +86,6 @@ class Invoice extends Entity {
      */
     private $id;
 
-
     /**
      * Set invoice
      *
@@ -255,7 +254,6 @@ class Invoice extends Entity {
      */
     private $items;
 
-
     /**
      * Add item
      *
@@ -263,8 +261,7 @@ class Invoice extends Entity {
      *
      * @return Invoice
      */
-    public function addItem(\SoftoneBundle\Entity\InvoiceItem $item)
-    {
+    public function addItem(\SoftoneBundle\Entity\InvoiceItem $item) {
         $this->items[] = $item;
 
         return $this;
@@ -275,8 +272,7 @@ class Invoice extends Entity {
      *
      * @param \SoftoneBundle\Entity\InvoiceItem $item
      */
-    public function removeItem(\SoftoneBundle\Entity\InvoiceItem $item)
-    {
+    public function removeItem(\SoftoneBundle\Entity\InvoiceItem $item) {
         $this->items->removeElement($item);
     }
 
@@ -285,15 +281,14 @@ class Invoice extends Entity {
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getItems()
-    {
+    public function getItems() {
         return $this->items;
     }
+
     /**
      * @var integer
      */
     private $reference = '0';
-
 
     /**
      * Set reference
@@ -302,8 +297,7 @@ class Invoice extends Entity {
      *
      * @return Invoice
      */
-    public function setReference($reference)
-    {
+    public function setReference($reference) {
         $this->reference = $reference;
 
         return $this;
@@ -314,8 +308,35 @@ class Invoice extends Entity {
      *
      * @return integer
      */
-    public function getReference()
-    {
+    public function getReference() {
         return $this->reference;
     }
+
+    /**
+     * @var \SoftoneBundle\Entity\Supplier
+     */
+    private $supplier;
+
+    /**
+     * Set supplier
+     *
+     * @param \SoftoneBundle\Entity\Supplier $supplier
+     *
+     * @return Invoice
+     */
+    public function setSupplier(\SoftoneBundle\Entity\Supplier $supplier = null) {
+        $this->supplier = $supplier;
+
+        return $this;
+    }
+
+    /**
+     * Get supplier
+     *
+     * @return \SoftoneBundle\Entity\Supplier
+     */
+    public function getSupplier() {
+        return $this->supplier;
+    }
+
 }
