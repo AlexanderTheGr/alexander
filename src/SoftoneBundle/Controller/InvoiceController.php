@@ -39,11 +39,18 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
 
         $content = $this->gettabs($id);
         //$content = $this->getoffcanvases($id);
-
+        $invoice = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->find($id);
+        $pagename = "";
+        if ($invoice) {
+            $pagename = $invoice->getInvoice();
+        }
         $content = $this->content();
 
         return $this->render('SoftoneBundle:Invoice:view.html.twig', array(
-                    'pagename' => 's',
+                    'pagename' => $pagename,
+                    'invoice' => $id,
                     'url' => '/invoice/save',
                     'buttons' => $buttons,
                     'ctrl' => $this->generateRandomString(),
@@ -209,7 +216,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                             ->getRepository($this->repository)
                             ->findOneBy(array('invoice' => $data[0]));
                 }
-                if (!$inv[$invoice->getId()] AND $invoice->getReference() == 0 ) {
+                if (!$inv[$invoice->getId()] AND $invoice->getReference() == 0) {
                     $sql = "delete from  softone_invoice_item where invoice = '" . $invoice->getId() . "'";
                     $em->getConnection()->exec($sql);
                     $inv[$invoice->getId()] = true;
