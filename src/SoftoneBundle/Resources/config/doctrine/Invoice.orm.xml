@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <entity name="SoftoneBundle\Entity\Invoice" repository-class="SoftoneBundle\Entity\InvoiceRepository" table="softone_route">
+    <entity name="SoftoneBundle\Entity\Invoice" repository-class="SoftoneBundle\Entity\InvoiceRepository" table="softone_invoice">
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
         </id>
