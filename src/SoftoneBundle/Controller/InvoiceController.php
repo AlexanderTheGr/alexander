@@ -339,14 +339,19 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($order->getCustomer());
         */
+        /*
         if ($order->getVat())
             $vatsst = $id > 0 ? $order->getVat()->getVatsts() : $this->getSetting("SoftoneBundle:Order:Vat");
         else
             $vatsst = 1410; //$this->getSetting("SoftoneBundle:Product:Vat");
-
+        */
+        $vatsst = 1410;
+        /*
         if ($order->getReference() > 0) {
             $data = $softone->delData($object, (int) $order->getReference());
         }
+         * 
+         */
         $objectArr = array();
         $objectArr[0]["SUPPLIER"] = 9818;//$customer->getReference();
         $objectArr[0]["SERIESNUM"] = $order->getId();
