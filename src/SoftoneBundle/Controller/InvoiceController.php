@@ -72,8 +72,6 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         );
     }
 
-    
-    
     /**
      * @Route("/invoice/editinvoiceitem/")
      */
@@ -117,8 +115,8 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
-    }    
-    
+    }
+
     /**
      * @Route("/invoice/gettab")
      */
@@ -140,14 +138,14 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         $forms = $this->getFormLyFields($entity, $fields);
 
         if ($id > 0 AND count($entity) > 0) {
-            
+
             $entity2 = $this->getDoctrine()
                     ->getRepository('SoftoneBundle:Product')
                     ->find($id);
             $entity2->setReference("");
             $fields2["reference"] = array("label" => "Erp Code", "className" => "invoicecode col-md-12");
             $forms2 = $this->getFormLyFields($entity2, $fields2);
-            
+
             $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
             $dtparams[] = array("name" => "", "function" => 'deleteitem');
             //$dtparams[] = array("name" => "Code", "index" => 'code');
@@ -182,12 +180,61 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         return $json;
     }
 
-    
+    /**
+     * @Route("/invoice/readInvoiceFile")
+     */
+    public function readInvoiceFile() {
+        $em = $this->getDoctrine()->getManager();
+        $file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/invoice.csv";
+        $availability = false;
+        $inv = array();
+        if (($handle = fopen($file, "r")) !== FALSE) {
+            fgetcsv($handle, 1000000, ";");
+            while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
+                $invoice = $this->getDoctrine()
+                        ->getRepository($this->repository)
+                        ->findOneBy(array('invoice' => $data[0]));
+
+                if (!$invoice) {
+                    $dt = new \DateTime("now");
+                    $invoice = new Invoice;
+                    $invoice->setInvoice($data[0]);
+                    $invoice->setTs($dt);
+                    $invoice->setCreated($dt);
+                    $invoice->setModified($dt);
+                    $this->flushpersist($invoice);
+                    $invoice = $this->getDoctrine()
+                            ->getRepository($this->repository)
+                            ->findOneBy(array('invoice' => $data[0]));
+                }
+                if (!$inv[$invoice->getId()]) {
+                    $sql = "delete from  softone_invoice_item where invoice = '" . $invoice->getId() . "'";
+                    $em->getConnection()->exec($sql);
+                    $inv[$invoice->getId()] = true;
+                }
+                $data[6] = str_replace("'", "", $data[6]);
+                $product = $this->getDoctrine()
+                        ->getRepository("SoftoneBundle:Product")
+                        ->findOneBy(array('itemCode2' => $data[6]));
+                $invoiceItem = new InvoiceItem;
+                $invoiceItem->setInvoice($invoice);
+                $invoiceItem->setProduct($product);
+                $invoiceItem->setCode($product->getErpCode());
+                $invoiceItem->setQty($data[9]);
+                $invoiceItem->setPrice($data[7]);
+                $invoiceItem->setFprice($data[7]*$data[9]);
+                $invoiceItem->setDiscount(0);
+                $invoiceItem->setChk(1);
+                $this->flushpersist($invoiceItem);
+            }
+        }
+        exit;
+    }
 
     /**
      * @Route("/invoice/addItem")
      */
-    public function addRelation(Request $request) {
+    public function addItem(Request $request) {
 
         $json = json_encode(array("ok"));
         $product = $this->getDoctrine()
@@ -205,7 +252,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                 ->find($id);
 
         $invoiceItem = new InvoiceItem;
-        
+
         $invoiceItem->setInvoice($invoice);
         $invoiceItem->setProduct($product);
         $invoiceItem->setCode($product->getErpCode());
@@ -218,8 +265,8 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
-    }    
-    
+    }
+
     /**
      * @Route("/invoice/invoice/getitems/{id}")
      */
