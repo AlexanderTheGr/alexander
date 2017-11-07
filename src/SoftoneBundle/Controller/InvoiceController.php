@@ -191,6 +191,8 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         if (($handle = fopen($file, "r")) !== FALSE) {
             fgetcsv($handle, 1000000, ";");
             while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
+                if (count($data) < 7)
+                    continue;
                 $invoice = $this->getDoctrine()
                         ->getRepository($this->repository)
                         ->findOneBy(array('invoice' => $data[0]));
