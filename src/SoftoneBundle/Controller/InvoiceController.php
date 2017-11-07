@@ -138,6 +138,14 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         $forms = $this->getFormLyFields($entity, $fields);
 
         if ($id > 0 AND count($entity) > 0) {
+            
+            $entity2 = $this->getDoctrine()
+                    ->getRepository('SoftoneBundle:Product')
+                    ->find($id);
+            $entity2->setReference("");
+            $fields2["reference"] = array("label" => "Erp Code", "className" => "synafiacode col-md-12");
+            $forms2 = $this->getFormLyFields($entity2, $fields2);
+            
             $dtparams[] = array("name" => "ID", "index" => 'id', "active" => "active");
             $dtparams[] = array("name" => "", "function" => 'deleteitem');
             //$dtparams[] = array("name" => "Code", "index" => 'code');
@@ -163,7 +171,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
 
         $this->addTab(array("title" => $this->getTranslation("General"), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         if ($id > 0 AND count($entity) > 0) {
-            $tabs[] = array("title" => $this->getTranslation("Items"), "datatables" => $datatables, "form" => '', "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
+            $tabs[] = array("title" => $this->getTranslation("Items"), "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => false);
         }
         foreach ((array) $tabs as $tab) {
             $this->addTab($tab);
