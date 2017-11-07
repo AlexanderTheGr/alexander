@@ -194,17 +194,16 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
     public function readInvoices() {
         $dir = '/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/invoices/';
         $files1 = scandir($dir);
-        foreach($files1 as $file) {
-            if (!in_array($file,array(".",".."))) {
-                echo $dir.$file."<BR>";
-                $this->readInvoiceFile($dir.$file);
-            }   
+        foreach ($files1 as $file) {
+            if (!in_array($file, array(".", ".."))) {
+                echo $dir . $file . "<BR>";
+                $this->readInvoiceFile($dir . $file);
+            }
         }
         exit;
         //$this->readInvoiceFile($file);
     }
-    
-    
+
     public function readInvoiceFile($file) {
         $em = $this->getDoctrine()->getManager();
         //$file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/invoice.csv";
@@ -215,6 +214,8 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
             while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
                 if (count($data) < 7)
                     continue;
+                //if ($invoice->getReference() > 0)
+                //    continue;
                 $invoice = $this->getDoctrine()
                         ->getRepository($this->repository)
                         ->findOneBy(array('invoice' => $data[0]));
@@ -231,11 +232,14 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                             ->getRepository($this->repository)
                             ->findOneBy(array('invoice' => $data[0]));
                 }
+                if ($invoice->getReference() > 0)
+                    continue;
                 if (!$inv[$invoice->getId()] AND $invoice->getReference() == 0) {
                     $sql = "delete from  softone_invoice_item where invoice = '" . $invoice->getId() . "'";
                     $em->getConnection()->exec($sql);
                     $inv[$invoice->getId()] = true;
                 }
+
                 $data[6] = str_replace("'", "", $data[6]);
                 $product = $this->getDoctrine()
                         ->getRepository("SoftoneBundle:Product")
@@ -254,7 +258,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                 }
             }
         }
-        exit;
+        //exit;
     }
 
     /**
@@ -331,12 +335,13 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                 ->addField(array("name" => $this->getTranslation("Invoice"), "index" => 'invoice'))
                 ->addField(array("name" => $this->getTranslation("To Softone"), "index" => 'reference', 'method' => 'yesno'))
                 ->addField(array("name" => $this->getTranslation("Date Time"), 'datetime' => 'Y-m-d H:s:i', "index" => 'created'));
-                
+
         $json = $this->datatable();
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+
     /**
      * @Route("/invoice/saveSoftone")
      */
@@ -349,41 +354,41 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                 ->getRepository("SoftoneBundle:Invoice")
                 ->find($id);
         /*
-        $customer = $this->getDoctrine()
-                ->getRepository("SoftoneBundle:Customer")
-                ->find($order->getCustomer());
-        */
+          $customer = $this->getDoctrine()
+          ->getRepository("SoftoneBundle:Customer")
+          ->find($order->getCustomer());
+         */
         /*
-        if ($order->getVat())
-            $vatsst = $id > 0 ? $order->getVat()->getVatsts() : $this->getSetting("SoftoneBundle:Order:Vat");
-        else
-            $vatsst = 1410; //$this->getSetting("SoftoneBundle:Product:Vat");
-        */
+          if ($order->getVat())
+          $vatsst = $id > 0 ? $order->getVat()->getVatsts() : $this->getSetting("SoftoneBundle:Order:Vat");
+          else
+          $vatsst = 1410; //$this->getSetting("SoftoneBundle:Product:Vat");
+         */
         $vatsst = 1410;
         /*
-        if ($order->getReference() > 0) {
-            $data = $softone->delData($object, (int) $order->getReference());
-        }
+          if ($order->getReference() > 0) {
+          $data = $softone->delData($object, (int) $order->getReference());
+          }
          * 
          */
         $objectArr = array();
-        $objectArr[0]["TRDR"] = 9818;//$customer->getReference();
+        $objectArr[0]["TRDR"] = 9818; //$customer->getReference();
         $objectArr[0]["SERIESNUM"] = $invoice->getId();
         $objectArr[0]["FINCODE"] = $invoice->getInvoice();
         //$objectArr[0]["TRDBRANCH"] = $order->getTrdbranch();
         //$objectArr[0]["PAYMENT"] = $customer->getCustomerPayment() > 0 ? $customer->getCustomerPayment() : 1003;
         //$objectArr[0]["TFPRMS"] = $model->tfprms;
         /*
-        if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
-            $objectArr[0]["ACNMSK"] = $order->getUser()->getUsername();
-            $objectArr[0]["INT01"] = $order->getUser()->getReference();
-        }
-        */
-        $objectArr[0]["SERIES"] = 2062;//$order->getSoftoneStore()->getSeries();
-        $objectArr[0]["VATSTS"] = $vatsst;//$this->getSetting("SoftoneBundle:Order:Vat") != '' ? $this->getSetting("SoftoneBundle:Order:Vat") : $customer->getCustomerVatsts();
-        $objectArr[0]["COMMENTS"] = "";//$order->getRemarks(); //$customer->getCustomerPayment() > 0 ? $customer->getCustomerPayment() : 1003; // Mage::app()->getRequest()->getParam('comments');
-        $objectArr[0]["REMARKS"] = "";//$order->getRemarks();
-        $objectArr[0]["COMMENTS"] = "";//$order->getComments();
+          if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
+          $objectArr[0]["ACNMSK"] = $order->getUser()->getUsername();
+          $objectArr[0]["INT01"] = $order->getUser()->getReference();
+          }
+         */
+        $objectArr[0]["SERIES"] = 2062; //$order->getSoftoneStore()->getSeries();
+        $objectArr[0]["VATSTS"] = $vatsst; //$this->getSetting("SoftoneBundle:Order:Vat") != '' ? $this->getSetting("SoftoneBundle:Order:Vat") : $customer->getCustomerVatsts();
+        $objectArr[0]["COMMENTS"] = ""; //$order->getRemarks(); //$customer->getCustomerPayment() > 0 ? $customer->getCustomerPayment() : 1003; // Mage::app()->getRequest()->getParam('comments');
+        $objectArr[0]["REMARKS"] = ""; //$order->getRemarks();
+        $objectArr[0]["COMMENTS"] = ""; //$order->getComments();
         //$objectArr[0]["WHOUSE"] = 1101;
         //$objectArr[0]["DISC1PRC"] = 10;   
         $dataOut[$object] = (array) $objectArr;
@@ -423,19 +428,19 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         }
         if (@$out->id > 0) {
             /*
-            if ($order->getReference() == 0) {
-                foreach ($order->getItems() as $item) {
-                    $product = $item->getProduct();
-                    if ($product) {
-                        $reserved = (int) $product->getReserved();
-                        $reserved += $item->getQty();
-                        $product->setReserved($reserved);
-                        $this->flushpersist($product);
-                        //echo "\n(" . $reserved . ")\n";
-                    }
-                }
-            }
-            */
+              if ($order->getReference() == 0) {
+              foreach ($order->getItems() as $item) {
+              $product = $item->getProduct();
+              if ($product) {
+              $reserved = (int) $product->getReserved();
+              $reserved += $item->getQty();
+              $product->setReserved($reserved);
+              $this->flushpersist($product);
+              //echo "\n(" . $reserved . ")\n";
+              }
+              }
+              }
+             */
             $invoice->setReference($out->id);
             $this->flushpersist($invoice);
         }
@@ -446,4 +451,5 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+
 }
