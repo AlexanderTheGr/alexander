@@ -6,6 +6,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use SoftoneBundle\Entity\Invoice as Invoice;
+use SoftoneBundle\Entity\InvoiceItem as InvoiceItem;
 use AppBundle\Controller\Main as Main;
 
 class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
@@ -180,6 +182,38 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         return $json;
     }
 
+    
+
+    /**
+     * @Route("/invoice/addItem")
+     */
+    public function addRelation(Request $request) {
+
+        $json = json_encode(array("ok"));
+        $product = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Product")
+                ->findOneBy(array('erpCode' => $request->request->get("erp_code")));
+        if (!$product)
+            exit;
+
+        $idArr = explode(":", $request->request->get("id"));
+        $id = (int) $idArr[3];
+
+
+        $invoice = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->find($id);
+
+        $invoiceItem = new InvoiceItem;
+        
+        $invoiceItem->setInvoice($invoice);
+        $invoiceItem->setProduct($product);
+        $this->flushpersist($invoiceItem);
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+    }    
+    
     /**
      * @Route("/invoice/invoice/getitems/{id}")
      */
