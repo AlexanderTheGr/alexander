@@ -45,7 +45,7 @@ class InvoiceItem {
     /**
      * @var \SoftoneBundle\Entity\Invoice
      */
-    private $Invoice;
+    private $invoice;
 
     /**
      * Set invoice
