@@ -16,13 +16,15 @@
                 <option name="fixed"/>
             </options>
         </field>
+        
         <many-to-one
             field="product"
             target-entity="Product"
             inversed-by="Products"
             join-column="product">
             <join-column name="product" referenced-column-name="id" />
-        </many-to-one>        
+        </many-to-one> 
+               
         <many-to-one
             field="invoice"
             target-entity="Invoice"
