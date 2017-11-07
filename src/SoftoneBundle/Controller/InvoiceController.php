@@ -70,6 +70,53 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         );
     }
 
+    
+    
+    /**
+     * @Route("/invoice/editinvoiceitem/")
+     */
+    public function editorderitemAction(Request $request) {
+        $orderItem = $this->getDoctrine()
+                ->getRepository('SoftoneBundle:InvoiceImte')
+                ->find($request->request->get("id"));
+        if ($request->request->get("qty") != '') {
+            $orderItem->setQty($request->request->get("qty"));
+        } else if ($request->request->get("price") != '')
+            $orderItem->setPrice($request->request->get("price"));
+        else if ($request->request->get("discount") != '')
+            $orderItem->setDisc1prc($request->request->get("discount"));
+        elseif ($request->request->get("livevalqty") != '') {
+            //$orderItem->setDisc1prc($request->request->get("discount"));
+            $disc1prc = 1 - ($request->request->get("livevalqty") / $orderItem->getPrice());
+            $orderItem->setDisc1prc($disc1prc * 100);
+        } elseif ($request->request->get("liveval") != '') {
+            //$orderItem->setDisc1prc($request->request->get("discount"));
+            $disc1prc = 1 - (($request->request->get("liveval") / $orderItem->getQty()) / $orderItem->getPrice());
+            $orderItem->setDisc1prc($disc1prc * 100);
+        } elseif ($request->request->get("qty") == "0") {
+            try {
+                $this->flushremove($orderItem);
+                $json = json_encode(array("error" => false));
+            } catch (\Exception $e) {
+                $json = json_encode(array("error" => true, "message" => "Product Exists"));
+            }
+            return new Response(
+                    $json, 200, array('Content-Type' => 'application/json')
+            );
+        }
+        $fprice = ($orderItem->getPrice() * $orderItem->getQty()) * (1 - ($orderItem->getField('disc1prc') / 100));
+        $orderItem->setLineval($fprice);
+        try {
+            $this->flushpersist($orderItem);
+            $json = json_encode(array("error" => false));
+        } catch (\Exception $e) {
+            $json = json_encode(array("error" => true, "message" => "Product Exists"));
+        }
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );
+    }    
+    
     /**
      * @Route("/invoice/gettab")
      */
