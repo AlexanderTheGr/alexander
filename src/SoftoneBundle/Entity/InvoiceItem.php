@@ -253,5 +253,11 @@ class InvoiceItem {
             $out .= '<BR><span class="text-sm text-info">' . $this->remarks . '</span>'; // "<BR>".$this->remarks;
         return $out;
     }
-
+    public function getForOrderSupplier() {
+        return $this->getProduct()->getForOrderSupplier();
+    }
+    public function getProductApothiki() {
+        return $this->getProduct()->getApothiki();
+        //return $this->lineval / $this->qty;
+    }    
 }
