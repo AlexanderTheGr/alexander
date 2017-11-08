@@ -365,11 +365,20 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $trdbranch[] = array("value" => "3", "name" => "ΣΩΡΟΥ");
             $trdbranch[] = array("value" => "4", "name" => "ΑΓ. ΔΗΜΗΤΡΙΟΣ");
             $trdbranch[] = array("value" => "5", "name" => "ΑΕΡΟΔΡΟΜΙΟ");
+
+
+
+            $shipment[] = array("value" => "100", "name" => "Παραλαβή Απο Κατάστημα");
+            $shipment[] = array("value" => "101", "name" => "Γενική Ταχυδρομική");
+            $shipment[] = array("value" => "102", "name" => "Πόρτα Πόρτα");
+            $shipment[] = array("value" => "103", "name" => "Μεταφορική");
+
             //$dataarray[] = array("value" => "1", "name" => "Ναι");
 
             $fields["fincode"] = array("label" => $this->getTranslation("Customer Code"), 'className' => 'asdfg', "required" => true);
 
             $fields["trdbranch"] = array("label" => $this->getTranslation("Send to"), 'type' => "select", 'dataarray' => $trdbranch, 'className' => 'asdfg', "required" => false);
+            $fields["shipment"] = array("label" => $this->getTranslation("Send to"), 'type' => "select", 'dataarray' => $shipment, 'className' => 'asdfg', "required" => false);
 
             $fields["customerName"] = array("label" => $this->getTranslation("Customer Name"), "required" => true, 'className' => 'asdfg');
             $fields["route"] = array("label" => "Route", "required" => false, 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Route', 'name' => 'route', 'value' => 'id'));
@@ -696,7 +705,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $sa[trim($cross["cross1"])] = trim($cross["cross1"]);
                     }
                     if (count($sa)) {
-                        $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where so.itemCode2 in ('" . implode("','", $sa) . "') OR so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";                        
+                        $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where so.itemCode2 in ('" . implode("','", $sa) . "') OR so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
                     } else {
                         $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
                     }
@@ -818,10 +827,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 //$sql = str_replace("ORDER BY p.qty asc","",$sql);
                 //echo $sql."<BR>";
                 $query = $em->createQuery(
-                                $sql
+                        $sql
                         )
-                        //->setMaxResults($request->request->get("length"))
-                        //->setFirstResult($request->request->get("start"))
+                //->setMaxResults($request->request->get("length"))
+                //->setFirstResult($request->request->get("start"))
                 ;
                 //echo $sql."<BR>";    
                 /*
@@ -863,8 +872,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $model_str = $brands[0]["model_str"];
                 }
             }
-            
-            
+
+
             foreach (@(array) $results as $result) {
                 $json = array();
                 foreach ($data["fields"] as $field) {
