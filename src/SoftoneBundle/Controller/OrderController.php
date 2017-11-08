@@ -1131,6 +1131,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             $objectArr[0]["ACNMSK"] = $order->getUser()->getUsername();
             $objectArr[0]["INT01"] = $order->getUser()->getReference();
+            $objectArr[0]["SHIPMENT"] = $order->getShipment();
         }
         $objectArr[0]["SERIES"] = $order->getSoftoneStore()->getSeries();
         $objectArr[0]["VATSTS"] = $this->getSetting("SoftoneBundle:Order:Vat") != '' ? $this->getSetting("SoftoneBundle:Order:Vat") : $customer->getCustomerVatsts();
@@ -1138,7 +1139,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $objectArr[0]["REMARKS"] = $order->getRemarks();
         $objectArr[0]["COMMENTS"] = $order->getComments();
         //if ($order->getShipment())
-        $objectArr[0]["SHIPMENT"] = $order->getShipment();
+        
         //$objectArr[0]["WHOUSE"] = 1101;
         //$objectArr[0]["DISC1PRC"] = 10;   
         $dataOut[$object] = (array) $objectArr;
