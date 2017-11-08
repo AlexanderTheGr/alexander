@@ -47,6 +47,14 @@
                 <option name="unsigned"/>
             </options>
         </field>
+        
+        <field name="shipment" type="integer" column="shipment" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="default">0</option>
+            </options>
+        </field>
+                
         <field name="fprms" type="integer" column="fprms" nullable="true">
             <options>
                 <option name="unsigned"/>
