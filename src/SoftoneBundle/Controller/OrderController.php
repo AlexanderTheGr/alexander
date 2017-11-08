@@ -1137,6 +1137,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $objectArr[0]["COMMENTS"] = $order->getRemarks(); //$customer->getCustomerPayment() > 0 ? $customer->getCustomerPayment() : 1003; // Mage::app()->getRequest()->getParam('comments');
         $objectArr[0]["REMARKS"] = $order->getRemarks();
         $objectArr[0]["COMMENTS"] = $order->getComments();
+        //if ($order->getShipment())
+        $objectArr[0]["SHIPMENT"] = $order->getShipment();
         //$objectArr[0]["WHOUSE"] = 1101;
         //$objectArr[0]["DISC1PRC"] = 10;   
         $dataOut[$object] = (array) $objectArr;
