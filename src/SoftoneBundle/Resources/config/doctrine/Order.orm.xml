@@ -51,7 +51,7 @@
         <field name="shipment" type="integer" column="shipment" nullable="true">
             <options>
                 <option name="unsigned"/>
-                <option name="default">0</option>
+                <option name="default">103</option>
             </options>
         </field>
                 
