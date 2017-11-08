@@ -909,4 +909,33 @@ class Order extends Entity {
     function getPicked() {
         return $this->getStatus() == 2 ? "Picked" : "";
     }	    
+    /**
+     * @var integer
+     */
+    private $shipment = '103';
+
+
+    /**
+     * Set shipment
+     *
+     * @param integer $shipment
+     *
+     * @return Order
+     */
+    public function setShipment($shipment)
+    {
+        $this->shipment = $shipment;
+
+        return $this;
+    }
+
+    /**
+     * Get shipment
+     *
+     * @return integer
+     */
+    public function getShipment()
+    {
+        return $this->shipment;
+    }
 }
