@@ -373,6 +373,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $shipment[] = array("value" => "102", "name" => "Πόρτα Πόρτα");
             $shipment[] = array("value" => "103", "name" => "Μεταφορική");
 
+            $this->setSetting("SoftoneBundle:Order:Shipments", serialize($shipment));
+            
             //$dataarray[] = array("value" => "1", "name" => "Ναι");
 
             $fields["fincode"] = array("label" => $this->getTranslation("Customer Code"), 'className' => 'asdfg', "required" => true);
