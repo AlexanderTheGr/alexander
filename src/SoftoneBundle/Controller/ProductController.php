@@ -2139,7 +2139,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //echo 'Sss';
         echo count($datas) . "<BR>";
         //print_r($datas);
-        exit;
+        //exit;
         $em = $this->getDoctrine()->getManager();
 
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
