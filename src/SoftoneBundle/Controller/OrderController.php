@@ -776,8 +776,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     else
                         krsort($supplierIds);
                     $this->orderBy = 'FIELD(p.supplierId, ' . implode(",", $supplierIds) . ')';
+                } elseif ($dt_order[0]["column"] == 2) {
+                    $this->orderBy = "p.itemName asc";
                 } else {
-                    $this->orderBy = "p.qty desc";
+                    $this->orderBy = "p.qty ".$dir;
                 }
 
                 // 6979111727
