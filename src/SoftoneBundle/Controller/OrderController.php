@@ -716,9 +716,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $sa[trim($cross["cross1"])] = trim($cross["cross1"]);
                     }
                     if (count($sa)) {
-                        $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where so.itemCode1 = '".$search[1]."' OR so.itemCode2 in ('" . implode("','", $sa) . "') OR so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
+                        $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where so.itemCode2 in ('" . implode("','", $sa) . "') OR so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
                     } else {
-                        $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where so.itemCode1 = '".$search[1]."' OR so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
+                        $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
                     }
                 }
                 //echo $sqlearch; 
@@ -814,7 +814,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $hasArticleIds = true;
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where p.itemCode1 = "'.$search[1].'" OR p.itemIsactive = 1 AND (' . $qsupplier . '  (' . $tecdoc_article . $sqlearch2 . $tecdoc_article2 . ' ' . $sisxetisi . ') )
+                                where p.itemIsactive = 1 AND (' . $qsupplier . '  (' . $tecdoc_article . $sqlearch2 . $tecdoc_article2 . ' ' . $sisxetisi . ') )
                                 ORDER BY ' . $this->orderBy;
 
                     if ($search[0] == 'productfreesearch') {
@@ -828,7 +828,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $hasArticleIds = false;
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where p.itemCode1 = "'.$search[1].'" OR p.itemIsactive = 1 AND (' . $qsupplier . ' (' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . '))
+                                where p.itemIsactive = 1 AND (' . $qsupplier . ' (' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . '))
                                 ORDER BY ' . $this->orderBy;
                 }
                 if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
