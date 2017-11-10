@@ -297,14 +297,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
          */
         $order->setUser($user);
 
-        if (!$user->getSoftoneStore()) {
+        //if (!$user->getSoftoneStore()) {
             $store = $this->getDoctrine()
                     ->getRepository("SoftoneBundle:Store")
                     ->find(1);
             $order->setSoftoneStore($store);
-        } else {
-            $order->setSoftoneStore($user->getSoftoneStore());
-        }
+        //} else {
+       //     $order->setSoftoneStore($user->getSoftoneStore());
+        //}
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($request->request->get("customer"));
