@@ -193,7 +193,7 @@ class EdiOrderController extends Main {
             $Ediitem = $this->getDoctrine()
                     ->getRepository('EdiBundle:EdiItem')
                     ->find($request->request->get("id"));
-            //$Ediitem->toErp();
+            $Ediitem->toErp();
         } elseif ($request->request->get("product") > 0) {
             $Ediitem = $this->getDoctrine()
                     ->getRepository('EdiBundle:EdiItem')
