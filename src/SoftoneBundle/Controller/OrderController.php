@@ -296,7 +296,15 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
           ->find($user->getId());
          */
         $order->setUser($user);
-        $order->setSoftoneStore($user->getSoftoneStore());
+
+        if (!$user->getSoftoneStore()) {
+            $store = $this->getDoctrine()
+                    ->getRepository("SoftoneBundle:Store")
+                    ->find(1);
+            $order->setSoftoneStore($store);
+        } else {
+            $order->setSoftoneStore($user->getSoftoneStore());
+        }
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($request->request->get("customer"));
@@ -368,13 +376,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
 
             /*
-            $shipment[] = array("value" => "100", "name" => "Παραλαβή Απο Κατάστημα");
-            $shipment[] = array("value" => "101", "name" => "Γενική Ταχυδρομική");
-            $shipment[] = array("value" => "102", "name" => "Πόρτα Πόρτα");
-            $shipment[] = array("value" => "103", "name" => "Μεταφορική");
-            */
+              $shipment[] = array("value" => "100", "name" => "Παραλαβή Απο Κατάστημα");
+              $shipment[] = array("value" => "101", "name" => "Γενική Ταχυδρομική");
+              $shipment[] = array("value" => "102", "name" => "Πόρτα Πόρτα");
+              $shipment[] = array("value" => "103", "name" => "Μεταφορική");
+             */
             $shipment = unserialize($this->getSetting("SoftoneBundle:Order:Shipments"));
-            
+
             //$dataarray[] = array("value" => "1", "name" => "Ναι");
 
             $fields["fincode"] = array("label" => $this->getTranslation("Customer Code"), 'className' => 'asdfg', "required" => true);
@@ -382,7 +390,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $fields["trdbranch"] = array("label" => $this->getTranslation("Send to"), 'type' => "select", 'dataarray' => $trdbranch, 'className' => 'asdfg', "required" => false);
             $fields["shipment"] = array("label" => $this->getTranslation("Shipment"), 'type' => "select", 'dataarray' => $shipment, 'className' => 'asdfg', "required" => false);
 
-            
+
             $fields["customerName"] = array("label" => $this->getTranslation("Customer Name"), "required" => true, 'className' => 'asdfg');
             $fields["route"] = array("label" => "Route", "required" => false, 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Route', 'name' => 'route', 'value' => 'id'));
             $fields["softoneStore"] = array("label" => $this->getTranslation("Store"), 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Store', 'name' => 'title', 'value' => 'id'));
@@ -777,9 +785,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         krsort($supplierIds);
                     $this->orderBy = 'FIELD(p.supplierId, ' . implode(",", $supplierIds) . ')';
                 } elseif ($dt_order[0]["column"] == 1) {
-                    $this->orderBy = "p.itemCode ".$dir;                    
+                    $this->orderBy = "p.itemCode " . $dir;
                 } elseif ($dt_order[0]["column"] == 2) {
-                    $this->orderBy = "p.itemName ".$dir;
+                    $this->orderBy = "p.itemName " . $dir;
                 } else {
                     $this->orderBy = "p.qty desc";
                 }
@@ -1143,7 +1151,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $objectArr[0]["REMARKS"] = $order->getRemarks();
         $objectArr[0]["COMMENTS"] = $order->getComments();
         //if ($order->getShipment())
-        
         //$objectArr[0]["WHOUSE"] = 1101;
         //$objectArr[0]["DISC1PRC"] = 10;   
         $dataOut[$object] = (array) $objectArr;
