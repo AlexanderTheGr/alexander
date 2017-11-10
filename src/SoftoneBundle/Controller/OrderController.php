@@ -814,7 +814,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $hasArticleIds = true;
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where p.itemIsactive = 1 AND (' . $qsupplier . '  (' . $tecdoc_article . $sqlearch2 . $tecdoc_article2 . ' ' . $sisxetisi . ') )
+                                where p.itemCode1 = "'.$search[1].'" OR p.itemIsactive = 1 AND (' . $qsupplier . '  (' . $tecdoc_article . $sqlearch2 . $tecdoc_article2 . ' ' . $sisxetisi . ') )
                                 ORDER BY ' . $this->orderBy;
 
                     if ($search[0] == 'productfreesearch') {
