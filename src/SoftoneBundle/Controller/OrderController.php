@@ -716,9 +716,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $sa[trim($cross["cross1"])] = trim($cross["cross1"]);
                     }
                     if (count($sa)) {
-                        $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where so.itemCode2 in ('" . implode("','", $sa) . "') OR so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
+                        $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where so.itemCode1 = '".$search[1]."' OR so.itemCode2 in ('" . implode("','", $sa) . "') OR so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
                     } else {
-                        $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
+                        $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where so.itemCode1 = '".$search[1]."' OR so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
                     }
                 }
                 //echo $sqlearch; 
