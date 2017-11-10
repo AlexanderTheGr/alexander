@@ -697,9 +697,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     }
                     //echo $sql11;
                     if (count($sa)) {
-                        $sqlearch = "Select o.id from SoftoneBundle:Product o where o.itemCode1 LIKE '".$search[1]."' OR o.supplierCode in ('" . implode("','", $sa) . "') OR o.supplierCode like '" . $search[1] . "%'";
+                        $sqlearch = "Select o.id from SoftoneBundle:Product o where o.supplierCode in ('" . implode("','", $sa) . "') OR o.supplierCode like '" . $search[1] . "%'";
                     } else {
-                        $sqlearch = "Select o.id from SoftoneBundle:Product o where o.itemCode1 LIKE '".$search[1]."' OR o.supplierCode like '" . $search[1] . "%'";
+                        $sqlearch = "Select o.id from SoftoneBundle:Product o where o.supplierCode like '" . $search[1] . "%'";
                     }
                     //echo $sqlearch; 
                     //$sqlearch = "Select o.id from SoftoneBundle:Product o where o.itemMtrgroup = '" . (int) $search[1] . "%'";
@@ -847,7 +847,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 //->setMaxResults($request->request->get("length"))
                 //->setFirstResult($request->request->get("start"))
                 ;
-                echo $sql."<BR>";    
+                //echo $sql."<BR>";    
                 /*
                   echo 'SELECT  ' . $this->select . ', p.reference
                   FROM ' . $this->repository . ' ' . $this->prefix . '
