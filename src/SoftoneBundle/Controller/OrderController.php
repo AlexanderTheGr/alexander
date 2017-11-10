@@ -828,7 +828,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $hasArticleIds = false;
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where p.itemIsactive = 1 AND (' . $qsupplier . ' (' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . '))
+                                where p.itemCode1 = "'.$search[1].'" OR p.itemIsactive = 1 AND (' . $qsupplier . ' (' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . '))
                                 ORDER BY ' . $this->orderBy;
                 }
                 if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
