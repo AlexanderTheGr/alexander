@@ -193,7 +193,7 @@ class EdiOrderController extends Main {
             $Ediitem = $this->getDoctrine()
                     ->getRepository('EdiBundle:EdiItem')
                     ->find($request->request->get("id"));
-            $Ediitem->toErp();
+            $product = $Ediitem->toErp();
         } elseif ($request->request->get("product") > 0) {
             $Ediitem = $this->getDoctrine()
                     ->getRepository('EdiBundle:EdiItem')
@@ -296,7 +296,7 @@ class EdiOrderController extends Main {
             $EdiOrderItem->setField("chk", 1);
             try {
                 $this->flushpersist($EdiOrderItem);
-                $json = json_encode(array("error" => false, "message" => $Ediitem->getEdi()->getName() . " " . $Ediitem->getItemCode() . " ανοιχτηκε επιτυχώς"));
+                $json = json_encode(array("error" => false, "product"=>$product,"message" => $Ediitem->getEdi()->getName() . " " . $Ediitem->getItemCode() . " ανοιχτηκε επιτυχώς"));
             } catch (\Exception $e) {
                 $json = json_encode(array("error" => true, "message" => "Product Exists"));
             }
