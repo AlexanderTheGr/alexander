@@ -533,6 +533,7 @@ jQuery('.ediiteqty1, .ediiteqty2, EdiBundleEdiOrderItemQty, .SoftoneBundleProduc
                 toastr.success(result.error, result.message);
             }
         })
+        
     }
 });
 
