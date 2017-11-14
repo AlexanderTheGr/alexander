@@ -1125,6 +1125,7 @@ class EdiItem extends Entity {
     }
 
     public function getQty1() {
+        /*
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
@@ -1154,12 +1155,15 @@ class EdiItem extends Entity {
                 $qty = $EdiOrderItem->getQty();
             }
         }
-
+         * 
+         */
+        $qty = 1;
         return "<input type='text' data-id='" . $this->id . "' name='qty1_" . $this->id . "' value='" . $qty . "' size=2 id='qty1_" . $this->id . "' class='ediiteqty1'>";
     }
 
     public function getQty2() {
-        return "<input type='text' data-id='" . $this->id . "' name='qty2_" . $this->id . "' size=2  id='qty2_" . $this->id . "' class='ediiteqty2'>";
+        $qty = 1;
+        return "<input type='text' data-id='" . $this->id . "' name='qty2_" . $this->id . "' value='" . $qty . "' size=2 id='qty2_" . $this->id . "' class='ediiteqty2'>";
     }
     public function getQty3() {
         return '<a class="create_edi_product" data-id="' . $this->id . '" style="font-size:10px; color:rose" href="#">Create Product</a>';//"<input type='text' data-id='" . $this->id . "' name='qty3_" . $this->id . "' size=2  id='qty3_" . $this->id . "' class='ediiteqty3'>";
