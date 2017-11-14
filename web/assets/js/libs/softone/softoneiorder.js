@@ -534,6 +534,29 @@ jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .SoftoneBundleProductEdi, create_
         })
     }
 });
+jQuery('.create_edi_product').live("click", function (e) {
+    if (e.keyCode == 13) {
+        var data = {};
+        if (jQuery(this).attr('class') == 'SoftoneBundleProductEdi') {
+            data.product = jQuery(this).attr('data-id');
+            var store = data.product;
+        } else {
+            data.id = jQuery(this).attr('data-id');
+            var store = data.id;
+        }
+        data.qty = 0;
+        data.store = 0;
+        $("#loaderer").show();
+        $.post("/edi/order/addorderitem/", data, function (result) {
+            $("#loaderer").hide();
+            if (result.error) {
+                toastr.error(result.message, result.message);
+            } else {
+                toastr.success(result.error, result.message);
+            }
+        })
+    }
+});
 
 
 jQuery('.SoftoneBundleGBGProductAdd').live("click", function (e) {
