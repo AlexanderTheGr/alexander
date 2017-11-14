@@ -913,7 +913,7 @@ class EdiItem extends Entity {
             }
             $product->toSoftone();
             //echo $this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode();
-            return;
+            return $product;
         }
 
 
@@ -1011,7 +1011,7 @@ class EdiItem extends Entity {
 
         $sql = 'update `softone_product` set product_sale = 1 where product_sale is null';
         $em->getConnection()->exec($sql);
-        return;
+        return $product;
     }
 
     function fixsuppliers($supplier) {
