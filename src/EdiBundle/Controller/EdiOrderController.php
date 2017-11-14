@@ -207,7 +207,9 @@ class EdiOrderController extends Main {
 
         if (@$Ediitem->id == 0)
             return;
-
+        if ($request->request->get("qty") == 0)
+            return;
+        
         if ($request->request->get("order") > 0) {
             $EdiOrder = $this->getDoctrine()
                     ->getRepository('EdiBundle:EdiOrder')
