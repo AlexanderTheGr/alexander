@@ -1160,10 +1160,10 @@ class EdiItem extends Entity {
         $qty = 1;
         return "<input type='text' data-id='" . $this->id . "' name='qty1_" . $this->id . "' value='" . $qty . "' size=2 id='qty1_" . $this->id . "' class='ediiteqty1'>";
     }
-
+    var $finalprice = 0;
     public function getQty2() {
         $qty = 1;
-        return "<input type='text' data-id='" . $this->id . "' name='qty2_" . $this->id . "' value='" . $qty . "' size=2 id='qty2_" . $this->id . "' class='ediiteqty2'>";
+        return "<input type='text' data-price='".$this->finalprice."' data-id='" . $this->id . "' name='qty2_" . $this->id . "' value='" . $qty . "' size=2 id='qty2_" . $this->id . "' class='ediiteqty2'>";
     }
     public function getQty3() {
         return '<a class="create_edi_product" data-id="' . $this->id . '" style="font-size:10px; color:rose" href="#">Create Product</a>';//"<input type='text' data-id='" . $this->id . "' name='qty3_" . $this->id . "' size=2  id='qty3_" . $this->id . "' class='ediiteqty3'>";
@@ -1604,7 +1604,7 @@ class EdiItem extends Entity {
         $price = $price > 0 ? $price : $this->getEdiMarkupPrice($pricefield);
         $discountedPrice = $this->getEdiMarkupPrice($pricefield) * (1 - $discount / 100 );
         $finalprice = $discount > 0 ? $discountedPrice : $price;
-
+        $this->finalprice = $finalprice * $vat;
         return $this->getEdiMarkupPrice($pricefield) . " / " . number_format($finalprice, 2, '.', '') . " / " . number_format($finalprice * $vat, 2, '.', '') . " (" . (float) $discount . "%)";
     }
 
