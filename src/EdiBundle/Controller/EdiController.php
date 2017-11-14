@@ -331,7 +331,7 @@ class EdiController extends Main {
         $i = 0;
         foreach ($collection as $entity) {
             //if ($i++ <= 1) continue;
-            if ($entity["id"] == 4) {
+            if ($entity["id"] == 11) {
                 $func = $entity["func"];
                 $this->$func($entity);
             }
@@ -408,14 +408,14 @@ class EdiController extends Main {
                         } else {
                             $sql = "update partsbox_db.edi_item set " . implode(",", $q) . " where id = '" . $ediedi_id . "'";
                             echo $sql . "<BR>";
-                            $em->getConnection()->exec($sql);
+                            //$em->getConnection()->exec($sql);
                         }
 
                         //$sql = "replace partsbox_db.fanopoiia_category2 set brand = brand, year = year, img = img, category_id = category_id, model_id = '".(int)$data[5]."', brand_str = '".$data[6].", model_str = '".$data[7]."'";
                         if (!$df[(int) $data[5]]) {
                             $df[(int) $data[5]] = true;
                             $sql = "INSERT INTO partsbox_db.fanopoiia_category set model_id = '" . (int) $data[5] . "', brand = '" . $data[6] . "', brand_str = '" . $data[6] . "', model_str = '" . $data[7] . "' ON DUPLICATE KEY UPDATE brand = '" . $data[6] . "', brand_str = '" . $data[6] . "', model_str = '" . $data[7] . "'";
-                            $em->getConnection()->exec($sql);
+                            //$em->getConnection()->exec($sql);
                         }
 
                         echo $sql . "<BR>";
