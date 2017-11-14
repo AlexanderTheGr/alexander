@@ -262,6 +262,7 @@ class EdiItemController extends Main {
                 ->addField(array("name" => "Price", "index" => 'wholesaleprice', 'search' => 'text'))
                 ->addField(array("name" => "ID", "function" => 'getQty1', "active" => "active"))
                 ->addField(array("name" => "ID", "function" => 'getQty2', "active" => "active"))
+                ->addField(array("name" => "ID", "function" => 'getQty3', "active" => "active"))
 
 
         ;
