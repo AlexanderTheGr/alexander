@@ -808,7 +808,7 @@ class EdiItemController extends Main {
                     @$jsonarr[$key]['DT_RowClass'] .= $xml->Item->Header->Available == "Y" ? ' text-success ' : ' text-danger ';
                 }
             }
-            @$jsonarr[$key]['9'] = $entity->getQty2();
+            @$jsonarr[$key]['9'] = "";//$entity->getQty2();
             //$jsonarr2[(int)$key] = $json;
             @$jsonarr[$key]['DT_RowClass'] .= ' text-danger ';
         }
