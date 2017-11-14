@@ -294,14 +294,21 @@ class EdiOrderController extends Main {
             $EdiOrderItem->setField("discount", 0);
             $EdiOrderItem->setField("store", $store);
             $EdiOrderItem->setField("chk", 1);
+            try {
+                $this->flushpersist($EdiOrderItem);
+                $json = json_encode(array("error" => false, "message" => $Ediitem->getEdi()->getName() . " " . $Ediitem->getItemCode() . " ανοιχτηκε επιτυχώς"));
+            } catch (\Exception $e) {
+                $json = json_encode(array("error" => true, "message" => "Product Exists"));
+            }
+        } else {
+            try {
+                //$this->flushpersist($EdiOrderItem);
+                $json = json_encode(array("error" => false, "message" => $Ediitem->getEdi()->getName() . " " . $Ediitem->getItemCode() . " ανοιχτηκε επιτυχώς"));
+            } catch (\Exception $e) {
+                $json = json_encode(array("error" => true, "message" => "Product Exists"));
+            }
         }
 
-        try {
-            $this->flushpersist($EdiOrderItem);
-            $json = json_encode(array("error" => false, "message" => $Ediitem->getEdi()->getName() . " " . $Ediitem->getItemCode() . " ανοιχτηκε επιτυχώς"));
-        } catch (\Exception $e) {
-            $json = json_encode(array("error" => true, "message" => "Product Exists"));
-        }
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
