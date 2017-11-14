@@ -653,7 +653,7 @@ class EdiItem extends Entity {
         if ($this->getSetting("AppBundle:Erp:erpprefix") == '/erp01') {
             $this->toMegasoftErp();
         } else {
-            $this->toSoftoneErp();
+            return $this->toSoftoneErp();
         }
     }
 
