@@ -348,7 +348,7 @@ class EdiController extends Main {
         if ($zip->open('/home2/partsbox/PRICELIST_RETAIL.ZIP') === TRUE) {
             $zip->extractTo('/home2/partsbox/');
             $zip->close();
-            $file = "/home2/partsbox/PRICELIST_RETAIL.txt";
+            $file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/PRICELIST_RETAIL.txt";
             if (($handle = fopen($file, "r")) !== FALSE) {
                 //echo 'sss';
                 while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
@@ -419,8 +419,8 @@ class EdiController extends Main {
                         }
 
                         echo $sql . "<BR>";
-                        //if ($i++ > 100)
-                        //    return;
+                        if ($i++ > 100)
+                            return;
                     }
                 }
             }
