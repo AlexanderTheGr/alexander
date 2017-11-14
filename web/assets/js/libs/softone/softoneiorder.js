@@ -511,7 +511,7 @@ function fororder(order) {
 }
 
 
-jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .SoftoneBundleProductEdi').live("keyup", function (e) {
+jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .SoftoneBundleProductEdi, create_edi_product').live("keyup", function (e) {
     if (e.keyCode == 13) {
         var data = {};
         if (jQuery(this).attr('class') == 'SoftoneBundleProductEdi') {
@@ -534,6 +534,7 @@ jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .SoftoneBundleProductEdi').live("
         })
     }
 });
+
 
 jQuery('.SoftoneBundleGBGProductAdd').live("click", function (e) {
     //if (e.keyCode == 13) {
