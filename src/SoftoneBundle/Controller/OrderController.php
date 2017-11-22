@@ -1455,7 +1455,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //$request->request->get("brand")
         $path = $this->getSetting("SoftoneBundle:Product:Images");
         $em = $this->getDoctrine()->getManager();
-        $sql = "SELECT model_id, year,id  FROM  partsbox_db.fanopoiia_category where brand = '" . $brand["brand"] . "' AND model = '" . $brand["model"] . "'";
+        $sql = "SELECT model_id, year,id  FROM  partsbox_db.fanopoiia_category where brand = '" . $brand["brand"] . "' AND model = '" . $brand["model"] . "' order by year";
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
         $statement->execute();
