@@ -690,7 +690,7 @@ jQuery(".modeldiv").live('click', function () {
     //alert('sss');
     jQuery(this).find('.modelitem').show();
 });
-jQuery(".modeldiv img").live('click', function () {
+jQuery(".modeldiv").live('click', function () {
     //alert('sss');
     jQuery('.modelitem').hide();
 });
