@@ -695,6 +695,7 @@ jQuery(".modeldiv img").live('click', function () {
     jQuery('.modelitem').hide();
 });
 
+
 jQuery(".forordersupplier").live('click', function () {
     //alert('sss');
     var data = {}
