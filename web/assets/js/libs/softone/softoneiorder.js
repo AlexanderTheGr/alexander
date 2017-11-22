@@ -688,13 +688,12 @@ jQuery(".edibutton").live('click', function () {
 
 jQuery(".modeldiv").live('click', function () {
     //alert('sss');
-    jQuery(this).find('.modelitem').show();
+    jQuery(this).find('.modelitem').toggle();
 });
-jQuery(".modeldiv").live('click', function () {
+jQuery(".modeldiv").live('mouseout', function () {
     //alert('sss');
-    jQuery('.modelitem').hide();
+    //jQuery('.modelitem').hide();
 });
-
 
 jQuery(".forordersupplier").live('click', function () {
     //alert('sss');
