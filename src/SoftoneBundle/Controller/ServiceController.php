@@ -51,9 +51,10 @@ class ServiceController extends Main{
         
         
         $search = $data["SoftoneBundle:Pcategory:itecategoryName:"];
-        
-        $items = explode("\n", $search);
-        print_r($items);
+        $q = $items = explode("\n",",", $search);
+        echo $q;
+        //$items = explode("\n", $search);
+        //print_r($items);
         exit;
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
