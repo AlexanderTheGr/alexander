@@ -70,14 +70,15 @@ class ServiceController extends Main{
         }
         ksort($brands);
         
-        print_r($dfr);
+        //print_r($dfr);
         echo  '"";'.implode(";", $brands)."\n";
         foreach($dfr as $brand=>$branddata) {
             echo $brand.";".implode(";", $brands2)."\n";
             //continue;
             foreach($branddata as $title=>$titledata) {
                 echo $title.";".implode(";", $brands2)."\n";
-                foreach($titledata as $code=>$codedata) {   
+                foreach($titledata as $code=>$codedata) { 
+                    $ddf = array();
                     foreach($brands as $brand) {
                        $ddf[] = implode("|",(array)$codedata[$brand]);
                     }   
