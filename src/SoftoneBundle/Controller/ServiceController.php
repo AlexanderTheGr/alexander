@@ -63,7 +63,7 @@ class ServiceController extends Main{
         $datas = $statement->fetchAll();  
           
         foreach($datas as $data) {
-            $dfr[$data["brand"]][$data["title"]][$data["code"]][$data["art_brand"]] = $data["art_code"];
+            $dfr[$data["brand"]][$data["title"]][$data["code"]][$data["art_brand"]][] = $data["art_code"];
         }
         print_r($dfr);
         exit;
