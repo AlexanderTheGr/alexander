@@ -437,7 +437,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $this->addTab(array("title" => "General", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         if ($entity->getId()) {
             $this->addTab(array("title" => $this->getTranslation("Search"), "datatables" => array(), "form" => '', "content" => $this->getTabContentSearch($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
-            $this->addTab(array("title" => $this->getTranslation("Items"), "datatables" => $datatables, "form" => '', "content" => "", "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
+            $this->addTab(array("title" => $this->getTranslation("Καλάθι"), "datatables" => $datatables, "form" => '', "content" => "", "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
             $this->addTab(array("title" => $this->getTranslation("Customer Details"), "datatables" => array(), "form" => '', "content" => $this->getCustomerDetails($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
         }
         $json = $this->tabs();
