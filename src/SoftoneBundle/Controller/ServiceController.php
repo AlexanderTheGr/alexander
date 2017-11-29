@@ -60,7 +60,7 @@ class ServiceController extends Main{
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
         $statement->execute();
-        $data = $statement->fetch();  
+        $data = $statement->fetchAll();  
         print_r($data);
         exit;
         return new Response(
