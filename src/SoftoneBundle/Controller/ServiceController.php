@@ -89,7 +89,7 @@ class ServiceController extends Main{
         
         //print_r($dfr);
         file_put_contents("assse.csv", $csv);
-        $json = json_encode(array("ok", "returnurl" => "assse.csv"));
+        $json = json_encode(array("ok", "returnurl" => "/assse.csv"));
         //exit;
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
