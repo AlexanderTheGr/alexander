@@ -18,8 +18,8 @@ class ServiceController extends Main{
     public function indexAction() {
 
         
-        $content = "aaaaa";
-        
+
+        $content = $this->gettabs();
         return $this->render('SoftoneBundle:Category:view.html.twig', array(
                     'pagename' => 'Service',
                     'url' => '',
@@ -30,6 +30,15 @@ class ServiceController extends Main{
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
+    public function gettabs() {
 
+
+
+
+        $this->addTab(array("title" => "General", "form" => "", "content" => 'aaaa', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
+   
+        $json = $this->tabs();
+        return $json;
+    }
 
 }
