@@ -47,7 +47,13 @@ class ServiceController extends Main{
      */
     public function save() {
         //$json = json_decode($this->formLybase64());
-        print_r($this->formLybase64());
+        $data = $this->formLybase64();
+        
+        
+        $search = $data["SoftoneBundle:Pcategory:itecategoryName:"];
+        
+        $items = explode("\n", $search);
+        print_r($items);
         exit;
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
