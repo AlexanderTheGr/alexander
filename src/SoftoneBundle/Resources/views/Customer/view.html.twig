@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+<button style='float:right' data-ref='0' id="btn-get-new-order" class="btn btn-primary parse-json" data-target="basic">Δημιουργία Παραγγελίας</button> 
 <button style='float:right' data-ref='0' id="btn-get-new" class="btn btn-primary parse-json" data-target="basic">New Rule</button>       
 {{ render(controller('SoftoneBundle:Customer:content', { 'ctrl': ctrl,'app':app,'url':url,'content':content }) ) }}
 {% endblock %}
@@ -179,5 +180,15 @@
 
     }
     });
+    
+    
+     $('#btn-get-new-order').live('click', function () {
+        var data = {};
+        data.customerName = "{{pagename}}";
+        data.customer = "{{group}}";
+        $.post("/order/saveCustome", data, function (result) {
+        
+    })
+     })
     </script>
 {% endblock %}
