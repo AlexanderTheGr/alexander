@@ -65,10 +65,23 @@ class ServiceController extends Main{
         foreach($datas as $data) {
             if ($data["oem"] == 0) continue;
             $brands[$data["art_brand"]] = $data["art_brand"]; 
+            $brands2[$data["art_brand"]] = ""; 
             $dfr[$data["brand"]][$data["title"]][$data["code"]][$data["art_brand"]][] = $data["art_code"];
         }
         ksort($brands);
-        echo implode(";", $brands);
+        $csv =  '"";'.implode(";", $brands)."\n";
+        foreach($dfr as $brand=>$branddata) {
+            echo $brand.";".implode(";", $brands2)."\n";
+            foreach($branddata as $title=>$titledata) {
+                echo $title.";".implode(";", $brands2)."\n";
+                foreach($titledata as $code=>$codedata) {   
+                    foreach($brands as $brand) {
+                       $ddf[] = implode("|",$codedata[$brand]);
+                    }   
+                    echo $code.";".implode(";",$ddf);
+                }
+            }
+        }
         
         //print_r($dfr);
         exit;
