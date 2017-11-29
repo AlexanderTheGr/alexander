@@ -56,12 +56,16 @@ class ServiceController extends Main{
         echo $q;
         //$items = explode("\n", $search);
         //print_r($items);
-        $sql = "SELECT * FROM partsbox_db.crossbase WHERE code in (".$q.")";
+        $sql = "SELECT * FROM partsbox_db.crossbase WHERE code in (".$q.") AND oem = 1";
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
         $statement->execute();
-        $data = $statement->fetchAll();  
-        print_r($data);
+        $datas = $statement->fetchAll();  
+        print_r($datas);
+        
+        foreach($datas as $data) {
+            $dfr[$data["code"]] = array();
+        }
         exit;
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
