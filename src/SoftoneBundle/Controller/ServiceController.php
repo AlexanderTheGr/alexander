@@ -33,8 +33,6 @@ class ServiceController extends Main{
     public function gettabs() {
 
 
-
-
         $this->addTab(array("title" => "General", "form" => "", "content" => 'aaaa', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
    
         $json = $this->tabs();
