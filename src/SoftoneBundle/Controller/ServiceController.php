@@ -76,7 +76,7 @@ class ServiceController extends Main{
                 echo $title.";".implode(";", $brands2)."\n";
                 foreach($titledata as $code=>$codedata) {   
                     foreach($brands as $brand) {
-                       $ddf[] = implode("|",$codedata[$brand]);
+                       $ddf[] = implode("|",(array)$codedata[$brand]);
                     }   
                     echo $code.";".implode(";",$ddf);
                 }
