@@ -22,7 +22,7 @@ class ServiceController extends Main{
         $content = $this->gettabs();
         return $this->render('SoftoneBundle:Category:view.html.twig', array(
                     'pagename' => 'Service',
-                    'url' => '',
+                    'url' => '/service/save',
                     'view' => '',
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
@@ -31,8 +31,6 @@ class ServiceController extends Main{
         ));
     }
     public function gettabs() {
-
-
         $entity = new Pcategory;
                 
         $fields["itecategoryName"] = array("label" => "Original",'type' => "textarea");
@@ -44,5 +42,15 @@ class ServiceController extends Main{
         $json = $this->tabs();
         return $json;
     }
+    /**
+     * @Route("/service/save")
+     */
+    public function save() {
+        $json = json_encode(array("ok"));
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );        
+        
+    }    
 
 }
