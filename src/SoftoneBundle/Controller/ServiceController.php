@@ -56,7 +56,7 @@ class ServiceController extends Main{
         echo $q;
         //$items = explode("\n", $search);
         //print_r($items);
-        $sql = "SELECT * FROM `partsbox_db.crossbase` WHERE code in (".$q.")";
+        $sql = "SELECT * FROM partsbox_db.crossbase WHERE code in (".$q.")";
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
         $statement->execute();
