@@ -46,8 +46,9 @@ class ServiceController extends Main{
      * @Route("/service/save")
      */
     public function save() {
-        $json = json_decode($this->formLybase64());
-        
+        //$json = json_decode($this->formLybase64());
+        print_r($this->formLybase64());
+        exit;
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );        
