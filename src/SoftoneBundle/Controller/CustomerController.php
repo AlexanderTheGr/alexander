@@ -260,6 +260,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
         $fields["customerAddress"] = array("label" => $this->getTranslation("Customer Address"), "className" => "col-md-6", "required" => false);
         $fields["customerCity"] = array("label" => $this->getTranslation("Customer City"), "className" => "col-md-6", "required" => false);
+        $fields["customerZip"] = array("label" => $this->getTranslation("Customer Zip"), "className" => "col-md-6", "required" => false);
         $fields["customerPhone01"] = array("label" => $this->getTranslation("Customer Phones"), "required" => false);
 
         $fields["customergroup"] = array("label" => $this->getTranslation("Customer Group"), "className" => "col-md-6", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:Customergroup', 'name' => 'title', 'value' => 'id'));
