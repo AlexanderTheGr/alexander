@@ -275,7 +275,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     public function saveCustomerAction(Request $request) {
         $request->request->get("customerName");
         $request->request->get("customer");
-        $id = $request->request->get("id");
+        $id = (int)$request->request->get("id");
 
         $order = $this->getDoctrine()
                 ->getRepository($this->repository)
