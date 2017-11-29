@@ -387,7 +387,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
             $fields["fincode"] = array("label" => $this->getTranslation("Customer Code"), 'className' => 'asdfg', "required" => true);
 
+            if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis')
             $fields["trdbranch"] = array("label" => $this->getTranslation("Send to"), 'type' => "select", 'dataarray' => $trdbranch, 'className' => 'asdfg', "required" => false);
+            
             $fields["shipment"] = array("label" => $this->getTranslation("Shipment"), 'type' => "select", 'dataarray' => $shipment, 'className' => 'asdfg', "required" => false);
 
 
