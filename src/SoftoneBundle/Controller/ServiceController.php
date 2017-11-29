@@ -61,11 +61,11 @@ class ServiceController extends Main{
         $statement = $connection->prepare($sql);
         $statement->execute();
         $datas = $statement->fetchAll();  
-        print_r($datas);
-        
+          
         foreach($datas as $data) {
-            $dfr[$data["code"]] = array();
+            $dfr[$data["brand"]][$data["title"]][$data["code"]][$data["art_brand"]] = $data["art_code"];
         }
+        print_r($dfr);
         exit;
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
