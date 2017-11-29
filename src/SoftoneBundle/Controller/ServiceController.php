@@ -69,6 +69,7 @@ class ServiceController extends Main{
             $dfr[$data["brand"]][$data["title"]][$data["code"]][$data["art_brand"]][] = $data["art_code"];
         }
         ksort($brands);
+        
         //print_r($dfr);
         echo  '"";'.implode(";", $brands)."\n";
         foreach($dfr as $brand=>$branddata) {
