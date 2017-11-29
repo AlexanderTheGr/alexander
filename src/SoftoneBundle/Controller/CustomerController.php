@@ -21,7 +21,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function indexAction() {
         return $this->render('SoftoneBundle:Customer:index.html.twig', array(
-                    'pagename' => 'Customers',
+                    'pagename' => 'Πελάτες',
                     'url' => '/customer/getdatatable',
                     'view' => '/customer/view',
                     'ctrl' => $this->generateRandomString(),
