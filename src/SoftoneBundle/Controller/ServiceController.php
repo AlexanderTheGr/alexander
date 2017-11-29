@@ -53,7 +53,7 @@ class ServiceController extends Main{
         
         $search = $data["SoftoneBundle:Pcategory:itecategoryName:"];
         $q = $items = str_replace("\n",",", $search);
-        echo $q;
+        //echo $q;
         //$items = explode("\n", $search);
         //print_r($items);
         $sql = "SELECT * FROM partsbox_db.crossbase WHERE code in (".$q.")";
@@ -67,8 +67,8 @@ class ServiceController extends Main{
             $brands[$data["art_brand"]] = $data["art_brand"]; 
             $dfr[$data["brand"]][$data["title"]][$data["code"]][$data["art_brand"]][] = $data["art_code"];
         }
-        
-        
+        ksort($brands);
+        echo implode(";", $brands);
         
         //print_r($dfr);
         exit;
