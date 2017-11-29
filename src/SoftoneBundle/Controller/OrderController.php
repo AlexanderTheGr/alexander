@@ -286,6 +286,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $this->newentity[$this->repository] = $order;
             $this->initialazeNewEntity($order);
             @$this->newentity[$this->repository]->setField("status", 1);
+        } else {
+            
+            
         }
 
         $order->setCustomerName($request->request->get("customerName"));
@@ -385,7 +388,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
             //$dataarray[] = array("value" => "1", "name" => "Ναι");
 
-            $fields["fincode"] = array("label" => $this->getTranslation("Customer Code"), 'className' => 'asdfg', "required" => true);
+            $fields["fincode"] = array("label" => $this->getTranslation("Κωδικός Παραγγελίας"), 'className' => 'asdfg', "required" => true);
 
             if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis')
             $fields["trdbranch"] = array("label" => $this->getTranslation("Send to"), 'type' => "select", 'dataarray' => $trdbranch, 'className' => 'asdfg', "required" => false);
