@@ -71,24 +71,26 @@ class ServiceController extends Main{
         ksort($brands);
         
         //print_r($dfr);
-        echo  '"";"";"";'.implode(";", $brands)."\n";
+        $csv .=  '"";"";"";'.implode(";", $brands)."\n";
         foreach($dfr as $brand=>$branddata) {
-            echo $brand.";".implode(";", $brands2)."\n";
+            $csv .= $brand.";".implode(";", $brands2)."\n";
             //continue;
             foreach($branddata as $title=>$titledata) {
-                echo '"";'.$title.";".implode(";", $brands2)."\n";
+                $csv .= '"";'.$title.";".implode(";", $brands2)."\n";
                 foreach($titledata as $code=>$codedata) { 
                     $ddf = array();
                     foreach($brands as $brand) {
                        $ddf[] = implode("|",(array)$codedata[$brand]);
                     }   
-                    echo '"";"";'.$code.";".implode(";",$ddf)."\n";
+                    $csv .= '"";"";'.$code.";".implode(";",$ddf)."\n";
                 }
             }
         }
         
         //print_r($dfr);
-        exit;
+        file_put_contents("assse.csv", $csv);
+        $json = json_encode(array("ok", "returnurl" => "assse.csv"));
+        //exit;
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );        
