@@ -390,7 +390,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis')
             $fields["trdbranch"] = array("label" => $this->getTranslation("Send to"), 'type' => "select", 'dataarray' => $trdbranch, 'className' => 'asdfg', "required" => false);
             
-            $fields["shipment"] = array("label" => $this->getTranslation("Shipment"), 'type' => "select", 'dataarray' => $shipment, 'className' => 'asdfg', "required" => false);
+            $fields["shipment"] = array("label" => $this->getTranslation("Μεταφορική"), 'type' => "select", 'dataarray' => $shipment, 'className' => 'asdfg', "required" => false);
 
 
             $fields["customerName"] = array("label" => $this->getTranslation("Customer Name"), "required" => true, 'className' => 'asdfg');
@@ -434,7 +434,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
 
         $forms = $this->getFormLyFields($entity, $fields);
-        $this->addTab(array("title" => "General", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
+        $this->addTab(array("title" => "Γενικά", "datatables" => array(), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         if ($entity->getId()) {
             $this->addTab(array("title" => $this->getTranslation("Search"), "datatables" => array(), "form" => '', "content" => $this->getTabContentSearch($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
             $this->addTab(array("title" => $this->getTranslation("Καλάθι"), "datatables" => $datatables, "form" => '', "content" => "", "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
