@@ -22,6 +22,8 @@ class ServiceController extends Main{
         
         return $this->render('SoftoneBundle:Category:view.html.twig', array(
                     'pagename' => 'Service',
+                    'url' => '',
+                    'view' => '',
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'content' => $content,
