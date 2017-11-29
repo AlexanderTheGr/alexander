@@ -47,6 +47,7 @@ class ServiceController extends Main{
      */
     public function save() {
         //$json = json_decode($this->formLybase64());
+        $em = $this->getDoctrine()->getManager();
         $data = $this->formLybase64();
         
         
@@ -55,6 +56,12 @@ class ServiceController extends Main{
         echo $q;
         //$items = explode("\n", $search);
         //print_r($items);
+        $sql = "SELECT * FROM `crossbase` WHERE code in (".$q.")";
+        $connection = $em->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $data = $statement->fetch();  
+        print_r($data);
         exit;
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
