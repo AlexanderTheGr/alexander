@@ -5,12 +5,12 @@ namespace SoftoneBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use SoftoneBundle\Entity\Category as Category;
+use SoftoneBundle\Entity\Pcategory as Pcategory;
 use AppBundle\Controller\Main as Main;
 
 class ServiceController extends Main{
 
-    var $repository = 'SoftoneBundle:Category';
+    var $repository = 'SoftoneBundle:Pcategory';
 
     /**
      * @Route("/service/service")
@@ -33,7 +33,13 @@ class ServiceController extends Main{
     public function gettabs() {
 
 
-        $this->addTab(array("title" => "General", "form" => "", "content" => 'aaaa', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
+        $entity = new Pcategory;
+                
+        $fields["itecategoryName"] = array("label" => "Weight");
+
+        $forms = $this->getFormLyFields($entity, $fields);
+        
+        $this->addTab(array("title" => "General", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
    
         $json = $this->tabs();
         return $json;
