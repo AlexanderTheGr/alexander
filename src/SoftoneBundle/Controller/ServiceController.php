@@ -73,6 +73,7 @@ class ServiceController extends Main{
         echo  '"";'.implode(";", $brands)."\n";
         foreach($dfr as $brand=>$branddata) {
             echo $brand.";".implode(";", $brands2)."\n";
+            continue;
             foreach($branddata as $title=>$titledata) {
                 echo $title.";".implode(";", $brands2)."\n";
                 foreach($titledata as $code=>$codedata) {   
