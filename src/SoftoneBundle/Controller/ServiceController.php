@@ -35,7 +35,7 @@ class ServiceController extends Main{
 
         $entity = new Pcategory;
                 
-        $fields["itecategoryName"] = array("label" => "Weight");
+        $fields["itecategoryName"] = array("label" => "Original",'type' => "textarea");
 
         $forms = $this->getFormLyFields($entity, $fields);
         
