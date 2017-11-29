@@ -20,10 +20,8 @@ class ServiceController extends Main{
         
         $content = "aaaaa";
         
-        return $this->render('SoftoneBundle:Category:index.html.twig', array(
+        return $this->render('SoftoneBundle:Category:view.html.twig', array(
                     'pagename' => 'Service',
-                    'url' => '/category/getdatatable',
-                    'view' => '/category/view',
                     'ctrl' => $this->generateRandomString(),
                     'app' => $this->generateRandomString(),
                     'content' => $content,
