@@ -51,7 +51,7 @@ class ServiceController extends Main{
         
         
         $search = $data["SoftoneBundle:Pcategory:itecategoryName:"];
-        $q = $items = explode("\n",",", $search);
+        $q = $items = str_replace("\n",",", $search);
         echo $q;
         //$items = explode("\n", $search);
         //print_r($items);
