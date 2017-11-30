@@ -384,9 +384,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $shipment[] = array("value" => "103", "name" => "Μεταφορική");
             $shipment[] = array("value" => "104", "name" => "Δρομολόγιο");
             
-            $this->setSetting("SoftoneBundle:Order:Shipments",$shipment);
-            $shipment = unserialize($this->getSetting("SoftoneBundle:Order:Shipments"))
-                    ;
+            $this->setSetting("SoftoneBundle:Order:Shipments",  serialize($shipment));
+            $shipment = unserialize($this->getSetting("SoftoneBundle:Order:Shipments"));
+                    
 
             //$dataarray[] = array("value" => "1", "name" => "Ναι");
 
