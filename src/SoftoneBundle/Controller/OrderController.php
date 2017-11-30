@@ -275,7 +275,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     public function saveCustomerAction(Request $request) {
         $request->request->get("customerName");
         $request->request->get("customer");
-        $id = (int)$request->request->get("id");
+        $id = (int) $request->request->get("id");
 
         $order = $this->getDoctrine()
                 ->getRepository($this->repository)
@@ -287,7 +287,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $this->initialazeNewEntity($order);
             @$this->newentity[$this->repository]->setField("status", 1);
         } else {
-            
             
         }
 
@@ -301,12 +300,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $order->setUser($user);
 
         //if (!$user->getSoftoneStore()) {
-            $store = $this->getDoctrine()
-                    ->getRepository("SoftoneBundle:Store")
-                    ->find(1);
-            $order->setSoftoneStore($store);
+        $store = $this->getDoctrine()
+                ->getRepository("SoftoneBundle:Store")
+                ->find(1);
+        $order->setSoftoneStore($store);
         //} else {
-       //     $order->setSoftoneStore($user->getSoftoneStore());
+        //     $order->setSoftoneStore($user->getSoftoneStore());
         //}
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
@@ -378,21 +377,24 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $trdbranch[] = array("value" => "5", "name" => "ΑΕΡΟΔΡΟΜΙΟ");
 
 
-            /*
-              $shipment[] = array("value" => "100", "name" => "Παραλαβή Απο Κατάστημα");
-              $shipment[] = array("value" => "101", "name" => "Γενική Ταχυδρομική");
-              $shipment[] = array("value" => "102", "name" => "Πόρτα Πόρτα");
-              $shipment[] = array("value" => "103", "name" => "Μεταφορική");
-             */
-            $shipment = unserialize($this->getSetting("SoftoneBundle:Order:Shipments"));
+
+            $shipment[] = array("value" => "100", "name" => "Παραλαβή Απο Κατάστημα");
+            $shipment[] = array("value" => "101", "name" => "Γενική Ταχυδρομική");
+            $shipment[] = array("value" => "102", "name" => "Πόρτα Πόρτα");
+            $shipment[] = array("value" => "103", "name" => "Μεταφορική");
+            $shipment[] = array("value" => "104", "name" => "Δρομολόγιο");
+            
+            $this->setSetting("SoftoneBundle:Order:Shipments",$shipment);
+            $shipment = unserialize($this->getSetting("SoftoneBundle:Order:Shipments"))
+                    ;
 
             //$dataarray[] = array("value" => "1", "name" => "Ναι");
 
             $fields["fincode"] = array("label" => $this->getTranslation("Κωδικός Παραγγελίας"), 'className' => 'asdfg', "required" => true);
 
             if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis')
-            $fields["trdbranch"] = array("label" => $this->getTranslation("Send to"), 'type' => "select", 'dataarray' => $trdbranch, 'className' => 'asdfg', "required" => false);
-            
+                $fields["trdbranch"] = array("label" => $this->getTranslation("Send to"), 'type' => "select", 'dataarray' => $trdbranch, 'className' => 'asdfg', "required" => false);
+
             $fields["shipment"] = array("label" => $this->getTranslation("Τρόπος Αποστολής"), 'type' => "select", 'dataarray' => $shipment, 'className' => 'asdfg', "required" => false);
 
 
@@ -819,14 +821,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $hasArticleIds = true;
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
                                 FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where p.itemCode1 LIKE \''.$search[1].'\' OR p.itemIsactive = 1 AND (' . $qsupplier . '  (' . $tecdoc_article . $sqlearch2 . $tecdoc_article2 . ' ' . $sisxetisi . ') )
+                                where p.itemCode1 LIKE \'' . $search[1] . '\' OR p.itemIsactive = 1 AND (' . $qsupplier . '  (' . $tecdoc_article . $sqlearch2 . $tecdoc_article2 . ' ' . $sisxetisi . ') )
                                 ORDER BY ' . $this->orderBy;
 
                     if ($search[0] == 'productfreesearch') {
 
                         $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
 									FROM ' . $this->repository . ' ' . $this->prefix . '
-									where p.itemCode1 = "'.$search[1].'" OR p.itemIsactive = 1 AND (' . $qsupplier . '  (' . $tecdoc_article . $sqlearch2 . $tecdoc_article2 . ' ' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . ') )
+									where p.itemCode1 = "' . $search[1] . '" OR p.itemIsactive = 1 AND (' . $qsupplier . '  (' . $tecdoc_article . $sqlearch2 . $tecdoc_article2 . ' ' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . ') )
 									ORDER BY ' . $this->orderBy;
                     }
                 } else {
