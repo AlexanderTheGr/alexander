@@ -690,7 +690,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $fields["itemMarkupr"] = array("label" => $this->getTranslation("Retail Markup"), "className" => "col-md-2", "required" => false);
             $fields["itemRemarks"] = array("label" => $this->getTranslation("Remarks"), "required" => false, "className" => "col-md-6 col-sm-6");
             $fields["sisxetisi"] = array("label" => $this->getTranslation("Κωδικός Συσχέτισης"), "className" => "col-md-6", "required" => false);
-            //$fields["edis"] = array("label" => "Αντιστοιχίες Εκτός Αποθήκης", "className" => "col-md-6", "required" => false);      
+            $fields["edis"] = array("label" => "Αντιστοιχίες Εκτός Αποθήκης", "className" => "col-md-6", "required" => false);      
         } else {
 
             //$fields["productSale"] = array("label" => "Προσφορά", "className" => "col-md-3", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:ProductSale', 'name' => 'title', 'value' => 'id'));
