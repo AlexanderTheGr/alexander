@@ -17,6 +17,7 @@ class Invoice extends Entity {
 
     public function __construct() {
         $this->repositories['supplier'] = 'SoftoneBundle:Supplier';
+        $this->types['supplier'] = 'object';
         $this->items = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
