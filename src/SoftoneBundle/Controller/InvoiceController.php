@@ -162,7 +162,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
             $dtparams[] = array("name" => $this->getTranslation("Product Name"), "function" => 'getForOrderItemsTitle', 'search' => 'text');
             $dtparams[] = array("name" => $this->getTranslation("Product Code"), "index" => 'product:erpCode');
             $dtparams[] = array("name" => $this->getTranslation("Supplier"), "function" => 'getForOrderSupplier', 'search' => 'text');
-            $dtparams[] = array("name" => $this->getTranslation("Invetory"), "function" => 'getProductApothiki', 'search' => 'text');
+            $dtparams[] = array("name" => $this->getTranslation("Αποθήκη"), "function" => 'getProductApothiki', 'search' => 'text');
             $dtparams[] = array("name" => $this->getTranslation("Qty"), "input" => "text", "index" => 'qty');
             $dtparams[] = array("name" => $this->getTranslation("Price"), "input" => "text", "index" => 'price');
             $dtparams[] = array("name" => $this->getTranslation("Final Price"), "index" => 'fprice');
