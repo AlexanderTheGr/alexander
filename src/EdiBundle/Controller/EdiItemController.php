@@ -843,7 +843,7 @@ class EdiItemController extends Main {
                                 $entity->setWholesaleprice($Item->ListPrice);
 
                                 @$jsonarr[$ands[$Item->ItemCode]]['6'] = $entity->getDiscount($customer, $vat);
-                                @$jsonarr[$ands[$Item->ItemCode]]['7'] = number_format($Item->ListPrice, 2, '.', '');
+                                @$jsonarr[$ands[$Item->ItemCode]]['7'] = number_format($Item->ListPrice, 2, '.', '') . " / ".number_format($Item->UnitPrice, 2, '.', '');
                                 @$jsonarr[$ands[$Item->ItemCode]]['9'] = $entity->getQty2();
 
                                 //$entity->setRetailprice(number_format($Item->UnitPrice, 2, '.', ''));
