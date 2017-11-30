@@ -270,8 +270,8 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $fields["customerVatsts"] = array("label" => $this->getTranslation("Customer Vat"), "required" => true, "className" => "col-md-6", 'type' => "select", 'dataarray' => $vatsts);
 
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
-            //$priceField[] = array("value" => "itemPricer", "name" => "Λιανική");
-            //$priceField[] = array("value" => "itemPricew", "name" => "Χονδρική");
+            $priceField[] = array("value" => "itemPricer", "name" => "Λιανική");
+            $priceField[] = array("value" => "itemPricew", "name" => "Χονδρική");
 
             $priceField[] = array("value" => "itemPricer01", "name" => "Χονδρικής με ΦΠΑ");
             $priceField[] = array("value" => "itemPricew01", "name" => "Χονδρικής");
