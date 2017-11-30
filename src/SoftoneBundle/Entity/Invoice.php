@@ -16,6 +16,7 @@ class Invoice extends Entity {
     var $uniques = array();
 
     public function __construct() {
+        $this->repositories['supplier'] = 'SoftoneBundle:Supplier';
         $this->items = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -33,6 +34,7 @@ class Invoice extends Entity {
     }
 
     public function getRepositories($repo) {
+        $this->repositories['supplier'] = 'SoftoneBundle:Supplier';
         return $this->repositories[$repo];
     }
 
