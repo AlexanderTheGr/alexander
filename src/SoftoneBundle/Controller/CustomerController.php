@@ -237,7 +237,8 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             $customergroup = $this->getDoctrine()->getRepository("SoftoneBundle:Customergroup")->find(1);
             $entity->setCustomergroup($customergroup);
             if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
-                $entity->setPriceField("itemPricew02");
+                $entity->setPriceField("itemPricer");
+                $entity->setCustomerPayment(1000);
             } else {
                 $entity->setPriceField("itemPricer");
             }
