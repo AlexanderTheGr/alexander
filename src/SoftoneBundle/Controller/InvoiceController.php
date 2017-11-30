@@ -141,7 +141,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         }
 
         $fields["invoice"] = array("label" => $this->getTranslation("Invoice"));
-        $fields["supplier"] = array("label" => $this->getTranslation("Supplier"), 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Supplier', 'name' => 'supplierName', 'value' => 'id'));
+        //$fields["supplier"] = array("label" => $this->getTranslation("Supplier"), 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Supplier', 'name' => 'supplierName', 'value' => 'id'));
 
         //$fields["routeName"] = array("label" => "Name");
 
