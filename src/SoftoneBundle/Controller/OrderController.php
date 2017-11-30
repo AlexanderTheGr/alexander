@@ -878,7 +878,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $recordsFiltered = count($results);
             //$model_str = "";
             $session = new Session();
-            if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'tsakonas' AND $session) {
+            if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'tsakonas' AND $session->get("fanomodel")) {
                 $sql = "SELECT *  FROM  partsbox_db.fanopoiia_category where model_id = '" . $session->get("fanomodel") . "'";
                 $connection = $em->getConnection();
                 $statement = $connection->prepare($sql);
