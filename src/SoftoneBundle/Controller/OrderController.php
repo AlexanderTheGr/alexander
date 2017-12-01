@@ -88,6 +88,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
     public function printarea($order) {
         $html = "";
+        $shipment = unserialize($this->getSetting("SoftoneBundle:Order:Shipments"));
         if (!$order)
             return "";
         $html .= '<h2>Παραγγελία ' . $order->getfincode() . '</h2>';
@@ -95,6 +96,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $html .= '<tr><th>Όνομα πελάτη</th><td>' . $order->getCustomerName() . '</td>';
         $html .= '<tr><th>Σχόλια</th><td>' . $order->getRemarks() . '</td>';
         $html .= '<tr><th>Χρήστης</th><td>' . $order->getUser()->getUsername() . '</td>';
+        $html .= '<tr><th>Τρόπος Αποστολής </th><td>' . $shipment[$order->getShippiment()] . '</td>';
         $html .= "</table>";
 
         $html .= "<table width='100%'>";
