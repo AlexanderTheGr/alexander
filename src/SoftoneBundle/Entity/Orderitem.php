@@ -253,7 +253,16 @@ class Orderitem {
         $out = '<a title="' . $this->getProduct()->getTitle() . '" class="productfano_info" car="" data-articleId="' . $this->getProduct()->getTecdocArticleId() . '" data-ref="' . $this->getProduct()->getId() . '">' . $this->getProduct()->getTitle() . '</a>';
         $out .= '<div class="ediprices ediprices_' . $this->getProduct()->getId() . '"></div>';
         if ($this->remarks)
-        $out .=  '<BR><span class="text-sm text-info">' . $this->remarks . '</span>';// "<BR>".$this->remarks;
+            $out .= '<BR><span class="text-sm text-info">' . $this->remarks . '</span>'; // "<BR>".$this->remarks;
+        return $out;
+    }
+
+    public function getForOrderItemsTitlePrint() {
+        //$out = '<a title="' . $this->getProduct()->getTitle() . '" class="productfano_info" car="" data-articleId="' . $this->getProduct()->getTecdocArticleId() . '" data-ref="' . $this->getProduct()->getId() . '">' . $this->getProduct()->getTitle() . '</a>';
+        //$out .= '<div class="ediprices ediprices_' . $this->getProduct()->getId() . '"></div>';
+        $out .= $this->getProduct()->getTitle();
+        if ($this->remarks)
+            $out .= '<BR>' . $this->remarks . '</span>'; // "<BR>".$this->remarks;
         return $out;
     }
 
