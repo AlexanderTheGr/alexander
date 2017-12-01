@@ -143,7 +143,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
             $supplier = $item->getProduct()->getSupplierId() ? $item->getProduct()->getSupplierId()->getTitle() : '';
             $html .= "<tr>";
-            $html .= "<td>" . $item->getForOrderItemsTitle() . "</td>";
+            $html .= "<td>" . $item->getForOrderItemsTitlePrint() . "</td>";
             $html .= "<td>" . $product->getErpCode() . "</td>";
             $html .= "<td>" . $ti . "</td>";
             //$html .= "<td>" . $product->getItemMtrplace() . "</td>";
