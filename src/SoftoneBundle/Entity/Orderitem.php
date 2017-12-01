@@ -262,7 +262,7 @@ class Orderitem {
         //$out .= '<div class="ediprices ediprices_' . $this->getProduct()->getId() . '"></div>';
         $out .= $this->getProduct()->getTitle();
         if ($this->remarks)
-            $out .= '<BR>' . $this->remarks . '</span>'; // "<BR>".$this->remarks;
+            $out .= '<BR><i>' . $this->remarks . '</i></span>'; // "<BR>".$this->remarks;
         return $out;
     }
 
