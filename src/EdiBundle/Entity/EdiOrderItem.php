@@ -23,7 +23,12 @@ class EdiOrderItem extends Entity {
      * @var integer
      */
     private $qty;
-
+    
+    /**
+     * @var integer
+     */
+    private $porder;
+    
     /**
      * @var string
      */
@@ -151,6 +156,29 @@ class EdiOrderItem extends Entity {
     public function getFprice() {
         return $this->fprice;
     }
+    
+    /**
+     * Get store
+     *
+     * @return integer
+     */
+    public function getPorder() {
+        return $this->porder;
+    }
+    
+    /**
+     * Set store
+     *
+     * @param integer $store
+     *
+     * @return EdiOrderItem
+     */
+    public function setPorder($porder) {
+        $this->porder = $store;
+
+        return $this;
+    }    
+    
 
     /**
      * Set store
@@ -165,6 +193,7 @@ class EdiOrderItem extends Entity {
         return $this;
     }
 
+
     /**
      * Get store
      *
@@ -172,7 +201,10 @@ class EdiOrderItem extends Entity {
      */
     public function getStore() {
         return $this->store;
-    }
+    }    
+    
+    
+    
 
     /**
      * Set chk
