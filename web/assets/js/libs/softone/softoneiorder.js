@@ -523,6 +523,7 @@ jQuery('.ediiteqty1, .ediiteqty2, EdiBundleEdiOrderItemQty, .SoftoneBundleProduc
         }
         data.qty = jQuery(this).val();
         data.price = jQuery(this).attr('data-price');
+        data.order = jQuery(this).attr('data-order');
         data.store = jQuery("#store_" + store).val();
         $("#loaderer").show();
         $.post("/edi/order/addorderitem/", data, function (result) {
