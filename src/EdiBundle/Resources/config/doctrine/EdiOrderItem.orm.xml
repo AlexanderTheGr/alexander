@@ -42,6 +42,14 @@
         <option name="default">7021</option>
       </options>
     </field>
+    
+    <field name="porder" type="integer" column="porder" nullable="false">
+      <options>
+        <option name="unsigned"/>
+        <option name="default">0</option>
+      </options>
+    </field>
+        
     <field name="chk" type="boolean" column="chk" nullable="false"/>
    
   </entity>
