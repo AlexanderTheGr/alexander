@@ -2945,11 +2945,14 @@ class Product extends Entity {
             $connection = $em->getConnection();
             $statement = $connection->prepare($sql11);
             $statement->execute();
-            $part = $statement->fetch();
-            print_r($part);
+            $edi = $statement->fetch();
+            //print_r($part);
         }
 
         $ti = $this->getSupplierId() ? $this->getSupplierId()->getTitle() : "";
+        if ($edi["name"]) {
+            $ti .= " (".$edi["name"].")";
+        }
         if ($this->tecdocArticleId == 0) {
             $out = '<a title="' . $ti . '"  class="forordersupplier" car="" data-articleId="' . $this->tecdocArticleId . '" data-order="' . $order . '" data-ref="' . $this->id . '">' . $ti . '</a>';
             return $out;
