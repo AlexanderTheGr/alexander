@@ -751,10 +751,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $statement->execute();
                     $crosses = $statement->fetchAll();
                     $sa = array();
+                    
+                    print_r($crosses);
+                    
                     foreach ($crosses as $cross) {
                         $sa[trim($cross["partno"])] = trim($cross["partno"]);
                     }
-                    print_r($sa);
+                    //print_r($sa);
                     //echo $sql11;                    
                     
                     if (count($sa)) {
