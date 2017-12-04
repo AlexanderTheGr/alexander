@@ -2743,7 +2743,7 @@ class Product extends Entity {
         return number_format($price * $vat, 2, '.', '') . " (" . (float) $discount . "%)";
     }
 
-    function getEdiPrices() {
+    function getEdiPrices($orderid = 0) {
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") != 'tsakonas')
             return;
 
@@ -2850,7 +2850,7 @@ class Product extends Entity {
                                 <td>' . $data["description"] . '</td>
                                 <td>' . $data["gbg1"] . '</td>
                                 <td>' . $pricef . '</td>
-                                <td style="width:150px"><input type="text" data-price="'.$pricef.'" data-id="' . $data['id'] . '" name="qty1_' . $data['id'] . '" value="0" size="2" id="qty1_' . $data['id'] . '" class="ediiteqty1"> <div class="SoftoneBundleGBGProductAdd" data-price="'.$pricef.'" data-qty="qty1" data-id="' . $data['id'] . '" style="width: 50%; float: right;"><div style="position: relative" class="gui-icon"><i class="md md-shopping-cart"></i><span class="title"><a target="_blank" href="#"></a></span></div></div> </td>    
+                                <td style="width:150px"><input type="text" data-order="'.$orderid.'" data-price="'.$pricef.'" data-id="' . $data['id'] . '" name="qty1_' . $data['id'] . '" value="0" size="2" id="qty1_' . $data['id'] . '" class="ediiteqty1"> <div class="SoftoneBundleGBGProductAdd" data-price="'.$pricef.'" data-qty="qty1" data-id="' . $data['id'] . '" style="width: 50%; float: right;"><div style="position: relative" class="gui-icon"><i class="md md-shopping-cart"></i><span class="title"><a target="_blank" href="#"></a></span></div></div> </td>    
                             </tr>';
                     $out .= '<tr>
                                 <td>' . $data["name"] . '</td>
@@ -2858,7 +2858,7 @@ class Product extends Entity {
                                 <td>' . $data["description"] . '</td>
                                 <td>' . $data["gbg2"] . '</td>
                                 <td>' . $pricef . '</td>
-                                <td style="width:150px"><input type="text" data-price="'.$pricef.'" data-id="' . $data['id'] . '" name="qty2_' . $data['id'] . '" value="0" size="2" id="qty2_' . $data['id'] . '" class="ediiteqty1"> <div class="SoftoneBundleGBGProductAdd" data-price="'.$pricef.'" data-qty="qty2" data-id="' . $data['id'] . '" style="width: 50%; float: right;"><div style="position: relative" class="gui-icon"><i class="md md-shopping-cart"></i><span class="title"><a target="_blank" href="#"></a></span></div></div> </td>    
+                                <td style="width:150px"><input type="text" data-order="'.$orderid.'" data-price="'.$pricef.'" data-id="' . $data['id'] . '" name="qty2_' . $data['id'] . '" value="0" size="2" id="qty2_' . $data['id'] . '" class="ediiteqty1"> <div class="SoftoneBundleGBGProductAdd" data-price="'.$pricef.'" data-qty="qty2" data-id="' . $data['id'] . '" style="width: 50%; float: right;"><div style="position: relative" class="gui-icon"><i class="md md-shopping-cart"></i><span class="title"><a target="_blank" href="#"></a></span></div></div> </td>    
                             </tr>';
                     $out .= '<tr>
                                 <td>' . $data["name"] . '</td>
@@ -2866,7 +2866,7 @@ class Product extends Entity {
                                 <td>' . $data["description"] . '</td>
                                 <td>' . $data["gbg3"] . '</td>
                                 <td>' . $pricef . '</td>
-                                <td style="width:150px"><input type="text" data-price="'.$pricef.'" data-id="' . $data['id'] . '" name="qty3_' . $data['id'] . '" value="0" size="2" id="qty3_' . $data['id'] . '" class="ediiteqty1"> <div class="SoftoneBundleGBGProductAdd" data-price="'.$pricef.'" data-qty="qty3" data-id="' . $data['id'] . '" style="width: 50%; float: right;"><div style="position: relative" class="gui-icon"><i class="md md-shopping-cart"></i><span class="title"><a target="_blank" href="#"></a></span></div></div></td>    
+                                <td style="width:150px"><input type="text" data-order="'.$orderid.'" data-price="'.$pricef.'" data-id="' . $data['id'] . '" name="qty3_' . $data['id'] . '" value="0" size="2" id="qty3_' . $data['id'] . '" class="ediiteqty1"> <div class="SoftoneBundleGBGProductAdd" data-price="'.$pricef.'" data-qty="qty3" data-id="' . $data['id'] . '" style="width: 50%; float: right;"><div style="position: relative" class="gui-icon"><i class="md md-shopping-cart"></i><span class="title"><a target="_blank" href="#"></a></span></div></div></td>    
                             </tr>';                    
                 }  else {
                 
