@@ -506,7 +506,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $dtparams[] = array("name" => $this->getTranslation("Product Code"), "function" => 'getForOrderCode', 'search' => 'text');
         $dtparams[] = array("name" => $this->getTranslation("Product Title"), "function" => 'getForOrderTitle', 'search' => 'text');
 
-        $dtparams[] = array("name" => $this->getTranslation("Supplier"), "function" => 'getForOrderSupplier', 'search' => 'text');
+        $dtparams[] = array("name" => $this->getTranslation("Supplier"), "function" => 'getForOrderSupplier', 'functionparams'=>$id, 'search' => 'text');
         $dtparams[] = array("name" => $this->getTranslation("Atributes"), "function" => 'getArticleAttributes', 'search' => 'text');
 
         $dtparams[] = array("name" => $this->getTranslation("Remarks"), "index" => "itemRemarks", 'search' => 'text');
