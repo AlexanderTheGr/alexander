@@ -198,9 +198,11 @@ class EdiOrderController extends Main {
             $Ediitem = $this->getDoctrine()
                     ->getRepository('EdiBundle:EdiItem')
                     ->findOneBy(array("product" => $request->request->get("product")));
+            
             $Ediitem = $this->getDoctrine()
                     ->getRepository('EdiBundle:EdiItem')
                     ->find($request->request->get("product"));
+            $product = $Ediitem->toErp();
         } else {
             return;
         }
