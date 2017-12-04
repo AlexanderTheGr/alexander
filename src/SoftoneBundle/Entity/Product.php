@@ -2945,7 +2945,7 @@ class Product extends Entity {
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql11);
         $statement->execute();
-        $part = $statement->fetchOne();
+        $part = $statement->fetchRow();
         $sa = array();
 
         $ti = $this->getSupplierId() ? $this->getSupplierId()->getTitle() : "";
