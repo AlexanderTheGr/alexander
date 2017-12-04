@@ -2941,7 +2941,7 @@ class Product extends Entity {
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         if ($order > 0) {
-            $sql11 = "select edi from edi_order where id (select ediorder from edi_order_item where porder = '" . $order . "' AND  ediitem in (SELECT id FROM partsbox_db.edi_item where edi = 11 AND replace(replace(replace(replace(`partno`, '/', ''), '.', ''), '-', ''), ' ', '') LIKE '" . $this->getItemCode2() . "'))";
+            $sql11 = "select edi from edi_order where id in (select ediorder from edi_order_item where porder = '" . $order . "' AND  ediitem in (SELECT id FROM partsbox_db.edi_item where edi = 11 AND replace(replace(replace(replace(`partno`, '/', ''), '.', ''), '-', ''), ' ', '') LIKE '" . $this->getItemCode2() . "'))";
             $connection = $em->getConnection();
             $statement = $connection->prepare($sql11);
             $statement->execute();
