@@ -732,6 +732,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     //echo $sqlearch; 
                     //$sqlearch = "Select o.id from SoftoneBundle:Product o where o.itemMtrgroup = '" . (int) $search[1] . "%'";
                 } else {
+                    
+                    
+                    
                     $search[1] = $this->clearstring($search[1]);
                     $sql11 = "SELECT * FROM  partsbox_db.fanocrosses where cross1 LIKE '" . $search[1] . "%' OR cross2 LIKE '" . $search[1] . "%'";
                     $connection = $em->getConnection();
@@ -743,7 +746,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $sa[trim($cross["cross2"])] = trim($cross["cross2"]);
                         $sa[trim($cross["cross1"])] = trim($cross["cross1"]);
                     }
-                    
                     
                     $sql11 = "SELECT partno FROM  partsbox_db.edi_item where edi = 11 AND replace(replace(replace(replace(`artnr`, '/', ''), '.', ''), '-', ''), ' ', '') LIKE '".$this->clearstring($search[1])."'";
                     $connection = $em->getConnection();
@@ -757,7 +759,19 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     
                     foreach ($crosses as $cross) {
                         $sa[trim($cross["partno"])] = trim($cross["partno"]);
+                        $search[1] = $this->clearstring($search[1]);
+                        $sql11 = "SELECT * FROM  partsbox_db.fanocrosses where cross1 LIKE '" . $cross["partno"] . "%' OR cross2 LIKE '" . $cross["partno"] . "%'";
+                        $connection = $em->getConnection();
+                        $statement = $connection->prepare($sql11);
+                        $statement->execute();
+                        $crosses = $statement->fetchAll();
+                        $sa = array();
+                        foreach ($crosses as $cross) {
+                            $sa[trim($cross["cross2"])] = trim($cross["cross2"]);
+                            $sa[trim($cross["cross1"])] = trim($cross["cross1"]);
+                        }                        
                     }
+                    //$sa =array_unique($sa);
                     //print_r($sa);
                     //echo $sql11;                    
                     
