@@ -870,7 +870,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                     if ($search[1] != '') {
                         if ($sqlearch)
-                        $sqlearch2 = "p.id in (".$sqlearch.") OR";
+                        $sqlearch2 = "p.id in (".$sqlearch.") OR p.id in (Select o.id from SoftoneBundle:ProductSearch o where o.search like '%" . $search[1] . "%') OR ";
                         else
                         $sqlearch2 = "p.id in (Select o.id from SoftoneBundle:ProductSearch o where o.search like '%" . $search[1] . "%') OR ";
                     }
