@@ -245,8 +245,8 @@ class Orderitem {
         return $this->product;
     }
 
-    public function getForOrderSupplier() {
-        return $this->getProduct()->getForOrderSupplier();
+    public function getForOrderSupplier($order=0) {
+        return $this->getProduct()->getForOrderSupplier($order);
     }
 
     public function getForOrderItemsTitle() {
