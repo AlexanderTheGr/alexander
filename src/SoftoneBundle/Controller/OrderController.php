@@ -721,7 +721,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $sa = array();
                     foreach ($crosses as $cross) {
                         $sa[trim($cross["partno"])] = trim($cross["partno"]);
-   
                     }
                     //echo $sql11;
                     if (count($sa)) {
