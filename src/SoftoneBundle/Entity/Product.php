@@ -2940,13 +2940,14 @@ class Product extends Entity {
             $kernel = $kernel->getKernel();
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
-        
-        $sql11 = "SELECT id FROM  partsbox_db.edi_item where edi = 11 AND replace(replace(replace(replace(`partno`, '/', ''), '.', ''), '-', ''), ' ', '') LIKE '" . $this->getItemCode2() . "'";
-        $connection = $em->getConnection();
-        $statement = $connection->prepare($sql11);
-        $statement->execute();
-        $part = $statement->fetch();
-        $sa = array();
+        if ($order > 0) {
+            $sql11 = "select ediorder from edi_order_item where porder = '" . $order . "' AND  eiditem in (SELECT id FROM partsbox_db.edi_item where edi = 11 AND replace(replace(replace(replace(`partno`, '/', ''), '.', ''), '-', ''), ' ', '') LIKE '" . $this->getItemCode2() . "')";
+            $connection = $em->getConnection();
+            $statement = $connection->prepare($sql11);
+            $statement->execute();
+            $part = $statement->fetch();
+            print_r($part);
+        }
 
         $ti = $this->getSupplierId() ? $this->getSupplierId()->getTitle() : "";
         if ($this->tecdocArticleId == 0) {
