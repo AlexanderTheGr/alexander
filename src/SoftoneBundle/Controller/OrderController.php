@@ -882,7 +882,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     //echo $sql;
                     //exit;				
                 }
-                echo $sql;
+                //echo $sql;
 
 
                 $sql = str_replace("p.*,", "", $sql);
