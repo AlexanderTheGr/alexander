@@ -2833,24 +2833,22 @@ class Product extends Entity {
                         ->find($data["id"]);
                 $entity->getEdiQtyAvailability();
                 $pricef = $price[$data["itemcode"]] > 0 ? $price[$data["itemcode"]] : $data["wholesaleprice"];
-                
+
                 if ($data["edi"] == 11) {
-                    
-                    
-                
+
+
+
                     //$availabilityf = $availability[$data["itemcode"]] != '' ? $availability[$data["itemcode"]] : $entity->getEdiQtyAvailability();
                     //$availabilityf = $availabilityf == 'green' OR $availabilityf == 1 ? "YES" : "NO";
-                    
-                    
                     // 
-                    
+
                     $out .= '<tr>
                                 <td>' . $data["name"] . ' (ΚΑΡΠΟΥ)</td>
                                 <td>' . $data["itemcode"] . '</td>
                                 <td>' . $data["description"] . '</td>
                                 <td>' . $data["gbg1"] . '</td>
                                 <td>' . $pricef . '</td>
-                                <td style="width:150px"><input type="text" data-order="'.$orderid.'" data-price="'.$pricef.'" data-id="' . $data['id'] . '" name="qty1_' . $data['id'] . '" value="0" size="2" id="qty1_' . $data['id'] . '" class="ediiteqty1"> <div class="SoftoneBundleGBGProductAdd" data-price="'.$pricef.'" data-qty="qty1" data-id="' . $data['id'] . '" style="width: 50%; float: right;"><div style="position: relative" class="gui-icon"><i class="md md-shopping-cart"></i><span class="title"><a target="_blank" href="#"></a></span></div></div> </td>    
+                                <td style="width:150px"><input type="text" data-order="' . $orderid . '" data-price="' . $pricef . '" data-id="' . $data['id'] . '" name="qty1_' . $data['id'] . '" value="0" size="2" id="qty1_' . $data['id'] . '" class="ediiteqty1"> <div class="SoftoneBundleGBGProductAdd" data-price="' . $pricef . '" data-qty="qty1" data-id="' . $data['id'] . '" style="width: 50%; float: right;"><div style="position: relative" class="gui-icon"><i class="md md-shopping-cart"></i><span class="title"><a target="_blank" href="#"></a></span></div></div> </td>    
                             </tr>';
                     $out .= '<tr>
                                 <td>' . $data["name"] . '</td>
@@ -2858,7 +2856,7 @@ class Product extends Entity {
                                 <td>' . $data["description"] . '</td>
                                 <td>' . $data["gbg2"] . '</td>
                                 <td>' . $pricef . '</td>
-                                <td style="width:150px"><input type="text" data-order="'.$orderid.'" data-price="'.$pricef.'" data-id="' . $data['id'] . '" name="qty2_' . $data['id'] . '" value="0" size="2" id="qty2_' . $data['id'] . '" class="ediiteqty1"> <div class="SoftoneBundleGBGProductAdd" data-price="'.$pricef.'" data-qty="qty2" data-id="' . $data['id'] . '" style="width: 50%; float: right;"><div style="position: relative" class="gui-icon"><i class="md md-shopping-cart"></i><span class="title"><a target="_blank" href="#"></a></span></div></div> </td>    
+                                <td style="width:150px"><input type="text" data-order="' . $orderid . '" data-price="' . $pricef . '" data-id="' . $data['id'] . '" name="qty2_' . $data['id'] . '" value="0" size="2" id="qty2_' . $data['id'] . '" class="ediiteqty1"> <div class="SoftoneBundleGBGProductAdd" data-price="' . $pricef . '" data-qty="qty2" data-id="' . $data['id'] . '" style="width: 50%; float: right;"><div style="position: relative" class="gui-icon"><i class="md md-shopping-cart"></i><span class="title"><a target="_blank" href="#"></a></span></div></div> </td>    
                             </tr>';
                     $out .= '<tr>
                                 <td>' . $data["name"] . '</td>
@@ -2866,13 +2864,13 @@ class Product extends Entity {
                                 <td>' . $data["description"] . '</td>
                                 <td>' . $data["gbg3"] . '</td>
                                 <td>' . $pricef . '</td>
-                                <td style="width:150px"><input type="text" data-order="'.$orderid.'" data-price="'.$pricef.'" data-id="' . $data['id'] . '" name="qty3_' . $data['id'] . '" value="0" size="2" id="qty3_' . $data['id'] . '" class="ediiteqty1"> <div class="SoftoneBundleGBGProductAdd" data-price="'.$pricef.'" data-qty="qty3" data-id="' . $data['id'] . '" style="width: 50%; float: right;"><div style="position: relative" class="gui-icon"><i class="md md-shopping-cart"></i><span class="title"><a target="_blank" href="#"></a></span></div></div></td>    
-                            </tr>';                    
-                }  else {
-                
-                $availabilityf = $availability[$data["itemcode"]] != '' ? $availability[$data["itemcode"]] : $entity->getEdiQtyAvailability();
-                //$availabilityf = $availabilityf == 'green' OR $availabilityf == 1 ? "YES" : "NO";
-                $out .= '<tr>
+                                <td style="width:150px"><input type="text" data-order="' . $orderid . '" data-price="' . $pricef . '" data-id="' . $data['id'] . '" name="qty3_' . $data['id'] . '" value="0" size="2" id="qty3_' . $data['id'] . '" class="ediiteqty1"> <div class="SoftoneBundleGBGProductAdd" data-price="' . $pricef . '" data-qty="qty3" data-id="' . $data['id'] . '" style="width: 50%; float: right;"><div style="position: relative" class="gui-icon"><i class="md md-shopping-cart"></i><span class="title"><a target="_blank" href="#"></a></span></div></div></td>    
+                            </tr>';
+                } else {
+
+                    $availabilityf = $availability[$data["itemcode"]] != '' ? $availability[$data["itemcode"]] : $entity->getEdiQtyAvailability();
+                    //$availabilityf = $availabilityf == 'green' OR $availabilityf == 1 ? "YES" : "NO";
+                    $out .= '<tr>
                             <td>' . $data["name"] . '</td>
                             <td>' . $data["itemcode"] . '</td>
                             <td>' . $data["description"] . '</td>
@@ -2910,7 +2908,7 @@ class Product extends Entity {
             $out = '<a title="' . $this->title . '" class="productfano_info" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
         <div class="ediprices ediprices_' . $this->id . '"></div>
         <br>
-        <span class="text-sm text-info">' . $this->erpCode . '</span>';            
+        <span class="text-sm text-info">' . $this->erpCode . '</span>';
         } else {
             $out = '<a title="' . $this->title . '" class="product_info" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '" href="#">' . $this->erpCode . '</a>
         <div class="ediprices ediprices_' . $this->id . '"></div>
@@ -2936,15 +2934,27 @@ class Product extends Entity {
         return $out;
     }
 
-    public function getForOrderSupplier($order=0) {
+    public function getForOrderSupplier($order = 0) {
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        
+        $sql11 = "SELECT id FROM  partsbox_db.edi_item where edi = 11 AND replace(replace(replace(replace(`partno`, '/', ''), '.', ''), '-', ''), ' ', '') LIKE '" . $this->getItemCode2() . "'";
+        $connection = $em->getConnection();
+        $statement = $connection->prepare($sql11);
+        $statement->execute();
+        $part = $statement->fetchOne();
+        $sa = array();
 
         $ti = $this->getSupplierId() ? $this->getSupplierId()->getTitle() : "";
         if ($this->tecdocArticleId == 0) {
-            $out = '<a title="' . $ti . '"  class="forordersupplier" car="" data-articleId="' . $this->tecdocArticleId . '" data-order="' . $order. '" data-ref="' . $this->id . '">' . $ti . '</a>';
+            $out = '<a title="' . $ti . '"  class="forordersupplier" car="" data-articleId="' . $this->tecdocArticleId . '" data-order="' . $order . '" data-ref="' . $this->id . '">' . $ti . '</a>';
             return $out;
         }
         @$tecdoc = $this->getTecdocSupplierId() ? $this->getTecdocSupplierId()->getSupplier() : "";
-        $out = '<a title="' . $ti . '"  class="forordersupplier" car="" data-articleId="' . $this->tecdocArticleId . '" data-order="' . $order. '" data-ref="' . $this->id . '">' . $ti . '</a>
+        $out = '<a title="' . $ti . '"  class="forordersupplier" car="" data-articleId="' . $this->tecdocArticleId . '" data-order="' . $order . '" data-ref="' . $this->id . '">' . $ti . '</a>
         <br>
         <span class="text-sm text-info">' . $tecdoc . '</span>';
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
