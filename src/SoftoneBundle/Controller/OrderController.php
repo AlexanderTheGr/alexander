@@ -712,6 +712,17 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $sa[trim($cross["cross2"])] = trim($cross["cross2"]);
                         $sa[trim($cross["cross1"])] = trim($cross["cross1"]);
                     }
+                    // replace(replace(replace(replace(`erp_code`, '/', ''), '.', ''), '-', ''), ' ', '') LIKE '".$search[1]."'  OR
+                    $sql11 = "SELECT partno FROM  partsbox_db.edi_item where edi = 11 AND replace(replace(replace(replace(`artnr`, '/', ''), '.', ''), '-', ''), ' ', '') LIKE '".$search[1]."'";
+                    $connection = $em->getConnection();
+                    $statement = $connection->prepare($sql11);
+                    $statement->execute();
+                    $crosses = $statement->fetchAll();
+                    $sa = array();
+                    foreach ($crosses as $cross) {
+                        $sa[trim($cross["partno"])] = trim($cross["partno"]);
+   
+                    }
                     //echo $sql11;
                     if (count($sa)) {
                         $sqlearch = "Select o.id from SoftoneBundle:Product o where o.supplierCode in ('" . implode("','", $sa) . "') OR o.supplierCode like '" . $search[1] . "%'";
