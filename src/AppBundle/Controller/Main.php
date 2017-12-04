@@ -219,7 +219,7 @@ class Main extends Controller {
     }
 
     function clearstring($search) {
-        return $search;
+        //return $search;
         $search = str_replace(" ", "", trim($search));
         $search = str_replace(".", "", $search);
         $search = str_replace("-", "", $search);
