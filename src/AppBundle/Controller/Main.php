@@ -183,7 +183,7 @@ class Main extends Controller {
                     $obj = $em->getRepository($this->repository)->find($result["id"]);
                     $func = $field["function"];
                     //$obj = $em->getRepository($this->repository)->find($result["id"]);
-                    $val = $obj->$func("1".$field["functionparams"]);
+                    $val = $obj->$func($field["functionparams"]);
                     if (@$field["input"]) {
                         @$json[] = "<input id='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "_" . $result["id"] . "' data-id='" . $result["id"] . "' class='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . " " . $field["class"] . "' type='" . $field["input"] . "' value='" . $val . "'>";
                     } else {
