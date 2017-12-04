@@ -752,8 +752,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $crosses = $statement->fetchAll();
                     $sa = array();
                     
-                    echo $sql11;
-                    print_r($crosses);
+                    //echo $sql11;
+                    //print_r($crosses);
                     
                     foreach ($crosses as $cross) {
                         $sa[trim($cross["partno"])] = trim($cross["partno"]);
