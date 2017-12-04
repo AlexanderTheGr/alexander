@@ -936,7 +936,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($request->request->get("id"));
-        echo $product->getEdiPrices();
+        echo $product->getEdiPrices($request->request->get("order"));
         exit;
     }
 
