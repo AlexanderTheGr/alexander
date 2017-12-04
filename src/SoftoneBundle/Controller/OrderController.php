@@ -745,7 +745,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     }
                     
                     
-                    $sql11 = "SELECT partno FROM  partsbox_db.edi_item where edi = 11 AND replace(replace(replace(replace(`artnr`, '/', ''), '.', ''), '-', ''), ' ', '') LIKE '".$search[1]."'";
+                    $sql11 = "SELECT partno FROM  partsbox_db.edi_item where edi = 11 AND replace(replace(replace(replace(`artnr`, '/', ''), '.', ''), '-', ''), ' ', '') LIKE '".$this->clearstring($search[1])."'";
                     $connection = $em->getConnection();
                     $statement = $connection->prepare($sql11);
                     $statement->execute();
@@ -754,7 +754,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     foreach ($crosses as $cross) {
                         $sa[trim($cross["partno"])] = trim($cross["partno"]);
                     }
-                    echo $sql11;                    
+                    //echo $sql11;                    
                     
                     if (count($sa)) {
                         $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where so.itemCode2 in ('" . implode("','", $sa) . "') OR so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
