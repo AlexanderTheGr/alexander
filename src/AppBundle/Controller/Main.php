@@ -223,6 +223,8 @@ class Main extends Controller {
         $search = str_replace(" ", "", trim($search));
         $search = str_replace(".", "", $search);
         $search = str_replace("-", "", $search);
+        $search = str_replace("-", "", $search);
+        
         $search = str_replace("/", "", $search);
         $search = str_replace("*", "", $search);
         $search = strtoupper($search);
