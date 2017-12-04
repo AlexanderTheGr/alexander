@@ -591,7 +591,7 @@ jQuery('.SoftoneBundleGBGProductAdd').live("click", function (e) {
     var store = data.product;
     data.qty = 1;
     data.price = jQuery(this).attr('data-price');
-    data.order = jQuery(this).attr('data-order');
+    data.order = order;//jQuery(this).attr('data-order');
     data.store = jQuery(this).attr('data-qty')//jQuery("#store_" + store).val();
     $("#loaderer").show();
     $.post("/edi/order/addorderitem/", data, function (result) {
