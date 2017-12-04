@@ -699,6 +699,7 @@ jQuery(".forordersupplier").live('click', function () {
     //alert('sss');
     var data = {}
     data.id = jQuery(this).attr("data-ref");
+    data.order = jQuery(this).attr("data-order");
     //jQuery(this).find('.orderitemstable').show();
     if (data.id > 0 && jQuery(this).find('.ediprices').text() == '') {
         //jQuery('.ediprices').hide();
