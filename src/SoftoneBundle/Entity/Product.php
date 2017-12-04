@@ -2936,15 +2936,15 @@ class Product extends Entity {
         return $out;
     }
 
-    public function getForOrderSupplier() {
+    public function getForOrderSupplier($order=0) {
 
         $ti = $this->getSupplierId() ? $this->getSupplierId()->getTitle() : "";
         if ($this->tecdocArticleId == 0) {
-            $out = '<a title="' . $ti . '"  class="forordersupplier" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '">' . $ti . '</a>';
+            $out = '<a title="' . $ti . '"  class="forordersupplier" car="" data-articleId="' . $this->tecdocArticleId . '" data-order="' . $order. '" data-ref="' . $this->id . '">' . $ti . '</a>';
             return $out;
         }
         @$tecdoc = $this->getTecdocSupplierId() ? $this->getTecdocSupplierId()->getSupplier() : "";
-        $out = '<a title="' . $ti . '"  class="forordersupplier" car="" data-articleId="' . $this->tecdocArticleId . '" data-ref="' . $this->id . '">' . $ti . '</a>
+        $out = '<a title="' . $ti . '"  class="forordersupplier" car="" data-articleId="' . $this->tecdocArticleId . '" data-order="' . $order. '" data-ref="' . $this->id . '">' . $ti . '</a>
         <br>
         <span class="text-sm text-info">' . $tecdoc . '</span>';
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
