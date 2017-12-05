@@ -247,13 +247,15 @@ class Main extends Controller {
     function createOrderBy($fields, $dt_order) {
         $bundle = explode(":", $this->repository);
         $field_order = explode(":", $fields[$dt_order[0]["column"]]);
+        $sql =                     'SELECT  ' . $this->prefix . '.id
+                                FROM ' . $bundle[0] . ':' . $field_order[0] . ' ' . $this->prefix . '
+                                ORDER BY ' . $this->prefix . '.' . $field_order[1];
         if (count($field_order) > 1) {
             $em = $this->getDoctrine()->getManager();
             $query = $em->createQuery(
-                    'SELECT  ' . $this->prefix . '.id
-                                FROM ' . $bundle[0] . ':' . $field_order[0] . ' ' . $this->prefix . '
-                                ORDER BY ' . $this->prefix . '.' . $field_order[1]
+                    $sql
             );
+            echo $sql;
             $results = $query->getResult();
             foreach ($results as $res) {
                 $d[] = $res["id"];
