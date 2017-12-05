@@ -89,7 +89,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     public function printarea($order) {
         $html = "";
         $shipment = unserialize($this->getSetting("SoftoneBundle:Order:Shipments"));
-        foreach($shipment as $as) {
+        foreach ($shipment as $as) {
             $ship[$as["value"]] = $as["name"];
         }
         if (!$order)
@@ -101,7 +101,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $html .= '<tr><th>Πόλη</th><td>' . $order->getCustomer()->getCustomerCity() . '</td>';
         $html .= '<tr><th>ΤΚ</th><td>' . $order->getCustomer()->getCustomerZip() . '</td>';
         $html .= '<tr><th>Τηλέφωνο</th><td>' . $order->getCustomer()->getCustomerPhone01() . '</td>';
-        
+
         $html .= '<tr><th>Σχόλια</th><td>' . $order->getRemarks() . '</td>';
         $html .= '<tr><th>Χρήστης</th><td>' . $order->getUser()->getUsername() . '</td>';
         $html .= '<tr><th>Τρόπος Αποστολής </th><td>' . $ship[$order->getShipment()] . '</td>';
@@ -139,8 +139,20 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $product = $item->getProduct();
             if (!$product)
                 continue;
-            $ti = $product->getSupplierId() ? $product->getSupplierId()->getTitle() : "";
 
+            if ($order->getId() > 0) {
+                $sql11 = "select name from edi where id in (select edi from edi_order where id in (select ediorder from edi_order_item where porder = '" . $order->getId() . "' AND  ediitem in (SELECT id FROM partsbox_db.edi_item where edi = 11 AND replace(replace(replace(replace(`partno`, '/', ''), '.', ''), '-', ''), ' ', '') LIKE '" . $product->getItemCode2() . "')))";
+                $connection = $em->getConnection();
+                $statement = $connection->prepare($sql11);
+                $statement->execute();
+                $edi = $statement->fetch();
+                //print_r($part);
+            }
+
+            $ti = $product->getSupplierId() ? $product->getSupplierId()->getTitle() : "";
+            if ($edi["name"]) {
+                $ti .= " (" . $edi["name"] . ")";
+            }
             $supplier = $item->getProduct()->getSupplierId() ? $item->getProduct()->getSupplierId()->getTitle() : '';
             $html .= "<tr>";
             $html .= "<td>" . $item->getForOrderItemsTitlePrint() . "</td>";
@@ -388,15 +400,15 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
 
             /*
-            $shipment[] = array("value" => "100", "name" => "Παραλαβή Απο Κατάστημα");
-            $shipment[] = array("value" => "101", "name" => "Γενική Ταχυδρομική");
-            $shipment[] = array("value" => "102", "name" => "Πόρτα Πόρτα");
-            $shipment[] = array("value" => "103", "name" => "Μεταφορική");
-            $shipment[] = array("value" => "104", "name" => "Δρομολόγιο");
-            */
+              $shipment[] = array("value" => "100", "name" => "Παραλαβή Απο Κατάστημα");
+              $shipment[] = array("value" => "101", "name" => "Γενική Ταχυδρομική");
+              $shipment[] = array("value" => "102", "name" => "Πόρτα Πόρτα");
+              $shipment[] = array("value" => "103", "name" => "Μεταφορική");
+              $shipment[] = array("value" => "104", "name" => "Δρομολόγιο");
+             */
             //$this->setSetting("SoftoneBundle:Order:Shipments",  serialize($shipment));
             $shipment = unserialize($this->getSetting("SoftoneBundle:Order:Shipments"));
-                    
+
 
             //$dataarray[] = array("value" => "1", "name" => "Ναι");
 
@@ -431,7 +443,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $dtparams[] = array("name" => $this->getTranslation("Product Code"), "index" => 'product:erpCode');
         $dtparams[] = array("name" => $this->getTranslation("Place"), "index" => 'product:itemMtrplace');
         //$dtparams[] = array("name" => $this->getTranslation("Supplier"), "index" => 'product:supplierId:title');
-        $dtparams[] = array("name" => $this->getTranslation("Supplier"), "function" => 'getForOrderSupplier', 'functionparams'=>$id, 'search' => 'text');
+        $dtparams[] = array("name" => $this->getTranslation("Supplier"), "function" => 'getForOrderSupplier', 'functionparams' => $id, 'search' => 'text');
         $dtparams[] = array("name" => $this->getTranslation("Αποθήκη"), "function" => 'getProductApothiki', 'search' => 'text');
         $dtparams[] = array("name" => $this->getTranslation("Qty"), "input" => "text", "index" => 'qty');
         $dtparams[] = array("name" => $this->getTranslation("Catalogue Price"), "input" => "text", "index" => 'price');
@@ -506,7 +518,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $dtparams[] = array("name" => $this->getTranslation("Product Code"), "function" => 'getForOrderCode', 'search' => 'text');
         $dtparams[] = array("name" => $this->getTranslation("Product Title"), "function" => 'getForOrderTitle', 'search' => 'text');
 
-        $dtparams[] = array("name" => $this->getTranslation("Supplier"), "function" => 'getForOrderSupplier', 'functionparams'=>0, 'search' => 'text');
+        $dtparams[] = array("name" => $this->getTranslation("Supplier"), "function" => 'getForOrderSupplier', 'functionparams' => 0, 'search' => 'text');
         $dtparams[] = array("name" => $this->getTranslation("Atributes"), "function" => 'getArticleAttributes', 'search' => 'text');
 
         $dtparams[] = array("name" => $this->getTranslation("Remarks"), "index" => "itemRemarks", 'search' => 'text');
@@ -713,7 +725,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $sa[trim($cross["cross1"])] = trim($cross["cross1"]);
                     }
                     // replace(replace(replace(replace(`erp_code`, '/', ''), '.', ''), '-', ''), ' ', '') LIKE '".$search[1]."'  OR
-                    $sql11 = "SELECT partno FROM  partsbox_db.edi_item where edi = 11 AND replace(replace(replace(replace(`artnr`, '/', ''), '.', ''), '-', ''), ' ', '') LIKE '".$search[1]."'";
+                    $sql11 = "SELECT partno FROM  partsbox_db.edi_item where edi = 11 AND replace(replace(replace(replace(`artnr`, '/', ''), '.', ''), '-', ''), ' ', '') LIKE '" . $search[1] . "'";
                     $connection = $em->getConnection();
                     $statement = $connection->prepare($sql11);
                     $statement->execute();
@@ -723,7 +735,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $sa[trim($cross["partno"])] = trim($cross["partno"]);
                     }
                     //echo $sql11;
-                    
+
                     if (count($sa)) {
                         $sqlearch = "Select o.id from SoftoneBundle:Product o where o.supplierCode in ('" . implode("','", $sa) . "') OR o.supplierCode like '" . $search[1] . "%'";
                     } else {
@@ -732,9 +744,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     //echo $sqlearch; 
                     //$sqlearch = "Select o.id from SoftoneBundle:Product o where o.itemMtrgroup = '" . (int) $search[1] . "%'";
                 } else {
-                    
-                    
-                    
+
+
+
                     $search[1] = $this->clearstring($search[1]);
                     $sql11 = "SELECT * FROM  partsbox_db.fanocrosses where cross1 LIKE '" . $search[1] . "%' OR cross2 LIKE '" . $search[1] . "%'";
                     $connection = $em->getConnection();
@@ -746,17 +758,17 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $sa[trim($cross["cross2"])] = trim($cross["cross2"]);
                         $sa[trim($cross["cross1"])] = trim($cross["cross1"]);
                     }
-                    
-                    $sql11 = "SELECT partno FROM  partsbox_db.edi_item where edi = 11 AND replace(replace(replace(replace(`artnr`, '/', ''), '.', ''), '-', ''), ' ', '') LIKE '".str_replace("-", "", $search[1])."'";
+
+                    $sql11 = "SELECT partno FROM  partsbox_db.edi_item where edi = 11 AND replace(replace(replace(replace(`artnr`, '/', ''), '.', ''), '-', ''), ' ', '') LIKE '" . str_replace("-", "", $search[1]) . "'";
                     $connection = $em->getConnection();
                     $statement = $connection->prepare($sql11);
                     $statement->execute();
                     $crosses = $statement->fetchAll();
                     $sa = array();
-                    
+
                     //echo $sql11;
                     //print_r($crosses);
-                    
+
                     foreach ($crosses as $cross) {
                         $sa[trim($cross["partno"])] = trim($cross["partno"]);
                         $search[1] = $this->clearstring($search[1]);
@@ -769,12 +781,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         foreach ($crosses as $cross) {
                             $sa[trim($cross["cross2"])] = trim($cross["cross2"]);
                             $sa[trim($cross["cross1"])] = trim($cross["cross1"]);
-                        }                        
+                        }
                     }
                     //$sa =array_unique($sa);
                     //print_r($sa);
                     //echo $sql11;                    
-                    
+
                     if (count($sa)) {
                         $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where so.itemCode2 in ('" . implode("','", $sa) . "') OR so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
                     } else {
@@ -870,9 +882,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                     if ($search[1] != '') {
                         if ($sqlearch)
-                        $sqlearch2 = "p.id in (".$sqlearch.") OR p.id in (Select o.id from SoftoneBundle:ProductSearch o where o.search like '%" . $search[1] . "%') OR ";
+                            $sqlearch2 = "p.id in (" . $sqlearch . ") OR p.id in (Select o.id from SoftoneBundle:ProductSearch o where o.search like '%" . $search[1] . "%') OR ";
                         else
-                        $sqlearch2 = "p.id in (Select o.id from SoftoneBundle:ProductSearch o where o.search like '%" . $search[1] . "%') OR ";
+                            $sqlearch2 = "p.id in (Select o.id from SoftoneBundle:ProductSearch o where o.search like '%" . $search[1] . "%') OR ";
                     }
                     $hasArticleIds = true;
                     $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
