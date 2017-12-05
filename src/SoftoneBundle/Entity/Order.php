@@ -22,6 +22,7 @@ class Order extends Entity {
         $this->repositories['route'] = 'SoftoneBundle:Route';
         $this->repositories['customer'] = 'SoftoneBundle:Customer';
         $this->repositories['softoneStore'] = 'SoftoneBundle:Store';
+        $this->repositories['user'] = 'SoftoneBundle:User';
         $this->types['route'] = 'object';
         $this->types['softoneStore'] = 'object';
         $this->route = new \SoftoneBundle\Entity\Route;
@@ -46,6 +47,7 @@ class Order extends Entity {
         $this->repositories['route'] = 'SoftoneBundle:Route';
         $this->repositories['customer'] = 'SoftoneBundle:Customer';
         $this->repositories['softoneStore'] = 'SoftoneBundle:Store';
+        $this->repositories['user'] = 'SoftoneBundle:User';
         return $this->repositories[$repo];
     }
 
