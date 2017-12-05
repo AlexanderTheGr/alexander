@@ -2935,6 +2935,7 @@ class Product extends Entity {
     }
 
     public function getForOrderSupplier($order = 0) {
+        $order = (int)$order;
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
