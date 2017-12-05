@@ -317,7 +317,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             $fields["priceField"] = array("label" => $this->getTranslation("Price List"), "className" => "col-md-3", 'type' => "select", "required" => true, 'dataarray' => $priceField);
             $fields["customerPayment"] = array("label" => $this->getTranslation("Payment Method"), "className" => "col-md-3", 'type' => "select", "required" => true, 'dataarray' => $payment);
             $shipment = unserialize($this->getSetting("SoftoneBundle:Order:Shipments"));
-            $fields["shipment"] = array("label" => $this->getTranslation("Τρόπος Αποστολής"), 'type' => "select", 'dataarray' => $shipment, 'className' => 'asdfg', "required" => false);
+            $fields["shipment"] = array("label" => $this->getTranslation("Τρόπος Αποστολής"), "className" => "col-md-3", 'type' => "select", 'dataarray' => $shipment, 'className' => 'asdfg', "required" => false);
        } else {
             $fields["priceField"] = array("label" => $this->getTranslation("Κατάλογος"), "className" => "col-md-6", 'type' => "select", "required" => true, 'dataarray' => $priceField);
         }
