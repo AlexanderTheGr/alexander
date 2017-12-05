@@ -697,7 +697,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     }
                     $like = implode(" AND ", $likearr);
                     $sqlearch = "Select so.id from SoftoneBundle:ProductFreesearch so where " . $like . "";
-                    echo $sqlearch;
+                    //echo $sqlearch;
                 } elseif ($search[0] == 'productfano') {
 
                     $session->set("fanomodel", $search[1]);
@@ -722,7 +722,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     foreach ($crosses as $cross) {
                         $sa[trim($cross["partno"])] = trim($cross["partno"]);
                     }
-                    echo $sql11;
+                    //echo $sql11;
                     
                     if (count($sa)) {
                         $sqlearch = "Select o.id from SoftoneBundle:Product o where o.supplierCode in ('" . implode("','", $sa) . "') OR o.supplierCode like '" . $search[1] . "%'";
