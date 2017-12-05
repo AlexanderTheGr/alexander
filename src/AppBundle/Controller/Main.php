@@ -246,6 +246,9 @@ class Main extends Controller {
 
     function createOrderBy($fields, $dt_order) {
         $bundle = explode(":", $this->repository);
+        if (ucfirst($field_order[0]) == "User") {
+            $bundle[0] = "AppBundle";
+        }
         $field_order = explode(":", $fields[$dt_order[0]["column"]]);
         if (count($field_order) > 1) {
             $em = $this->getDoctrine()->getManager();
@@ -254,9 +257,6 @@ class Main extends Controller {
                                 FROM ' . $bundle[0] . ':' . ucfirst($field_order[0]) . ' ' . $this->prefix . '
                                 ORDER BY ' . $this->prefix . '.' . $field_order[1]
             );
-            echo 'SELECT  ' . $this->prefix . '.id
-                                FROM ' . $bundle[0] . ':' . ucfirst($field_order[0]) . ' ' . $this->prefix . '
-                                ORDER BY ' . $this->prefix . '.' . $field_order[1];
             $results = $query->getResult();
             foreach ($results as $res) {
                 $d[] = $res["id"];
