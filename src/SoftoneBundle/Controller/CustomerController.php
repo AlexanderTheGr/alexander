@@ -270,6 +270,8 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         //$fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
         $fields["customerVatsts"] = array("label" => $this->getTranslation("Customer Vat"), "required" => true, "className" => "col-md-6", 'type' => "select", 'dataarray' => $vatsts);
 
+        
+        
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             $priceField[] = array("value" => "itemPricer", "name" => "Λιανική");
             $priceField[] = array("value" => "itemPricew", "name" => "Χονδρική");
@@ -314,7 +316,9 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             $fields["priceField"] = array("label" => $this->getTranslation("Price List"), "className" => "col-md-3", 'type' => "select", "required" => true, 'dataarray' => $priceField);
             $fields["customerPayment"] = array("label" => $this->getTranslation("Payment Method"), "className" => "col-md-3", 'type' => "select", "required" => true, 'dataarray' => $payment);
-        } else {
+            $shipment = unserialize($this->getSetting("SoftoneBundle:Order:Shipments"));
+            $fields["shipment"] = array("label" => $this->getTranslation("Τρόπος Αποστολής"), 'type' => "select", 'dataarray' => $shipment, 'className' => 'asdfg', "required" => false);
+       } else {
             $fields["priceField"] = array("label" => $this->getTranslation("Κατάλογος"), "className" => "col-md-6", 'type' => "select", "required" => true, 'dataarray' => $priceField);
         }
         $forms = $this->getFormLyFields($entity, $fields);
