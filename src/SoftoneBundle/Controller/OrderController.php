@@ -92,6 +92,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ($shipment as $as) {
             $ship[$as["value"]] = $as["name"];
         }
+        $em = $this->getDoctrine()->getManager();
         if (!$order)
             return "";
         $html .= '<h2>Παραγγελία ' . $order->getfincode() . '</h2>';
