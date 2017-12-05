@@ -2888,7 +2888,7 @@ class Product extends Entity {
         }
     }
 
-    public function getFanoImageUrl($ext="jpg") {
+    public function getFanoImageUrl($ext='jpg') {
         return $this->getSetting("SoftoneBundle:Product:Images") . "Photos/Parts/" . substr($this->itemCode2, 0, 4) . "/" . $this->itemCode2 . ".".$ext;
     }
 
@@ -2900,7 +2900,7 @@ class Product extends Entity {
         }
         if (file_exists($url)) {
             $urlpath = str_replace("/home2/partsbox/public_html/partsbox/web", "", $url);
-            return $url.'<div style="position: absolute;" class="productfanoimg productfanoimg_' . $this->id . '"><img width=300 src="' . $urlpath . '" /></div>';
+            return '<div style="display:none; position: absolute;" class="productfanoimg productfanoimg_' . $this->id . '"><img width=300 src="' . $urlpath . '" /></div>';
         }
     }
 
