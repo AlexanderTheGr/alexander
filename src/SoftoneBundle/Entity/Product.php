@@ -2888,17 +2888,20 @@ class Product extends Entity {
         }
     }
 
-    public function getFanoImageUrl() {
-        return $this->getSetting("SoftoneBundle:Product:Images") . "Photos/Parts/" . substr($this->itemCode2, 0, 4) . "/" . $this->itemCode2 . ".jpg";
+    public function getFanoImageUrl($ext="jpg") {
+        return $this->getSetting("SoftoneBundle:Product:Images") . "Photos/Parts/" . substr($this->itemCode2, 0, 4) . "/" . $this->itemCode2 . ".".$ext;
     }
 
     public function getForOrderImage() {
 
         $url = $this->getFanoImageUrl();
-        //if (file_exists($url)) {
+        if (!file_exists($url)) {
+            $url = $this->getFanoImageUrl("JPG");
+        }
+        if (file_exists($url)) {
             $urlpath = str_replace("/home2/partsbox/public_html/partsbox/web", "", $url);
             return $url.'<div style="position: absolute;" class="productfanoimg productfanoimg_' . $this->id . '"><img width=300 src="' . $urlpath . '" /></div>';
-        //}
+        }
     }
 
     public function getForOrderCode() {
