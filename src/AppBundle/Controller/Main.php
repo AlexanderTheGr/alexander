@@ -246,10 +246,11 @@ class Main extends Controller {
 
     function createOrderBy($fields, $dt_order) {
         $bundle = explode(":", $this->repository);
+        $field_order = explode(":", $fields[$dt_order[0]["column"]]);
         if (ucfirst($field_order[0]) == "User") {
             $bundle[0] = "AppBundle";
         }
-        $field_order = explode(":", $fields[$dt_order[0]["column"]]);
+        
         if (count($field_order) > 1) {
             $em = $this->getDoctrine()->getManager();
             $query = $em->createQuery(
