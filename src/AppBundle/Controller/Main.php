@@ -254,6 +254,9 @@ class Main extends Controller {
                                 FROM ' . $bundle[0] . ':' . ucfirst($field_order[0]) . ' ' . $this->prefix . '
                                 ORDER BY ' . $this->prefix . '.' . $field_order[1]
             );
+            echo 'SELECT  ' . $this->prefix . '.id
+                                FROM ' . $bundle[0] . ':' . ucfirst($field_order[0]) . ' ' . $this->prefix . '
+                                ORDER BY ' . $this->prefix . '.' . $field_order[1];
             $results = $query->getResult();
             foreach ($results as $res) {
                 $d[] = $res["id"];
