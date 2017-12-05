@@ -2889,7 +2889,7 @@ class Product extends Entity {
     }
 
     public function getFanoImageUrl() {
-        return $this->getSetting("SoftoneBundle:Product:Images") . "Photos/Parts/" . substr($this->itemCode2, 0, 4) . "/" . $this->itemCode2 . ".jpg";
+        return $this->getSetting("SoftoneBundle:Product:Images") . "Photos/Parts/" . substr($this->itemCode2, 0, 4) . "/" . $this->itemCode2 . ".JPG";
     }
 
     public function getForOrderImage() {
