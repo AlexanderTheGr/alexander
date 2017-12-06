@@ -301,14 +301,14 @@ class EdiOrderController extends Main {
                 $this->flushpersist($EdiOrderItem);
                 $json = json_encode(array("error" => false, "product"=>$product->getId(),"message" => $Ediitem->getEdi()->getName() . " " . $Ediitem->getItemCode() . " ανοιχτηκε επιτυχώς"));
             } catch (\Exception $e) {
-                $json = json_encode(array("error" => true, "message" => "Product Exists"));
+                $json = json_encode(array("error" => true, "message" => $e->getMessage()));
             }
         } else {
             try {
                 //$this->flushpersist($EdiOrderItem);
                 $json = json_encode(array("error" => false, "product"=>$product->getId(), "message" => $Ediitem->getEdi()->getName() . " " . $Ediitem->getItemCode() . " ανοιχτηκε επιτυχώς"));
             } catch (\Exception $e) {
-                $json = json_encode(array("error" => true, "message" => "Product Exists"));
+                $json = json_encode(array("error" => true, "message" => $e->getMessage()));
             }
         }
 
