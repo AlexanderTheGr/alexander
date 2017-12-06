@@ -299,14 +299,14 @@ class EdiOrderController extends Main {
             $EdiOrderItem->setField("chk", 1);
             try {
                 $this->flushpersist($EdiOrderItem);
-                $json = json_encode(array("error" => false, "product"=>$product->getId(),"message" => $Ediitem->getEdi()->getName() . " " . $Ediitem->getItemCode() . " ανοιχτηκε επιτυχώς"));
+                $json = json_encode(array("error" => false, "product"=>$product->getId(),"message" => $Ediitem->getEdi()->getName() . " " . $Ediitem->getItemCode() . " μπήκε στο καλάθι"));
             } catch (\Exception $e) {
                 $json = json_encode(array("error" => true, "message" => $e->getMessage()));
             }
         } else {
             try {
                 //$this->flushpersist($EdiOrderItem);
-                $json = json_encode(array("error" => false, "product"=>$product->getId(), "message" => $Ediitem->getEdi()->getName() . " " . $Ediitem->getItemCode() . " ανοιχτηκε επιτυχώς"));
+                $json = json_encode(array("error" => false, "product"=>$product->getId(), "message" => $Ediitem->getEdi()->getName() . " " . $Ediitem->getItemCode() . " μπήκε στο καλάθι"));
             } catch (\Exception $e) {
                 $json = json_encode(array("error" => true, "message" => $e->getMessage()));
             }
