@@ -88,6 +88,15 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
     public function printarea($order) {
         $html = "";
+
+
+        $shipment[] = array("value" => "100", "name" => "Παραλαβή Απο Κατάστημα");
+        $shipment[] = array("value" => "101", "name" => "Γενική Ταχυδρομική");
+        $shipment[] = array("value" => "102", "name" => "Πόρτα Πόρτα");
+        $shipment[] = array("value" => "103", "name" => "Μεταφορική");
+        $shipment[] = array("value" => "104", "name" => "Δρομολόγιο");
+
+        $this->setSetting("SoftoneBundle:Order:Shipments", serialize($shipment));
         $shipment = unserialize($this->getSetting("SoftoneBundle:Order:Shipments"));
         foreach ($shipment as $as) {
             $ship[$as["value"]] = $as["name"];
