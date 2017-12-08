@@ -725,7 +725,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                     $session->set("fanomodel", $search[1]);
 
-                    $sql11 = "SELECT * FROM  partsbox_db.fanocrosses where cross1 LIKE '" . $assssss. "%' OR cross2 LIKE '" . $assssss . "%'";
+                    $sql11 = "SELECT * FROM  partsbox_db.fanocrosses where cross1 LIKE '" . $search[1]. "%' OR cross2 LIKE '" . $search[1] . "%'";
                     $connection = $em->getConnection();
                     $statement = $connection->prepare($sql11);
                     $statement->execute();
@@ -741,7 +741,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $statement = $connection->prepare($sql11);
                     $statement->execute();
                     $crosses = $statement->fetchAll();
-                    $sa = array();
+                     //$sa = array();
                     foreach ($crosses as $cross) {
                         $sa[trim($cross["partno"])] = trim($cross["partno"]);
                     }
