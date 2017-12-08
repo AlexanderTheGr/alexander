@@ -667,6 +667,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     @$articleIds2 = unserialize(base64_decode($search[0]));
                 }
             } else {
+                $assssss = $search[1];
                 $search[1] = str_pad($search[1], 4, "0", STR_PAD_LEFT);
             }
             //$articleIds2["linkingTargetId"];
@@ -724,7 +725,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                     $session->set("fanomodel", $search[1]);
 
-                    $sql11 = "SELECT * FROM  partsbox_db.fanocrosses where cross1 LIKE '" . $search[1] . "%' OR cross2 LIKE '" . $search[1] . "%'";
+                    $sql11 = "SELECT * FROM  partsbox_db.fanocrosses where cross1 LIKE '" . $assssss. "%' OR cross2 LIKE '" . $assssss . "%'";
                     $connection = $em->getConnection();
                     $statement = $connection->prepare($sql11);
                     $statement->execute();
@@ -751,7 +752,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     } else {
                         $sqlearch = "Select o.id from SoftoneBundle:Product o where o.supplierCode like '" . $search[1] . "%'";
                     }
-                    echo $sqlearch; 
+                    //echo $sqlearch; 
                     //$sqlearch = "Select o.id from SoftoneBundle:Product o where o.itemMtrgroup = '" . (int) $search[1] . "%'";
                 } else {
 
