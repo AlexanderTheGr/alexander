@@ -931,6 +931,37 @@ class Order extends Entity {
         return $this;
     }
 
+    
+    /**
+     * Get payment
+     *
+     * @return integer
+     */
+    public function getPayment()
+    {
+        return $this->payment;
+    }
+    
+    /**
+     * @var integer
+     */
+    private $payment = '1003';
+
+
+    /**
+     * Set payment
+     *
+     * @param integer $payment
+     *
+     * @return Order
+     */
+    public function setPayment($payment)
+    {
+        $this->payment = $payment;
+
+        return $this;
+    }
+
     /**
      * Get shipment
      *
@@ -939,5 +970,6 @@ class Order extends Entity {
     public function getShipment()
     {
         return $this->shipment;
-    }
+    }    
 }
+
