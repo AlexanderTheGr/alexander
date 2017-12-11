@@ -735,6 +735,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $sa[trim($cross["cross2"])] = trim($cross["cross2"]);
                         $sa[trim($cross["cross1"])] = trim($cross["cross1"]);
                     }
+                    
                     // replace(replace(replace(replace(`erp_code`, '/', ''), '.', ''), '-', ''), ' ', '') LIKE '".$search[1]."'  OR
                     $sql11 = "SELECT partno FROM  partsbox_db.edi_item where edi = 11 AND replace(replace(replace(replace(`artnr`, '/', ''), '.', ''), '-', ''), ' ', '') LIKE '" . $search[1] . "'";
                     $connection = $em->getConnection();
@@ -1248,6 +1249,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //print_r($dataOut);
         foreach ($order->getItems() as $item) {
             //$dataOut["ITELINES"][] = array("QTY1" => $item->getQty(), "VAT" => $vat, "LINENUM" => $item->getLineval(), "MTRL" => $item->getProduct()->getReference());
+            if ($item->getQty() > 0)
             $dataOut["ITELINES"][] = array(
                 "VAT" => $vatsst,
                 "QTY1" => $item->getQty(),
