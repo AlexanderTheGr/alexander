@@ -290,12 +290,12 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
             $payment[] = array("value" => "1000", "name" => "Τοίς Μετρητοίς");
             $payment[] = array("value" => "1001", "name" => "Κάρτα");
-            $payment[] = array("value" => "1002", "name" => "Μικτός Τρόπος Πληρωμής");
+            $payment[] = array("value" => "1002", "name" => "Αντικαταβολή");
             $payment[] = array("value" => "1003", "name" => "Πίστωση 30 ημερών");
             $payment[] = array("value" => "1004", "name" => "Πίστωση 60 ημερών");
             $payment[] = array("value" => "1005", "name" => "Πίστωση 90 ημερών");
-            $payment[] = array("value" => "1006", "name" => "Αντικαταβολή");
-            $payment[] = array("value" => "1007", "name" => "Πίστωση 45 ημερών");
+            $payment[] = array("value" => "1006", "name" => "Τραπεζική Κατάθεση");
+            
         } else {
             $priceField[] = array("value" => "itemPricer", "name" => "Λιανική");
             $priceField[] = array("value" => "itemPricew", "name" => "Χονδρική");
