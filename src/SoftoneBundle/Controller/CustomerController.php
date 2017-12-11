@@ -268,7 +268,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $fields["customergroup"] = array("label" => $this->getTranslation("Customer Group"), "className" => "col-md-6", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:Customergroup', 'name' => 'title', 'value' => 'id'));
 
         //$fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
-        $fields["customerVatsts"] = array("label" => $this->getTranslation("Customer Vat"), "required" => true, "className" => "col-md-6", 'type' => "select", 'dataarray' => $vatsts);
+        $fields["customerVatsts"] = array("label" => $this->getTranslation("Customer Vat"), "required" => true, "className" => "col-md-3", 'type' => "select", 'dataarray' => $vatsts);
 
 
 
@@ -295,6 +295,18 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             $payment[] = array("value" => "1004", "name" => "Πίστωση 60 ημερών");
             $payment[] = array("value" => "1005", "name" => "Πίστωση 90 ημερών");
             $payment[] = array("value" => "1006", "name" => "Τραπεζική Κατάθεση");
+            
+            
+            
+            $customerTrdcategory[] = array("value" => "3000", "name" => "Πελάτες Εσωτερικού Με Κανονικό Φ.Π.Α.");
+            $customerTrdcategory[] = array("value" => "3001", "name" => "Πελάτες Εσωτερικού Με Μειωμένο Φ.Π.Α.");
+            $customerTrdcategory[] = array("value" => "3002", "name" => "Πελάτες Εξωτερικού Τ.Χ");
+            $customerTrdcategory[] = array("value" => "3003", "name" => "Πελάτες Εξωτερικού ΕΕ");
+            $customerTrdcategory[] = array("value" => "3004", "name" => "Πελάτες Εσωτερικού Απαλλασόμενοι Φ.Π.Α.");
+            $customerTrdcategory[] = array("value" => "3005", "name" => "ΝΠΔΔ");
+            $customerTrdcategory[] = array("value" => "3099", "name" => "Πελάτες Λιανικής");
+            $fields["customerTrdcategory"] = array("label" => $this->getTranslation("Λογιστική Καταγορία"), "className" => "col-md-3", 'type' => "select", 'dataarray' => $customerTrdcategory, "required" => false);
+
         } else {
             $priceField[] = array("value" => "itemPricer", "name" => "Λιανική");
             $priceField[] = array("value" => "itemPricew", "name" => "Χονδρική");
