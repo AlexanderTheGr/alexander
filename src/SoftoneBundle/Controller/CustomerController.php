@@ -379,7 +379,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     function retrieveCustomer() {
-        $where = "M.UPDDATE >= '" . date("Y-m-d", strtotime("-10 days")) . "'";
+        $where = "AND M.UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "'";
         $params["softone_object"] = 'customer';
         $params["repository"] = 'SoftoneBundle:Customer';
         $params["softone_table"] = 'TRDR';
@@ -431,9 +431,9 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
         $softone = new Softone();
         $datas = $softone->createSql($params);
-        print_r($datas);
+        //print_r($datas);
         //return;
-        exit;
+        ///exit;
         $em = $this->getDoctrine()->getManager();
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
