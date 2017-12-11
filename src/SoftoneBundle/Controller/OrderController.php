@@ -226,6 +226,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     ->getRepository("SoftoneBundle:Vat")
                     ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
             $entity->setVat($vat);
+            $entity->setShipment($customer->getShipment());
+            $entity->setPayment($customer->getCustomerPayment());            
             $entity->setCustomerName($customer->getCustomerName() . " (" . $customer->getCustomerAfm() . " - " . $customer->getCustomerCode() . ")");
             $route = $this->getDoctrine()
                     ->getRepository("SoftoneBundle:Route")
@@ -342,9 +344,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($request->request->get("customer"));
+        
         $order->setCustomer($customer);
         $order->setShipment($customer->getShipment());
         $order->setPayment($customer->getCustomerPayment());
+        
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($request->request->get("customer"));
