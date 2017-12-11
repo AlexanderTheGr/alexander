@@ -251,6 +251,8 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                 $product = $this->getDoctrine()
                         ->getRepository("SoftoneBundle:Product")
                         ->findOneBy(array('itemCode2' => $data[6]));
+                
+                echo $product->getErpCode()." ".$data[6]."<BR>";
                 if ($product AND $invoice) {
                     $invoiceItem = new InvoiceItem;
                     $invoiceItem->setInvoice($invoice);
@@ -265,7 +267,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                 }
             }
         }
-        //exit;
+        exit;
     }
 
     /**
