@@ -440,7 +440,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             //$data["IRSDATA2"] = $IRSDATA[$data["IRSDATA"]];
             //print_r($data);
             //if ($i++ > 100 ) exit;
-            if ($data["CODE"] > $maxcode) 
+            if ($data["CODE"] > $maxcode AND $data["CODE"] != "00009651") 
             $maxcode = $data["CODE"];
 
             $entity = $this->getDoctrine()
