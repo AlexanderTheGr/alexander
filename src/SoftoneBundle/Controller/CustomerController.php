@@ -421,6 +421,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         }
 
         $itemfield[] = "M.ISACTIVE";
+        $itemfield[] = "M.TRDCATEGORY";
         $selfields = implode(",", $itemfield);
         $params["fSQL"] = 'SELECT ' . $selfields . ' FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
         //echo $params["fSQL"];
