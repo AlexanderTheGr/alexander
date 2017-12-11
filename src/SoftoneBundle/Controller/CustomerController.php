@@ -431,16 +431,17 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
         $softone = new Softone();
         $datas = $softone->createSql($params);
-        print_r($datas);
+        //print_r($datas);
         //return;
-        exit;
+        //exit;
         $em = $this->getDoctrine()->getManager();
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
             //$data["IRSDATA2"] = $IRSDATA[$data["IRSDATA"]];
             //print_r($data);
             //if ($i++ > 100 ) exit;
-
+            if ($data["CODE"] > $maxcode) 
+            $maxcode = $data["CODE"];
 
             $entity = $this->getDoctrine()
                     ->getRepository($params["repository"])
@@ -525,6 +526,8 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             //if (@$i++ > 1500)
             //    break;
         }
+        echo $maxcode;
+        //$this->setSetting("SoftoneBundle:Customer:customerCode",$maxcode);
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             $sql = 'update `softone_customer` set customergroup = 1 where customergroup is null';
             $this->getDoctrine()->getConnection()->exec($sql);
