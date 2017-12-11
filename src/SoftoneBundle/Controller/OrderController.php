@@ -1225,7 +1225,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $objectArr[0]["SERIESNUM"] = $order->getId();
         $objectArr[0]["FINCODE"] = $order->getFincode();
         $objectArr[0]["TRDBRANCH"] = $order->getTrdbranch();
-        $objectArr[0]["PAYMENT"] = $customer->getCustomerPayment() > 0 ? $customer->getCustomerPayment() : 1003;
+        $objectArr[0]["PAYMENT"] = 1003;//$customer->getCustomerPayment() > 0 ? $customer->getCustomerPayment() : 1003;
         //$objectArr[0]["TFPRMS"] = $model->tfprms;
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             $objectArr[0]["ACNMSK"] = $order->getUser()->getUsername();
