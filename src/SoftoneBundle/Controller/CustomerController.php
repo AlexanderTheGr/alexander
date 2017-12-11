@@ -424,7 +424,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $itemfield[] = "M.TRDCATEGORY";
         $selfields = implode(",", $itemfield);
         $params["fSQL"] = 'SELECT ' . $selfields . ' FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
-        //echo $params["fSQL"];
+        echo $params["fSQL"];
         //$params["fSQL"] = 'SELECT M.* FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
         //echo "<BR>";
         //echo $params["fSQL"];
@@ -432,7 +432,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
         $softone = new Softone();
         $datas = $softone->createSql($params);
-        //print_r($datas);
+        print_r($datas);
         //return;
         //exit;
         $em = $this->getDoctrine()->getManager();
