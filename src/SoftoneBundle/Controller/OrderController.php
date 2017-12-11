@@ -216,7 +216,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             if (!$user->getSoftoneStore()) {
                 $store = $this->getDoctrine()
                         ->getRepository("SoftoneBundle:Store")
-                        ->find(1);
+                        ->find(2);
                 $entity->setSoftoneStore($store);
             } else {
                 $entity->setSoftoneStore($user->getSoftoneStore());
