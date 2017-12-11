@@ -431,9 +431,9 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
         $softone = new Softone();
         $datas = $softone->createSql($params);
-        //print_r($datas);
+        print_r($datas);
         //return;
-        ///exit;
+        exit;
         $em = $this->getDoctrine()->getManager();
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
@@ -506,6 +506,8 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             //if ($i++ > 100)
             //    exit;
             //continue;
+            $customerCode = (int) $this->getSetting("SoftoneBundle:Customer:customerCode");
+            
             $em->getConnection()->exec($sql);
             /*
               @$entity_id = (int) $entity->id;
