@@ -54,7 +54,14 @@
                 <option name="default">103</option>
             </options>
         </field>
-                
+        
+        <field name="payment" type="integer" column="payment" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="default">1003</option>
+            </options>
+        </field>
+                        
         <field name="fprms" type="integer" column="fprms" nullable="true">
             <options>
                 <option name="unsigned"/>
