@@ -4,9 +4,9 @@
         <indexes>
             <index name="invoice" columns="invoice"/>
         </indexes>
-        <unique-constraints>
+        <!--unique-constraints>
             <unique-constraint name="invoiceitem" columns="code,invoice"/>
-        </unique-constraints>    
+        </unique-constraints-->    
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
         </id>
