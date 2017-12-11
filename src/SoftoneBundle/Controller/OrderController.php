@@ -443,12 +443,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
             $fields["customerName"] = array("label" => $this->getTranslation("Customer Name"), "required" => true, 'className' => 'asdfg');
             $fields["route"] = array("label" => "Route", "required" => false, 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Route', 'name' => 'route', 'value' => 'id'));
-            $fields["softoneStore"] = array("label" => $this->getTranslation("Store"), 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Store', 'name' => 'title', 'value' => 'id'));
-
-            
-
-            
-
+            $fields["softoneStore"] = array("label" => $this->getTranslation("Σειρά"), 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Store', 'name' => 'title', 'value' => 'id'));
             
             if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'foxline') {
                 
