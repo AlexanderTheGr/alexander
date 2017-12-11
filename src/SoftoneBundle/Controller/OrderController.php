@@ -1256,8 +1256,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 "LINENUM" => $k++,
                 "COMMENTS2" => $item->getRemarks(),
                 "MTRL" => $item->getProduct()->getReference(),
-                "PRICE" => $item->getPrice() / $vat,
-                "LINEVAL" => $item->getLineval() / $vat,
+                "PRICE" => round($item->getPrice() / $vat,2),
+                "LINEVAL" => round($item->getLineval() / $vat,2),
                 "DISC1PRC" => $item->getDisc1prc()
             );
         }
