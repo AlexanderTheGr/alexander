@@ -227,7 +227,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
             $entity->setVat($vat);
             $entity->setShipment($customer->getShipment());
-            $entity->setPayment($customer->getCustomerPayment());            
+            $entity->setPayment($customer->getCustomerPayment());
             $entity->setCustomerName($customer->getCustomerName() . " (" . $customer->getCustomerAfm() . " - " . $customer->getCustomerCode() . ")");
             $route = $this->getDoctrine()
                     ->getRepository("SoftoneBundle:Route")
@@ -344,11 +344,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($request->request->get("customer"));
-        
+
         $order->setCustomer($customer);
         $order->setShipment($customer->getShipment());
         $order->setPayment($customer->getCustomerPayment());
-        
+
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($request->request->get("customer"));
@@ -423,7 +423,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
              */
             //$this->setSetting("SoftoneBundle:Order:Shipments",  serialize($shipment));
             $shipment = unserialize($this->getSetting("SoftoneBundle:Order:Shipments"));
-            
+
             $payment[] = array("value" => "1000", "name" => "Τοίς Μετρητοίς");
             $payment[] = array("value" => "1001", "name" => "Κάρτα");
             $payment[] = array("value" => "1002", "name" => "Αντικαταβολή");
@@ -433,7 +433,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $payment[] = array("value" => "1006", "name" => "Τραπεζική Κατάθεση");
             //$payment[] = array("value" => "1007", "name" => "Πίστωση 45 ημερών");
             //$payment[] = array("value" => "1008", "name" => "Τραπεζική Κατάθεση");
-            $this->setSetting("SoftoneBundle:Order:Payments",  serialize($payment));
+            $this->setSetting("SoftoneBundle:Order:Payments", serialize($payment));
             $payment = unserialize($this->getSetting("SoftoneBundle:Order:Payments"));
             //$dataarray[] = array("value" => "1", "name" => "Ναι");
 
@@ -449,10 +449,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $fields["customerName"] = array("label" => $this->getTranslation("Customer Name"), "required" => true, 'className' => 'asdfg');
             $fields["route"] = array("label" => "Route", "required" => false, 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Route', 'name' => 'route', 'value' => 'id'));
             $fields["softoneStore"] = array("label" => $this->getTranslation("Σειρά"), 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Store', 'name' => 'title', 'value' => 'id'));
-            
+
             if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'foxline') {
-                
-                
+
+
                 $storeField[] = array("value" => "7021", "name" => "Γέρακας");
                 $storeField[] = array("value" => "7121", "name" => "Κορωπί");
                 $fields["series"] = array("label" => $this->getTranslation("Store"), "className" => "col-md-12", 'type' => "select", "required" => true, 'dataarray' => $storeField);
@@ -652,6 +652,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $customer = $this->getDoctrine()
                     ->getRepository("SoftoneBundle:Customer")
                     ->find($order->getCustomer());
+            if ($customer->getCustomerTrdcategory() == 3001) {
+                $vat = 1.17;
+            }
             $priceField = $customer->getPriceField();
         } else {
             $priceField = "itemPricew";
@@ -743,7 +746,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                     $session->set("fanomodel", $search[1]);
 
-                    $sql11 = "SELECT * FROM  partsbox_db.fanocrosses where cross1 LIKE '" . $search[1]. "%' OR cross2 LIKE '" . $search[1] . "%'";
+                    $sql11 = "SELECT * FROM  partsbox_db.fanocrosses where cross1 LIKE '" . $search[1] . "%' OR cross2 LIKE '" . $search[1] . "%'";
                     $connection = $em->getConnection();
                     $statement = $connection->prepare($sql11);
                     $statement->execute();
@@ -753,14 +756,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $sa[trim($cross["cross2"])] = trim($cross["cross2"]);
                         $sa[trim($cross["cross1"])] = trim($cross["cross1"]);
                     }
-                    
+
                     // replace(replace(replace(replace(`erp_code`, '/', ''), '.', ''), '-', ''), ' ', '') LIKE '".$search[1]."'  OR
                     $sql11 = "SELECT partno FROM  partsbox_db.edi_item where edi = 11 AND replace(replace(replace(replace(`artnr`, '/', ''), '.', ''), '-', ''), ' ', '') LIKE '" . $search[1] . "'";
                     $connection = $em->getConnection();
                     $statement = $connection->prepare($sql11);
                     $statement->execute();
                     $crosses = $statement->fetchAll();
-                     //$sa = array();
+                    //$sa = array();
                     foreach ($crosses as $cross) {
                         $sa[trim($cross["partno"])] = trim($cross["partno"]);
                     }
@@ -1230,13 +1233,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($order->getCustomer());
-        
+
         if ($customer->getCustomerTrdcategory() == 3001) {
             $vat = 1.17;
-        }        
-        
-        
-        
+        }
+
+
+
         if ($order->getVat())
             $vatsst = $id > 0 ? $order->getVat()->getVatsts() : $this->getSetting("SoftoneBundle:Order:Vat");
         else
@@ -1275,16 +1278,16 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ($order->getItems() as $item) {
             //$dataOut["ITELINES"][] = array("QTY1" => $item->getQty(), "VAT" => $vat, "LINENUM" => $item->getLineval(), "MTRL" => $item->getProduct()->getReference());
             if ($item->getQty() > 0)
-            $dataOut["ITELINES"][] = array(
-                "VAT" => $vatsst,
-                "QTY1" => $item->getQty(),
-                "LINENUM" => $k++,
-                "COMMENTS2" => $item->getRemarks(),
-                "MTRL" => $item->getProduct()->getReference(),
-                "PRICE" => round($item->getPrice() / $vat,2),
-                "LINEVAL" => round($item->getLineval() / $vat,2),
-                "DISC1PRC" => $item->getDisc1prc()
-            );
+                $dataOut["ITELINES"][] = array(
+                    "VAT" => $vatsst,
+                    "QTY1" => $item->getQty(),
+                    "LINENUM" => $k++,
+                    "COMMENTS2" => $item->getRemarks(),
+                    "MTRL" => $item->getProduct()->getReference(),
+                    "PRICE" => round($item->getPrice() / $vat, 2),
+                    "LINEVAL" => round($item->getLineval() / $vat, 2),
+                    "DISC1PRC" => $item->getDisc1prc()
+                );
         }
 
         $locateinfo = "MTRL,NAME,PRICE,QTY1,VAT;ITELINES:DISC1PRC,ITELINES:LINEVAL,MTRL,MTRL_ITEM_CODE,MTRL_ITEM_CODE1,MTRL_ITEM_NAME,MTRL_ITEM_NAME1,PRICE,QTY1;SALDOC:BUSUNITS,EXPN,TRDR,MTRL,PRICE,QTY1,VAT";
