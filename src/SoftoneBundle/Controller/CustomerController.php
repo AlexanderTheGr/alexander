@@ -295,7 +295,6 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             $payment[] = array("value" => "1004", "name" => "Πίστωση 60 ημερών");
             $payment[] = array("value" => "1005", "name" => "Πίστωση 90 ημερών");
             $payment[] = array("value" => "1006", "name" => "Τραπεζική Κατάθεση");
-            
         } else {
             $priceField[] = array("value" => "itemPricer", "name" => "Λιανική");
             $priceField[] = array("value" => "itemPricew", "name" => "Χονδρική");
@@ -421,10 +420,9 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         }
 
         $itemfield[] = "M.ISACTIVE";
-        $itemfield[] = "M.TRDCATEGORY";
         $selfields = implode(",", $itemfield);
         $params["fSQL"] = 'SELECT ' . $selfields . ' FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
-        echo $params["fSQL"];
+        //echo $params["fSQL"];
         //$params["fSQL"] = 'SELECT M.* FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
         //echo "<BR>";
         //echo $params["fSQL"];
@@ -432,7 +430,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
         $softone = new Softone();
         $datas = $softone->createSql($params);
-        print_r($datas);
+        //print_r($datas);
         //return;
         //exit;
         $em = $this->getDoctrine()->getManager();
