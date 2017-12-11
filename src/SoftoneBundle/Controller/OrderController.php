@@ -344,6 +344,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->find($request->request->get("customer"));
         $order->setCustomer($customer);
         $order->setShipment($customer->getShipment());
+        $order->setPayment($customer->getCustomerPayment());
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($request->request->get("customer"));
@@ -418,8 +419,17 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
              */
             //$this->setSetting("SoftoneBundle:Order:Shipments",  serialize($shipment));
             $shipment = unserialize($this->getSetting("SoftoneBundle:Order:Shipments"));
-
-
+            
+            $payment[] = array("value" => "1000", "name" => "Τοίς Μετρητοίς");
+            $payment[] = array("value" => "1001", "name" => "Κάρτα");
+            $payment[] = array("value" => "1002", "name" => "Μικτός Τρόπος Πληρωμής");
+            $payment[] = array("value" => "1003", "name" => "Πίστωση 30 ημερών");
+            $payment[] = array("value" => "1004", "name" => "Πίστωση 60 ημερών");
+            $payment[] = array("value" => "1005", "name" => "Πίστωση 90 ημερών");
+            $payment[] = array("value" => "1006", "name" => "Αντικαταβολή");
+            $payment[] = array("value" => "1007", "name" => "Πίστωση 45 ημερών");
+            $this->setSetting("SoftoneBundle:Order:Payments",  serialize($payment));
+            $payment = unserialize($this->getSetting("SoftoneBundle:Order:Payments"));
             //$dataarray[] = array("value" => "1", "name" => "Ναι");
 
             $fields["fincode"] = array("label" => $this->getTranslation("Κωδικός Παραγγελίας"), 'className' => 'asdfg', "required" => true);
@@ -428,13 +438,21 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $fields["trdbranch"] = array("label" => $this->getTranslation("Send to"), 'type' => "select", 'dataarray' => $trdbranch, 'className' => 'asdfg', "required" => false);
 
             $fields["shipment"] = array("label" => $this->getTranslation("Τρόπος Αποστολής"), 'type' => "select", 'dataarray' => $shipment, 'className' => 'asdfg', "required" => false);
+            $fields["payment"] = array("label" => $this->getTranslation("Τρόπος Αποστολής"), 'type' => "select", 'dataarray' => $payment, 'className' => 'asdfg', "required" => false);
 
 
             $fields["customerName"] = array("label" => $this->getTranslation("Customer Name"), "required" => true, 'className' => 'asdfg');
             $fields["route"] = array("label" => "Route", "required" => false, 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Route', 'name' => 'route', 'value' => 'id'));
             $fields["softoneStore"] = array("label" => $this->getTranslation("Store"), 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Store', 'name' => 'title', 'value' => 'id'));
 
+            
+
+            
+
+            
             if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'foxline') {
+                
+                
                 $storeField[] = array("value" => "7021", "name" => "Γέρακας");
                 $storeField[] = array("value" => "7121", "name" => "Κορωπί");
                 $fields["series"] = array("label" => $this->getTranslation("Store"), "className" => "col-md-12", 'type' => "select", "required" => true, 'dataarray' => $storeField);
