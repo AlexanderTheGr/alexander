@@ -425,9 +425,9 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $params["fSQL"] = 'SELECT ' . $selfields . ' FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
         //echo $params["fSQL"];
         //$params["fSQL"] = 'SELECT M.* FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
-        echo "<BR>";
-        echo $params["fSQL"];
-        echo "<BR>";
+        //echo "<BR>";
+        //echo $params["fSQL"];
+        //echo "<BR>";
 
         $softone = new Softone();
         $datas = $softone->createSql($params);
@@ -446,7 +446,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
                     ->getRepository($params["repository"])
                     ->findOneBy(array("reference" => (int) $data[$params["softone_table"]]));
 
-            echo @$entity->id . "<BR>";
+            //echo @$entity->id . "<BR>";
 
             //if ($data[$params["softone_table"]] < 7385) continue;
             /*
@@ -473,7 +473,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
                     $entity->setField($field, $rel);
                 }
             }
-            echo $data[$params["softone_table"]] . "<BR>";
+            //echo $data[$params["softone_table"]] . "<BR>";
             /*
               $imporetedData = array();
               $entity->setReference($data[$params["softone_table"]]);
@@ -502,7 +502,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             } else {
                 $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
             }
-            echo $sql . "<BR>";
+            //echo $sql . "<BR>";
             //if ($i++ > 100)
             //    exit;
             //continue;
