@@ -1230,6 +1230,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($order->getCustomer());
+        
+        if ($customer->getCustomerTrdcategory() == 3001) {
+            $vat = 1.17;
+        }        
+        
+        
+        
         if ($order->getVat())
             $vatsst = $id > 0 ? $order->getVat()->getVatsts() : $this->getSetting("SoftoneBundle:Order:Vat");
         else
