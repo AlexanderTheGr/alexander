@@ -379,7 +379,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     function retrieveCustomer() {
-        $where = "UPDDATE >= '" . date("Y-m-d", strtotime("-10 days")) . "'";
+        $where = "M.UPDDATE >= '" . date("Y-m-d", strtotime("-10 days")) . "'";
         $params["softone_object"] = 'customer';
         $params["repository"] = 'SoftoneBundle:Customer';
         $params["softone_table"] = 'TRDR';
