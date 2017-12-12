@@ -254,7 +254,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
 
                 $data[7] = str_replace(",", ".", $data[7]);
                 
-                //echo $product->getErpCode()." ".$data[6]."<BR>";
+                echo $product->getErpCode()." ".$data[7]."<BR>";
                 if ($product AND $invoice) {
                     $invoiceItem = new InvoiceItem;
                     $invoiceItem->setInvoice($invoice);
@@ -269,8 +269,8 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                 }
             }
         }
-        unlink($file);
-        //exit;
+        //unlink($file);
+        exit;
     }
 
     /**
