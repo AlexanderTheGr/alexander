@@ -34,6 +34,8 @@ class Customer extends Entity {
         $this->repositories['customergroup'] = 'SoftoneBundle:Customergroup';
         //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:SoftoneSupplier';
         $this->types['customergroup'] = 'object';
+        $this->repositories['softoneStore'] = 'SoftoneBundle:Store';
+        $this->softoneStore = new \SoftoneBundle\Entity\Store;
         //$this->types['supplierId'] = 'object';
         //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:TecdocSupplier';
         //$this->types['tecdocSupplierId'] = 'object';
@@ -46,6 +48,7 @@ class Customer extends Entity {
 
     public function getRepositories($repo) {
         $this->repositories['customergroup'] = 'SoftoneBundle:Customergroup';
+        $this->repositories['softoneStore'] = 'SoftoneBundle:Store';
         return $this->repositories[$repo];
     }
 
@@ -1273,5 +1276,30 @@ class Customer extends Entity {
     public function getShipment() {
         return $this->shipment;
     }
+    /**
+     * @var \SoftoneBundle\Entity\Store
+     */
+    protected $softoneStore;
 
+    /**
+     * Set softoneStore
+     *
+     * @param \SoftoneBundle\Entity\Store $softoneStore
+     *
+     * @return User
+     */
+    public function setSoftoneStore(\SoftoneBundle\Entity\Store $softoneStore = null) {
+        $this->softoneStore = $softoneStore;
+
+        return $this;
+    }
+
+    /**
+     * Get softoneStore
+     *
+     * @return \SoftoneBundle\Entity\Store
+     */
+    public function getSoftoneStore() {
+        return $this->softoneStore;
+    }
 }
