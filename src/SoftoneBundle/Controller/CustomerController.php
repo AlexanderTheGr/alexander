@@ -230,22 +230,26 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
         if ($id == 0 AND @ $entity->id == 0) {
             $entity = new Customer;
-            
+
             $customerCode = (int) $this->getSetting("SoftoneBundle:Customer:customerCode");
             $entity->setField("customerCode", str_pad($customerCode, 7, "0", STR_PAD_LEFT));
             $customerCode++;
             $this->setSetting("SoftoneBundle:Customer:customerCode", $customerCode);
-            
+
             $this->newentity[$this->repository] = $entity;
             $entity->setCustomerVatsts(1);
             $customergroup = $this->getDoctrine()->getRepository("SoftoneBundle:Customergroup")->find(1);
             $entity->setCustomergroup($customergroup);
             if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
+                $store = $this->getDoctrine()
+                        ->getRepository("SoftoneBundle:Store")
+                        ->find(2);
                 $customergroup = $this->getDoctrine()->getRepository("SoftoneBundle:Customergroup")->find(3);
                 $entity->setCustomergroup($customergroup);
                 $entity->setPriceField("itemPricer");
                 $entity->setCustomerPayment(1000);
                 $entity->setCustomerTrdcategory(3099);
+                $entity->setSoftoneStore($store);
             } else {
                 $entity->setPriceField("itemPricer");
             }
@@ -302,9 +306,9 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             $payment[] = array("value" => "1004", "name" => "Πίστωση 60 ημερών");
             $payment[] = array("value" => "1005", "name" => "Πίστωση 90 ημερών");
             $payment[] = array("value" => "1006", "name" => "Τραπεζική Κατάθεση");
-            
-            
-            
+
+
+
             $customerTrdcategory[] = array("value" => "3000", "name" => "Πελάτες Εσωτερικού Με Κανονικό Φ.Π.Α.");
             $customerTrdcategory[] = array("value" => "3001", "name" => "Πελάτες Εσωτερικού Με Μειωμένο Φ.Π.Α.");
             $customerTrdcategory[] = array("value" => "3002", "name" => "Πελάτες Εξωτερικού Τ.Χ");
@@ -314,7 +318,6 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             $customerTrdcategory[] = array("value" => "3099", "name" => "Πελάτες Λιανικής");
             $fields["customerTrdcategory"] = array("label" => $this->getTranslation("Λογιστική Καταγορία"), "className" => "col-md-3", 'type' => "select", 'dataarray' => $customerTrdcategory, "required" => false);
             $fields["softoneStore"] = array("label" => $this->getTranslation("Σειρά"), "className" => "col-md-3", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Store', 'name' => 'title', 'value' => 'id'));
-
         } else {
             $priceField[] = array("value" => "itemPricer", "name" => "Λιανική");
             $priceField[] = array("value" => "itemPricew", "name" => "Χονδρική");
@@ -459,15 +462,14 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             //$data["IRSDATA2"] = $IRSDATA[$data["IRSDATA"]];
             //print_r($data);
             //if ($i++ > 100 ) exit;
-            if ($data["CODE"] > $maxcode AND (int)$data["CODE"] < 5000) 
-            $maxcode = $data["CODE"];
+            if ($data["CODE"] > $maxcode AND (int) $data["CODE"] < 5000)
+                $maxcode = $data["CODE"];
 
             $entity = $this->getDoctrine()
                     ->getRepository($params["repository"])
                     ->findOneBy(array("reference" => (int) $data[$params["softone_table"]]));
 
             //echo @$entity->id . "<BR>";
-
             //if ($data[$params["softone_table"]] < 7385) continue;
             /*
               $dt = new \DateTime("now");
@@ -527,7 +529,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             //    exit;
             //continue;
             $customerCode = (int) $this->getSetting("SoftoneBundle:Customer:customerCode");
-            
+
             $em->getConnection()->exec($sql);
             /*
               @$entity_id = (int) $entity->id;
@@ -546,8 +548,8 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             //    break;
         }
         //echo $maxcode;
-        if ($customerCode < (int)$maxcode+1) {
-            $this->setSetting("SoftoneBundle:Customer:customerCode",(int)$maxcode+1);
+        if ($customerCode < (int) $maxcode + 1) {
+            $this->setSetting("SoftoneBundle:Customer:customerCode", (int) $maxcode + 1);
         }
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             $sql = 'update `softone_customer` set customergroup = 1 where customergroup is null';
