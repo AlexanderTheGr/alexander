@@ -181,7 +181,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
 
         $this->addTab(array("title" => $this->getTranslation("General"), "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
         if ($id > 0 AND count($entity) > 0) {
-            $tabs[] = array("title" => $this->getTranslation("Items"), "datatables" => $datatables, "form" => $forms2, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
+            $tabs[] = array("title" => $this->getTranslation("Items"), "datatables" => $datatables, "form" => $forms2, "content" => 'hhhh', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true);
         }
         foreach ((array) $tabs as $tab) {
             $this->addTab($tab);
