@@ -252,6 +252,8 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                         ->getRepository("SoftoneBundle:Product")
                         ->findOneBy(array('itemCode2' => $data[6]));
 
+                $data[7] = str_replace(",", ".", $data[7]);
+                
                 //echo $product->getErpCode()." ".$data[6]."<BR>";
                 if ($product AND $invoice) {
                     $invoiceItem = new InvoiceItem;
