@@ -345,7 +345,7 @@ class Invoice extends Entity {
     function getTotal() {
         $total = 0;
         foreach ($this->getItems() as $item) {
-            @$total += $item->getLineval();
+            @$total += $item->getPrice()*$item->getQty();
         }
         return $total;
     }
