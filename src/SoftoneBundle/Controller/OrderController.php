@@ -817,7 +817,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         }
                     }
                     //$sa =array_unique($sa);
-                    //print_r($sa);
+                    if ($_SERVER["REMOTE_ADDR"] == '212.205.224.191') {
+                        print_r($sa);
+                    }
                     //echo $sql11;                    
 
                     if (count($sa)) {
