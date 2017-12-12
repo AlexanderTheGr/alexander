@@ -251,7 +251,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                 $product = $this->getDoctrine()
                         ->getRepository("SoftoneBundle:Product")
                         ->findOneBy(array('itemCode2' => $data[6]));
-                
+
                 //echo $product->getErpCode()." ".$data[6]."<BR>";
                 if ($product AND $invoice) {
                     $invoiceItem = new InvoiceItem;
@@ -315,7 +315,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
             $this->addField($param);
         }
         $this->repository = 'SoftoneBundle:InvoiceItem';
-        $this->q_and[] = $this->prefix . ".invoice = '" . $id . "'";
+        $this->q_and[] = $this->prefix . ".invoice = '" . $id . "' and qty > 0";
         $json = $this->itemsdatatable();
 
         $datatable = json_decode($json);
@@ -333,6 +333,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+
     public function itemsdatatable() {
         $data = json_decode($this->datatable());
         $total = 0;
@@ -366,6 +367,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         $data->data[] = $json;
         return json_encode($data);
     }
+
     /**
      * @Route("/invoice/getdatatable")
      */
@@ -444,6 +446,8 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         //print_r($dataOut);
         foreach ($invoice->getItems() as $item) {
             //$dataOut["ITELINES"][] = array("QTY1" => $item->getQty(), "VAT" => $vat, "LINENUM" => $item->getLineval(), "MTRL" => $item->getProduct()->getReference());
+            if ($item->getQty() == 0)
+                continue;
             $dataOut["ITELINES"][] = array(
                 "VAT" => $vatsst,
                 "QTY1" => $item->getQty(),
