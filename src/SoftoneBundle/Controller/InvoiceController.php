@@ -20,7 +20,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/invoice/invoice")
      */
     public function indexAction() {
-
+        $this->readInvoices();
         return $this->render('SoftoneBundle:Invoice:index.html.twig', array(
                     'pagename' => $this->getTranslation('Invoices'),
                     'url' => '/invoice/getdatatable',
@@ -267,6 +267,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                 }
             }
         }
+        unlink($file);
         //exit;
     }
 
