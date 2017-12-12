@@ -350,7 +350,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $order->setCustomer($customer);
         $order->setShipment($customer->getShipment());
         $order->setPayment($customer->getCustomerPayment());
-
+        $order->setSoftoneStore($customer->getSoftoneStore());
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($request->request->get("customer"));
