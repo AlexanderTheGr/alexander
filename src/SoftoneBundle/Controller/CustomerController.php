@@ -543,7 +543,9 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             //    break;
         }
         //echo $maxcode;
-        $this->setSetting("SoftoneBundle:Customer:customerCode",(int)$maxcode+1);
+        if ($customerCode < (int)$maxcode+1) {
+            $this->setSetting("SoftoneBundle:Customer:customerCode",(int)$maxcode+1);
+        }
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             $sql = 'update `softone_customer` set customergroup = 1 where customergroup is null';
             $this->getDoctrine()->getConnection()->exec($sql);
