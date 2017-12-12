@@ -823,13 +823,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     //echo $sql11;                    
 
                     if (count($sa)) {
-                        $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where so.itemCode1 in ('" . implode("','", $sa) . "') OR so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
+                        $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where so.itemCode1 in ('" . implode("','", $sa) . "') OR so.itemCode2 in ('" . implode("','", $sa) . "') OR  so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
                     } else {
                         $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
                     }
                 }
                 if ($_SERVER["REMOTE_ADDR"] == '212.205.224.191') {
-                    echo $sqlearch; 
+                    //echo $sqlearch; 
                 }
                 $qsupplier = "";
                 if ($dt_columns[3]["search"]["value"] > 3) {
