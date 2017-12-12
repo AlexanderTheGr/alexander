@@ -1741,7 +1741,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $statement->execute();
         $results = $statement->fetchAll();
 
-
         foreach ($results as $result) {
             $json["id"] = $result["id"];
             $json["label"] = $result["title"] . ' ' . $result["erp_code"];
