@@ -359,8 +359,9 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         $json[3] = "";
         $json[4] = "";
         $json[5] = "";
-        $json[6] = "Total";
-        $json[7] = $total;
+        $json[6] = "";
+        $json[7] = "Total";
+        $json[8] = $total;
 
         $data->data[] = $json;
         return json_encode($data);
