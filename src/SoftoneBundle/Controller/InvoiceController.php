@@ -375,13 +375,15 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
           $vatsst = 1410; //$this->getSetting("SoftoneBundle:Product:Vat");
          */
         $vatsst = 1410;
-
+        /*
         if ($invoice->getReference() > 0) {
             $json = json_encode(array());
             return new Response(
                     $json, 200, array('Content-Type' => 'application/json')
             );
         }
+         * 
+         */
 
         $objectArr = array();
         $objectArr[0]["TRDR"] = $invoice->getSupplier()->getReference(); //9818; //$customer->getReference();
