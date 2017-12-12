@@ -239,6 +239,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
                 $entity->setPriceField("itemPricer");
                 $entity->setCustomerPayment(1000);
+                $entity->setCustomerTrdcategory(3000);
             } else {
                 $entity->setPriceField("itemPricer");
             }
