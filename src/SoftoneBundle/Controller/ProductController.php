@@ -1739,7 +1739,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $connection = $em->getConnection();
         $statement = $connection->prepare($sql);
         $statement->execute();
-        $results = $statement->fetch();
+        $results = $statement->fetchAll();
 
 
         foreach ($results as $result) {
