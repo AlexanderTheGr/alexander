@@ -947,7 +947,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     //echo $sql;
                     //exit;				
                 }
-                //echo $sql;
+                if ($_SERVER["REMOTE_ADDR"] == '212.205.224.191') {
+                    echo $sql;
+                }
 
 
                 $sql = str_replace("p.*,", "", $sql);
