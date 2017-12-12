@@ -315,7 +315,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
             $this->addField($param);
         }
         $this->repository = 'SoftoneBundle:InvoiceItem';
-        $this->q_and[] = $this->prefix . ".invoice = '" . $id . "' and ".$this->prefix . ".qty > 0";
+        $this->q_and[] = $this->prefix . ".invoice = '" . $id . "'";
         $json = $this->itemsdatatable();
 
         $datatable = json_decode($json);
@@ -378,7 +378,10 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                 ->addField(array("name" => $this->getTranslation("Invoice"), "index" => 'invoice'))
                 ->addField(array("name" => $this->getTranslation("Supplier"), "index" => 'supplier:supplierName'))
                 ->addField(array("name" => $this->getTranslation("To Softone"), "index" => 'reference', 'method' => 'yesno'))
-                ->addField(array("name" => $this->getTranslation("Date Time"), 'datetime' => 'Y-m-d H:s:i', "index" => 'created'));
+                ->addField(array("name" => $this->getTranslation("To Softone"), "index" => 'reference', 'method' => 'yesno'))
+                ->addField(array("name" => $this->getTranslation("Date Time"), 'datetime' => 'Y-m-d H:s:i', "index" => 'created'))
+                ->addField(array("name" => $this->getTranslation("Total"), 'function' => 'getTotal'))
+                ;
 
         $json = $this->datatable();
         return new Response(
