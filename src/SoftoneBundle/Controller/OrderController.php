@@ -143,6 +143,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         }
         ksort($items);
         foreach ($items as $item) {
+            if ($item->getQty() == 0) continue;
             @$total += $item->getLineval();
             //$item->getProduct()->getReference();
 
