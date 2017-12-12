@@ -426,6 +426,12 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         $locateinfo = "MTRL,NAME,PRICE,QTY1,VAT;ITELINES:DISC1PRC,ITELINES:LINEVAL,MTRL,MTRL_ITEM_CODE,MTRL_ITEM_CODE1,MTRL_ITEM_NAME,MTRL_ITEM_NAME1,PRICE,QTY1;SALDOC:BUSUNITS,EXPN,TRDR,MTRL,PRICE,QTY1,VAT";
         print_r($dataOut);
         file_put_contents("/home2/partsbox/public_html/OrderdatIn.txt", print_r($dataOut, true));
+        if ($invoice->getReference() > 0) {
+            $json = json_encode(array());
+            return new Response(
+                    $json, 200, array('Content-Type' => 'application/json')
+            );
+        }        
         $out = $softone->setData((array) $dataOut, $object, (int) 0);
         print_r($out);
         //exit;
