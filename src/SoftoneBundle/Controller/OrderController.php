@@ -948,7 +948,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     //exit;				
                 }
                 if ($_SERVER["REMOTE_ADDR"] == '212.205.224.191') {
-                    echo $sql;
+                   // echo $sql;
                 }
 
 
