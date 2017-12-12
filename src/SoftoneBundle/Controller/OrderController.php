@@ -823,7 +823,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     //echo $sql11;                    
 
                     if (count($sa)) {
-                        $sqlearch = "Select so.id from SoftoneBundle:Productso where so.itemCode1 in ('" . implode("','", $sa) . "') OR so.itemCode2 in ('" . implode("','", $sa) . "') OR  so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
+                        $sqlearch = "Select so.id from SoftoneBundle:Product so where so.itemCode1 in ('" . implode("','", $sa) . "') OR so.itemCode2 in ('" . implode("','", $sa) . "') OR  so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
                     } else {
                         $sqlearch = "Select so.id from SoftoneBundle:ProductSearch so where so.search like '%" . $search[1] . "%' OR so.itemCode like '%" . $search[1] . "%' OR so.itemCode1 like '%" . $search[1] . "%' OR so.itemCode2 like '%" . $search[1] . "%'";
                     }
