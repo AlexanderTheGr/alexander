@@ -1735,11 +1735,22 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
          * 
          * 
          */
-        $sql = "Select p.id, p.title, p.erp_code from softone_product p where p.item_code2 in (select code from crossmulti where multi like '" . $this->clearstring($_GET["term"]) . "%') OR p.item_code2 like '" . $this->clearstring($_GET["term"]) . "%' OR p.item_code like '" . $this->clearstring($_GET["term"]) . "%' OR p.item_apvcode like '" . $this->clearstring($_GET["term"]) . "%'";
-        $connection = $em->getConnection();
-        $statement = $connection->prepare($sql);
-        $statement->execute();
-        $results = $statement->fetchAll();
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") != 'tsakonas') {
+            $sql = "Select p.id, p.title, p.erp_code from softone_product p where p.item_code2 in (select code from crossmulti where multi like '" . $this->clearstring($_GET["term"]) . "%') OR p.item_code2 like '" . $this->clearstring($_GET["term"]) . "%' OR p.item_code like '" . $this->clearstring($_GET["term"]) . "%' OR p.item_apvcode like '" . $this->clearstring($_GET["term"]) . "%'";
+            $connection = $em->getConnection();
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            $results = $statement->fetchAll();
+        } else {
+            $query = $em->createQuery(
+                    "SELECT  p.id, p.title, p.erpCode
+                FROM " . $this->repository . " p
+                where p.itemCode2 like '" . $this->clearstring($_GET["term"]) . "%' OR p.itemCode like '" . $this->clearstring($_GET["term"]) . "%' OR p.itemApvcode like '" . $this->clearstring($_GET["term"]) . "%'"
+            );
+
+            $results = $query->getResult();
+            $jsonArr = array();
+        }
 
         foreach ($results as $result) {
             $json["id"] = $result["id"];
