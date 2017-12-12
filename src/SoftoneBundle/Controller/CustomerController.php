@@ -313,6 +313,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             $customerTrdcategory[] = array("value" => "3005", "name" => "ΝΠΔΔ");
             $customerTrdcategory[] = array("value" => "3099", "name" => "Πελάτες Λιανικής");
             $fields["customerTrdcategory"] = array("label" => $this->getTranslation("Λογιστική Καταγορία"), "className" => "col-md-3", 'type' => "select", 'dataarray' => $customerTrdcategory, "required" => false);
+            $fields["softoneStore"] = array("label" => $this->getTranslation("Σειρά"), 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Store', 'name' => 'title', 'value' => 'id'));
 
         } else {
             $priceField[] = array("value" => "itemPricer", "name" => "Λιανική");
