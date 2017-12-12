@@ -206,9 +206,9 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $jsonarr = array();
         if ($this->newentity[$this->repository]->getId()) {
             if ($this->newentity[$this->repository]->getReference() > 0) {
-                $customerCode = (int) $this->getSetting("SoftoneBundle:Customer:customerCode");
-                $customerCode++;
-                $this->setSetting("SoftoneBundle:Customer:customerCode", $customerCode);
+                //$customerCode = (int) $this->getSetting("SoftoneBundle:Customer:customerCode");
+                //$customerCode++;
+                //$this->setSetting("SoftoneBundle:Customer:customerCode", $customerCode);
             }
             $this->newentity[$this->repository]->toSoftone();
             $jsonarr["returnurl"] = "/customer/view/" . $this->newentity[$this->repository]->getId();
@@ -232,6 +232,8 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             $entity = new Customer;
             $customerCode = (int) $this->getSetting("SoftoneBundle:Customer:customerCode");
             $entity->setField("customerCode", str_pad($customerCode, 7, "0", STR_PAD_LEFT));
+            $customerCode++;
+            $this->setSetting("SoftoneBundle:Customer:customerCode", $customerCode);
             $this->newentity[$this->repository] = $entity;
             $entity->setCustomerVatsts(1);
             $customergroup = $this->getDoctrine()->getRepository("SoftoneBundle:Customergroup")->find(1);
