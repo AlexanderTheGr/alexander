@@ -68,7 +68,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/customer/view/{id}")
      */
     public function viewAction($id) {
-        $this->retrieveCustomer();
+        //$this->retrieveCustomer();
         $buttons = array();
         $content = $this->gettabs($id);
         $content = $this->content();
