@@ -316,7 +316,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         }
         $this->repository = 'SoftoneBundle:InvoiceItem';
         $this->q_and[] = $this->prefix . ".invoice = '" . $id . "'";
-        $json = $this->datatable();
+        $json = $this->itemsdatatable();
 
         $datatable = json_decode($json);
         $datatable->data = (array) $datatable->data;
@@ -333,7 +333,42 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+    public function itemsdatatable() {
+        $data = json_decode($this->datatable());
+        $total = 0;
+        foreach ($data->data as $item) {
 
+            $of = "11";
+
+            $text = $item->$of;
+            $document = new \DOMDocument();
+            $document->loadHTML($text);
+
+            $inputs = $document->getElementsByTagName("input");
+            $value = 0;
+            foreach ($inputs as $input) {
+                $value = $input->getAttribute("value");
+                break;
+            }
+            $total += $value;
+        }
+        $total = number_format($total, 2, '.', '');
+        $json[0] = "";
+        $json[1] = "";
+        $json[2] = "";
+        $json[3] = "";
+        $json[4] = "";
+        $json[5] = "";
+        $json[6] = "";
+        $json[7] = "";
+        $json[8] = "";
+        $json[9] = "";
+        $json[10] = "Total";
+        $json[11] = $total;
+
+        $data->data[] = $json;
+        return json_encode($data);
+    }
     /**
      * @Route("/invoice/getdatatable")
      */
