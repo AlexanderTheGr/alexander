@@ -339,7 +339,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         $total = 0;
         foreach ($data->data as $item) {
 
-            $of = "8";
+            $of = "7";
 
             $text = $item->$of;
             $document = new \DOMDocument();
