@@ -797,7 +797,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $statement = $connection->prepare($sql11);
                     $statement->execute();
                     $crosses = $statement->fetchAll();
-                    $sa = array();
+                    //$sa = array();
 
                     //echo $sql11;
                     //print_r($crosses);
