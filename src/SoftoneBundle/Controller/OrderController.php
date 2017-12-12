@@ -817,7 +817,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         }
                     }
                     //$sa =array_unique($sa);
-                    print_r($sa);
+                    //print_r($sa);
                     //echo $sql11;                    
 
                     if (count($sa)) {
