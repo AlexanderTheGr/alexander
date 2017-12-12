@@ -315,7 +315,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
             $this->addField($param);
         }
         $this->repository = 'SoftoneBundle:InvoiceItem';
-        $this->q_and[] = $this->prefix . ".invoice = '" . $id . "' and qty > 0";
+        $this->q_and[] = $this->prefix . ".invoice = '" . $id . "' and ".$this->prefix . ".qty > 0";
         $json = $this->itemsdatatable();
 
         $datatable = json_decode($json);
