@@ -338,7 +338,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         );
     }
 
-    public function itemsdatatable() {
+    public function itemsdatatable($id) {
         $data = json_decode($this->datatable());
         $total = 0;
 
