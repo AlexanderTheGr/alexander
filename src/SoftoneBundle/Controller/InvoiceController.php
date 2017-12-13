@@ -343,7 +343,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         $total = 0;
 
         $entity = $this->getDoctrine()
-                ->getRepository($this->repository)
+                ->getRepository('SoftoneBundle:Invoice')
                 ->find($id);
 
         foreach ($data->data as $item) {
