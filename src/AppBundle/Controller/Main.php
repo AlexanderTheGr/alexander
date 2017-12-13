@@ -292,6 +292,9 @@ class Main extends Controller {
             } elseif (count($field_order) > 1 AND @ $field["type"] == "select") {
                 $em = $this->getDoctrine()->getManager();
                 $object = @ $field["object"] ? $field["object"] : ucfirst($field_order[0]);
+                if ($object == "User") {
+                    $bundle[0] = "AppBundle";
+                }
                 $query = $em->createQuery(
                         'SELECT  ' . $this->prefix . '.id, ' . $this->prefix . '.' . $field_order[1] . '
                                 FROM ' . $bundle[0] . ':' . $object . ' ' . $this->prefix . '
