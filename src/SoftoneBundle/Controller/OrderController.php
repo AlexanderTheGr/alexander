@@ -1800,8 +1800,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->addField(array("name" => $this->getTranslation("To Softone"), "index" => 'reference', 'method' => 'yesno'))
                 ->addField(array("name" => $this->getTranslation("Invoiced"), "index" => 'fullytrans', 'method' => 'yesno'))
                 ->addField(array("name" => $this->getTranslation("Seller"), "index" => 'user:username'))
-                //->addField(array("name" => $this->getTranslation("Seller"), "index" => 'user:username', 'type' => 'select', 'object' => 'User'))
-                ->addField(array("name" => $this->getTranslation("Comments"), "index" => 'comments'))
+                ->addField(array("name" => $this->getTranslation("Seller"), "index" => 'user:username', 'type' => 'select', 'object' => 'User'))
+                //->addField(array("name" => $this->getTranslation("Comments"), "index" => 'comments'))
                 ->addField(array("name" => $this->getTranslation("Status"), 'function' => 'getPicked'))
                 ->addField(array("name" => $this->getTranslation("Total"), 'function' => 'getTotal'))
 
