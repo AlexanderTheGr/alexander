@@ -144,7 +144,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         }
         ksort($items);
         foreach ($items as $item) {
-            if ($item->getQty() == 0) continue;
+            if ($item->getQty() == 0)
+                continue;
             @$total += $item->getLineval();
             //$item->getProduct()->getReference();
 
@@ -797,7 +798,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $statement->execute();
                     $crosses = $statement->fetchAll();
                     //$sa = array();
-
                     //echo $sql11;
                     //print_r($crosses);
 
@@ -947,7 +947,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     //exit;				
                 }
                 if ($_SERVER["REMOTE_ADDR"] == '212.205.224.191') {
-                   // echo $sql;
+                    // echo $sql;
                 }
 
 
@@ -1799,7 +1799,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $this->addField(array("name" => $this->getTranslation("Customer Afm"), "index" => 'customer:customerAfm'))
                 ->addField(array("name" => $this->getTranslation("To Softone"), "index" => 'reference', 'method' => 'yesno'))
                 ->addField(array("name" => $this->getTranslation("Invoiced"), "index" => 'fullytrans', 'method' => 'yesno'))
-                ->addField(array("name" => $this->getTranslation("Seller"), "index" => 'user:username'))
+                //->addField(array("name" => $this->getTranslation("Seller"), "index" => 'user:username'))
+                ->addField(array("name" => $this->getTranslation("Seller"), "index" => 'user:username', 'type' => 'select', 'object' => 'User'))
                 ->addField(array("name" => $this->getTranslation("Comments"), "index" => 'comments'))
                 ->addField(array("name" => $this->getTranslation("Status"), 'function' => 'getPicked'))
                 ->addField(array("name" => $this->getTranslation("Total"), 'function' => 'getTotal'))
