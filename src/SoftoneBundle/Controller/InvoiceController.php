@@ -253,10 +253,10 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                         ->findOneBy(array('itemCode2' => $data[6]));
 
                 $data[7] = str_replace(",", ".", $data[7]);
-                
-                
+
+
                 if ($product AND $invoice) {
-                    echo $product->getErpCode()." ".$data[7]."<BR>";
+
                     $invoiceItem = new InvoiceItem;
                     $invoiceItem->setInvoice($invoice);
                     $invoiceItem->setProduct($product);
@@ -320,7 +320,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         }
         $this->repository = 'SoftoneBundle:InvoiceItem';
         $this->q_and[] = $this->prefix . ".invoice = '" . $id . "'";
-        $json = $this->itemsdatatable();
+        $json = $this->itemsdatatable($id);
 
         $datatable = json_decode($json);
         $datatable->data = (array) $datatable->data;
@@ -341,6 +341,11 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
     public function itemsdatatable() {
         $data = json_decode($this->datatable());
         $total = 0;
+
+        $entity = $this->getDoctrine()
+                ->getRepository($this->repository)
+                ->find($id);
+
         foreach ($data->data as $item) {
 
             $of = "7";
@@ -366,7 +371,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         $json[5] = "";
         $json[6] = "";
         $json[7] = "Total";
-        $json[8] = $total;
+        $json[8] = $entity->getTotal();
 
         $data->data[] = $json;
         return json_encode($data);
@@ -385,7 +390,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                 ->addField(array("name" => $this->getTranslation("To Softone"), "index" => 'reference', 'method' => 'yesno'))
                 ->addField(array("name" => $this->getTranslation("Date Time"), 'datetime' => 'Y-m-d H:s:i', "index" => 'created'))
                 ->addField(array("name" => $this->getTranslation("Total"), 'function' => 'getTotal'))
-                ;
+        ;
 
         $json = $this->datatable();
         return new Response(
