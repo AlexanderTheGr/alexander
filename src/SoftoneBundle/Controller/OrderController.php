@@ -1248,7 +1248,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $VATSTS = $this->getSetting("SoftoneBundle:Order:Vat") != '' ? $this->getSetting("SoftoneBundle:Order:Vat") : $customer->getCustomerVatsts();
         if ($customer->getCustomerTrdcategory() == 3003) {
             $VATSTS = 0;
-            $vat = 0;
+            $vat = 1;
         }
 
 
