@@ -655,6 +655,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             if ($customer->getCustomerTrdcategory() == 3001) {
                 $vat = 1.17;
             }
+            if ($customer->getCustomerTrdcategory() == 3003) {
+                $vat = 0;
+            }
             $priceField = $customer->getPriceField();
         } else {
             $priceField = "itemPricew";
@@ -1242,7 +1245,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         if ($customer->getCustomerTrdcategory() == 3001) {
             $vat = 1.17;
         }
-
+        $VATSTS = $this->getSetting("SoftoneBundle:Order:Vat") != '' ? $this->getSetting("SoftoneBundle:Order:Vat") : $customer->getCustomerVatsts();
+        if ($customer->getCustomerTrdcategory() == 3003) {
+            $VATSTS = 0;
+            $vat = 0;
+        }
 
 
         if ($order->getVat())
@@ -1266,7 +1273,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $objectArr[0]["SHIPMENT"] = $order->getShipment();
         }
         $objectArr[0]["SERIES"] = $order->getSoftoneStore()->getSeries();
-        $objectArr[0]["VATSTS"] = $this->getSetting("SoftoneBundle:Order:Vat") != '' ? $this->getSetting("SoftoneBundle:Order:Vat") : $customer->getCustomerVatsts();
+        $objectArr[0]["VATSTS"] = $VATSTS; //$this->getSetting("SoftoneBundle:Order:Vat") != '' ? $this->getSetting("SoftoneBundle:Order:Vat") : $customer->getCustomerVatsts();
         $objectArr[0]["COMMENTS"] = $order->getRemarks(); //$customer->getCustomerPayment() > 0 ? $customer->getCustomerPayment() : 1003; // Mage::app()->getRequest()->getParam('comments');
         $objectArr[0]["REMARKS"] = $order->getRemarks();
         $objectArr[0]["COMMENTS"] = $order->getComments();
@@ -2114,7 +2121,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->find($order->getCustomer());
 
         $vat = $customer->getCustomerVatsts() > 1 ? 1.17 : 1.24;
-
+        if ($customer->getCustomerTrdcategory() == 3003) {
+            $vat = 0;
+        }
         $price = $product->getGroupedPrice($customer, $vat);
 
         $orderItem->setField("qty", $qty + $request->request->get("qty"));
