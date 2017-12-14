@@ -644,7 +644,7 @@ class EdiItemController extends Main {
             $vat = 1.17;
         }
         if ($customer->getCustomerTrdcategory() == 3003) {
-            $vat = 0;
+            $vat = 1;
         }        
         $request = Request::createFromGlobals();
         $dt_columns = $request->request->get("columns");
