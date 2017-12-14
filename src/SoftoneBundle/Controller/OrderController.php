@@ -656,7 +656,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $vat = 1.17;
             }
             if ($customer->getCustomerTrdcategory() == 3003) {
-                $vat = 0;
+                $vat = 1;
             }
             $priceField = $customer->getPriceField();
         } else {
@@ -2122,7 +2122,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
         $vat = $customer->getCustomerVatsts() > 1 ? 1.17 : 1.24;
         if ($customer->getCustomerTrdcategory() == 3003) {
-            $vat = 0;
+            $vat = 1;
         }
         $price = $product->getGroupedPrice($customer, $vat);
 
