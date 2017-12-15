@@ -1469,6 +1469,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //$this->flushpersist($entity);
             $q = array();
             $hasmark = false;
+            $data["CODE"] = addslashes($data["CODE"]);
             foreach ($data as $identifier => $val) {
                 $imporetedData[strtolower($params["softone_object"] . "_" . $identifier)] = addslashes($val);
                 $ad = strtolower($identifier);
@@ -1505,7 +1506,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             }
             //print_r($data);
             if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
-                $data["CODE"] = addslashes($data["CODE"]);
+                
                 if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
                     $data["REMARKS"] = str_replace("\n", "|", $data["REMARKS"]);
                     $data["REMARKS"] = str_replace("\r", "|", $data["REMARKS"]);
