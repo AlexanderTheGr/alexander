@@ -1505,7 +1505,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             }
             //print_r($data);
             if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
-
+                $data["CODE"] = addslashes($data["REMARKS"]);
                 if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
                     $data["REMARKS"] = str_replace("\n", "|", $data["REMARKS"]);
                     $data["REMARKS"] = str_replace("\r", "|", $data["REMARKS"]);
