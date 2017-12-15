@@ -446,8 +446,8 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
          */
         $objectArr[0]["SERIES"] = 2062; //$order->getSoftoneStore()->getSeries();
         //$objectArr[0]["VATSTS"] = $vatsst; //$this->getSetting("SoftoneBundle:Order:Vat") != '' ? $this->getSetting("SoftoneBundle:Order:Vat") : $customer->getCustomerVatsts();
-        $objectArr[0]["COMMENTS"] = ""; //$order->getRemarks(); //$customer->getCustomerPayment() > 0 ? $customer->getCustomerPayment() : 1003; // Mage::app()->getRequest()->getParam('comments');
-        $objectArr[0]["REMARKS"] = ""; //$order->getRemarks();
+        $objectArr[0]["COMMENTS"] = $invoice->getInvoice(); //$order->getRemarks(); //$customer->getCustomerPayment() > 0 ? $customer->getCustomerPayment() : 1003; // Mage::app()->getRequest()->getParam('comments');
+        $objectArr[0]["REMARKS"] = $invoice->getInvoice(); //$order->getRemarks();
         $objectArr[0]["COMMENTS"] = ""; //$order->getComments();
         //$objectArr[0]["WHOUSE"] = 1101;
         //$objectArr[0]["DISC1PRC"] = 10;   
