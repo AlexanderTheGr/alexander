@@ -1737,7 +1737,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
          * 
          */
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'tsakonas') {
-            $sql = "Select p.id, p.title, p.erp_code from softone_product p where p.item_code in (select code from crossiaponiki where supplier_code like '" . $this->clearstring($_GET["term"]) . "%' OR ref like '" . $this->clearstring($_GET["term"]) . "%') OR p.item_code2 in (select code from crossmulti where multi like '" . $this->clearstring($_GET["term"]) . "%') OR p.item_code2 like '" . $this->clearstring($_GET["term"]) . "%' OR p.item_code like '" . $this->clearstring($_GET["term"]) . "%' OR p.item_apvcode like '" . $this->clearstring($_GET["term"]) . "%'";
+            $sql = "Select p.id, p.title, p.erp_code from softone_product p where p.item_code in (select erp_code from crossiaponiki where supplier_code like '" . $this->clearstring($_GET["term"]) . "%' OR ref like '" . $this->clearstring($_GET["term"]) . "%') OR p.item_code2 in (select code from crossmulti where multi like '" . $this->clearstring($_GET["term"]) . "%') OR p.item_code2 like '" . $this->clearstring($_GET["term"]) . "%' OR p.item_code like '" . $this->clearstring($_GET["term"]) . "%' OR p.item_apvcode like '" . $this->clearstring($_GET["term"]) . "%'";
             $connection = $em->getConnection();
             $statement = $connection->prepare($sql);
             $statement->execute();
