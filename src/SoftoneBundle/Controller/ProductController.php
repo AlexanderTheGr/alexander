@@ -1290,6 +1290,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $params["fSQL"] = "SELECT VARCHAR05,VARCHAR01, MTRL FROM MTREXTRA WHERE VARCHAR01 != ''";
         $softone = new Softone();
         $datas = $softone->createSql($params);
+        echo "<BR>";
         echo count($datas->data);
         //print_r($datas->data);
         foreach ((array) $datas->data as $data) {
@@ -1298,7 +1299,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 //echo $sql . "<BR>";
                 //$this->getDoctrine()->getConnection()->exec($sql);
             }
-            if ((int) $data->VARCHAR01 != "") {
+            if ($data->VARCHAR01 != "") {
                 $sql = 'update `softone_product` set `item_remarks` =  "' . addslashes($data->VARCHAR01) . '" where reference = "' . $data->MTRL . '"';
                 echo $sql . "<BR>";
                 //$this->getDoctrine()->getConnection()->exec($sql);
