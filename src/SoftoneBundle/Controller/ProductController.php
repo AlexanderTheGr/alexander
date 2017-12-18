@@ -1287,7 +1287,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         //$this->retrieveProduct($params);
         //echo 'ss';
-        $params["fSQL"] = "SELECT VARCHAR05,VARCHAR01, MTRL FROM MTREXTRA WHERE VARCHAR05 != ''";
+        $params["fSQL"] = "SELECT VARCHAR05,VARCHAR01, MTRL FROM MTREXTRA WHERE VARCHAR01 != ''";
         $softone = new Softone();
         $datas = $softone->createSql($params);
         echo count($datas->data);
