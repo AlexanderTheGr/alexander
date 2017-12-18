@@ -431,7 +431,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
 
         $objectArr = array();
         $objectArr[0]["TRDR"] = $invoice->getSupplier()->getReference(); //9818; //$customer->getReference();
-        $objectArr[0]["SERIESNUM"] = $invoice->getId();
+        //$objectArr[0]["SERIESNUM"] = $invoice->getId();
         $objectArr[0]["FINCODE"] = $invoice->getInvoice();
         //$objectArr[0]["TRDBRANCH"] = $order->getTrdbranch();
         //$objectArr[0]["PAYMENT"] = $customer->getCustomerPayment() > 0 ? $customer->getCustomerPayment() : 1003;
