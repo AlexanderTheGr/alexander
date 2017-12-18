@@ -1068,9 +1068,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 }
                 $json[4] = $obj->getArticleAttributes2($articleIds2["linkingTargetId"]);
                 if ($model_str) {
-                    $json[5] = "[".$model_str."]";
+                    $json[5] = $model_str;
+                } else {
+                    $json[5] = $obj->getItemRemarks();
                 }
-                $json[5] = "---";
                 $json[6] = $pricer;
                 ;
                 $json[7] = $obj->getDiscount($customer, $vat);
