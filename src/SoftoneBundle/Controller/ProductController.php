@@ -1302,7 +1302,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             if ($data->VARCHAR01 != "") {
                 $sql = 'update `softone_product` set `item_remarks` =  "' . addslashes($data->VARCHAR01) . '" where reference = "' . $data->MTRL . '"';
                 echo $sql . "<BR>";
-                //$this->getDoctrine()->getConnection()->exec($sql);
+                $this->getDoctrine()->getConnection()->exec($sql);
             }            
         }
 
