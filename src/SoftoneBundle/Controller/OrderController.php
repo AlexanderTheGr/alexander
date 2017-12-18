@@ -1070,6 +1070,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 if ($model_str) {
                     $json[5] = "[".$model_str."]";
                 }
+                $json[5] = "---";
                 $json[6] = $pricer;
                 ;
                 $json[7] = $obj->getDiscount($customer, $vat);
