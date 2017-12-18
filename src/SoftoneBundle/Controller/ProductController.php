@@ -1470,6 +1470,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $q = array();
             $hasmark = false;
             $data["CODE"] = addslashes($data["CODE"]);
+            if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'tsakonas') {
+                unset($data["REMARKS"]);
+            }            
             foreach ($data as $identifier => $val) {
                 $imporetedData[strtolower($params["softone_object"] . "_" . $identifier)] = addslashes($val);
                 $ad = strtolower($identifier);
