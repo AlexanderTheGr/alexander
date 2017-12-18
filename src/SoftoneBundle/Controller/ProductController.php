@@ -1285,23 +1285,28 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $this->setSetting("SoftoneBundle:Product:retrieveMtrl", serialize($params));
         }
 
-        $this->retrieveProduct($params);
+        //$this->retrieveProduct($params);
         //echo 'ss';
-        $params["fSQL"] = "SELECT VARCHAR05, MTRL FROM MTREXTRA WHERE VARCHAR05 != ''";
+        $params["fSQL"] = "SELECT VARCHAR05,VARCHAR01, MTRL FROM MTREXTRA WHERE VARCHAR05 != ''";
         $softone = new Softone();
         $datas = $softone->createSql($params);
         echo count($datas->data);
         //print_r($datas->data);
         foreach ((array) $datas->data as $data) {
             if ((int) $data->VARCHAR05 > 0) {
-                $sql = 'update `softone_product` set `catalogue` =  "' . (int) $data->VARCHAR05 . '" where reference = "' . $data->MTRL . '"';
-                echo $sql . "<BR>";
-                $this->getDoctrine()->getConnection()->exec($sql);
+                //$sql = 'update `softone_product` set `catalogue` =  "' . (int) $data->VARCHAR05 . '" where reference = "' . $data->MTRL . '"';
+                //echo $sql . "<BR>";
+                //$this->getDoctrine()->getConnection()->exec($sql);
             }
+            if ((int) $data->VARCHAR01 != "") {
+                $sql = 'update `softone_product` set `item_remarks` =  "' . addslashes($data->VARCHAR01) . '" where reference = "' . $data->MTRL . '"';
+                echo $sql . "<BR>";
+                //$this->getDoctrine()->getConnection()->exec($sql);
+            }            
         }
 
 
-        //exit;
+        exit;
         $sql = 'update `softone_product` set `tecdoc_supplier_id` =  `item_mtrmark` where tecdoc_supplier_id is null';
         $this->getDoctrine()->getConnection()->exec($sql);
 
