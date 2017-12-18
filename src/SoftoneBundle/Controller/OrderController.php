@@ -1068,7 +1068,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 }
                 $json[4] = $obj->getArticleAttributes2($articleIds2["linkingTargetId"]);
                 if ($model_str) {
-                    $json[5] = $model_str;
+                    $json[5] = "[".$model_str."]";
                 }
                 $json[6] = $pricer;
                 ;
