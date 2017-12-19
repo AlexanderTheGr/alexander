@@ -1410,7 +1410,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         ini_set('memory_limit', '12256M');
 
         echo count($datas->data);
-        print_r($datas);
+        //print_r($datas);
         echo "<BR>";
         //exit;
         foreach ((array) $datas->data as $data) {
@@ -1507,7 +1507,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     //$entity->setField($baz, $val);
                 }
             }
-            //print_r($data);
+            print_r($data);
+            echo "<BR><BR>";
+            
             if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
                 
                 if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
