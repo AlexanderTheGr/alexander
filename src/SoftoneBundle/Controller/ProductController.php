@@ -1409,7 +1409,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         };
         ini_set('memory_limit', '12256M');
 
-        echo count($datas->data);
+        echo "<BR>".count($datas->data)."<BR>";
         //print_r($datas);
         echo "<BR>";
         //exit;
@@ -1420,6 +1420,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //exit;
             //echo $data["MTRL"]."<BR>";
             //if ($i++ > 230) continue;
+            
             print_r($data);
             echo "<BR><BR>";            
             $entity = $this->getDoctrine()
