@@ -2109,6 +2109,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $orderItem->setRemarks($brands[0]["model_str"]);
                     //$this->flushpersist($order);
                 }
+            } else {
+                $orderItem->setRemarks($product->getRemarks());
             }
         } else {
             $qty = $orderItem->getQty();
