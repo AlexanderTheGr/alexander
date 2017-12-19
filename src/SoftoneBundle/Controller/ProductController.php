@@ -1267,7 +1267,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 } else {
                     $extra["foxline"] = array("CCCFXRELTDCODE" => "CCCFXRELTDCODE", "CCCFXRELBRAND" => "CCCFXRELBRAND");
                 }
-                $extra["foxline"] = array(); //array("CCCFXRELTDCODE" => "CCCFXRELTDCODE");
+                $extra["foxline"] = array("CCCFXRELTDCODE" => "CCCFXRELTDCODE");
                 $params["filter"] = 'WHERE M.SODTYPE=51 ' . $where;
                 $params["extra"] = $this->getSetting("SoftoneBundle:Softone:merchant") ? $extra[$this->getSetting("SoftoneBundle:Softone:merchant")] : array("cccRef" => "cccRef", "cccWebUpd" => "cccWebUpd", "cccPriceUpd" => "cccPriceUpd");
             }
