@@ -1529,16 +1529,16 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     //if (addslashes($data["CCCFXRELBRAND"]) != '')
                     //	$q[] = "`" . strtolower($params["softone_object"] . "_mtrmanfctr") . "` = '" . addslashes($data["CCCFXRELBRAND"]) . "'";
                 } else {
-                    if (addslashes($data["CCCFXTDBRAND"]) != '') {
-                        $data["CCCFXRELBRAND"] = $data["CCCFXTDBRAND"];
-                    }
+                    //if (addslashes($data["CCCFXTDBRAND"]) != '') {
+                    //    $data["CCCFXRELBRAND"] = $data["CCCFXTDBRAND"];
+                    //}
                     //$extra["foxline"] = array("CCCFXRELTDCODE" => "CCCFXRELTDCODE", "CCCFXRELBRAND" => "CCCFXRELBRAND"); 
 
                     if (addslashes($data["CCCFXRELTDCODE"]) != '')
                     //if (addslashes($data["CCCFXRELTDCODE"]) != '')
                         $q[] = "`" . strtolower($params["softone_object"] . "_apvcode") . "` = '" . addslashes($data["CCCFXRELTDCODE"]) . "'";
 
-                    if (addslashes($data["CCCFXRELBRAND"]) != '' AND $hasmark == false) {
+                    if (addslashes($data["CCCFXRELBRAND"]) != '') {
                         $q[] = "`" . strtolower($params["softone_object"] . "_mtrmark") . "` = '" . addslashes($data["CCCFXRELBRAND"]) . "'";
                         echo "<BR><BR><BR>----------<BR><BR>";
                     }
