@@ -1222,7 +1222,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline' OR $this->getSetting("SoftoneBundle:Softone:merchant") == 'gianop') {
             //$MTRL = 263528;
-            $MTRL1 = 192513;
+            $MTRL1 = 0;
             $MTRL2 = 277976;
             $UPDDATE = date("-1 week");
         }
@@ -1419,7 +1419,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //echo "<BR>";
             //exit;
             //echo $data["MTRL"]."<BR>";
-            //if ($i++ < 23000) continue;
+            if ($i++ > 230) continue;
             print_r($data);
             echo "<BR><BR>";            
             $entity = $this->getDoctrine()
