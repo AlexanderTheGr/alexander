@@ -1420,6 +1420,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //exit;
             //echo $data["MTRL"]."<BR>";
             //if ($i++ < 23000) continue;
+            print_r($data);
+            echo "<BR><BR>";            
             $entity = $this->getDoctrine()
                     ->getRepository($this->repository)
                     ->findOneBy(array("reference" => (int) $data["MTRL"]));
@@ -1507,8 +1509,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     //$entity->setField($baz, $val);
                 }
             }
-            print_r($data);
-            echo "<BR><BR>";
+
             
             if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
                 
