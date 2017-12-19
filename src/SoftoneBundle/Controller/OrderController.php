@@ -2110,7 +2110,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     //$this->flushpersist($order);
                 }
             } else {
-                $orderItem->setRemarks($product->getRemarks());
+                //$orderItem->setRemarks($product->getRemarks());
             }
         } else {
             $qty = $orderItem->getQty();
