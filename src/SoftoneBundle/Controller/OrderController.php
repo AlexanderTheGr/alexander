@@ -2359,7 +2359,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $customer->setCustomerIrsdata($data[22]);
                         $customer->setCustomerVatsts(1);
                         $this->flushpersist($customer);
-                        $customer->toSoftone();
+                        //$customer->toSoftone();
                     }
                     $vat = $this->getDoctrine()
                             ->getRepository("SoftoneBundle:Vat")
