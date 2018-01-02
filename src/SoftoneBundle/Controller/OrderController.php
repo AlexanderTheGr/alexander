@@ -2304,7 +2304,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     if (!$customer) {
                         $customer = new Customer;
                         $customerCode = (int) $this->getSetting("SoftoneBundle:Customer:customerCode");
-                        $entity->setField("customerCode", str_pad($customerCode, 7, "0", STR_PAD_LEFT));
+                        $customer->setField("customerCode", str_pad($customerCode, 7, "0", STR_PAD_LEFT));
                         $customerCode++;
                         $this->setSetting("SoftoneBundle:Customer:customerCode", $customerCode);
                         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
