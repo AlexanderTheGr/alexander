@@ -2303,6 +2303,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $customer = $this->getDoctrine()
                         ->getRepository("SoftoneBundle:Customer")
                         ->findOneByEmail($data[11]);
+                
                 if ($order)
                 if ($order->getReference() > 0) {
                     continue;
