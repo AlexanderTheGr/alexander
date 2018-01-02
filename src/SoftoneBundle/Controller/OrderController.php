@@ -2378,6 +2378,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     if ($order->getReference() > 0) {
                         continue;
                     }
+                    $user = $this->getDoctrine()
+                            ->getRepository("AppBundle:User")
+                            ->find(10);
                     $order->setUser($user);
                     $order->setCustomerName($data[10] . "(" . $data[19] . " - " . $customer->getCustomerCode() . ")");
                     $this->flushpersist($order);
