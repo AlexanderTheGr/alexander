@@ -2368,22 +2368,24 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $order->setSeries(7021);
                     $this->flushpersist($order);
                 }
+
+                $product = $this->getDoctrine()
+                        ->getRepository('SoftoneBundle:Product')
+                        ->findOneByItemCode2($data[6]);
+                if (!$product) {
+                    continue;
+                }
+
+                $orderItem = new Orderitem;
+                $orderItem->setOrder($entity);
+                $orderItem->setPrice($data[7]);
+                $orderItem->setDisc1prc(0);
+                $orderItem->setLineval($data[9]);
+                $orderItem->setQty((int) $data[5]);
+                $orderItem->setChk(1);
+                $orderItem->setProduct($product);
+                $this->flushpersist($orderItem);
             }
-            $product = $this->getDoctrine()
-                    ->getRepository('SoftoneBundle:Product')
-                    ->findOneByItemCode2($data[6]);
-            if (!$product)
-                continue;
-            
-            $orderItem = new Orderitem;
-            $orderItem->setOrder($entity);
-            $orderItem->setPrice($data[7]);
-            $orderItem->setDisc1prc(0);
-            $orderItem->setLineval($data[9]);
-            $orderItem->setQty((int)$data[5]);
-            $orderItem->setChk(1);
-            $orderItem->setProduct($product);
-            $this->flushpersist($orderItem);
         }
     }
 
