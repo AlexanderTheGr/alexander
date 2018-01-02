@@ -2370,6 +2370,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $order->setFincode($data[0]);
                     $order->setSeries(7021);
                     $this->flushpersist($order);
+                } else {
+                    $order->setCustomerName($data[10]);
+                    $this->flushpersist($order);
                 }
 
                 $product = $this->getDoctrine()
