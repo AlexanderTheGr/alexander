@@ -2299,7 +2299,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 }
                 $order = $this->getDoctrine()
                         ->getRepository("SoftoneBundle:Order")
-                        ->findOneByFincode($data[0]);                
+                        ->findOneByFincode($data[0]);
                 $customer = $this->getDoctrine()
                         ->getRepository("SoftoneBundle:Customer")
                         ->findOneByEmail($data[11]);
@@ -2328,16 +2328,16 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                             $customer->setCustomerPayment(1000);
                             $customer->setCustomerTrdcategory(3099);
                             $customer->setSoftoneStore($store);
-
-                            $customer->setSoftoneStore($store);
                             $customer->setEmail($data[11]);
                             $customer->setCustomerEmail($data[11]);
                             $customer->setCustomerAddress($data[12]);
                             $customer->setCustomerCity($data[13]);
                             $customer->setCustomerZip($data[15]);
                             $customer->setCustomerName($data[10]);
-                            $customer->setCustomerAfm($data[19] ? $data[19] : 1);
-                            $customer->setCustomerIrsdata($data[20]);
+                            $customer->setCustomerPhone01($data[17]);
+                            $customer->setCustomerPhone01($data[18]);
+                            $customer->setCustomerAfm($data[21] ? $data[21] : 1);
+                            $customer->setCustomerIrsdata($data[22]);
                             $customer->setCustomerVatsts(1);
                             $this->flushpersist($customer);
                             $customer->toSoftone();
@@ -2347,13 +2347,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $customer->setCustomerCity($data[13]);
                         $customer->setCustomerZip($data[15]);
                         $customer->setCustomerName($data[10]);
-                        $customer->setCustomerAfm($data[19] ? $data[19] : 1);
-                        $customer->setCustomerIrsdata($data[20]);
+                        $customer->setCustomerPhone01($data[17]);
+                        $customer->setCustomerPhone01($data[18]);
+                        $customer->setCustomerAfm($data[21] ? $data[21] : 1);
+                        $customer->setCustomerIrsdata($data[22]);
                         $customer->setCustomerVatsts(1);
                         $this->flushpersist($customer);
                         $customer->toSoftone();
                     }
-
                     $vat = $this->getDoctrine()
                             ->getRepository("SoftoneBundle:Vat")
                             ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
@@ -2381,6 +2382,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $user = $this->getDoctrine()
                             ->getRepository("AppBundle:User")
                             ->find(10);
+
                     $order->setUser($user);
                     $order->setCustomerName($data[10] . "(" . $data[19] . " - " . $customer->getCustomerCode() . ")");
                     $this->flushpersist($order);
