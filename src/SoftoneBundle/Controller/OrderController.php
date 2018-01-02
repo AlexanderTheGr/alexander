@@ -2334,6 +2334,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                             $customer->setCustomerName($data[10]);
                             $customer->setCustomerAfm($data[19] ? $data[19] : 1);
                             $customer->setCustomerIrsdata($data[20]);
+                            $customer->setCustomerVatsts(1);
                             $this->flushpersist($customer);
                             $customer->toSoftone();
                         }
@@ -2344,9 +2345,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $customer->setCustomerName($data[10]);
                         $customer->setCustomerAfm($data[19] ? $data[19] : 1);
                         $customer->setCustomerIrsdata($data[20]);
+                        $customer->setCustomerVatsts(1);
                         $this->flushpersist($customer);
                         $customer->toSoftone();
                     }
+                    
                     $vat = $this->getDoctrine()
                             ->getRepository("SoftoneBundle:Vat")
                             ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
@@ -2377,7 +2380,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 }
 
                 $orderItem = new Orderitem;
-                $orderItem->setOrder($entity);
+                $orderItem->setOrder($order);
                 $orderItem->setPrice($data[7]);
                 $orderItem->setDisc1prc(0);
                 $orderItem->setLineval($data[9]);
