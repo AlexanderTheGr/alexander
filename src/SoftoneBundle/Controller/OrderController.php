@@ -112,7 +112,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $html .= '<tr><th>Διεύθυνση</th><td>' . $order->getCustomer()->getCustomerAddress() . '</td>';
         $html .= '<tr><th>Πόλη</th><td>' . $order->getCustomer()->getCustomerCity() . '</td>';
         $html .= '<tr><th>ΤΚ</th><td>' . $order->getCustomer()->getCustomerZip() . '</td>';
-        $html .= '<tr><th>Τηλέφωνο</th><td>' . $order->getCustomer()->getCustomerPhone01() . '</td>';
+        $html .= '<tr><th>Τηλέφωνο 1</th><td>' . $order->getCustomer()->getCustomerPhone01() . '</td>';
+        $html .= '<tr><th>Τηλέφωνο 2</th><td>' . $order->getCustomer()->getCustomerPhone02() . '</td>';
 
         $html .= '<tr><th>Σχόλια</th><td>' . $order->getRemarks() . '</td>';
         $html .= '<tr><th>Χρήστης</th><td>' . $order->getUser()->getUsername() . '</td>';
