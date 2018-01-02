@@ -2357,6 +2357,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $user = $this->getDoctrine()
                             ->getRepository("AppBundle:User")
                             ->find(2);
+                    $route = $this->getDoctrine()
+                            ->getRepository("SoftoneBundle:Route")
+                            ->find(1);
+                    $order->setRoute($route);
                     $order->setCustomer($customer);
                     $order->setUser($user);
                     $order->setSoftoneStore($store);
