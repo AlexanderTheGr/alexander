@@ -2284,7 +2284,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function readInvoiceFile() {
         $d = date("dmy");
-        echo "/home2/partsbox/public_html/partsbox.com/infocus/orderProds_".$d.".csv";
+        //echo "/home2/partsbox/public_html/partsbox.com/infocus/orderProds_".$d.".csv";
         //exit;
         //$file = "/home2/partsbox/public_html/partsbox.com/infocus/orderProds_191217.csv";
         $availability = false;
