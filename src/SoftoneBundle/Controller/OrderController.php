@@ -2296,14 +2296,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 foreach ($data as $key => $value) {
                     $data[$key] = iconv("ISO-8859-7", "UTF-8", $value);
                 }
+                $customer = $this->getDoctrine()
+                        ->getRepository("SoftoneBundle:Customer")
+                        ->findOneByEmail($data[11]);
                 if (!$order) {
                     $order = new Order;
                     $this->newentity[$this->repository] = $order;
                     $this->initialazeNewEntity($order);
 
-                    $customer = $this->getDoctrine()
-                            ->getRepository("SoftoneBundle:Customer")
-                            ->findOneByEmail($data[11]);
                     if (!$customer) {
                         $customer = new Customer;
                         $customerCode = (int) $this->getSetting("SoftoneBundle:Customer:customerCode");
@@ -2371,7 +2371,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $order->setSeries(7021);
                     $this->flushpersist($order);
                 } else {
-                    $order->setCustomerName($data[10] ."(".$data[19]." - ".$customer->getCustomerCode().")");
+                    $order->setCustomerName($data[10] . "(" . $data[19] . " - " . $customer->getCustomerCode() . ")");
                     $this->flushpersist($order);
                 }
 
@@ -2386,7 +2386,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $this->getDoctrine()->getConnection()->exec($sql);
                     $ord[$order->getId()] = true;
                 }
-                
+
                 $orderItem = new Orderitem;
                 $orderItem->setOrder($order);
                 $orderItem->setPrice($data[7]);
