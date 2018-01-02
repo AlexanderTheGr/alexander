@@ -2349,7 +2349,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $this->flushpersist($customer);
                         $customer->toSoftone();
                     }
-                    
+
                     $vat = $this->getDoctrine()
                             ->getRepository("SoftoneBundle:Vat")
                             ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
@@ -2381,7 +2381,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 if (!$product) {
                     continue;
                 }
-
+                if ($order->getReference() == 0 AND $ord[$order->getId()] == false) {
+                    $sql = "delete from softone_orderitem where s_order = '" . $order->getId() . "'";
+                    $this->getDoctrine()->getConnection()->exec($sql);
+                    $ord[$order->getId()] = true;
+                }
+                
                 $orderItem = new Orderitem;
                 $orderItem->setOrder($order);
                 $orderItem->setPrice($data[7]);
