@@ -2286,7 +2286,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $d = date("dmy");
         //echo "/home2/partsbox/public_html/partsbox.com/infocus/orderProds_".$d.".csv";
         //exit;
-        $file = "/home2/partsbox/public_html/partsbox.com/infocus/orderProds_".$d.".csv";
+        $file = "/home2/partsbox/public_html/partsbox.com/infocus/orderProds_" . $d . ".csv";
         $availability = false;
         $inv = array();
         if (($handle = fopen($file, "r")) !== FALSE) {
@@ -2303,52 +2303,33 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $customer = $this->getDoctrine()
                         ->getRepository("SoftoneBundle:Customer")
                         ->findOneByEmail($data[11]);
-                
-                if ($order)
-                if ($order->getReference() > 0) {
-                    continue;
-                }
-                
-                if (!$order) {
-                    $order = new Order;
-                    $this->newentity[$this->repository] = $order;
-                    $this->initialazeNewEntity($order);
 
-                    if (!$customer) {
-                        $customer = new Customer;
-                        $customerCode = (int) $this->getSetting("SoftoneBundle:Customer:customerCode");
-                        $customer->setField("customerCode", str_pad($customerCode, 7, "0", STR_PAD_LEFT));
-                        $customerCode++;
-                        $this->setSetting("SoftoneBundle:Customer:customerCode", $customerCode);
-                        if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
-                            $store = $this->getDoctrine()
-                                    ->getRepository("SoftoneBundle:Store")
-                                    ->find(2);
-                            $customergroup = $this->getDoctrine()->getRepository("SoftoneBundle:Customergroup")->find(3);
-                            $dt = new \DateTime("now");
-                            $customer->setTs($dt);
-                            $customer->setCreated($dt);
-                            $customer->setModified($dt);
-                            $customer->setCustomergroup($customergroup);
-                            $customer->setPriceField("itemPricer");
-                            $customer->setCustomerPayment(1000);
-                            $customer->setCustomerTrdcategory(3099);
-                            $customer->setSoftoneStore($store);
-                            $customer->setEmail($data[11]);
-                            $customer->setCustomerEmail($data[11]);
-                            $customer->setCustomerAddress($data[12]);
-                            $customer->setCustomerCity($data[13]);
-                            $customer->setCustomerZip($data[15]);
-                            $customer->setCustomerName($data[10]);
-                            $customer->setCustomerPhone01($data[17]);
-                            $customer->setCustomerPhone02($data[18]);
-                            $customer->setCustomerAfm($data[21] ? $data[21] : 1);
-                            $customer->setCustomerIrsdata($data[22]);
-                            $customer->setCustomerVatsts(1);
-                            $this->flushpersist($customer);
-                            $customer->toSoftone();
-                        }
-                    } else {
+                if ($order)
+                    if ($order->getReference() > 0) {
+                        continue;
+                    }
+                if (!$customer) {
+                    $customer = new Customer;
+                    $customerCode = (int) $this->getSetting("SoftoneBundle:Customer:customerCode");
+                    $customer->setField("customerCode", str_pad($customerCode, 7, "0", STR_PAD_LEFT));
+                    $customerCode++;
+                    $this->setSetting("SoftoneBundle:Customer:customerCode", $customerCode);
+                    if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
+                        $store = $this->getDoctrine()
+                                ->getRepository("SoftoneBundle:Store")
+                                ->find(2);
+                        $customergroup = $this->getDoctrine()->getRepository("SoftoneBundle:Customergroup")->find(3);
+                        $dt = new \DateTime("now");
+                        $customer->setTs($dt);
+                        $customer->setCreated($dt);
+                        $customer->setModified($dt);
+                        $customer->setCustomergroup($customergroup);
+                        $customer->setPriceField("itemPricer");
+                        $customer->setCustomerPayment(1000);
+                        $customer->setCustomerTrdcategory(3099);
+                        $customer->setSoftoneStore($store);
+                        $customer->setEmail($data[11]);
+                        $customer->setCustomerEmail($data[11]);
                         $customer->setCustomerAddress($data[12]);
                         $customer->setCustomerCity($data[13]);
                         $customer->setCustomerZip($data[15]);
@@ -2361,6 +2342,26 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $this->flushpersist($customer);
                         $customer->toSoftone();
                     }
+                } else {
+                    $customer->setCustomerAddress($data[12]);
+                    $customer->setCustomerCity($data[13]);
+                    $customer->setCustomerZip($data[15]);
+                    $customer->setCustomerName($data[10]);
+                    $customer->setCustomerPhone01($data[17]);
+                    $customer->setCustomerPhone02($data[18]);
+                    $customer->setCustomerAfm($data[21] ? $data[21] : 1);
+                    $customer->setCustomerIrsdata($data[22]);
+                    $customer->setCustomerVatsts(1);
+                    $this->flushpersist($customer);
+                    $customer->toSoftone();
+                }
+
+                if (!$order) {
+                    $order = new Order;
+                    $this->newentity[$this->repository] = $order;
+                    $this->initialazeNewEntity($order);
+
+
                     $vat = $this->getDoctrine()
                             ->getRepository("SoftoneBundle:Vat")
                             ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
