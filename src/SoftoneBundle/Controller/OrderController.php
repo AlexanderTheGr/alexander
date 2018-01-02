@@ -2277,6 +2277,93 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
+    
+    /**
+     * @Route("/order/readInvoices")
+     */
+    public function readInvoiceFile() {
+
+        $file = "/home2/partsbox/public_html/partsbox.com/infocus/orderProds_191217.csv";
+        $availability = false;
+        $inv = array();
+        if (($handle = fopen($file, "r")) !== FALSE) {
+            fgetcsv($handle, 1000000, ";");
+            while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
+                $order = $this->getDoctrine()
+                        ->getRepository("SoftoneBundle:Order")
+                        ->findOneByFincode($data[0]);
+                if (!$order) {
+                    $order = new Order;
+                    $this->newentity[$this->repository] = $order;
+                    $this->initialazeNewEntity($order);
+
+                    $customer = $this->getDoctrine()
+                            ->getRepository("SoftoneBundle:Customer")
+                            ->findOneByEmail($data[11]);
+                    if (!$customer) {
+                        $customer = new Customer;
+                        $customerCode = (int) $this->getSetting("SoftoneBundle:Customer:customerCode");
+                        $entity->setField("customerCode", str_pad($customerCode, 7, "0", STR_PAD_LEFT));
+                        $customerCode++;
+                        $this->setSetting("SoftoneBundle:Customer:customerCode", $customerCode);
+                        if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
+                            $store = $this->getDoctrine()
+                                    ->getRepository("SoftoneBundle:Store")
+                                    ->find(2);
+                            $customergroup = $this->getDoctrine()->getRepository("SoftoneBundle:Customergroup")->find(3);
+                            $customer->setCustomergroup($customergroup);
+                            $customer->setPriceField("itemPricer");
+                            $customer->setCustomerPayment(1000);
+                            $customer->setCustomerTrdcategory(3099);
+                            $customer->setSoftoneStore($store);
+
+                            $customer->setSoftoneStore($store);
+                            $customer->setEmail($data[11]);
+                            $customer->setCustomerEmail($data[11]);
+                            $customer->setCustomerAddress($data[12]);
+                            $customer->setCustomerCity($data[13]);
+                            $customer->setCustomerZip($data[15]);
+                            $customer->setCustomerName($data[10]);
+                            $customer->setCustomerAfm($data[19] ? $data[19] : 1);
+                            $customer->setCustomerIrsdata($data[20]);
+                            $this->flushpersist($customer);
+                            $customer->toSoftone();
+                        }
+                    }
+                    $vat = $this->getDoctrine()
+                            ->getRepository("SoftoneBundle:Vat")
+                            ->findOneBy(array('enable' => 1, 'id' => $customer->getCustomerVatsts()));
+
+                    $store = $this->getDoctrine()
+                            ->getRepository("SoftoneBundle:Store")
+                            ->find(1);
+                    $user = $this->getDoctrine()
+                            ->getRepository("AppBundle:User")
+                            ->find(2);
+                    $order->setCustomer($customer);
+                    $order->setUser($user);
+                    $order->setSoftoneStore($store);
+                    $order->setFincode($data[0]);
+                    $order->setSeries(7021);
+                    $this->flushpersist($order);
+                }
+            }
+            $product = $this->getDoctrine()
+                    ->getRepository('SoftoneBundle:Product')
+                    ->findOneByItemCode2($data[6]);
+            if (!$product)
+                return;
+            $orderItem = new Orderitem;
+            $orderItem->setOrder($entity);
+            $orderItem->setPrice($data[7]);
+            $orderItem->setDisc1prc(0);
+            $orderItem->setLineval($data[9]);
+            $orderItem->setQty($data[5]);
+            $orderItem->setChk(1);
+            $orderItem->setProduct($product);
+            $this->flushpersist($orderItem);            
+        }
+    }
 
     /**
      * @Route("/order/setb2border")
@@ -2291,6 +2378,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $ord = $order["SALDOC"][0];
         if (!$ord["ID"])
             exit;
+
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->findOneByReference($ord["TRDR"]);
@@ -2316,12 +2404,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         }
 
 
-        $entity->setCustomer($customer);
-        $entity->setUser($user);
-        $entity->setSoftoneStore($store);
-        $entity->setReference($ord["ID"]);
-        $entity->setFincode($ord["FINCODE"]);
-        $entity->setSeries($ord["SERIES"]);
+
 
         $entity->setRemarks($ord["REMARKS"]);
         $entity->setComments($ord["COMMENTS"]);
