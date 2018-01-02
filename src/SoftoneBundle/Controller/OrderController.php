@@ -14,6 +14,7 @@ use AppBundle\Entity\Tecdoc as Tecdoc;
 use EdiBundle\Entity\EdiItem;
 use EdiBundle\Entity\Edi;
 use SoftoneBundle\Entity\Reportmodel as Reportmodel;
+use SoftoneBundle\Entity\Customer as Customer;
 
 class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
