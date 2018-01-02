@@ -2373,7 +2373,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     ->getRepository('SoftoneBundle:Product')
                     ->findOneByItemCode2($data[6]);
             if (!$product)
-                return;
+                continue;
+            
             $orderItem = new Orderitem;
             $orderItem->setOrder($entity);
             $orderItem->setPrice($data[7]);
