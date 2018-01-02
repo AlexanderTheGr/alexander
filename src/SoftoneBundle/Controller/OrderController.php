@@ -2283,19 +2283,23 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/order/readInvoices")
      */
     public function readInvoiceFile() {
-
+        $d = date("dmy");
+        echo "/home2/partsbox/public_html/partsbox.com/infocus/orderProds_".$d.".csv";
+        exit;
         $file = "/home2/partsbox/public_html/partsbox.com/infocus/orderProds_191217.csv";
         $availability = false;
         $inv = array();
         if (($handle = fopen($file, "r")) !== FALSE) {
             fgetcsv($handle, 1000000, ";");
             while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
-                $order = $this->getDoctrine()
-                        ->getRepository("SoftoneBundle:Order")
-                        ->findOneByFincode($data[0]);
+                if ($data[0] == "INVOICE_No")
+                    continue;
                 foreach ($data as $key => $value) {
                     $data[$key] = iconv("ISO-8859-7", "UTF-8", $value);
                 }
+                $order = $this->getDoctrine()
+                        ->getRepository("SoftoneBundle:Order")
+                        ->findOneByFincode($data[0]);                
                 $customer = $this->getDoctrine()
                         ->getRepository("SoftoneBundle:Customer")
                         ->findOneByEmail($data[11]);
