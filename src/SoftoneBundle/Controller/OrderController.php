@@ -2341,7 +2341,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                             $customer->setCustomerZip($data[15]);
                             $customer->setCustomerName($data[10]);
                             $customer->setCustomerPhone01($data[17]);
-                            $customer->setCustomerPhone01($data[18]);
+                            $customer->setCustomerPhone02($data[18]);
                             $customer->setCustomerAfm($data[21] ? $data[21] : 1);
                             $customer->setCustomerIrsdata($data[22]);
                             $customer->setCustomerVatsts(1);
@@ -2354,7 +2354,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $customer->setCustomerZip($data[15]);
                         $customer->setCustomerName($data[10]);
                         $customer->setCustomerPhone01($data[17]);
-                        $customer->setCustomerPhone01($data[18]);
+                        $customer->setCustomerPhone02($data[18]);
                         $customer->setCustomerAfm($data[21] ? $data[21] : 1);
                         $customer->setCustomerIrsdata($data[22]);
                         $customer->setCustomerVatsts(1);
