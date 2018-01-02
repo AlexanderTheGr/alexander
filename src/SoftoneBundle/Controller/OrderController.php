@@ -2373,7 +2373,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $order->setUser($user);
                     $order->setSoftoneStore($store);
                     $order->setFincode($data[0]);
-                    $order->setSeries(7021);
+                    $order->setSeries(7023);
                     $this->flushpersist($order);
                 } else {
                     if ($order->getReference() > 0) {
