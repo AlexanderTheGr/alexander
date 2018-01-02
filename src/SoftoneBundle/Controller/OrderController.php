@@ -2278,7 +2278,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $json, 200, array('Content-Type' => 'application/json')
         );
     }
-    
+
     /**
      * @Route("/order/readInvoices")
      */
@@ -2312,6 +2312,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                     ->getRepository("SoftoneBundle:Store")
                                     ->find(2);
                             $customergroup = $this->getDoctrine()->getRepository("SoftoneBundle:Customergroup")->find(3);
+                            $dt = new \DateTime("now");
+                            $customer->setTs($dt);
+                            $customer->setCreated($dt);
+                            $customer->setModified($dt);
                             $customer->setCustomergroup($customergroup);
                             $customer->setPriceField("itemPricer");
                             $customer->setCustomerPayment(1000);
@@ -2362,7 +2366,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $orderItem->setQty($data[5]);
             $orderItem->setChk(1);
             $orderItem->setProduct($product);
-            $this->flushpersist($orderItem);            
+            $this->flushpersist($orderItem);
         }
     }
 
