@@ -2293,6 +2293,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $order = $this->getDoctrine()
                         ->getRepository("SoftoneBundle:Order")
                         ->findOneByFincode($data[0]);
+                foreach ($data as $key => $value) {
+                    $data[$key] = iconv("ISO-8859-7", "UTF-8", $value);
+                }
                 if (!$order) {
                     $order = new Order;
                     $this->newentity[$this->repository] = $order;
@@ -2334,6 +2337,15 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                             $this->flushpersist($customer);
                             $customer->toSoftone();
                         }
+                    } else {
+                        $customer->setCustomerAddress($data[12]);
+                        $customer->setCustomerCity($data[13]);
+                        $customer->setCustomerZip($data[15]);
+                        $customer->setCustomerName($data[10]);
+                        $customer->setCustomerAfm($data[19] ? $data[19] : 1);
+                        $customer->setCustomerIrsdata($data[20]);
+                        $this->flushpersist($customer);
+                        $customer->toSoftone();
                     }
                     $vat = $this->getDoctrine()
                             ->getRepository("SoftoneBundle:Vat")
