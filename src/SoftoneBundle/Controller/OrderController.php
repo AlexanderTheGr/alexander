@@ -2284,8 +2284,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function readInvoiceFile() {
         $d = date("dmy");
-        echo "/home2/partsbox/public_html/partsbox.com/infocus/orderProds_".$d.".csv";
-        exit;
+        //echo "/home2/partsbox/public_html/partsbox.com/infocus/orderProds_".$d.".csv";
+        //exit;
         $file = "/home2/partsbox/public_html/partsbox.com/infocus/orderProds_191217.csv";
         $availability = false;
         $inv = array();
@@ -2363,7 +2363,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                             ->find(1);
                     $user = $this->getDoctrine()
                             ->getRepository("AppBundle:User")
-                            ->find(2);
+                            ->find(10);
                     $route = $this->getDoctrine()
                             ->getRepository("SoftoneBundle:Route")
                             ->find(1);
@@ -2378,6 +2378,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     if ($order->getReference() > 0) {
                         continue;
                     }
+                    $order->setUser($user);
                     $order->setCustomerName($data[10] . "(" . $data[19] . " - " . $customer->getCustomerCode() . ")");
                     $this->flushpersist($order);
                 }
