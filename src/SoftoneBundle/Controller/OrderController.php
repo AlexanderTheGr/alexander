@@ -2371,6 +2371,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $order->setSeries(7021);
                     $this->flushpersist($order);
                 } else {
+                    if ($order->getReference() > 0) {
+                        continue;
+                    }
                     $order->setCustomerName($data[10] . "(" . $data[19] . " - " . $customer->getCustomerCode() . ")");
                     $this->flushpersist($order);
                 }
