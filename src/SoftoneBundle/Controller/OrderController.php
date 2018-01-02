@@ -49,6 +49,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function indexAction() {
         $this->setfullytrans();
+        $this->readInvoiceFile();
         return $this->render('SoftoneBundle:Order:index.html.twig', array(
                     'pagename' => 'Orders',
                     'url' => '/order/getdatatable',
