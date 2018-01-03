@@ -2373,6 +2373,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             exit;
         }
     }
+    
     /**
      * 
      * 
@@ -2397,6 +2398,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             exit;
         }
     }
+    
+    
     
     /**
      * 
