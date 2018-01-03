@@ -2313,7 +2313,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                             ->findOneByEmail($data[11]);
 
                     if ($order)
-                        if ($order->getReference() > 0) {
+                        if ($order->getReference() > 0 OR $order->getIsnew() == 0) {
                             continue;
                         }
                     if (!$customer) {
@@ -2369,7 +2369,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                             ->getRepository("SoftoneBundle:Order")
                             ->findOneByFincode($data[0]);
                     if ($order)
-                        if ($order->getReference() > 0) {
+                        if ($order->getReference() > 0 OR $order->getIsnew() == 0) {
                             continue;
                         }                    
                     if (!$order) {
