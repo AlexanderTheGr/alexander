@@ -2313,7 +2313,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                     if ($order)
                         if ($order->getReference() > 0) {
-                            continue;
+                            //continue;
                         }
                     if (!$customer) {
                         $customer = new Customer;
@@ -2369,7 +2369,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                             ->findOneByFincode($data[0]);
                     if ($order)
                         if ($order->getReference() > 0) {
-                            continue;
+                            //continue;
                         }                    
                     if (!$order) {
                         $order = new Order;
