@@ -2287,11 +2287,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/order/readInvoices")
      */
     public function readInvoiceFile() {
-        $d = date("dmy");
+        $d = "020118";//date("dmy");
         //echo "/home2/partsbox/public_html/partsbox.com/infocus/orderProds_".$d.".csv";
         //exit;
         $vat = 1.24;
         $file = "/home2/partsbox/public_html/partsbox.com/infocus/orderProds_" . $d . ".csv";
+        //$file = "/home2/partsbox/public_html/partsbox.com/infocus/orderProds_" . $d . ".csv";
         $availability = false;
         $inv = array();
         if (file_exists($file))
