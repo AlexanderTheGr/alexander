@@ -49,7 +49,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function indexAction() {
         $this->setfullytrans();
-        //$this->readInvoiceFile();
+        $this->readInvoiceFile();
         return $this->render('SoftoneBundle:Order:index.html.twig', array(
                     'pagename' => 'Orders',
                     'url' => '/order/getdatatable',
@@ -2300,8 +2300,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     if ($data[0] == "INVOICE_No")
                         continue;
                     foreach ($data as $key => $value) {
-                        $data[$key] = iconv("ISO-8859-7", "UTF-8", $value);
+                        $data[$key] = iconv("ISO-8859-7", "UTF-8", trim($value));
                     }
+                    $order = false;
                     $order = $this->getDoctrine()
                             ->getRepository("SoftoneBundle:Order")
                             ->findOneByFincode($data[0]);
