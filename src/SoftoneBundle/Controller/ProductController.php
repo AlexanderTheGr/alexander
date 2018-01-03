@@ -2373,7 +2373,31 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             exit;
         }
     }
-
+    /**
+     * 
+     * 
+     * @Route("/product/getProductSales")
+     */
+    public function getProductSales(Request $request) {
+        //echo 'ssss';
+        $allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
+        $allowedipsArr = explode(",", $allowedips);
+        if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
+            $sql = "SELECT id FROM  `softone_product` where product_sale > 1";
+            $connection = $this->getDoctrine()->getConnection();
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            $results = $statement->fetchAll();
+            $json = json_encode($results);
+            return new Response(
+                    $json, 200, array('Content-Type' => 'application/json')
+            );
+        } else {
+            //   
+            exit;
+        }
+    }
+    
     /**
      * 
      * 
