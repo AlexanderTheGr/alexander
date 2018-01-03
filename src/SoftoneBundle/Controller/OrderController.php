@@ -2287,7 +2287,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/order/readInvoices")
      */
     public function readInvoiceFile() {
-        $d = "020118";//date("dmy");
+        $d = date("dmy");
         //echo "/home2/partsbox/public_html/partsbox.com/infocus/orderProds_".$d.".csv";
         //exit;
         $vat = 1.24;
@@ -2314,7 +2314,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                     if ($order)
                         if ($order->getReference() > 0) {
-                            //continue;
+                            continue;
                         }
                     if (!$customer) {
                         $customer = new Customer;
@@ -2370,7 +2370,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                             ->findOneByFincode($data[0]);
                     if ($order)
                         if ($order->getReference() > 0) {
-                            //continue;
+                            continue;
                         }                    
                     if (!$order) {
                         $order = new Order;
