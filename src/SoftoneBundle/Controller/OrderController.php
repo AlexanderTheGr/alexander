@@ -2290,6 +2290,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $d = date("dmy");
         //echo "/home2/partsbox/public_html/partsbox.com/infocus/orderProds_".$d.".csv";
         //exit;
+        $vat = 1.24;
         $file = "/home2/partsbox/public_html/partsbox.com/infocus/orderProds_" . $d . ".csv";
         $availability = false;
         $inv = array();
@@ -2424,7 +2425,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                     $orderItem = new Orderitem;
                     $orderItem->setOrder($order);
-                    $orderItem->setPrice($data[7]);
+                    $orderItem->setPrice($data[7]*1.24);
                     $orderItem->setDisc1prc(0);
                     $orderItem->setLineval($data[9]);
                     $orderItem->setQty((int) $data[5]);
