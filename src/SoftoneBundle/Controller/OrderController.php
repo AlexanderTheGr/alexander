@@ -2366,6 +2366,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $order = $this->getDoctrine()
                             ->getRepository("SoftoneBundle:Order")
                             ->findOneByFincode($data[0]);
+                    if ($order)
+                        if ($order->getReference() > 0) {
+                            continue;
+                        }                    
                     if (!$order) {
                         $order = new Order;
                         $this->newentity[$this->repository] = $order;
