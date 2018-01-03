@@ -2384,7 +2384,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                         $store = $this->getDoctrine()
                                 ->getRepository("SoftoneBundle:Store")
-                                ->find(1);
+                                ->find(2);
                         $user = $this->getDoctrine()
                                 ->getRepository("AppBundle:User")
                                 ->find(10);
@@ -2406,7 +2406,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $user = $this->getDoctrine()
                                 ->getRepository("AppBundle:User")
                                 ->find(10);
-
+                        $store = $this->getDoctrine()
+                                ->getRepository("SoftoneBundle:Store")
+                                ->find(2);
+                        $order->setSoftoneStore($store);
                         $order->setUser($user);
                         $order->setCustomerName($data[10] . "(" . $data[19] . " - " . $customer->getCustomerCode() . ")");
                         $this->flushpersist($order);
