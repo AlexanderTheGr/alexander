@@ -2363,7 +2363,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $this->flushpersist($customer);
                         //$customer->toSoftone();
                     }
-
+                    $order = $this->getDoctrine()
+                            ->getRepository("SoftoneBundle:Order")
+                            ->findOneByFincode($data[0]);
                     if (!$order) {
                         $order = new Order;
                         $this->newentity[$this->repository] = $order;
