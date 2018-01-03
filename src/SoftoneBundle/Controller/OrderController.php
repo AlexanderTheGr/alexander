@@ -2393,6 +2393,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 ->find(1);
                         $order->setRoute($route);
                         $order->setCustomer($customer);
+                        $order->setPayment(1000);
                         $order->setUser($user);
                         $order->setSoftoneStore($store);
                         $order->setFincode($data[0]);
@@ -2409,6 +2410,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $store = $this->getDoctrine()
                                 ->getRepository("SoftoneBundle:Store")
                                 ->find(2);
+                        $order->setPayment(1000);
                         $order->setSoftoneStore($store);
                         $order->setUser($user);
                         $order->setCustomerName($data[10] . "(" . $data[19] . " - " . $customer->getCustomerCode() . ")");
