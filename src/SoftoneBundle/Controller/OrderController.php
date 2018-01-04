@@ -504,7 +504,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
     function getCustomerDetails($entity) {
         $customer = $entity->getCustomer();
-        $html = "<table>";
+        $html = "<a target='_blanc' href='/customer/view/".$customer->getId()."'>Καρτέλα Πελάτη</a>";
+        $html .= "<table>";
         $html .= "<tr><th>" . $this->getTranslation("Customer Code") . ": </th><td>" . $customer->getCustomerCode() . "</td></tr>";
         $html .= "<tr><th>" . $this->getTranslation("Customer Name") . ": </th><td>" . $customer->getCustomerName() . "</td></tr>";
         $html .= "<tr><th>" . $this->getTranslation("Customer Afm") . ": </th><td>" . $customer->getCustomerAfm() . "</td></tr>";
