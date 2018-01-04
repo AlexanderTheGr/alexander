@@ -2435,6 +2435,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $orderItem->setPrice($data[7]*1.24);
                     $orderItem->setDisc1prc(0);
                     $orderItem->setLineval($data[9]);
+                    $orderItem->setRemarks($data[4]);
                     $orderItem->setQty((int) $data[5]);
                     $orderItem->setChk(1);
                     $orderItem->setProduct($product);
