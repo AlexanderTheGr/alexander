@@ -572,7 +572,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
      */
     function retrieveSoftoneData($params = array()) {
 
-        //$this->retrieveCustomer();
+        $this->retrieveCustomer();
         //$em = $this->getDoctrine()->getManager();
 
         /*
@@ -594,7 +594,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
           }
          * 
          */
-        //exit;
+        exit;
 
         $params["list"] = 'partsbox';
 
