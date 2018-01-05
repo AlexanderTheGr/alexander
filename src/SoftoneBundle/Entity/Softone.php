@@ -142,19 +142,21 @@ class Softone extends Entity {
         ini_set('memory_limit', '2048M');
         $data_string = json_encode($data);
 
-        //echo $data_string."<BR>"; 
+        echo $data_string."<BR>"; 
         //exit;
-        //echo $requerstUrl."<BR>";
+        echo $requerstUrl."<BR>";
       
         $result = file_get_contents($requerstUrl, null, stream_context_create(array(
             'http' => array(
                 'method' => 'POST',
                 'header' =>
                 'Content-Type: application/json' . "\r\n"
+                . 'Content-Length: ' . strlen('') . "\r\n",
+                'content' => '',
             ),
         )));
         echo $result;
-        exit;
+        
         if (@$result1 = gzdecode($result)) {
             $result = iconv("ISO-8859-7", "UTF-8", $result1);
         } else {
