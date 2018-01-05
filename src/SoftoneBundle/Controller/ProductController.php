@@ -2106,27 +2106,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") != 'tsakonas')
             return;
 
-        if ($zip->open('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/OUTOFSTOCK_ALL.ZIP') === TRUE) {
-            echo 'sssss';
-            $zip->extractTo('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/');
-            $zip->close();
-            $file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/OUTOFSTOCK_ALL.txt";
-            $availability = false;
-            if (($handle = fopen($file, "r")) !== FALSE) {
-                //echo 'sss';
-                $sql = "update partsbox_db.edi_item set gbg1 = '0', gbg2 = '0', gbg3 = '0' where edi = 11";
-                $em->getConnection()->exec($sql);
-                while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
-                    //echo "aa";
-                    if ($data[1] > 0 OR $data[2] > 0 OR $data[3] > 0) {
-                        $sql = "update partsbox_db.edi_item set gbg1 = '" . $data[1] . "', gbg2 = '" . $data[2] . "', gbg2 = '" . $data[3] . "' where edi = 11 and itemcode = '" . $data[0] . "'";
-                        //echo $sql . "<BR>";
-                        //if ($i++ > 100) exit;
-                        $em->getConnection()->exec($sql);
-                    }
-                }
-            }
-        }
+
         //return;
         if ($zip->open('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/OUTOFSTOCK_ATH_KAR.ZIP') === TRUE) {
             //echo 'sssss';
@@ -2137,21 +2117,64 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             if (($handle = fopen($file, "r")) !== FALSE) {
                 //echo 'sss';
                 $sql = "update softone_product set gbg = '0'";
+                
                 echo $sql . "<BR>";
                 //if ($i++ > 100) exit;
                 $em->getConnection()->exec($sql);
+                $sql = "update partsbox_db.edi_item set gbg1 = '0' where edi = 11";
+                $em->getConnection()->exec($sql);                
                 while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
-                    $gbg = ($data[1] + $data[2]) * 10;
+                    $gbg = ($data[1]) * 10;
                     if ($gbg > 0) {
                         $sql = "update softone_product set gbg = '" . $gbg . "' where item_code2 = '" . $data[0] . "'";
-                        //echo $sql . "<BR>";
-                        //if ($i++ > 100) exit;
+                        $em->getConnection()->exec($sql);
+                        $sql = "update partsbox_db.edi_item set gbg1 = '" . $gbg . "' where edi = 11 and itemcode = '" . $data[0] . "'";
                         $em->getConnection()->exec($sql);
                     }
                 }
             }
         }
-
+        
+        //return;
+        if ($zip->open('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/OUTOFSTOCK_ATH_ALL.ZIP') === TRUE) {
+            //echo 'sssss';
+            $zip->extractTo('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/');
+            $zip->close();
+            $file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/OUTOFSTOCK_ATH_ALL.txt";
+            $availability = false;
+            if (($handle = fopen($file, "r")) !== FALSE) {
+                $sql = "update partsbox_db.edi_item set gbg2 = '0' where edi = 11";
+                $em->getConnection()->exec($sql);                
+                while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
+                    $gbg = ($data[1]) * 10;
+                    if ($gbg > 0) {
+                        $sql = "update partsbox_db.edi_item set gbg2 = '" . $gbg . "' where edi = 11 and itemcode = '" . $data[0] . "'";
+                        $em->getConnection()->exec($sql);
+                    }
+                }
+            }
+        }
+        
+        //return;
+        if ($zip->open('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/OUTOFSTOCK_ATH_LIOS.ZIP') === TRUE) {
+            //echo 'sssss';
+            $zip->extractTo('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/');
+            $zip->close();
+            $file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/OUTOFSTOCK_ATH_LIOS.txt";
+            $availability = false;
+            if (($handle = fopen($file, "r")) !== FALSE) {
+                $sql = "update partsbox_db.edi_item set gbg3 = '0' where edi = 11";
+                $em->getConnection()->exec($sql);                
+                while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
+                    $gbg = ($data[1]) * 10;
+                    if ($gbg > 0) {
+                        $sql = "update partsbox_db.edi_item set gbg3 = '" . $gbg . "' where edi = 11 and itemcode = '" . $data[0] . "'";
+                        $em->getConnection()->exec($sql);
+                    }
+                }
+            }
+        }
+        
 
         $time_elapsed_secs = microtime(true) - $start;
         echo "<BR>[" . $time_elapsed_secs . "]";
