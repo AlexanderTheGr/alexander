@@ -139,7 +139,7 @@ class Softone extends Entity {
         ini_set('memory_limit', '2048M');
         $data_string = json_encode($data);
 
-        //echo $data_string."<BR>"; 
+        echo $data_string."<BR>"; 
         //exit;
         //echo $requerstUrl."<BR>";
         echo  strlen($data_string)."<BR>";
