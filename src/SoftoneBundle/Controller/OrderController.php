@@ -504,7 +504,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
     function getCustomerDetails($entity) {
         $customer = $entity->getCustomer();
-        $html = "<a target='_blanc' href='/customer/view/".$customer->getId()."'>Καρτέλα Πελάτη</a>";
+        $html = "<a target='_blanc' href='/customer/view/" . $customer->getId() . "'>Καρτέλα Πελάτη</a>";
         $html .= "<table>";
         $html .= "<tr><th>" . $this->getTranslation("Customer Code") . ": </th><td>" . $customer->getCustomerCode() . "</td></tr>";
         $html .= "<tr><th>" . $this->getTranslation("Customer Name") . ": </th><td>" . $customer->getCustomerName() . "</td></tr>";
@@ -1277,7 +1277,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             //$objectArr[0]["ACNMSK"] = $order->getUser()->getUsername();
             $objectArr[0]["VARCHAR01"] = $order->getUser()->getUsername();
-            $objectArr[0]["INT01"] = $order->getUser()->getReference();
+            //$objectArr[0]["INT01"] = $order->getUser()->getReference();
             $objectArr[0]["SHIPMENT"] = $order->getShipment();
         }
         $objectArr[0]["SERIES"] = $order->getSoftoneStore()->getSeries();
@@ -2372,7 +2372,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     if ($order)
                         if ($order->getReference() > 0 OR $order->getIsnew() == 0) {
                             continue;
-                        }                    
+                        }
                     if (!$order) {
                         $order = new Order;
                         $this->newentity[$this->repository] = $order;
@@ -2432,7 +2432,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                     $orderItem = new Orderitem;
                     $orderItem->setOrder($order);
-                    $orderItem->setPrice($data[7]*1.24);
+                    $orderItem->setPrice($data[7] * 1.24);
                     $orderItem->setDisc1prc(0);
                     $orderItem->setLineval($data[9]);
                     $orderItem->setRemarks($data[4]);
