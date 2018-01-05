@@ -128,6 +128,17 @@ class Softone extends Entity {
         return $this->doRequest($params,$this->requerstUrl."/JS/SiteData.Items/createSql");
     }
     
+    function createSql2($params) {
+        $params = array(
+            "clientID" => $this->authenticateClientID,
+            "appId" => $this->appId,
+            "OBJECT" => "Items",
+			"fSQL"=> $params["fSQL"]
+        );
+        echo $this->requerstUrl."/JS/SiteData.Items/createSql";
+        return $this->doRequest($params,$this->requerstUrl."/JS/SiteData.Items/createSql");
+    }  
+    
     function getCustomItems($params) {
         $params = array(
             "clientID" => $this->authenticateClientID,
