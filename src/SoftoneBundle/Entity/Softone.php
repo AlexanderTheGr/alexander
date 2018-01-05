@@ -134,15 +134,33 @@ class Softone extends Entity {
         //echo $this->requerstUrl."/JS/SiteData.Items/createSql";
         return $this->doRequest2($params, $this->requerstUrl . "/JS/SiteData.Items/createSql2");
     }
+
     function doRequest2($data, $requerstUrl = false) {
         $requerstUrl = $requerstUrl ? $requerstUrl : $this->requerstUrl;
         ini_set('memory_limit', '2048M');
         $data_string = json_encode($data);
 
-        echo $data_string."<BR>"; 
+
+
+        //$data_string = json_encode($data);
+
+        $ch = curl_init($requerstUrl);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data_string))
+        );
+
+        $result = curl_exec($ch);
+        echo $result;
+        exit;
+        
+        echo $data_string . "<BR>";
         //exit;
         //echo $requerstUrl."<BR>";
-        echo  strlen($data_string)."<BR>";
+        echo strlen($data_string) . "<BR>";
         $result = file_get_contents($requerstUrl, null, stream_context_create(array(
             'http' => array(
                 'method' => 'POST',
@@ -154,6 +172,8 @@ class Softone extends Entity {
         )));
         echo $result;
         exit;
+
+
         if (@$result1 = gzdecode($result)) {
             $result = iconv("ISO-8859-7", "UTF-8", $result1);
         } else {
@@ -162,8 +182,7 @@ class Softone extends Entity {
         $result = str_replace("	", "", $result);
         return json_decode($result);
     }
-    
-    
+
     function getCustomItems($params) {
         $params = array(
             "clientID" => $this->authenticateClientID,
