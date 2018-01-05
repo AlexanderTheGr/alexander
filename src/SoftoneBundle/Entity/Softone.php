@@ -144,6 +144,10 @@ class Softone extends Entity {
 
         echo $requerstUrl."<BR>";
 
+        $result111 = file_get_contents($requerstUrl);
+        echo $result111;
+        exit;
+        
         $result = file_get_contents($requerstUrl, null, stream_context_create(array(
             'http' => array(
                 'method' => 'POST',
