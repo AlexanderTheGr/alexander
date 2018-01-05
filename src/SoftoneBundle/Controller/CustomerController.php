@@ -572,8 +572,18 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/customer/retrieve")
      */
     function retrieveSoftoneData($params = array()) {
-
-        $this->retrieveCustomer();
+        $params["fSQL"] =  "SELECT M.TRDR FROM TRDR M";
+        //echo $params["fSQL"];
+        //$params["fSQL"] = 'SELECT M.* FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
+        //echo "<BR>";
+        //echo $params["fSQL"];
+        //echo "<BR>";
+        //print_r($params);
+        $softone = new Softone();
+        $datas = $softone->createSql2($params);
+        print_r($datas);
+        
+       // $this->retrieveCustomer();
         //$em = $this->getDoctrine()->getManager();
 
         /*
