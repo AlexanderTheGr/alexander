@@ -116,9 +116,9 @@ class EdiOrderController extends Main {
         $dataarray[] = array("value" => "14", "name" => "14");
         $dataarray[] = array("value" => "15", "name" => "15");
 
-        $dataarray[] = array("value" => "qty1", "name" => "qty1");
-        $dataarray[] = array("value" => "qty2", "name" => "qty2");
-        $dataarray[] = array("value" => "qty3", "name" => "qty3");
+        $dataarray[] = array("value" => "qty1", "name" => "ΚΑΡΠΟΥ");
+        $dataarray[] = array("value" => "qty2", "name" => "ΚΟΡΩΠΙ");
+        $dataarray[] = array("value" => "qty3", "name" => "ΛΙΟΣΙΩΝ");
 
         //$tabfields["PurchaseOrderNo"] = array("label" => "Purchase Order No","value"=>1);
         $tabfields["remarks"] = array("label" => "Remarks");
