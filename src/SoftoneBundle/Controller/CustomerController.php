@@ -572,8 +572,8 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
      */
     function retrieveSoftoneData($params = array()) {
 
-        $this->retrieveCustomer();
-        $em = $this->getDoctrine()->getManager();
+        //$this->retrieveCustomer();
+        //$em = $this->getDoctrine()->getManager();
 
         /*
           $sql = "SELECT * FROM IRSDATA";
@@ -594,7 +594,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
           }
          * 
          */
-        exit;
+        //exit;
 
         $params["list"] = 'partsbox';
 
@@ -607,7 +607,8 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $date = "2016-02-01";
         $filters = "CUSTOMER.UPDDATE=" . $date . "&CUSTOMER.UPDDATE_TO=" . date("Y-m-d");
         $datas = $softone->retrieveData($params["softone_object"], $params["list"], $filters);
-
+        print_r($datas);
+        exit;
 
         foreach ($datas as $data) {
             break;
