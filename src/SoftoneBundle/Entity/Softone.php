@@ -128,9 +128,6 @@ class Softone extends Entity {
 
     function createSql2($params) {
         $params = array(
-            "clientID" => $this->authenticateClientID,
-            "appId" => $this->appId,
-            "OBJECT" => "Items",
             "fSQL" => $params["fSQL"]
         );
         //print_r($params);
