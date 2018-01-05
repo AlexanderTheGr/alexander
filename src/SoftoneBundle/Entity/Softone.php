@@ -153,7 +153,7 @@ class Softone extends Entity {
             ),
         )));
         echo $result;
-        
+        exit;
         if (@$result1 = gzdecode($result)) {
             $result = iconv("ISO-8859-7", "UTF-8", $result1);
         } else {
