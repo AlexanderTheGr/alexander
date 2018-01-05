@@ -2851,7 +2851,7 @@ class Product extends Entity {
                                 <td style="width:150px"><input type="text" data-order="' . $orderid . '" data-price="' . $pricef . '" data-id="' . $data['id'] . '" name="qty1_' . $data['id'] . '" value="0" size="2" id="qty1_' . $data['id'] . '" class="ediiteqty1"> <div class="SoftoneBundleGBGProductAdd" data-price="' . $pricef . '" data-qty="qty1" data-id="' . $data['id'] . '" style="width: 50%; float: right;"><div style="position: relative" class="gui-icon"><i class="md md-shopping-cart"></i><span class="title"><a target="_blank" href="#"></a></span></div></div> </td>    
                             </tr>';
                     $out .= '<tr>
-                                <td>' . $data["name"] . '</td>
+                                <td>' . $data["name"] . ' (ΚΟΡΩΠΙ)</td>
                                 <td>' . $data["itemcode"] . '</td>
                                 <td>' . $data["description"] . '</td>
                                 <td>' . $data["gbg2"] . '</td>
@@ -2859,7 +2859,7 @@ class Product extends Entity {
                                 <td style="width:150px"><input type="text" data-order="' . $orderid . '" data-price="' . $pricef . '" data-id="' . $data['id'] . '" name="qty2_' . $data['id'] . '" value="0" size="2" id="qty2_' . $data['id'] . '" class="ediiteqty1"> <div class="SoftoneBundleGBGProductAdd" data-price="' . $pricef . '" data-qty="qty2" data-id="' . $data['id'] . '" style="width: 50%; float: right;"><div style="position: relative" class="gui-icon"><i class="md md-shopping-cart"></i><span class="title"><a target="_blank" href="#"></a></span></div></div> </td>    
                             </tr>';
                     $out .= '<tr>
-                                <td>' . $data["name"] . '</td>
+                                <td>' . $data["name"] . ' (ΛΙΟΣΙΩΝ)</td>
                                 <td>' . $data["itemcode"] . '</td>
                                 <td>' . $data["description"] . '</td>
                                 <td>' . $data["gbg3"] . '</td>
