@@ -151,7 +151,7 @@ class Softone extends Entity {
                 'method' => 'POST',
                 'header' =>
                 'Content-Type: application/json' . "\r\n"
-                . 'Content-Length: ' . (strlen($data_string)+1) . "\r\n",
+                . 'Content-Length: ' . (strlen($data_string)) . "\r\n",
                 'content' => $data_string,
             ),
         )));
