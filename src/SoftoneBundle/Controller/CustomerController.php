@@ -446,7 +446,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $selfields = implode(",", $itemfield);
         $params["fSQL"] = 'SELECT ' . $selfields . ' FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
         $params["fSQL"] =  "SELECT M.TRDR FROM TRDR M";
-        echo $params["fSQL"];
+        //echo $params["fSQL"];
         //$params["fSQL"] = 'SELECT M.* FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
         //echo "<BR>";
         //echo $params["fSQL"];
