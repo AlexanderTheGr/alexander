@@ -456,7 +456,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $datas = $softone->createSql2($params);
         print_r($datas);
         //return;
-        //exit;
+        exit;
         $em = $this->getDoctrine()->getManager();
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
