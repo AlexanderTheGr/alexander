@@ -128,7 +128,7 @@ class Softone extends Entity {
 
     function createSql2($params) {
         $params = array(
-            "fSQL" => $params["fSQL"]
+            $params["fSQL"]
         );
         //print_r($params);
         //echo $this->requerstUrl."/JS/SiteData.Items/createSql";
