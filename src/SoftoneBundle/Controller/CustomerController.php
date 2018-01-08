@@ -452,7 +452,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         //echo "<BR>";
 
         $softone = new Softone();
-        $datas = $softone->createSql2($params);
+        $datas = $softone->createSql($params);
         //print_r($datas);
         //return;
         //exit;
