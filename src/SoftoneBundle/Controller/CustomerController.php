@@ -275,7 +275,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $fields["customerZip"] = array("label" => $this->getTranslation("Ταχυδρομικός Κώδικας"), "className" => "col-md-4", "required" => false);
 
         $fields["customerPhone01"] = array("label" => $this->getTranslation("Customer Phone 1"), "className" => "col-md-6", "required" => false);
-        $fields["customerPhone02"] = array("label" => $this->getTranslation("Customer Phone 2"), "className" => "col-md-6", "required" => false);
+        $fields["customerPhone02"] = array("label" => $this->getTranslation("Customer Phone 2"), "className" => "col-md-6",  "required" => false);
         $fields["customergroup"] = array("label" => $this->getTranslation("Customer Group"), "className" => "col-md-6", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:Customergroup', 'name' => 'title', 'value' => 'id'));
 
         //$fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
@@ -445,18 +445,17 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $itemfield[] = "M.ISACTIVE";
         $selfields = implode(",", $itemfield);
         $params["fSQL"] = 'SELECT ' . $selfields . ' FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
-        $params["fSQL"] =  "SELECT M.TRDR FROM TRDR M";
         //echo $params["fSQL"];
         //$params["fSQL"] = 'SELECT M.* FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
         //echo "<BR>";
         //echo $params["fSQL"];
         //echo "<BR>";
-        //print_r($params);
+
         $softone = new Softone();
-        $datas = $softone->createSql2($params);
-        print_r($datas);
+        $datas = $softone->createSql($params);
+        //print_r($datas);
         //return;
-        exit;
+        //exit;
         $em = $this->getDoctrine()->getManager();
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
@@ -572,19 +571,9 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/customer/retrieve")
      */
     function retrieveSoftoneData($params = array()) {
-        $params["fSQL"] =  "SELECT M.TRDR FROM TRDR M";
-        //echo $params["fSQL"];
-        //$params["fSQL"] = 'SELECT M.* FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
-        //echo "<BR>";
-        //echo $params["fSQL"];
-        //echo "<BR>";
-        //print_r($params);
-        $softone = new Softone();
-        $datas = $softone->createSql($params);
-        print_r($datas);
-        
-       // $this->retrieveCustomer();
-        //$em = $this->getDoctrine()->getManager();
+
+        $this->retrieveCustomer();
+        $em = $this->getDoctrine()->getManager();
 
         /*
           $sql = "SELECT * FROM IRSDATA";
@@ -618,8 +607,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $date = "2016-02-01";
         $filters = "CUSTOMER.UPDDATE=" . $date . "&CUSTOMER.UPDDATE_TO=" . date("Y-m-d");
         $datas = $softone->retrieveData($params["softone_object"], $params["list"], $filters);
-        print_r($datas);
-        exit;
+
 
         foreach ($datas as $data) {
             break;
