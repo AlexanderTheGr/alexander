@@ -133,34 +133,26 @@ class Softone extends Entity {
         //print_r($params);
         //echo $this->requerstUrl."/JS/SiteData.Items/createSql";
         //urlencode($str)
-        return $this->doRequest2($params, $this->requerstUrl . "/JS/SiteData.Items/createSql2?data=".urlencode($params["fSQL"]));
+        
+        return $this->doRequest2($params, $this->requerstUrl . "/JS/SiteData.Items/createSql2");
     }
 
     function doRequest2($data, $requerstUrl = false) {
         $requerstUrl = $requerstUrl ? $requerstUrl : $this->requerstUrl;
         ini_set('memory_limit', '2048M');
-        echo $requerstUrl;
-        $result = file_get_contents($requerstUrl);
-        echo $result;
-        exit;
-        
-        echo $data_string . "<BR>";
-        //exit;
-        //echo $requerstUrl."<BR>";
-        echo strlen($data_string) . "<BR>";
+        $data_string = json_encode($data);
+
+
+
         $result = file_get_contents($requerstUrl, null, stream_context_create(array(
             'http' => array(
                 'method' => 'POST',
                 'header' =>
                 'Content-Type: application/json' . "\r\n"
-                . 'Content-Length: ' . (strlen($data_string)) . "\r\n",
+                . 'Content-Length: ' . strlen($data_string) . "\r\n",
                 'content' => $data_string,
             ),
         )));
-        echo $result;
-        exit;
-
-
         if (@$result1 = gzdecode($result)) {
             $result = iconv("ISO-8859-7", "UTF-8", $result1);
         } else {
