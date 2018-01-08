@@ -1240,10 +1240,15 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";
                 //$where = " AND UPDDATE = '" . date("Y-m-d") . "'";
             } else {
-                $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "' ORDER BY MTRL";
-                $MTRL1 = 10000;
-                $MTRL2 = 30000;
-                $where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";
+                if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
+                    $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "' ORDER BY MTRL";
+                } else {
+
+                    $MTRL1 = 10000;
+                    $MTRL2 = 30000;
+
+                    $where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";
+                }
                 //$where = " AND INSDATE = '2017-03-01' ORDER BY MTRL";
             }
 
@@ -1280,9 +1285,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $params["extra"]["CCCFXRELTDCODE"] = "CCCFXRELTDCODE";
                 $params["extra"]["CCCFXRELBRAND"] = "CCCFXRELBRAND";
             }
-            
+
             $params["relation"]["reference"] = "MTRL";
-            
+
             $params["relation"]["erpCode"] = "CODE";
             $params["relation"]["supplierCode"] = "CODE2";
             $params["relation"]["title"] = "NAME";
@@ -1416,7 +1421,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         };
         ini_set('memory_limit', '12256M');
 
-        echo "<BR>".count($datas->data)."<BR>";
+        echo "<BR>" . count($datas->data) . "<BR>";
         //print_r($datas);
         echo "<BR>";
         //exit;
@@ -1427,9 +1432,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //exit;
             //echo $data["MTRL"]."<BR>";
             //if ($i++ > 230) continue;
-            
+
             print_r($data);
-            echo "<BR><BR>";            
+            echo "<BR><BR>";
             $entity = $this->getDoctrine()
                     ->getRepository($this->repository)
                     ->findOneBy(array("reference" => (int) $data["MTRL"]));
@@ -1482,7 +1487,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $data["CODE"] = addslashes($data["CODE"]);
             if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'tsakonas') {
                 unset($data["REMARKS"]);
-            }            
+            }
             foreach ($data as $identifier => $val) {
                 $imporetedData[strtolower($params["softone_object"] . "_" . $identifier)] = addslashes($val);
                 $ad = strtolower($identifier);
@@ -1518,9 +1523,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 }
             }
 
-            
+
             if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
-                
+
                 if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
                     $data["REMARKS"] = str_replace("\n", "|", $data["REMARKS"]);
                     $data["REMARKS"] = str_replace("\r", "|", $data["REMARKS"]);
@@ -1757,14 +1762,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $statement->execute();
             $results = $statement->fetchAll();
             /*
-            $sql = "Select p.id, p.title, p.erp_code from softone_product p where p.item_code in (select code from crossiaponiki where supplier_code like '" . $this->clearstring($_GET["term"]) . "%' OR ref like '" . $this->clearstring($_GET["term"]) . "%') OR p.item_code2 like '" . $this->clearstring($_GET["term"]) . "%' OR p.item_code like '" . $this->clearstring($_GET["term"]) . "%' OR p.item_apvcode like '" . $this->clearstring($_GET["term"]) . "%'";
-            $connection = $em->getConnection();
-            $statement = $connection->prepare($sql);
-            $statement->execute();
-            $results = $statement->fetchAll();
+              $sql = "Select p.id, p.title, p.erp_code from softone_product p where p.item_code in (select code from crossiaponiki where supplier_code like '" . $this->clearstring($_GET["term"]) . "%' OR ref like '" . $this->clearstring($_GET["term"]) . "%') OR p.item_code2 like '" . $this->clearstring($_GET["term"]) . "%' OR p.item_code like '" . $this->clearstring($_GET["term"]) . "%' OR p.item_apvcode like '" . $this->clearstring($_GET["term"]) . "%'";
+              $connection = $em->getConnection();
+              $statement = $connection->prepare($sql);
+              $statement->execute();
+              $results = $statement->fetchAll();
              * 
              */
-            
         } else {
             $query = $em->createQuery(
                     "SELECT  p.id, p.title, p.erpCode
@@ -2124,12 +2128,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             if (($handle = fopen($file, "r")) !== FALSE) {
                 //echo 'sss';
                 $sql = "update softone_product set gbg = '0'";
-                
+
                 echo $sql . "<BR>";
                 //if ($i++ > 100) exit;
                 $em->getConnection()->exec($sql);
                 $sql = "update partsbox_db.edi_item set gbg1 = '0' where edi = 11";
-                $em->getConnection()->exec($sql);                
+                $em->getConnection()->exec($sql);
                 while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
                     $gbg = ($data[1]) * 10;
                     if ($gbg > 0) {
@@ -2141,7 +2145,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 }
             }
         }
-        
+
         //return;
         if ($zip->open('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/OUTOFSTOCK_ATH_ALL.ZIP') === TRUE) {
             //echo 'sssss';
@@ -2151,7 +2155,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $availability = false;
             if (($handle = fopen($file, "r")) !== FALSE) {
                 $sql = "update partsbox_db.edi_item set gbg2 = '0' where edi = 11";
-                $em->getConnection()->exec($sql);                
+                $em->getConnection()->exec($sql);
                 while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
                     $gbg = ($data[1]) * 10;
                     if ($gbg > 0) {
@@ -2170,7 +2174,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $availability = false;
             if (($handle = fopen($file, "r")) !== FALSE) {
                 $sql = "update partsbox_db.edi_item set gbg3 = '0' where edi = 11";
-                $em->getConnection()->exec($sql);                
+                $em->getConnection()->exec($sql);
                 while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
                     $gbg = ($data[1]) * 10;
                     if ($gbg > 0) {
@@ -2180,7 +2184,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 }
             }
         }
-        
+
 
         $time_elapsed_secs = microtime(true) - $start;
         echo "<BR>[" . $time_elapsed_secs . "]";
@@ -2402,7 +2406,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             exit;
         }
     }
-    
+
     /**
      * 
      * 
@@ -2427,9 +2431,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             exit;
         }
     }
-    
-    
-    
+
     /**
      * 
      * 
