@@ -139,6 +139,7 @@ class Softone extends Entity {
     function doRequest2($data, $requerstUrl = false) {
         $requerstUrl = $requerstUrl ? $requerstUrl : $this->requerstUrl;
         ini_set('memory_limit', '2048M');
+        echo $requerstUrl;
         $result = file_get_contents($requerstUrl);
         echo $result;
         exit;
