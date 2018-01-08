@@ -132,18 +132,14 @@ class Softone extends Entity {
         );
         //print_r($params);
         //echo $this->requerstUrl."/JS/SiteData.Items/createSql";
-        return $this->doRequest2($params, $this->requerstUrl . "/JS/SiteData.Items/createSql2");
+        return $this->doRequest2($params, $this->requerstUrl . "/JS/SiteData.Items/createSql2?data=".$params["fSQL"]);
     }
 
     function doRequest2($data, $requerstUrl = false) {
         $requerstUrl = $requerstUrl ? $requerstUrl : $this->requerstUrl;
         ini_set('memory_limit', '2048M');
         $data_string = json_encode($data);
-
-
-
         //$data_string = json_encode($data);
-
         $ch = curl_init($requerstUrl);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
