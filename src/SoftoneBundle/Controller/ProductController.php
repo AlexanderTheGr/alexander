@@ -1386,7 +1386,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $softone = new Softone();
         $datas = $softone->createSql($params);
         echo count($datas->data);
-        print_r($datas);
+        //print_r($datas);
         //exit;
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
             echo "<PRE>";
