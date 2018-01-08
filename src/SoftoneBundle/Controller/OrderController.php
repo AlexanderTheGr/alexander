@@ -48,8 +48,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/order/order")
      */
     public function indexAction() {
+        
         $this->setfullytrans();
-        $this->readInvoiceFile();
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'tsakonas') {
+            $this->readInvoiceFile();
+        }
+        
         return $this->render('SoftoneBundle:Order:index.html.twig', array(
                     'pagename' => 'Orders',
                     'url' => '/order/getdatatable',
