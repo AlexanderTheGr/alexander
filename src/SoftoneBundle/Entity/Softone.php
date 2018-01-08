@@ -1,39 +1,41 @@
 <?php
 
 namespace SoftoneBundle\Entity;
-
 use AppBundle\Entity\Entity;
 
 class Softone extends Entity {
 
     var $authenticateClientID;
     var $loginClientID;
+    
+    
     var $appId = 0;
     var $username = '';
     var $password = '';
     var $requerstUrl = '';
-
+    
+    
     //var $requerstUrl = 'http://foxnet.oncloud.gr/s1services';
-
+	
 
     function __construct() {
         //session_start();
         $this->appId = $this->getSetting("SoftoneBundle:Softone:appId");
         $this->username = $this->getSetting("SoftoneBundle:Softone:username");
-        $this->password = $this->getSetting("SoftoneBundle:Softone:password");
+        $this->password  = $this->getSetting("SoftoneBundle:Softone:password");
         $this->requerstUrl = $this->getSetting("SoftoneBundle:Softone:requerstUrl");
-
+        
         $loginData = $this->login();
         $this->authenticate($loginData);
     }
 
     function login() {
-
+        
         //if ($_SESSION["logindata"]) {
-        //print_r($_SESSION["logindata"]);
-        //$data = $_SESSION["logindata"];
-        //$this->loginClientID = $data->clientID;
-        //return $data;  
+            //print_r($_SESSION["logindata"]);
+            //$data = $_SESSION["logindata"];
+            //$this->loginClientID = $data->clientID;
+            //return $data;  
         //}
 
 
@@ -49,12 +51,12 @@ class Softone extends Entity {
     }
 
     function authenticate($data) {
-
+        
         //if ($_SESSION["authenticatedata"]) {
-        //print_r($_SESSION["authenticatedata"]);
-        //  $data = $_SESSION["authenticatedata"];
-        // $this->authenticateClientID = $data->clientID;
-        // return $data;
+            //print_r($_SESSION["authenticatedata"]);
+          //  $data = $_SESSION["authenticatedata"];
+           // $this->authenticateClientID = $data->clientID;
+           // return $data;
         //}
 
 
@@ -121,69 +123,31 @@ class Softone extends Entity {
             "clientID" => $this->authenticateClientID,
             "appId" => $this->appId,
             "OBJECT" => "Items",
-            "fSQL" => $params["fSQL"]
+			"fSQL"=> $params["fSQL"]
         );
-        return $this->doRequest($params, $this->requerstUrl . "/JS/SiteData.Items/createSql");
+        return $this->doRequest($params,$this->requerstUrl."/JS/SiteData.Items/createSql");
     }
-
-    function createSql2($params) {
-        $params = array(
-            $params["fSQL"]
-        );
-        //print_r($params);
-        //echo $this->requerstUrl."/JS/SiteData.Items/createSql";
-        //urlencode($str)
-        
-        return $this->doRequest2($params, $this->requerstUrl . "/JS/SiteData.Items/createSql2");
-    }
-
-    function doRequest2($data, $requerstUrl = false) {
-        $requerstUrl = $requerstUrl ? $requerstUrl : $this->requerstUrl;
-        ini_set('memory_limit', '2048M');
-        $data_string = json_encode($data);
-
-
-
-        $result = file_get_contents($requerstUrl, null, stream_context_create(array(
-            'http' => array(
-                'method' => 'POST',
-                'header' =>
-                'Content-Type: application/json' . "\r\n"
-                . 'Content-Length: ' . strlen($data_string) . "\r\n",
-                'content' => $data_string,
-            ),
-        )));
-        if (@$result1 = gzdecode($result)) {
-            $result = iconv("ISO-8859-7", "UTF-8", $result1);
-        } else {
-            $result = iconv("ISO-8859-7", "UTF-8", $result);
-        }
-        $result = str_replace("	", "", $result);
-        return json_decode($result);
-    }
-
+    
     function getCustomItems($params) {
         $params = array(
             "clientID" => $this->authenticateClientID,
             "appId" => $this->appId,
             "OBJECT" => "Items",
-            "DateL" => $params["DateL"],
-            "DateH" => $params["DateH"]
+			"DateL"=> $params["DateL"],
+			"DateH"=> $params["DateH"]
         );
-        return $this->doRequest($params, $this->requerstUrl . "/JS/SiteData.Items/getItems");
-    }
-
-    function getCustomerAddresses($params = false) {
+        return $this->doRequest($params,$this->requerstUrl."/JS/SiteData.Items/getItems");
+    }	
+    function getCustomerAddresses($params=false) {
         $params = array(
             "clientID" => $this->authenticateClientID,
             "appId" => $this->appId,
             "OBJECT" => "Items",
-            "DateL" => $params["DateL"],
-            "DateH" => $params["DateH"]
+			"DateL"=> $params["DateL"],
+			"DateH"=> $params["DateH"]
         );
-        return $this->doRequest($params, $this->requerstUrl . "/JS/SiteData.Items/getAddresses");
-    }
-
+        return $this->doRequest($params,$this->requerstUrl."/JS/SiteData.Items/getAddresses");
+    }		
     function getDialog($obj, $list = "") {
         $params = array(
             "service" => "getDialog",
@@ -341,14 +305,15 @@ class Softone extends Entity {
         );
         return $this->doRequest($params);
     }
-
-    function doRequest($data, $requerstUrl = false) {
-        $requerstUrl = $requerstUrl ? $requerstUrl : $this->requerstUrl;
+	
+	
+    function doRequest($data,$requerstUrl=false) {
+		$requerstUrl = $requerstUrl ? $requerstUrl : $this->requerstUrl;
         ini_set('memory_limit', '2048M');
         $data_string = json_encode($data);
+		
 
-
-
+		
         $result = file_get_contents($requerstUrl, null, stream_context_create(array(
             'http' => array(
                 'method' => 'POST',
@@ -366,7 +331,7 @@ class Softone extends Entity {
         $result = str_replace("	", "", $result);
         return json_decode($result);
     }
-
+    
     function getManufactures($params = array()) {
         $params = array(
             "clientID" => $this->authenticateClientID,
@@ -376,20 +341,20 @@ class Softone extends Entity {
             "DateH" => $params["DateH"]
         );
         //return $this->doRequest($params, "http://bsautospare.oncloud.gr/s1services/JS/SiteData.Items/getManufactures");
-        $requerstUrl = $this->requerstUrl . "/JS/SiteData.Items/getManufactures";
+        $requerstUrl = $this->requerstUrl."/JS/SiteData.Items/getManufactures";
         ini_set('memory_limit', '2048M');
         $data_string = json_encode($params);
-
+		
         $result = @file_get_contents($requerstUrl, null, stream_context_create(array(
-                    'http' => array(
-                        'method' => 'POST',
-                        'header' =>
-                        'Content-Type: application/json' . "\r\n"
-                        . 'Content-Length: ' . strlen($data_string) . "\r\n",
-                        'content' => $data_string,
-                    ),
+            'http' => array(
+                'method' => 'POST',
+                'header' =>
+                'Content-Type: application/json' . "\r\n"
+                . 'Content-Length: ' . strlen($data_string) . "\r\n",
+                'content' => $data_string,
+            ),
         )));
-
+   
         if (@$result1 = gzdecode($result)) {
             //$result = iconv("ISO-8859-7", "UTF-8", $result1);
             $result = $result1;
@@ -397,10 +362,10 @@ class Softone extends Entity {
             //$result = iconv("ISO-8859-7", "UTF-8", $result);
             $result = $result;
         }
-        $result = iconv("WINDOWS-1252", "UTF-8", $result);
-        return json_decode($result);
+        $result =  iconv("WINDOWS-1252", "UTF-8", $result);
+        return json_decode($result);        
     }
-
+    
     function retrieveColumns($obj, $list = "") {
         $result = $this->getBrowserInfo($obj, $list);
         $out = array();
@@ -425,7 +390,7 @@ class Softone extends Entity {
 
     function retrieveData($obj, $list = "", $filters = "") {
         $fields = $this->getBrowserInfo($obj, $list, $filters);
-        foreach ((array) $fields->fields as $key => $field) {
+        foreach ((array)$fields->fields as $key => $field) {
             $fieldRow[$key] = str_replace(".", "_", strtolower($field->name));
         }
         $datas = $this->getBrowser($obj, $list, $filters);
