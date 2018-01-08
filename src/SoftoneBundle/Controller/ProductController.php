@@ -1242,7 +1242,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             } else {
                 $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "' ORDER BY MTRL";
                 $MTRL1 = 0;
-                $MTRL2 = 20000;
+                $MTRL2 = 10000;
                 $where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";
                 //$where = " AND INSDATE = '2017-03-01' ORDER BY MTRL";
             }
