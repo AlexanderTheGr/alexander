@@ -40,7 +40,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
 
         $query = $em->createQuery(
-                        "SELECT p.id, p.customerName,p.customerAfm,p.customerCode,p.status FROM " . $this->repository . " " . $this->prefix . " where p.customerName LIKE '%" . $_GET["term"] . "%' OR p.customerAfm LIKE '%" . $_GET["term"] . "%' OR p.customerCode LIKE '%" . $_GET["term"] . "%'"
+                        "SELECT p.id, p.customerName,p.customerAfm,p.customerCode,p.status FROM " . $this->repository . " " . $this->prefix . " where p.customerName LIKE '%" . $_GET["term"] . "%' OR p.customerPhone01 LIKE '%" . $_GET["term"] . "%' OR p.customerPhone02 LIKE '%" . $_GET["term"] . "%' OR p.customerAfm LIKE '%" . $_GET["term"] . "%' OR p.customerCode LIKE '%" . $_GET["term"] . "%'"
                 )
                 ->setMaxResults(20)
                 ->setFirstResult(0);
