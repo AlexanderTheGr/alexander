@@ -2315,7 +2315,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                             ->findOneByFincode($data[0]);
                     $customer = $this->getDoctrine()
                             ->getRepository("SoftoneBundle:Customer")
-                            ->findOneByEmail($data[11]);
+                            ->findOneByEmail($data[17]);
 
                     if ($order)
                         if ($order->getReference() > 0 OR $order->getIsnew() == 0) {
