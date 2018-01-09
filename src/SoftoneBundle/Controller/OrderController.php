@@ -518,6 +518,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $html .= "<tr><th>" . $this->getTranslation("Customer Occupation") . ": </th><td>" . $customer->getCustomerJobtypetrd() . "</td></tr>";
         $html .= "<tr><th>" . $this->getTranslation("Customer Address") . ": </th><td>" . $customer->getCustomerAddress() . "</td></tr>";
         $html .= "<tr><th>" . $this->getTranslation("Customer City") . ": </th><td>" . $customer->getCustomerCity() . "</td></tr>";
+        $html .= "<tr><th>" . $this->getTranslation("Customer Phone 2") . ": </th><td>" . $customer->getCustomerZip() . "</td></tr>";
         $html .= "<tr><th>" . $this->getTranslation("Customer Phone 1") . ": </th><td>" . $customer->getCustomerPhone01() . "</td></tr>";
         $html .= "<tr><th>" . $this->getTranslation("Customer Phone 2") . ": </th><td>" . $customer->getCustomerPhone02() . "</td></tr>";
         $html .= "</table>";
