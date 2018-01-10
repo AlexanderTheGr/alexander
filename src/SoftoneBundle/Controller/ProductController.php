@@ -658,7 +658,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
             $fields["erpSupplier"] = array("label" => $this->getTranslation("New Supplier"), "required" => false, "className" => "col-md-3");
 
-            $fields["supplierCode"] = array("label" => $this->getTranslation("Supplier Code"), "className" => "col-md-3", "required" => true);
+            $fields["supplierCode"] = array("label" => $this->getTranslation("Κωδικός Εργοστασίου"), "className" => "col-md-3", "required" => true);
 
 
 
@@ -703,13 +703,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $fields["tecdocCode"] = array("label" => $this->getTranslation("Tecdoc Code"), "required" => false, "className" => "col-md-6");
 
 
-            $fields["supplierId"] = array("label" => $this->getTranslation("Supplier"), "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
+            $fields["supplierId"] = array("label" => $this->getTranslation("Εργοστάσιο"), "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
 
             //$fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'dataarray' => $supplierId);
 
             $fields["erpSupplier"] = array("label" => $this->getTranslation("New Supplier"), "required" => false, "className" => "col-md-3");
 
-            $fields["supplierCode"] = array("label" => $this->getTranslation("Supplier Code"), "className" => "col-md-3", "required" => true);
+            $fields["supplierCode"] = array("label" => $this->getTranslation("Κωδικός Εργοστασίου"), "className" => "col-md-3", "required" => true);
 
 
 
