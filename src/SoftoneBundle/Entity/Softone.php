@@ -125,7 +125,7 @@ class Softone extends Entity {
         );
         return $this->doRequest($params, $this->requerstUrl . "/JS/SiteData.Items/createSql");
     }
-    
+
     function createSql2($params) {
         $params = array(
             "clientID" => $this->authenticateClientID,
@@ -135,6 +135,7 @@ class Softone extends Entity {
         );
         return $this->doRequest2($params, $this->requerstUrl . "/JS/SiteData.Items/createSql");
     }
+
     function doRequest2($data, $requerstUrl = false) {
         $requerstUrl = $requerstUrl ? $requerstUrl : $this->requerstUrl;
         ini_set('memory_limit', '2048M');
@@ -151,18 +152,20 @@ class Softone extends Entity {
                 'content' => $data_string,
             ),
         )));
-        
+
         if (@$result1 = gzdecode($result)) {
-            echo $result1;
             $result = iconv("ISO-8859-7", "UTF-8", $result1);
-            
+            if (!$result)
+                $result = $result1;
         } else {
             $result = iconv("ISO-8859-7", "UTF-8", $result);
+            if (!$result)
+                $result = $result1;            
         }
         $result = str_replace("	", "", $result);
         return json_decode($result);
     }
-    
+
     function getCustomItems($params) {
         $params = array(
             "clientID" => $this->authenticateClientID,
