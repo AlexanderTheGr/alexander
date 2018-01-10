@@ -162,8 +162,8 @@ class Softone extends Entity {
             if (!$result)
                 $result = $result1;            
         }
-        echo $result;
-        $result = str_replace("	", "", $result);
+        //echo $result;
+        $result = str_replace("�", "", $result);
         print_r(json_decode($result));
         
         return json_decode($result);
