@@ -1803,7 +1803,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         return str_replace("\n", "", trim($tmpl));
         return $response;
     }
-
     /**
      * @Route("/order/getdatatable")
      */
