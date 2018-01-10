@@ -334,6 +334,16 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
             $priceField[] = array("value" => "itemPricer04", "name" => "Λιανική 4");
             $priceField[] = array("value" => "itemPricew04", "name" => "Χονδρική 4");
+            $customerTrdcategory[] = array("value" => "3000", "name" => "Πελάτες Εσωτερικού Με Κανονικό Φ.Π.Α.");
+            $customerTrdcategory[] = array("value" => "3001", "name" => "Πελάτες Εσωτερικού Με Μειωμένο Φ.Π.Α.");
+            $customerTrdcategory[] = array("value" => "3002", "name" => "Πελάτες Εξωτερικού Τ.Χ");
+            $customerTrdcategory[] = array("value" => "3003", "name" => "Πελάτες Εξωτερικού ΕΕ");
+            $customerTrdcategory[] = array("value" => "3004", "name" => "Πελάτες Εσωτερικού Απαλλασόμενοι Φ.Π.Α.");
+            $customerTrdcategory[] = array("value" => "3005", "name" => "ΝΠΔΔ");
+            $customerTrdcategory[] = array("value" => "3099", "name" => "Πελάτες Λιανικής");
+            $fields["customerTrdcategory"] = array("label" => $this->getTranslation("Λογιστική Καταγορία"), "className" => "col-md-3", 'type' => "select", 'dataarray' => $customerTrdcategory, "required" => false);
+            $fields["softoneStore"] = array("label" => $this->getTranslation("Σειρά"), "className" => "col-md-3", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Store', 'name' => 'title', 'value' => 'id'));
+            
         }
 
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
