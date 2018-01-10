@@ -252,6 +252,8 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
                 $entity->setCustomerTrdcategory(3099);
                 $entity->setSoftoneStore($store);
             } else {
+                $entity->setCustomerPayment(1000);
+                $entity->setCustomerTrdcategory(3000);
                 $entity->setPriceField("itemPricer");
             }
             $code = $this->getSetting("SoftoneBundle:Customer:CodeIncrement");
