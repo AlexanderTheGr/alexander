@@ -2291,8 +2291,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
                 if ($data["item_soreserved"] > 0) {
                     $reserveds[$data["item_soreserved"]][] = $data["reference"];
-                    //$sql = "update softone_product set reserved = '" . $data["item_soreserved"] . "' where reference = '" . $data["reference"] . "'";
-                    //echo $sql . "<BR>";					
+                    $sql = "update softone_product set reserved = '" . $data["item_soreserved"] . "' where reference = '" . $data["reference"] . "'";
+                    echo $sql . "<BR>";					
                 }
                 $qtys[$data["item_v1"]][] = $data["reference"];
                 //}
