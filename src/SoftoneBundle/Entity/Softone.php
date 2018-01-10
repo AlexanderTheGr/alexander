@@ -163,6 +163,7 @@ class Softone extends Entity {
                 $result = $result1;            
         }
         $result = str_replace("	", "", $result);
+        echo $result;
         return json_decode($result);
     }
 
