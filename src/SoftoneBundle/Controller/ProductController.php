@@ -2217,7 +2217,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             echo "<BR>" . count($datas) . "<BR>";
             //exit;
         } else {
-            $filters = "ITEM.MTRL=20000&ITEM.MTRL_TO=80000"; 
+            $filters = "ITEM.MTRL=80000&ITEM.MTRL_TO=200000"; 
             $datas = $softone->retrieveData("ITEM", "apothema",$filters);
             echo "<BR>" . count($datas) . "<BR>";
             //print_r($datas);
