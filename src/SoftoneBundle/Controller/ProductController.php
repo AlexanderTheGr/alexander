@@ -1102,16 +1102,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M ";
         $softone = new Softone();
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
-            //$datas = $softone->getManufactures($params);
-            //$datas = $softone->createSql($params);
+            $datas = $softone->getManufactures($params);
+            $datas = $softone->createSql($params);
         } else {
-            //$datas = $softone->createSql($params);
-            $datas = $softone->createSql2($params);
+            $datas = $softone->createSql($params);
         }
-        
-        //print_r($params);
-        //print_r($datas);
-        //exit;
         //echo 'sss';
         //echo "<PRE>";
         //print_r($datas);
