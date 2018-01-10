@@ -1809,7 +1809,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     public function getdatatableAction(Request $request) {
         $this
                 ->addField(array("name" => "ID", "index" => 'id', "active" => "active"))
-                ->addField(array("name" => $this->getTranslation("Date Time"), 'datetime' => 'Y-m-d H:s:i', "index" => 'created'))
+                ->addField(array("name" => $this->getTranslation("Date Time"), 'datetime' => 'Y-m-d H:i:s', "index" => 'created'))
                 ->addField(array("name" => $this->getTranslation("Fincode"), "index" => 'fincode'))
                 ->addField(array("name" => $this->getTranslation("Customer Name"), "index" => 'customerName'));
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
