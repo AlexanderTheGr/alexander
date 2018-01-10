@@ -2217,7 +2217,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             echo "<BR>" . count($datas) . "<BR>";
             //exit;
         } else {
-            $datas = $softone->retrieveData("ITEM", "apothema");
+            $filters = "ITEM.UPDDATE=".date("Y-m-d")."&ITEM.UPDDATE_TO=".date("Y-m-d"); 
+            $datas = $softone->retrieveData("ITEM", "apothema",$filters);
             echo "<BR>" . count($datas) . "<BR>";
             //print_r($datas);
             //exit;
