@@ -2219,8 +2219,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         } else {
             $datas = $softone->retrieveData("ITEM", "apothema");
             echo "<BR>" . count($datas) . "<BR>";
-            print_r($datas);
-            exit;
+            //print_r($datas);
+            //exit;
         }
 
         //$datas = $softone->retrieveData("ITEM", "apothema");
@@ -2294,7 +2294,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     //$sql = "update softone_product set reserved = '" . $data["item_soreserved"] . "' where reference = '" . $data["reference"] . "'";
                     //echo $sql . "<BR>";					
                 }
-                $qtys[$data["item_mtrl_itemtrdata_qty1"]][] = $data["reference"];
+                $qtys[$data["item_v1"]][] = $data["reference"];
                 //}
             }
 
