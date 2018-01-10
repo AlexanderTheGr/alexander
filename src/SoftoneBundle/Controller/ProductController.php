@@ -1092,7 +1092,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
         $this->retrieve($params);
     }
-
+    
+    /**
+     * 
+     * @Route("/product/retrieveMtrmanfctr")
+     */
+    
     function retrieveMtrmanfctr() {
         $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M ";
         $softone = new Softone();
