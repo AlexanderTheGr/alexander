@@ -2294,6 +2294,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     $sql = "update softone_product set reserved = '" . $data["item_soreserved"] . "' where reference = '" . $data["reference"] . "'";
                     echo $sql . "<BR>";					
                 }
+                echo ".";
                 $qtys[$data["item_v1"]][] = $data["reference"];
                 //}
             }
