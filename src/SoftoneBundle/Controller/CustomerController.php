@@ -201,6 +201,11 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $this->newentity[$this->repository]->setField("status", 1);
         $this->newentity[$this->repository]->setField("reference", 1);
         $this->newentity[$this->repository]->setField("group", 1);
+            $dt = new \DateTime("now");
+            $this->newentity[$this->repository] = $entity;
+            $this->newentity[$this->repository]->setTs($dt);
+            $this->newentity[$this->repository]->setCreated($dt);
+            $this->newentity[$this->repository]->setModified($dt);        
         $out = $this->save();
 
         $jsonarr = array();
