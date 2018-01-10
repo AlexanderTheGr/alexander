@@ -388,7 +388,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
                 ->addField(array("name" => $this->getTranslation("Supplier"), "index" => 'supplier:supplierName'))
                 ->addField(array("name" => $this->getTranslation("To Softone"), "index" => 'reference', 'method' => 'yesno'))
                 ->addField(array("name" => $this->getTranslation("To Softone"), "index" => 'reference', 'method' => 'yesno'))
-                ->addField(array("name" => $this->getTranslation("Date Time"), 'datetime' => 'Y-m-d H:s:i', "index" => 'created'))
+                ->addField(array("name" => $this->getTranslation("Date Time"), 'datetime' => 'Y-m-d H:i:s', "index" => 'created'))
                 ->addField(array("name" => $this->getTranslation("Total"), 'function' => 'getTotal'))
         ;
 
