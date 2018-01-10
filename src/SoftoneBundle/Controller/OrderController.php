@@ -2447,6 +2447,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $this->flushpersist($orderItem);
                 }
             }
+        header("Location: /order/order");
         exit;    
     }
 
