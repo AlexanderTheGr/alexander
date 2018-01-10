@@ -1393,7 +1393,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //echo $params["fSQL"];
         echo $params["fSQL"];
         // echo "<BR>";
-        //return;
+        exit;
+        return;
         $softone = new Softone();
         $datas = $softone->createSql($params);
         echo count($datas->data);
