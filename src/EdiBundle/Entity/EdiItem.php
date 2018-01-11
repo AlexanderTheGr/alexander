@@ -653,7 +653,7 @@ class EdiItem extends Entity {
         if ($this->getSetting("AppBundle:Erp:erpprefix") == '/erp01') {
             $this->toMegasoftErp();
         } else {
-            $this->toSoftoneErp();
+            return $this->toSoftoneErp();
         }
     }
 
@@ -913,7 +913,7 @@ class EdiItem extends Entity {
             }
             $product->toSoftone();
             //echo $this->clearCode($this->partno) . "-" . $SoftoneSupplier->getCode();
-            return;
+            return $product;
         }
 
 
@@ -1011,7 +1011,7 @@ class EdiItem extends Entity {
 
         $sql = 'update `softone_product` set product_sale = 1 where product_sale is null';
         $em->getConnection()->exec($sql);
-        return;
+        return $product;
     }
 
     function fixsuppliers($supplier) {
@@ -1125,6 +1125,7 @@ class EdiItem extends Entity {
     }
 
     public function getQty1() {
+        /*
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
@@ -1154,14 +1155,19 @@ class EdiItem extends Entity {
                 $qty = $EdiOrderItem->getQty();
             }
         }
-
+         * 
+         */
+        $qty = 1;
         return "<input type='text' data-id='" . $this->id . "' name='qty1_" . $this->id . "' value='" . $qty . "' size=2 id='qty1_" . $this->id . "' class='ediiteqty1'>";
     }
-
+    var $finalprice = 0;
     public function getQty2() {
-        return "<input type='text' data-id='" . $this->id . "' name='qty2_" . $this->id . "' size=2  id='qty1_" . $this->id . "' class='ediiteqty2'>";
+        $qty = 1;
+        return "<input type='text' data-price='".$this->finalprice."' data-id='" . $this->id . "' name='qty2_" . $this->id . "' value='" . $qty . "' size=2 id='qty2_" . $this->id . "' class='ediiteqty2'>";
     }
-
+    public function getQty3() {
+        return '<a class="create_edi_product" data-id="' . $this->id . '" style="font-size:10px; color:rose" href="#">Create Product</a>';//"<input type='text' data-id='" . $this->id . "' name='qty3_" . $this->id . "' size=2  id='qty3_" . $this->id . "' class='ediiteqty3'>";
+    }
     public function getQtyAvailability($cnt = 0) {
         if ($cnt > 10)
             return;
@@ -1598,7 +1604,7 @@ class EdiItem extends Entity {
         $price = $price > 0 ? $price : $this->getEdiMarkupPrice($pricefield);
         $discountedPrice = $this->getEdiMarkupPrice($pricefield) * (1 - $discount / 100 );
         $finalprice = $discount > 0 ? $discountedPrice : $price;
-
+        $this->finalprice = $finalprice * $vat;
         return $this->getEdiMarkupPrice($pricefield) . " / " . number_format($finalprice, 2, '.', '') . " / " . number_format($finalprice * $vat, 2, '.', '') . " (" . (float) $discount . "%)";
     }
 

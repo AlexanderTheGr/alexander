@@ -22,6 +22,7 @@ class Order extends Entity {
         $this->repositories['route'] = 'SoftoneBundle:Route';
         $this->repositories['customer'] = 'SoftoneBundle:Customer';
         $this->repositories['softoneStore'] = 'SoftoneBundle:Store';
+        $this->repositories['user'] = 'SoftoneBundle:User';
         $this->types['route'] = 'object';
         $this->types['softoneStore'] = 'object';
         $this->route = new \SoftoneBundle\Entity\Route;
@@ -46,6 +47,7 @@ class Order extends Entity {
         $this->repositories['route'] = 'SoftoneBundle:Route';
         $this->repositories['customer'] = 'SoftoneBundle:Customer';
         $this->repositories['softoneStore'] = 'SoftoneBundle:Store';
+        $this->repositories['user'] = 'SoftoneBundle:User';
         return $this->repositories[$repo];
     }
 
@@ -909,4 +911,65 @@ class Order extends Entity {
     function getPicked() {
         return $this->getStatus() == 2 ? "Picked" : "";
     }	    
+    /**
+     * @var integer
+     */
+    private $shipment = '103';
+
+
+    /**
+     * Set shipment
+     *
+     * @param integer $shipment
+     *
+     * @return Order
+     */
+    public function setShipment($shipment)
+    {
+        $this->shipment = $shipment;
+
+        return $this;
+    }
+
+    
+    /**
+     * Get payment
+     *
+     * @return integer
+     */
+    public function getPayment()
+    {
+        return $this->payment;
+    }
+    
+    /**
+     * @var integer
+     */
+    private $payment = '1003';
+
+
+    /**
+     * Set payment
+     *
+     * @param integer $payment
+     *
+     * @return Order
+     */
+    public function setPayment($payment)
+    {
+        $this->payment = $payment;
+
+        return $this;
+    }
+
+    /**
+     * Get shipment
+     *
+     * @return integer
+     */
+    public function getShipment()
+    {
+        return $this->shipment;
+    }    
 }
+

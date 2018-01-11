@@ -21,7 +21,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function indexAction() {
         return $this->render('SoftoneBundle:Customer:index.html.twig', array(
-                    'pagename' => 'Customers',
+                    'pagename' => 'Πελάτες',
                     'url' => '/customer/getdatatable',
                     'view' => '/customer/view',
                     'ctrl' => $this->generateRandomString(),
@@ -40,7 +40,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
 
         $query = $em->createQuery(
-                        "SELECT p.id, p.customerName,p.customerAfm,p.customerCode,p.status FROM " . $this->repository . " " . $this->prefix . " where p.customerName LIKE '%" . $_GET["term"] . "%' OR p.customerAfm LIKE '%" . $_GET["term"] . "%' OR p.customerCode LIKE '%" . $_GET["term"] . "%'"
+                        "SELECT p.id, p.customerName,p.customerAfm,p.customerCode,p.status FROM " . $this->repository . " " . $this->prefix . " where p.customerName LIKE '%" . $_GET["term"] . "%' OR p.customerPhone01 LIKE '%" . $_GET["term"] . "%' OR p.customerPhone02 LIKE '%" . $_GET["term"] . "%' OR p.customerAfm LIKE '%" . $_GET["term"] . "%' OR p.customerCode LIKE '%" . $_GET["term"] . "%'"
                 )
                 ->setMaxResults(20)
                 ->setFirstResult(0);
@@ -68,7 +68,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
      * @Route("/customer/view/{id}")
      */
     public function viewAction($id) {
-
+        //$this->retrieveCustomer();
         $buttons = array();
         $content = $this->gettabs($id);
         $content = $this->content();
@@ -201,14 +201,15 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $this->newentity[$this->repository]->setField("status", 1);
         $this->newentity[$this->repository]->setField("reference", 1);
         $this->newentity[$this->repository]->setField("group", 1);
+        
         $out = $this->save();
 
         $jsonarr = array();
         if ($this->newentity[$this->repository]->getId()) {
             if ($this->newentity[$this->repository]->getReference() > 0) {
-                $customerCode = (int) $this->getSetting("SoftoneBundle:Customer:customerCode");
-                $customerCode++;
-                $this->setSetting("SoftoneBundle:Customer:customerCode", $customerCode);
+                //$customerCode = (int) $this->getSetting("SoftoneBundle:Customer:customerCode");
+                //$customerCode++;
+                //$this->setSetting("SoftoneBundle:Customer:customerCode", $customerCode);
             }
             $this->newentity[$this->repository]->toSoftone();
             $jsonarr["returnurl"] = "/customer/view/" . $this->newentity[$this->repository]->getId();
@@ -230,15 +231,29 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
         if ($id == 0 AND @ $entity->id == 0) {
             $entity = new Customer;
+
             $customerCode = (int) $this->getSetting("SoftoneBundle:Customer:customerCode");
             $entity->setField("customerCode", str_pad($customerCode, 7, "0", STR_PAD_LEFT));
+            $customerCode++;
+            $this->setSetting("SoftoneBundle:Customer:customerCode", $customerCode);
+
             $this->newentity[$this->repository] = $entity;
             $entity->setCustomerVatsts(1);
             $customergroup = $this->getDoctrine()->getRepository("SoftoneBundle:Customergroup")->find(1);
             $entity->setCustomergroup($customergroup);
             if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
-                $entity->setPriceField("itemPricew02");
+                $store = $this->getDoctrine()
+                        ->getRepository("SoftoneBundle:Store")
+                        ->find(2);
+                $customergroup = $this->getDoctrine()->getRepository("SoftoneBundle:Customergroup")->find(3);
+                $entity->setCustomergroup($customergroup);
+                $entity->setPriceField("itemPricer");
+                $entity->setCustomerPayment(1000);
+                $entity->setCustomerTrdcategory(3099);
+                $entity->setSoftoneStore($store);
             } else {
+                $entity->setCustomerPayment(1000);
+                $entity->setCustomerTrdcategory(3000);
                 $entity->setPriceField("itemPricer");
             }
             $code = $this->getSetting("SoftoneBundle:Customer:CodeIncrement");
@@ -249,7 +264,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ($vats as $vat) {
             $vatsts[] = array("value" => (string) $vat->getId(), "name" => $vat->getVat()); // $supplier->getSupplierName();
         }
-        
+
         $fields["customerCode"] = array("label" => $this->getTranslation("Customer Code"), "className" => "col-md-6", "required" => true);
         $fields["customerName"] = array("label" => $this->getTranslation("Customer Name"), "className" => "col-md-6", "required" => true);
         $fields["customerAfm"] = array("label" => $this->getTranslation("Customer Afm"), "className" => "col-md-6", "required" => true);
@@ -258,18 +273,22 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $fields["customerIrsdata"] = array("label" => $this->getTranslation("Customer DOY"), "className" => "col-md-6", "required" => false);
         $fields["customerJobtypetrd"] = array("label" => $this->getTranslation("Customer Occupation"), "className" => "col-md-6", "required" => false);
 
-        $fields["customerAddress"] = array("label" => $this->getTranslation("Customer Address"), "className" => "col-md-6", "required" => false);
-        $fields["customerCity"] = array("label" => $this->getTranslation("Customer City"), "className" => "col-md-6", "required" => false);
-        $fields["customerPhone01"] = array("label" => $this->getTranslation("Customer Phones"), "required" => false);
+        $fields["customerAddress"] = array("label" => $this->getTranslation("Customer Address"), "className" => "col-md-4", "required" => false);
+        $fields["customerCity"] = array("label" => $this->getTranslation("Customer City"), "className" => "col-md-4", "required" => false);
+        $fields["customerZip"] = array("label" => $this->getTranslation("Ταχυδρομικός Κώδικας"), "className" => "col-md-4", "required" => false);
 
+        $fields["customerPhone01"] = array("label" => $this->getTranslation("Customer Phone 1"), "className" => "col-md-6", "required" => false);
+        $fields["customerPhone02"] = array("label" => $this->getTranslation("Customer Phone 2"), "className" => "col-md-6",  "required" => false);
         $fields["customergroup"] = array("label" => $this->getTranslation("Customer Group"), "className" => "col-md-6", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:Customergroup', 'name' => 'title', 'value' => 'id'));
 
         //$fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
-        $fields["customerVatsts"] = array("label" => $this->getTranslation("Customer Vat"), "required" => true, "className" => "col-md-6", 'type' => "select", 'dataarray' => $vatsts);
+        $fields["customerVatsts"] = array("label" => $this->getTranslation("Customer Vat"), "required" => true, "className" => "col-md-3", 'type' => "select", 'dataarray' => $vatsts);
+
+
 
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
-            //$priceField[] = array("value" => "itemPricer", "name" => "Λιανική");
-            //$priceField[] = array("value" => "itemPricew", "name" => "Χονδρική");
+            $priceField[] = array("value" => "itemPricer", "name" => "Λιανική");
+            $priceField[] = array("value" => "itemPricew", "name" => "Χονδρική");
 
             $priceField[] = array("value" => "itemPricer01", "name" => "Χονδρικής με ΦΠΑ");
             $priceField[] = array("value" => "itemPricew01", "name" => "Χονδρικής");
@@ -285,12 +304,23 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
             $payment[] = array("value" => "1000", "name" => "Τοίς Μετρητοίς");
             $payment[] = array("value" => "1001", "name" => "Κάρτα");
-            $payment[] = array("value" => "1002", "name" => "Μικτός Τρόπος Πληρωμής");
+            $payment[] = array("value" => "1002", "name" => "Αντικαταβολή");
             $payment[] = array("value" => "1003", "name" => "Πίστωση 30 ημερών");
             $payment[] = array("value" => "1004", "name" => "Πίστωση 60 ημερών");
             $payment[] = array("value" => "1005", "name" => "Πίστωση 90 ημερών");
-            $payment[] = array("value" => "1006", "name" => "Αντικαταβολή");
-            $payment[] = array("value" => "1007", "name" => "Πίστωση 45 ημερών");
+            $payment[] = array("value" => "1006", "name" => "Τραπεζική Κατάθεση");
+
+
+
+            $customerTrdcategory[] = array("value" => "3000", "name" => "Πελάτες Εσωτερικού Με Κανονικό Φ.Π.Α.");
+            $customerTrdcategory[] = array("value" => "3001", "name" => "Πελάτες Εσωτερικού Με Μειωμένο Φ.Π.Α.");
+            $customerTrdcategory[] = array("value" => "3002", "name" => "Πελάτες Εξωτερικού Τ.Χ");
+            $customerTrdcategory[] = array("value" => "3003", "name" => "Πελάτες Εξωτερικού ΕΕ");
+            $customerTrdcategory[] = array("value" => "3004", "name" => "Πελάτες Εσωτερικού Απαλλασόμενοι Φ.Π.Α.");
+            $customerTrdcategory[] = array("value" => "3005", "name" => "ΝΠΔΔ");
+            $customerTrdcategory[] = array("value" => "3099", "name" => "Πελάτες Λιανικής");
+            $fields["customerTrdcategory"] = array("label" => $this->getTranslation("Λογιστική Καταγορία"), "className" => "col-md-3", 'type' => "select", 'dataarray' => $customerTrdcategory, "required" => false);
+            $fields["softoneStore"] = array("label" => $this->getTranslation("Σειρά"), "className" => "col-md-3", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Store', 'name' => 'title', 'value' => 'id'));
         } else {
             $priceField[] = array("value" => "itemPricer", "name" => "Λιανική");
             $priceField[] = array("value" => "itemPricew", "name" => "Χονδρική");
@@ -306,11 +336,23 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
             $priceField[] = array("value" => "itemPricer04", "name" => "Λιανική 4");
             $priceField[] = array("value" => "itemPricew04", "name" => "Χονδρική 4");
+            $customerTrdcategory[] = array("value" => "3000", "name" => "Πελάτες Εσωτερικού Με Κανονικό Φ.Π.Α.");
+            $customerTrdcategory[] = array("value" => "3001", "name" => "Πελάτες Εσωτερικού Με Μειωμένο Φ.Π.Α.");
+            $customerTrdcategory[] = array("value" => "3002", "name" => "Πελάτες Εξωτερικού Τ.Χ");
+            $customerTrdcategory[] = array("value" => "3003", "name" => "Πελάτες Εξωτερικού ΕΕ");
+            $customerTrdcategory[] = array("value" => "3004", "name" => "Πελάτες Εσωτερικού Απαλλασόμενοι Φ.Π.Α.");
+            $customerTrdcategory[] = array("value" => "3005", "name" => "ΝΠΔΔ");
+            $customerTrdcategory[] = array("value" => "3099", "name" => "Πελάτες Λιανικής");
+            $fields["customerTrdcategory"] = array("label" => $this->getTranslation("Λογιστική Καταγορία"), "className" => "col-md-3", 'type' => "select", 'dataarray' => $customerTrdcategory, "required" => false);
+            $fields["softoneStore"] = array("label" => $this->getTranslation("Σειρά"), "className" => "col-md-3", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Store', 'name' => 'title', 'value' => 'id'));
+            
         }
 
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             $fields["priceField"] = array("label" => $this->getTranslation("Price List"), "className" => "col-md-3", 'type' => "select", "required" => true, 'dataarray' => $priceField);
             $fields["customerPayment"] = array("label" => $this->getTranslation("Payment Method"), "className" => "col-md-3", 'type' => "select", "required" => true, 'dataarray' => $payment);
+            $shipment = unserialize($this->getSetting("SoftoneBundle:Order:Shipments"));
+            $fields["shipment"] = array("label" => $this->getTranslation("Τρόπος Αποστολής"), "className" => "col-md-3", 'type' => "select", 'dataarray' => $shipment, "required" => false);
         } else {
             $fields["priceField"] = array("label" => $this->getTranslation("Κατάλογος"), "className" => "col-md-6", 'type' => "select", "required" => true, 'dataarray' => $priceField);
         }
@@ -372,7 +414,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     function retrieveCustomer() {
-        $where = '';
+        $where = "AND M.UPDDATE >= '" . date("Y-m-d", strtotime("-1000 days")) . "'";
         $params["softone_object"] = 'customer';
         $params["repository"] = 'SoftoneBundle:Customer';
         $params["softone_table"] = 'TRDR';
@@ -418,29 +460,29 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $params["fSQL"] = 'SELECT ' . $selfields . ' FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
         //echo $params["fSQL"];
         //$params["fSQL"] = 'SELECT M.* FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
-        echo "<BR>";
-        echo $params["fSQL"];
-        echo "<BR>";
+        //echo "<BR>";
+        //echo $params["fSQL"];
+        //echo "<BR>";
 
         $softone = new Softone();
         $datas = $softone->createSql($params);
         //print_r($datas);
         //return;
-        ///exit;
+        //exit;
         $em = $this->getDoctrine()->getManager();
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
             //$data["IRSDATA2"] = $IRSDATA[$data["IRSDATA"]];
             //print_r($data);
             //if ($i++ > 100 ) exit;
-
+            if ($data["CODE"] > $maxcode AND (int) $data["CODE"] < 5000)
+                $maxcode = $data["CODE"];
 
             $entity = $this->getDoctrine()
                     ->getRepository($params["repository"])
                     ->findOneBy(array("reference" => (int) $data[$params["softone_table"]]));
 
-            echo @$entity->id . "<BR>";
-
+            //echo @$entity->id . "<BR>";
             //if ($data[$params["softone_table"]] < 7385) continue;
             /*
               $dt = new \DateTime("now");
@@ -466,7 +508,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
                     $entity->setField($field, $rel);
                 }
             }
-            echo $data[$params["softone_table"]] . "<BR>";
+            //echo $data[$params["softone_table"]] . "<BR>";
             /*
               $imporetedData = array();
               $entity->setReference($data[$params["softone_table"]]);
@@ -495,10 +537,12 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             } else {
                 $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
             }
-            echo $sql . "<BR>";
+            //echo $sql . "<BR>";
             //if ($i++ > 100)
             //    exit;
             //continue;
+            $customerCode = (int) $this->getSetting("SoftoneBundle:Customer:customerCode");
+
             $em->getConnection()->exec($sql);
             /*
               @$entity_id = (int) $entity->id;
@@ -516,6 +560,10 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             //if (@$i++ > 1500)
             //    break;
         }
+        //echo $maxcode;
+        if ($customerCode < (int) $maxcode + 1) {
+            //$this->setSetting("SoftoneBundle:Customer:customerCode", (int) $maxcode + 1);
+        }
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             $sql = 'update `softone_customer` set customergroup = 1 where customergroup is null';
             $this->getDoctrine()->getConnection()->exec($sql);
@@ -524,6 +572,10 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
                 $this->getDoctrine()->getConnection()->exec($sql);
             }
             $sql = "update `softone_customer` SET `customer_payment` = '1000' WHERE `customer_payment` IS NULL";
+            $this->getDoctrine()->getConnection()->exec($sql);
+        }
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") != 'tsakonas') {
+            $sql = "update `softone_customer` set `price_field` = 'itemPricer' WHERE `price_field` IS NULL";
             $this->getDoctrine()->getConnection()->exec($sql);
         }
     }

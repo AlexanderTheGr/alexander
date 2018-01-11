@@ -1,14 +1,11 @@
 <?php
 
-namespace EdiBundle\Entity;
+namespace SoftoneBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use AppBundle\Entity\Entity;
-use SoftoneBundle\Entity\Softone as Softone;
 /**
- * EdiOrderItem
+ * InvoiceItem
  */
-class EdiOrderItem extends Entity {
+class InvoiceItem {
 
     public function getField($field) {
         return $this->$field;
@@ -23,12 +20,7 @@ class EdiOrderItem extends Entity {
      * @var integer
      */
     private $qty;
-    
-    /**
-     * @var integer
-     */
-    private $porder;
-    
+
     /**
      * @var string
      */
@@ -45,11 +37,6 @@ class EdiOrderItem extends Entity {
     private $fprice;
 
     /**
-     * @var integer
-     */
-    private $store = '7021';
-
-    /**
      * @var boolean
      */
     private $chk;
@@ -57,24 +44,41 @@ class EdiOrderItem extends Entity {
     /**
      * @var integer
      */
-    var $id;
+    private $id;
 
     /**
-     * @var \EdiBundle\Entity\EdiItem
+     * @var \SoftoneBundle\Entity\Invoice
      */
-    private $EdiItem;
+    private $invoice;
 
     /**
-     * @var \EdiBundle\Entity\EdiOrder
+     * Set invoice
+     *
+     * @param string $invoice
+     *
+     * @return InvoiceItem
      */
-    private $EdiOrder;
+    public function setInvoice($invoice) {
+        $this->invoice = $invoice;
+
+        return $this;
+    }
+
+    /**
+     * Get invoice
+     *
+     * @return string
+     */
+    public function getInvoice() {
+        return $this->invoice;
+    }
 
     /**
      * Set qty
      *
      * @param integer $qty
      *
-     * @return EdiOrderItem
+     * @return InvoiceItem
      */
     public function setQty($qty) {
         $this->qty = $qty;
@@ -96,7 +100,7 @@ class EdiOrderItem extends Entity {
      *
      * @param string $price
      *
-     * @return EdiOrderItem
+     * @return InvoiceItem
      */
     public function setPrice($price) {
         $this->price = $price;
@@ -118,7 +122,7 @@ class EdiOrderItem extends Entity {
      *
      * @param string $discount
      *
-     * @return EdiOrderItem
+     * @return InvoiceItem
      */
     public function setDiscount($discount) {
         $this->discount = $discount;
@@ -140,7 +144,7 @@ class EdiOrderItem extends Entity {
      *
      * @param string $fprice
      *
-     * @return EdiOrderItem
+     * @return InvoiceItem
      */
     public function setFprice($fprice) {
         $this->fprice = $fprice;
@@ -156,62 +160,13 @@ class EdiOrderItem extends Entity {
     public function getFprice() {
         return $this->fprice;
     }
-    
-    /**
-     * Get store
-     *
-     * @return integer
-     */
-    public function getPorder() {
-        return $this->porder;
-    }
-    
-    /**
-     * Set store
-     *
-     * @param integer $store
-     *
-     * @return EdiOrderItem
-     */
-    public function setPorder($porder) {
-        $this->porder = $store;
-
-        return $this;
-    }    
-    
-
-    /**
-     * Set store
-     *
-     * @param integer $store
-     *
-     * @return EdiOrderItem
-     */
-    public function setStore($store) {
-        $this->store = $store;
-
-        return $this;
-    }
-
-
-    /**
-     * Get store
-     *
-     * @return integer
-     */
-    public function getStore() {
-        return $this->store;
-    }    
-    
-    
-    
 
     /**
      * Set chk
      *
      * @param boolean $chk
      *
-     * @return EdiOrderItem
+     * @return InvoiceItem
      */
     public function setChk($chk) {
         $this->chk = $chk;
@@ -238,47 +193,74 @@ class EdiOrderItem extends Entity {
     }
 
     /**
-     * Set ediItem
-     *
-     * @param \EdiBundle\Entity\EdiItem $ediItem
-     *
-     * @return EdiOrderItem
+     * @var string
      */
-    public function setEdiItem(\EdiBundle\Entity\EdiItem $ediItem = null) {
-        $this->EdiItem = $ediItem;
+    private $code;
+
+    /**
+     * Set code
+     *
+     * @param string $code
+     *
+     * @return InvoiceItem
+     */
+    public function setCode($code) {
+        $this->code = $code;
 
         return $this;
     }
 
     /**
-     * Get ediItem
+     * Get code
      *
-     * @return \EdiBundle\Entity\EdiItem
+     * @return string
      */
-    public function getEdiItem() {
-        return $this->EdiItem;
+    public function getCode() {
+        return $this->code;
     }
 
     /**
-     * Set ediOrder
-     *
-     * @param \EdiBundle\Entity\EdiOrder $ediOrder
-     *
-     * @return EdiOrderItem
+     * @var \SoftoneBundle\Entity\Product
      */
-    public function setEdiOrder(\EdiBundle\Entity\EdiOrder $ediOrder = null) {
-        $this->EdiOrder = $ediOrder;
+    private $product;
+
+    /**
+     * Set product
+     *
+     * @param \SoftoneBundle\Entity\Product $product
+     *
+     * @return InvoiceItem
+     */
+    public function setProduct(\SoftoneBundle\Entity\Product $product = null) {
+        $this->product = $product;
 
         return $this;
     }
 
     /**
-     * Get ediOrder
+     * Get product
      *
-     * @return \EdiBundle\Entity\EdiOrder
+     * @return \SoftoneBundle\Entity\Product
      */
-    public function getEdiOrder() {
-        return $this->EdiOrder;
+    public function getProduct() {
+        return $this->product;
     }
 
+    public function getForOrderItemsTitle() {
+        $out = '<a title="' . $this->getProduct()->getTitle() . '" class="productfano_info" car="" data-articleId="' . $this->getProduct()->getTecdocArticleId() . '" data-ref="' . $this->getProduct()->getId() . '">' . $this->getProduct()->getTitle() . '</a>';
+        $out .= '<div class="ediprices ediprices_' . $this->getProduct()->getId() . '"></div>';
+        if ($this->remarks)
+            $out .= '<BR><span class="text-sm text-info">' . $this->remarks . '</span>'; // "<BR>".$this->remarks;
+        return $out;
+    }
+    public function getForOrderSupplier() {
+        return $this->getProduct()->getForOrderSupplier();
+    }
+    public function getProductApothiki() {
+        return $this->getProduct()->getApothiki();
+        //return $this->lineval / $this->qty;
+    }
+    public function deleteitem() {
+        return '<a style="font-size:20px; color:red; cursor: pointer" data-id="' . $this->id . '" class="deleteinvoiceitem"><i class="md md-delete"></i></a>';
+    }    
 }

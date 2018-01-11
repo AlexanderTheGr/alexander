@@ -652,13 +652,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $fields["tecdocCode"] = array("label" => $this->getTranslation("Tecdoc Code"), "required" => false, "className" => "col-md-6");
 
 
-            $fields["supplierId"] = array("label" => $this->getTranslation("Supplier"), "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
+            $fields["supplierId"] = array("label" => $this->getTranslation("Εργοστάσιο"), "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
 
             //$fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'dataarray' => $supplierId);
 
             $fields["erpSupplier"] = array("label" => $this->getTranslation("New Supplier"), "required" => false, "className" => "col-md-3");
 
-            $fields["supplierCode"] = array("label" => $this->getTranslation("Supplier Code"), "className" => "col-md-3", "required" => true);
+            $fields["supplierCode"] = array("label" => $this->getTranslation("Κωδικός Εργοστασίου"), "className" => "col-md-3", "required" => true);
 
 
 
@@ -690,7 +690,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $fields["itemMarkupr"] = array("label" => $this->getTranslation("Retail Markup"), "className" => "col-md-2", "required" => false);
             $fields["itemRemarks"] = array("label" => $this->getTranslation("Remarks"), "required" => false, "className" => "col-md-6 col-sm-6");
             $fields["sisxetisi"] = array("label" => $this->getTranslation("Κωδικός Συσχέτισης"), "className" => "col-md-6", "required" => false);
-            //$fields["edis"] = array("label" => "Αντιστοιχίες Εκτός Αποθήκης", "className" => "col-md-6", "required" => false);      
+            $fields["edis"] = array("label" => "Αντιστοιχίες Εκτός Αποθήκης", "className" => "col-md-6", "required" => false);
         } else {
 
             //$fields["productSale"] = array("label" => "Προσφορά", "className" => "col-md-3", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:ProductSale', 'name' => 'title', 'value' => 'id'));
@@ -703,13 +703,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $fields["tecdocCode"] = array("label" => $this->getTranslation("Tecdoc Code"), "required" => false, "className" => "col-md-6");
 
 
-            $fields["supplierId"] = array("label" => $this->getTranslation("Supplier"), "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
+            $fields["supplierId"] = array("label" => $this->getTranslation("Εργοστάσιο"), "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'SoftoneBundle:SoftoneSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
 
             //$fields["supplierId"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'dataarray' => $supplierId);
 
             $fields["erpSupplier"] = array("label" => $this->getTranslation("New Supplier"), "required" => false, "className" => "col-md-3");
 
-            $fields["supplierCode"] = array("label" => $this->getTranslation("Supplier Code"), "className" => "col-md-3", "required" => true);
+            $fields["supplierCode"] = array("label" => $this->getTranslation("Κωδικός Εργοστασίου"), "className" => "col-md-3", "required" => true);
 
 
 
@@ -891,6 +891,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $fields[] = array("name" => $this->getTranslation("Product Code"), "index" => 'erpCode');
         $fields[] = array("name" => $this->getTranslation("Product Supplier"), "index" => 'supplierId:title', 'type' => 'select', 'object' => 'SoftoneSupplier');
         $fields[] = array("name" => $this->getTranslation("Offer"), "index" => 'productSale:title', 'type' => 'select', 'object' => 'ProductSale');
+        $fields[] = array("name" => "Article Name", "index" => 'tecdocArticleName');
         $fields[] = array("name" => $this->getTranslation("Product Place"), "index" => 'itemMtrplace');
         $fields[] = array("name" => $this->getTranslation("Syncrhonize"), "index" => 'cccPriceUpd', 'method' => 'yesno');
 
@@ -935,7 +936,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($request->request->get("id"));
-        echo $product->getEdiPrices();
+        echo $product->getEdiPrices($request->request->get("order"));
         exit;
     }
 
@@ -1091,7 +1092,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
         $this->retrieve($params);
     }
-
+    
+    /**
+     * 
+     * @Route("/product/retrieveMtrmanfctr")
+     */
+    
     function retrieveMtrmanfctr() {
         $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M ";
         $softone = new Softone();
@@ -1222,7 +1228,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline' OR $this->getSetting("SoftoneBundle:Softone:merchant") == 'gianop') {
             //$MTRL = 263528;
             $MTRL1 = 0;
-            $MTRL2 = 1000;
+            $MTRL2 = 277976;
             $UPDDATE = date("-1 week");
         }
 
@@ -1239,7 +1245,16 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";
                 //$where = " AND UPDDATE = '" . date("Y-m-d") . "'";
             } else {
-                $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-90 days")) . "' ORDER BY MTRL";
+                if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
+                    $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "' ORDER BY MTRL";
+                } else {
+
+                    $MTRL1 = 165151;
+                    $MTRL2 = 200000;
+
+                    //$where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";
+                    $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "' ORDER BY MTRL";
+                }
                 //$where = " AND INSDATE = '2017-03-01' ORDER BY MTRL";
             }
 
@@ -1266,15 +1281,19 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 } else {
                     $extra["foxline"] = array("CCCFXRELTDCODE" => "CCCFXRELTDCODE", "CCCFXRELBRAND" => "CCCFXRELBRAND");
                 }
-                $extra["foxline"] = array(); //array("CCCFXRELTDCODE" => "CCCFXRELTDCODE");
+                $extra["foxline"] = array("CCCFXRELTDCODE" => "CCCFXRELTDCODE");
                 $params["filter"] = 'WHERE M.SODTYPE=51 ' . $where;
                 $params["extra"] = $this->getSetting("SoftoneBundle:Softone:merchant") ? $extra[$this->getSetting("SoftoneBundle:Softone:merchant")] : array("cccRef" => "cccRef", "cccWebUpd" => "cccWebUpd", "cccPriceUpd" => "cccPriceUpd");
             }
             $params["relation"] = array();
             $params["extrafunction"] = array();
-            $params["extra"]["CCCFXRELTDCODE"] = "CCCFXRELTDCODE";
-            //$params["extra"]["CCCFXRELBRAND"] = "CCCFXRELBRAND";
+            if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
+                $params["extra"]["CCCFXRELTDCODE"] = "CCCFXRELTDCODE";
+                $params["extra"]["CCCFXRELBRAND"] = "CCCFXRELBRAND";
+            }
+
             $params["relation"]["reference"] = "MTRL";
+
             $params["relation"]["erpCode"] = "CODE";
             $params["relation"]["supplierCode"] = "CODE2";
             $params["relation"]["title"] = "NAME";
@@ -1283,6 +1302,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $params["extrafunction"][] = "updatetecdoc";
             $this->setSetting("SoftoneBundle:Product:retrieveMtrl", serialize($params));
         }
+
         $this->retrieveProduct($params);
         //echo 'ss';
         $params["fSQL"] = "SELECT VARCHAR05, MTRL FROM MTREXTRA WHERE VARCHAR05 != ''";
@@ -1290,13 +1310,15 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $datas = $softone->createSql($params);
         echo count($datas->data);
         //print_r($datas->data);
-        foreach ($datas->data as $data) {
+        foreach ((array) $datas->data as $data) {
             if ((int) $data->VARCHAR05 > 0) {
                 $sql = 'update `softone_product` set `catalogue` =  "' . (int) $data->VARCHAR05 . '" where reference = "' . $data->MTRL . '"';
                 echo $sql . "<BR>";
                 $this->getDoctrine()->getConnection()->exec($sql);
             }
         }
+
+
         //exit;
         $sql = 'update `softone_product` set `tecdoc_supplier_id` =  `item_mtrmark` where tecdoc_supplier_id is null';
         $this->getDoctrine()->getConnection()->exec($sql);
@@ -1364,7 +1386,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $params["fSQL"] = 'SELECT ' . $selfields . ' FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
         //echo $params["fSQL"];
         //exit;
-        //$params["fSQL"] = 'SELECT M.* FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
+        //$params["fSQL"] = 'SELECT M.MTRL FROM MTRL M';// ' . $params["softone_table"] . ';
         //$params["fSQL"] = "SELECT VARCHAR02, MTRL FROM MTREXTRA WHERE VARCHAR02 != ''";
         //$sql = "SELECT M.MTRL,M.INSDATE,M.UPDDATE,M.ISACTIVE,M.VAT,M.MTRMANFCTR,M.MTRMARK,M.REMARKS,M.MARKUPW,M.MARKUPR,M.PRICER,M.PRICEW,M.PRICEW01,M.PRICEW02,M.PRICEW03,M.PRICEW04,M.PRICEW05,M.PRICER01,M.PRICER02,M.PRICER03,M.PRICER04,M.PRICER05,M.NAME,M.NAME1,M.CODE,M.CODE1,M.CODE2,M.APVCODE,M.MTRPLACE,M.MTRSUP,M.MTRCATEGORY,M.MTRGROUP FROM MTRL M WHERE M.SODTYPE=51 AND MTRL = 421443";
         // echo "<BR>";
@@ -1374,6 +1396,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //return;
         $softone = new Softone();
         $datas = $softone->createSql($params);
+        echo count($datas->data);
+        //print_r($datas);
+        //exit;
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
             echo "<PRE>";
             //print_r($datas);
@@ -1402,7 +1427,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         };
         ini_set('memory_limit', '12256M');
 
-        echo count($datas->data);
+        echo "<BR>" . count($datas->data) . "<BR>";
         //print_r($datas);
         echo "<BR>";
         //exit;
@@ -1412,7 +1437,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //echo "<BR>";
             //exit;
             //echo $data["MTRL"]."<BR>";
-            //if ($i++ < 23000) continue;
+            //if ($i++ > 230) continue;
+
+            print_r($data);
+            echo "<BR><BR>";
             $entity = $this->getDoctrine()
                     ->getRepository($this->repository)
                     ->findOneBy(array("reference" => (int) $data["MTRL"]));
@@ -1462,6 +1490,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //$this->flushpersist($entity);
             $q = array();
             $hasmark = false;
+            $data["CODE"] = addslashes($data["CODE"]);
+            if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'tsakonas') {
+                unset($data["REMARKS"]);
+            }
             foreach ($data as $identifier => $val) {
                 $imporetedData[strtolower($params["softone_object"] . "_" . $identifier)] = addslashes($val);
                 $ad = strtolower($identifier);
@@ -1496,7 +1528,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     //$entity->setField($baz, $val);
                 }
             }
-            //print_r($data);
+
+
             if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
 
                 if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'kanteres') {
@@ -1515,16 +1548,16 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     //if (addslashes($data["CCCFXRELBRAND"]) != '')
                     //	$q[] = "`" . strtolower($params["softone_object"] . "_mtrmanfctr") . "` = '" . addslashes($data["CCCFXRELBRAND"]) . "'";
                 } else {
-                    if (addslashes($data["CCCFXTDBRAND"]) != '') {
-                        $data["CCCFXRELBRAND"] = $data["CCCFXTDBRAND"];
-                    }
+                    //if (addslashes($data["CCCFXTDBRAND"]) != '') {
+                    //    $data["CCCFXRELBRAND"] = $data["CCCFXTDBRAND"];
+                    //}
                     //$extra["foxline"] = array("CCCFXRELTDCODE" => "CCCFXRELTDCODE", "CCCFXRELBRAND" => "CCCFXRELBRAND"); 
 
                     if (addslashes($data["CCCFXRELTDCODE"]) != '')
                     //if (addslashes($data["CCCFXRELTDCODE"]) != '')
                         $q[] = "`" . strtolower($params["softone_object"] . "_apvcode") . "` = '" . addslashes($data["CCCFXRELTDCODE"]) . "'";
 
-                    if (addslashes($data["CCCFXRELBRAND"]) != '' AND $hasmark == false) {
+                    if (addslashes($data["CCCFXRELBRAND"]) != '') {
                         $q[] = "`" . strtolower($params["softone_object"] . "_mtrmark") . "` = '" . addslashes($data["CCCFXRELBRAND"]) . "'";
                         echo "<BR><BR><BR>----------<BR><BR>";
                     }
@@ -1591,16 +1624,18 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     if ($i++ > 1120)
                         exit;
                     $oem = strpos($file, "NOT_OE") ? 0 : 1;
-                    
-                    if ($oem == 0) continue;
+
+                    if ($oem == 0)
+                        continue;
                     //echo $i . " " . basename($file) . "<BR>";
                     //if ($i <= 121)
                     //    continue;
-                    $sqlfile = str_replace(".csv",".sql",basename($file));
+                    $sqlfile = str_replace(".csv", ".sql", basename($file));
                     //continue;
                     echo $i . " " . basename($sqlfile) . "<BR>";
-                    if (file_exists("/home2/service6/crossbasesql/".$sqlfile)) continue;
-                    
+                    if (file_exists("/home2/service6/crossbasesql/" . $sqlfile))
+                        continue;
+
                     $file = "/home2/service6/crossbase/" . $file;
                     $em = $this->getDoctrine()->getManager();
                     if ((($handle = fopen($file, "r")) !== FALSE)) {
@@ -1622,12 +1657,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                     . "code = '" . $data[5] . "',"
                                     . "code_adv = '" . $data[6] . "',"
                                     . "oem = '" . $oem . "';\n";
-                            
+
                             //echo $sql . "<BR>";
-                            file_put_contents("/home2/service6/crossbasesql/".$sqlfile, $sql, FILE_APPEND | LOCK_EX);
+                            file_put_contents("/home2/service6/crossbasesql/" . $sqlfile, $sql, FILE_APPEND | LOCK_EX);
                             //if ($i++ > 100) exit;
                             //if ($k++ > 100) {
-                            
+
                             echo ".";
                             //$k = 0;
                             //}
@@ -1636,7 +1671,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     }
                     echo "<BR>";
                     if ($k++ > 5)
-                    exit;
+                        exit;
                 }
             }
 
@@ -1644,13 +1679,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
 
         exit;
-    }    
-    
+    }
+
     /**
      * @Route("/product/crossestecdoc")
      */
     public function crossestecdocAction() {
-        $iddd = (int)$_GET["iddd"];
+        $iddd = (int) $_GET["iddd"];
         $dir = '/home2/service6/crossestecdoc2017/';
         $k = 0;
         if ($handledir = opendir($dir)) {
@@ -1658,7 +1693,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             while (false !== ($file = readdir($handledir))) {
                 //echo '<img src="' . $dir . $file . '"/>';
                 if ($file != '.' && $file != '..') {
-                    if ($i++ > $iddd+15)
+                    if ($i++ > $iddd + 15)
                         exit;
                     $oem = strpos($file, "OEM") ? 1 : 0;
                     echo $i . " " . $file . "<BR>";
@@ -1687,10 +1722,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                                     . "oem = '" . $oem . "'";
                             //echo $sql . "<BR>";
                             //if ($k++ % 50 == 0) {
-                                echo ".";
-                                //$k = 0;
+                            echo ".";
+                            //$k = 0;
                             //}
-                                
+
                             $em->getConnection()->exec($sql);
                         }
                     }
@@ -1710,17 +1745,51 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     public function autocompletesearchAction() {
         //echo $_GET["term"];
         $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery(
-                "SELECT  p.id, p.title, p.erpCode
-                    FROM " . $this->repository . " p
-                    where p.itemCode2 like '" . $this->clearstring($_GET["term"]) . "%' OR p.itemCode like '" . $this->clearstring($_GET["term"]) . "%' OR p.itemApvcode like '" . $this->clearstring($_GET["term"]) . "%'"
-        );
-        $results = $query->getResult();
-        $jsonArr = array();
+
+
+
+
+        /*
+          $query = $em->createQuery(
+          "SELECT  p.id, p.title, p.erpCode
+          FROM " . $this->repository . " p
+          where p.itemCode2 like '" . $this->clearstring($_GET["term"]) . "%' OR p.itemCode like '" . $this->clearstring($_GET["term"]) . "%' OR p.itemApvcode like '" . $this->clearstring($_GET["term"]) . "%'"
+          );
+
+          $results = $query->getResult();
+          $jsonArr = array();
+         * 
+         * 
+         */
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'tsakonas') {
+            $sql = "Select p.id, p.title, p.erp_code from softone_product p where p.item_code in (select erp_code from crossiaponiki where supplier_code like '" . $this->clearstring($_GET["term"]) . "%' OR ref like '" . $this->clearstring($_GET["term"]) . "%') OR p.item_code2 in (select code from crossmulti where multi like '" . $this->clearstring($_GET["term"]) . "%') OR p.item_code2 like '" . $this->clearstring($_GET["term"]) . "%' OR p.item_code like '" . $this->clearstring($_GET["term"]) . "%' OR p.item_apvcode like '" . $this->clearstring($_GET["term"]) . "%'";
+            $connection = $em->getConnection();
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            $results = $statement->fetchAll();
+            /*
+              $sql = "Select p.id, p.title, p.erp_code from softone_product p where p.item_code in (select code from crossiaponiki where supplier_code like '" . $this->clearstring($_GET["term"]) . "%' OR ref like '" . $this->clearstring($_GET["term"]) . "%') OR p.item_code2 like '" . $this->clearstring($_GET["term"]) . "%' OR p.item_code like '" . $this->clearstring($_GET["term"]) . "%' OR p.item_apvcode like '" . $this->clearstring($_GET["term"]) . "%'";
+              $connection = $em->getConnection();
+              $statement = $connection->prepare($sql);
+              $statement->execute();
+              $results = $statement->fetchAll();
+             * 
+             */
+        } else {
+            $query = $em->createQuery(
+                    "SELECT  p.id, p.title, p.erpCode
+                FROM " . $this->repository . " p
+                where p.itemCode2 like '" . $this->clearstring($_GET["term"]) . "%' OR p.itemCode like '" . $this->clearstring($_GET["term"]) . "%' OR p.itemApvcode like '" . $this->clearstring($_GET["term"]) . "%'"
+            );
+
+            $results = $query->getResult();
+            $jsonArr = array();
+        }
+
         foreach ($results as $result) {
             $json["id"] = $result["id"];
-            $json["label"] = $result["title"] . ' ' . $result["erpCode"];
-            $json["value"] = $result["erpCode"];
+            $json["label"] = $result["title"] . ' ' . $result["erp_code"];
+            $json["value"] = $result["erp_code"];
             $jsonArr[] = $json;
         }
         $json = json_encode($jsonArr);
@@ -1738,7 +1807,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $query = $em->createQuery(
                 "SELECT  p.id
                     FROM " . $this->repository . " p
-                    where p.tecdocSupplierId > 0 AND p.tecdocArticleId IS NULL order by p.id asc"
+                    where p.tecdocSupplierId > 0 AND p.tecdocArticleId IS NULL order by p.id desc"
         );
         /*
           $query = $em->createQuery(
@@ -1998,6 +2067,54 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //}
     }
 
+    /**
+     * 
+     * @Route("/product/retrievePricesGbg")
+     */
+    function retrievePricesGbg() {
+        $em = $this->getDoctrine()->getManager();
+        $zip = new \ZipArchive;
+        // OUTOFSTOCK_ALL.ZIP
+        $start = microtime(true);
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") != 'tsakonas')
+            return;
+
+
+        if ($zip->open('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/PRICELIST_RETAIL.ZIP') === TRUE) {
+            //echo 'sssss';
+            $zip->extractTo('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/');
+            $zip->close();
+            $file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/PRICELIST_RETAIL.txt";
+            $availability = false;
+            if (($handle = fopen($file, "r")) !== FALSE) {
+                //echo 'sss';
+                //$sql = "update softone_product set gbg = '0'";
+                //echo $sql . "<BR>";
+                //if ($i++ > 100) exit;
+                //$em->getConnection()->exec($sql);
+                while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
+                    //$gbg = ($data[1] + $data[2]) * 10;
+                    //if ($gbg > 0) {
+                    $sql = "update softone_product set item_pricer = '" . $data[8] . "' where item_code2 = '" . $data[0] . "'";
+                    echo $sql . "<BR>";
+                    //if ($i++ > 100) exit;
+                    $em->getConnection()->exec($sql);
+                    //}
+                }
+            }
+        }
+
+
+        $time_elapsed_secs = microtime(true) - $start;
+        echo "<BR>[" . $time_elapsed_secs . "]";
+        exit;
+        return $availability;
+    }
+
+    /**
+     * 
+     * @Route("/product/retrieveApothemaGbg")
+     */
     function retrieveApothemaGbg($filters = false) {
         $em = $this->getDoctrine()->getManager();
         $zip = new \ZipArchive;
@@ -2006,27 +2123,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") != 'tsakonas')
             return;
 
-        if ($zip->open('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/OUTOFSTOCK_ALL.ZIP') === TRUE) {
-            echo 'sssss';
-            $zip->extractTo('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/');
-            $zip->close();
-            $file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/OUTOFSTOCK_ALL.txt";
-            $availability = false;
-            if (($handle = fopen($file, "r")) !== FALSE) {
-                //echo 'sss';
-                $sql = "update partsbox_db.edi_item set gbg1 = '0', gbg2 = '0', gbg3 = '0' where edi = 11";
-                $em->getConnection()->exec($sql);
-                while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
-                    //echo "aa";
-                    if ($data[1] > 0 OR $data[2] > 0 OR $data[3] > 0) {
-                        $sql = "update partsbox_db.edi_item set gbg1 = '" . $data[1] . "', gbg2 = '" . $data[2] . "', gbg2 = '" . $data[3] . "' where edi = 11 and itemcode = '" . $data[0] . "'";
-                        //echo $sql . "<BR>";
-                        //if ($i++ > 100) exit;
-                        $em->getConnection()->exec($sql);
-                    }
-                }
-            }
-        }
+
         //return;
         if ($zip->open('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/OUTOFSTOCK_ATH_KAR.ZIP') === TRUE) {
             //echo 'sssss';
@@ -2037,15 +2134,57 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             if (($handle = fopen($file, "r")) !== FALSE) {
                 //echo 'sss';
                 $sql = "update softone_product set gbg = '0'";
+
                 echo $sql . "<BR>";
                 //if ($i++ > 100) exit;
                 $em->getConnection()->exec($sql);
+                $sql = "update partsbox_db.edi_item set gbg1 = '0' where edi = 11";
+                $em->getConnection()->exec($sql);
                 while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
-                    $gbg = ($data[1] + $data[2]) * 10;
+                    $gbg = ($data[1]) * 10;
                     if ($gbg > 0) {
                         $sql = "update softone_product set gbg = '" . $gbg . "' where item_code2 = '" . $data[0] . "'";
-                        //echo $sql . "<BR>";
-                        //if ($i++ > 100) exit;
+                        $em->getConnection()->exec($sql);
+                        $sql = "update partsbox_db.edi_item set gbg1 = '" . $gbg . "' where edi = 11 and itemcode = '" . $data[0] . "'";
+                        $em->getConnection()->exec($sql);
+                    }
+                }
+            }
+        }
+
+        //return;
+        if ($zip->open('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/OUTOFSTOCK_ATH_ALL.ZIP') === TRUE) {
+            //echo 'sssss';
+            $zip->extractTo('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/');
+            $zip->close();
+            $file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/OUTOFSTOCK_ATH_ALL.txt";
+            $availability = false;
+            if (($handle = fopen($file, "r")) !== FALSE) {
+                $sql = "update partsbox_db.edi_item set gbg2 = '0' where edi = 11";
+                $em->getConnection()->exec($sql);
+                while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
+                    $gbg = ($data[1]) * 10;
+                    if ($gbg > 0) {
+                        $sql = "update partsbox_db.edi_item set gbg2 = '" . $gbg . "' where edi = 11 and itemcode = '" . $data[0] . "'";
+                        $em->getConnection()->exec($sql);
+                    }
+                }
+            }
+        }
+        //return;
+        if ($zip->open('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/OUTOFSTOCK_ATH_LIOS.ZIP') === TRUE) {
+            //echo 'sssss';
+            $zip->extractTo('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/');
+            $zip->close();
+            $file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/OUTOFSTOCK_ATH_LIOS.txt";
+            $availability = false;
+            if (($handle = fopen($file, "r")) !== FALSE) {
+                $sql = "update partsbox_db.edi_item set gbg3 = '0' where edi = 11";
+                $em->getConnection()->exec($sql);
+                while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
+                    $gbg = ($data[1]) * 10;
+                    if ($gbg > 0) {
+                        $sql = "update partsbox_db.edi_item set gbg3 = '" . $gbg . "' where edi = 11 and itemcode = '" . $data[0] . "'";
                         $em->getConnection()->exec($sql);
                     }
                 }
@@ -2078,10 +2217,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             echo "<BR>" . count($datas) . "<BR>";
             //exit;
         } else {
-            $datas = $softone->retrieveData("ITEM", "apothema");
+            $filters = "ITEM.MTRL=1&ITEM.MTRL_TO=10000"; 
+            $datas = $softone->retrieveData("ITEM", "apothema",$filters);
             echo "<BR>" . count($datas) . "<BR>";
+            //print_r($datas);
+            //exit;
         }
-
+        exit;
         //$datas = $softone->retrieveData("ITEM", "apothema");
         //echo 'Sss';
         echo count($datas) . "<BR>";
@@ -2130,6 +2272,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 //$sql = "update softone_product set qty = '" . $data["item_mtrl_itemtrdata_qty1"] . "', reserved = '" . $data["item_soreserved"] . "' where reference = '" . $data["reference"] . "'";
                 //echo $sql . "<BR>";
                 //$em->getConnection()->exec($sql);
+                $data["item_mtrl_itemtrdata_qty1"] = $data["item_v3"] + $data["item_v4"];
+                $data["item_soreserved"] = $data["item_v7"] + $data["item_v6"];
                 if ($data["item_soreserved"] > 0) {
                     $reserveds[$data["item_soreserved"]][] = $data["reference"];
                     //$sql = "update softone_product set reserved = '" . $data["item_soreserved"] . "' where reference = '" . $data["reference"] . "'";
@@ -2148,10 +2292,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
                 if ($data["item_soreserved"] > 0) {
                     $reserveds[$data["item_soreserved"]][] = $data["reference"];
-                    //$sql = "update softone_product set reserved = '" . $data["item_soreserved"] . "' where reference = '" . $data["reference"] . "'";
-                    //echo $sql . "<BR>";					
+                    $sql = "update softone_product set reserved = '" . $data["item_soreserved"] . "' where reference = '" . $data["reference"] . "'";
+                    echo $sql . "<BR>";					
                 }
-                $qtys[$data["item_mtrl_itemtrdata_qty1"]][] = $data["reference"];
+                echo ".";
+                $qtys[$data["item_v1"]][] = $data["reference"];
                 //}
             }
 
@@ -2263,6 +2408,31 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 //if ($i++ > 100) break;
             }
             $json = json_encode($arr);
+            return new Response(
+                    $json, 200, array('Content-Type' => 'application/json')
+            );
+        } else {
+            //   
+            exit;
+        }
+    }
+
+    /**
+     * 
+     * 
+     * @Route("/product/getProductSales")
+     */
+    public function getProductSales(Request $request) {
+        //echo 'ssss';
+        $allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
+        $allowedipsArr = explode(",", $allowedips);
+        if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
+            $sql = "SELECT id FROM  `softone_product` where product_sale > 1";
+            $connection = $this->getDoctrine()->getConnection();
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            $results = $statement->fetchAll();
+            $json = json_encode($results);
             return new Response(
                     $json, 200, array('Content-Type' => 'application/json')
             );

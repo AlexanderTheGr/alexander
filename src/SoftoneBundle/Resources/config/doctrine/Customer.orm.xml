@@ -5,6 +5,7 @@
             <index name="user_id" columns="actioneer"/>
             <index name="customer_code" columns="customer_code"/>
             <index name="route" columns="route"/>
+            <index name="store" columns="store"/>
         </indexes>
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
@@ -115,6 +116,12 @@
                 <option name="unsigned"/>
             </options>
         </field>
+        <field name="shipment" type="integer" column="shipment" nullable="true">
+            <options>
+                <option name="unsigned"/>
+                <option name="default">103</option>
+            </options>
+        </field>
         <field name="customerVatsts" type="integer" column="customer_vatsts" nullable="true">
             <options>
                 <option name="unsigned"/>
@@ -166,7 +173,16 @@
             <join-column name="customergroup" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>            
         </many-to-one> 
         
-      
+        <many-to-one
+            field="softoneStore"
+            target-entity="SoftoneBundle\Entity\Store"
+            inversed-by="Stores"
+            join-column="store">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+            <join-column name="store" referenced-column-name="id"/>
+        </many-to-one>       
                 
         <many-to-one
             field="route"

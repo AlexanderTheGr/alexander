@@ -183,7 +183,7 @@ class Main extends Controller {
                     $obj = $em->getRepository($this->repository)->find($result["id"]);
                     $func = $field["function"];
                     //$obj = $em->getRepository($this->repository)->find($result["id"]);
-                    $val = $obj->$func(count($results));
+                    $val = $obj->$func($field["functionparams"]);
                     if (@$field["input"]) {
                         @$json[] = "<input id='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . "_" . $result["id"] . "' data-id='" . $result["id"] . "' class='" . str_replace(":", "", $this->repository) . ucfirst($field["index"]) . " " . $field["class"] . "' type='" . $field["input"] . "' value='" . $val . "'>";
                     } else {
@@ -223,6 +223,8 @@ class Main extends Controller {
         $search = str_replace(" ", "", trim($search));
         $search = str_replace(".", "", $search);
         $search = str_replace("-", "", $search);
+        $search = str_replace("-", "", $search);
+        
         $search = str_replace("/", "", $search);
         $search = str_replace("*", "", $search);
         $search = strtoupper($search);
@@ -245,11 +247,15 @@ class Main extends Controller {
     function createOrderBy($fields, $dt_order) {
         $bundle = explode(":", $this->repository);
         $field_order = explode(":", $fields[$dt_order[0]["column"]]);
+        if (ucfirst($field_order[0]) == "User") {
+            $bundle[0] = "AppBundle";
+        }
+        
         if (count($field_order) > 1) {
             $em = $this->getDoctrine()->getManager();
             $query = $em->createQuery(
                     'SELECT  ' . $this->prefix . '.id
-                                FROM ' . $bundle[0] . ':' . $field_order[0] . ' ' . $this->prefix . '
+                                FROM ' . $bundle[0] . ':' . ucfirst($field_order[0]) . ' ' . $this->prefix . '
                                 ORDER BY ' . $this->prefix . '.' . $field_order[1]
             );
             $results = $query->getResult();
@@ -286,6 +292,9 @@ class Main extends Controller {
             } elseif (count($field_order) > 1 AND @ $field["type"] == "select") {
                 $em = $this->getDoctrine()->getManager();
                 $object = @ $field["object"] ? $field["object"] : ucfirst($field_order[0]);
+                if ($object == "User") {
+                    $bundle[0] = "AppBundle";
+                }
                 $query = $em->createQuery(
                         'SELECT  ' . $this->prefix . '.id, ' . $this->prefix . '.' . $field_order[1] . '
                                 FROM ' . $bundle[0] . ':' . $object . ' ' . $this->prefix . '

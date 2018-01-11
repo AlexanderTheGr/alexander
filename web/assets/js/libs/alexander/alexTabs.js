@@ -46,11 +46,13 @@ $("#loaderer").hide();
 
                     var data = {}
                     data.data = vm.model;
+                    $("#loaderer").show();
                     $http.post(url, data)
                             .success(function (response) {
                                 if (response.returnurl) {
                                     location.href = response.returnurl;
                                 }
+                                $("#loaderer").hide();
                                 //if (response.unique) {
                                 angular.forEach(vm.tabs, function (tab) {
                                     angular.forEach(tab.form.fields, function (field, index) {

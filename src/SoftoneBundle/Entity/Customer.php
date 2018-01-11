@@ -34,6 +34,8 @@ class Customer extends Entity {
         $this->repositories['customergroup'] = 'SoftoneBundle:Customergroup';
         //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:SoftoneSupplier';
         $this->types['customergroup'] = 'object';
+        $this->repositories['softoneStore'] = 'SoftoneBundle:Store';
+        $this->softoneStore = new \SoftoneBundle\Entity\Store;
         //$this->types['supplierId'] = 'object';
         //$this->repositories['tecdocSupplierId'] = 'SoftoneBundle:TecdocSupplier';
         //$this->types['tecdocSupplierId'] = 'object';
@@ -46,6 +48,7 @@ class Customer extends Entity {
 
     public function getRepositories($repo) {
         $this->repositories['customergroup'] = 'SoftoneBundle:Customergroup';
+        $this->repositories['softoneStore'] = 'SoftoneBundle:Store';
         return $this->repositories[$repo];
     }
 
@@ -991,7 +994,7 @@ class Customer extends Entity {
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
         }
-		
+
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         $object = "CUSTOMER";
         $softone = new Softone();
@@ -1020,7 +1023,7 @@ class Customer extends Entity {
             $objectArr = $data->data->$object;
             $objectArr2 = (array) $objectArr[0];
         }
-		
+
         foreach ($fields as $field) {
             $field1 = strtoupper(str_replace(strtolower($object) . "_", "", $field));
             $field2 = lcfirst($this->createName($field));
@@ -1028,8 +1031,8 @@ class Customer extends Entity {
             @$objectArr2[$field1] = $this->$field2;
             //}
         }
-		$objectArr2["CITY"] = $this->customerCity;
-		$objectArr2["ZIP"] = $this->customerZip;
+        $objectArr2["CITY"] = $this->customerCity;
+        $objectArr2["ZIP"] = $this->customerZip;
         $objectArr[0] = $objectArr2;
         $dataOut[$object] = (array) $objectArr;
         //@$dataOut["ITEEXTRA"][0] = array("NUM02" => $this->item_mtrl_iteextra_num02);
@@ -1225,7 +1228,6 @@ class Customer extends Entity {
      */
     private $customerIsactive = '1';
 
-
     /**
      * Set customerIsactive
      *
@@ -1233,8 +1235,7 @@ class Customer extends Entity {
      *
      * @return Customer
      */
-    public function setCustomerIsactive($customerIsactive)
-    {
+    public function setCustomerIsactive($customerIsactive) {
         $this->customerIsactive = $customerIsactive;
 
         return $this;
@@ -1245,8 +1246,60 @@ class Customer extends Entity {
      *
      * @return boolean
      */
-    public function getCustomerIsactive()
-    {
+    public function getCustomerIsactive() {
         return $this->customerIsactive;
+    }
+
+    /**
+     * @var integer
+     */
+    private $shipment = '103';
+
+    /**
+     * Set shipment
+     *
+     * @param integer $shipment
+     *
+     * @return Order
+     */
+    public function setShipment($shipment) {
+        $this->shipment = $shipment;
+
+        return $this;
+    }
+
+    /**
+     * Get shipment
+     *
+     * @return integer
+     */
+    public function getShipment() {
+        return $this->shipment;
+    }
+    /**
+     * @var \SoftoneBundle\Entity\Store
+     */
+    protected $softoneStore;
+
+    /**
+     * Set softoneStore
+     *
+     * @param \SoftoneBundle\Entity\Store $softoneStore
+     *
+     * @return User
+     */
+    public function setSoftoneStore(\SoftoneBundle\Entity\Store $softoneStore = null) {
+        $this->softoneStore = $softoneStore;
+
+        return $this;
+    }
+
+    /**
+     * Get softoneStore
+     *
+     * @return \SoftoneBundle\Entity\Store
+     */
+    public function getSoftoneStore() {
+        return $this->softoneStore;
     }
 }

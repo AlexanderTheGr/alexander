@@ -50,7 +50,7 @@ class EdiOrderController extends Main {
         $params['url'] = '/edi/edi/order/getitems/' . $id;
 
         $buttons = array();
-        
+
 
         $json = json_encode(array());
         $EdiOrder = $this->getDoctrine()
@@ -109,16 +109,20 @@ class EdiOrderController extends Main {
         }
         $buttons = array();
         $buttons[] = array("label" => 'Get PartMaster', 'position' => 'right', 'class' => 'btn-success');
-        
+
         $dataarray[] = array("value" => "06", "name" => "06");
         $dataarray[] = array("value" => "10", "name" => "10");
         $dataarray[] = array("value" => "12", "name" => "12");
         $dataarray[] = array("value" => "14", "name" => "14");
         $dataarray[] = array("value" => "15", "name" => "15");
-        
+
+        $dataarray[] = array("value" => "qty1", "name" => "ΚΑΡΠΟΥ");
+        $dataarray[] = array("value" => "qty2", "name" => "ΚΟΡΩΠΙ");
+        $dataarray[] = array("value" => "qty3", "name" => "ΛΙΟΣΙΩΝ");
+
         //$tabfields["PurchaseOrderNo"] = array("label" => "Purchase Order No","value"=>1);
         $tabfields["remarks"] = array("label" => "Remarks");
-        $tabfields["store"] = array("label" => "Store",'type' => "select", 'dataarray' => $dataarray);
+        $tabfields["store"] = array("label" => "Store", 'type' => "select", 'dataarray' => $dataarray);
         $tabfields["ship"] = array("label" => "Ship");
 
         $tabforms = $this->getFormLyFields($entity, $tabfields);
@@ -175,7 +179,7 @@ class EdiOrderController extends Main {
     }
 
     function getTabContentSearch($edi) {
-        $response = $this->get('twig')->render('EdiBundle:Edi:ediordersearch.html.twig', array('edi'=>$edi));
+        $response = $this->get('twig')->render('EdiBundle:Edi:ediordersearch.html.twig', array('edi' => $edi));
         return str_replace("\n", "", htmlentities($response));
     }
 
@@ -189,108 +193,125 @@ class EdiOrderController extends Main {
             $Ediitem = $this->getDoctrine()
                     ->getRepository('EdiBundle:EdiItem')
                     ->find($request->request->get("id"));
-            $Ediitem->toErp();
+            $product = $Ediitem->toErp();
         } elseif ($request->request->get("product") > 0) {
             $Ediitem = $this->getDoctrine()
                     ->getRepository('EdiBundle:EdiItem')
                     ->findOneBy(array("product" => $request->request->get("product")));
+            
+            $Ediitem = $this->getDoctrine()
+                    ->getRepository('EdiBundle:EdiItem')
+                    ->find($request->request->get("product"));
+            $product = $Ediitem->toErp();
         } else {
             return;
         }
 
         if (@$Ediitem->id == 0)
             return;
+        if ($request->request->get("qty") > 0) {
 
-        if ($request->request->get("order") > 0) {
-            $EdiOrder = $this->getDoctrine()
-                    ->getRepository('EdiBundle:EdiOrder')
-                    ->find($request->request->get("order"));
-        } elseif ($request->request->get("order") == 0) {
 
-            /*
-            $query = $em->createQuery(
-                            'SELECT p
-                            FROM EdiBundle:EdiOrder p
-                            WHERE 
-                            p.reference = 0
-                            AND p.Edi = :edi AND p.store = :store'
-                    )->setParameter('edi', $Ediitem->getEdi());
-            $EdiOrder = $query->setMaxResults(1)->getOneOrNullResult();
-            */
-            $EdiOrder = $this->getDoctrine()
-                    ->getRepository('EdiBundle:EdiOrder')->findOneBy(array("reference"=>'',"store"=>$request->request->get("store"),"Edi"=>$Ediitem->getEdi()));
-            if (!$EdiOrder) {
-                $EdiOrder = new EdiOrder;
-                $dt = new \DateTime("now");
-                $this->newentity[$this->repository] = $EdiOrder;
-                $EdiOrder->setEdi($Ediitem->getEdi());
-                $EdiOrder->setStore($request->request->get("store")?$request->request->get("store"):"Default");
-                $EdiOrder->setShip("");
-                $EdiOrder->setRemarks($Ediitem->getEdi()->getName()."_".$request->request->get("store"));
-                $EdiOrder->setInsdate($dt);
-                $EdiOrder->setCreated($dt);
-                $EdiOrder->setModified($dt);
+            if ($request->request->get("order") > 0) {
+                $EdiOrder = $this->getDoctrine()
+                        ->getRepository('EdiBundle:EdiOrder')
+                        ->find($request->request->get("order"));
+            } elseif ($request->request->get("order") == 0) {
+
+                /*
+                  $query = $em->createQuery(
+                  'SELECT p
+                  FROM EdiBundle:EdiOrder p
+                  WHERE
+                  p.reference = 0
+                  AND p.Edi = :edi AND p.store = :store'
+                  )->setParameter('edi', $Ediitem->getEdi());
+                  $EdiOrder = $query->setMaxResults(1)->getOneOrNullResult();
+                 */
+                $EdiOrder = $this->getDoctrine()
+                                ->getRepository('EdiBundle:EdiOrder')->findOneBy(array("reference" => '', "store" => $request->request->get("store"), "Edi" => $Ediitem->getEdi()));
+                if (!$EdiOrder) {
+                    $EdiOrder = new EdiOrder;
+                    $dt = new \DateTime("now");
+                    $this->newentity[$this->repository] = $EdiOrder;
+                    $EdiOrder->setEdi($Ediitem->getEdi());
+                    $EdiOrder->setStore($request->request->get("store") ? $request->request->get("store") : "Default");
+                    $EdiOrder->setShip("");
+                    $EdiOrder->setRemarks($Ediitem->getEdi()->getName() . "_" . $request->request->get("store"));
+                    $EdiOrder->setInsdate($dt);
+                    $EdiOrder->setCreated($dt);
+                    $EdiOrder->setModified($dt);
+                    $this->flushpersist($EdiOrder);
+                    $EdiOrder->setRemarks("EL1-" . $EdiOrder->getId() . " " . $Ediitem->getEdi()->getName() . "_" . $request->request->get("store"));
+                    $this->flushpersist($EdiOrder);
+                }
+                $EdiOrder->setRemarks("EL1-" . $EdiOrder->getId() . " " . $Ediitem->getEdi()->getName() . "_" . $request->request->get("store"));
                 $this->flushpersist($EdiOrder);
-                $EdiOrder->setRemarks("EL1-" . $EdiOrder->getId()." ".$Ediitem->getEdi()->getName()."_".$request->request->get("store"));
-                $this->flushpersist($EdiOrder);                
             }
-            $EdiOrder->setRemarks("EL1-" . $EdiOrder->getId()." ".$Ediitem->getEdi()->getName()."_".$request->request->get("store"));
-            $this->flushpersist($EdiOrder);   
-        }
 
-        
-        //$availability = $Ediitem->getQtyAvailability($request->request->get("qty"));
-        //$Available = (array) $availability["Header"];
-        //$price = $availability["PriceOnPolicy"];
-        $price = 0;
-        /*
-          if (@$availability["Availability"] != 'green') {
-          $json = json_encode(array("error" => true, "message" => $Available["Available"]));
-          return new Response(
-          $json, 200, array('Content-Type' => 'application/json')
-          );
-          }
-         */
-        $store = 1; //$Available["SUGGESTED_STORE"];
-        /*
-          $json = json_encode($availability);
-          return new Response(
-          $json, 200, array('Content-Type' => 'application/json')
-          );
-         * 
-         */
 
-        $query = $em->createQuery(
-                'SELECT p
+            //$availability = $Ediitem->getQtyAvailability($request->request->get("qty"));
+            //$Available = (array) $availability["Header"];
+            //$price = $availability["PriceOnPolicy"];
+            $price = 0;
+            /*
+              if (@$availability["Availability"] != 'green') {
+              $json = json_encode(array("error" => true, "message" => $Available["Available"]));
+              return new Response(
+              $json, 200, array('Content-Type' => 'application/json')
+              );
+              }
+             */
+            $store = 1; //$Available["SUGGESTED_STORE"];
+            /*
+              $json = json_encode($availability);
+              return new Response(
+              $json, 200, array('Content-Type' => 'application/json')
+              );
+             * 
+             */
+
+            $query = $em->createQuery(
+                    'SELECT p
                             FROM EdiBundle:EdiOrderItem p
                             WHERE 
                             p.EdiItem = ' . $Ediitem->getId() . '
                             AND p.EdiOrder = ' . $EdiOrder->getId() . ''
-        );
-        $EdiOrderItem = $query->setMaxResults(1)->getOneOrNullResult();
+            );
+            $EdiOrderItem = $query->setMaxResults(1)->getOneOrNullResult();
 
-        if (@ $EdiOrderItem->id == 0) {
-            $EdiOrderItem = new EdiOrderItem;
+            if (@ $EdiOrderItem->id == 0) {
+                $EdiOrderItem = new EdiOrderItem;
+            }
+            $qty = $request->request->get("qty");
+            $price = $request->request->get("price");
+
+            $price = $price > 0 ? $price : $Ediitem->getEdiQtyAvailability($qty);
+            //echo $price;
+            $EdiOrderItem->setEdiOrder($EdiOrder);
+            $EdiOrderItem->setEdiItem($Ediitem);
+            $EdiOrderItem->setField("qty", $qty);
+            $EdiOrderItem->setField("price", $price);
+            $EdiOrderItem->setField("porder", (int)$request->request->get("porder") );
+            $EdiOrderItem->setField("fprice", (float) $price * $qty);
+            $EdiOrderItem->setField("discount", 0);
+            $EdiOrderItem->setField("store", $store);
+            $EdiOrderItem->setField("chk", 1);
+            try {
+                $this->flushpersist($EdiOrderItem);
+                $json = json_encode(array("error" => false, "product"=>$product->getId(),"message" => $Ediitem->getEdi()->getName() . " " . $Ediitem->getItemCode() . " μπήκε στο καλάθι"));
+            } catch (\Exception $e) {
+                $json = json_encode(array("error" => true, "message" => $e->getMessage()));
+            }
+        } else {
+            try {
+                //$this->flushpersist($EdiOrderItem);
+                $json = json_encode(array("error" => false, "product"=>$product->getId(), "message" => $Ediitem->getEdi()->getName() . " " . $Ediitem->getItemCode() . " μπήκε στο καλάθι"));
+            } catch (\Exception $e) {
+                $json = json_encode(array("error" => true, "message" => $e->getMessage()));
+            }
         }
-        $qty = $request->request->get("qty");
 
-        $price = $Ediitem->getEdiQtyAvailability($qty);
-        //echo $price;
-        $EdiOrderItem->setEdiOrder($EdiOrder);
-        $EdiOrderItem->setEdiItem($Ediitem);
-        $EdiOrderItem->setField("qty", $qty);
-        $EdiOrderItem->setField("price", $price);
-        $EdiOrderItem->setField("fprice", (float)$price * $qty);
-        $EdiOrderItem->setField("discount", 0);
-        $EdiOrderItem->setField("store", $store);
-        $EdiOrderItem->setField("chk", 1);
-
-        try {
-            $this->flushpersist($EdiOrderItem);
-            $json = json_encode(array("error" => false,"message"=>$Ediitem->getEdi()->getName()." ".$Ediitem->getItemCode()." ανοιχτηκε επιτυχώς"));
-        } catch (\Exception $e) {
-            $json = json_encode(array("error" => true, "message" => "Product Exists"));
-        }
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
@@ -478,7 +499,7 @@ class EdiOrderController extends Main {
             }
             $data["orginal"] .= "</ul>";
 
-            
+
             $attributs = $tecdoc->getAssignedArticlesByIds(
                     array(
                         "articleId" => $item->getTecdocArticleId(),
@@ -501,9 +522,9 @@ class EdiOrderController extends Main {
                 //}
             }
             $descrption .= "</ul>";
-            
-            $data["img"] = $descrption ;
-            
+
+            $data["img"] = $descrption;
+
             echo $descrption;
         }
 

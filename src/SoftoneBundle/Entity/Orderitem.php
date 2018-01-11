@@ -3,6 +3,7 @@
 namespace SoftoneBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Orderitem
  */
@@ -61,8 +62,6 @@ class Orderitem {
      * @var \SoftoneBundle\Entity\Product
      */
     protected $product;
-
-
 
     /**
      * Set qty
@@ -160,14 +159,17 @@ class Orderitem {
     public function getLinevalQty() {
         return number_format($this->lineval / $this->qty, 2, '.', '');
         //return $this->lineval / $this->qty;
-    }  
-    public function deleteitem() {
-        return '<a style="font-size:20px; color:red; cursor: pointer" data-id="'.$this->id.'" class="deleteitem"><i class="md md-delete"></i></a>';
     }
+
+    public function deleteitem() {
+        return '<a style="font-size:20px; color:red; cursor: pointer" data-id="' . $this->id . '" class="deleteitem"><i class="md md-delete"></i></a>';
+    }
+
     public function getProductApothiki() {
         return $this->getProduct()->getApothiki();
         //return $this->lineval / $this->qty;
-    } 
+    }
+
     /**
      * Set store
      *
@@ -243,6 +245,25 @@ class Orderitem {
         return $this->product;
     }
 
+    public function getForOrderSupplier($order=0) {
+        return $this->getProduct()->getForOrderSupplier($order);
+    }
+
+    public function getForOrderItemsTitle() {
+        $out = '<a title="' . $this->getProduct()->getTitle() . '" class="productfano_info" car="" data-articleId="' . $this->getProduct()->getTecdocArticleId() . '" data-ref="' . $this->getProduct()->getId() . '">' . $this->getProduct()->getTitle() . '</a>';
+        $out .= '<div class="ediprices ediprices_' . $this->getProduct()->getId() . '"></div>';
+        if ($this->remarks)
+            $out .= '<BR><span class="text-sm text-info">' . $this->remarks . '</span>'; // "<BR>".$this->remarks;
+        return $out;
+    }
+    public function getForOrderItemsTitlePrint() {
+        //$out = '<a title="' . $this->getProduct()->getTitle() . '" class="productfano_info" car="" data-articleId="' . $this->getProduct()->getTecdocArticleId() . '" data-ref="' . $this->getProduct()->getId() . '">' . $this->getProduct()->getTitle() . '</a>';
+        //$out .= '<div class="ediprices ediprices_' . $this->getProduct()->getId() . '"></div>';
+        $out .= $this->getProduct()->getTitle();
+        if ($this->remarks)
+            $out .= '<BR><i>' . $this->remarks . '</i></span>'; // "<BR>".$this->remarks;
+        return $out;
+    }
 
     /**
      * Set order
@@ -251,8 +272,7 @@ class Orderitem {
      *
      * @return Orderitem
      */
-    public function setOrder(\SoftoneBundle\Entity\Order $order = null)
-    {
+    public function setOrder(\SoftoneBundle\Entity\Order $order = null) {
         $this->order = $order;
 
         return $this;
@@ -263,8 +283,37 @@ class Orderitem {
      *
      * @return \SoftoneBundle\Entity\Order
      */
-    public function getOrder()
-    {
+    public function getOrder() {
         return $this->order;
     }
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="remarks", type="text", length=65535, nullable=false)
+     */
+    protected $remarks = '';
+
+    /**
+     * Set remarks
+     *
+     * @param string $remarks
+     *
+     * @return Order
+     */
+    public function setRemarks($remarks) {
+        $this->remarks = $remarks;
+
+        return $this;
+    }
+
+    /**
+     * Get remarks
+     *
+     * @return string
+     */
+    public function getRemarks() {
+        return $this->remarks;
+    }
+
 }

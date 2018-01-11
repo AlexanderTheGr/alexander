@@ -262,6 +262,7 @@ class EdiItemController extends Main {
                 ->addField(array("name" => "Price", "index" => 'wholesaleprice', 'search' => 'text'))
                 ->addField(array("name" => "ID", "function" => 'getQty1', "active" => "active"))
                 ->addField(array("name" => "ID", "function" => 'getQty2', "active" => "active"))
+                ->addField(array("name" => "ID", "function" => 'getQty3', "active" => "active"))
 
 
         ;
@@ -639,6 +640,12 @@ class EdiItemController extends Main {
         }
 
         $customer = $order->getCustomer();
+        if ($customer->getCustomerTrdcategory() == 3001) {
+            $vat = 1.17;
+        }
+        if ($customer->getCustomerTrdcategory() == 3003) {
+            $vat = 1;
+        }        
         $request = Request::createFromGlobals();
         $dt_columns = $request->request->get("columns");
         if ($dt_columns[1]["search"]["value"] == 4) {
@@ -800,13 +807,15 @@ class EdiItemController extends Main {
                     $AvailabilityDetailsHtml .= "</select>";
 
                     //print_r($xml->Item->Header);
+                    
                     $entity->setWholesaleprice($xml->Item->Header->WholePrice);
                     @$jsonarr[$key]['6'] = $entity->getDiscount($customer, $vat);
-                    @$jsonarr[$key]['7'] = number_format((float) $xml->Item->Header->WholePrice, 2, '.', '');
+                    @$jsonarr[$key]['7'] = number_format((float) $xml->Item->Header->WholePrice, 2, '.', '') ." / ".number_format((float) $xml->Item->Header->PriceOnPolicy, 2, '.', '');
                     @$jsonarr[$key]['8'] = $jsonarr[$key]['8'] . $AvailabilityDetailsHtml;
                     @$jsonarr[$key]['DT_RowClass'] .= $xml->Item->Header->Available == "Y" ? ' text-success ' : ' text-danger ';
                 }
             }
+            @$jsonarr[$key]['9'] = $entity->getQty2();
             //$jsonarr2[(int)$key] = $json;
             @$jsonarr[$key]['DT_RowClass'] .= ' text-danger ';
         }
@@ -841,8 +850,8 @@ class EdiItemController extends Main {
                                 $entity->setWholesaleprice($Item->ListPrice);
 
                                 @$jsonarr[$ands[$Item->ItemCode]]['6'] = $entity->getDiscount($customer, $vat);
-                                @$jsonarr[$ands[$Item->ItemCode]]['7'] = number_format($Item->ListPrice, 2, '.', '');
-
+                                @$jsonarr[$ands[$Item->ItemCode]]['7'] = number_format($Item->ListPrice, 2, '.', '') . " / ".number_format($Item->UnitPrice, 2, '.', '');
+                                @$jsonarr[$ands[$Item->ItemCode]]['9'] = $entity->getQty2();
 
                                 //$entity->setRetailprice(number_format($Item->UnitPrice, 2, '.', ''));
                                 //$this->flushpersist($entity);

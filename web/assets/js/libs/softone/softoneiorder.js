@@ -124,6 +124,22 @@ jQuery(".savesoftone").live('click', function (e) {
         }
     })
 })
+jQuery(".saveinvoicesoftone").live('click', function (e) {
+    var data = {}
+    data.id = jQuery(this).attr('data-id');
+    $("#loaderer").show();
+    $.post("/invoice/saveSoftone", data, function (result) {
+        $("#loaderer").hide();
+        var json = angular.fromJson(result);
+        if (json.error) {
+            toastr.error(json.error, "Error");
+        } else {
+            toastr.success(json.error, "Success");
+            $(".apestaleni").show();
+        }
+    })
+})
+
 
 jQuery(".EdiSendOrder").live('click', function (e) {
     var data = {}
@@ -158,9 +174,64 @@ jQuery(".SoftoneBundleOrderitemQty").live('keyup', function (e) {
         })
     }
 })
+//SoftoneBundleInvoiceItemPrice 
+jQuery(".SoftoneBundleInvoiceItemPrice").live('keyup', function (e) {
+    if (e.keyCode == 13) {
+        var data = {}
+        data.id = jQuery(this).attr('data-id');
+        data.price = jQuery(this).val();
+        $("#loaderer").show();
+        $.post("/invoice/editinvoiceitem/", data, function (result) {
+            $("#loaderer").hide();
+            var json = angular.fromJson(result);
+            if (json.error) {
+                toastr.error(json.message, "Error");
+            }
+            var table = dt_tables["ctrlgettabs"];
+            //$(".offcanvas-search").click();
+            table.fnFilter();
+        })
+    }
+})
+jQuery(".SoftoneBundleInvoiceItemQty").live('keyup', function (e) {
+    if (e.keyCode == 13) {
+        var data = {}
+        data.id = jQuery(this).attr('data-id');
+        data.qty = jQuery(this).val();
+        $("#loaderer").show();
+        $.post("/invoice/editinvoiceitem/", data, function (result) {
+            $("#loaderer").hide();
+            var json = angular.fromJson(result);
+            if (json.error) {
+                toastr.error(json.message, "Error");
+            }
+            var table = dt_tables["ctrlgettabs"];
+            //$(".offcanvas-search").click();
+            table.fnFilter();
+        })
+    }
+})
 
 
 
+jQuery(".deleteinvoiceitem").live('click', function (e) {
+
+    var data = {}
+    data.id = jQuery(this).attr('data-id');
+    data.qty = 0;
+    $("#loaderer").show();
+    $.post("/invoice/editinvoiceitem/", data, function (result) {
+        $("#loaderer").hide();
+        var json = angular.fromJson(result);
+        if (json.error) {
+            toastr.error(json.message, "Error");
+        }
+        var table = dt_tables["ctrlgettabs"];
+        //$(".offcanvas-search").click();
+        table.fnFilter();
+    })
+
+})
 
 jQuery(".deleteitem").live('click', function (e) {
 
@@ -292,7 +363,26 @@ jQuery(".livevalqty").live('keyup', function (e) {
 })
 
 
+jQuery(".SoftoneBundleProductAdd").live('click', function (e) {
+    var data = {}
+    data.order = orderid;
+    data.item = jQuery(this).attr('data-id');
+    data.price = jQuery("#SoftoneBundleProductItemPricew01_" + data.item).val();
+    data.qty = 1;
+    $("#loaderer").show();
+    $.post("/order/addorderitem/", data, function (result) {
+        $(".tick_" + data.item).show();
+        $("#loaderer").hide();
+        var json = angular.fromJson(result);
+        if (json.error) {
+            toastr.error(json.message, "Error");
+        }
+        var table = dt_tables["ctrlgettabs"];
+        //$(".offcanvas-search").click();
+        table.fnFilter();
+    })
 
+})
 jQuery(".SoftoneBundleProductQty").live('keyup', function (e) {
     if (e.keyCode == 13) {
         var data = {}
@@ -314,6 +404,8 @@ jQuery(".SoftoneBundleProductQty").live('keyup', function (e) {
         })
     }
 })
+
+
 function asdf(obj, search) {
 
     var data = {}
@@ -419,7 +511,7 @@ function fororder(order) {
 }
 
 
-jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .SoftoneBundleProductEdi').live("keyup", function (e) {
+jQuery('.ediiteqty1, .ediiteqty2, EdiBundleEdiOrderItemQty, .SoftoneBundleProductEdi').live("keyup", function (e) {
     if (e.keyCode == 13) {
         var data = {};
         if (jQuery(this).attr('class') == 'SoftoneBundleProductEdi') {
@@ -430,6 +522,8 @@ jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .SoftoneBundleProductEdi').live("
             var store = data.id;
         }
         data.qty = jQuery(this).val();
+        data.price = jQuery(this).attr('data-price');
+        data.order = jQuery(this).attr('data-order');
         data.store = jQuery("#store_" + store).val();
         $("#loaderer").show();
         $.post("/edi/order/addorderitem/", data, function (result) {
@@ -438,11 +532,78 @@ jQuery('.ediiteqty1, EdiBundleEdiOrderItemQty, .SoftoneBundleProductEdi').live("
                 toastr.error(result.message, result.message);
             } else {
                 toastr.success(result.error, result.message);
+
+                if (result.product > 0) {
+
+                    data.order = orderid;
+                    data.item = result.product;//jQuery(this).attr('data-id');
+                    data.price = result.price;//jQuery("#SoftoneBundleProductItemPricew01_" + data.item).val();
+                    //data.qty = jQuery(this).val();
+                    $("#loaderer").show();
+                    $.post("/order/addorderitem/", data, function (result) {
+                        $(".tick_" + data.item).show();
+                        $("#loaderer").hide();
+                        var json = angular.fromJson(result);
+                        if (json.error) {
+                            toastr.error(json.message, "Error");
+                        }
+                        var table = dt_tables["ctrlgettabs"];
+                        //$(".offcanvas-search").click();
+                        table.fnFilter();
+                    })
+
+                }
             }
         })
+
     }
 });
 
+jQuery('.create_edi_product').live("click", function (e) {
+
+    var data = {};
+    if (jQuery(this).attr('class') == 'SoftoneBundleProductEdi') {
+        data.product = jQuery(this).attr('data-id');
+        var store = data.product;
+    } else {
+        data.id = jQuery(this).attr('data-id');
+        var store = data.id;
+    }
+    data.qty = 0;
+    data.store = 0;
+    $("#loaderer").show();
+    $.post("/edi/order/addorderitem/", data, function (result) {
+        $("#loaderer").hide();
+        if (result.error) {
+            toastr.error(result.message, result.message);
+        } else {
+            toastr.success(result.error, result.message);
+        }
+    })
+
+});
+
+
+jQuery('.SoftoneBundleGBGProductAdd').live("click", function (e) {
+    //if (e.keyCode == 13) {
+    var data = {};
+    data.product = jQuery(this).attr('data-id');
+    var store = data.product;
+    data.qty = 1;
+    data.price = jQuery(this).attr('data-price');
+    data.porder = order;//jQuery(this).attr('data-order');
+    data.store = jQuery(this).attr('data-qty')//jQuery("#store_" + store).val();
+    $("#loaderer").show();
+    $.post("/edi/order/addorderitem/", data, function (result) {
+        $("#loaderer").hide();
+        if (result.error) {
+            toastr.error(result.message, result.message);
+        } else {
+            toastr.success(result.error, result.message);
+        }
+    })
+    //}
+});
 
 jQuery(".create_product").live('click', function () {
     var ref = jQuery(this).attr("data-ref");
@@ -482,7 +643,7 @@ jQuery(".product_info").live('click', function () {
 })
 jQuery(".productfano_info").live('click', function () {
     var ref = jQuery(this).attr("data-ref");
-    jQuery('.productfanoimg_'+ref).show();
+    jQuery('.productfanoimg_' + ref).show();
 })
 jQuery(".productfanoimg").live('click', function () {
     jQuery(this).hide();
@@ -529,25 +690,27 @@ jQuery(".edibutton").live('click', function () {
 
 jQuery(".modeldiv").live('click', function () {
     //alert('sss');
-    jQuery(this).find('.modelitem').show();
+    jQuery(this).find('.modelitem').toggle();
 });
 jQuery(".modeldiv").live('mouseout', function () {
     //alert('sss');
-    jQuery('.modelitem').hide();
+    //jQuery('.modelitem').hide();
 });
 
 jQuery(".forordersupplier").live('click', function () {
     //alert('sss');
     var data = {}
     data.id = jQuery(this).attr("data-ref");
+    //data.order = jQuery(this).attr("data-order");
+    data.order = order;
     //jQuery(this).find('.orderitemstable').show();
     if (data.id > 0 && jQuery(this).find('.ediprices').text() == '') {
         //jQuery('.ediprices').hide();
         var obj = this;
         jQuery.post("/product/getediprices", data, function (result) {
-            jQuery('.ediprices_'+data.id).html(result);
-            jQuery('.ediprices_'+data.id).show();
-            jQuery('.ediprices_'+data.id).find('.orderitemstable').show();
+            jQuery('.ediprices_' + data.id).html(result);
+            jQuery('.ediprices_' + data.id).show();
+            jQuery('.ediprices_' + data.id).find('.orderitemstable').show();
             //jQuery('.orderitemstable').show();
         })
     }
@@ -558,15 +721,25 @@ jQuery(".alexander tr").live('mouseover', function () {
     var data = {}
     data.id = jQuery(this).attr("data-ref");
     jQuery(this).find('.orderitemstable').show();
-    jQuery(obj).find('.ediprices').show();
+    //jQuery('.ediprices').html('');
     var obj = this;
- 
+
 });
+jQuery(".ediprices").live('mouseout', function () {
+    jQuery(this).hide();
+})
+jQuery(".ediprices").live('mouseover', function () {
+    jQuery(this).show();
+})
+
+jQuery(".alexander").live('mouseout', function () {
+    jQuery('.ediprices').hide();
+});
+
 jQuery(".alexander tr").live('mouseout', function () {
     //alert('sss');
     jQuery('.orderitemstable').hide();
-    jQuery(obj).find('.ediprices').show();
-    
+
 });
 
 jQuery(".offcanvas-tools .md-close").live("click", function () {
