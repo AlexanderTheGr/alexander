@@ -1393,8 +1393,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //echo $params["fSQL"];
         echo $params["fSQL"];
         // echo "<BR>";
-        exit;
-        return;
+        //return;
         $softone = new Softone();
         $datas = $softone->createSql($params);
         echo count($datas->data);
@@ -2218,13 +2217,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             echo "<BR>" . count($datas) . "<BR>";
             //exit;
         } else {
-            $filters = "ITEM.MTRL=80000&ITEM.MTRL_TO=200000"; 
+            $filters = "ITEM.MTRL=1&ITEM.MTRL_TO=10000"; 
             $datas = $softone->retrieveData("ITEM", "apothema",$filters);
             echo "<BR>" . count($datas) . "<BR>";
             //print_r($datas);
             //exit;
         }
-
+        exit;
         //$datas = $softone->retrieveData("ITEM", "apothema");
         //echo 'Sss';
         echo count($datas) . "<BR>";
