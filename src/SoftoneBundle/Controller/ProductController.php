@@ -267,7 +267,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $sup = trim(strtoupper($product->getErpSupplier()));
             $SoftoneSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")
                     ->findOneBy(array('title' => $sup));
-            $SoftoneSupplier->toSoftone();
+            //$SoftoneSupplier->toSoftone();
             if (@$SoftoneSupplier->id == 0) {
                 $TecdocSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:TecdocSupplier")
                         ->findOneBy(array('supplier' => $sup));
@@ -297,7 +297,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $sup = trim(strtoupper($product->getErpSupplier()));
             $SoftoneSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")
                     ->findOneBy(array('title' => $sup));
-            $SoftoneSupplier->toSoftone();
+           // $SoftoneSupplier->toSoftone();
             if (@$SoftoneSupplier->id == 0) {
                 $SoftoneSupplier = new \SoftoneBundle\Entity\SoftoneSupplier;
                 $SoftoneSupplier->setTitle($sup);
