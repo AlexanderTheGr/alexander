@@ -573,6 +573,9 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             }
             $sql = "update `softone_customer` SET `customer_payment` = '1000' WHERE `customer_payment` IS NULL";
             $this->getDoctrine()->getConnection()->exec($sql);
+        } else {
+            $sql = "update `softone_customer` SET `store` = '1' WHERE `store` IS NULL";
+            $this->getDoctrine()->getConnection()->exec($sql);
         }
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") != 'tsakonas') {
             $sql = "update `softone_customer` set `price_field` = 'itemPricer' WHERE `price_field` IS NULL";
