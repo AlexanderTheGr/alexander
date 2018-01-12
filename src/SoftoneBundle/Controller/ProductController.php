@@ -267,7 +267,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $sup = trim(strtoupper($product->getErpSupplier()));
             $SoftoneSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")
                     ->findOneBy(array('title' => $sup));
-            //$SoftoneSupplier->toSoftone();
             if (@$SoftoneSupplier->id == 0) {
                 $TecdocSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:TecdocSupplier")
                         ->findOneBy(array('supplier' => $sup));
@@ -297,7 +296,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $sup = trim(strtoupper($product->getErpSupplier()));
             $SoftoneSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")
                     ->findOneBy(array('title' => $sup));
-           // $SoftoneSupplier->toSoftone();
             if (@$SoftoneSupplier->id == 0) {
                 $SoftoneSupplier = new \SoftoneBundle\Entity\SoftoneSupplier;
                 $SoftoneSupplier->setTitle($sup);
@@ -1777,6 +1775,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
               $results = $statement->fetchAll();
              * 
              */
+            foreach ($results as $result) {
+                $json["id"] = $result["id"];
+                $json["label"] = $result["title"] . ' ' . $result["erp_code"];
+                $json["value"] = $result["erp_code"];
+                $jsonArr[] = $json;
+            }
+            $json = json_encode($jsonArr);            
         } else {
             $query = $em->createQuery(
                     "SELECT  p.id, p.title, p.erpCode
@@ -1786,15 +1791,17 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
             $results = $query->getResult();
             $jsonArr = array();
+            print_r($results);
+            foreach ($results as $result) {
+                $json["id"] = $result["id"];
+                $json["label"] = $result["title"] . ' ' . $result["erpCode"];
+                $json["value"] = $result["erpCode"];
+                $jsonArr[] = $json;
+            }
+            $json = json_encode($jsonArr);            
         }
-        //print_r($results);
-        foreach ($results as $result) {
-            $json["id"] = $result["id"];
-            $json["label"] = $result["title"] . ' ' . $result["erpCode"];
-            $json["value"] = $result["erpCode"];
-            $jsonArr[] = $json;
-        }
-        $json = json_encode($jsonArr);
+
+
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
