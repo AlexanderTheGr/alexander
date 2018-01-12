@@ -49,7 +49,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
      */
     public function indexAction() {
 
-        //$this->setfullytrans();
+        $this->setfullytrans();
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'tsakonas') {
             //$this->readInvoiceFile();
         }
