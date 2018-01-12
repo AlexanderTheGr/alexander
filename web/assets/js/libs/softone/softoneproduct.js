@@ -72,7 +72,7 @@ jQuery('.productcategorychk').live('click', function () {
 
 setTimeout(function () {
     jQuery("select.form-control").chosen({width: "100%"});
-    var obj = $(".synafiacode input");
+    var obj = jQuery(".synafiacode input");
     var $elem = jQuery(".synafiacode input").autocomplete({
         source: "/product/autocompletesearch",
         method: "POST",
@@ -80,7 +80,7 @@ setTimeout(function () {
         select: function (event, ui) {
             var data = {};
             data.erp_code = ui.item.value;
-            data.id = obj.attr("id");
+            data.id = jQuery(".synafiacode input").attr("id");
             $("#loaderer").show();
             $.post("/product/addRelation", data, function (result) {
                 $("#loaderer").hide();
