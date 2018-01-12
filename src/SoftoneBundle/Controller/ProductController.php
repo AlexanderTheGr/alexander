@@ -2213,7 +2213,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             $filters = "ITEM.V5=*";
-            $datas = $softone->retrieveData("ITEM", "apothema", $filters);
+            $datas = $softone->retrieveData("ITEM", "apothema_full", $filters);
             echo "<BR>" . count($datas) . "<BR>";
             //exit;
         } else {
