@@ -2213,7 +2213,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             $filters = "ITEM.V5=*";
-            $datas = $softone->retrieveData("ITEM", "apothema_full", $filters);
+            $datas = $softone->retrieveData("ITEM", "apothema", $filters);
             echo "<BR>" . count($datas) . "<BR>";
             //exit;
         } else {
@@ -2310,9 +2310,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $sql = "update softone_product set reserved = 0";
             echo $sql . "<BR>";
             $em->getConnection()->exec($sql);
-            $sql = "update softone_product set qty = 0";
-            echo $sql . "<BR>";
-            $em->getConnection()->exec($sql);
+            //$sql = "update softone_product set qty = 0";
+            //echo $sql . "<BR>";
+            //$em->getConnection()->exec($sql);
             
             foreach ((array) $reserveds as $reserved => $reference) {
                 $sql = "update softone_product set reserved = '" . $reserved . "' where reference in (" . implode(",", $reference) . ")";
