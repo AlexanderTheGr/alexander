@@ -267,6 +267,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $sup = trim(strtoupper($product->getErpSupplier()));
             $SoftoneSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")
                     ->findOneBy(array('title' => $sup));
+            $SoftoneSupplier->toSoftone();
             if (@$SoftoneSupplier->id == 0) {
                 $TecdocSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:TecdocSupplier")
                         ->findOneBy(array('supplier' => $sup));
@@ -2227,7 +2228,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //$datas = $softone->retrieveData("ITEM", "apothema");
         //echo 'Sss';
         echo count($datas) . "<BR>";
-        print_r($datas);
+        //print_r($datas);
         //exit;
         $em = $this->getDoctrine()->getManager();
 
