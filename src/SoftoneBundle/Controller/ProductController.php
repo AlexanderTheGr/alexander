@@ -1789,7 +1789,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ($results as $result) {
             $json["id"] = $result["id"];
             $json["label"] = $result["title"] . ' ' . $result["erp_code"];
-            $json["value"] = $result["erp_code"];
+            $json["value"] = $result["erpCode"];
             $jsonArr[] = $json;
         }
         $json = json_encode($jsonArr);
