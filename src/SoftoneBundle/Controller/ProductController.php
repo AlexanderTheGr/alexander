@@ -724,8 +724,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
 
 
-            $fields["itemMarkupw"] = array("label" => $this->getTranslation("Wholessle Markup"), "className" => "col-md-2", "required" => false);
-            $fields["itemMarkupr"] = array("label" => $this->getTranslation("Retail Markup"), "className" => "col-md-2", "required" => false);
+            $fields["itemPricer"] = array("label" => $this->getTranslation("Wholessle"), "className" => "col-md-2", "required" => false);
+            $fields["itemPricew"] = array("label" => $this->getTranslation("Retail"), "className" => "col-md-2", "required" => false);
             $fields["itemMarkupw"] = array("label" => $this->getTranslation("Wholessle Markup"), "className" => "col-md-2", "required" => false);
             $fields["itemMarkupr"] = array("label" => $this->getTranslation("Retail Markup"), "className" => "col-md-2", "required" => false);
             $fields["itemRemarks"] = array("label" => $this->getTranslation("Remarks"), "required" => false, "className" => "col-md-6 col-sm-6");
