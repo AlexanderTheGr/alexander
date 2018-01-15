@@ -1764,13 +1764,14 @@ class ProductController extends Main {
             $StoreDetails = $response->GetProductsResult->StoreDetails;
         }
         */
-        print_r($StoreDetails);
+        //print_r($StoreDetails);
         exit;
 
         $storeIds = array();
         foreach ($StoreDetails as $data) {
             //if ($i++ < ($cnt-10000))
-            //   continue;
+            print_r( $data);
+               continue;
             $i++;
             $storeIds = array();
             //if ($i > 180000 AND $i<250000) {            
