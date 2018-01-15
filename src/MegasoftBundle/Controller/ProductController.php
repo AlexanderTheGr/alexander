@@ -1381,7 +1381,7 @@ class ProductController extends Main {
         $allowedips = $this->getSetting("MegasoftBundle:Product:Allowedips");
         $allowedipsArr = explode(",", $allowedips);
         if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
-            $sql = "SELECT * FROM  `megasoft_product` where erp_supplier != 'GBG' AND ts >= '" . date("Y-m-d", strtotime("-10 days")) . "' order by id desc";
+            $sql = "SELECT * FROM  `megasoft_product` where erp_supplier != 'GBG' AND ts >= '" . date("Y-m-d", strtotime("-1 days")) . "' order by id desc";
             //$sql = "SELECT * FROM `megasoft_product` WHERE `manufacturer` != 515 AND erp_supplier != 'GBG'";
             $connection = $this->getDoctrine()->getConnection();
             $statement = $connection->prepare($sql);
