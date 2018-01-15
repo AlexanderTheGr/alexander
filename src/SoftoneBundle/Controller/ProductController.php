@@ -1127,12 +1127,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             } else {
                 //echo $data["ISACTIVE"]."<BR>";
                 if ($data["ISACTIVE"] == 1) {
-                    if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'gianop') {
+                    //if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'gianop') {
                         $name = str_replace(" - " . $data["CODE"], "", $data["NAME"]);
                         $sql = "update softone_softone_supplier SET title = '" . addslashes($name) . "', code = '" . $data["CODE"] . "' where id = '" . $data["MTRMANFCTR"] . "'";
                         echo $sql . "<BR>";
                         //$this->getDoctrine()->getConnection()->exec($sql);
-                    }
+                    //}
                 } else {
                     $sql = "delete from softone_softone_supplier where id = '" . $data["MTRMANFCTR"] . "'";
                     echo $sql . "<BR>";
