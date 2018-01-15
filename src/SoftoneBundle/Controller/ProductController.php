@@ -1110,7 +1110,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
         //echo 'sss';
         //echo "<PRE>";
-        print_r($datas);
+        //print_r($datas);
         //echo "</PRE>";
         //exit;
 
@@ -1122,6 +1122,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 if ($data["ISACTIVE"] == 1) {
                     $sql = "Insert softone_softone_supplier SET id = '" . $data["MTRMANFCTR"] . "', title = '" . addslashes($data["NAME"]) . "', code = '" . $data["CODE"] . "'";
                     $this->getDoctrine()->getConnection()->exec($sql);
+                    echo $sql."<BR>";
                 }
             } else {
                 //echo $data["ISACTIVE"]."<BR>";
@@ -1140,7 +1141,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 //$this->getDoctrine()->getConnection()->exec($sql);			
             }
         }
-        //exit;
+        exit;
     }
 
     function fixSupplier($supplier) {
