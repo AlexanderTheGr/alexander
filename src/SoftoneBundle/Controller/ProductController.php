@@ -1099,12 +1099,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
      */
     
     function retrieveMtrmanfctr() {
-        $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M ";
+        
         $softone = new Softone();
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             $datas = $softone->getManufactures($params);
             $datas = $softone->createSql($params);
         } else {
+            $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M where M.MTRMANFCTR != MTRMANFCTR";
             $datas = $softone->createSql2($params);
         }
         //echo 'sss';
