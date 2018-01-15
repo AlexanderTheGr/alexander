@@ -1105,7 +1105,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $datas = $softone->getManufactures($params);
             $datas = $softone->createSql($params);
         } else {
-            $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M where M.MTRMANFCTR != 4723";
+            $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M where M.MTRMANFCTR != 452";
             $datas = $softone->createSql2($params);
         }
         //echo 'sss';
