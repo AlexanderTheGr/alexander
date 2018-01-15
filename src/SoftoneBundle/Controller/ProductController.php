@@ -715,7 +715,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
             $fields["itemMtrplace"] = array("label" => $this->getTranslation("Place"), "className" => "col-md-1", "required" => false);
 
-            $fields["qty"] = array("label" => $this->getTranslation("Place"), "className" => "col-md-1", "required" => false);
+            $fields["qty"] = array("label" => $this->getTranslation("Απόθεμα"), "className" => "col-md-1", "required" => false);
             $fields["reserved"] = array("label" => $this->getTranslation("Δεσμευμενα"), "className" => "col-md-1", "required" => false);
 
             //$fields["itemMtrsup"] = array("label" => "Συνήθης προμηθευτής", "className" => "col-md-2", "required" => false);        
