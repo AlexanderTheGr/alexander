@@ -1105,7 +1105,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $datas = $softone->getManufactures($params);
             $datas = $softone->createSql($params);
         } else {
-            $datas = $softone->createSql($params);
+            $datas = $softone->createSql2($params);
         }
         //echo 'sss';
         //echo "<PRE>";
