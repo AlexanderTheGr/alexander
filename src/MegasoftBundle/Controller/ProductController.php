@@ -1381,7 +1381,7 @@ class ProductController extends Main {
         $allowedips = $this->getSetting("MegasoftBundle:Product:Allowedips");
         $allowedipsArr = explode(",", $allowedips);
         if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
-            $sql = "SELECT * FROM  `megasoft_product` where erp_supplier != 'GBG' AND ts >= '" . date("Y-m-d", strtotime("-3 days")) . "' order by id desc";
+            $sql = "SELECT * FROM  `megasoft_product` where erp_supplier != 'GBG' AND ts >= '" . date("Y-m-d", strtotime("-10 days")) . "' order by id desc";
             //$sql = "SELECT * FROM `megasoft_product` WHERE `manufacturer` != 515 AND erp_supplier != 'GBG'";
             $connection = $this->getDoctrine()->getConnection();
             $statement = $connection->prepare($sql);
@@ -1765,13 +1765,12 @@ class ProductController extends Main {
         }
         */
         //print_r($StoreDetails);
-        //exit;
+        // exit;
 
         $storeIds = array();
         foreach ($StoreDetails as $data) {
             //if ($i++ < ($cnt-10000))
-            print_r( $data);
-               continue;
+            //   continue;
             $i++;
             $storeIds = array();
             //if ($i > 180000 AND $i<250000) {            
@@ -1783,13 +1782,13 @@ class ProductController extends Main {
             //}
             //if ($i++ > 100) return;
         }
-        exit;
+
         $params["JsonStrWeb"] = json_encode(array("items" => $storeIds));
         $this->setCustomFields($soap, $params);
 
         $sql = 'UPDATE `megasoft_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
         $this->getDoctrine()->getConnection()->exec($sql);
-        //$this->retrieveProductPrices();
+        $this->retrieveProductPrices();
         //exit;
         //;
     }
