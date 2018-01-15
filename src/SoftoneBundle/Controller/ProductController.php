@@ -1130,7 +1130,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     //if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'gianop') {
                         $name = str_replace(" - " . $data["CODE"], "", $data["NAME"]);
                         $sql = "update softone_softone_supplier SET title = '" . addslashes($name) . "', code = '" . $data["CODE"] . "' where id = '" . $data["MTRMANFCTR"] . "'";
-                        echo $sql . "<BR>";
+                        //echo $sql . "<BR>";
                         //$this->getDoctrine()->getConnection()->exec($sql);
                     //}
                 } else {
@@ -1141,7 +1141,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 //$this->getDoctrine()->getConnection()->exec($sql);			
             }
         }
-        exit;
+       // exit;
     }
 
     function fixSupplier($supplier) {
