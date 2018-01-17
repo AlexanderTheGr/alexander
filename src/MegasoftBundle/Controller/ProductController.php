@@ -1783,13 +1783,11 @@ class ProductController extends Main {
             //}
             if ($i++ > 10) break;
         }
-        print_r($storeIds);
-        echo "<BR>";
-        return;
+
         
         $params["JsonStrWeb"] = json_encode(array("items" => $storeIds));
         $this->setCustomFields($soap, $params);
-
+        exit;
         $sql = 'UPDATE `megasoft_product` SET tecdoc_supplier_id = NULL WHERE  `tecdoc_supplier_id` = 0';
         $this->getDoctrine()->getConnection()->exec($sql);
         $this->retrieveProductPrices();
