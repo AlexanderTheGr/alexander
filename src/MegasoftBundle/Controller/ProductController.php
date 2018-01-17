@@ -1768,7 +1768,7 @@ class ProductController extends Main {
         // exit;
 
         $storeIds = array();
-        /*
+        
         foreach ($StoreDetails as $data) {
             //if ($i++ < ($cnt-10000))
             //   continue;
@@ -1777,14 +1777,12 @@ class ProductController extends Main {
             //if ($i > 180000 AND $i<250000) {            
             $data = (array) $data;
             $storeIds[] = array("storeid" => addslashes($data["StoreId"]));
-            $this->setProduct($data);
+            //$this->setProduct($data);
             //} else {
             // continue;
             //}
             //if ($i++ > 100) return;
         }
-         * 
-         */
 
         $params["JsonStrWeb"] = json_encode(array("items" => $storeIds));
         $this->setCustomFields($soap, $params);
