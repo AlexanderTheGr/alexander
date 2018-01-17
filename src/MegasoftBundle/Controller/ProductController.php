@@ -1738,7 +1738,7 @@ class ProductController extends Main {
         //echo count($xml);
         //$params["Date"] = "2016-06-21";
         //$response = $soap->__soapCall("GetProducts", array($params));
-        print_r($StoreDetails);
+
         $cnt = count($StoreDetails);
         echo "<BR>[" . $cnt . "]<BR>";
         // exit;
@@ -1764,7 +1764,7 @@ class ProductController extends Main {
             $StoreDetails = $response->GetProductsResult->StoreDetails;
         }
         */
-        print_r($StoreDetails);
+        //print_r($StoreDetails);
         // exit;
 
         $storeIds = array();
@@ -1777,11 +1777,11 @@ class ProductController extends Main {
             //if ($i > 180000 AND $i<250000) {            
             $data = (array) $data;
             $storeIds[] = array("storeid" => addslashes($data["StoreId"]));
-            //$this->setProduct($data);
+            $this->setProduct($data);
             //} else {
             // continue;
             //}
-            //if ($i++ > 100) return;
+            if ($i++ > 10) break;
         }
         print_r($storeIds);
         echo "<BR>";
