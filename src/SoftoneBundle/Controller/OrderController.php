@@ -507,6 +507,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     function getCustomerDetails($entity) {
+        $payment[1000] = "Τοίς Μετρητοίς"; //array("value" => "1000", "name" => "Τοίς Μετρητοίς");
+        $payment[1001] = "Κάρτα"; // array("value" => "1001", "name" => "Κάρτα");
+        $payment[1002] = "Αντικαταβολή"; //array("value" => "1002", "name" => "Αντικαταβολή");
+        $payment[1003] = "Πίστωση 30 ημερών"; // array("value" => "1003", "name" => "Πίστωση 30 ημερών");
+        $payment[1004] = "Πίστωση 60 ημερών"; //array("value" => "1004", "name" => "Πίστωση 60 ημερών");
+        $payment[1005] = "Πίστωση 90 ημερών"; //array("value" => "1005", "name" => "Πίστωση 90 ημερών");
+        $payment[1006] = "Τραπεζική Κατάθεση"; // array("value" => "1006", "name" => "Τραπεζική Κατάθεση");        
         $customer = $entity->getCustomer();
         $html = "<a target='_blanc' href='/customer/view/" . $customer->getId() . "'>Καρτέλα Πελάτη</a>";
         $html .= "<table>";
@@ -521,6 +528,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $html .= "<tr><th>" . $this->getTranslation("Customer Zip") . ": </th><td>" . $customer->getCustomerZip() . "</td></tr>";
         $html .= "<tr><th>" . $this->getTranslation("Customer Phone 1") . ": </th><td>" . $customer->getCustomerPhone01() . "</td></tr>";
         $html .= "<tr><th>" . $this->getTranslation("Customer Phone 2") . ": </th><td>" . $customer->getCustomerPhone02() . "</td></tr>";
+
+        $html .= "<tr><th>" . $this->getTranslation("Ομάδα") . ": </th><td>" . $customer->getCustomergroup()->getTitle() . "</td></tr>";
+        $html .= "<tr><th>" . $this->getTranslation("Τρόπος Πληρωμής") . ": </th><td>" . $payment[$customer->getCustomerPayment()] . "</td></tr>";
+
         $html .= "</table>";
         return $html;
     }
@@ -1803,6 +1814,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         return str_replace("\n", "", trim($tmpl));
         return $response;
     }
+
     /**
      * @Route("/order/getdatatable")
      */
@@ -2447,7 +2459,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 }
             }
         header("Location: /order/order");
-        exit;    
+        exit;
     }
 
     /**
