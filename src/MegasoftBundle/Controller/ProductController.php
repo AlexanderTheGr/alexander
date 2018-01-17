@@ -1738,7 +1738,7 @@ class ProductController extends Main {
         //echo count($xml);
         //$params["Date"] = "2016-06-21";
         //$response = $soap->__soapCall("GetProducts", array($params));
-
+        print_r($StoreDetails);
         $cnt = count($StoreDetails);
         echo "<BR>[" . $cnt . "]<BR>";
         // exit;
