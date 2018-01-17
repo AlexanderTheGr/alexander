@@ -1764,7 +1764,7 @@ class ProductController extends Main {
             $StoreDetails = $response->GetProductsResult->StoreDetails;
         }
         */
-        //print_r($StoreDetails);
+        print_r($StoreDetails);
         // exit;
 
         $storeIds = array();
