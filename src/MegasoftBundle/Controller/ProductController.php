@@ -1773,11 +1773,11 @@ class ProductController extends Main {
             //if ($i++ < ($cnt-10000))
             //   continue;
             $i++;
-            $storeIds = array();
+            //$storeIds = array();
             //if ($i > 180000 AND $i<250000) {            
             $data = (array) $data;
             $storeIds[] = array("storeid" => addslashes($data["StoreId"]));
-            $this->setProduct($data);
+            //$this->setProduct($data);
             //} else {
             // continue;
             //}
