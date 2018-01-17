@@ -1781,7 +1781,7 @@ class ProductController extends Main {
             //} else {
             // continue;
             //}
-            if ($i++ > 10) break;
+            //if ($i++ > 10) break;
         }
 
         
