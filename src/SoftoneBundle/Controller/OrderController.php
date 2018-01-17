@@ -532,6 +532,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $html .= "<tr><th>" . $this->getTranslation("Ομάδα") . ": </th><td>" . $customer->getCustomergroup()->getTitle() . "</td></tr>";
         $html .= "<tr><th>" . $this->getTranslation("Τρόπος Πληρωμής") . ": </th><td>" . $payment[$customer->getCustomerPayment()] . "</td></tr>";
 
+        
         $html .= "</table>";
         return $html;
     }
