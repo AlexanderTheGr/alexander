@@ -91,7 +91,14 @@ class CustomerController extends Main {
                 $supplierArr[$supplier->getId()] = $supplier->getTitle();
             }
             $supplierjson = json_encode($supplierArr);
-
+            
+            $suppliers2 = $this->getDoctrine()->getRepository("MegasoftBundle:Supplier")->findAll();
+            $supplier2Arr = array();
+            foreach ($suppliers as $supplier) {
+                $supplier2Arr[$supplier->getId()] = $supplier->getTitle();
+            }
+            $supplier2json = json_encode($supplier2Arr);
+            
             $categories = $this->getDoctrine()->getRepository("MegasoftBundle:Category")->findBy(array("parent" => 0));
             $categoriesArr = array();
             foreach ($categories as $category) {
@@ -132,6 +139,7 @@ class CustomerController extends Main {
                     'supplierjson' => $supplierjson,
                     "categoryjson" => $categoryjson,
                     "productsalejson" => $productsalejson,
+                    "supplier2json" => $supplier2json,
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
 
