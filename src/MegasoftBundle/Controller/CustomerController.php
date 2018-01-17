@@ -94,8 +94,8 @@ class CustomerController extends Main {
             
             $suppliers2 = $this->getDoctrine()->getRepository("MegasoftBundle:Supplier")->findAll();
             $supplier2Arr = array();
-            foreach ($suppliers as $supplier) {
-                $supplier2Arr[$supplier->getId()] = $supplier->getTitle();
+            foreach ($suppliers2 as $supplier) {
+                $supplier2Arr[$supplier->getId()] = $supplier->getSupplierName();
             }
             $supplier2json = json_encode($supplier2Arr);
             
