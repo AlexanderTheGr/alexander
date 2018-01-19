@@ -1741,7 +1741,7 @@ class ProductController extends Main {
 
         $cnt = count($StoreDetails);
         echo "<BR>[" . $cnt . "]<BR>";
-        // exit;
+         exit;
 
 
 
