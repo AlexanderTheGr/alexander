@@ -1775,7 +1775,7 @@ class ProductController extends Main {
             $i++;
             echo "[".$i."]<BR>";
             $storeIds = array();
-            if ($i > 104848) {            
+            if ($i > 140101) {            
                 $data = (array) $data;
                 if ($i % 200 == 0) {
                     $k++;
