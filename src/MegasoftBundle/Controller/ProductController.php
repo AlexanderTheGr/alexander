@@ -1773,8 +1773,9 @@ class ProductController extends Main {
             //if ($i++ < ($cnt-10000))
             //   continue;
             $i++;
+            echo "[".$i."]<BR>";
             $storeIds = array();
-            if ($i > 35000) {            
+            if ($i > 70000) {            
                 $data = (array) $data;
                 if ($i % 200 == 0) {
                     $k++;
