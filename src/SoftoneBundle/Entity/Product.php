@@ -2187,7 +2187,7 @@ class Product extends Entity {
         $objectArr2["cccWebUpd"] = $this->cccWebUpd;
         $objectArr2["REMARKS"] = $this->itemRemarks;
         $objectArr2["MTRMARK"] = $this->itemMtrmark;
-
+        $objectArr2["CRDCARDMODE"] = "Καμιά";
         $objectArr2["MTRMANFCTR"] = $this->itemMtrmanfctr > 0 ? $this->itemMtrmanfctr : $this->getSupplierId()->getId();
         $objectArr2["ISACTIVE"] = (int) $this->itemIsactive;
         $objectArr[0] = $objectArr2;
