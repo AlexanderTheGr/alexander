@@ -1741,7 +1741,7 @@ class ProductController extends Main {
 
         $cnt = count($StoreDetails);
         echo "<BR>[" . $cnt . "]<BR>";
-         exit;
+        // exit;
 
 
 
@@ -1774,13 +1774,14 @@ class ProductController extends Main {
             //   continue;
             $i++;
             $storeIds = array();
-            //if ($i > 180000 AND $i<250000) {            
-            $data = (array) $data;
-            if ($i % 200 == 0) {
-                $k++;
+            if ($i > 35000) {            
+                $data = (array) $data;
+                if ($i % 200 == 0) {
+                    $k++;
+                }
+                $storeIdss[$k][] = array("storeid" => addslashes($data["StoreId"]));
+                $this->setProduct($data);
             }
-            $storeIdss[$k][] = array("storeid" => addslashes($data["StoreId"]));
-            $this->setProduct($data);
             //} else {
             // continue;
             //}
