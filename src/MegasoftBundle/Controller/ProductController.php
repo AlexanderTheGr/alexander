@@ -1929,7 +1929,7 @@ class ProductController extends Main {
             $q[] = "`ts` = '" . date("Y-m-d") . "'";
             $q[] = "`product_sale` = '1'";
             $sql = "insert " . strtolower($params["table"]) . " set " . implode(",", $q) . "";
-            echo $sql . "<BR>";
+            //echo $sql . "<BR>";
             //echo "-";
             //return;
             $this->getDoctrine()->getManager()->getConnection()->exec($sql);
@@ -1937,7 +1937,7 @@ class ProductController extends Main {
             //return;
             $q[] = "`ts` = '" . date("Y-m-d") . "'";
             $sql = "update " . strtolower($params["table"]) . " set " . implode(",", $q) . " where id = '" . $entity->getId() . "'";
-            echo $sql;
+            //echo $sql;
             //echo $entity->getId() . "<BR>";
             //echo ".";
             $this->getDoctrine()->getManager()->getConnection()->exec($sql);
