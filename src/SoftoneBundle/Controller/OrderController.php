@@ -1262,6 +1262,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $order = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Order")
                 ->find($id);
+        if ($order->getFullytrans() > 0) {
+            return new Response(
+                json_encode(array()), 200, array('Content-Type' => 'application/json')
+            );
+        }        
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($order->getCustomer());
@@ -1284,6 +1289,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         if ($order->getReference() > 0) {
             $data = $softone->delData($object, (int) $order->getReference());
         }
+
         $objectArr = array();
         $objectArr[0]["TRDR"] = $customer->getReference();
         $objectArr[0]["SERIESNUM"] = $order->getId();
@@ -1330,6 +1336,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $locateinfo = "MTRL,NAME,PRICE,QTY1,VAT;ITELINES:DISC1PRC,ITELINES:LINEVAL,MTRL,MTRL_ITEM_CODE,MTRL_ITEM_CODE1,MTRL_ITEM_NAME,MTRL_ITEM_NAME1,PRICE,QTY1;SALDOC:BUSUNITS,EXPN,TRDR,MTRL,PRICE,QTY1,VAT";
         //print_r($dataOut);
         file_put_contents("/home2/partsbox/public_html/OrderdatIn.txt", print_r($dataOut, true));
+
         $out = $softone->setData((array) $dataOut, $object, (int) 0);
         //print_r($out);
         if (@$out->id == 0) {
