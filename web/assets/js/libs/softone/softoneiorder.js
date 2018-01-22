@@ -388,7 +388,7 @@ jQuery(".SoftoneBundleProductQty").live('keyup', function (e) {
         var data = {}
         data.order = orderid;
         data.item = jQuery(this).attr('data-id');
-        data.price = jQuery("#SoftoneBundleProductItemPricew01_" + data.item).val();
+        data.price = jQuery("#SoftoneBundleProductPricew_" + data.item).val();
         data.qty = jQuery(this).val();
         $("#loaderer").show();
         $.post("/order/addorderitem/", data, function (result) {
