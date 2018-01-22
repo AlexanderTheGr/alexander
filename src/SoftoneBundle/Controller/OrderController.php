@@ -2163,12 +2163,20 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         if ($customer->getCustomerTrdcategory() == 3003) {
             $vat = 1;
         }
-        $price = $product->getGroupedPrice($customer, $vat);
+        
+        if ($request->request->get("price") > 0) {
+            //$price = $product->getGroupedPrice($customer, $vat);
+            $disc1prc = $product->getGroupedDiscount($customer, $vat);
+            $price = $request->request->get("price"); 
+        } else {
+            $disc1prc = $product->getGroupedDiscount($customer, $vat);
+            $price = $product->getGroupedPrice($customer, $vat);
+        }
 
         $orderItem->setField("qty", $qty + $request->request->get("qty"));
         $orderItem->setField("price", $price);
         $orderItem->setField("lineval", $product->getGroupedDiscountPrice($customer, $vat) * $request->request->get("qty"));
-        $orderItem->setField("disc1prc", $product->getGroupedDiscount($customer, $vat));
+        $orderItem->setField("disc1prc", $disc1prc);
         //$orderItem->setField("store", $store);
         $orderItem->setField("chk", 1);
 
