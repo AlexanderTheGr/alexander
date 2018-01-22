@@ -2170,7 +2170,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $disc1prc = $product->getGroupedDiscount($customer, $vat);
             $price = $product->getGroupedPrice($customer, $vat);
             $lineval = $request->request->get("price") * $qty;
-            $disc1prc = (1 - (($request->request->get("price") / $qty) /  $price))*100;
+            $disc1prc = (1 - (($request->request->get("price")) /  $price))*100;
             
         } else {
             $disc1prc = $product->getGroupedDiscount($customer, $vat);
