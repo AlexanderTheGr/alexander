@@ -1101,7 +1101,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 //    $json[8] = $obj->getGroupedDiscountPrice($customer, 1) . " / " . $obj->getGroupedDiscountPrice($customer, $vat); //str_replace($obj->$priceField, $obj->getGroupedDiscountPrice($customer), $json[5]);
                 //} else {
                     $json[8] = $obj->getGroupedDiscountPrice($customer, 1) . " / " . $obj->getGroupedDiscountPrice($customer, $vat); //str_replace($obj->$priceField, $obj->getGroupedDiscountPrice($customer), $json[5]);
-                    $json[8] .= '<BR><input style="width: 50%;" data-id="' . $obj->getId() . '" data-rep="SoftoneBundle:Product" data-ref="' . $obj->getId() . '" id="SoftoneBundleProducPrice_' . $obj->getId() . '" class="SoftoneBundleProducPrice" type="text" value="'.$obj->getGroupedDiscountPrice($customer, $vat).'" />';
+                    $json[8] .= '<BR><input style="width: 80%;" data-id="' . $obj->getId() . '" data-rep="SoftoneBundle:Product" data-ref="' . $obj->getId() . '" id="SoftoneBundleProducPrice_' . $obj->getId() . '" class="SoftoneBundleProducPrice" type="text" value="'.$obj->getGroupedDiscountPrice($customer, $vat).'" />';
                 //}
                 //$json[6] = str_replace("value='---'", "value='1'", $json[6]);
                 $json[9] = $obj->getSisxetisi();
