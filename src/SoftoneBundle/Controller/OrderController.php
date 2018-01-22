@@ -2163,19 +2163,24 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         if ($customer->getCustomerTrdcategory() == 3003) {
             $vat = 1;
         }
-        
+        //$qty + $request->request->get("qty");
+        $qty = $qty + $request->request->get("qty");
         if ($request->request->get("price") > 0) {
             //$price = $product->getGroupedPrice($customer, $vat);
             $disc1prc = $product->getGroupedDiscount($customer, $vat);
-            $price = $request->request->get("price"); 
+            $price = $product->getGroupedPrice($customer, $vat);
+            $lineval = $request->request->get("price") * $qty;
+            $disc1prc = 1 - (($request->request->get("price") / $qty) /  $price);
+            
         } else {
             $disc1prc = $product->getGroupedDiscount($customer, $vat);
             $price = $product->getGroupedPrice($customer, $vat);
+            $lineval = $product->getGroupedDiscountPrice($customer, $vat) * $qty;
         }
 
-        $orderItem->setField("qty", $qty + $request->request->get("qty"));
+        $orderItem->setField("qty", $qty);
         $orderItem->setField("price", $price);
-        $orderItem->setField("lineval", $product->getGroupedDiscountPrice($customer, $vat) * $request->request->get("qty"));
+        $orderItem->setField("lineval", $lineval);
         $orderItem->setField("disc1prc", $disc1prc);
         //$orderItem->setField("store", $store);
         $orderItem->setField("chk", 1);
