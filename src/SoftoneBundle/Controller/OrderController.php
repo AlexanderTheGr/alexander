@@ -2396,6 +2396,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                             $customer->toSoftone();
                         }
                     } else {
+                        /*
                         $customer->setCustomerAddress($data[12]);
                         $customer->setCustomerCity($data[13]);
                         $customer->setCustomerZip($data[15]);
@@ -2407,6 +2408,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $customer->setCustomerIrsdata($data[22]);
                         $customer->setCustomerVatsts(1);
                         $this->flushpersist($customer);
+                         * 
+                         */
                         //$customer->toSoftone();
                     }
                     $order = $this->getDoctrine()
