@@ -182,6 +182,7 @@ class Customergrouprule {
                 $supplier = $Manufacturer->getId();
         } else {
             $supplier = $product->getManufacturer() ? $product->getManufacturer()->getId() : 0;
+            $supplier2 = $product->getSupplier() ? $product->getSupplier()->getId() : 0;
             //$supplier = 0;
             if ($product->getProductsale()) {
                 $productsale = $product->getProductsale()->getId();
@@ -191,10 +192,10 @@ class Customergrouprule {
         //echo $supplier;
         //
         //echo $this->rulesLoop($rule, $catsEp, $supplier) ? "true" : "false";
-        return $this->rulesLoop($rule, $catsEp, $supplier, $erpcode, $productsale);
+        return $this->rulesLoop($rule, $catsEp, $supplier, $erpcode, $productsale,$supplier2);
     }
 
-    function rulesLoop($rule, $catsEp, $supplier, $code, $productsale) {
+    function rulesLoop($rule, $catsEp, $supplier, $code, $productsale,$supplier2) {
         foreach ($rule["rules"] as $rl) {
 
             if (count($rl["rules"])) {
@@ -235,7 +236,18 @@ class Customergrouprule {
                         }
                     }
                 }
-
+                if ($rl["id"] == "supplier2") {
+                    if ($rl["operator"] == "equal") {
+                        if ($rl["value"] == $supplier2) {
+                            return true;
+                        }
+                    }
+                    if ($rl["operator"] == "not_equal") {
+                        if ($rl["value"] != $supplier2) {
+                            return true;
+                        }
+                    }
+                }
                 if ($rl["id"] == "productsale") {
                     if ($rl["operator"] == "equal") {
                         if ($rl["value"] == $productsale) {
