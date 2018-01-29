@@ -346,6 +346,7 @@ class Customerrule {
                         }
                     }
                 }
+                print_r($rl);
                 if ($rl["id"] == "supplier2") {
                     
                     //echo $rl["id"]." ".$rl["value"] ;
