@@ -216,6 +216,7 @@ class Customerrule {
                     ->findOneBy(array('title' => $editem->getBrand()));
             if ($Manufacturer)
                 $supplier = $Manufacturer->getId();
+            $supplier2 = $product->getSupplier() ? $product->getSupplier()->getId() : 0;
         } else {
             $supplier = $product->getManufacturer() ? $product->getManufacturer()->getId() : 0;
             $supplier2 = $product->getSupplier() ? $product->getSupplier()->getId() : 0;
