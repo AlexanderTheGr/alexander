@@ -235,7 +235,7 @@ class Customerrule {
         //print_r($rule["rules"]);
         foreach ($rule["rules"] as $rl) {
             echo ".";
-            print_r($r1);
+
             if (count($rl["rules"])) {
                 $out = $this->rulesLoop($rl, $catsEp, $supplier, $code, $productsale,$supplier2);
                 if ($rule["condition"] == "OR" AND $out == true) {
@@ -393,6 +393,6 @@ class Customerrule {
                 }
             }
         }
-        return $out;
+        return false;
     }
 }
