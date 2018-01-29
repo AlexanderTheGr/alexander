@@ -274,7 +274,7 @@ class Customerrule {
                     }
                 }
                 if ($rl["id"] == "supplier2") {
-                    print_r($rl);
+                    
                     //echo $rl["id"]." ".$rl["value"] ;
                     if ($supplier2 > 0) {
                         if ($rl["operator"] == "equal") {
@@ -346,7 +346,22 @@ class Customerrule {
                         }
                     }
                 }
-
+                if ($rl["id"] == "supplier2") {
+                    
+                    //echo $rl["id"]." ".$rl["value"] ;
+                    if ($supplier2 > 0) {
+                        if ($rl["operator"] == "equal") {
+                            if ($rl["value"] == $supplier2) {
+                                return true;
+                            }
+                        }
+                        if ($rl["operator"] == "not_equal") {
+                            if ($rl["value"] != $supplier2) {
+                                return true;
+                            }
+                        }
+                    }
+                }
 
                 if ($rl["id"] == "productsale") {
                     if ($rl["operator"] == "equal") {
