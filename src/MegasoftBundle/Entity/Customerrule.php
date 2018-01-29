@@ -225,7 +225,7 @@ class Customerrule {
             }
             $erpcode = $product->getErpCode();
         }
-        echo $supplier2.",";
+        //echo $supplier2.",";
         //
         //echo $this->rulesLoop($rule, $catsEp, $supplier) ? "true" : "false";
         return $this->rulesLoop($rule, $catsEp, $supplier, $erpcode, $productsale,$supplier2);
@@ -273,6 +273,7 @@ class Customerrule {
                     }
                 }
                 if ($rl["id"] == "supplier2") {
+                    echo $rl["id"]." ".$rl["value"] ;
                     if ($supplier2 > 0) {
                         if ($rl["operator"] == "equal") {
                             if ($rl["value"] == $supplier2) {
