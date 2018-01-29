@@ -232,7 +232,7 @@ class Customerrule {
     }
 
     function rulesLoop($rule, $catsEp, $supplier, $code, $productsale,$supplier2) {
-        //print_r($rule["rules"]);
+        print_r($rule["rules"]);
         foreach ($rule["rules"] as $rl) {
             print_r($r1);
             if (count($rl["rules"])) {
