@@ -64,7 +64,14 @@ class CustomergroupController extends Main {
             $supplierArr[$supplier->getId()] = $supplier->getTitle();
         }
         $supplierjson = json_encode($supplierArr);
-
+        
+        $suppliers2 = $this->getDoctrine()->getRepository("MegasoftBundle:Supplier")->findAll();
+        $supplier2Arr = array();
+        foreach ($suppliers2 as $supplier) {
+            $supplier2Arr[$supplier->getId()] = $supplier->getSupplierName();
+        }
+        $supplier2json = json_encode($supplier2Arr);
+        
         $categories = $this->getDoctrine()->getRepository("MegasoftBundle:Category")->findBy(array("parent" => 0));
         $categoriesArr = array();
         foreach ($categories as $category) {
@@ -104,6 +111,7 @@ class CustomergroupController extends Main {
                     'supplierjson' => $supplierjson,
                     "categoryjson" => $categoryjson,
                     "productsalejson" => $productsalejson,
+                    "supplier2json" => $supplier2json,
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
@@ -290,7 +298,7 @@ class CustomergroupController extends Main {
             $as["sortorder"] = 0;
             $as["price"] = "";
             $as["rules"] = array();
-            $as["price_field"] = $customer->getPriceField();      
+            $as["price_field"] = $customer->getPriceField();
             $jsonarr[0] = $as;
             foreach ((array) $rules as $rule) {
                 $as["id"] = $rule->getId();
