@@ -236,7 +236,7 @@ class Customerrule {
         foreach ($rule["rules"] as $rl) {
 
             if (count($rl["rules"])) {
-                $out = $this->rulesLoop($rl, $catsEp, $supplier, $code, $productsale);
+                $out = $this->rulesLoop($rl, $catsEp, $supplier, $code, $productsale,$supplier2);
                 if ($rule["condition"] == "OR" AND $out == true) {
                     return true;
                 }
@@ -346,7 +346,6 @@ class Customerrule {
                         }
                     }
                 }
-                print_r($rl);
                 if ($rl["id"] == "supplier2") {
                     
                     //echo $rl["id"]." ".$rl["value"] ;
