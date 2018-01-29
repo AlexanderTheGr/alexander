@@ -233,9 +233,9 @@ class Customerrule {
 
     function rulesLoop($rule, $catsEp, $supplier, $code, $productsale,$supplier2) {
         //print_r($rule["rules"]);
-        foreach ($rule["rules"] as $rl) {
+        foreach ($rule["rules"] as $key=>$rl) {
             //echo ".";
-
+            print_r($rule["rules"][$key]);
             if (count($rl["rules"])) {
                 $out = $this->rulesLoop($rl, $catsEp, $supplier, $code, $productsale,$supplier2);
                 if ($rule["condition"] == "OR" AND $out == true) {
