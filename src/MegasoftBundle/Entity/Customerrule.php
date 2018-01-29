@@ -272,14 +272,16 @@ class Customerrule {
                     }
                 }
                 if ($rl["id"] == "supplier2") {
-                    if ($rl["operator"] == "equal") {
-                        if ($rl["value"] == $supplier2) {
-                            return true;
+                    if ($supplier2 > 0) {
+                        if ($rl["operator"] == "equal") {
+                            if ($rl["value"] == $supplier2) {
+                                return true;
+                            }
                         }
-                    }
-                    if ($rl["operator"] == "not_equal") {
-                        if ($rl["value"] != $supplier2) {
-                            return true;
+                        if ($rl["operator"] == "not_equal") {
+                            if ($rl["value"] != $supplier2) {
+                                return true;
+                            }
                         }
                     }
                 }
