@@ -322,6 +322,7 @@ class Customergrouprule {
                         }
                     }
                 }
+                
                 if ($rl["id"] == "productsale") {
                     if ($rl["operator"] == "equal") {
                         if ($rl["value"] != $productsale) {
