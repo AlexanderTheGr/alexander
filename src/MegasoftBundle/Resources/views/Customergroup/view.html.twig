@@ -81,6 +81,15 @@
                                 operators: ['equal', 'not_equal']
                         },
                         {
+                        id: 'supplier2',
+                                label: 'Προμυθευτης',
+                                type: 'integer',
+                                input: 'select',
+                                values:{{supplier2json | raw}},
+                                /*operators: ['equal', 'not_equal', 'in', 'not_in', 'is_null', 'is_not_null']*/
+                                operators: ['equal', 'not_equal']
+                        },
+                        {
                         id: 'productsale',
                                 label: 'Προσφορά',
                                 type: 'integer',
