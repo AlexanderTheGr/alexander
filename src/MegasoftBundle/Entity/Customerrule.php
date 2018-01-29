@@ -232,6 +232,7 @@ class Customerrule {
     }
 
     function rulesLoop($rule, $catsEp, $supplier, $code, $productsale,$supplier2) {
+        print_r($rule["rules"]);
         foreach ($rule["rules"] as $rl) {
 
             if (count($rl["rules"])) {
@@ -273,7 +274,7 @@ class Customerrule {
                     }
                 }
                 if ($rl["id"] == "supplier2") {
-                    echo $rl["id"]." ".$rl["value"] ;
+                    //echo $rl["id"]." ".$rl["value"] ;
                     if ($supplier2 > 0) {
                         if ($rl["operator"] == "equal") {
                             if ($rl["value"] == $supplier2) {
