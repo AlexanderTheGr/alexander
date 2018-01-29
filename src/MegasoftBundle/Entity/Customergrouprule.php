@@ -197,9 +197,9 @@ class Customergrouprule {
 
     function rulesLoop($rule, $catsEp, $supplier, $code, $productsale,$supplier2) {
         foreach ($rule["rules"] as $rl) {
-
+            $r1 = $rule["rules"][$key];
             if (count($rl["rules"])) {
-                $out = $this->rulesLoop($rl, $catsEp, $supplier, $code,$productsale);
+                $out = $this->rulesLoop($rl, $catsEp, $supplier, $code,$productsale,$supplier2);
                 if ($rule["condition"] == "OR" AND $out == true) {
                     return true;
                 }
@@ -308,7 +308,20 @@ class Customergrouprule {
                     }
                 }
 
-
+                if ($rl["id"] == "supplier2") {
+                    if ($supplier2 > 0) {
+                        if ($rl["operator"] == "equal") {
+                            if ($rl["value"] == $supplier2) {
+                                return true;
+                            }
+                        }
+                        if ($rl["operator"] == "not_equal") {
+                            if ($rl["value"] != $supplier2) {
+                                return true;
+                            }
+                        }
+                    }
+                }
                 if ($rl["id"] == "productsale") {
                     if ($rl["operator"] == "equal") {
                         if ($rl["value"] != $productsale) {
