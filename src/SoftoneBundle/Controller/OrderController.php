@@ -1324,6 +1324,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         );
 
         
+        
         $dataOut["ITELINES"] = array();
 
         $k = 0;
