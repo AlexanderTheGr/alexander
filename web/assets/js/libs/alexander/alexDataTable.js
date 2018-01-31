@@ -57,7 +57,9 @@
                     dt_table.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
                 }
-                location.href = view + "/" + $(this).attr("ref");
+                //location.href = view + "/" + $(this).attr("ref");
+                url = view + "/" + $(this).attr("ref");
+                window.open(url,'_blank');
             });
             jQuery("select.search_init").chosen({width: "100px"});
             $(".btn_new_"+ctrl).live('click', function () {
