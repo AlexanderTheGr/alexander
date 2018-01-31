@@ -1314,7 +1314,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $objectArr[0]["REMARKS"] = $order->getRemarks();
         $objectArr[0]["COMMENTS"] = $order->getComments();
         //if ($order->getShipment())
-        $objectArr[0]["MTRDOC"]["WHOUSE"] = 1000;
+        //$objectArr[0]["MTRDOC"]["WHOUSE"] = 1000;
         //$objectArr[0]["DISC1PRC"] = 10;   
         $dataOut[$object] = (array) $objectArr;
 
