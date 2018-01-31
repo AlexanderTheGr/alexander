@@ -1319,7 +1319,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
        
         $dataOut[$object] = (array) $objectArr;
         $dataOut["MTRDOC"][] = array(
-            "MTRDOC" => 1000,
+            "WHOUSE" => 1000,
         ); 
 
         $dataOut["ITELINES"] = array();
