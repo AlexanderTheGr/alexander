@@ -1318,10 +1318,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //$objectArr[0]["DISC1PRC"] = 10;   
        
         $dataOut[$object] = (array) $objectArr;
+        /*
         $dataOut["MTRDOC"][] = array(
             "WHOUSE" => 1000,
         ); 
-
+        */
         $dataOut["ITELINES"] = array();
 
         $k = 0;
