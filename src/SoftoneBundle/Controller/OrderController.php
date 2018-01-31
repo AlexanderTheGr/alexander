@@ -532,7 +532,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $html .= "<tr><th>" . $this->getTranslation("Ομάδα") . ": </th><td>" . $customer->getCustomergroup()->getTitle() . "</td></tr>";
         $html .= "<tr><th>" . $this->getTranslation("Τρόπος Πληρωμής") . ": </th><td>" . $payment[$customer->getCustomerPayment()] . "</td></tr>";
 
-        
+
         $html .= "</table>";
         return $html;
     }
@@ -1100,8 +1100,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 //if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
                 //    $json[8] = $obj->getGroupedDiscountPrice($customer, 1) . " / " . $obj->getGroupedDiscountPrice($customer, $vat); //str_replace($obj->$priceField, $obj->getGroupedDiscountPrice($customer), $json[5]);
                 //} else {
-                    $json[8] = $obj->getGroupedDiscountPrice($customer, 1) . " / " . $obj->getGroupedDiscountPrice($customer, $vat); //str_replace($obj->$priceField, $obj->getGroupedDiscountPrice($customer), $json[5]);
-                    $json[8] .= '<BR><input style="width: 80%;" data-id="' . $obj->getId() . '" data-rep="SoftoneBundle:Product" data-ref="' . $obj->getId() . '" id="SoftoneBundleProducPrice_' . $obj->getId() . '" class="SoftoneBundleProducPrice" type="text" value="'.$obj->getGroupedDiscountPrice($customer, $vat).'" />';
+                $json[8] = $obj->getGroupedDiscountPrice($customer, 1) . " / " . $obj->getGroupedDiscountPrice($customer, $vat); //str_replace($obj->$priceField, $obj->getGroupedDiscountPrice($customer), $json[5]);
+                $json[8] .= '<BR><input style="width: 80%;" data-id="' . $obj->getId() . '" data-rep="SoftoneBundle:Product" data-ref="' . $obj->getId() . '" id="SoftoneBundleProducPrice_' . $obj->getId() . '" class="SoftoneBundleProducPrice" type="text" value="' . $obj->getGroupedDiscountPrice($customer, $vat) . '" />';
                 //}
                 //$json[6] = str_replace("value='---'", "value='1'", $json[6]);
                 $json[9] = $obj->getSisxetisi();
@@ -1269,9 +1269,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->find($id);
         if ($order->getFullytrans() > 0) {
             return new Response(
-                json_encode(array()), 200, array('Content-Type' => 'application/json')
+                    json_encode(array()), 200, array('Content-Type' => 'application/json')
             );
-        }        
+        }
         $customer = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Customer")
                 ->find($order->getCustomer());
@@ -1316,8 +1316,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //if ($order->getShipment())
         //$objectArr[0]["MTRDOC"]["WHOUSE"] = 1000;
         //$objectArr[0]["DISC1PRC"] = 10;   
+       
         $dataOut[$object] = (array) $objectArr;
-
+        $dataOut["EXPANAL"][] = array(
+            "MTRDOC" => 1000,
+        ); 
 
         $dataOut["ITELINES"] = array();
 
@@ -2169,10 +2172,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             //$price = $product->getGroupedPrice($customer, $vat);
             $disc1prc = $product->getGroupedDiscount($customer, $vat);
             $price = $product->getGroupedPrice($customer, $vat);
-            $price = $price > 0 ?  $price :  $request->request->get("price");
+            $price = $price > 0 ? $price : $request->request->get("price");
             $lineval = $request->request->get("price") * $qty;
-            $disc1prc = (1 - (($request->request->get("price")) /  $price))*100;
-            
+            $disc1prc = (1 - (($request->request->get("price")) / $price)) * 100;
         } else {
             $disc1prc = $product->getGroupedDiscount($customer, $vat);
             $price = $product->getGroupedPrice($customer, $vat);
@@ -2397,17 +2399,17 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         }
                     } else {
                         /*
-                        $customer->setCustomerAddress($data[12]);
-                        $customer->setCustomerCity($data[13]);
-                        $customer->setCustomerZip($data[15]);
-                        $customer->setCustomerName($data[10]);
-                        $customer->setCustomerPhone01($data[17]);
-                        $customer->setCustomerPhone02($data[18]);
-                        $customer->setCustomerJobtypetrd($data[20]);
-                        $customer->setCustomerAfm($data[21] ? $data[21] : 1);
-                        $customer->setCustomerIrsdata($data[22]);
-                        $customer->setCustomerVatsts(1);
-                        $this->flushpersist($customer);
+                          $customer->setCustomerAddress($data[12]);
+                          $customer->setCustomerCity($data[13]);
+                          $customer->setCustomerZip($data[15]);
+                          $customer->setCustomerName($data[10]);
+                          $customer->setCustomerPhone01($data[17]);
+                          $customer->setCustomerPhone02($data[18]);
+                          $customer->setCustomerJobtypetrd($data[20]);
+                          $customer->setCustomerAfm($data[21] ? $data[21] : 1);
+                          $customer->setCustomerIrsdata($data[22]);
+                          $customer->setCustomerVatsts(1);
+                          $this->flushpersist($customer);
                          * 
                          */
                         //$customer->toSoftone();
