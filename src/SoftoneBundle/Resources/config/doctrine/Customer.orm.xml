@@ -138,7 +138,20 @@
                 <option name="default">1</option>
             </options>
         </field>          
-        
+  
+        <field name="pinakida" type="string" column="pinakida" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+                <option name="default"></option>
+            </options>
+        </field>        
+        <field name="vin" type="string" column="vin" length="255" nullable="true">
+            <options>
+                <option name="fixed"/>
+                <option name="default"></option>
+            </options>
+        </field>   
+                            
         <field name="customerInsdate" type="datetime" column="customer_insdate" nullable="true"/>
         <field name="customerUpddate" type="datetime" column="customer_upddate" nullable="true"/>
                 
