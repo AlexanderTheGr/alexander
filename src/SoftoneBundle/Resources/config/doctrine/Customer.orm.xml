@@ -4,6 +4,13 @@
         <indexes>
             <index name="user_id" columns="actioneer"/>
             <index name="customer_code" columns="customer_code"/>
+            <index name="customer_name" columns="customer_name"/>
+            <index name="customer_phone01" columns="customer_phone01"/>
+            <index name="customer_phone02" columns="customer_phone02"/>
+            <index name="customer_afm" columns="customer_afm"/>
+            <index name="pinakida" columns="pinakida"/>
+            <index name="vin" columns="vin"/>
+            
             <index name="route" columns="route"/>
             <index name="store" columns="store"/>
         </indexes>
