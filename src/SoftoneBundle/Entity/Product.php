@@ -2177,6 +2177,7 @@ class Product extends Entity {
                 //MU21
             }
         }
+        
         unset($objectArr2["MU21"]);
         unset($objectArr2["MU12MODE"]);
         $objectArr2["VAT"] = 1410;
