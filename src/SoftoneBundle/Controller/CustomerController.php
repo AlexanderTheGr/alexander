@@ -360,6 +360,9 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         } else {
             $fields["priceField"] = array("label" => $this->getTranslation("Κατάλογος"), "className" => "col-md-6", 'type' => "select", "required" => true, 'dataarray' => $priceField);
         }
+        
+        $fields["pinakida"] = array("label" => $this->getTranslation("Πινακίδα"), "className" => "col-md-6", "required" => true);
+        $fields["vin"] = array("label" => $this->getTranslation("Αριθμός Πλαισίου"), "className" => "col-md-6", "required" => true);
         $forms = $this->getFormLyFields($entity, $fields);
 
 
