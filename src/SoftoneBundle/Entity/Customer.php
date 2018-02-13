@@ -1304,4 +1304,62 @@ class Customer extends Entity {
     public function getSoftoneStore() {
         return $this->softoneStore;
     }
+    /**
+     * @var string
+     */
+    private $pinakida = '';
+
+    /**
+     * @var string
+     */
+    private $vin = '';
+
+
+    /**
+     * Set pinakida
+     *
+     * @param string $pinakida
+     *
+     * @return Customer
+     */
+    public function setPinakida($pinakida)
+    {
+        $this->pinakida = $pinakida;
+
+        return $this;
+    }
+
+    /**
+     * Get pinakida
+     *
+     * @return string
+     */
+    public function getPinakida()
+    {
+        return $this->pinakida;
+    }
+
+    /**
+     * Set vin
+     *
+     * @param string $vin
+     *
+     * @return Customer
+     */
+    public function setVin($vin)
+    {
+        $this->vin = $vin;
+
+        return $this;
+    }
+
+    /**
+     * Get vin
+     *
+     * @return string
+     */
+    public function getVin()
+    {
+        return $this->vin;
+    }
 }
