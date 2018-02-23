@@ -2222,7 +2222,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //return;
         $softone = new Softone();
         //$datas = $softone->retrieveData("ITEM", "apothema");
-
+        /*
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             $filters = "ITEM.V5=*";
             $datas = $softone->retrieveData("ITEM", "apothema", $filters);
@@ -2235,12 +2235,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //print_r($datas);
             //exit;
         }
+         * 
+         */
         //exit;
-        //$datas = $softone->retrieveData("ITEM", "apothema");
+        $datas = $softone->retrieveData("ITEM", "apothema_full");
         //echo 'Sss';
         echo count($datas) . "<BR>";
-        //print_r($datas);
-        //exit;
+        print_r($datas);
+        exit;
         $em = $this->getDoctrine()->getManager();
 
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
