@@ -1256,7 +1256,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     $MTRL2 = 200000;
 
                     //$where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";
-                    $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-2 days")) . "' ORDER BY MTRL";
+                    $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-20 days")) . "' ORDER BY MTRL";
                     //$where = " AND MTRPLACE != '' AND MTRL > 165150 ORDER BY MTRL";
                 }
                 //$where = " AND INSDATE = '2017-03-01' ORDER BY MTRL";
@@ -1272,8 +1272,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $params["softone_table"] = 'MTRL';
             $params["table"] = 'softone_product';
             $params["object"] = 'SoftoneBundle\Entity\Product';
+            $company = $this->getSetting("SoftoneBundle:Softone:company") > 0 ? $this->getSetting("SoftoneBundle:Softone:company") : 1000;
+            $sodtype = 51;//$this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts' ? 61 : 51;
             if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'gianop') {
-                $params["filter"] = 'WHERE M.SODTYPE=51 ' . $where;
+                $params["filter"] = 'WHERE M.SODTYPE='.$sodtype.' ' . $where;
                 //$params["filter"] = "WHERE M.SODTYPE=51 AND M.CODE2 = '19050'";
                 //$extra["foxline"] = array("CCCFXRELTDCODE" => "CCCFXRELTDCODE", "CCCFXRELBRAND" => "CCCFXRELBRAND");
                 $params["extra"] = array(); //$this->getSetting("SoftoneBundle:Softone:merchant") ? $extra[$this->getSetting("SoftoneBundle:Softone:merchant")] : array("cccRef" => "cccRef", "cccWebUpd" => "cccWebUpd", "cccPriceUpd" => "cccPriceUpd");
@@ -1286,7 +1288,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     $extra["foxline"] = array("CCCFXRELTDCODE" => "CCCFXRELTDCODE", "CCCFXRELBRAND" => "CCCFXRELBRAND");
                 }
                 $extra["foxline"] = array("CCCFXRELTDCODE" => "CCCFXRELTDCODE");
-                $params["filter"] = 'WHERE M.SODTYPE=51 ' . $where;
+                $params["filter"] = 'WHERE M.SODTYPE='.$sodtype.' ' . $where;
                 $params["extra"] = $this->getSetting("SoftoneBundle:Softone:merchant") ? $extra[$this->getSetting("SoftoneBundle:Softone:merchant")] : array("cccRef" => "cccRef", "cccWebUpd" => "cccWebUpd", "cccPriceUpd" => "cccPriceUpd");
             }
             $params["relation"] = array();
@@ -1398,6 +1400,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
        // echo $params["fSQL"];
         // echo "<BR>";
         //return;
+        /*
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
             $params["fSQL"] = "SELECT * FROM MTRL M WHERE COMPANY = 1001 AND MTRL < 4500";
             echo $params["fSQL"];
@@ -1408,6 +1411,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
         
         exit;
+        */
         $softone = new Softone();
         $datas = $softone->createSql($params);
         echo count($datas->data);
