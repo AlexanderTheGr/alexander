@@ -1101,11 +1101,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     function retrieveMtrmanfctr() {
         
         $softone = new Softone();
+        $company = $this->getSetting("SoftoneBundle:Softone:company") ? $this->getSetting("SoftoneBundle:Softone:company") : 1000;
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             $datas = $softone->getManufactures($params);
             $datas = $softone->createSql($params);
         } else {
-            $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M where M.MTRMANFCTR != 452 AND COMPANY = 1000";
+            $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M where M.MTRMANFCTR != 452 AND COMPANY = ".$company;
             $datas = $softone->createSql($params);
         }
         //echo 'sss';
@@ -1397,6 +1398,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         echo $params["fSQL"];
         // echo "<BR>";
         //return;
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
+            $params["fSQL"] = "SELECT * FROM MTRL M WHERE MTRL = 421443";
+            $softone = new Softone();
+            $datas = $softone->createSql($params);  
+            print_r($datas);
+            exit;            
+        }
+        exit;
         $softone = new Softone();
         $datas = $softone->createSql($params);
         echo count($datas->data);
