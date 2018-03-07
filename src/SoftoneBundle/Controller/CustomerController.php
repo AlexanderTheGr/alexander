@@ -428,7 +428,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $params["table"] = 'softone_customer';
         $params["object"] = 'SoftoneBundle\Entity\Customer';
         $params["filter"] = '';
-        $params["filter"] = 'WHERE M.SODTYPE=13 ' . $where;
+        //$params["filter"] = 'WHERE M.SODTYPE=13 ' . $where;
         $params["relation"] = array();
         $params["extra"] = array();
         $params["extrafunction"] = array();
