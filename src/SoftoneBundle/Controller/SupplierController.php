@@ -115,6 +115,8 @@ class SupplierController extends \SoftoneBundle\Controller\SoftoneController  {
      */    
     function retrieveSupplier() {
         $where = '';
+        $company = $this->getSetting("SoftoneBundle:Softone:company") ? $this->getSetting("SoftoneBundle:Softone:company") : 1000;
+        $where = "AND COMPANY = ".$company;
         $params["softone_object"] = 'supplier';
         $params["repository"] = 'SoftoneBundle:Supplier';
         $params["softone_table"] = 'TRDR';
