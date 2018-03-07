@@ -126,7 +126,11 @@ class SupplierController extends \SoftoneBundle\Controller\SoftoneController  {
         $params["extra"] = array();
         $params["extrafunction"] = array();
         $this->setSetting("SoftoneBundle:Supplier:retrieveSupplier", serialize($params));
-
+        $params["fSQL"] = "SELECT * FROM TRDR";
+        $softone = new Softone();
+        $datas = $softone->createSql($params);
+        print_r($datas);
+        exit;
         $params = unserialize($this->getSetting("SoftoneBundle:Supplier:retrieveSupplier"));
         $this->retrieve($params);
         return new Response(
