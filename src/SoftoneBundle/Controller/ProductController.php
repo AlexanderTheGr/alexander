@@ -1405,6 +1405,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             print_r($datas);
             exit;            
         }
+        
         exit;
         $softone = new Softone();
         $datas = $softone->createSql($params);
