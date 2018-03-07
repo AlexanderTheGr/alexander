@@ -422,7 +422,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
     function retrieveCustomer() {
         $where = "AND M.UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "'";
-        $where = "";
+        $where = "COMPANY = ".$this->getSetting("SoftoneBundle:Softone:company");
         $params["softone_object"] = 'customer';
         $params["repository"] = 'SoftoneBundle:Customer';
         $params["softone_table"] = 'TRDR';
@@ -436,12 +436,13 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $this->setSetting("SoftoneBundle:Customer:retrieveCustomer", serialize($params));
 
         $params = unserialize($this->getSetting("SoftoneBundle:Customer:retrieveCustomer"));
-        
+        /*
         $params["fSQL"] = "SELECT * FROM TRDR WHERE TRDR = '44'";
         $softone = new Softone();
         $datas = $softone->createSql($params);
         print_r($datas);
         exit;
+        */
         $this->retrieve($params);
     }
 
