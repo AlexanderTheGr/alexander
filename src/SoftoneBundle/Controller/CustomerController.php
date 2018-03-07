@@ -421,7 +421,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     function retrieveCustomer() {
-        $where = "AND M.UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "'";
+        $where = "AND M.UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "' AND COMPANY = ".$this->getSetting("SoftoneBundle:Softone:company");
         $where = "COMPANY = ".$this->getSetting("SoftoneBundle:Softone:company");
         $params["softone_object"] = 'customer';
         $params["repository"] = 'SoftoneBundle:Customer';
