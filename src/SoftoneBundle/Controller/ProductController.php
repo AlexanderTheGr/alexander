@@ -1399,7 +1399,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         // echo "<BR>";
         //return;
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
-            $params["fSQL"] = "SELECT * FROM MTRL M WHERE MTRL = 421443";
+            $params["fSQL"] = "SELECT * FROM MTRL M WHERE MTRL < 500";
             $softone = new Softone();
             $datas = $softone->createSql($params);  
             print_r($datas);
