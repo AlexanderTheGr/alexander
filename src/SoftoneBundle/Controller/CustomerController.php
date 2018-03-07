@@ -438,10 +438,10 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
         $params = unserialize($this->getSetting("SoftoneBundle:Customer:retrieveCustomer"));
         
         $params["fSQL"] = "SELECT * FROM TRDR WHERE TRDR = '44'";
-        //$softone = new Softone();
-        //$datas = $softone->createSql($params);
-        //print_r($datas);
-        //exit;
+        $softone = new Softone();
+        $datas = $softone->createSql($params);
+        print_r($datas);
+        exit;
         $this->retrieve($params);
     }
 
