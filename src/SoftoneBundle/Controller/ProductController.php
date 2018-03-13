@@ -1269,6 +1269,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             if ($MTRL > 0) {
                 $where = ' AND MTRL = ' . $MTRL . ' ';
             }
+            
 
             $params["softone_object"] = "item";
             $params["repository"] = 'SoftoneBundle:Product';
