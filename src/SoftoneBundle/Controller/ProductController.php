@@ -2290,6 +2290,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 //$em->getConnection()->exec($sql);
                 $data["item_mtrl_itemtrdata_qty1"] = $data["item_v3"] + $data["item_v4"];
                 $data["item_soreserved"] = $data["item_v7"] + $data["item_v6"];
+                
+                
+                
                 if ($data["item_soreserved"] > 0) {
                     $reserveds[$data["item_soreserved"]][] = $data["reference"];
                     //$sql = "update softone_product set reserved = '" . $data["item_soreserved"] . "' where reference = '" . $data["reference"] . "'";
@@ -2300,6 +2303,16 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 //print_r($qty);
                 //exit;
                 //}			
+            
+            } elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
+                if ($data["item_soreserved"] > 0) {
+                    $reserveds[$data["item_soreserved"]][] = $data["reference"];
+                    $sql = "update softone_product set reserved = '" . $data["item_soreserved"] . "' where reference = '" . $data["reference"] . "'";
+                    echo $sql . "<BR>";					
+                }
+                echo ".";
+                $qtys[$data["item_mtrl_itemtrdata_qty1"]][] = $data["reference"];
+                
             } else {
                 //if ($data["item_mtrl_itemtrdata_qty1"] > 0 OR $data["item_soreserved"] > 0) {
                 //$sql = "update softone_product set qty = '" . $data["item_mtrl_itemtrdata_qty1"] . "', reserved = '" . $data["item_soreserved"] . "' where reference = '" . $data["reference"] . "'";
