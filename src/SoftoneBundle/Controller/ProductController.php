@@ -1321,7 +1321,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ((array) $datas->data as $data) {
             if ((int) $data->VARCHAR05 > 0) {
                 $sql = 'update `softone_product` set `catalogue` =  "' . (int) $data->VARCHAR05 . '" where reference = "' . $data->MTRL . '"';
-                echo $sql . "<BR>";
+                //echo $sql . "<BR>";
                 $this->getDoctrine()->getConnection()->exec($sql);
             }
         }
