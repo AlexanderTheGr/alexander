@@ -81,7 +81,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $json = json_encode($asd);
 
 
-
+        echo $asd->brandName;
         $em = $this->getDoctrine();
         $SoftoneSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")
                 ->findOneBy(array('title' => $asd->brandName));
