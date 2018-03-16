@@ -1113,7 +1113,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             print_r($datas);
         }
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
-            $datas = $softone->getManufactures($params);
+            //$datas = $softone->getManufactures($params);
         }
         //echo 'sss';
 
