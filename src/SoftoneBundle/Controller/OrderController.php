@@ -246,17 +246,19 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             header("location: /order/view/" . $id);
             exit;
         }
-        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
-            $softone = new Softone();
-            $dd = $softone->getData("SALDOC", $id);
-            print_r($dd);
-        }  
+ 
         $buttons = array();
         $content = $this->gettabs($id);
         $content = $this->getoffcanvases($id);
         $order = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Order")
                 ->find($id);
+        
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
+            $softone = new Softone();
+            $dd = $softone->getData("SALDOC", $order->getReference());
+            print_r($dd);
+        }         
         $pagename = "";
         $displaynone = 'display:none';
         $fullytrans = 'display:none';
