@@ -418,6 +418,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
           if ($order->getVat())
           $vatsst = $id > 0 ? $order->getVat()->getVatsts() : $this->getSetting("SoftoneBundle:Order:Vat");
           else
+         * SoftoneBundle:Softone:invoiceseries
           $vatsst = 1410; //$this->getSetting("SoftoneBundle:Product:Vat");
          */
         $vatsst = 1410;
@@ -442,7 +443,7 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
           $objectArr[0]["INT01"] = $order->getUser()->getReference();
           }
          */
-        $objectArr[0]["SERIES"] = 2062; //$order->getSoftoneStore()->getSeries();
+        $objectArr[0]["SERIES"] = $this->getSetting("SoftoneBundle:Softone:invoiceseries"); // 2062; //$order->getSoftoneStore()->getSeries();
         //$objectArr[0]["VATSTS"] = $vatsst; //$this->getSetting("SoftoneBundle:Order:Vat") != '' ? $this->getSetting("SoftoneBundle:Order:Vat") : $customer->getCustomerVatsts();
         $objectArr[0]["COMMENTS"] = $invoice->getInvoice(); //$order->getRemarks(); //$customer->getCustomerPayment() > 0 ? $customer->getCustomerPayment() : 1003; // Mage::app()->getRequest()->getParam('comments');
         $objectArr[0]["REMARKS"] = $invoice->getInvoice(); //$order->getRemarks();
