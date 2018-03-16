@@ -1109,8 +1109,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M where M.MTRMANFCTR != 452 AND COMPANY = ".$company;
             echo $params["fSQL"];
             //$datas = $softone->createSql($params);
-            $datas = $softone->getManufactures($params);
-            print_r($datas);
+            //$datas = $softone->getManufactures($params);
+            //print_r($datas);
         }
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
             //$datas = $softone->getManufactures($params);
