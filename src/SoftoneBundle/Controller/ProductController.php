@@ -1126,7 +1126,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 if ($data["ISACTIVE"] == 1) {
                     $sql = "Insert softone_softone_supplier SET id = '" . $data["MTRMANFCTR"] . "', title = '" . addslashes($data["NAME"]) . "', code = '" . $data["CODE"] . "'";
                     $this->getDoctrine()->getConnection()->exec($sql);
-                    echo $sql."<BR>";
+                    //echo $sql."<BR>";
                 }
             } else {
                 //echo $data["ISACTIVE"]."<BR>";
@@ -1139,7 +1139,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     //}
                 } else {
                     $sql = "delete from softone_softone_supplier where id = '" . $data["MTRMANFCTR"] . "'";
-                    echo $sql . "<BR>";
+                    //echo $sql . "<BR>";
                     //$this->getDoctrine()->getConnection()->exec($sql);
                 }
                 //$this->getDoctrine()->getConnection()->exec($sql);			
