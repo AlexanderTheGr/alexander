@@ -2269,6 +2269,42 @@ class Product extends Entity {
      */
     private $itemPricer05;
 
+
+    /**
+     * @var string
+     */
+    private $purlprice;
+    
+    /**
+     * Set itemPricew04
+     *
+     * @param string $itemPricew04
+     *
+     * @return Product
+     */
+    public function setPurlprice($purlprice) {
+        $this->purlprice = $purlprice;
+        return $this;
+    }    
+    
+    
+    /**
+     * @var string
+     */
+    private $itemStandcost;
+    
+    /**
+     * Set itemPricew04
+     *
+     * @param string $itemPricew04
+     *
+     * @return Product
+     */
+    public function seItemStandcost($itemStandcost) {
+        $this->itemStandcost = $itemStandcost;
+        return $this;
+    }
+    
     /**
      * Set itemPricew04
      *
