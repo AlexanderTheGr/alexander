@@ -1378,6 +1378,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ($fields as $field) {
             $ffield = " " . $field;
             if (strpos($ffield, $params["softone_object"]) == true) {
+                
+                if (strtoupper(str_replace($params["softone_object"], "", $field)) == "STANDCOST") continue;
+                
                 $itemfield[] = "M." . strtoupper(str_replace($params["softone_object"], "", $field));
             }
         }
