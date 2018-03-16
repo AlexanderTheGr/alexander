@@ -1293,8 +1293,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
         if ($order->getReference() > 0) {
             $data = $softone->delData($object, (int) $order->getReference());
-            if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') 
-                print_r($data);
+            //if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') 
+            //    print_r($data);
         }
 
         $objectArr = array();
@@ -1365,6 +1365,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         if (@$out->id == 0) {
             $out = $softone->setData((array) $dataOut, $object, (int) 0);
         }
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') 
+        print_r($out);
+        
         if (@$out->id > 0) {
             
             if ($order->getReference() == 0) {
