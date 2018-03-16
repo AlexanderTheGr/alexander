@@ -1317,13 +1317,17 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $params["fSQL"] = "SELECT * FROM MTRDATA WHERE COMPANY = 1001";
             $softone = new Softone();
             $datas = $softone->createSql($params);
-            echo "[".count($datas->data)."]"; 
+            //echo "[".count($datas->data)."]"; 
             //print_r($datas->data);
             foreach ((array) $datas->data as $data) {
                 $sql = 'update `softone_product` set `purlprice` =  "' . $data->PURLPRICE . '" where reference = "' . $data->MTRL . '"';
-                echo $sql."<BR>";    
+                //echo $sql."<BR>";    
                 $this->getDoctrine()->getConnection()->exec($sql);                
             }
+            $params["fSQL"] = "SELECT NUM01, MTRL FROM MTREXTRA WHERE NUM01 != '' AND COMPANY = 1001";
+            $datas = $softone->createSql($params);
+            echo "[".count($datas->data)."]"; 
+            print_r($datas->data);           
         } else {
 
             $params["fSQL"] = "SELECT VARCHAR05, MTRL FROM MTREXTRA WHERE VARCHAR05 != ''";
