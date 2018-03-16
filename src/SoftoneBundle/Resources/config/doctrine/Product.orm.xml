@@ -222,7 +222,7 @@
         <field name="itemPricer04" type="decimal" column="item_pricer04" precision="10" scale="2" nullable="true"/>
         <field name="itemPricer05" type="decimal" column="item_pricer05" precision="10" scale="2" nullable="true"/>
         
-        <field name="itemStandcost" type="decimal" column="item_standcost" precision="10" scale="2" nullable="true"/>
+        <field name="cost" type="decimal" column="cost" precision="10" scale="2" nullable="true"/>
         
         <options>
             <option name="unsigned"/>
