@@ -246,21 +246,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             header("location: /order/view/" . $id);
             exit;
         }
- 
+
         $buttons = array();
         $content = $this->gettabs($id);
         $content = $this->getoffcanvases($id);
         $order = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Order")
                 ->find($id);
-        
-        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
-         //   $softone = new Softone();
-          //  $dd = $softone->getData("SALDOC", $order->getReference());
-          //  echo "<pre>";
-           // print_r($dd);
-            //echo "</pre>";
-        }         
         $pagename = "";
         $displaynone = 'display:none';
         $fullytrans = 'display:none';
@@ -1325,7 +1317,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //$objectArr[0]["MTRDOC"]["WHOUSE"] = 1000;
         //$objectArr[0]["DISC1PRC"] = 10;   
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') 
-        $objectArr[0]["SALESMAN_PRSNIN_CODE"] = $order->getUser()->getReference();    
+            $dataOut["PRSNIN"][0] = array("CODE" => 1001);
+            //$dataOut["PRSNIN"][0] = array("CODE" => $order->getUser()->getReference());
+        //$objectArr[0]["SALESMAN_PRSNIN_CODE"] = $order->getUser()->getReference();    
         
         $dataOut[$object] = (array) $objectArr;
         /*
@@ -1371,7 +1365,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         }
         if (@$out->id > 0) {
             
-            if ($order->getReference() == 0) {              
+            if ($order->getReference() == 0) {
+              
                 foreach ($order->getItems() as $item) {
                     $product = $item->getProduct();
                     if ($product) {
