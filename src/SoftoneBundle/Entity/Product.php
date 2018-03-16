@@ -2291,7 +2291,7 @@ class Product extends Entity {
     /**
      * @var string
      */
-    private $itemStandcost;
+    private $cost;
     
     /**
      * Set itemPricew04
@@ -2300,8 +2300,8 @@ class Product extends Entity {
      *
      * @return Product
      */
-    public function seItemStandcost($itemStandcost) {
-        $this->itemStandcost = $itemStandcost;
+    public function setCost($cost) {
+        $this->cost = $cost;
         return $this;
     }
     
