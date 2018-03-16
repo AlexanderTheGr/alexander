@@ -253,7 +253,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $order = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Order")
                 ->find($id);
-        /*
+        
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
             $softone = new Softone();
             $data = $softone->getData("SALDOC", (int) $order->getReference());
@@ -261,8 +261,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             print_r($data);
             echo "</PRE>";
         }
-         * 
-         */
+         
+         
         $pagename = "";
         $displaynone = 'display:none';
         $fullytrans = 'display:none';
