@@ -1314,7 +1314,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //echo 'ss';
 
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
-            $params["fSQL"] = "SELECT * FROM ITEMTRDATA";
+            $params["fSQL"] = "SELECT * FROM MTRDATA";
             $softone = new Softone();
             $datas = $softone->createSql($params);
             echo "[".count($datas->data)."]"; 
