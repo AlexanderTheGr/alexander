@@ -1314,11 +1314,16 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //echo 'ss';
 
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
-            $params["fSQL"] = "SELECT * FROM MTRDATA";
+            $params["fSQL"] = "SELECT * FROM MTRDATA WHERE COMPANY = 1001";
             $softone = new Softone();
             $datas = $softone->createSql($params);
             echo "[".count($datas->data)."]"; 
-            print_r($datas->data);
+            //print_r($datas->data);
+            foreach ((array) $datas->data as $data) {
+                $sql = 'update `softone_product` set `purlprice` =  "' . $data->PURLPRICE . '" where reference = "' . $data->MTRL . '"';
+                echo $sql."<BR>";    
+                //$this->getDoctrine()->getConnection()->exec($sql);                
+            }
         } else {
 
             $params["fSQL"] = "SELECT VARCHAR05, MTRL FROM MTREXTRA WHERE VARCHAR05 != ''";
