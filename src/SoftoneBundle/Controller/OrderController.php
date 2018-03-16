@@ -247,6 +247,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             exit;
         }
                         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
+                            $softone = new Softone();
                             $dd = $softone->setData($object, $id);
                             print_r($dd);
                         }  
