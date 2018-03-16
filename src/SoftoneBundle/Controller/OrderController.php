@@ -1328,11 +1328,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //if ($order->getShipment())
         //$objectArr[0]["MTRDOC"]["WHOUSE"] = 1000;
         //$objectArr[0]["DISC1PRC"] = 10;   
-        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') 
-            $objectArr[0]["SALESMAN_PRSNIN_CODE"] = 1002; //$order->getUser()->getReference();  
-            //$dataOut["PRSN"][0] = array("CODE" => 1001);
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
+            //$objectArr[0]["SALESMAN_PRSNIN_CODE"] = 1002; //$order->getUser()->getReference();  
+            $dataOut["PRSNIN"][0] = array("CODE" => 1001);
             //$dataOut["PRSNIN"][0] = array("CODE" => $order->getUser()->getReference());
-              
+        }     
         
         $dataOut[$object] = (array) $objectArr;
         /*
