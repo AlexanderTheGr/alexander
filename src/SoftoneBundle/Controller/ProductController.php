@@ -1322,7 +1322,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             foreach ((array) $datas->data as $data) {
                 $sql = 'update `softone_product` set `purlprice` =  "' . $data->PURLPRICE . '" where reference = "' . $data->MTRL . '"';
                 echo $sql."<BR>";    
-                //$this->getDoctrine()->getConnection()->exec($sql);                
+                $this->getDoctrine()->getConnection()->exec($sql);                
             }
         } else {
 
