@@ -255,13 +255,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ->find($id);
         
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
-            $softone = new Softone();
-            $data = $softone->getData("SALDOC", (int) $order->getReference());
-            echo "<PRE>";
-            print_r($data);
-            echo "</PRE>";
+            //$softone = new Softone();
+            //$data = $softone->getData("SALDOC", (int) $order->getReference());
+            //echo "<PRE>";
+            //print_r($data);
+            //echo "</PRE>";
         }
-         
+        
          
         $pagename = "";
         $displaynone = 'display:none';
@@ -1329,8 +1329,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //$objectArr[0]["MTRDOC"]["WHOUSE"] = 1000;
         //$objectArr[0]["DISC1PRC"] = 10;   
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
-            //$objectArr[0]["SALESMAN_PRSNIN_CODE"] = 1002; //$order->getUser()->getReference();  
-            $dataOut["PRSEXT"][0] = array("CODE" => 1001);
+            $objectArr[0]["SALESMAN"] = 9; // $order->getUser()->getReference();  
+            //$dataOut["PRSEXT"][0] = array("CODE" => 1001);
             //$dataOut["PRSNIN"][0] = array("CODE" => $order->getUser()->getReference());
         }     
         
