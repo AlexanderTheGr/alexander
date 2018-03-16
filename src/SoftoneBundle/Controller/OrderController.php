@@ -1316,7 +1316,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //if ($order->getShipment())
         //$objectArr[0]["MTRDOC"]["WHOUSE"] = 1000;
         //$objectArr[0]["DISC1PRC"] = 10;   
-       
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') 
+        $objectArr[0]["SALESMAN_PRSNIN_CODE"] = $order->getUser()->getReference();    
+        
         $dataOut[$object] = (array) $objectArr;
         /*
         $dataOut["MTRDOC"][] = array(
