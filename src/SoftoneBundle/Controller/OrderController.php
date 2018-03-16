@@ -1317,7 +1317,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //$objectArr[0]["MTRDOC"]["WHOUSE"] = 1000;
         //$objectArr[0]["DISC1PRC"] = 10;   
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') 
-        $objectArr[0]["SALESMAN"] = $order->getUser()->getReference();    
+        $objectArr[0]["SALESMAN_PRSNIN_CODE"] = $order->getUser()->getReference();    
         
         $dataOut[$object] = (array) $objectArr;
         /*
@@ -1371,6 +1371,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $product->setReserved($reserved);
                         $this->flushpersist($product);
                         //echo "\n(" . $reserved . ")\n";
+                        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
+                            $dd = $softone->setData($object, $out->id);
+                            print_r($dd);
+                        }
                     }
                 }
             }
