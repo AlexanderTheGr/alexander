@@ -1092,21 +1092,20 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
         $this->retrieve($params);
     }
-    
+
     /**
      * 
      * @Route("/product/retrieveMtrmanfctr")
      */
-    
     function retrieveMtrmanfctr() {
-        
+
         $softone = new Softone();
         $company = $this->getSetting("SoftoneBundle:Softone:company") ? $this->getSetting("SoftoneBundle:Softone:company") : 1000;
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             $datas = $softone->getManufactures($params);
             //$datas = $softone->createSql($params);
         } else {
-            $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M where M.MTRMANFCTR != 452 AND COMPANY = ".$company;
+            $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M where M.MTRMANFCTR != 452 AND COMPANY = " . $company;
             echo $params["fSQL"];
             //$datas = $softone->createSql($params);
             //$datas = $softone->getManufactures($params);
@@ -1132,10 +1131,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 //echo $data["ISACTIVE"]."<BR>";
                 if ($data["ISACTIVE"] == 1) {
                     //if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'gianop') {
-                        $name = str_replace(" - " . $data["CODE"], "", $data["NAME"]);
-                        $sql = "update softone_softone_supplier SET title = '" . addslashes($name) . "', code = '" . $data["CODE"] . "' where id = '" . $data["MTRMANFCTR"] . "'";
-                        //echo $sql . "<BR>";
-                        //$this->getDoctrine()->getConnection()->exec($sql);
+                    $name = str_replace(" - " . $data["CODE"], "", $data["NAME"]);
+                    $sql = "update softone_softone_supplier SET title = '" . addslashes($name) . "', code = '" . $data["CODE"] . "' where id = '" . $data["MTRMANFCTR"] . "'";
+                    //echo $sql . "<BR>";
+                    //$this->getDoctrine()->getConnection()->exec($sql);
                     //}
                 } else {
                     $sql = "delete from softone_softone_supplier where id = '" . $data["MTRMANFCTR"] . "'";
@@ -1145,7 +1144,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 //$this->getDoctrine()->getConnection()->exec($sql);			
             }
         }
-       // exit;
+        // exit;
     }
 
     function fixSupplier($supplier) {
@@ -1269,7 +1268,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             if ($MTRL > 0) {
                 $where = ' AND MTRL = ' . $MTRL . ' ';
             }
-            
+
 
             $params["softone_object"] = "item";
             $params["repository"] = 'SoftoneBundle:Product';
@@ -1311,18 +1310,27 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $this->setSetting("SoftoneBundle:Product:retrieveMtrl", serialize($params));
         }
 
-        $this->retrieveProduct($params);
+        //$this->retrieveProduct($params);
         //echo 'ss';
-        $params["fSQL"] = "SELECT VARCHAR05, MTRL FROM MTREXTRA WHERE VARCHAR05 != ''";
-        $softone = new Softone();
-        $datas = $softone->createSql($params);
-        echo count($datas->data);
-        //print_r($datas->data);
-        foreach ((array) $datas->data as $data) {
-            if ((int) $data->VARCHAR05 > 0) {
-                $sql = 'update `softone_product` set `catalogue` =  "' . (int) $data->VARCHAR05 . '" where reference = "' . $data->MTRL . '"';
-                //echo $sql . "<BR>";
-                $this->getDoctrine()->getConnection()->exec($sql);
+
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
+            $params["fSQL"] = "SELECT PURLPRICE, MTRL FROM ITEMTRDATA WHERE PURLPRICE != ''";
+            $softone = new Softone();
+            $datas = $softone->createSql($params);
+            echo "[".count($datas->data)."]";            
+        } else {
+
+            $params["fSQL"] = "SELECT VARCHAR05, MTRL FROM MTREXTRA WHERE VARCHAR05 != ''";
+            $softone = new Softone();
+            $datas = $softone->createSql($params);
+            echo count($datas->data);
+            //print_r($datas->data);
+            foreach ((array) $datas->data as $data) {
+                if ((int) $data->VARCHAR05 > 0) {
+                    $sql = 'update `softone_product` set `catalogue` =  "' . (int) $data->VARCHAR05 . '" where reference = "' . $data->MTRL . '"';
+                    //echo $sql . "<BR>";
+                    $this->getDoctrine()->getConnection()->exec($sql);
+                }
             }
         }
 
@@ -1342,6 +1350,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $sql = 'UPDATE  `softone_product` SET `supplier_code` =  `item_code2`, `title` =  `item_name`, `tecdoc_code` =  `item_apvcode`, `erp_code` =  `item_code`';
         $this->getDoctrine()->getConnection()->exec($sql);
+
 
         if ($MTRL > 0) {
             $tecdoc = new Tecdoc();
@@ -1378,9 +1387,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         foreach ($fields as $field) {
             $ffield = " " . $field;
             if (strpos($ffield, $params["softone_object"]) == true) {
-                
-                if (strtoupper(str_replace($params["softone_object"], "", $field)) == "STANDCOST") continue;
-                
+
+                if (strtoupper(str_replace($params["softone_object"], "", $field)) == "STANDCOST")
+                    continue;
+
                 $itemfield[] = "M." . strtoupper(str_replace($params["softone_object"], "", $field));
             }
         }
@@ -1792,7 +1802,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $json["value"] = $result["erp_code"];
                 $jsonArr[] = $json;
             }
-            $json = json_encode($jsonArr);            
+            $json = json_encode($jsonArr);
         } else {
             $query = $em->createQuery(
                     "SELECT  p.id, p.title, p.erpCode
@@ -1809,7 +1819,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $json["value"] = $result["erpCode"];
                 $jsonArr[] = $json;
             }
-            $json = json_encode($jsonArr);            
+            $json = json_encode($jsonArr);
         }
 
 
@@ -2238,7 +2248,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //exit;
         } else {
             //$filters = "ITEM.MTRL=1&ITEM.MTRL_TO=10000"; 
-            $datas = $softone->retrieveData("ITEM", "apothema",$filters);
+            $datas = $softone->retrieveData("ITEM", "apothema", $filters);
             echo "<BR>" . count($datas) . "<BR>";
             //print_r($datas);
             //exit;
@@ -2294,9 +2304,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 //$em->getConnection()->exec($sql);
                 $data["item_mtrl_itemtrdata_qty1"] = $data["item_v3"] + $data["item_v4"];
                 $data["item_soreserved"] = $data["item_v7"] + $data["item_v6"];
-                
-                
-                
+
+
+
                 if ($data["item_soreserved"] > 0) {
                     $reserveds[$data["item_soreserved"]][] = $data["reference"];
                     //$sql = "update softone_product set reserved = '" . $data["item_soreserved"] . "' where reference = '" . $data["reference"] . "'";
@@ -2307,16 +2317,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 //print_r($qty);
                 //exit;
                 //}			
-            
             } elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
                 if ($data["item_soreserved"] > 0) {
                     $reserveds[$data["item_soreserved"]][] = $data["reference"];
                     $sql = "update softone_product set reserved = '" . $data["item_soreserved"] . "' where reference = '" . $data["reference"] . "'";
-                    echo $sql . "<BR>";					
+                    echo $sql . "<BR>";
                 }
                 echo ".";
                 $qtys[$data["item_mtrl_itemtrdata_qty1"]][] = $data["reference"];
-                
             } else {
                 //if ($data["item_mtrl_itemtrdata_qty1"] > 0 OR $data["item_soreserved"] > 0) {
                 //$sql = "update softone_product set qty = '" . $data["item_mtrl_itemtrdata_qty1"] . "', reserved = '" . $data["item_soreserved"] . "' where reference = '" . $data["reference"] . "'";
@@ -2326,7 +2334,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 if ($data["item_soreserved"] > 0) {
                     $reserveds[$data["item_soreserved"]][] = $data["reference"];
                     $sql = "update softone_product set reserved = '" . $data["item_soreserved"] . "' where reference = '" . $data["reference"] . "'";
-                    echo $sql . "<BR>";					
+                    echo $sql . "<BR>";
                 }
                 echo ".";
                 $qtys[$data["item_v1"]][] = $data["reference"];
@@ -2346,7 +2354,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //$sql = "update softone_product set qty = 0";
             //echo $sql . "<BR>";
             //$em->getConnection()->exec($sql);
-            
+
             foreach ((array) $reserveds as $reserved => $reference) {
                 $sql = "update softone_product set reserved = '" . $reserved . "' where reference in (" . implode(",", $reference) . ")";
                 echo $sql . "<BR>";
