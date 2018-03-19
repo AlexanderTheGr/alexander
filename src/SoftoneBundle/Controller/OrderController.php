@@ -967,7 +967,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                         $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
 									FROM ' . $this->repository . ' ' . $this->prefix . '
-									where p.itemCode1 = "' . $search[1] . '" OR p.itemIsactive = 1 AND (' . $qsupplier . '  (' . $tecdoc_article . $sqlearch2 . $tecdoc_article2 . ' ' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . ') )
+									where p.itemIsactive = 1 AND (' . $qsupplier . '  (' . $tecdoc_article . $sqlearch2 . $tecdoc_article2 . ' ' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . ') )
 									ORDER BY ' . $this->orderBy;
                     }
                 } else {
