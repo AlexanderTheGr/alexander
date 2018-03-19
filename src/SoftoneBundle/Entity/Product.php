@@ -2286,7 +2286,9 @@ class Product extends Entity {
         $this->purlprice = $purlprice;
         return $this;
     }    
-    
+    public function getPurlprice() {
+        return $this->purlprice;
+    }     
     
     /**
      * @var string
@@ -2304,7 +2306,9 @@ class Product extends Entity {
         $this->cost = $cost;
         return $this;
     }
-    
+    public function getCost() {
+        return $this->cost;
+    }    
     /**
      * Set itemPricew04
      *
