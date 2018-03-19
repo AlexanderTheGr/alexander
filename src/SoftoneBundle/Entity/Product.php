@@ -2273,7 +2273,7 @@ class Product extends Entity {
     /**
      * @var string
      */
-    private $purlprice;
+    private $purlprice = 0;
     
     /**
      * Set itemPricew04
@@ -2293,7 +2293,7 @@ class Product extends Entity {
     /**
      * @var string
      */
-    private $cost;
+    private $cost = 0;
     
     /**
      * Set itemPricew04
