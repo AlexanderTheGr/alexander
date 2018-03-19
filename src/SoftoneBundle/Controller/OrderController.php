@@ -1105,6 +1105,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $pricer = $obj->priceEshop($vat);
                 } elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
                     $pricer = $obj->priceMpal($vat);
+                } elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
+                    $pricer = $obj->priceCarparts($vat);            
                 } else {
                     $pricer = $obj->getItemPricer();
                     $pricer = number_format($pricer * $vat, 2, '.', '');
