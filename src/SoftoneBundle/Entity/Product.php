@@ -3456,7 +3456,6 @@ class Product extends Entity {
     }
 
     function priceCarparts($vat = 1) {
-        $vat = 1;
         $pricer1 = number_format($this->getPurlprice() * $vat, 2, '.', '');
         $pricer2 = number_format($this->getCost() * $vat, 2, '.', '');
         $pricer = $pricer1 . " / " . $pricer2;
