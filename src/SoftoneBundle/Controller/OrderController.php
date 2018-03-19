@@ -996,7 +996,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 //->setFirstResult($request->request->get("start"))
                 ;
                 if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
-                    echo $sql."<BR>";  
+                    //echo $sql."<BR>";  
                     
                 }  
                 /*
