@@ -964,10 +964,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 ORDER BY ' . $this->orderBy;
 
                     if ($search[0] == 'productfreesearch') {
-
+                        if ($search[1] != '') {
+                            $sqlearch2 = "p.id in (Select o.id from SoftoneBundle:ProductSearch o where o.search like '%" . $search[1] . "%') OR ";
+                        }
                         $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
 									FROM ' . $this->repository . ' ' . $this->prefix . '
-									where p.itemCode1 = \'' . $search[1] . '\' OR p.itemIsactive = 1 AND (' . $qsupplier . '  (' . $tecdoc_article . $tecdoc_article2 . ' ' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . ') )
+									where p.itemCode1 = \'' . $search[1] . '\' OR p.itemIsactive = 1 AND (' . $qsupplier . '  (' . $tecdoc_article . $sqlearch2 . $tecdoc_article2 . ' ' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . ') )
 									ORDER BY ' . $this->orderBy;
                         /*
                         $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
