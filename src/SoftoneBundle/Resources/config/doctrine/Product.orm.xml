@@ -200,8 +200,12 @@
         </field>
 
         
-        <field name="purlprice" type="decimal" column="purlprice" precision="10" scale="2" nullable="true"/>
-                
+        <field name="purlprice" type="decimal" column="purlprice" precision="10" scale="2" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>    
+                        
         <field name="itemMarkupw" type="decimal" column="item_markupw" precision="10" scale="2" nullable="true"/>
         <field name="itemMarkupr" type="decimal" column="item_markupr" precision="10" scale="2" nullable="true"/>
  
@@ -222,8 +226,12 @@
         <field name="itemPricer04" type="decimal" column="item_pricer04" precision="10" scale="2" nullable="true"/>
         <field name="itemPricer05" type="decimal" column="item_pricer05" precision="10" scale="2" nullable="true"/>
         
-        <field name="cost" type="decimal" column="cost" precision="10" scale="2" nullable="true"/>
-        
+        <field name="cost" type="decimal" column="cost" precision="10" scale="2" nullable="true">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>     
+               
         <options>
             <option name="unsigned"/>
         </options>
