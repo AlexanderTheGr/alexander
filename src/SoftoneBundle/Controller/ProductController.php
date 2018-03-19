@@ -726,8 +726,15 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
             $fields["itemPricew"] = array("label" => $this->getTranslation("Wholessle"), "className" => "col-md-2", "required" => false);
             $fields["itemPricer"] = array("label" => $this->getTranslation("Retail"), "className" => "col-md-2", "required" => false);
-            $fields["itemMarkupw"] = array("label" => $this->getTranslation("Wholessle Markup"), "className" => "col-md-2", "required" => false);
-            $fields["itemMarkupr"] = array("label" => $this->getTranslation("Retail Markup"), "className" => "col-md-2", "required" => false);
+            
+            if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
+                $fields["cost"] = array("label" => $this->getTranslation("ΠΚ"), "className" => "col-md-2", "required" => false);
+                $fields["purlprice"] = array("label" => $this->getTranslation("Tελευταία τιμή αγοράς"), "className" => "col-md-2", "required" => false);
+                
+            } else {
+                $fields["itemMarkupw"] = array("label" => $this->getTranslation("Wholessle Markup"), "className" => "col-md-2", "required" => false);
+                $fields["itemMarkupr"] = array("label" => $this->getTranslation("Retail Markup"), "className" => "col-md-2", "required" => false);
+            }
             $fields["itemRemarks"] = array("label" => $this->getTranslation("Remarks"), "required" => false, "className" => "col-md-6 col-sm-6");
             $fields["sisxetisi"] = array("label" => $this->getTranslation("Κωδικός Συσχέτισης"), "className" => "col-md-6", "required" => false);
             $fields["edis"] = array("label" => $this->getTranslation("Αντιστοιχίες Εκτός Αποθήκης"), "className" => "col-md-6", "required" => false);
