@@ -2224,9 +2224,10 @@ class Product extends Entity {
             $params["fSQL"] = "UPDATE MTRL SET MTRMANFCTR=" . $this->getSupplierId()->getId() . " , MTRMARK=" . $this->itemMtrmark . " WHERE MTRL = " . $this->reference;
             //echo $params["fSQL"]."\n";
             //if (!$op) {
-            if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'gianop') {
-                //$softone->createSql($params);
-                //print_r($softone->createSql($params));
+            //if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'gianop') {
+            if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
+                $softone->createSql($params);
+                print_r($softone->createSql($params));
             }
             //$this->toB2b();
             //print_r($softone->createSql($params));
