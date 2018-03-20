@@ -296,6 +296,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $sup = trim(strtoupper($product->getErpSupplier()));
             $SoftoneSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")
                     ->findOneBy(array('title' => $sup));
+            $SoftoneSupplier->toSoftone();
             if (@$SoftoneSupplier->id == 0) {
                 $SoftoneSupplier = new \SoftoneBundle\Entity\SoftoneSupplier;
                 $SoftoneSupplier->setTitle($sup);
