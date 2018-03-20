@@ -1035,6 +1035,7 @@ class Customer extends Entity {
         $objectArr2["ZIP"] = $this->customerZip;
         $objectArr2["PAYMENT"] = $this->customerPayment;
         $objectArr2["TRDCATEGORY"] = $this->customerTrdcategory;
+        $objectArr2["JOBTYPETRD"] = $this->customerJobtypetrd;
         $objectArr[0] = $objectArr2;
         $dataOut[$object] = (array) $objectArr;
         //@$dataOut["ITEEXTRA"][0] = array("NUM02" => $this->item_mtrl_iteextra_num02);
