@@ -2226,8 +2226,8 @@ class Product extends Entity {
             //if (!$op) {
             //if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'gianop') {
             if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
-                $softone->createSql($params);
-                print_r($softone->createSql($params));
+                //$softone->createSql($params);
+                //print_r($softone->createSql($params));
             }
             //$this->toB2b();
             //print_r($softone->createSql($params));
