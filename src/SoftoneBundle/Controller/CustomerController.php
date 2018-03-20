@@ -426,7 +426,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
     function retrieveCustomer() {
         $company = $this->getSetting("SoftoneBundle:Softone:company") ? $this->getSetting("SoftoneBundle:Softone:company") : 1000;
         $where = "AND M.UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "' AND COMPANY = ".$this->getSetting("SoftoneBundle:Softone:company");
-        $where = "AND COMPANY = ".$this->getSetting("SoftoneBundle:Softone:company");
+        //$where = "AND COMPANY = ".$this->getSetting("SoftoneBundle:Softone:company");
         $params["softone_object"] = 'customer';
         $params["repository"] = 'SoftoneBundle:Customer';
         $params["softone_table"] = 'TRDR';
