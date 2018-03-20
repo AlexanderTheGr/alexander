@@ -114,6 +114,10 @@ class InvoiceController extends \SoftoneBundle\Controller\SoftoneController {
         }
         $fprice = ($orderItem->getPrice() * $orderItem->getQty()) * (1 - ($orderItem->getField('disc1prc') / 100));
         $orderItem->setFprice($fprice);
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
+            $sql = 'delete from `softone_invoice_item` where qty = 0';
+            $this->getDoctrine()->getConnection()->exec($sql);
+        }
         try {
             $this->flushpersist($orderItem);
             $json = json_encode(array("error" => false));
