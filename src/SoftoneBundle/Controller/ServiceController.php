@@ -48,9 +48,19 @@ class ServiceController extends Main{
     public function save() {
         //$json = json_decode($this->formLybase64());
         $em = $this->getDoctrine()->getManager();
-        $data = $this->formLybase64();
+        //$data = $this->formLybase64();
+        
+        $search = $data["SoftoneBundle:Pcategory:itecategoryName:"];
+        $q = $items = str_replace("\n",",", $search);        
+        $term = preg_replace("/[^a-zA-Z0-9]+/", "", $q);
+        $sql = "SELECT art.art_id as articleId FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."'))";			
+        $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql);
+        $datas = unserialize(file_get_contents($url));
+	print_r($this->package($datas));
+        exit;
         
         
+        /*
         $search = $data["SoftoneBundle:Pcategory:itecategoryName:"];
         $q = $items = str_replace("\n",",", $search);
         //echo $q;
@@ -86,7 +96,7 @@ class ServiceController extends Main{
                 }
             }
         }
-        
+        */
         
         //print_r($dfr);
         file_put_contents("assse.csv", $csv);
