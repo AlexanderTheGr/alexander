@@ -48,7 +48,7 @@ class ServiceController extends Main{
     public function save() {
         //$json = json_decode($this->formLybase64());
         $em = $this->getDoctrine()->getManager();
-        //$data = $this->formLybase64();
+        $data = $this->formLybase64();
         
         $search = $data["SoftoneBundle:Pcategory:itecategoryName:"];
         $q = $items = str_replace("\n",",", $search);
