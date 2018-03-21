@@ -234,7 +234,7 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
 
             $customerCode = (int) $this->getSetting("SoftoneBundle:Customer:customerCode");
             if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts')   
-                $entity->setField("customerCode", str_pad("1".$customerCode, 7, "0", STR_PAD_LEFT));
+                $entity->setField("customerCode", "1".str_pad($customerCode, 7, "0", STR_PAD_LEFT));
             else 
                 $entity->setField("customerCode", str_pad($customerCode, 7, "0", STR_PAD_LEFT));            
             
