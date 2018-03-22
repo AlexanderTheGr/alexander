@@ -266,6 +266,8 @@ class CustomerController extends \SoftoneBundle\Controller\SoftoneController {
             }
             $code = $this->getSetting("SoftoneBundle:Customer:CodeIncrement");
         }
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts')
+            $entity->setPriceField("itemPricew");
         $vats = $this->getDoctrine()
                         ->getRepository('SoftoneBundle:Vat')->findAll();
         $itemMtrsup = array();
