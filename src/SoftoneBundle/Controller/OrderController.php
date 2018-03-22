@@ -29,7 +29,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $statement = $connection->prepare($sql);
         $statement->execute();
         $data = $statement->fetch();
-        $findoc = $data["ref"] - 1150;    
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts')
+        $findoc = $data["ref"] - 1150;  
+        else 
+        $findoc = $data["ref"] - 50;     
         $em = $this->getDoctrine()->getManager();
         $sql = "SELECT FINDOC,FULLYTRANSF FROM FINDOC WHERE FULLYTRANSF = 1 AND FINDOC > " . $findoc;
         $params["fSQL"] = $sql;
