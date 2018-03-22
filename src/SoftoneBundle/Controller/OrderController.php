@@ -38,7 +38,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $params["fSQL"] = $sql;
         $softone = new Softone();
         $datas = $softone->createSql($params);
-        // print_r($datas);
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
+            print_r($datas); 
+            exit;
+        }
         //exit;
         foreach ((array) $datas->data as $data) {
             $sql = "update softone_order set fullytrans = '" . $data->FULLYTRANSF . "' where reference = '" . $data->FINDOC . "'";
