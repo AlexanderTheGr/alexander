@@ -61,7 +61,7 @@ class ServiceController extends Main{
         
         
         
-        $this->ergostatio($items);
+        echo $this->ergostatio($items);
         //echo $sql;
         
         /*
@@ -149,9 +149,10 @@ class ServiceController extends Main{
                 }
                 $html .= '</tr>';
             }
-            $html = '<table>';
+            $html .= '<table>';
             //print_r($datas);
-        }        
+        } 
+        return $html;
     }
     
 }
