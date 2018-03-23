@@ -159,6 +159,7 @@ class ServiceController extends Main{
             $html .= '</tr>';
             $html .= '<table>';            
         }
+        return $html; 
     }
     
     function ergostatio2($items) {
