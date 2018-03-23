@@ -59,7 +59,7 @@ class ServiceController extends Main{
         
         
         
-        $html = $this->ergostatio2($items);
+        $html = $this->match($items);
         
         $json = json_encode(array("ok", "html" => $html,'divid'=>"resulthtml"));
         return new Response(
@@ -130,12 +130,24 @@ class ServiceController extends Main{
         
     }    
 
+    
+    function match($items) {
+        if ($items) {
+            foreach($items as $term) {
+                $terms = explode("\t",$term);
+                $art_article_nr_can = preg_replace("/[^a-zA-Z0-9]+/", "", $terms[0]);
+                $sup_id = terms[1];
+                $sql = "SELECT art_id FROM `articles` art_article_nr_can = '".$art_article_nr_can."' AND sup_id = '".$sup_id."' ";
+                echo $sql."<BR>";
+            }
+        }
+    }
+    
     function ergostatio2($items) {
         foreach($items as $key=>$item) {
             $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
         }
         if ($items) {
-
             foreach($items as $term) {
                 $sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."')))";
                 //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$items)."') order by sup_brand";
