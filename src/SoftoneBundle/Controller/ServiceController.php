@@ -152,7 +152,7 @@ class ServiceController extends Main{
                         continue;
                     }
                     $out[$data["art_article_nr_can"]][1] = "OK";
-                    $out[$data["art_article_nr_can"]][2] = $data["atr_id"];
+                    $out[$data["art_article_nr_can"]][2] = $data["art_id"];
                 } else {
                     if ($out[$data["art_article_nr_can"]][1] == 'OK') {
                         continue;
