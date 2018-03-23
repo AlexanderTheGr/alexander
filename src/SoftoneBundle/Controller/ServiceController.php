@@ -18,7 +18,7 @@ class ServiceController extends Main{
     public function indexAction() {
 
         $content = $this->gettabs();
-        return $this->render('SoftoneBundle:Category:view.html.twig', array(
+        return $this->render('SoftoneBundle:Service:view.html.twig', array(
                     'pagename' => 'Service',
                     'url' => '/service/save',
                     'view' => '',
@@ -61,7 +61,7 @@ class ServiceController extends Main{
         
         $html = $this->ergostatio($items);
         
-        $json = json_encode(array("ok", "html" => $html));
+        $json = json_encode(array("ok", "html" => $html,'divid'=>"resulthtml"));
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );         
