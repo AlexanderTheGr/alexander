@@ -55,6 +55,7 @@ class ServiceController extends Main{
         $data = $this->formLybase64();
         
         $search = $data["SoftoneBundle:Pcategory:itecategoryName:"];
+        $type = $data["SoftoneBundle:Pcategory:itemIsactive:"];
         $q = $items = str_replace("\n",",", $search);
         $items = explode("\n", $search);
         //print_r($items);    
@@ -64,7 +65,7 @@ class ServiceController extends Main{
         
                 
         
-        $html = $this->matchModels($items);
+        $html = $type;//$this->matchModels($items);
         
         $json = json_encode(array("ok", "html" => $html,'divid'=>"resulthtml"));
         return new Response(
