@@ -159,7 +159,7 @@ class ServiceController extends Main{
                     $models = unserialize(file_get_contents($url));     
                     $mdo = array();
                     foreach ($models as $model_type) {
-                        $mdo[] = $model_type;
+                        $mdo[] = $model_type["mod_lnk_vich_id"];
                     }
                     $out[$data["art_article_nr_can"]][3] = implode(",", $mdo);
                 } else {
