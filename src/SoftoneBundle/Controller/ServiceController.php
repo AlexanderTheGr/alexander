@@ -35,9 +35,9 @@ class ServiceController extends Main{
         $dataarray[] = array("value" => "match", "name" => "Match"); 
         $dataarray[] = array("value" => "ergostatio2", "name" => "Ergostatio2");
         $dataarray[] = array("value" => "ergostatio", "name" => "Ergostatio");
-        $fields["itemIsactive"] = array("label" => "Ενεργό", 'type' => "select", 'dataarray' => $dataarray, "required" => false, "className" => "col-md-2 col-sm-2");
+        $fields["itemIsactive"] = array("label" => "Type", 'type' => "select", 'dataarray' => $dataarray, "required" => false, "className" => "col-md-2 col-sm-2");
         
-        $fields["itecategoryName"] = array("label" => "Original",'type' => "textarea");
+        $fields["itecategoryName"] = array("label" => "Field",'type' => "textarea");
 
         $forms = $this->getFormLyFields($entity, $fields);
         
