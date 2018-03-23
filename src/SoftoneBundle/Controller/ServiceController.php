@@ -150,15 +150,16 @@ class ServiceController extends Main{
             foreach ($out as $article_nr=>$arts) {
                 $html .= '<tr>';
                 $html .= "<td>".$article_nr."</td>";
-                
                 foreach ($arts as $art) {
                     $html .= "<td>".$art["sup_id"]."</td>";
                     $html .= "<td>".$art["sup_brand"]."</td>";
                     $html .= "<td>".$art["art_article_nr_can"]."</td>";
                 }
-                
                 $html .= '</tr>';
             }
+            $html .= '<tr>';
+            $html .= "<td></td>";
+            $html .= '</tr>';
             $html .= '<table>';
         }
         return $html;        
