@@ -161,7 +161,8 @@ class ServiceController extends Main{
                     foreach ($models as $model_type) {
                         $mdo[] = $model_type["mod_lnk_vich_id"];
                     }
-                    $out[$data["art_article_nr_can"]][3] = implode(",", $mdo);
+                    $out[$data["art_article_nr_can"]][3] = count($mdo);
+                    $out[$data["art_article_nr_can"]][4] = implode(",", $mdo);
                 } else {
                     if ($out[$data["art_article_nr_can"]][1] == 'OK') {
                         continue;
@@ -169,6 +170,7 @@ class ServiceController extends Main{
                     $out[$data["art_article_nr_can"]][1] = "NOT OK"; 
                     $out[$data["art_article_nr_can"]][2] = "";
                     $out[$data["art_article_nr_can"]][3] = "";
+                    $out[$data["art_article_nr_can"]][4] = "";
                 }
             }
             
