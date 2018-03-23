@@ -130,7 +130,9 @@ class ServiceController extends Main{
         
     }    
 
-    
+    function ergostatio2($items) {
+        
+    }
     function ergostatio($items) {
         foreach($items as $key=>$item) {
             $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
@@ -146,10 +148,16 @@ class ServiceController extends Main{
             foreach ($out as $article_nr=>$arts) {
                 $html .= '<tr>';
                 $html .= "<td>".$article_nr."</td>";
+                if (count($arts)>1) {
+                    $html .= "<td></td>";
+                    $html .= "<td></td>";
+                }
+                
                 foreach ($arts as $art) {
                     $html .= "<td>".$art["sup_id"]."</td>";
                     $html .= "<td>".$art["sup_brand"]."</td>";
                 }
+                
                 $html .= '</tr>';
             }
             $html .= '<table>';
