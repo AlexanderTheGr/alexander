@@ -59,7 +59,9 @@ class ServiceController extends Main{
         
         $sql = "SELECT `str_id` FROM magento2_base4q2017.link_pt_str WHERE `str_type` = 1 AND pt_id in (Select pt_id from magento2_base4q2017.art_products_des where art_id = '".$art_id."')";
 
-        
+        foreach($items as $key=>$item) {
+            $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
+        }
         if ($items)
         $sql = "SELECT * FROM `articles` where art_article_nr_can in ('".implode("','",$items)."')";
         echo $sql;
