@@ -63,7 +63,7 @@ class ServiceController extends Main{
             $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
         }
         if ($items) {
-            $sql = "SELECT * FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$items)."')";
+            $sql = "SELECT art_article_nr,sup_id,sup_brand, FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$items)."')";
             $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql); 
             $datas = unserialize(file_get_contents($url));        
             print_r($datas);
