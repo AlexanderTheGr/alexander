@@ -178,6 +178,7 @@ class ServiceController extends Main{
             foreach ($out as $article_nr=>$arts) {
                 $html .= '<tr>';
                 $html .= "<td>".$article_nr."</td>";
+                $html .= "<td>".$sup_id[$article_nr]."</td>";
                 foreach ($arts as $art) {
                     $html .= "<td>".$art."</td>";
                 }
