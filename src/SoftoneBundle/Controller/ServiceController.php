@@ -146,10 +146,17 @@ class ServiceController extends Main{
             $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql); 
             $datas = unserialize(file_get_contents($url));        
             foreach($datas as $data) {
-                if ($sup_id[$data["art_article_nr_can"]] == $data["sup_id"]) 
-                    $out[$data["art_article_nr_can"]][] = "OK";
-                else
-                    $out[$data["art_article_nr_can"]][] = "NOT OK"; 
+                if ($sup_id[$data["art_article_nr_can"]] == $data["sup_id"]) {
+                    if ($out[$data["art_article_nr_can"]][1] == 'OK') {
+                        continue;
+                    }
+                    $out[$data["art_article_nr_can"]][1] = "OK";
+                } else {
+                    if ($out[$data["art_article_nr_can"]][1] == 'OK') {
+                        continue;
+                    }                    
+                    $out[$data["art_article_nr_can"]][1] = "NOT OK"; 
+                }
             }
             /*
             foreach($items as $term) {
