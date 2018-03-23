@@ -1,12 +1,11 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-{{ render(controller('SoftoneBundle:Category:content', { 'ctrl': ctrl,'app':app,'url':url,'content':content }) ) }}
+{{ render(controller('SoftoneBundle:Service:content', { 'ctrl': ctrl,'app':app,'url':url,'content':content }) ) }}
+<div id='resulthtml'></div>
 {% endblock %}
 {% block stylesheets %}
 {% endblock %}
 {% block javascripts %}
-<!--script src="{{  asset('assets/js/libs/softone/softoneiorder.js') }}"></script-->
-<script src="{{  asset('assets/js/libs/softone/softoneproduct.js') }}"></script> 
 <script>
     $(".{{ctrl}}").alexTabs("{{app}}", "{{ctrl}}", "{{url}}","{{content|json_encode()}}");
 </script>
