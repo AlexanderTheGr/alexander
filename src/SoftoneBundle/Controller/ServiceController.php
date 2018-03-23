@@ -146,9 +146,9 @@ class ServiceController extends Main{
             $datas = unserialize(file_get_contents($url));        
             foreach($datas as $data) {
                 if ($sup_id[$data["art_article_nr_can"]] == $data["sup_id"]) 
-                    $out[$art_article_nr_can][] = "OK";
+                    $out[$data["art_article_nr_can"]][] = "OK";
                 else
-                    $out[$art_article_nr_can][] = "NOT OK"; 
+                    $out[$data["art_article_nr_can"]][] = "NOT OK"; 
             }
             /*
             foreach($items as $term) {
