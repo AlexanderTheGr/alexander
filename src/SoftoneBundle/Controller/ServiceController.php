@@ -62,9 +62,13 @@ class ServiceController extends Main{
         foreach($items as $key=>$item) {
             $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
         }
-        if ($items)
-        $sql = "SELECT * FROM `articles` where art_article_nr_can in ('".implode("','",$items)."')";
-        echo $sql;
+        if ($items) {
+            $sql = "SELECT * FROM `articles` where art_article_nr_can in ('".implode("','",$items)."')";
+            $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql); 
+            $datas = unserialize(file_get_contents($url));        
+            print_r($datas);
+        }
+        //echo $sql;
         
         /*
         foreach ($items as $term){
