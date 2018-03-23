@@ -30,7 +30,13 @@ class ServiceController extends Main{
     }
     public function gettabs() {
         $entity = new Pcategory;
-                
+  
+        $dataarray[] = array("value" => "matchModels", "name" => "Match Models");
+        $dataarray[] = array("value" => "match", "name" => "Match"); 
+        $dataarray[] = array("value" => "ergostatio2", "name" => "Ergostatio2");
+        $dataarray[] = array("value" => "ergostatio", "name" => "Ergostatio");
+        $fields["itemIsactive"] = array("label" => "Ενεργό", 'type' => "select", 'dataarray' => $dataarray, "required" => false, "className" => "col-md-2 col-sm-2");
+        
         $fields["itecategoryName"] = array("label" => "Original",'type' => "textarea");
 
         $forms = $this->getFormLyFields($entity, $fields);
