@@ -56,18 +56,12 @@ class ServiceController extends Main{
         //print_r($items);    
         $term = preg_replace("/[^a-zA-Z0-9]+/", "", $items[0]);
         //$sql = "SELECT * FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."'))";			
-        
         $sql = "SELECT `str_id` FROM magento2_base4q2017.link_pt_str WHERE `str_type` = 1 AND pt_id in (Select pt_id from magento2_base4q2017.art_products_des where art_id = '".$art_id."')";
-
-        foreach($items as $key=>$item) {
-            $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
-        }
-        if ($items) {
-            $sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$items)."')";
-            $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql); 
-            $datas = unserialize(file_get_contents($url));        
-            print_r($datas);
-        }
+        
+        
+        
+        
+        $this->ergostatio($items);
         //echo $sql;
         
         /*
@@ -133,4 +127,31 @@ class ServiceController extends Main{
         
     }    
 
+    
+    function ergostatio($items) {
+        foreach($items as $key=>$item) {
+            $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
+        }
+        if ($items) {
+            $sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$items)."')";
+            $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql); 
+            $datas = unserialize(file_get_contents($url));        
+            foreach($datas as $data) {
+                $out[$data["art_article_nr_can"]][] = $data;
+            }
+            $html = '<table>';
+            foreach ($out as $article_nr=>$arts) {
+                $html .= '<tr>';
+                $html .= "<td>".$article_nr."</td>";
+                foreach ($out as $article_nr=>$arts) {
+                    $html .= "<td>".$arts["sup_id"]."</td>";
+                    $html .= "<td>".$arts["sup_brand"]."</td>";
+                }
+                $html .= '</tr>';
+            }
+            $html = '<table>';
+            //print_r($datas);
+        }        
+    }
+    
 }
