@@ -52,6 +52,9 @@ $("#loaderer").hide();
                                 if (response.returnurl) {
                                     location.href = response.returnurl;
                                 }
+                                if (response.html) {
+                                    $("#" + response.divid).html(response.html);
+                                }
                                 $("#loaderer").hide();
                                 //if (response.unique) {
                                 angular.forEach(vm.tabs, function (tab) {
