@@ -138,6 +138,7 @@ class ServiceController extends Main{
                 $art_article_nr_can = preg_replace("/[^a-zA-Z0-9]+/", "", $terms[0]);
                 $sup_id = $terms[1];
                 $sql = "SELECT art_id FROM `articles` art_article_nr_can = '".$art_article_nr_can."' AND sup_id = '".$sup_id."' ";
+                $html .= $sql."<BR>";
                 $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql); 
                 $datas = unserialize(file_get_contents($url));        
                 if ($datas)
@@ -145,7 +146,7 @@ class ServiceController extends Main{
                 else
                     $out[$art_article_nr_can][] = "NOT OK";                
             }
-            $html = '<table>';
+            $html .= '<table>';
             foreach ($out as $article_nr=>$arts) {
                 $html .= '<tr>';
                 $html .= "<td>".$article_nr."</td>";
