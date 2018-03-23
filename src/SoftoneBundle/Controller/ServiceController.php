@@ -65,7 +65,7 @@ class ServiceController extends Main{
         
                 
         
-        $html = $type;//$this->matchModels($items);
+        $html = $this->$type($items);
         
         $json = json_encode(array("ok", "html" => $html,'divid'=>"resulthtml"));
         return new Response(
