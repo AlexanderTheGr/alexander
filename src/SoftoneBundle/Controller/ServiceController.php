@@ -17,8 +17,6 @@ class ServiceController extends Main{
      */
     public function indexAction() {
 
-        
-
         $content = $this->gettabs();
         return $this->render('SoftoneBundle:Category:view.html.twig', array(
                     'pagename' => 'Service',
@@ -61,7 +59,12 @@ class ServiceController extends Main{
         
         
         
-        echo $this->ergostatio($items);
+        $html = $this->ergostatio($items);
+        
+        $json = json_encode(array("ok", "html" => $html));
+        return new Response(
+                $json, 200, array('Content-Type' => 'application/json')
+        );         
         //echo $sql;
         
         /*
@@ -150,8 +153,7 @@ class ServiceController extends Main{
                 $html .= '</tr>';
             }
             $html .= '<table>';
-            //print_r($datas);
-        } 
+        }
         return $html;
     }
     
