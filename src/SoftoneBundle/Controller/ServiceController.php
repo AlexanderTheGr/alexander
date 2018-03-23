@@ -133,6 +133,23 @@ class ServiceController extends Main{
     
     function match($items) {
         if ($items) {
+            
+            foreach($items as $term) {
+                $terms = explode("\t",$term);
+                $art_article_nr_can[] = preg_replace("/[^a-zA-Z0-9]+/", "", $terms[0]);
+                $sup_id[$terms[0]] = $terms[1];
+            }
+            
+            $sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$art_article_nr_can)."') order by sup_brand";
+            //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."')))";
+            $datas = unserialize(file_get_contents($url));        
+            foreach($datas as $data) {
+                if ($sup_id[$data["art_article_nr_can"]] == $data["sup_id"]) 
+                    $out[$art_article_nr_can][] = "OK";
+                else
+                    $out[$art_article_nr_can][] = "NOT OK"; 
+            }
+            /*
             foreach($items as $term) {
                 $terms = explode("\t",$term);
                 $art_article_nr_can = preg_replace("/[^a-zA-Z0-9]+/", "", $terms[0]);
@@ -146,6 +163,8 @@ class ServiceController extends Main{
                 else
                     $out[$art_article_nr_can][] = "NOT OK";                
             }
+             * 
+             */
             $html .= '<table>';
             foreach ($out as $article_nr=>$arts) {
                 $html .= '<tr>';
@@ -168,6 +187,7 @@ class ServiceController extends Main{
             $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
         }
         if ($items) {
+            
             foreach($items as $term) {
                 $sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."')))";
                 //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$items)."') order by sup_brand";
