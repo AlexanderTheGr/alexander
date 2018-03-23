@@ -59,7 +59,7 @@ class ServiceController extends Main{
         
         
         
-        $html = $this->match($items);
+        $html = $this->matchModels($items);
         
         $json = json_encode(array("ok", "html" => $html,'divid'=>"resulthtml"));
         return new Response(
@@ -130,6 +130,54 @@ class ServiceController extends Main{
         
     }    
 
+    function matchModels($items) {
+        if ($items) {
+            
+            foreach($items as $term) {
+                $terms = explode("\t",$term);
+                $art_article_nr_can = preg_replace("/[^a-zA-Z0-9]+/", "", $terms[0]);
+                $art_article_nr_cans[] = $art_article_nr_can;
+                $sup_id[$art_article_nr_can] = $terms[1];
+            }
+            
+            $sql = "SELECT atr_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$art_article_nr_cans)."') order by sup_brand";
+            //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."')))";
+            $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql); 
+            $datas = unserialize(file_get_contents($url));        
+            
+            foreach($datas as $data) {
+                if ($sup_id[$data["art_article_nr_can"]] == $data["sup_id"]) {
+                    if ($out[$data["art_article_nr_can"]][1] == 'OK') {
+                        continue;
+                    }
+                    $out[$data["art_article_nr_can"]][1] = "OK";
+                    $out[$data["art_article_nr_can"]][2] = $data["atr_id"];
+                } else {
+                    if ($out[$data["art_article_nr_can"]][1] == 'OK') {
+                        continue;
+                    }                    
+                    $out[$data["art_article_nr_can"]][1] = "NOT OK"; 
+                    $out[$data["art_article_nr_can"]][2] = "";
+                }
+            }
+            
+            $html .= '<table>';
+            foreach ($out as $article_nr=>$arts) {
+                $html .= '<tr>';
+                $html .= "<td>".$article_nr."</td>";
+                $html .= "<td>".$sup_id[$article_nr]."</td>";
+                foreach ($arts as $art) {
+                    $html .= "<td>".$art."</td>";
+                }
+                $html .= '</tr>';
+            }
+            $html .= '<tr>';
+            $html .= "<td></td>";
+            $html .= '</tr>';
+            $html .= '<table>';            
+        }
+        return $html; 
+    }
     
     function match($items) {
         if ($items) {
@@ -158,22 +206,6 @@ class ServiceController extends Main{
                     $out[$data["art_article_nr_can"]][1] = "NOT OK"; 
                 }
             }
-            /*
-            foreach($items as $term) {
-                $terms = explode("\t",$term);
-                $art_article_nr_can = preg_replace("/[^a-zA-Z0-9]+/", "", $terms[0]);
-                $sup_id = $terms[1];
-                $sql = "SELECT art_id FROM `articles` where art_article_nr_can = '".$art_article_nr_can."' AND art_sup_id  = '".$sup_id."' ";
-                //$html .= $sql."<BR>";
-                $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql); 
-                $datas = unserialize(file_get_contents($url));        
-                if ($datas)
-                    $out[$art_article_nr_can][] = "OK";
-                else
-                    $out[$art_article_nr_can][] = "NOT OK";                
-            }
-             * 
-             */
             $html .= '<table>';
             foreach ($out as $article_nr=>$arts) {
                 $html .= '<tr>';
