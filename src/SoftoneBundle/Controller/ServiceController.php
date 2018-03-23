@@ -59,7 +59,7 @@ class ServiceController extends Main{
         
         
         
-        $html = $this->ergostatio($items);
+        $html = $this->ergostatio2($items);
         
         $json = json_encode(array("ok", "html" => $html,'divid'=>"resulthtml"));
         return new Response(
@@ -131,7 +131,39 @@ class ServiceController extends Main{
     }    
 
     function ergostatio2($items) {
-        
+        foreach($items as $key=>$item) {
+            $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
+        }
+        if ($items) {
+            
+
+            $sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number in ('".implode("','",$items)."'))))";
+
+            //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$items)."') order by sup_brand";
+            $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql); 
+            $datas = unserialize(file_get_contents($url));        
+            foreach($datas as $data) {
+                $out[$data["art_article_nr_can"]][] = $data;
+            }
+            $html = '<table>';
+            foreach ($out as $article_nr=>$arts) {
+                $html .= '<tr>';
+                $html .= "<td>".$article_nr."</td>";
+                if (count($arts)>1) {
+                    $html .= "<td></td>";
+                    $html .= "<td></td>";
+                }
+                
+                foreach ($arts as $art) {
+                    $html .= "<td>".$art["sup_id"]."</td>";
+                    $html .= "<td>".$art["sup_brand"]."</td>";
+                }
+                
+                $html .= '</tr>';
+            }
+            $html .= '<table>';
+        }
+        return $html;        
     }
     function ergostatio($items) {
         foreach($items as $key=>$item) {
