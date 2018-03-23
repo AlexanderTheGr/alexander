@@ -60,6 +60,11 @@ class ServiceController extends Main{
         $sql = "SELECT `str_id` FROM magento2_base4q2017.link_pt_str WHERE `str_type` = 1 AND pt_id in (Select pt_id from magento2_base4q2017.art_products_des where art_id = '".$art_id."')";
 
         
+        if ($items)
+        $sql = "SELECT * FROM `articles` where art_article_nr_can in ".implode(",",$items);
+        echo $sql;
+        
+        /*
         foreach ($items as $term){
             $term = preg_replace("/[^a-zA-Z0-9]+/", "", $term);
             //$sql = "SELECT * FROM `articles` WHERE `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."')))";
@@ -69,6 +74,8 @@ class ServiceController extends Main{
             $datas = unserialize(file_get_contents($url));
             print_r($datas);
         }
+         * 
+         */
         exit;
         
         
