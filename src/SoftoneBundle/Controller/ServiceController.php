@@ -56,8 +56,7 @@ class ServiceController extends Main{
         //$sql = "SELECT * FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."'))";			
         $sql = "SELECT `str_id` FROM magento2_base4q2017.link_pt_str WHERE `str_type` = 1 AND pt_id in (Select pt_id from magento2_base4q2017.art_products_des where art_id = '".$art_id."')";
         
-        
-        
+                
         
         $html = $this->matchModels($items);
         
@@ -142,6 +141,8 @@ class ServiceController extends Main{
             
             $sql = "SELECT atr_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$art_article_nr_cans)."') order by sup_brand";
             //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."')))";
+            echo $sql;
+            exit;
             $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql); 
             $datas = unserialize(file_get_contents($url));        
             
