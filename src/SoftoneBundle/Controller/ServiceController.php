@@ -61,7 +61,7 @@ class ServiceController extends Main{
 
         
         if ($items)
-        $sql = "SELECT * FROM `articles` where art_article_nr_can in ".implode(",",$items);
+        $sql = "SELECT * FROM `articles` where art_article_nr_can in ('".implode("','",$items)."')";
         echo $sql;
         
         /*
