@@ -136,7 +136,7 @@ class ServiceController extends Main{
             foreach($items as $term) {
                 $terms = explode("\t",$term);
                 $art_article_nr_can = preg_replace("/[^a-zA-Z0-9]+/", "", $terms[0]);
-                $sup_id = terms[1];
+                $sup_id = $terms[1];
                 $sql = "SELECT art_id FROM `articles` art_article_nr_can = '".$art_article_nr_can."' AND sup_id = '".$sup_id."' ";
                 echo $sql."<BR>";
             }
