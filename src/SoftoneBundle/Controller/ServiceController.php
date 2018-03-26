@@ -322,16 +322,14 @@ class ServiceController extends Main{
                 $sql = "SELECT atr_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$items)."') order by sup_brand";
                 $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql); 
                 $datas = unserialize(file_get_contents($url));        
-                foreach($datas as $data) {
-                    
-                    
+                foreach((array)$datas as $data) {
                     $sql = "SELECT `str_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='".$category."' AND `str_type` = 1 AND pt_id in (Select pt_id from magento2_base4q2017.art_products_des where art_id = '".$data["atr_id"]."')";
                     $cats = unserialize(file_get_contents($url));  
                     $data["cat"] = $cats[0]["str_id"];
                     $out[$data["art_article_nr_can"]][] = $data;
                 }
                 $html = '<table>';
-                foreach ($out as $article_nr=>$arts) {
+                foreach ((array)$out as $article_nr=>$arts) {
                     $html .= '<tr>';
                     $html .= "<td>".$article_nr."</td>";
                     if (count($arts)>1) {
