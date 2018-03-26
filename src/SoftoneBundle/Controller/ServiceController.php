@@ -79,6 +79,8 @@ class ServiceController extends Main {
 
         $search = $data["SoftoneBundle:Pcategory:itecategoryName:"];
         $type = $data["SoftoneBundle:Pcategory:itemIsactive:"];
+        $tecdocSupplierId = $data["SoftoneBundle:Pcategory:tecdocSupplierId:"];
+        echo $tecdocSupplierId;
         if (!$type)
             exit;
         if ($search == "")
