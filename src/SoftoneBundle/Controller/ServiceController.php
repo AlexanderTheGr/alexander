@@ -83,6 +83,8 @@ class ServiceController extends Main {
         echo $tecdocSupplierId;
         if (!$type)
             exit;
+        if ($type=='null')
+            exit;        
         if ($search == "")
             exit;
         $category = $data["SoftoneBundle:Pcategory:category:"];
