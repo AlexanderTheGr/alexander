@@ -35,8 +35,29 @@ class ServiceController extends Main{
         $dataarray[] = array("value" => "match", "name" => "Match"); 
         $dataarray[] = array("value" => "ergostatio2", "name" => "Ergostatio2");
         $dataarray[] = array("value" => "ergostatio", "name" => "Ergostatio");
-        $fields["itemIsactive"] = array("label" => "Type", 'type' => "select", 'dataarray' => $dataarray, "required" => false, "className" => "col-md-2 col-sm-2");
         
+        
+       $pcats = $this->getDoctrine()
+                ->getRepository('SoftoneBundle:Category')
+                ->findBy(array("parent" => 0));
+       
+        foreach ($pcats as $pcat) {
+            
+            
+            //$html .= "<option value='" . $pcat->getId() . "'>".$pcat->getName()."</option>";
+
+            $dataarray[] = array("value" => $pcat->getId(), "name" => $pcat->getName());
+            $cats = $this->getDoctrine()
+                    ->getRepository('SoftoneBundle:Category')
+                    ->findBy(array("parent" => $pcat->getId()));
+            foreach ($cats as $cat) {
+                $dataarray[] = array("value" => $cat->getId(), "name" => "--".$cat->getName());
+            }
+            
+        }    
+        
+        $fields["itemIsactive"] = array("label" => "Type", 'type' => "select", 'dataarray' => $dataarray, "required" => false, "className" => "col-md-2 col-sm-2");
+        $fields["category"] = array("label" => "Category", 'type' => "select", 'dataarray' => $dataarray, "required" => false, "className" => "col-md-2 col-sm-2");
         $fields["itecategoryName"] = array("label" => "Field",'type' => "textarea");
 
         $forms = $this->getFormLyFields($entity, $fields);
