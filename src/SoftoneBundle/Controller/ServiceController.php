@@ -88,7 +88,7 @@ class ServiceController extends Main{
         $sql = "SELECT `str_id` FROM magento2_base4q2017.link_pt_str WHERE `str_type` = 1 AND pt_id in (Select pt_id from magento2_base4q2017.art_products_des where art_id = '".$art_id."')";
        
         
-        $html = $this->$type($items);
+        $html = $this->$type((array)$items);
         $json = json_encode(array("ok", "html" => $html,'divid'=>"resulthtml"));
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
