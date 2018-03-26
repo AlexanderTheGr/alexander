@@ -389,6 +389,7 @@ class ServiceController extends Main {
             $out = array();
             foreach ($items as $key => $item) {
                 $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
+                $out[$items[$key]] = array();
             }
             $sup = "";
             if ($tecdocSupplierId > 0) {
@@ -450,6 +451,7 @@ class ServiceController extends Main {
             $out = array();
             foreach ($items as $key => $item) {
                 $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
+                $out[$items[$key]] = array();
             }
             $sup = "";
             if ($tecdocSupplierId > 0) {
