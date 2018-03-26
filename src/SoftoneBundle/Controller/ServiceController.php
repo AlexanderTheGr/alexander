@@ -35,7 +35,7 @@ class ServiceController extends Main {
         $dataarray[] = array("value" => "matchModels", "name" => "Match Models");
         $dataarray[] = array("value" => "match", "name" => "Match");
         $dataarray[] = array("value" => "original2", "name" => "Original");
-        $dataarray[] = array("value" => "ergostatio2", "name" => "Ergostatio2");
+        $dataarray[] = array("value" => "ppergostat", "name" => "Ergostatio2");
         $dataarray[] = array("value" => "ergostatio", "name" => "Ergostatio");
         
 
@@ -105,7 +105,7 @@ class ServiceController extends Main {
             //print_r($results);
             $category = $results[0]["oldnew_id"];
         }
-        echo $type;
+        //echo $type;
         $html = $this->$type((array) $items, $category,$tecdocSupplierId);
         $json = json_encode(array("ok", "html" => $html, 'divid' => "resulthtml"));
         return new Response(
@@ -283,7 +283,7 @@ class ServiceController extends Main {
         return $html;
     }
 
-    function ergostatio2($items, $category = 0,$tecdocSupplierId=0) {
+    function ppergostat($items, $category = 0,$tecdocSupplierId=0) {
         if (count($items)) {
             $sup = "";
             if ($tecdocSupplierId > 0) {
