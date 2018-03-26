@@ -298,6 +298,8 @@ class ServiceController extends Main {
                             $cats = unserialize(file_get_contents($url));
                             if ($cats)
                                 $data["cat"] = "OK";
+                            else
+                                continue;
                         }
                         $out[$term][] = $data;
                     }
@@ -342,6 +344,8 @@ class ServiceController extends Main {
                         $cats = unserialize(file_get_contents($url));
                         if ($cats)
                             $data["cat"] = "OK";
+                        else
+                            continue;
                     }
                     $out[$data["art_article_nr_can"]][] = $data;
                 }
