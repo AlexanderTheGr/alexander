@@ -159,7 +159,7 @@ class ServiceController extends Main{
     }    
 
     function matchModels($items,$category = 0) {
-        if ($items) {
+        if (count($items)) {
             
             foreach($items as $term) {
                 $terms = explode("\t",$term);
@@ -175,7 +175,7 @@ class ServiceController extends Main{
             $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql); 
             $datas = unserialize(file_get_contents($url));        
             
-            foreach($datas as $data) {
+            foreach((array)$datas as $data) {
                 if ($sup_id[$data["art_article_nr_can"]] == $data["sup_id"]) {
                     if ($out[$data["art_article_nr_can"]][1] == 'OK') {
                         continue;
@@ -222,7 +222,7 @@ class ServiceController extends Main{
     }
     
     function match($items,$category = 0) {
-        if ($items) {
+        if (count($items)) {
             
             foreach($items as $term) {
                 $terms = explode("\t",$term);
@@ -235,7 +235,7 @@ class ServiceController extends Main{
             //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."')))";
             $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql); 
             $datas = unserialize(file_get_contents($url));        
-            foreach($datas as $data) {
+            foreach((array)$datas as $data) {
                 if ($sup_id[$data["art_article_nr_can"]] == $data["sup_id"]) {
                     if ($out[$data["art_article_nr_can"]][1] == 'OK') {
                         continue;
@@ -267,67 +267,71 @@ class ServiceController extends Main{
     }
     
     function ergostatio2($items,$category = 0) {
-        foreach($items as $key=>$item) {
-            $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
-        }
-        if ($items) {
-            
-            foreach($items as $term) {
-                $sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."')))";
-                //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$items)."') order by sup_brand";
-                $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql); 
-                $datas = unserialize(file_get_contents($url));        
-                foreach($datas as $data) {
-                    $out[$term][] = $data;
-                }
+        if (count($items)) {
+            foreach($items as $key=>$item) {
+                $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
             }
-            
-            $html = '<table>';
-            foreach ($out as $article_nr=>$arts) {
+            if ($items) {
+
+                foreach($items as $term) {
+                    $sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."')))";
+                    //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$items)."') order by sup_brand";
+                    $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql); 
+                    $datas = unserialize(file_get_contents($url));        
+                    foreach($datas as $data) {
+                        $out[$term][] = $data;
+                    }
+                }
+
+                $html = '<table>';
+                foreach ($out as $article_nr=>$arts) {
+                    $html .= '<tr>';
+                    $html .= "<td>".$article_nr."</td>";
+                    foreach ($arts as $art) {
+                        $html .= "<td>".$art["sup_id"]."</td>";
+                        $html .= "<td>".$art["sup_brand"]."</td>";
+                        $html .= "<td>".$art["art_article_nr_can"]."</td>";
+                    }
+                    $html .= '</tr>';
+                }
                 $html .= '<tr>';
-                $html .= "<td>".$article_nr."</td>";
-                foreach ($arts as $art) {
-                    $html .= "<td>".$art["sup_id"]."</td>";
-                    $html .= "<td>".$art["sup_brand"]."</td>";
-                    $html .= "<td>".$art["art_article_nr_can"]."</td>";
-                }
+                $html .= "<td></td>";
                 $html .= '</tr>';
+                $html .= '<table>';
             }
-            $html .= '<tr>';
-            $html .= "<td></td>";
-            $html .= '</tr>';
-            $html .= '<table>';
         }
         return $html;        
     }
     function ergostatio($items,$category = 0) {
-        foreach($items as $key=>$item) {
-            $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
-        }
-        if ($items) {
-            $sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$items)."') order by sup_brand";
-            $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql); 
-            $datas = unserialize(file_get_contents($url));        
-            foreach($datas as $data) {
-                $out[$data["art_article_nr_can"]][] = $data;
+        if (count($items)) {
+            foreach($items as $key=>$item) {
+                $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
             }
-            $html = '<table>';
-            foreach ($out as $article_nr=>$arts) {
-                $html .= '<tr>';
-                $html .= "<td>".$article_nr."</td>";
-                if (count($arts)>1) {
-                    $html .= "<td></td>";
-                    $html .= "<td></td>";
+            if ($items) {
+                $sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$items)."') order by sup_brand";
+                $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql); 
+                $datas = unserialize(file_get_contents($url));        
+                foreach($datas as $data) {
+                    $out[$data["art_article_nr_can"]][] = $data;
                 }
-                
-                foreach ($arts as $art) {
-                    $html .= "<td>".$art["sup_id"]."</td>";
-                    $html .= "<td>".$art["sup_brand"]."</td>";
+                $html = '<table>';
+                foreach ($out as $article_nr=>$arts) {
+                    $html .= '<tr>';
+                    $html .= "<td>".$article_nr."</td>";
+                    if (count($arts)>1) {
+                        $html .= "<td></td>";
+                        $html .= "<td></td>";
+                    }
+
+                    foreach ($arts as $art) {
+                        $html .= "<td>".$art["sup_id"]."</td>";
+                        $html .= "<td>".$art["sup_brand"]."</td>";
+                    }
+
+                    $html .= '</tr>';
                 }
-                
-                $html .= '</tr>';
+                $html .= '<table>';
             }
-            $html .= '<table>';
         }
         return $html;
     }
