@@ -419,7 +419,8 @@ class ServiceController extends Main {
                     }
                      * 
                      */
-                    $out[$data["art_article_nr_can"]][] = $data;
+                    
+                    $out[strtolower($data["art_article_nr_can"])][] = $data;
                 }
                 $html = '<table>';
                 foreach ((array) $out as $article_nr => $arts) {
@@ -452,6 +453,7 @@ class ServiceController extends Main {
             foreach ($items as $key => $item) {
                 $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
                 $out[$items[$key]] = array();
+                $out1[$items[$key]] = $item;
             }
             $sup = "";
             if ($tecdocSupplierId > 0) {
@@ -484,7 +486,7 @@ class ServiceController extends Main {
                     }
                      * 
                      */
-                    $out[$data["art_article_nr_can"]][] = $data;
+                    $out[$out1[$data["art_article_nr_can"]]][] = $data;
                 }
                 $html = '<table>';
                 foreach ((array) $out as $article_nr => $arts) {
