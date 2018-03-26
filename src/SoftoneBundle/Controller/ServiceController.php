@@ -80,7 +80,7 @@ class ServiceController extends Main {
         $search = $data["SoftoneBundle:Pcategory:itecategoryName:"];
         $type = $data["SoftoneBundle:Pcategory:itemIsactive:"];
         $tecdocSupplierId = $data["SoftoneBundle:Pcategory:tecdocSupplierId:"];
-        echo $tecdocSupplierId;
+        //echo $tecdocSupplierId;
         if (!$type)
             exit;
         if ($type=='null')
@@ -105,7 +105,7 @@ class ServiceController extends Main {
             $category = $results[0]["oldnew_id"];
         }
 
-        $html = $this->$type((array) $items, $category);
+        $html = $this->$type((array) $items, $category,$tecdocSupplierId);
         $json = json_encode(array("ok", "html" => $html, 'divid' => "resulthtml"));
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
@@ -174,7 +174,7 @@ class ServiceController extends Main {
         );
     }
 
-    function matchModels($items, $category = 0) {
+    function matchModels($items, $category = 0,$tecdocSupplierId=0) {
         if (count($items)) {
             $out = array();
             foreach ($items as $term) {
@@ -237,7 +237,7 @@ class ServiceController extends Main {
         return $html;
     }
 
-    function match($items, $category = 0) {
+    function match($items, $category = 0,$tecdocSupplierId=0) {
         if (count($items)) {
             $out = array();
             foreach ($items as $term) {
@@ -282,8 +282,12 @@ class ServiceController extends Main {
         return $html;
     }
 
-    function ergostatio2($items, $category = 0) {
+    function ergostatio2($items, $category = 0,$tecdocSupplierId=0) {
         if (count($items)) {
+            $sup = "";
+            if ($tecdocSupplierId > 0) {
+                $sup = " AND sup_id = '".$tecdocSupplierId."'";
+            }
             $out = array();
             foreach ($items as $key => $item) {
                 $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
@@ -292,9 +296,9 @@ class ServiceController extends Main {
 
                 foreach ($items as $term) {
                     if ($category > 0) {
-                        $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where art_id in (Select art_id from magento2_base4q2017.art_products_des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1)) AND sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '" . $term . "')))";                        
+                        $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where art_id in (Select art_id from magento2_base4q2017.art_products_des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1)) ".$sup." AND sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '" . $term . "')))";                        
                     } else
-                        $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '" . $term . "')))";
+                        $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '" . $term . "')))  ".$sup."";
                     //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$items)."') order by sup_brand";
                     $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
                     $datas = unserialize(file_get_contents($url));
@@ -323,17 +327,21 @@ class ServiceController extends Main {
         return $html;
     }
 
-    function ergostatio($items, $category = 0) {
+    function ergostatio($items, $category = 0,$tecdocSupplierId=0) {
         if (count($items)) {
             $out = array();
             foreach ($items as $key => $item) {
                 $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
             }
+            $sup = "";
+            if ($tecdocSupplierId > 0) {
+                $sup = " AND sup_id = '".$tecdocSupplierId."'";
+            }
             if ($items) {
                 if ($category > 0) {
-                    $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where art_id in (Select art_id from magento2_base4q2017.art_products_des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1)) AND sup_id = art_sup_id AND art_article_nr_can in ('" . implode("','", $items) . "') order by sup_brand";
+                    $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where art_id in (Select art_id from magento2_base4q2017.art_products_des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' ".$sup." AND `str_type` = 1)) AND sup_id = art_sup_id AND art_article_nr_can in ('" . implode("','", $items) . "') order by sup_brand";
                 } else
-                    $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('" . implode("','", $items) . "') order by sup_brand";
+                    $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('" . implode("','", $items) . "') ".$sup." order by sup_brand";
                 $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
                 //echo $sql;
                 
