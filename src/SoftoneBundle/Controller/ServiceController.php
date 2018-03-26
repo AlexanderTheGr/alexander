@@ -78,7 +78,7 @@ class ServiceController extends Main{
         $search = $data["SoftoneBundle:Pcategory:itecategoryName:"];
         $type = $data["SoftoneBundle:Pcategory:itemIsactive:"];
         if (!$type) exit;
-        if (!$search) exit;        
+        if ($search == "") exit;        
         $category = $data["SoftoneBundle:Pcategory:category:"];
         $q = $items = str_replace("\n",",", $search);
         $items = explode("\n", $search);
