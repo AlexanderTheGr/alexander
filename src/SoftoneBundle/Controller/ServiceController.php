@@ -321,6 +321,7 @@ class ServiceController extends Main{
             if ($items) {
                 $sql = "SELECT atr_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$items)."') order by sup_brand";
                 $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql); 
+                echo $sql;
                 $datas = unserialize(file_get_contents($url));        
                 foreach((array)$datas as $data) {
                     $sql = "SELECT `str_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='".$category."' AND `str_type` = 1 AND pt_id in (Select pt_id from magento2_base4q2017.art_products_des where art_id = '".$data["atr_id"]."')";
