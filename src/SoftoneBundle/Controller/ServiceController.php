@@ -451,6 +451,7 @@ class ServiceController extends Main {
         if (count($items)) {
             $out = array();
             foreach ($items as $key => $item) {
+                $item = strtolower($item);
                 $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
                 $out[$item] = array();
                 $out1[$items[$key]] = $item;
@@ -486,6 +487,7 @@ class ServiceController extends Main {
                     }
                      * 
                      */
+                    $data["art_article_nr_can"] = preg_replace("/[^a-zA-Z0-9]+/", "", $data["art_article_nr_can"]);
                     $out[$out1[$data["art_article_nr_can"]]][] = $data;
                 }
                 $html = '<table>';
