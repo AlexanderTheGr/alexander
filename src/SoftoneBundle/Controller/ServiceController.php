@@ -326,6 +326,7 @@ class ServiceController extends Main{
                 foreach((array)$datas as $data) {
                     $sql = "SELECT `str_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='".$category."' AND `str_type` = 1 AND pt_id in (Select pt_id from magento2_base4q2017.art_products_des where art_id = '".$data["art_id"]."')";
                     $cats = unserialize(file_get_contents($url));  
+                    $data["sql"] = $sql;
                     $data["cat"] = $cats[0]["str_id"];
                     $out[$data["art_article_nr_can"]][] = $data;
                 }
@@ -342,6 +343,7 @@ class ServiceController extends Main{
                         $html .= "<td>".$art["sup_id"]."</td>";
                         $html .= "<td>".$art["sup_brand"]."</td>";
                         $html .= "<td>".$art["cat"]."</td>";
+                        $html .= "<td>".$art["sql"]."</td>";
                     }
 
                     $html .= '</tr>';
