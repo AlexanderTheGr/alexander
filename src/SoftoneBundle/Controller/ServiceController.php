@@ -36,7 +36,7 @@ class ServiceController extends Main {
         $dataarray[] = array("value" => "match", "name" => "Match");
         $dataarray[] = array("value" => "ergostatio2", "name" => "Ergostatio2");
         $dataarray[] = array("value" => "ergostatio", "name" => "Ergostatio");
-
+        $dataarray[] = array("value" => "original", "name" => "Original");
 
         $pcats = $this->getDoctrine()
                 ->getRepository('SoftoneBundle:Category')
@@ -327,6 +327,68 @@ class ServiceController extends Main {
         return $html;
     }
 
+    function original($items, $category = 0,$tecdocSupplierId=0) {
+        if (count($items)) {
+            $out = array();
+            foreach ($items as $key => $item) {
+                $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
+            }
+            $sup = "";
+            if ($tecdocSupplierId > 0) {
+                $sup = " AND sup_id = '".$tecdocSupplierId."'";
+            }
+            if ($items) {
+                if ($category > 0) {
+                    $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where art_id in (Select art_id from magento2_base4q2017.art_products_des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1)) AND sup_id = art_sup_id AND art_id in (SELECT `art_id` FROM `art_oem_numbers` WHERE `oem_num_can` in ('" . implode("','", $items) . "')) ".$sup." order by sup_brand";
+                } else
+                    $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_id in (SELECT `art_id` FROM `art_oem_numbers` WHERE `oem_num_can` in ('" . implode("','", $items) . "')) ".$sup." order by sup_brand";
+                $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+                //echo $sql;
+                
+                
+                //$sql = "(Select art_id from magento2_base4q2017.art_products_des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1))";
+                
+                $datas = unserialize(file_get_contents($url));
+                foreach ((array) $datas as $data) {
+                    /*
+                    if ($category > 0) {
+                        $sql = "SELECT `str_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1 AND pt_id in (Select pt_id from magento2_base4q2017.art_products_des where art_id = '" . $data["art_id"] . "')";
+                        $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+                        $cats = unserialize(file_get_contents($url));
+                        if ($cats)
+                            $data["cat"] = "OK";
+                        else
+                            continue;
+                    }
+                     * 
+                     */
+                    $out[$data["art_article_nr_can"]][] = $data;
+                }
+                $html = '<table>';
+                foreach ((array) $out as $article_nr => $arts) {
+                    $html .= '<tr>';
+                    $html .= "<td>" . $article_nr . "</td>";
+                    if (count($arts) > 1) {
+                        $html .= "<td></td>";
+                        $html .= "<td></td>";
+                    }
+
+                    foreach ($arts as $art) {
+                        $html .= "<td>" . $art["sup_id"] . "</td>";
+                        $html .= "<td>" . $art["sup_brand"] . "</td>";
+                        $html .= "<td>" . $art["cat"] . "</td>";
+                        //$html .= "<td>".$art["sql"]."</td>";
+                    }
+
+                    $html .= '</tr>';
+                }
+                $html .= '<table>';
+            }
+        }
+        return $html;
+    }
+    
+    
     function ergostatio($items, $category = 0,$tecdocSupplierId=0) {
         if (count($items)) {
             $out = array();
