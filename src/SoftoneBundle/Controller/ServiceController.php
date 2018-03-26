@@ -459,7 +459,7 @@ class ServiceController extends Main {
                 
                 
                 $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
-                echo $sql."\n";
+                //echo $sql."\n";
                 
                 
                 //$sql = "(Select art_id from magento2_base4q2017.art_products_des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1))";
