@@ -160,7 +160,7 @@ class ServiceController extends Main{
 
     function matchModels($items,$category = 0) {
         if (count($items)) {
-            
+            $out = array();
             foreach($items as $term) {
                 $terms = explode("\t",$term);
                 $art_article_nr_can = preg_replace("/[^a-zA-Z0-9]+/", "", $terms[0]);
@@ -223,7 +223,7 @@ class ServiceController extends Main{
     
     function match($items,$category = 0) {
         if (count($items)) {
-            
+            $out = array();
             foreach($items as $term) {
                 $terms = explode("\t",$term);
                 $art_article_nr_can = preg_replace("/[^a-zA-Z0-9]+/", "", $terms[0]);
@@ -268,6 +268,7 @@ class ServiceController extends Main{
     
     function ergostatio2($items,$category = 0) {
         if (count($items)) {
+            $out = array();
             foreach($items as $key=>$item) {
                 $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
             }
@@ -304,6 +305,7 @@ class ServiceController extends Main{
     }
     function ergostatio($items,$category = 0) {
         if (count($items)) {
+            $out = array();
             foreach($items as $key=>$item) {
                 $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
             }
