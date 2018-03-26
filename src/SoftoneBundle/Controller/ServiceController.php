@@ -93,10 +93,11 @@ class ServiceController extends Main{
             $statement = $connection->prepare($sql);
             $statement->execute();
             $results = $statement->fetchAll();
-            print_r($results);
+            //print_r($results);
+            $category = $results[0]["oldnew_id"];
         }
         
-        $html = $this->$type((array)$items);
+        $html = $this->$type((array)$items,$category);
         $json = json_encode(array("ok", "html" => $html,'divid'=>"resulthtml"));
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
@@ -318,10 +319,15 @@ class ServiceController extends Main{
                 $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
             }
             if ($items) {
-                $sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$items)."') order by sup_brand";
+                $sql = "SELECT atr_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$items)."') order by sup_brand";
                 $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql); 
                 $datas = unserialize(file_get_contents($url));        
                 foreach($datas as $data) {
+                    
+                    
+                    $sql = "SELECT `str_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='".$category."' AND `str_type` = 1 AND pt_id in (Select pt_id from magento2_base4q2017.art_products_des where art_id = '".$data["atr_id"]."')";
+                    $cats = unserialize(file_get_contents($url));  
+                    $data["cat"] = $cats[0]["str_id"];
                     $out[$data["art_article_nr_can"]][] = $data;
                 }
                 $html = '<table>';
