@@ -36,7 +36,7 @@ class ServiceController extends Main {
         $dataarray[] = array("value" => "match", "name" => "Match");
         $dataarray[] = array("value" => "ergostatio2", "name" => "Ergostatio2");
         $dataarray[] = array("value" => "ergostatio", "name" => "Ergostatio");
-        $dataarray[] = array("value" => "original", "name" => "Original");
+        $dataarray[] = array("value" => "original2", "name" => "Original");
 
         $pcats = $this->getDoctrine()
                 ->getRepository('SoftoneBundle:Category')
@@ -327,6 +327,54 @@ class ServiceController extends Main {
         return $html;
     }
 
+    
+    function original2($items, $category = 0,$tecdocSupplierId=0) {
+        if (count($items)) {
+            $sup = "";
+            if ($tecdocSupplierId > 0) {
+                $sup = " AND sup_id = '".$tecdocSupplierId."'";
+            }
+            $out = array();
+            foreach ($items as $key => $item) {
+                $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
+            }
+            if ($items) {
+
+                foreach ($items as $term) {
+                    if ($category > 0) {
+                        $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where art_id in (Select art_id from magento2_base4q2017.art_products_des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1)) ".$sup." AND sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = art_id AND art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` LIKE '" . $term . "'))))";                        
+                    } else
+                        $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and  AND art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` LIKE '" . $term . "'))))  ".$sup."";
+                    //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$items)."') order by sup_brand";
+                    $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+                    $datas = unserialize(file_get_contents($url));
+                    foreach ($datas as $data) {
+                        $out[$term][] = $data;
+                    }
+                }
+
+                $html = '<table>';
+                foreach ($out as $article_nr => $arts) {
+                    $html .= '<tr>';
+                    $html .= "<td>" . $article_nr . "</td>";
+                    foreach ($arts as $art) {
+                        $html .= "<td>" . $art["sup_id"] . "</td>";
+                        $html .= "<td>" . $art["sup_brand"] . "</td>";
+                        $html .= "<td>" . $art["art_article_nr_can"] . "</td>";
+                    }
+                    $html .= '</tr>';
+                }
+                $html .= '<tr>';
+                $html .= "<td></td>";
+                $html .= '</tr>';
+                $html .= '<table>';
+            }
+        }
+        return $html;
+    }    
+    
+    
+    
     function original($items, $category = 0,$tecdocSupplierId=0) {
         if (count($items)) {
             $out = array();
