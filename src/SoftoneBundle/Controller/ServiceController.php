@@ -452,10 +452,10 @@ class ServiceController extends Main {
             $out = array();
             foreach ($items as $key => $item) {
                 //$item = strtolower($item);
-                $out1[$items[$key]] = $item;
+                
                 $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", strtolower($item));
                 $out[$item] = array();
-                
+                $out1[$items[$key]] = $item;
             }
             $sup = "";
             if ($tecdocSupplierId > 0) {
