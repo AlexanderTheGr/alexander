@@ -451,10 +451,11 @@ class ServiceController extends Main {
         if (count($items)) {
             $out = array();
             foreach ($items as $key => $item) {
-                $item = strtolower($item);
-                $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
-                $out[$item] = array();
+                //$item = strtolower($item);
                 $out1[$items[$key]] = $item;
+                $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", strtolower($item));
+                $out[$item] = array();
+                
             }
             $sup = "";
             if ($tecdocSupplierId > 0) {
