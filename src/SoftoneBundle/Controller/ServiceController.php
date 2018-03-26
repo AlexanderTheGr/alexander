@@ -105,7 +105,7 @@ class ServiceController extends Main {
             //print_r($results);
             $category = $results[0]["oldnew_id"];
         }
-        echo $type;
+        //echo $type;
         $html = $this->$type((array) $items, $category,$tecdocSupplierId);
         $json = json_encode(array("ok", "html" => $html, 'divid' => "resulthtml"));
         return new Response(
