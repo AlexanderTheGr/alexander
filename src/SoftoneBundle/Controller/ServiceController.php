@@ -311,6 +311,7 @@ class ServiceController extends Main {
                         $html .= "<td>" . $art["sup_id"] . "</td>";
                         $html .= "<td>" . $art["sup_brand"] . "</td>";
                         $html .= "<td>" . $art["art_article_nr_can"] . "</td>";
+                        $html .= "<td>" . $art["cat"] . "</td>";
                     }
                     $html .= '</tr>';
                 }
