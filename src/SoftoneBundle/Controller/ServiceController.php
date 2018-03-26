@@ -407,19 +407,6 @@ class ServiceController extends Main {
                 
                 $datas = unserialize(file_get_contents($url));
                 foreach ((array) $datas as $data) {
-                    /*
-                    if ($category > 0) {
-                        $sql = "SELECT `str_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1 AND pt_id in (Select pt_id from magento2_base4q2017.art_products_des where art_id = '" . $data["art_id"] . "')";
-                        $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
-                        $cats = unserialize(file_get_contents($url));
-                        if ($cats)
-                            $data["cat"] = "OK";
-                        else
-                            continue;
-                    }
-                     * 
-                     */
-                    
                     $out[strtolower($data["art_article_nr_can"])][] = $data;
                 }
                 $html = '<table>';
@@ -476,18 +463,6 @@ class ServiceController extends Main {
                 
                 $datas = unserialize(file_get_contents($url));
                 foreach ((array) $datas as $data) {
-                    /*
-                    if ($category > 0) {
-                        $sql = "SELECT `str_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1 AND pt_id in (Select pt_id from magento2_base4q2017.art_products_des where art_id = '" . $data["art_id"] . "')";
-                        $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
-                        $cats = unserialize(file_get_contents($url));
-                        if ($cats)
-                            $data["cat"] = "OK";
-                        else
-                            continue;
-                    }
-                     * 
-                     */
                     $data["art_article_nr_can"] = preg_replace("/[^a-zA-Z0-9]+/", "", strtolower($data["art_article_nr_can"]));
                     $out[$out1[$data["art_article_nr_can"]]][] = $data;
                 }
