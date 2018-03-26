@@ -34,9 +34,10 @@ class ServiceController extends Main {
 
         $dataarray[] = array("value" => "matchModels", "name" => "Match Models");
         $dataarray[] = array("value" => "match", "name" => "Match");
+        $dataarray[] = array("value" => "original2", "name" => "Original");
         $dataarray[] = array("value" => "ergostatio2", "name" => "Ergostatio2");
         $dataarray[] = array("value" => "ergostatio", "name" => "Ergostatio");
-        $dataarray[] = array("value" => "original2", "name" => "Original");
+        
 
         $pcats = $this->getDoctrine()
                 ->getRepository('SoftoneBundle:Category')
