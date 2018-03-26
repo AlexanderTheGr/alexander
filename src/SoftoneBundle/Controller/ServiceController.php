@@ -324,11 +324,13 @@ class ServiceController extends Main{
                 //echo $sql;
                 $datas = unserialize(file_get_contents($url));        
                 foreach((array)$datas as $data) {
-                    $sql = "SELECT `str_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='".$category."' AND `str_type` = 1 AND pt_id in (Select pt_id from magento2_base4q2017.art_products_des where art_id = '".$data["art_id"]."')";
-                    $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql); 
-                    $cats = unserialize(file_get_contents($url));  
-                    $data["sql"] = $sql;
-                    $data["cat"] = print_r($cats,true);
+                    if ($category > 0) {
+                        $sql = "SELECT `str_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='".$category."' AND `str_type` = 1 AND pt_id in (Select pt_id from magento2_base4q2017.art_products_des where art_id = '".$data["art_id"]."')";
+                        $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql); 
+                        $cats = unserialize(file_get_contents($url));  
+                        if ($cats)
+                        $data["cat"] = "OK";
+                    }
                     $out[$data["art_article_nr_can"]][] = $data;
                 }
                 $html = '<table>';
@@ -344,7 +346,7 @@ class ServiceController extends Main{
                         $html .= "<td>".$art["sup_id"]."</td>";
                         $html .= "<td>".$art["sup_brand"]."</td>";
                         $html .= "<td>".$art["cat"]."</td>";
-                        $html .= "<td>".$art["sql"]."</td>";
+                        //$html .= "<td>".$art["sql"]."</td>";
                     }
 
                     $html .= '</tr>';
