@@ -85,7 +85,8 @@ class ServiceController extends Main{
         //$sql = "SELECT * FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."'))";			
         $sql = "SELECT `str_id` FROM magento2_base4q2017.link_pt_str WHERE `str_type` = 1 AND pt_id in (Select pt_id from magento2_base4q2017.art_products_des where art_id = '".$art_id."')";
         
-        if (!$type) exit;      
+        if (!$type) exit;
+        if (!$search) exit;
         
         $html = $this->$type($items);
         $json = json_encode(array("ok", "html" => $html,'divid'=>"resulthtml"));
