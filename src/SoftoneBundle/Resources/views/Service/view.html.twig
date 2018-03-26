@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 {{ render(controller('SoftoneBundle:Service:content', { 'ctrl': ctrl,'app':app,'url':url,'content':content }) ) }}
-<div id='resulthtml'></div>
+<div id='resulthtml' style='width:100%'></div>
 {% endblock %}
 {% block stylesheets %}
     <style>
