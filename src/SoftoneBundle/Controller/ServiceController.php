@@ -348,7 +348,7 @@ class ServiceController extends Main {
                     } else {
                         //$sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and  AND art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` LIKE '" . $term . "'))))  ".$sup."";
                         $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` LIKE '" . $term . "')))  ".$sup."";
-                        
+                        echo $sql;
                     }
                     //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$items)."') order by sup_brand";
                     $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
