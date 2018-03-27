@@ -1807,7 +1807,7 @@ class Product extends Entity {
         if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {                      
             $postparams = array(
                 "articleNumber" => $this->tecdocCode,
-                "lng" => $this->tecdocCode,
+                "lng" => 20,
                 "brandno" => $this->getTecdocSupplierId()->getId()
             );            
             print_r($postparams);
