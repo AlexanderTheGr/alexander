@@ -346,7 +346,7 @@ class ProductController extends Main {
         $product = $this->getDoctrine()
                 ->getRepository($this->repository)
                 ->find($product->getId());
-        $entity = $this->getDoctrine()
+        $entit = $this->getDoctrine()
                 ->getRepository('MegasoftBundle:Product')
                 ->find((int) $product->getId());
 
@@ -1690,7 +1690,7 @@ class ProductController extends Main {
 
         foreach ($ManufacturerDetails as $data) {
             $data = (array) $data;
-
+            
             $entity = $this->getDoctrine()
                     ->getRepository("MegasoftBundle:Manufacturer")
                     ->find((int) $data["ManufacturerID"]);
@@ -1769,11 +1769,13 @@ class ProductController extends Main {
 
         $storeIds = array();
         $k = 0;
+        
         foreach ($StoreDetails as $data) {
             //if ($i++ < ($cnt-10000))
             //   continue;
             $i++;
             echo "[".$i."]<BR>";
+            if ($i < 35433) continue;
             $storeIds = array();
             //if ($i > 104848) {            
                 $data = (array) $data;
@@ -2230,7 +2232,7 @@ class ProductController extends Main {
         //$allowedipsArr = explode(",", $allowedips);
         //if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
         set_time_limit(100000);
-        ini_set('memory_limit', '2256M');
+        ini_set('memory_limit', '16256M');
 
         echo $this->retrieveProduct();
         file_put_contents("retrieveMegasoft.txt", $allowedipsArr);
