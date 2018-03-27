@@ -850,30 +850,39 @@ class Product extends Entity {
         //$this->setTecdocArticleName($out->articleName);
         //$data_string = json_encode($data);
         $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
-        if ($_SERVER["DOCUMENT_ROOT"] == 'C:\symfony\alexander\webb') {
-            $fields = array(
-                'action' => 'updateTecdoc',
-                'tecdoc_code' => $this->tecdocCode,
-                'tecdoc_supplier_id' => $this->getTecdocSupplierId()->getId(),
-            );
-            $fields_string = '';
-            foreach ($fields as $key => $value) {
-                @$fields_string .= $key . '=' . $value . '&';
-            }
-            rtrim($fields_string, '&');
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_POST, count($fields));
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {                      
+            $postparams = array(
+                "articleNumber" => $this->tecdocCode,
+                "lng" => $this->tecdocCode,
+                "brandno" => $this->getTecdocSupplierId()->getId()
+            );            
+            
+            $term = preg_replace("/[^a-zA-Z0-9]+/", "", $postparams["articleNumber"]);
+            $sql = "SELECT * FROM magento2_base4q2017.suppliers, magento2_base4q2017.articles art,magento2_base4q2017.products pt,magento2_base4q2017.art_products_des artpt,magento2_base4q2017.text_designations tex
+                    WHERE 
+                    artpt.art_id = art.art_id AND 
+                    suppliers.sup_id = art.art_sup_id AND 
+                    pt.pt_id = artpt.pt_id AND
+                    tex.des_id = pt.pt_des_id AND
+                    tex.des_lng_id = '".$postparams["l"]."' AND 
+                    (
+                    art_article_nr_can LIKE '".$term."' AND sup_id = '". $postparams["brandno"]."'
+            )";	
+            $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql);
+            $datas = unserialize(file_get_contents($url));
+            //$result = mysqli_query($this->conn,$sql);
+            //$datas = mysqli_fetch_all($result,MYSQLI_ASSOC);
+            $data = $datas[0];
+            //$out = array();
+            $out = new stdClass();
+            if ($data) {
+                $out->articleId = $data["art_id"];
+                $out->articleName = $data["des_text"];
+                $out->genericArticleId = $data["pt_des_id"];
+            } 
+            print_r($out);
+            return;
 
-
-
-            $out = json_decode(curl_exec($ch));
-
-            // print_r($fields);
-            //echo $out;
-            //echo 'sssssssssss';
         } else {
 
             $postparams = array(
