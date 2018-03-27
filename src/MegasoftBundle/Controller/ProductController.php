@@ -2054,11 +2054,21 @@ class ProductController extends Main {
     public function getUpdateTecdocAction($funct = false) {
         $em = $this->getDoctrine()->getManager();
 
-        $query = $em->createQuery(
-                "SELECT  p.id
-                    FROM " . $this->repository . " p
-                    where p.tecdocSupplierId > 0 AND p.tecdocArticleId IS NULL order by p.id asc"
-        );
+        
+        
+        if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') { 
+            $query = $em->createQuery(
+                    "SELECT  p.id
+                        FROM " . $this->repository . " p
+                        where p.tecdocSupplierId > 0 AND p.tecdocArticleId > 0 order by p.id asc"
+            );            
+        } else {
+            $query = $em->createQuery(
+                    "SELECT  p.id
+                        FROM " . $this->repository . " p
+                        where p.tecdocSupplierId > 0 AND p.tecdocArticleId IS NULL order by p.id asc"
+            );
+        }
         /*
           $query = $em->createQuery(
           "SELECT  p.id
