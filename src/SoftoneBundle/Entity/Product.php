@@ -1818,7 +1818,7 @@ class Product extends Entity {
                     suppliers.sup_id = art.art_sup_id AND 
                     pt.pt_id = artpt.pt_id AND
                     tex.des_id = pt.pt_des_id AND
-                    tex.des_lng_id = '".$postparams["l"]."' AND 
+                    tex.des_lng_id = '".$postparams["lng"]."' AND 
                     (
                     art_article_nr_can LIKE '".$term."' AND sup_id = '". $postparams["brandno"]."'
             )";	
