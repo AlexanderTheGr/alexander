@@ -856,7 +856,7 @@ class Product extends Entity {
                 "lng" => $this->tecdocCode,
                 "brandno" => $this->getTecdocSupplierId()->getId()
             );            
-            
+            print_r($postparams);
             $term = preg_replace("/[^a-zA-Z0-9]+/", "", $postparams["articleNumber"]);
             $sql = "SELECT * FROM magento2_base4q2017.suppliers, magento2_base4q2017.articles art,magento2_base4q2017.products pt,magento2_base4q2017.art_products_des artpt,magento2_base4q2017.text_designations tex
                     WHERE 
