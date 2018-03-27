@@ -1828,7 +1828,7 @@ class Product extends Entity {
             //$datas = mysqli_fetch_all($result,MYSQLI_ASSOC);
             $data = $datas[0];
             //$out = array();
-            $out = new stdClass();
+            $out = new \stdClass();
             if ($data) {
                 $out->articleId = $data["art_id"];
                 $out->articleName = $data["des_text"];
