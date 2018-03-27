@@ -1852,6 +1852,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         );
     }
 
+    
     /**
      * @Route("/product/product/updatetecdoc")
      */
