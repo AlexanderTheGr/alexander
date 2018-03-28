@@ -2098,8 +2098,8 @@ class Product extends Entity {
         $connection = $em->getConnection();
         $sqls = array();
         foreach ($out as $category) {
-            $sql = "select * from magento2_base4q2017.cat2cat where oldnew_id = '" . $category["str_id"] . "'";
-            $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+            $sql1 = "select * from magento2_base4q2017.cat2cat where oldnew_id = '" . $category["str_id"] . "'";
+            $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql1);
             $cats = unserialize(file_get_contents($url));
             /*
             $sql = "select * from cat2cat where oldnew_id = '" . $category["str_id"] . "'";
