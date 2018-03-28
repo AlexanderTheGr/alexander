@@ -2042,7 +2042,9 @@ class Product extends Entity {
             $connection = $em->getConnection();
             $statement = $connection->prepare($sql);
             $statement->execute();
-            $cats = $statement->fetchAll();            
+            $cats = $statement->fetchAll();    
+            $statement->closeCursor();
+            unset($statement);
             foreach ($cats as $cat) {
                 if (in_array($cat["w_str_id"], $array)) {
                     $del = true;
@@ -2101,6 +2103,7 @@ class Product extends Entity {
             $statement = $connection->prepare($sql);
             $statement->execute();
             $cats = $statement->fetchAll();
+            $statement->closeCursor();
             unset($statement);
             //$statement->close();
             foreach ($cats as $cat) {
