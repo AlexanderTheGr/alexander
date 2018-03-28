@@ -12,6 +12,7 @@
             <index name="edi_id" columns="edi_id"/>  
             
             <index name="supplier_code" columns="supplier_code"/>
+            <index name="tecdoc_article_id_alt" columns="tecdoc_article_id_alt"/>
             <index name="tecdoc_article_id" columns="tecdoc_article_id"/>
             <index name="item_name" columns="item_name"/>
             <index name="tecdoc_code" columns="tecdoc_code"/>
@@ -98,7 +99,12 @@
             <options>
                 <option name="unsigned"/>
             </options>
-        </field>       
+        </field> 
+        <field name="tecdocArticleIdAlt" type="integer" column="tecdoc_article_id_alt" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>               
         <field name="supplierCode" type="string" column="supplier_code" length="255" nullable="true">
             <options>
                 <option name="fixed"/>
