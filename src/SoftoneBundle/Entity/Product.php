@@ -1839,7 +1839,7 @@ class Product extends Entity {
             if (@$out->articleId) {
                 $this->setTecdocArticleId($out->articleId);
                 $this->setTecdocArticleName($out->articleName);
-                $this->tecdoc_article_id = $out->articleId;
+                //$this->tecdocArticleId= $out->articleId;
                 $categories = array();
                 $cars = array();
                 $sql = "update `softone_product` set tecdoc_generic_article_id = '" . $out->genericArticleId . "', tecdoc_article_name = '" . $out->articleName . "', tecdoc_article_id = '" . $out->articleId . "', cars = '" . serialize($cars) . "', cats = '" . serialize($categories) . "' where id = '" . $this->id . "'";
@@ -1950,8 +1950,8 @@ class Product extends Entity {
     function getDetailssnew() {
         
         
-        echo "[".$this->tecdoc_article_id."]";
-        if ($this->tecdoc_article_id == 0)
+        echo "[".$this->tecdocArticleId."]";
+        if ($this->tecdocArticleId == 0)
             return;
         //$this->getDetails();
         //return;
@@ -1961,7 +1961,7 @@ class Product extends Entity {
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
 
-        $this->connection = Mage::getSingleton('core/resource')->getConnection('core_write');
+        //$this->connection = Mage::getSingleton('core/resource')->getConnection('core_write');
         $sql = "select * from t4_product_model_type where product = '" . $this->getId() . "'";
         echo $sql."<BR>";
         //$results = $this->connection->fetchAll($sql);
@@ -1974,7 +1974,7 @@ class Product extends Entity {
         $results = $statement->fetchAll();
 
         if (count($results) == 0) {
-            $sql = "Select mod_lnk_vich_id from magento2_base4q2017.art_mod_links a, magento2_base4q2017.models_links b where `mod_lnk_type` = 1 AND a.mod_lnk_id = b.mod_lnk_id and art_id = '" . $this->tecdoc_article_id . "' group by `mod_lnk_vich_id`";
+            $sql = "Select mod_lnk_vich_id from magento2_base4q2017.art_mod_links a, magento2_base4q2017.models_links b where `mod_lnk_type` = 1 AND a.mod_lnk_id = b.mod_lnk_id and art_id = '" . $this->tecdocArticleId . "' group by `mod_lnk_vich_id`";
             $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
             $out = unserialize(file_get_contents($url));
             //$out = $this->connection->fetchAll($sql);
@@ -1995,7 +1995,7 @@ class Product extends Entity {
         }
         //return;		
         $sql = "select * from magento2_base4q2017.article_criteria, magento2_base4q2017.criteria, magento2_base4q2017.text_designations
-			where acr_cri_id = 100 AND cri_id = acr_cri_id AND des_id = cri_des_id and des_lng_id = '" . $this->lng . "' and acr_art_id = '" . $this->tecdoc_article_id . "'";
+			where acr_cri_id = 100 AND cri_id = acr_cri_id AND des_id = cri_des_id and des_lng_id = '" . $this->lng . "' and acr_art_id = '" . $this->tecdocArticleId. "'";
         //$criteria = $this->connection->fetchRow($sql);
         echo $sql."<BR>";
 
@@ -2023,7 +2023,7 @@ class Product extends Entity {
 
         //if ($kv != 'VA' AND $kv != 'HA' ) return;
 
-        $sql = "SELECT `str_id` FROM magento2_base4q2017.link_pt_str WHERE `str_type` = 1 AND pt_id in (Select pt_id from magento2_base4q2017.art_products_des where art_id = '" . $this->tecdoc_article_id . "')";
+        $sql = "SELECT `str_id` FROM magento2_base4q2017.link_pt_str WHERE `str_type` = 1 AND pt_id in (Select pt_id from magento2_base4q2017.art_products_des where art_id = '" . $this->tecdocArticleId. "')";
         //$out = $this->connection->fetchAll($sql); 
         //echo $sql."<BR>";
 
