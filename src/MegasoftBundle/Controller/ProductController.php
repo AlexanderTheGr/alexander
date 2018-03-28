@@ -1775,7 +1775,7 @@ class ProductController extends Main {
             //   continue;
             $i++;
             echo "[".$i."]<BR>";
-            if ($i < 35433) continue;
+            //if ($i < 35433) continue;
             $storeIds = array();
             //if ($i > 104848) {            
                 $data = (array) $data;
@@ -2060,7 +2060,7 @@ class ProductController extends Main {
             $query = $em->createQuery(
                     "SELECT  p.id
                         FROM " . $this->repository . " p
-                        where p.tecdocSupplierId > 0 AND p.tecdocArticleId > 0 order by p.id asc"
+                        where p.tecdocSupplierId > 0 AND p.tecdocArticleIdAlt > 0 order by p.id asc"
             );            
         } else {
             $query = $em->createQuery(
@@ -2090,7 +2090,7 @@ class ProductController extends Main {
             $ediediitem->updatetecdoc();
             unset($ediediitem);
             echo $result["id"] . "<BR>";
-            //if ($i++ > 3000) exit;
+            if ($i++ > 300) exit;
             // }
         }
         exit;
