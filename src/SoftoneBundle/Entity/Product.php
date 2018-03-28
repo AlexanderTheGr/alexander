@@ -1993,7 +1993,7 @@ class Product extends Entity {
         $sql = "select * from magento2_base4q2017.article_criteria, magento2_base4q2017.criteria, magento2_base4q2017.text_designations
 			where acr_cri_id = 100 AND cri_id = acr_cri_id AND des_id = cri_des_id and des_lng_id = '" . $this->lng . "' and acr_art_id = '" . $this->tecdoc_article_id . "'";
         //$criteria = $this->connection->fetchRow($sql);
-        //echo $sql."<BR>";
+        echo $sql."<BR>";
 
         $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
         $criteria = unserialize(file_get_contents($url));
