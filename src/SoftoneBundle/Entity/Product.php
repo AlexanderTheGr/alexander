@@ -2038,7 +2038,11 @@ class Product extends Entity {
         $array = array(11023, 11199, 11001, 11109, 11176, 11024, 11200, 11002, 11110, 11177);
         foreach ($out as $category) {
             $sql = "select * from autoparts_tecdoc_cat2cat where oldnew_id = '" . $category["str_id"] . "'";
-            $cats = $this->connection->fetchAll($sql);
+            //$cats = $this->connection->fetchAll($sql);
+            $connection = $em->getConnection();
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            $cats = $statement->fetchAll();            
             foreach ($cats as $cat) {
                 if (in_array($cat["w_str_id"], $array)) {
                     $del = true;
