@@ -2096,6 +2096,7 @@ class Product extends Entity {
         echo "<BR>" . $kv . "<BR>";
         //return;
         $connection = $em->getConnection();
+        $sqls = array();
         foreach ($out as $category) {
             $sql = "select * from cat2cat where oldnew_id = '" . $category["str_id"] . "'";
             //$cats = $this->connection->fetchAll($sql);
@@ -2132,9 +2133,13 @@ class Product extends Entity {
                 }
                 //echo $sql."<BR>";
                 //$this->connection->query($sql);
-                $em->getConnection()->exec($sql);
+                $sqls[] = $sql;
+                //$em->getConnection()->exec($sql);
                 //echo "..";
             }
+        }
+        foreach($sqls as $sql) {
+            $em->getConnection()->exec($sql);
         }
         //print_r($out);
     }
