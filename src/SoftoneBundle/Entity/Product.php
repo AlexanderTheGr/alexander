@@ -17,6 +17,7 @@ class Product extends Entity {
 
     var $repositories = array();
     var $uniques = array();
+    var $lng = 20;
 
     public function __construct() {
         $this->setRepositories();
@@ -1804,12 +1805,12 @@ class Product extends Entity {
 
         //$data_string = json_encode($data);
         $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
-        if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {                      
+        if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
             $postparams = array(
                 "articleNumber" => $this->tecdocCode,
                 "lng" => 20,
                 "brandno" => $this->getTecdocSupplierId()->getId()
-            );            
+            );
             print_r($postparams);
             $term = preg_replace("/[^a-zA-Z0-9]+/", "", $postparams["articleNumber"]);
             $sql = "SELECT * FROM magento2_base4q2017.suppliers, magento2_base4q2017.articles art,magento2_base4q2017.products pt,magento2_base4q2017.art_products_des artpt,magento2_base4q2017.text_designations tex
@@ -1818,11 +1819,11 @@ class Product extends Entity {
                     suppliers.sup_id = art.art_sup_id AND 
                     pt.pt_id = artpt.pt_id AND
                     tex.des_id = pt.pt_des_id AND
-                    tex.des_lng_id = '".$postparams["lng"]."' AND 
+                    tex.des_lng_id = '" . $postparams["lng"] . "' AND 
                     (
-                    art_article_nr_can LIKE '".$term."' AND sup_id = '". $postparams["brandno"]."'
-            )";	
-            $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql);
+                    art_article_nr_can LIKE '" . $term . "' AND sup_id = '" . $postparams["brandno"] . "'
+            )";
+            $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
             $datas = unserialize(file_get_contents($url));
             //$result = mysqli_query($this->conn,$sql);
             //$datas = mysqli_fetch_all($result,MYSQLI_ASSOC);
@@ -1833,10 +1834,9 @@ class Product extends Entity {
                 $out->articleId = $data["art_id"];
                 $out->articleName = $data["des_text"];
                 $out->genericArticleId = $data["pt_des_id"];
-            } 
+            }
             print_r($out);
             return;
-
         } else {
 
 
@@ -1939,6 +1939,167 @@ class Product extends Entity {
         //echo $result;
     }
 
+    function getDetailssnew($product) {
+        if ($this->tecdoc_article_id == 0)
+            return;
+        //$this->getDetails();
+        //return;
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        
+        $this->connection = Mage::getSingleton('core/resource')->getConnection('core_write');
+        $sql = "select * from t4_product_model_type where product = '" . $this->getId() . "'";
+        $results = $this->connection->fetchAll($sql);
+        if (count($results) == 0) {
+            $sql = "Select mod_lnk_vich_id from magento2_base4q2017.art_mod_links a, magento2_base4q2017.models_links b where `mod_lnk_type` = 1 AND a.mod_lnk_id = b.mod_lnk_id and art_id = '" . $this->tecdoc_article_id . "' group by `mod_lnk_vich_id`";
+            $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+            $out = unserialize(file_get_contents($url));
+            //$out = $this->connection->fetchAll($sql);
+            //$result = mysqli_query($this->conn,$sql);
+            //$out =  mysqli_fetch_all($result,MYSQLI_ASSOC);		
+            $sql = "delete from t4_product_model_type where product = '" . $this->getId() . "'";
+            $em->getConnection()->exec($sql);
+            //$this->connection->query($sql);
+            foreach ($out as $model_type) {
+                if ($model_type == 0)
+                    continue;
+                $sql = "insert ignore t4_product_model_type set product = '" . $product->getId() . "', model_type = '" . $model_type["mod_lnk_vich_id"] . "'";
+                //echo $sql."<BR>";
+                //$this->connection->query($sql);
+                $em->getConnection()->exec($sql);
+            }
+        }
+        //return;		
+        $sql = "select * from magento2_base4q2017.article_criteria, magento2_base4q2017.criteria, magento2_base4q2017.text_designations
+			where acr_cri_id = 100 AND cri_id = acr_cri_id AND des_id = cri_des_id and des_lng_id = '" . $this->lng . "' and acr_art_id = '" . $this->tecdoc_article_id . "'";
+        //$criteria = $this->connection->fetchRow($sql);
+        //echo $sql."<BR>";
+
+        $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+        $criteria = unserialize(file_get_contents($url));
+
+        //$result = mysqli_query($this->conn,$sql);
+        //$criteria =  mysqli_fetch_all($result,MYSQLI_ASSOC);
+        //echo mysqli_error();
+        //print_r($criteria);
+        //exit;
+        $criteria = $criteria[0];
+        //print_r($criteria);
+        //echo "<BR>";
+        if ($criteria["acr_kv_kt_id"]) {
+            $sql = "select kv_kv from magento2_base4q2017.key_values, magento2_base4q2017.text_designations where kv_kt_id = '" . $criteria["acr_kv_kt_id"] . "' AND kv_kv = '" . $criteria["acr_kv_kv"] . "' AND des_id = kv_des_id and des_lng_id = '" . $this->lng . "' ";
+            echo $sql . "<BR>";
+            $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+            $kv_kv = unserialize(file_get_contents($url));
+            //$result = $result = mysqli_query($this->conn,$sql);
+            //$kv_kv =  mysqli_fetch_row($result,MYSQLI_ASSOC);	
+            $kv_kv = $kv_kv[0];
+            $kv = $kv_kv["kv_kv"]; // kv_kv HA VA
+        }
+
+        //if ($kv != 'VA' AND $kv != 'HA' ) return;
+
+        $sql = "SELECT `str_id` FROM magento2_base4q2017.link_pt_str WHERE `str_type` = 1 AND pt_id in (Select pt_id from magento2_base4q2017.art_products_des where art_id = '" . $this->tecdoc_article_id . "')";
+        //$out = $this->connection->fetchAll($sql); 
+        //echo $sql."<BR>";
+
+        $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+        $out = unserialize(file_get_contents($url));
+
+        //$result = mysqli_query($this->conn,$sql);
+        //$out =  mysqli_fetch_all($result,MYSQLI_ASSOC);	
+        //print_r($out);
+        //exit;
+        $del = false;
+        $array = array(11023, 11199, 11001, 11109, 11176, 11024, 11200, 11002, 11110, 11177);
+        foreach ($out as $category) {
+            $sql = "select * from autoparts_tecdoc_cat2cat where oldnew_id = '" . $category["str_id"] . "'";
+            $cats = $this->connection->fetchAll($sql);
+            foreach ($cats as $cat) {
+                if (in_array($cat["w_str_id"], $array)) {
+                    $del = true;
+                    if ($kv == "") {
+                        $term = preg_replace("/[^a-zA-Z0-9]+/", "", $this->getTecdocCode());
+                        $sql = "SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '" . $term . "'";
+                        //$arts = $this->connection->fetchAll($sql);
+                        //$result = mysqli_query($this->conn,$sql);
+                        //$arts =  mysqli_fetch_all($result,MYSQLI_ASSOC);							
+                        $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+                        $arts = unserialize(file_get_contents($url));
+
+                        foreach ($arts as $art) {
+                            $sql = "select * from magento2_base4q2017.article_criteria, magento2_base4q2017.criteria, magento2_base4q2017.text_designations
+								where acr_cri_id = 100 AND cri_id = acr_cri_id AND des_id = cri_des_id and des_lng_id = '" . $this->lng . "' and acr_art_id = '" . $art["all_art_id"] . "'";
+                            //$criteria = $this->connection->fetchRow($sql);
+                            //$result = $result = mysqli_query($this->conn,$sql);
+                            //$criteria =  mysqli_fetch_row($result,MYSQLI_ASSOC);	
+
+                            $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+                            $criteria = unserialize(file_get_contents($url));
+                            $criteria = $criteria[0];
+                            if ($criteria["acr_kv_kt_id"]) {
+                                $sql = "select kv_kv from magento2_base4q2017.key_values, magento2_base4q2017.text_designations where kv_kt_id = '" . $criteria["acr_kv_kt_id"] . "' AND kv_kv = '" . $criteria["acr_kv_kv"] . "' AND des_id = kv_des_id and des_lng_id = '" . $this->lng . "' ";
+                                //$kv = $this->connection->fetchOne($sql); // kv_kv HA VA	
+                                //$result = $result = mysqli_query($this->conn,$sql);
+                                //$kv_kv =  mysqli_fetch_row($result,MYSQLI_ASSOC);		
+                                $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+                                $kv_kv = unserialize(file_get_contents($url));
+                                $kv_kv = $kv_kv[0];
+                                $kv = $kv_kv["kv_kv"]; // kv_kv HA VA
+                            }
+
+                            if ($kv != "") {
+                                echo "<BR>[" . $kv . "]<BR>";
+                                break;
+                            }
+                        }
+                        //$sql = "insert ignore t4_product_category set product = '" . $product->getId() . "', category2 = '" . $category["str_id"] . "', category = '" . $cat["w_str_id"] . "'";
+                        //echo "ΗΑVA: ".$sql."<BR>";
+                    }
+                }
+            }
+        }
+        $sql = "delete from t4_product_category where product = '" . $this->getId() . "'";
+        echo "<BR>" . $sql . "<BR>";
+        //return;
+        echo "<BR>" . $kv . "<BR>";
+        //return;
+        foreach ($out as $category) {
+            $sql = "select * from autoparts_tecdoc_cat2cat where oldnew_id = '" . $category["str_id"] . "'";
+            $cats = $this->connection->fetchAll($sql);
+
+            foreach ($cats as $cat) {
+
+                // 11001, 11176 --> VA
+                // 11002, 11177 --> HA
+                if ($cat["w_str_id"] == 11023 OR $cat["w_str_id"] == 11199 OR $cat["w_str_id"] == 11001 OR $cat["w_str_id"] == 11109 OR $cat["w_str_id"] == 11176) {
+                    if ($kv == 'VA') {
+                        $sql = "insert ignore t4_product_category set product = '" . $this->getId() . "', category2 = '" . $category["str_id"] . "', category = '" . $cat["w_str_id"] . "'";
+                        $catva = true;
+                        echo "VA: " . $sql . "<BR>";
+                    }
+                } elseif ($cat["w_str_id"] == 11024 OR $cat["w_str_id"] == 11200 OR $cat["w_str_id"] == 11002 OR $cat["w_str_id"] == 11110 OR $cat["w_str_id"] == 11177) {
+                    if ($kv == 'HA') {
+                        $sql = "insert ignore t4_product_category set product = '" . $this->getId() . "', category2 = '" . $category["str_id"] . "', category = '" . $cat["w_str_id"] . "'";
+                        $catha = true;
+                        echo "ΗΑ: " . $sql . "<BR>";
+                    }
+                } else {
+                    $sql = "insert ignore t4_product_category set product = '" . $this->getId() . "', category2 = '" . $category["str_id"] . "', category = '" . $cat["w_str_id"] . "'";
+                    $cattt = true;
+                }
+                //echo $sql."<BR>";
+                //$this->connection->query($sql);
+                $em->getConnection()->exec($sql);
+                //echo "..";
+            }
+        }
+        //print_r($out);
+    }
+
     function checkForUniqueCategory($article, $cats, $tecdoc, $linkingTargetId) {
         if ($cats <= 2)
             return array();
@@ -1987,7 +2148,34 @@ class Product extends Entity {
     public function getTecdocArticleId() {
         return $this->tecdocArticleId;
     }
+    /**
+     * @var integer
+     */
+    private $tecdocArticleIdAlt;
 
+    /**
+     * Set tecdocArticleId
+     *
+     * @param integer $tecdocArticleId
+     *
+     * @return Product
+     */
+    public function setTecdocArticleIdAlt($tecdocArticleIdAlt) {
+        $this->tecdocArticleIdAlt = $tecdocArticleIdAlt;
+
+        return $this;
+    }
+
+    /**
+     * Get tecdocArticleId
+     *
+     * @return integer
+     */
+    public function getTecdocArticleIdAlt() {
+        return $this->tecdocArticleIdAlt;
+    }
+    
+    
     /**
      * @var string
      */
@@ -2186,7 +2374,7 @@ class Product extends Entity {
                 //MU21
             }
         }
-        
+
         unset($objectArr2["MU21"]);
         unset($objectArr2["MU12MODE"]);
         $objectArr2["VAT"] = 1410;
@@ -2197,9 +2385,9 @@ class Product extends Entity {
         $objectArr2["cccWebUpd"] = $this->cccWebUpd;
         $objectArr2["REMARKS"] = $this->itemRemarks;
         $objectArr2["MTRMARK"] = $this->itemMtrmark;
-        
+
         $objectArr2["CRDCARDMODE"] = "Καμιά";
-        
+
         $objectArr2["MTRMANFCTR"] = $this->itemMtrmanfctr > 0 ? $this->itemMtrmanfctr : $this->getSupplierId()->getId();
         $objectArr2["ISACTIVE"] = (int) $this->itemIsactive;
         $objectArr[0] = $objectArr2;
@@ -2279,12 +2467,11 @@ class Product extends Entity {
      */
     private $itemPricer05;
 
-
     /**
      * @var string
      */
     private $purlprice = 0;
-    
+
     /**
      * Set itemPricew04
      *
@@ -2295,16 +2482,17 @@ class Product extends Entity {
     public function setPurlprice($purlprice) {
         $this->purlprice = $purlprice;
         return $this;
-    }    
+    }
+
     public function getPurlprice() {
         return $this->purlprice;
-    }     
-    
+    }
+
     /**
      * @var string
      */
     private $cost = 0;
-    
+
     /**
      * Set itemPricew04
      *
@@ -2316,9 +2504,11 @@ class Product extends Entity {
         $this->cost = $cost;
         return $this;
     }
+
     public function getCost() {
         return $this->cost;
-    }    
+    }
+
     /**
      * Set itemPricew04
      *
@@ -2907,7 +3097,7 @@ class Product extends Entity {
                                 <td>' . $data["name"] . ' (ΚΟΡΩΠΙ)</td>
                                 <td>' . $data["itemcode"] . '</td>
                                 <td>' . $data["description"] . '</td>
-                                <td>' . ($data["gbg2"] > 0  ? "YES" : "NO") . '</td>
+                                <td>' . ($data["gbg2"] > 0 ? "YES" : "NO") . '</td>
                                 <td>' . $pricef . '</td>
                                 <td style="width:150px"><input type="text" data-order="' . $orderid . '" data-price="' . $pricef . '" data-id="' . $data['id'] . '" name="qty2_' . $data['id'] . '" value="0" size="2" id="qty2_' . $data['id'] . '" class="ediiteqty1"> <div class="SoftoneBundleGBGProductAdd" data-price="' . $pricef . '" data-qty="qty2" data-id="' . $data['id'] . '" style="width: 50%; float: right;"><div style="position: relative" class="gui-icon"><i class="md md-shopping-cart"></i><span class="title"><a target="_blank" href="#"></a></span></div></div> </td>    
                             </tr>';
@@ -2915,7 +3105,7 @@ class Product extends Entity {
                                 <td>' . $data["name"] . ' (ΛΙΟΣΙΩΝ)</td>
                                 <td>' . $data["itemcode"] . '</td>
                                 <td>' . $data["description"] . '</td>
-                                <td>' . ($data["gbg3"] > 0  ? "YES" : "NO") . '</td>
+                                <td>' . ($data["gbg3"] > 0 ? "YES" : "NO") . '</td>
                                 <td>' . $pricef . '</td>
                                 <td style="width:150px"><input type="text" data-order="' . $orderid . '" data-price="' . $pricef . '" data-id="' . $data['id'] . '" name="qty3_' . $data['id'] . '" value="0" size="2" id="qty3_' . $data['id'] . '" class="ediiteqty1"> <div class="SoftoneBundleGBGProductAdd" data-price="' . $pricef . '" data-qty="qty3" data-id="' . $data['id'] . '" style="width: 50%; float: right;"><div style="position: relative" class="gui-icon"><i class="md md-shopping-cart"></i><span class="title"><a target="_blank" href="#"></a></span></div></div></td>    
                             </tr>';
@@ -2941,8 +3131,8 @@ class Product extends Entity {
         }
     }
 
-    public function getFanoImageUrl($ext='jpg') {
-        return $this->getSetting("SoftoneBundle:Product:Images") . "Photos/Parts/" . substr($this->itemCode2, 0, 4) . "/" . $this->itemCode2 . ".".$ext;
+    public function getFanoImageUrl($ext = 'jpg') {
+        return $this->getSetting("SoftoneBundle:Product:Images") . "Photos/Parts/" . substr($this->itemCode2, 0, 4) . "/" . $this->itemCode2 . "." . $ext;
     }
 
     public function getForOrderImage() {
@@ -2991,7 +3181,7 @@ class Product extends Entity {
     }
 
     public function getForOrderSupplier($order = 0) {
-        $order = (int)$order;
+        $order = (int) $order;
         global $kernel;
         if ('AppCache' == get_class($kernel)) {
             $kernel = $kernel->getKernel();
@@ -3008,7 +3198,7 @@ class Product extends Entity {
 
         $ti = $this->getSupplierId() ? $this->getSupplierId()->getTitle() : "";
         if ($edi["name"]) {
-            $ti .= " (".$edi["name"].")";
+            $ti .= " (" . $edi["name"] . ")";
         }
         if ($this->tecdocArticleId == 0) {
             $out = '<a title="' . $ti . '"  class="forordersupplier" car="" data-articleId="' . $this->tecdocArticleId . '" data-order="' . $order . '" data-ref="' . $this->id . '">' . $ti . '</a>';
@@ -3471,12 +3661,13 @@ class Product extends Entity {
         $pricer = $pricer1 . " / " . $pricer2;
         return $pricer;
     }
+
     function priceEshop($vat = 1) {
         $pricer1 = number_format($this->getItemPricew02() * $vat, 2, '.', '');
         $pricer2 = number_format($this->getItemPricew04() * $vat, 2, '.', '');
         $pricer = $pricer1 . " / " . $pricer2;
         return $pricer;
-    }    
+    }
 
     function priceMpal($vat = 1) {
         $pricer1 = number_format($this->getItemPricew01() * $vat, 2, '.', '');
