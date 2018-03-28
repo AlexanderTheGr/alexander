@@ -2123,6 +2123,7 @@ class Product extends Entity {
                 } else {
                     $sql = "insert ignore t4_product_category set product = '" . $this->getId() . "', category2 = '" . $category["str_id"] . "', category = '" . $cat["w_str_id"] . "'";
                     $cattt = true;
+                    echo "VA: " . $sql . "<BR>";
                     $categories[] = $cat["w_str_id"];
                 }
                 //echo $sql."<BR>";
