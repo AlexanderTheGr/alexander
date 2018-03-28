@@ -2094,6 +2094,7 @@ class Product extends Entity {
         echo "<BR>" . $kv . "<BR>";
         //return;
         $connection = $em->getConnection();
+        $connection->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, 1);
         foreach ($out as $category) {
             $sql = "select * from cat2cat where oldnew_id = '" . $category["str_id"] . "'";
             //$cats = $this->connection->fetchAll($sql);
