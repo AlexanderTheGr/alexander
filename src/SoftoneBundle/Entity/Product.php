@@ -2136,7 +2136,7 @@ class Product extends Entity {
                     echo "VA: " . $sql . "<BR>";
                     $categories[] = $cat["w_str_id"];
                 }
-                echo "[[".$sql."]]<BR>";
+                //echo "[[".$sql."]]<BR>";
                 //$this->connection->query($sql);
                 $sqls[] = $sql;
                 //$em->getConnection()->exec($sql);
@@ -2150,6 +2150,8 @@ class Product extends Entity {
         foreach($sqls as $sql) {
             $em->getConnection()->exec($sql);
         }
+        $sql = "update `softone_product` set cars = '" . serialize($cars) . "', cats = '" . serialize($categories) . "' where id = '" . $this->id . "'";
+        $em->getConnection()->exec($sql);        
         //print_r($out);
     }
 
