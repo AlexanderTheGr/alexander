@@ -2098,6 +2098,10 @@ class Product extends Entity {
         $connection = $em->getConnection();
         $sqls = array();
         foreach ($out as $category) {
+            $sql = "select * from magento2_base4q2017.cat2cat where oldnew_id = '" . $category["str_id"] . "'";
+            $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+            $cats = unserialize(file_get_contents($url));
+            /*
             $sql = "select * from cat2cat where oldnew_id = '" . $category["str_id"] . "'";
             //$cats = $this->connection->fetchAll($sql);
             
@@ -2107,6 +2111,7 @@ class Product extends Entity {
             $statement->closeCursor();
             unset($statement);
             //$statement->close();
+            */
             foreach ($cats as $cat) {
 
                 // 11001, 11176 --> VA
@@ -2138,14 +2143,13 @@ class Product extends Entity {
                 //echo "..";
             }
         }
+        
         $em->flush(); // if you need to update something
         $em->clear();
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         foreach($sqls as $sql) {
-            if ($sql != "insert ignore t4_product_category set product = '10', category2 = '100030', category = '11024'")
             $em->getConnection()->exec($sql);
         }
-        
         //print_r($out);
     }
 
