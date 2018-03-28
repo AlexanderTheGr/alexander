@@ -1972,6 +1972,7 @@ class Product extends Entity {
         $statement = $connection->prepare($sql);
         $statement->execute();
         $results = $statement->fetchAll();
+        $statement->closeCursor();
 
         if (count($results) == 0) {
             $sql = "Select mod_lnk_vich_id from magento2_base4q2017.art_mod_links a, magento2_base4q2017.models_links b where `mod_lnk_type` = 1 AND a.mod_lnk_id = b.mod_lnk_id and art_id = '" . $this->tecdocArticleId . "' group by `mod_lnk_vich_id`";
@@ -2044,7 +2045,6 @@ class Product extends Entity {
             $statement->execute();
             $cats = $statement->fetchAll();    
             $statement->closeCursor();
-            unset($statement);
             foreach ($cats as $cat) {
                 if (in_array($cat["w_str_id"], $array)) {
                     $del = true;
