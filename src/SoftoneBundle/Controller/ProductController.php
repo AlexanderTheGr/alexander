@@ -1899,7 +1899,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $ediediitem->updatetecdoc();
             unset($ediediitem);
             echo $result["id"] . "<BR>";
-            //if ($i++ > 3000) exit;
+            if ($i++ > 300) exit;
             // }
         }
         exit;
