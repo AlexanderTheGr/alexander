@@ -1864,8 +1864,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $query = $em->createQuery(
                     "SELECT  p.id
                         FROM " . $this->repository . " p
-                        where p.tecdocSupplierId > 0 AND p.tecdocArticleIdAlt > 0 order by p.id asc"
-            );            
+                        where p.tecdocSupplierId > 0 AND p.tecdocArticleId IS NULL order by p.id asc"
+            );         
         } else {
             $query = $em->createQuery(
                     "SELECT  p.id
@@ -1899,7 +1899,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $ediediitem->updatetecdoc();
             unset($ediediitem);
             echo $result["id"] . "<BR>";
-            if ($i++ > 300) exit;
+            //if ($i++ > 300) exit;
             // }
         }
         exit;
