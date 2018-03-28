@@ -2136,7 +2136,7 @@ class Product extends Entity {
                     echo "VA: " . $sql . "<BR>";
                     $categories[] = $cat["w_str_id"];
                 }
-                //echo $sql."<BR>";
+                echo "[[".$sql."]]<BR>";
                 //$this->connection->query($sql);
                 $sqls[] = $sql;
                 //$em->getConnection()->exec($sql);
