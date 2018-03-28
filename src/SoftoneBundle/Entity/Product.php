@@ -2101,7 +2101,8 @@ class Product extends Entity {
             $statement = $connection->prepare($sql);
             $statement->execute();
             $cats = $statement->fetchAll();
-            $statement->close();
+            unset($statement);
+            //$statement->close();
             foreach ($cats as $cat) {
 
                 // 11001, 11176 --> VA
