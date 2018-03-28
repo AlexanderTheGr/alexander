@@ -1835,7 +1835,19 @@ class Product extends Entity {
                 $out->articleName = $data["des_text"];
                 $out->genericArticleId = $data["pt_des_id"];
             }
-            print_r($out);
+            //print_r($out);
+            if (@$out->articleId) {
+                $this->setTecdocArticleId($out->articleId);
+                $this->setTecdocArticleName($out->articleName);
+
+                $categories = array();
+                $cars = array();
+                $sql = "update `softone_product` set tecdoc_generic_article_id = '" . $out->genericArticleId . "', tecdoc_article_name = '" . $out->articleName . "', tecdoc_article_id = '" . $out->articleId . "', cars = '" . serialize($cars) . "', cats = '" . serialize($categories) . "' where id = '" . $this->id . "'";
+                $em->getConnection()->exec($sql);
+
+
+                $this->getDetailssnew();
+            }
             return;
         } else {
 
@@ -1874,72 +1886,68 @@ class Product extends Entity {
             }
 
             $out = $articleDirectSearchAllNumbers->data->array[0];
+            try {
+                //$webserviceProduct = WebserviceProduct::model()->findByAttributes(array('product' =>  $this->id,"webservice"=>$this->webservice));
+                //$sql = "Delete from SoftoneBundle:WebserviceProduct p where p.product = '" . $this->id . "'";
+                //$em->createQuery($sql)->getResult();
+                //$em->execute();
+                if (@$out->articleId) {
+                    $this->setTecdocArticleId($out->articleId);
+                    $this->setTecdocArticleName($out->articleName);
+                    //$this->setTecdocGenericArticleId($out->articleName);
 
-            //print_r($out);
-        }
+                    $cats = $tecdoc->getTreeForArticle($out->articleId);
 
+                    //print_r((array) $cats);
+                    //echo "<BR>";
 
-
-        try {
-            //$webserviceProduct = WebserviceProduct::model()->findByAttributes(array('product' =>  $this->id,"webservice"=>$this->webservice));
-            //$sql = "Delete from SoftoneBundle:WebserviceProduct p where p.product = '" . $this->id . "'";
-            //$em->createQuery($sql)->getResult();
-            //$em->execute();
-            if (@$out->articleId) {
-                $this->setTecdocArticleId($out->articleId);
-                $this->setTecdocArticleName($out->articleName);
-                //$this->setTecdocGenericArticleId($out->articleName);
-
-                $cats = $tecdoc->getTreeForArticle($out->articleId);
-
-                //print_r((array) $cats);
-                //echo "<BR>";
-
-                $params = array(
-                    "articleId" => $out->articleId
-                );
-                $articleLinkedAllLinkingTarget = $tecdoc->getArticleLinkedAllLinkingTarget($params);
-                $cars = array();
-                $linkingTargetId = 0;
+                    $params = array(
+                        "articleId" => $out->articleId
+                    );
+                    $articleLinkedAllLinkingTarget = $tecdoc->getArticleLinkedAllLinkingTarget($params);
+                    $cars = array();
+                    $linkingTargetId = 0;
 
 
-                foreach ($articleLinkedAllLinkingTarget->data->array as $v) {
-                    if ($linkingTargetId == 0)
-                        $linkingTargetId = $v->linkingTargetId;
-                    $cars[] = $v->linkingTargetId;
-                    //break;
+                    foreach ($articleLinkedAllLinkingTarget->data->array as $v) {
+                        if ($linkingTargetId == 0)
+                            $linkingTargetId = $v->linkingTargetId;
+                        $cars[] = $v->linkingTargetId;
+                        //break;
+                    }
+                    $categories2 = array();
+                    foreach ($cats as $cat) {
+                        $categories2[] = $cat->tree_id;
+                    }
+                    $categories = $this->checkForUniqueCategory($out, $cats, $tecdoc, $linkingTargetId);
+                    if (count($categories) == 0) {
+                        $categories = $categories2;
+                    }
+
+                    //print_r($categories);
+                    //print_r($cars);
+                    $this->setCats($categories);
+                    $this->setCars($cars);
+                    /*
+                      $em->persist($this);
+                      $em->flush();
+                     * 
+                     */
+                    $sql = "update `softone_product` set tecdoc_generic_article_id = '" . $out->genericArticleId . "', tecdoc_article_name = '" . $out->articleName . "', tecdoc_article_id = '" . $out->articleId . "', cars = '" . serialize($cars) . "', cats = '" . serialize($categories) . "' where id = '" . $this->id . "'";
+                    $em->getConnection()->exec($sql);
                 }
-                $categories2 = array();
-                foreach ($cats as $cat) {
-                    $categories2[] = $cat->tree_id;
-                }
-                $categories = $this->checkForUniqueCategory($out, $cats, $tecdoc, $linkingTargetId);
-                if (count($categories) == 0) {
-                    $categories = $categories2;
-                }
-
-                //print_r($categories);
-                //print_r($cars);
-                $this->setCats($categories);
-                $this->setCars($cars);
-                /*
-                  $em->persist($this);
-                  $em->flush();
-                 * 
-                 */
-                $sql = "update `softone_product` set tecdoc_generic_article_id = '" . $out->genericArticleId . "', tecdoc_article_name = '" . $out->articleName . "', tecdoc_article_id = '" . $out->articleId . "', cars = '" . serialize($cars) . "', cats = '" . serialize($categories) . "' where id = '" . $this->id . "'";
-                $em->getConnection()->exec($sql);
+            } catch (Exception $e) {
+                echo $e->getMessage();
+                exit;
             }
-        } catch (Exception $e) {
-            echo $e->getMessage();
-            exit;
         }
+
         $tecdoc = null;
         unset($tecdoc);
         //echo $result;
     }
 
-    function getDetailssnew($product) {
+    function getDetailssnew() {
         if ($this->tecdoc_article_id == 0)
             return;
         //$this->getDetails();
@@ -1949,10 +1957,18 @@ class Product extends Entity {
             $kernel = $kernel->getKernel();
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
-        
+
         $this->connection = Mage::getSingleton('core/resource')->getConnection('core_write');
         $sql = "select * from t4_product_model_type where product = '" . $this->getId() . "'";
-        $results = $this->connection->fetchAll($sql);
+        //$results = $this->connection->fetchAll($sql);
+        $categories = array();
+        $cars = array();
+
+        $connection = $em->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $results = $statement->fetchAll();
+
         if (count($results) == 0) {
             $sql = "Select mod_lnk_vich_id from magento2_base4q2017.art_mod_links a, magento2_base4q2017.models_links b where `mod_lnk_type` = 1 AND a.mod_lnk_id = b.mod_lnk_id and art_id = '" . $this->tecdoc_article_id . "' group by `mod_lnk_vich_id`";
             $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
@@ -1966,9 +1982,10 @@ class Product extends Entity {
             foreach ($out as $model_type) {
                 if ($model_type == 0)
                     continue;
-                $sql = "insert ignore t4_product_model_type set product = '" . $product->getId() . "', model_type = '" . $model_type["mod_lnk_vich_id"] . "'";
+                $sql = "insert ignore t4_product_model_type set product = '" . $this->getId() . "', model_type = '" . $model_type["mod_lnk_vich_id"] . "'";
                 //echo $sql."<BR>";
                 //$this->connection->query($sql);
+                $cars[] = $model_type["mod_lnk_vich_id"];
                 $em->getConnection()->exec($sql);
             }
         }
@@ -2069,7 +2086,11 @@ class Product extends Entity {
         //return;
         foreach ($out as $category) {
             $sql = "select * from autoparts_tecdoc_cat2cat where oldnew_id = '" . $category["str_id"] . "'";
-            $cats = $this->connection->fetchAll($sql);
+            //$cats = $this->connection->fetchAll($sql);
+            $connection = $em->getConnection();
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            $cats = $statement->fetchAll();
 
             foreach ($cats as $cat) {
 
@@ -2080,16 +2101,19 @@ class Product extends Entity {
                         $sql = "insert ignore t4_product_category set product = '" . $this->getId() . "', category2 = '" . $category["str_id"] . "', category = '" . $cat["w_str_id"] . "'";
                         $catva = true;
                         echo "VA: " . $sql . "<BR>";
+                        $categories[] = $cat["w_str_id"];
                     }
                 } elseif ($cat["w_str_id"] == 11024 OR $cat["w_str_id"] == 11200 OR $cat["w_str_id"] == 11002 OR $cat["w_str_id"] == 11110 OR $cat["w_str_id"] == 11177) {
                     if ($kv == 'HA') {
                         $sql = "insert ignore t4_product_category set product = '" . $this->getId() . "', category2 = '" . $category["str_id"] . "', category = '" . $cat["w_str_id"] . "'";
                         $catha = true;
                         echo "ΗΑ: " . $sql . "<BR>";
+                        $categories[] = $cat["w_str_id"];
                     }
                 } else {
                     $sql = "insert ignore t4_product_category set product = '" . $this->getId() . "', category2 = '" . $category["str_id"] . "', category = '" . $cat["w_str_id"] . "'";
                     $cattt = true;
+                    $categories[] = $cat["w_str_id"];
                 }
                 //echo $sql."<BR>";
                 //$this->connection->query($sql);
@@ -2148,6 +2172,7 @@ class Product extends Entity {
     public function getTecdocArticleId() {
         return $this->tecdocArticleId;
     }
+
     /**
      * @var integer
      */
@@ -2174,8 +2199,7 @@ class Product extends Entity {
     public function getTecdocArticleIdAlt() {
         return $this->tecdocArticleIdAlt;
     }
-    
-    
+
     /**
      * @var string
      */
