@@ -2138,6 +2138,8 @@ class Product extends Entity {
                 //echo "..";
             }
         }
+        $em->flush(); // if you need to update something
+        $em->clear();
         foreach($sqls as $sql) {
             $em->getConnection()->exec($sql);
         }
