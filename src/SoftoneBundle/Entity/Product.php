@@ -2145,6 +2145,7 @@ class Product extends Entity {
             if ($sql != "insert ignore t4_product_category set product = '10', category2 = '100030', category = '11024'")
             $em->getConnection()->exec($sql);
         }
+        
         //print_r($out);
     }
 
