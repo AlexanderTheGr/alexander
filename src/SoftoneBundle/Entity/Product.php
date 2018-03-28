@@ -2080,6 +2080,7 @@ class Product extends Entity {
             }
         }
         $sql = "delete from t4_product_category where product = '" . $this->getId() . "'";
+        $em->getConnection()->exec($sql);
         echo "<BR>" . $sql . "<BR>";
         //return;
         echo "<BR>" . $kv . "<BR>";
