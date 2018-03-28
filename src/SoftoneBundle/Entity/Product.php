@@ -1839,7 +1839,7 @@ class Product extends Entity {
             if (@$out->articleId) {
                 $this->setTecdocArticleId($out->articleId);
                 $this->setTecdocArticleName($out->articleName);
-
+                $this->tecdoc_article_id = $out->articleId;
                 $categories = array();
                 $cars = array();
                 $sql = "update `softone_product` set tecdoc_generic_article_id = '" . $out->genericArticleId . "', tecdoc_article_name = '" . $out->articleName . "', tecdoc_article_id = '" . $out->articleId . "', cars = '" . serialize($cars) . "', cats = '" . serialize($categories) . "' where id = '" . $this->id . "'";
