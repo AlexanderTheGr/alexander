@@ -2140,6 +2140,7 @@ class Product extends Entity {
         }
         $em->flush(); // if you need to update something
         $em->clear();
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         foreach($sqls as $sql) {
             $em->getConnection()->exec($sql);
         }
