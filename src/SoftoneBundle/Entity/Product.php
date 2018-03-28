@@ -2093,10 +2093,11 @@ class Product extends Entity {
         //return;
         echo "<BR>" . $kv . "<BR>";
         //return;
+        $connection = $em->getConnection();
         foreach ($out as $category) {
             $sql = "select * from cat2cat where oldnew_id = '" . $category["str_id"] . "'";
             //$cats = $this->connection->fetchAll($sql);
-            $connection = $em->getConnection();
+            
             $statement = $connection->prepare($sql);
             $statement->execute();
             $cats = $statement->fetchAll();
