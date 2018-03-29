@@ -729,7 +729,7 @@ class EdiItem extends Entity {
         $sql = "select * from magento2_base4q2017.article_criteria, magento2_base4q2017.criteria, magento2_base4q2017.text_designations
 			where acr_cri_id = 100 AND cri_id = acr_cri_id AND des_id = cri_des_id and des_lng_id = '" . $this->lng . "' and acr_art_id = '" . $this->tecdocArticleId2. "'";
         //$criteria = $this->connection->fetchRow($sql);
-        echo $sql."<BR>";
+        //echo $sql."<BR>";
 
         $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
         $criteria = unserialize(file_get_contents($url));
@@ -851,20 +851,20 @@ class EdiItem extends Entity {
                     if ($kv == 'VA') {
                         $sql = "insert ignore partsbox_db.edi_product_category set product = '" . $this->getId() . "', category2 = '" . $category["str_id"] . "', category = '" . $cat["w_str_id"] . "'";
                         $catva = true;
-                        echo "VA: " . $sql . "<BR>";
+                        //echo "VA: " . $sql . "<BR>";
                         $categories[] = $cat["w_str_id"];
                     }
                 } elseif ($cat["w_str_id"] == 11024 OR $cat["w_str_id"] == 11200 OR $cat["w_str_id"] == 11002 OR $cat["w_str_id"] == 11110 OR $cat["w_str_id"] == 11177) {
                     if ($kv == 'HA') {
                         $sql = "insert ignore partsbox_db.edi_product_category set product = '" . $this->getId() . "', category2 = '" . $category["str_id"] . "', category = '" . $cat["w_str_id"] . "'";
                         $catha = true;
-                        echo "ΗΑ: " . $sql . "<BR>";
+                        //echo "ΗΑ: " . $sql . "<BR>";
                         $categories[] = $cat["w_str_id"];
                     }
                 } else {
                     $sql = "insert ignore partsbox_db.edi_product_category set product = '" . $this->getId() . "', category2 = '" . $category["str_id"] . "', category = '" . $cat["w_str_id"] . "'";
                     $cattt = true;
-                    echo "VA: " . $sql . "<BR>";
+                    //echo "VA: " . $sql . "<BR>";
                     $categories[] = $cat["w_str_id"];
                 }
                 //echo "[[".$sql."]]<BR>";
