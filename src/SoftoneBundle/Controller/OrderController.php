@@ -1837,7 +1837,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $dt["matched"] = base64_encode(serialize($matched));
                 $dt["matched_count"] = count($matched);
                 $dt["edimatched"] = base64_encode(serialize($edimatched));
-                $dt["edimatched_count"] = count($matched);
+                $dt["edimatched_count"] = count($edimatched);
                 $dt["weight"] = $category->getWeight();
                 $all["matched"] = (array) $matched;
                 $all["edimatched"] = (array) $edimatched;
