@@ -1804,6 +1804,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 b.product = a.product AND
                                 p.product_id > 0 AND
                  b.model_type = '" . $params["linkingTargetId"] . "' group by category.id";
+            $connection = $em->getConnection();
             $statement = $connection->prepare($sql);
             $statement->execute();
             $results = $statement->fetchAll();
