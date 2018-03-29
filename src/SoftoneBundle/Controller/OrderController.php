@@ -1796,7 +1796,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $cats[$category->getParent()] = array();
             }
 
-
+            $tecdocArticleIds = array();
+            $tecdocEdiArticleIds = array();
             $sql = "select category.id, p.`tecdoc_article_id` from t4_product_category a, 
                     t4_product_model_type b,
                     softone_product p,
@@ -1810,12 +1811,25 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $statement = $connection->prepare($sql);
             $statement->execute();
             $results = $statement->fetchAll();
-            $tecdocArticleIds = array();
-            $tecdocEdiArticleIds = array();
             foreach ($results as $cat) {
                 $tecdocArticleIds[$cat["id"]][] = $cat["tecdoc_article_id"];
             }
-
+            $sql = "select category.id, p.`tecdoc_article_id3` from partsbox_db.edi_product_category a, 
+                    partsbox_db.edi_product_model_type b,
+                    softone_product p,
+                    category category
+                      where a.product = p.id AND 
+                                a.product = b.product AND
+                                category.id = a.category AND 
+                                b.product = a.product AND
+                 b.model_type = '" . $params["linkingTargetId"] . "' group by category.id";
+            $connection = $em->getConnection();
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            $results = $statement->fetchAll();
+            foreach ($results as $cat) {
+                $tecdocEdiArticleIds[$cat["id"]][] = $cat["tecdoc_article_id3"];
+            }
 
 
             foreach ($cats as $key => $arts) {
