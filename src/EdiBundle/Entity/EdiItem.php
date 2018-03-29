@@ -532,8 +532,56 @@ class EdiItem extends Entity {
          */
         $postparams = array(
             "articleNumber" => $this->artNr,
-            "brandno" => $this->dlnr
+            "brandno" => $this->dlnr,
+            "lng" => 20
         );
+        
+        $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
+        if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
+            $postparams = array(
+                "articleNumber" => $this->tecdocCode,
+                "lng" => 20,
+                "brandno" => $this->getTecdocSupplierId()->getId()
+            );
+            print_r($postparams);
+            $term = preg_replace("/[^a-zA-Z0-9]+/", "", $postparams["articleNumber"]);
+            $sql = "SELECT * FROM magento2_base4q2017.suppliers, magento2_base4q2017.articles art,magento2_base4q2017.products pt,magento2_base4q2017.art_products_des artpt,magento2_base4q2017.text_designations tex
+                    WHERE 
+                    artpt.art_id = art.art_id AND 
+                    suppliers.sup_id = art.art_sup_id AND 
+                    pt.pt_id = artpt.pt_id AND
+                    tex.des_id = pt.pt_des_id AND
+                    tex.des_lng_id = '" . $postparams["lng"] . "' AND 
+                    (
+                    art_article_nr_can LIKE '" . $term . "' AND sup_id = '" . $postparams["brandno"] . "'
+            )";
+            $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+            $datas = unserialize(file_get_contents($url));
+            //$result = mysqli_query($this->conn,$sql);
+            //$datas = mysqli_fetch_all($result,MYSQLI_ASSOC);
+            $data = $datas[0];
+            //$out = array();
+            $out = new \stdClass();
+            if ($data) {
+                $out->articleId = $data["art_id"];
+                $out->articleName = $data["des_text"];
+                $out->genericArticleId = $data["pt_des_id"];
+            }
+            //print_r($out);
+            if (@$out->articleId) {
+                $this->setTecdocArticleId($out->articleId);
+                $this->setTecdocArticleName($out->articleName);
+                //$this->tecdocArticleId= $out->articleId;
+                $categories = array();
+                $cars = array();
+                $sql = "update `edi_item` set tecdoc_article_id3 = '" . $out->articleId . "' where id = '" . $this->id . "'";
+                echo $sql."<BR>";
+                $em->getConnection()->exec($sql);
+                //$this->getDetailssnew();
+            }
+            return;
+        }        
+        return
         //echo ".";
 
         $tecdoc = $this->tecdoc ? $this->tecdoc : new Tecdoc(); //new Tecdoc();
