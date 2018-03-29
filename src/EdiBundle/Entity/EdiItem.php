@@ -765,6 +765,7 @@ class EdiItem extends Entity {
         //$result = mysqli_query($this->conn,$sql);
         //$out =  mysqli_fetch_all($result,MYSQLI_ASSOC);	
         //print_r($out);
+        //
         //exit;
         $del = false;
         $array = array(11023, 11199, 11001, 11109, 11176, 11024, 11200, 11002, 11110, 11177);
