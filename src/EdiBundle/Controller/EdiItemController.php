@@ -343,12 +343,24 @@ class EdiItemController extends Main {
     public function getUpdateTecdocAction($funct = false) {
         $em = $this->getDoctrine()->getManager();
 
-        $query = $em->createQuery(
-                "SELECT  p.id
-                    FROM " . $this->repository . " p, EdiBundle:Edi e
-                    where 
-                        e.id = p.Edi AND p.tecdocArticleId IS NULL AND p.dlnr > 0  order by p.id desc"
-        );
+        
+        
+        if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
+            $query = $em->createQuery(
+                    "SELECT  p.id
+                        FROM " . $this->repository . " p, EdiBundle:Edi e
+                        where 
+                            e.id = p.Edi AND p.dlnr > 0  order by p.id desc"
+            );            
+        } else {
+        
+            $query = $em->createQuery(
+                    "SELECT  p.id
+                        FROM " . $this->repository . " p, EdiBundle:Edi e
+                        where 
+                            e.id = p.Edi AND p.tecdocArticleId IS NULL AND p.dlnr > 0  order by p.id desc"
+            );
+        }
         /*
           $query = $em->createQuery(
           "SELECT  p.id
