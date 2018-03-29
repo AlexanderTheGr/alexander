@@ -780,7 +780,7 @@ class EdiItem extends Entity {
                 if (in_array($cat["w_str_id"], $array)) {
                     $del = true;
                     if ($kv == "") {
-                        $term = preg_replace("/[^a-zA-Z0-9]+/", "", $this->getTecdocCode());
+                        $term = preg_replace("/[^a-zA-Z0-9]+/", "", $this->artNr);
                         $sql = "SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '" . $term . "'";
                         //$arts = $this->connection->fetchAll($sql);
                         //$result = mysqli_query($this->conn,$sql);
