@@ -1816,7 +1816,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             }
             $sql = "select category.id, p.`tecdoc_article_id3` from partsbox_db.edi_product_category a, 
                     partsbox_db.edi_product_model_type b,
-                    softone_product p,
+                    partsbox_db.`edi_item` p,
                     category category
                       where a.product = p.id AND 
                                 a.product = b.product AND
