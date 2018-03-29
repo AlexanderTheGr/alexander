@@ -1782,7 +1782,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $cats[$cat["w_str_id"]][] = $cat["art_id"];
                 
                 if (!$categories[$cat["w_str_id"]])
-                    $categories[$key] = $this->getDoctrine()
+                    $categories[$cat["w_str_id"]] = $this->getDoctrine()
                             ->getRepository("SoftoneBundle:Category")
                             ->find($cat["w_str_id"]);                
                 
