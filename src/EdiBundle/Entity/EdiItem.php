@@ -493,8 +493,8 @@ class EdiItem extends Entity {
 
 
         //echo $this->getTecdocArticleId();
-        if ($this->getTecdocArticleId() > 0 and $forceupdate == false)
-            return;
+        //if ($this->getTecdocArticleId() > 0 and $forceupdate == false)
+        //    return;
 
 
 
