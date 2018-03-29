@@ -369,6 +369,7 @@ class EdiItemController extends Main {
                         where 
                             e.id = p.Edi AND p.tecdocArticleId IS NULL AND p.dlnr > 0  order by p.id desc"
             );
+            $results = $query->getResult();
         }
         /*
           $query = $em->createQuery(
@@ -380,7 +381,7 @@ class EdiItemController extends Main {
          * 
          */
 
-        $results = $query->getResult();
+
         echo count($results);
         $i = 0;
         $tecdoc = new Tecdoc();
