@@ -1777,7 +1777,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
             
             $out = file_get_contents($url);
-            file_put_contents("tmp/".$params["linkingTargetId"]."ser", $out);
+            file_put_contents("tmp/".$params["linkingTargetId"].".ser", $out);
             $results = unserialize($out);
             //echo $sql;
             $categories = array();
