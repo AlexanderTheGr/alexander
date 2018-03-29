@@ -493,8 +493,7 @@ class EdiItem extends Entity {
 
 
         //echo $this->getTecdocArticleId();
-        //if ($this->getTecdocArticleId() > 0 and $forceupdate == false)
-        //    return;
+
 
 
 
@@ -582,9 +581,10 @@ class EdiItem extends Entity {
             }
             return;
         }        
-        return
+        return;
         //echo ".";
-
+        if ($this->getTecdocArticleId() > 0 and $forceupdate == false)
+            return;
         $tecdoc = $this->tecdoc ? $this->tecdoc : new Tecdoc(); //new Tecdoc();
 
         $articleDirectSearchAllNumbers = $tecdoc->getArticleDirectSearchAllNumbers($postparams);
