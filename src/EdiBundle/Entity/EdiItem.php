@@ -539,9 +539,9 @@ class EdiItem extends Entity {
         $url = $this->getSetting("AppBundle:Entity:tecdocServiceUrl");
         if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
             $postparams = array(
-                "articleNumber" => $this->tecdocCode,
-                "lng" => 20,
-                "brandno" => $this->getTecdocSupplierId()->getId()
+                "articleNumber" => $this->artNr,
+                "brandno" => $this->dlnr,
+                "lng" => 20
             );
             print_r($postparams);
             $term = preg_replace("/[^a-zA-Z0-9]+/", "", $postparams["articleNumber"]);
