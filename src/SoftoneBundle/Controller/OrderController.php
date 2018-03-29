@@ -1775,20 +1775,23 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     link_pt_str.pt_id = art_products_des.pt_id AND 
                     art_products_des.art_id in (Select art_id from magento2_base4q2017.art_mod_links a, magento2_base4q2017.models_links b where `mod_lnk_type` = 1 AND a.mod_lnk_id = b.mod_lnk_id and mod_lnk_vich_id = '" . $params["linkingTargetId"] . "' group by `art_id`) order by w_str_id";
             $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
-            
-            $out = file_get_contents($url);
-            file_put_contents("tmp/".$params["linkingTargetId"].".ser", $out);
+
+            if (file_exists("tmp/" . $params["linkingTargetId"] . ".ser"))
+                $out = file_get_contents("tmp/" . $params["linkingTargetId"] . ".ser");
+            else
+                $out = file_get_contents($url);
+            file_put_contents("tmp/" . $params["linkingTargetId"] . ".ser", $out);
             $results = unserialize($out);
             //echo $sql;
             $categories = array();
             foreach ($results as $cat) {
                 $cats[$cat["w_str_id"]][] = $cat["art_id"];
-                
+
                 if (!$categories[$cat["w_str_id"]])
                     $categories[$cat["w_str_id"]] = $this->getDoctrine()
                             ->getRepository("SoftoneBundle:Category")
-                            ->find($cat["w_str_id"]);                
-                
+                            ->find($cat["w_str_id"]);
+
                 $category = $categories[$cat["w_str_id"]];
                 $cats[$category->getParent()] = array();
             }
@@ -1828,7 +1831,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                 $matched = array_intersect(@(array) $arts, (array) $tecdocArticleIds[$key]);
                 $edimatched = array_intersect(@(array) $arts, (array) $tecdocEdiArticleIds[$key]);
-                
+
                 $dt["articleIds"] = $arts;
                 $dt["articles_count"] = count($arts);
                 $dt["assemblyGroupName"] = $category->getName();
@@ -1845,7 +1848,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $all["articleIds"] = @(array) $arts;
                 $all["linkingTargetId"] = $params["linkingTargetId"];
                 $dt["all"] = base64_encode(serialize($all));
-                
+
                 $data[$key] = $dt;
             }
             $json = json_encode($data);
