@@ -1777,8 +1777,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql1);
             
             $results = unserialize(file_get_contents($url));
-
-            echo $sql;
+            print_r($results);
+            //echo $sql;
             $categories = array();
             foreach ($results as $cat) {
                 $cats[$cat["w_str_id"]][] = $cat["art_id"];
