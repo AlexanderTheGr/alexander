@@ -346,12 +346,14 @@ class EdiItemController extends Main {
         
         
         if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
+            /*
             $query = $em->createQuery(
                     "SELECT  p.id
                         FROM " . $this->repository . " p, EdiBundle:Edi e
                         where 
                             e.id = p.Edi AND p.dlnr > 0  order by p.id desc"
-            );      
+            );
+            */
             $sql = "Select * from partsbox_db.edi_item where tecdoc_article_id3 = 0";
             $connection = $em->getConnection();
             $statement = $connection->prepare($sql);
