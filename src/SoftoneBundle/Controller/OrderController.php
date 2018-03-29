@@ -30,9 +30,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $statement->execute();
         $data = $statement->fetch();
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts')
-        $findoc = $data["ref"] - 1150;  
-        else 
-        $findoc = $data["ref"] - 50;     
+            $findoc = $data["ref"] - 1150;
+        else
+            $findoc = $data["ref"] - 50;
         $em = $this->getDoctrine()->getManager();
         $sql = "SELECT FINDOC,FULLYTRANSF FROM FINDOC WHERE FULLYTRANSF = 1 AND FINDOC > " . $findoc;
         $params["fSQL"] = $sql;
@@ -258,7 +258,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $order = $this->getDoctrine()
                 ->getRepository("SoftoneBundle:Order")
                 ->find($id);
-        
+
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
             //$softone = new Softone();
             //$data = $softone->getData("SALDOC", (int) $order->getReference());
@@ -266,8 +266,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             //print_r($data);
             //echo "</PRE>";
         }
-        
-         
+
+
         $pagename = "";
         $displaynone = 'display:none';
         $fullytrans = 'display:none';
@@ -977,11 +977,11 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 									where p.itemCode1 = \'' . $search[1] . '\' OR p.itemIsactive = 1 AND (' . $qsupplier . '  (' . $tecdoc_article . $sqlearch2 . $tecdoc_article2 . ' ' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . ') )
 									ORDER BY ' . $this->orderBy;
                         /*
-                        $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
-                                FROM ' . $this->repository . ' ' . $this->prefix . '
-                                where p.itemCode1 = \'' . $search[1] . '\' OR p.itemIsactive = 1 AND (' . $qsupplier . ' ('.$tecdoc_article.' ' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . '))
-                                ORDER BY ' . $this->orderBy;
-                        */
+                          $sql = 'SELECT  ' . $this->select . ', p.reference, p.id
+                          FROM ' . $this->repository . ' ' . $this->prefix . '
+                          where p.itemCode1 = \'' . $search[1] . '\' OR p.itemIsactive = 1 AND (' . $qsupplier . ' ('.$tecdoc_article.' ' . $this->prefix . '.id in (' . $sqlearch . ') OR ' . $sisxetisi . '))
+                          ORDER BY ' . $this->orderBy;
+                         */
                     }
                 } else {
                     $hasArticleIds = false;
@@ -1010,8 +1010,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ;
                 if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
                     //echo $sql."<BR>";  
-                    
-                }  
+                }
                 /*
                   echo 'SELECT  ' . $this->select . ', p.reference
                   FROM ' . $this->repository . ' ' . $this->prefix . '
@@ -1111,7 +1110,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 } elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
                     $pricer = $obj->priceMpal($vat);
                 } elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
-                    $pricer = $obj->priceCarparts();            
+                    $pricer = $obj->priceCarparts();
                 } else {
                     $pricer = $obj->getItemPricer();
                     $pricer = number_format($pricer * $vat, 2, '.', '');
@@ -1347,19 +1346,19 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         //$objectArr[0]["MTRDOC"]["WHOUSE"] = 1000;
         //$objectArr[0]["DISC1PRC"] = 10;   
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
-            $objectArr[0]["SALESMAN"] = $order->getUser()->getReference();  
+            $objectArr[0]["SALESMAN"] = $order->getUser()->getReference();
             //$dataOut["PRSEXT"][0] = array("CODE" => 1001);
             //$dataOut["PRSNIN"][0] = array("CODE" => $order->getUser()->getReference());
-        }     
-        
+        }
+
         $dataOut[$object] = (array) $objectArr;
         /*
-        $dataOut["MTRDOC"][] = array(
-            "WHOUSE" => 1000,
-        );
-        */
-        
-        
+          $dataOut["MTRDOC"][] = array(
+          "WHOUSE" => 1000,
+          );
+         */
+
+
         $dataOut["ITELINES"] = array();
 
         $k = 0;
@@ -1394,13 +1393,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         if (@$out->id == 0) {
             $out = $softone->setData((array) $dataOut, $object, (int) 0);
         }
-       // if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') 
+        // if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') 
         //print_r($out);
-        
+
         if (@$out->id > 0) {
-            
+
             if ($order->getReference() == 0) {
-              
+
                 foreach ($order->getItems() as $item) {
                     $product = $item->getProduct();
                     if ($product) {
@@ -1409,7 +1408,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         $product->setReserved($reserved);
                         $this->flushpersist($product);
                         //echo "\n(" . $reserved . ")\n";
-
                     }
                 }
             }
@@ -1759,6 +1757,104 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
          */
         $session = new Session();
         $em = $this->getDoctrine()->getManager();
+
+        if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
+            $data = array();
+
+
+            $sql = "SELECT `w_str_id`, count(art_products_des.art_id) FROM magento2_base4q2017.link_pt_str, magento2_base4q2017.cat2cat,magento2_base4q2017.art_products_des WHERE 
+                    str_id = oldnew_id AND 
+                    `str_type` = 1 AND 
+                    link_pt_str.pt_id = art_products_des.pt_id AND 
+                    art_products_des.art_id in (Select art_id from magento2_base4q2017.art_mod_links a, magento2_base4q2017.models_links b where `mod_lnk_type` = 1 AND a.mod_lnk_id = b.mod_lnk_id and mod_lnk_vich_id = '" . $params["linkingTargetId"] . "' group by `art_id`) GROUP by w_str_id order by w_str_id";
+
+
+            $sql = "SELECT `w_str_id`, art_products_des.art_id FROM magento2_base4q2017.link_pt_str, magento2_base4q2017.cat2cat,magento2_base4q2017.art_products_des WHERE 
+                    str_id = oldnew_id AND 
+                    `str_type` = 1 AND 
+                    link_pt_str.pt_id = art_products_des.pt_id AND 
+                    art_products_des.art_id in (Select art_id from magento2_base4q2017.art_mod_links a, magento2_base4q2017.models_links b where `mod_lnk_type` = 1 AND a.mod_lnk_id = b.mod_lnk_id and mod_lnk_vich_id = '" . $params["linkingTargetId"] . "' group by `art_id`) order by w_str_id";
+            $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql1);
+            $results = unserialize(file_get_contents($url));
+
+            
+            $categories = array();
+            foreach ($results as $cat) {
+                $cats[$cat["w_str_id"]][] = $cat["art_id"];
+                
+                if (!$categories[$key])
+                    $categories[$key] = $this->getDoctrine()
+                            ->getRepository("SoftoneBundle:Category")
+                            ->find($cat["w_str_id"]);                
+                
+                $cats[$category->getParent()] = array();
+
+            }
+
+
+            $sql = "select category.id, p.`tecdoc_article_id` from t4_product_category a, 
+                    t4_product_model_type b,
+                    softone_product p,
+                    category category
+                      where a.product = p.id AND 
+                                a.product = b.product AND
+                                category.active = 1 AND
+                                category.id = a.category AND 
+                                b.product = a.product AND
+                                p.product_id > 0 AND
+                 b.model_type = '" . $params["linkingTargetId"] . "' group by category.id";
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            $results = $statement->fetchAll();
+            $tecdocArticleIds = array();
+            $tecdocEdiArticleIds = array();
+            foreach ($results as $cat) {
+                $tecdocArticleIds[$cat["id"]][] = $cat["tecdoc_article_id"];
+            }
+
+
+
+            foreach ($cats as $key => $arts) {
+
+                if (!$categories[$key])
+                    $categories[$key] = $this->getDoctrine()
+                            ->getRepository("SoftoneBundle:Category")
+                            ->find($key);
+
+                $category = $categories[$key];
+
+                $cat["parent"] = $category->getParent();
+
+                $matched = array_intersect(@(array) $arts, (array) $tecdocArticleIds[$key]);
+                $edimatched = array_intersect(@(array) $arts, (array) $tecdocEdiArticleIds[$key]);
+                
+                $dt["articleIds"] = $arts;
+                $dt["articles_count"] = counr($arts);
+                $dt["assemblyGroupName"] = $category->getName();
+                $dt["assemblyGroupNodeId"] = $key;
+                $dt["hasChilds"] = 0;
+                $dt["parentNodeId"] = $category->getParent();
+                $dt["matched"] = base64_encode(serialize($matched));
+                $dt["matched_count"] = count($matched);
+                $dt["edimatched"] = base64_encode(serialize($edimatched));
+                $dt["edimatched_count"] = count($matched);
+                $dt["weight"] = $category->getWeight();
+                $all["matched"] = (array) $matched;
+                $all["edimatched"] = (array) $edimatched;
+                $all["articleIds"] = @(array) $arts;
+                $all["linkingTargetId"] = $params["linkingTargetId"];
+                $dt["all"] = base64_encode(serialize($all));
+                
+                $data[$key] = $dt;
+            }
+            $json = json_encode($data);
+            //$data = unserialize($data);
+
+            return new Response(
+                    $json, 200, array('Content-Type' => 'application/json')
+            );
+        }
+
         $tecdoc = new Tecdoc();
         if ($this->getSetting("AppBundle:Entity:lng") > 0) {
             $tecdoc->setLng($this->getSetting("AppBundle:Entity:lng"));
@@ -1859,6 +1955,19 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
         );
+    }
+
+    public function prods($cat, $brandmodeltype = "", $query = "") {
+        $connection = $em->getConnection();
+        if ($brandmodeltype > 0)
+            $sql = "select p.tecdoc_article_id cnt from t4_product_category a, 
+									  t4_product_model_type b,
+									  softone_product p, 	
+									  category category
+						where p.product_id > 0 AND a.product = p.id AND a.product = b.product AND b.product = a.product AND category.id = a.category and a.category = '" . $cat . "' " . $query . " AND b.model_type = '" . $brandmodeltype . "' group by a.category";
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $cats = $statement->fetchAll();
     }
 
     public function getTabContentItems() {
