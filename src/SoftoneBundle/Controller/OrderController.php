@@ -1774,10 +1774,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     `str_type` = 1 AND 
                     link_pt_str.pt_id = art_products_des.pt_id AND 
                     art_products_des.art_id in (Select art_id from magento2_base4q2017.art_mod_links a, magento2_base4q2017.models_links b where `mod_lnk_type` = 1 AND a.mod_lnk_id = b.mod_lnk_id and mod_lnk_vich_id = '" . $params["linkingTargetId"] . "' group by `art_id`) order by w_str_id";
-            $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql1);
-            
+            $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
             $results = unserialize(file_get_contents($url));
-            print_r($results);
             //echo $sql;
             $categories = array();
             foreach ($results as $cat) {
