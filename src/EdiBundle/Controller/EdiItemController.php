@@ -351,7 +351,14 @@ class EdiItemController extends Main {
                         FROM " . $this->repository . " p, EdiBundle:Edi e
                         where 
                             e.id = p.Edi AND p.dlnr > 0  order by p.id desc"
-            );            
+            );      
+            $sql = "Select * from partsbox_db.edi_item where tecdoc_article_id3 = 0";
+            $connection = $em->getConnection();
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            $results = $statement->fetchAll();
+            $statement->closeCursor();            
+            
         } else {
         
             $query = $em->createQuery(
@@ -382,8 +389,8 @@ class EdiItemController extends Main {
             $ediediitem->updatetecdoc();
             unset($ediediitem);
             echo $result["id"] . "<BR>";
-            if ($i++ > 30)
-                exit;
+            //if ($i++ > 3000)
+            //    exit;
             //}
         }
         exit;
