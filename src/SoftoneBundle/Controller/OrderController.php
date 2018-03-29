@@ -1757,7 +1757,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
          */
         $session = new Session();
         $em = $this->getDoctrine()->getManager();
-
+        $params["linkingTargetId"] = $request->request->get("car");
         if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
             $data = array();
 
@@ -1778,7 +1778,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             
             $results = unserialize(file_get_contents($url));
 
-            echo $sql;
+            //echo $sql;
             $categories = array();
             foreach ($results as $cat) {
                 $cats[$cat["w_str_id"]][] = $cat["art_id"];
