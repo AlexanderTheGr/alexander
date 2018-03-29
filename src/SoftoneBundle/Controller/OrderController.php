@@ -1829,7 +1829,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $edimatched = array_intersect(@(array) $arts, (array) $tecdocEdiArticleIds[$key]);
                 
                 $dt["articleIds"] = $arts;
-                $dt["articles_count"] = counr($arts);
+                $dt["articles_count"] = count($arts);
                 $dt["assemblyGroupName"] = $category->getName();
                 $dt["assemblyGroupNodeId"] = $key;
                 $dt["hasChilds"] = 0;
