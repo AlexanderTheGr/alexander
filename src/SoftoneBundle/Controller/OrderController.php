@@ -1781,10 +1781,12 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             foreach ($results as $cat) {
                 $cats[$cat["w_str_id"]][] = $cat["art_id"];
                 
-                if (!$categories[$key])
+                if (!$categories[$cat["w_str_id"]])
                     $categories[$key] = $this->getDoctrine()
                             ->getRepository("SoftoneBundle:Category")
                             ->find($cat["w_str_id"]);                
+                
+                $category = $categories[$cat["w_str_id"]];
                 
                 $cats[$category->getParent()] = array();
 
