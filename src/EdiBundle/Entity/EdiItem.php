@@ -577,7 +577,8 @@ class EdiItem extends Entity {
                 $sql = "update partsbox_db.`edi_item` set tecdoc_article_id3 = '" . $out->articleId . "' where id = '" . $this->id . "'";
                 echo $sql."<BR>";
                 $em->getConnection()->exec($sql);
-                //$this->getDetailssnew();
+                $this->tecdocArticleId2 = $out->articleId;
+                $this->getDetailssnew();
             }
             return;
         }        
@@ -673,6 +674,217 @@ class EdiItem extends Entity {
         }
         //echo $result;
     }
+    
+    
+    
+     function getDetailssnew() {
+        
+        
+        echo "[".$this->tecdocArticleId2."]";
+        if ($this->tecdocArticleId2 == 0)
+            return;
+        //$this->getDetails();
+        //return;
+        $this->lng = 20;
+        global $kernel;
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+
+        //$this->connection = Mage::getSingleton('core/resource')->getConnection('core_write');
+        $sql = "select * from partsbox_db.edi_product_model_type where product = '" . $this->getId() . "'";
+        echo $sql."<BR>";
+        //$results = $this->connection->fetchAll($sql);
+        $categories = array();
+        $cars = array();
+
+        $connection = $em->getConnection();
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        $results = $statement->fetchAll();
+        $statement->closeCursor();
+
+        if (count($results) == 0) {
+            $sql = "Select mod_lnk_vich_id from magento2_base4q2017.art_mod_links a, magento2_base4q2017.models_links b where `mod_lnk_type` = 1 AND a.mod_lnk_id = b.mod_lnk_id and art_id = '" . $this->tecdocArticleId . "' group by `mod_lnk_vich_id`";
+            $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+            $out = unserialize(file_get_contents($url));
+            //$out = $this->connection->fetchAll($sql);
+            //$result = mysqli_query($this->conn,$sql);
+            //$out =  mysqli_fetch_all($result,MYSQLI_ASSOC);		
+            $sql = "delete from partsbox_db.edi_product_model_type where product = '" . $this->getId() . "'";
+            $em->getConnection()->exec($sql);
+            //$this->connection->query($sql);
+            foreach ($out as $model_type) {
+                if ($model_type == 0)
+                    continue;
+                $sql = "insert ignore partsbox_db.edi_product_model_type set product = '" . $this->getId() . "', model_type = '" . $model_type["mod_lnk_vich_id"] . "'";
+                //echo $sql."<BR>";
+                //$this->connection->query($sql);
+                $cars[] = $model_type["mod_lnk_vich_id"];
+                $em->getConnection()->exec($sql);
+            }
+        }
+        //return;		
+        $sql = "select * from magento2_base4q2017.article_criteria, magento2_base4q2017.criteria, magento2_base4q2017.text_designations
+			where acr_cri_id = 100 AND cri_id = acr_cri_id AND des_id = cri_des_id and des_lng_id = '" . $this->lng . "' and acr_art_id = '" . $this->tecdocArticleId2. "'";
+        //$criteria = $this->connection->fetchRow($sql);
+        echo $sql."<BR>";
+
+        $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+        $criteria = unserialize(file_get_contents($url));
+
+        //$result = mysqli_query($this->conn,$sql);
+        //$criteria =  mysqli_fetch_all($result,MYSQLI_ASSOC);
+        //echo mysqli_error();
+        //print_r($criteria);
+        //exit;
+        $criteria = $criteria[0];
+        //print_r($criteria);
+        //echo "<BR>";
+        if ($criteria["acr_kv_kt_id"]) {
+            $sql = "select kv_kv from magento2_base4q2017.key_values, magento2_base4q2017.text_designations where kv_kt_id = '" . $criteria["acr_kv_kt_id"] . "' AND kv_kv = '" . $criteria["acr_kv_kv"] . "' AND des_id = kv_des_id and des_lng_id = '" . $this->lng . "' ";
+            echo $sql . "<BR>";
+            $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+            $kv_kv = unserialize(file_get_contents($url));
+            //$result = $result = mysqli_query($this->conn,$sql);
+            //$kv_kv =  mysqli_fetch_row($result,MYSQLI_ASSOC);	
+            $kv_kv = $kv_kv[0];
+            $kv = $kv_kv["kv_kv"]; // kv_kv HA VA
+        }
+
+        //if ($kv != 'VA' AND $kv != 'HA' ) return;
+
+        $sql = "SELECT `str_id` FROM magento2_base4q2017.link_pt_str WHERE `str_type` = 1 AND pt_id in (Select pt_id from magento2_base4q2017.art_products_des where art_id = '" . $this->tecdocArticleId. "')";
+        //$out = $this->connection->fetchAll($sql); 
+        //echo $sql."<BR>";
+
+        $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+        $out = unserialize(file_get_contents($url));
+
+        //$result = mysqli_query($this->conn,$sql);
+        //$out =  mysqli_fetch_all($result,MYSQLI_ASSOC);	
+        //print_r($out);
+        //exit;
+        $del = false;
+        $array = array(11023, 11199, 11001, 11109, 11176, 11024, 11200, 11002, 11110, 11177);
+        foreach ($out as $category) {
+            $sql = "select * from cat2cat where oldnew_id = '" . $category["str_id"] . "'";
+            //$cats = $this->connection->fetchAll($sql);
+            $connection = $em->getConnection();
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            $cats = $statement->fetchAll();    
+            $statement->closeCursor();
+            foreach ($cats as $cat) {
+                if (in_array($cat["w_str_id"], $array)) {
+                    $del = true;
+                    if ($kv == "") {
+                        $term = preg_replace("/[^a-zA-Z0-9]+/", "", $this->getTecdocCode());
+                        $sql = "SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '" . $term . "'";
+                        //$arts = $this->connection->fetchAll($sql);
+                        //$result = mysqli_query($this->conn,$sql);
+                        //$arts =  mysqli_fetch_all($result,MYSQLI_ASSOC);							
+                        $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+                        $arts = unserialize(file_get_contents($url));
+
+                        foreach ($arts as $art) {
+                            $sql = "select * from magento2_base4q2017.article_criteria, magento2_base4q2017.criteria, magento2_base4q2017.text_designations
+								where acr_cri_id = 100 AND cri_id = acr_cri_id AND des_id = cri_des_id and des_lng_id = '" . $this->lng . "' and acr_art_id = '" . $art["all_art_id"] . "'";
+                            //$criteria = $this->connection->fetchRow($sql);
+                            //$result = $result = mysqli_query($this->conn,$sql);
+                            //$criteria =  mysqli_fetch_row($result,MYSQLI_ASSOC);	
+
+                            $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+                            $criteria = unserialize(file_get_contents($url));
+                            $criteria = $criteria[0];
+                            if ($criteria["acr_kv_kt_id"]) {
+                                $sql = "select kv_kv from magento2_base4q2017.key_values, magento2_base4q2017.text_designations where kv_kt_id = '" . $criteria["acr_kv_kt_id"] . "' AND kv_kv = '" . $criteria["acr_kv_kv"] . "' AND des_id = kv_des_id and des_lng_id = '" . $this->lng . "' ";
+                                //$kv = $this->connection->fetchOne($sql); // kv_kv HA VA	
+                                //$result = $result = mysqli_query($this->conn,$sql);
+                                //$kv_kv =  mysqli_fetch_row($result,MYSQLI_ASSOC);		
+                                $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+                                $kv_kv = unserialize(file_get_contents($url));
+                                $kv_kv = $kv_kv[0];
+                                $kv = $kv_kv["kv_kv"]; // kv_kv HA VA
+                            }
+
+                            if ($kv != "") {
+                                echo "<BR>[" . $kv . "]<BR>";
+                                break;
+                            }
+                        }
+                        //$sql = "insert ignore partsbox_db.edi_product_category set product = '" . $product->getId() . "', category2 = '" . $category["str_id"] . "', category = '" . $cat["w_str_id"] . "'";
+                        //echo "ΗΑVA: ".$sql."<BR>";
+                    }
+                }
+            }
+        }
+        $sql = "delete from partsbox_db.edi_product_category where product = '" . $this->getId() . "'";
+        $em->getConnection()->exec($sql);
+        echo "<BR>" . $sql . "<BR>";
+        //return;
+        echo "<BR>" . $kv . "<BR>";
+        //return;
+        $connection = $em->getConnection();
+        $sqls = array();
+        foreach ($out as $category) {
+            $sql1 = "select * from magento2_base4q2017.cat2cat where oldnew_id = '" . $category["str_id"] . "'";
+            $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql1);
+            $cats = unserialize(file_get_contents($url));
+            /*
+            $sql = "select * from cat2cat where oldnew_id = '" . $category["str_id"] . "'";
+            //$cats = $this->connection->fetchAll($sql);
+            
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            $cats = $statement->fetchAll();
+            $statement->closeCursor();
+            unset($statement);
+            //$statement->close();
+            */
+            foreach ($cats as $cat) {
+
+                // 11001, 11176 --> VA
+                // 11002, 11177 --> HA
+                if ($cat["w_str_id"] == 11023 OR $cat["w_str_id"] == 11199 OR $cat["w_str_id"] == 11001 OR $cat["w_str_id"] == 11109 OR $cat["w_str_id"] == 11176) {
+                    if ($kv == 'VA') {
+                        $sql = "insert ignore partsbox_db.edi_product_category set product = '" . $this->getId() . "', category2 = '" . $category["str_id"] . "', category = '" . $cat["w_str_id"] . "'";
+                        $catva = true;
+                        echo "VA: " . $sql . "<BR>";
+                        $categories[] = $cat["w_str_id"];
+                    }
+                } elseif ($cat["w_str_id"] == 11024 OR $cat["w_str_id"] == 11200 OR $cat["w_str_id"] == 11002 OR $cat["w_str_id"] == 11110 OR $cat["w_str_id"] == 11177) {
+                    if ($kv == 'HA') {
+                        $sql = "insert ignore partsbox_db.edi_product_category set product = '" . $this->getId() . "', category2 = '" . $category["str_id"] . "', category = '" . $cat["w_str_id"] . "'";
+                        $catha = true;
+                        echo "ΗΑ: " . $sql . "<BR>";
+                        $categories[] = $cat["w_str_id"];
+                    }
+                } else {
+                    $sql = "insert ignore partsbox_db.edi_product_category set product = '" . $this->getId() . "', category2 = '" . $category["str_id"] . "', category = '" . $cat["w_str_id"] . "'";
+                    $cattt = true;
+                    echo "VA: " . $sql . "<BR>";
+                    $categories[] = $cat["w_str_id"];
+                }
+                //echo "[[".$sql."]]<BR>";
+                //$this->connection->query($sql);
+                $sqls[] = $sql;
+                //$em->getConnection()->exec($sql);
+                //echo "..";
+            }
+        }
+        
+        $em->flush(); // if you need to update something
+        $em->clear();
+        $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        foreach($sqls as $sql) {
+            $em->getConnection()->exec($sql);
+        }
+        //$sql = "update `softone_product` set cars = '" . serialize($cars) . "', cats = '" . serialize($categories) . "' where id = '" . $this->id . "'";
+        //$em->getConnection()->exec($sql);        
+        //print_r($out);
+    }   
 
     function checkForUniqueCategory($article, $cats, $tecdoc, $linkingTargetId) {
         if ($cats <= 2)
