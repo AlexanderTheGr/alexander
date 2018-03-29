@@ -574,7 +574,7 @@ class EdiItem extends Entity {
                 //$this->tecdocArticleId= $out->articleId;
                 $categories = array();
                 $cars = array();
-                $sql = "update `edi_item` set tecdoc_article_id3 = '" . $out->articleId . "' where id = '" . $this->id . "'";
+                $sql = "update partsbox_db.`edi_item` set tecdoc_article_id3 = '" . $out->articleId . "' where id = '" . $this->id . "'";
                 echo $sql."<BR>";
                 $em->getConnection()->exec($sql);
                 //$this->getDetailssnew();
