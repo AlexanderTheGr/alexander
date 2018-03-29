@@ -354,7 +354,7 @@ class EdiItemController extends Main {
                             e.id = p.Edi AND p.dlnr > 0  order by p.id desc"
             );
             */
-            $sql = "Select * from partsbox_db.edi_item where tecdoc_article_id3 = 0";
+            $sql = "Select * from partsbox_db.edi_item where tecdoc_article_id3 = 0 order by id desc";
             $connection = $em->getConnection();
             $statement = $connection->prepare($sql);
             $statement->execute();
@@ -372,6 +372,7 @@ class EdiItemController extends Main {
             $results = $query->getResult();
         }
         /*
+         * \
           $query = $em->createQuery(
           "SELECT  p.id
           FROM " . $this->repository . " p, EdiBundle:Edi e
