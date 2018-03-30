@@ -870,9 +870,9 @@ class EdiItemController extends Main {
                   @$jsonarr[$key]['6'] = number_format($price, 2, '.', '');
                   @$jsonarr[$key]['DT_RowClass'] .= $xml->Item->Header->Available == "Y" ? ' text-success ' : ' text-danger ';
                  */
-                if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
+                //if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
                     
-                } else
+                //} else
                 if (count($jsonarr) < 50) {
                     $response = $elteka->getAvailability(
                             array('CustomerNo' => $this->CustomerNo,
