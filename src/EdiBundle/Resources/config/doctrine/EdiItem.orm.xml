@@ -85,7 +85,12 @@
             <options>
                 <option name="unsigned"/>
             </options>
-        </field>        
+        </field>  
+        <field name="tecdocArticleId3" type="integer" column="tecdoc_article_id3" nullable="true">
+            <options>
+                <option name="unsigned"/>
+            </options>
+        </field>                
         <field name="retailprice" type="decimal" column="retailprice" precision="10" scale="2" nullable="false"/>
         <field name="wholesaleprice" type="decimal" column="wholesaleprice" precision="10" scale="2" nullable="false"/>
         <field name="created" type="datetime" column="created" nullable="true"/>
