@@ -1661,7 +1661,9 @@ class EdiItem extends Entity {
     }
 
     function getEdiMarkupPrice($pricefield = false) {
-
+        if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
+            return "";
+        }
         $rules = $this->getEdi()->loadEdirules($pricefield)->getRules();
         $sortorder = 0;
         $markup = $this->markup;
@@ -1887,7 +1889,6 @@ class EdiItem extends Entity {
             }
         }
 
-        return "";
         $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
         $markip = $this->getEdiMarkupPrice($pricefield);
         $price = $price > 0 ? $price : $this->getEdiMarkupPrice($pricefield);
@@ -1895,7 +1896,7 @@ class EdiItem extends Entity {
         $finalprice = $discount > 0 ? $discountedPrice : $price;
         $this->finalprice = $finalprice * $vat;
         
-        return "";//$this->getEdiMarkupPrice($pricefield) . " / " . number_format($finalprice, 2, '.', '') . " / " . number_format($finalprice * $vat, 2, '.', '') . " (" . (float) $discount . "%)";
+        return $this->getEdiMarkupPrice($pricefield) . " / " . number_format($finalprice, 2, '.', '') . " / " . number_format($finalprice * $vat, 2, '.', '') . " (" . (float) $discount . "%)";
     }
 
     function ggetEdiQtyAvailability() {
