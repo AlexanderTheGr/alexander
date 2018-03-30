@@ -243,6 +243,9 @@ class EdiItemController extends Main {
 
         //echo "(p.partno LIKE '%" . $search[1] . "%' OR p.tecdocArticleId in (" . implode(",", $articleIds) . ")) ";
         $results = $query->getResult();
+        if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
+            print_r($results);
+        }
         $html .= '<button type="button" class="edibutton btn btn-raised ink-reaction" data-id="0">Invetory</button>';
         $edi = array();
         //print_r($results);
