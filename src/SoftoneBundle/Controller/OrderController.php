@@ -1855,7 +1855,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $dt["hasChilds"] = 0;
                 $dt["parentNodeId"] = $category->getParent();
                 $dt["matched"] = base64_encode(serialize($matched));
-                $dt["matched_count"] = $tecdocArticleIdsCnt[$key];
+                $dt["matched_count"] = (int)$tecdocArticleIdsCnt[$key];
                 $dt["edimatched"] = base64_encode(serialize($edimatched));
                 $dt["edimatched_count"] = count($edimatched);
                 $dt["weight"] = $category->getWeight();
