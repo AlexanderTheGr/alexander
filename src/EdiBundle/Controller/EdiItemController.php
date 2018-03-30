@@ -424,7 +424,7 @@ class EdiItemController extends Main {
             $search = explode(":", $dt_columns[4]["search"]["value"]);
 
             if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
-                print_r(base64_decode($dt_search["value"]));
+                print_r(unserialize(base64_decode($dt_search["value"])));
             }
             
             $search11 = explode(":", $dt_search["value"]);
