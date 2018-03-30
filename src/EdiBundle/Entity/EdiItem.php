@@ -427,7 +427,11 @@ class EdiItem extends Entity {
      * @var integer
      */
     private $tecdocArticleId;
-
+    
+    /**
+     * @var integer
+     */
+    private $tecdocArticleId3;
     /**
      * Set tecdocArticleName
      *
@@ -484,6 +488,18 @@ class EdiItem extends Entity {
 
         return $this;
     }
+    /**
+     * Set tecdocArticleId
+     *
+     * @param integer $tecdocArticleId3
+     *
+     * @return EdiItem
+     */
+    public function setTecdocArticleId3($tecdocArticleId3) {
+        $this->tecdocArticleId = $tecdocArticleId3;
+
+        return $this;
+    }    
 
     function updatetecdoc($forceupdate = false) {
         //$data = array("service" => "login", 'username' => 'dev', 'password' => 'dev', 'appId' => '2000');
@@ -767,6 +783,7 @@ class EdiItem extends Entity {
         //print_r($out);
         //
         //exit;
+        
         $del = false;
         $array = array(11023, 11199, 11001, 11109, 11176, 11024, 11200, 11002, 11110, 11177);
         foreach ($out as $category) {
@@ -1384,7 +1401,16 @@ class EdiItem extends Entity {
     public function getTecdocArticleId() {
         return $this->tecdocArticleId;
     }
-
+    
+    /**
+     * Get tecdocArticleId3
+     *
+     * @return integer
+     */
+    public function getTecdocArticleId3() {
+        return $this->tecdocArticleId3;
+    }
+    
     public function getQty1() {
         /*
         global $kernel;
