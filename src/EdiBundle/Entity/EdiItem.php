@@ -710,7 +710,7 @@ class EdiItem extends Entity {
 
         //$this->connection = Mage::getSingleton('core/resource')->getConnection('core_write');
         $sql = "select * from partsbox_db.edi_product_model_type where product = '" . $this->getId() . "'";
-        echo $sql."<BR>";
+        //echo $sql."<BR>";
         //$results = $this->connection->fetchAll($sql);
         $categories = array();
         $cars = array();
@@ -760,7 +760,7 @@ class EdiItem extends Entity {
         //echo "<BR>";
         if ($criteria["acr_kv_kt_id"]) {
             $sql = "select kv_kv from magento2_base4q2017.key_values, magento2_base4q2017.text_designations where kv_kt_id = '" . $criteria["acr_kv_kt_id"] . "' AND kv_kv = '" . $criteria["acr_kv_kv"] . "' AND des_id = kv_des_id and des_lng_id = '" . $this->lng . "' ";
-            echo $sql . "<BR>";
+            //echo $sql . "<BR>";
             $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
             $kv_kv = unserialize(file_get_contents($url));
             //$result = $result = mysqli_query($this->conn,$sql);
