@@ -343,26 +343,25 @@ class EdiItemController extends Main {
     public function getUpdateTecdocAction($funct = false) {
         $em = $this->getDoctrine()->getManager();
 
-        
-        
+
+
         if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
             /*
-            $query = $em->createQuery(
-                    "SELECT  p.id
-                        FROM " . $this->repository . " p, EdiBundle:Edi e
-                        where 
-                            e.id = p.Edi AND p.dlnr > 0  order by p.id desc"
-            );
-            */
+              $query = $em->createQuery(
+              "SELECT  p.id
+              FROM " . $this->repository . " p, EdiBundle:Edi e
+              where
+              e.id = p.Edi AND p.dlnr > 0  order by p.id desc"
+              );
+             */
             $sql = "Select * from partsbox_db.edi_item where tecdoc_article_id3 = 0 order by id";
             $connection = $em->getConnection();
             $statement = $connection->prepare($sql);
             $statement->execute();
             $results = $statement->fetchAll();
-            $statement->closeCursor();            
-            
+            $statement->closeCursor();
         } else {
-        
+
             $query = $em->createQuery(
                     "SELECT  p.id
                         FROM " . $this->repository . " p, EdiBundle:Edi e
@@ -480,14 +479,28 @@ class EdiItemController extends Main {
 
                 //$edi = $em->getRepository("EdiBundle:Edi")->find(1);
                 //$this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".partno != '' AND ((" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".artNr = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
-                if ($search11[0] == 'productfano') {
-                    $this->where = " where " . $this->prefix . ".itemCode LIKE '" . $search[1] . "%'))";
+
+                if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
+                    if ($search11[0] == 'productfano') {
+                        $this->where = " where " . $this->prefix . ".itemCode LIKE '" . $search[1] . "%'))";
+                    } else {
+                        if ($search[1])
+                            $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".partno != '' AND ((" . $this->prefix . ".tecdocArticleId3 in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".artNr = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
+                        else
+                            $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".artNr != '' AND " . $this->prefix . ".partno != '' AND ((" . $this->prefix . ".tecdocArticleId3 in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".artNr = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
+                    }
                 } else {
-                    if ($search[1])
-                        $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".partno != '' AND ((" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".artNr = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
-                    else
-                        $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".artNr != '' AND " . $this->prefix . ".partno != '' AND ((" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".artNr = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
+                    if ($search11[0] == 'productfano') {
+                        $this->where = " where " . $this->prefix . ".itemCode LIKE '" . $search[1] . "%'))";
+                    } else {
+                        if ($search[1])
+                            $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".partno != '' AND ((" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".artNr = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
+                        else
+                            $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".artNr != '' AND " . $this->prefix . ".partno != '' AND ((" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".artNr = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
+                    }
                 }
+
+
                 /*
                   if ($search[1]) {
                   $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND ((" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
@@ -666,7 +679,7 @@ class EdiItemController extends Main {
         }
         if ($customer->getCustomerTrdcategory() == 3003) {
             $vat = 1;
-        }        
+        }
         $request = Request::createFromGlobals();
         $dt_columns = $request->request->get("columns");
         if ($dt_columns[1]["search"]["value"] == 4) {
@@ -792,7 +805,7 @@ class EdiItemController extends Main {
                 if ($ed[0]->price > 0) {
                     $entity->getWholesaleprice($ed[0]->price);
                 }
-                @$jsonarr[$key]['6'] = "";//$entity->getDiscount($customer, $vat);
+                @$jsonarr[$key]['6'] = ""; //$entity->getDiscount($customer, $vat);
                 @$jsonarr[$key]['7'] = number_format((float) $entity->getWholesaleprice(), 2, '.', '');
                 @$jsonarr[$key]['8'] = $jsonarr[$key]['8'] . $AvailabilityDetailsHtml;
                 @$jsonarr[$key]['DT_RowClass'] .= $ed[0]->avail == "green" ? ' text-success ' : ' text-danger ';
@@ -828,10 +841,10 @@ class EdiItemController extends Main {
                     $AvailabilityDetailsHtml .= "</select>";
 
                     //print_r($xml->Item->Header);
-                    
+
                     $entity->setWholesaleprice($xml->Item->Header->WholePrice);
                     @$jsonarr[$key]['6'] = $entity->getDiscount($customer, $vat);
-                    @$jsonarr[$key]['7'] = number_format((float) $xml->Item->Header->WholePrice, 2, '.', '') ." / ".number_format((float) $xml->Item->Header->PriceOnPolicy, 2, '.', '');
+                    @$jsonarr[$key]['7'] = number_format((float) $xml->Item->Header->WholePrice, 2, '.', '') . " / " . number_format((float) $xml->Item->Header->PriceOnPolicy, 2, '.', '');
                     @$jsonarr[$key]['8'] = $jsonarr[$key]['8'] . $AvailabilityDetailsHtml;
                     @$jsonarr[$key]['DT_RowClass'] .= $xml->Item->Header->Available == "Y" ? ' text-success ' : ' text-danger ';
                 }
@@ -871,7 +884,7 @@ class EdiItemController extends Main {
                                 $entity->setWholesaleprice($Item->ListPrice);
 
                                 @$jsonarr[$ands[$Item->ItemCode]]['6'] = $entity->getDiscount($customer, $vat);
-                                @$jsonarr[$ands[$Item->ItemCode]]['7'] = number_format($Item->ListPrice, 2, '.', '') . " / ".number_format($Item->UnitPrice, 2, '.', '');
+                                @$jsonarr[$ands[$Item->ItemCode]]['7'] = number_format($Item->ListPrice, 2, '.', '') . " / " . number_format($Item->UnitPrice, 2, '.', '');
                                 @$jsonarr[$ands[$Item->ItemCode]]['9'] = $entity->getQty2();
 
                                 //$entity->setRetailprice(number_format($Item->UnitPrice, 2, '.', ''));
