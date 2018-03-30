@@ -498,8 +498,9 @@ class EdiItemController extends Main {
                         else
                             $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".artNr != '' AND " . $this->prefix . ".partno != '' AND ((" . $this->prefix . ".tecdocArticleId3 in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".artNr = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
                     }
+                    $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND ((" . $this->prefix . ".tecdocArticleId3 in (" . (implode(",", $articleIds)) . ")";
 
-                    echo $this->where;
+                    //echo $this->where;
                 } else {
                     if ($search11[0] == 'productfano') {
                         $this->where = " where " . $this->prefix . ".itemCode LIKE '" . $search[1] . "%'))";
