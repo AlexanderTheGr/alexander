@@ -577,6 +577,7 @@ class EdiItemController extends Main {
             $results = $query->getResult();
             //if (count($results) > 1000) return;
         }
+        exit;
         $data["fields"] = $this->fields;
         $jsonarr = array();
         $r = explode(":", $this->repository);
