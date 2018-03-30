@@ -1661,9 +1661,7 @@ class EdiItem extends Entity {
     }
 
     function getEdiMarkupPrice($pricefield = false) {
-        if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
-            return "";
-        }
+
         $rules = $this->getEdi()->loadEdirules($pricefield)->getRules();
         $sortorder = 0;
         $markup = $this->markup;
@@ -1675,6 +1673,9 @@ class EdiItem extends Entity {
                 //echo $markup;
             }
         }
+        if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
+            return "";
+        }        
         //$markup = $markup == 0 ? 0 : $markup; 
         //echo $markup."\n";
         $markupedPrice = (double) $this->getWholesaleprice() * (1 + $markup / 100 );
