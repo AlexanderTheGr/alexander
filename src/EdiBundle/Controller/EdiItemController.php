@@ -896,17 +896,12 @@ class EdiItemController extends Main {
                     $AvailabilityDetailsHtml .= "</select>";
 
                     //print_r($xml->Item->Header);
-
-                    $entity->setWholesaleprice($xml->Item->Header->WholePrice);
                     
-                    if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
-                        
-                    } else { 
-                    @$jsonarr[$key]['6'] = $entity->getDiscount($customer, $vat);    
+                    $entity->setWholesaleprice($xml->Item->Header->WholePrice);
+                    @$jsonarr[$key]['6'] = $entity->getDiscount($customer, $vat);
                     @$jsonarr[$key]['7'] = number_format((float) $xml->Item->Header->WholePrice, 2, '.', '') . " / " . number_format((float) $xml->Item->Header->PriceOnPolicy, 2, '.', '');
                     @$jsonarr[$key]['8'] = $jsonarr[$key]['8'] . $AvailabilityDetailsHtml;
                     @$jsonarr[$key]['DT_RowClass'] .= $xml->Item->Header->Available == "Y" ? ' text-success ' : ' text-danger ';
-                    }
                 }
             }
             @$jsonarr[$key]['9'] = $entity->getQty2();
