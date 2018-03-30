@@ -196,17 +196,31 @@ class EdiItemController extends Main {
                 );
             }
         } else {
-            $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[0])));
+            if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
+                $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[0])));
 
-            @$articleIds2 = unserialize(base64_decode($search[0]));
-            $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
-            $articleIds[] = 1;
-            $query = $em->createQuery(
-                    "SELECT  distinct(e.id) as eid, e.name as edi
+                @$articleIds2 = unserialize(base64_decode($search[0]));
+                $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
+                $articleIds[] = 1;
+                $query = $em->createQuery(
+                        "SELECT  distinct(e.id) as eid, e.name as edi
+                    FROM " . $this->repository . " p, EdiBundle:Edi e
+                    where 
+                        e.id = p.Edi AND p.tecdocArticleId3 in (" . implode(",", $articleIds) . ")"
+                );                
+            } else {
+                $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[0])));
+
+                @$articleIds2 = unserialize(base64_decode($search[0]));
+                $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
+                $articleIds[] = 1;
+                $query = $em->createQuery(
+                        "SELECT  distinct(e.id) as eid, e.name as edi
                     FROM " . $this->repository . " p, EdiBundle:Edi e
                     where 
                         e.id = p.Edi AND p.tecdocArticleId in (" . implode(",", $articleIds) . ")"
-            );
+                );
+            }
         }
 
 
@@ -426,12 +440,12 @@ class EdiItemController extends Main {
             if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
                 //print_r(unserialize(base64_decode($dt_search["value"])));
             }
-            
+
             $search11 = explode(":", $dt_search["value"]);
             if ($search11[0] != 'productfano') {
                 if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
                     $articleIds = count($articles["edimatched"]) ? $articles["edimatched"] : (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
-                    $articleIds[] = 1;                    
+                    $articleIds[] = 1;
                 } else {
                     $articleIds = count($articles["edimatched"]) ? $articles["edimatched"] : (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
                     $articleIds[] = 1;
@@ -497,9 +511,9 @@ class EdiItemController extends Main {
                             $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".partno != '' AND ((" . $this->prefix . ".tecdocArticleId3 in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".artNr = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
                         else
                             $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".tecdocArticleId3 in (" . (implode(",", $articleIds)) . ")";
-                            //$this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".artNr != '' AND " . $this->prefix . ".partno != '' AND ((" . $this->prefix . ".tecdocArticleId3 in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".artNr = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
+                        //$this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".artNr != '' AND " . $this->prefix . ".partno != '' AND ((" . $this->prefix . ".tecdocArticleId3 in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".artNr = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
                     }
-                    
+
                     //echo $this->where;
                 } else {
                     if ($search11[0] == 'productfano') {
@@ -509,7 +523,7 @@ class EdiItemController extends Main {
                             $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".partno != '' AND ((" . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".artNr = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
                         else
                             $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".tecdocArticleId in (" . (implode(",", $articleIds)) . ")";
-                            //$this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".artNr != '' AND " . $this->prefix . ".partno != '' AND ((" . $this->prefix . ".tecdocArticleId3 in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".artNr = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
+                        //$this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".artNr != '' AND " . $this->prefix . ".partno != '' AND ((" . $this->prefix . ".tecdocArticleId3 in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".artNr = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
                     }
                 }
 
