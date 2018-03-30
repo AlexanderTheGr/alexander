@@ -1861,8 +1861,7 @@ class EdiItem extends Entity {
     function getDiscount($customer, $vat = 1) {
         
         
-        if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
-        } else {            
+         
         $rules = $customer->loadCustomerrules()->getRules();
         $sortorder = 0;
         $discount = 0;
@@ -1895,8 +1894,8 @@ class EdiItem extends Entity {
         $discountedPrice = $this->getEdiMarkupPrice($pricefield) * (1 - $discount / 100 );
         $finalprice = $discount > 0 ? $discountedPrice : $price;
         $this->finalprice = $finalprice * $vat;
-        }
-        return $this->getEdiMarkupPrice($pricefield) . " / " . number_format($finalprice, 2, '.', '') . " / " . number_format($finalprice * $vat, 2, '.', '') . " (" . (float) $discount . "%)";
+        
+        return "";//$this->getEdiMarkupPrice($pricefield) . " / " . number_format($finalprice, 2, '.', '') . " / " . number_format($finalprice * $vat, 2, '.', '') . " (" . (float) $discount . "%)";
     }
 
     function ggetEdiQtyAvailability() {
