@@ -1813,6 +1813,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $results = $statement->fetchAll();
             foreach ($results as $cat) {
                 $tecdocArticleIds[$cat["id"]][] = $cat["tecdoc_article_id"];
+                $tecdocArticleIdsCnt[$cat["id"]]++;
             }
             $sql = "select category.id, p.`tecdoc_article_id3`,p.id as pid from partsbox_db.edi_product_category a, 
                     partsbox_db.edi_product_model_type b,
@@ -1854,7 +1855,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $dt["hasChilds"] = 0;
                 $dt["parentNodeId"] = $category->getParent();
                 $dt["matched"] = base64_encode(serialize($matched));
-                $dt["matched_count"] = count($matched);
+                $dt["matched_count"] = $tecdocArticleIdsCnt[$key];
                 $dt["edimatched"] = base64_encode(serialize($edimatched));
                 $dt["edimatched_count"] = count($edimatched);
                 $dt["weight"] = $category->getWeight();
