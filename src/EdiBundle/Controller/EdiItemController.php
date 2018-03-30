@@ -215,7 +215,9 @@ class EdiItemController extends Main {
 
                 @$articleIds2 = unserialize(base64_decode($search[0]));
                 $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
+                $articleIds = $articleIds2["edimatched"];
                 $articleIds[] = 1;
+                print_r($articleIds);
                 $query = $em->createQuery(
                         "SELECT  distinct(e.id) as eid, e.name as edi
                     FROM " . $this->repository . " p, EdiBundle:Edi e
@@ -244,7 +246,7 @@ class EdiItemController extends Main {
         //echo "(p.partno LIKE '%" . $search[1] . "%' OR p.tecdocArticleId in (" . implode(",", $articleIds) . ")) ";
         $results = $query->getResult();
         if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
-            print_r($results);
+            //print_r($results);
         }
         $html .= '<button type="button" class="edibutton btn btn-raised ink-reaction" data-id="0">Invetory</button>';
         $edi = array();
