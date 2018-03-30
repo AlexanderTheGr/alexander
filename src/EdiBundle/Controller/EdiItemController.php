@@ -614,7 +614,7 @@ class EdiItemController extends Main {
                     $json[] = $obj->$func(count($results));
                 }
             }
-            exit;
+
 
 
             $sql = "Select id from softone_product where replace(replace(replace(replace(replace(`item_cccref`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $this->clearstring($obj->getItemCode()) . "' AND item_mtrsup = '" . $obj->getEdi()->getItemMtrsup() . "'";
@@ -634,6 +634,7 @@ class EdiItemController extends Main {
             $json["DT_RowId"] = 'dt_id_' . strtolower($r[1]) . '_' . $result["id"];
             $jsonarr[] = $json;
         }
+        echo $funct;
         if ($funct) {
             $jsonarrnoref = array();
             if (count($jsonarr)) {
