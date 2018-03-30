@@ -1845,7 +1845,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                 $matched = array_intersect(@(array) $arts, (array) $tecdocArticleIds[$key]);
                 $edimatched = array_intersect(@(array) $arts, (array) $tecdocEdiArticleIds[$key]);
-
+                $matched = array_unique((array) $matched);
+                $edimatched = array_unique((array) $edimatched);
                 $dt["articleIds"] = $arts;
                 $dt["articles_count"] = count($arts);
                 $dt["assemblyGroupName"] = $category->getName();
