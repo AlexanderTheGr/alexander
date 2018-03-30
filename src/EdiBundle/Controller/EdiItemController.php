@@ -634,7 +634,7 @@ class EdiItemController extends Main {
             $json["DT_RowId"] = 'dt_id_' . strtolower($r[1]) . '_' . $result["id"];
             $jsonarr[] = $json;
         }
-        /*
+        
         if ($funct) {
             $jsonarrnoref = array();
             if (count($jsonarr)) {
@@ -642,7 +642,7 @@ class EdiItemController extends Main {
                 $jsonarr = array_merge($jsonarr, $jsonarrnoref);
             }
         }
-        */
+
         $data["data"] = $jsonarr;
         $data["recordsTotal"] = $recordsTotal;
         $data["recordsFiltered"] = $recordsFiltered;
