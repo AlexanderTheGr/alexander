@@ -1859,6 +1859,9 @@ class EdiItem extends Entity {
 
     //function getDiscount(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
     function getDiscount($customer, $vat = 1) {
+        
+        
+        
         $rules = $customer->loadCustomerrules()->getRules();
         $sortorder = 0;
         $discount = 0;
@@ -1885,13 +1888,15 @@ class EdiItem extends Entity {
         }
 
 
-
+        if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
+        } else {    
         $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
         $markip = $this->getEdiMarkupPrice($pricefield);
         $price = $price > 0 ? $price : $this->getEdiMarkupPrice($pricefield);
         $discountedPrice = $this->getEdiMarkupPrice($pricefield) * (1 - $discount / 100 );
         $finalprice = $discount > 0 ? $discountedPrice : $price;
         $this->finalprice = $finalprice * $vat;
+        }
         return $this->getEdiMarkupPrice($pricefield) . " / " . number_format($finalprice, 2, '.', '') . " / " . number_format($finalprice * $vat, 2, '.', '') . " (" . (float) $discount . "%)";
     }
 
