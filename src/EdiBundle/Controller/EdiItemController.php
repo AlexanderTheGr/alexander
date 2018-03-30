@@ -217,7 +217,7 @@ class EdiItemController extends Main {
                 $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
                 $articleIds = $articleIds2["edimatched"];
                 $articleIds[] = 1;
-                //print_r($articleIds);
+                print_r($articleIds);
                 $query = $em->createQuery(
                         "SELECT  distinct(e.id) as eid, e.name as edi
                     FROM " . $this->repository . " p, EdiBundle:Edi e
