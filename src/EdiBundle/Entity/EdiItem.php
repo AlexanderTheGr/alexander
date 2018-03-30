@@ -1665,9 +1665,6 @@ class EdiItem extends Entity {
         $rules = $this->getEdi()->loadEdirules($pricefield)->getRules();
         $sortorder = 0;
         $markup = $this->markup;
-        if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
-            return "";
-        }        
         foreach ($rules as $rule) {
             if ($rule->validateRule($this) AND $sortorder <= $rule->getSortorder()) {
                 $sortorder = $rule->getSortorder();
@@ -1676,7 +1673,6 @@ class EdiItem extends Entity {
                 //echo $markup;
             }
         }
-       
         //$markup = $markup == 0 ? 0 : $markup; 
         //echo $markup."\n";
         $markupedPrice = (double) $this->getWholesaleprice() * (1 + $markup / 100 );
@@ -1863,9 +1859,6 @@ class EdiItem extends Entity {
 
     //function getDiscount(\SoftoneBundle\Entity\Customer $customer, $vat = 1) {
     function getDiscount($customer, $vat = 1) {
-        
-        
-         
         $rules = $customer->loadCustomerrules()->getRules();
         $sortorder = 0;
         $discount = 0;
@@ -1891,13 +1884,14 @@ class EdiItem extends Entity {
             }
         }
 
+
+
         $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
         $markip = $this->getEdiMarkupPrice($pricefield);
         $price = $price > 0 ? $price : $this->getEdiMarkupPrice($pricefield);
         $discountedPrice = $this->getEdiMarkupPrice($pricefield) * (1 - $discount / 100 );
         $finalprice = $discount > 0 ? $discountedPrice : $price;
         $this->finalprice = $finalprice * $vat;
-        
         return $this->getEdiMarkupPrice($pricefield) . " / " . number_format($finalprice, 2, '.', '') . " / " . number_format($finalprice * $vat, 2, '.', '') . " (" . (float) $discount . "%)";
     }
 
