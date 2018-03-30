@@ -195,7 +195,7 @@ class Edirule extends Entity {
         }
         //$ediitem->tecdoc = new Tecdoc();
         if (!$ediitem->getCats()) {
-            $ediitem->updatetecdoc(true);
+            //$ediitem->updatetecdoc(true);
         }
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         $cats = $ediitem->getCats();
