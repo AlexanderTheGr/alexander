@@ -1887,7 +1887,7 @@ class EdiItem extends Entity {
             }
         }
 
-
+        return "";
         $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
         $markip = $this->getEdiMarkupPrice($pricefield);
         $price = $price > 0 ? $price : $this->getEdiMarkupPrice($pricefield);
