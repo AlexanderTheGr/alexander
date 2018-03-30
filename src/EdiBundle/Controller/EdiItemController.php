@@ -882,23 +882,29 @@ class EdiItemController extends Main {
                     $xml = simplexml_load_string($xml);
                     $AvailabilityDetailsHtml = "<select data-id='" . $entity->getId() . "' class='edistore' id='store_" . $entity->getId() . "' style=''>";
                     $asd = (array) $xml->Item;
+                    
+                    if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
+                    
+                        
+                    } else {
                     foreach ((array) $asd["AvailabilityDetails"] as $details) {
-                        if ($details->IsAvailable == 'Y') {
-                            $selected = (int) $xml->Item->Header->SUGGESTED_STORE == (int) $details->StoreNo ? "selected" : "";
-                            $AvailabilityDetailsHtml .= "<option " . $selected . " value='" . $details->StoreNo . "' style='color:green'>" . $details->StoreNo . "</option>";
-                        } else {
-                            $AvailabilityDetailsHtml .= "<option value='" . $details->StoreNo . "' style='color:red'>" . $details->StoreNo . " (" . $details->EstimatedBODeliveryTime . ")</option>";
+                            if ($details->IsAvailable == 'Y') {
+                                $selected = (int) $xml->Item->Header->SUGGESTED_STORE == (int) $details->StoreNo ? "selected" : "";
+                                $AvailabilityDetailsHtml .= "<option " . $selected . " value='" . $details->StoreNo . "' style='color:green'>" . $details->StoreNo . "</option>";
+                            } else {
+                                $AvailabilityDetailsHtml .= "<option value='" . $details->StoreNo . "' style='color:red'>" . $details->StoreNo . " (" . $details->EstimatedBODeliveryTime . ")</option>";
+                            }
                         }
+                        $AvailabilityDetailsHtml .= "</select>";
+
+                        //print_r($xml->Item->Header);
+
+                        $entity->setWholesaleprice($xml->Item->Header->WholePrice);
+                        @$jsonarr[$key]['6'] = $entity->getDiscount($customer, $vat);
+                        @$jsonarr[$key]['7'] = number_format((float) $xml->Item->Header->WholePrice, 2, '.', '') . " / " . number_format((float) $xml->Item->Header->PriceOnPolicy, 2, '.', '');
+                        @$jsonarr[$key]['8'] = $jsonarr[$key]['8'] . $AvailabilityDetailsHtml;
+                        @$jsonarr[$key]['DT_RowClass'] .= $xml->Item->Header->Available == "Y" ? ' text-success ' : ' text-danger ';
                     }
-                    $AvailabilityDetailsHtml .= "</select>";
-
-                    //print_r($xml->Item->Header);
-
-                    $entity->setWholesaleprice($xml->Item->Header->WholePrice);
-                    @$jsonarr[$key]['6'] = $entity->getDiscount($customer, $vat);
-                    @$jsonarr[$key]['7'] = number_format((float) $xml->Item->Header->WholePrice, 2, '.', '') . " / " . number_format((float) $xml->Item->Header->PriceOnPolicy, 2, '.', '');
-                    @$jsonarr[$key]['8'] = $jsonarr[$key]['8'] . $AvailabilityDetailsHtml;
-                    @$jsonarr[$key]['DT_RowClass'] .= $xml->Item->Header->Available == "Y" ? ' text-success ' : ' text-danger ';
                 }
             }
             @$jsonarr[$key]['9'] = $entity->getQty2();
