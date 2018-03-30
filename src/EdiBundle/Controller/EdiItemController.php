@@ -577,7 +577,6 @@ class EdiItemController extends Main {
             $results = $query->getResult();
             //if (count($results) > 1000) return;
         }
-        exit;
         $data["fields"] = $this->fields;
         $jsonarr = array();
         $r = explode(":", $this->repository);
@@ -615,7 +614,7 @@ class EdiItemController extends Main {
                     $json[] = $obj->$func(count($results));
                 }
             }
-
+            exit;
 
 
             $sql = "Select id from softone_product where replace(replace(replace(replace(replace(`item_cccref`, '/', ''), '.', ''), '-', ''), ' ', ''), '*', '')  = '" . $this->clearstring($obj->getItemCode()) . "' AND item_mtrsup = '" . $obj->getEdi()->getItemMtrsup() . "'";
