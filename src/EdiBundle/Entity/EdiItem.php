@@ -1861,7 +1861,8 @@ class EdiItem extends Entity {
     function getDiscount($customer, $vat = 1) {
         
         
-        
+        if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
+        } else {            
         $rules = $customer->loadCustomerrules()->getRules();
         $sortorder = 0;
         $discount = 0;
@@ -1888,8 +1889,7 @@ class EdiItem extends Entity {
         }
 
 
-        if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
-        } else {    
+  
         $pricefield = $customer->getPriceField() ? $customer->getPriceField() : "itemPricew";
         $markip = $this->getEdiMarkupPrice($pricefield);
         $price = $price > 0 ? $price : $this->getEdiMarkupPrice($pricefield);
