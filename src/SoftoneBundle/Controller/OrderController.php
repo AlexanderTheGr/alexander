@@ -1812,7 +1812,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $statement->execute();
             $results = $statement->fetchAll();
             foreach ($results as $cat) {
-                $tecdocArticleIds[$cat["id"]][] = $cat["tecdoc_article_id"];
+                $tecdocArticleIds[$cat["id"]][$cat["tecdoc_article_id"]] = $cat["tecdoc_article_id"];
             }
             $sql = "select category.id, p.`tecdoc_article_id3`,p.id as pid from partsbox_db.edi_product_category a, 
                     partsbox_db.edi_product_model_type b,
@@ -1828,7 +1828,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $statement->execute();
             $results = $statement->fetchAll();
             foreach ($results as $cat) {
-                $tecdocEdiArticleIds[$cat["id"]][$cat["pid"]] = $cat["tecdoc_article_id3"];
+                $tecdocEdiArticleIds[$cat["id"]][$cat["tecdoc_article_id3"]] = $cat["tecdoc_article_id3"];
             }
 
 
