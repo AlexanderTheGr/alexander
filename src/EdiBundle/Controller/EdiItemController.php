@@ -387,7 +387,7 @@ class EdiItemController extends Main {
               e.id = p.Edi AND p.dlnr > 0  order by p.id desc"
               );
              */
-            $sql = "Select * from partsbox_db.edi_item where tecdoc_article_id3 = 0 order by id";
+            $sql = "Select id from partsbox_db.edi_item where tecdoc_article_id3 = 0  AND id > 64889 order by id";
             $connection = $em->getConnection();
             $statement = $connection->prepare($sql);
             $statement->execute();
@@ -399,7 +399,7 @@ class EdiItemController extends Main {
                     "SELECT  p.id
                         FROM " . $this->repository . " p, EdiBundle:Edi e
                         where 
-                            e.id = p.Edi AND p.tecdocArticleId IS NULL AND p.dlnr > 0  order by p.id desc"
+                            e.id = p.Edi AND p.tecdocArticleId IS NULL AND p.dlnr > 0 order by p.id desc"
             );
             $results = $query->getResult();
         }
@@ -415,11 +415,11 @@ class EdiItemController extends Main {
          */
 
 
-        echo count($results);
+        echo "[".count($results)."]";
         $i = 0;
         $tecdoc = new Tecdoc();
         foreach ($results as $result) {
-            if ($result["id"] > 64889) {
+            //if ($result["id"] > 64889) {
             $ediediitem = $em->getRepository($this->repository)->find($result["id"]);
             //$ediediitem->tecdoc = $tecdoc;
             $ediediitem->updatetecdoc();
@@ -427,7 +427,7 @@ class EdiItemController extends Main {
             echo $result["id"] . "<BR>";
             //if ($i++ > 3000)
             //    exit;
-            }
+            //}
         }
         exit;
     }
