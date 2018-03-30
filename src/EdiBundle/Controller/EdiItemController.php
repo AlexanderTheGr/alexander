@@ -423,6 +423,10 @@ class EdiItemController extends Main {
 
             $search = explode(":", $dt_columns[4]["search"]["value"]);
 
+            if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
+                print_r(base64_decode($dt_search["value"]));
+            }
+            
             $search11 = explode(":", $dt_search["value"]);
             if ($search11[0] != 'productfano') {
                 $articleIds = count($articles["articleIds"]) ? $articles["articleIds"] : (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
@@ -489,7 +493,7 @@ class EdiItemController extends Main {
                         else
                             $this->where = " where " . $this->prefix . ".Edi = '" . $edi . "' AND " . $this->prefix . ".artNr != '' AND " . $this->prefix . ".partno != '' AND ((" . $this->prefix . ".tecdocArticleId3 in (" . (implode(",", $articleIds)) . ") OR " . $this->prefix . ".partno = '" . $search[1] . "' OR " . $this->prefix . ".artNr = '" . $search[1] . "' OR " . $this->prefix . ".itemCode = '" . $search[1] . "'))";
                     }
-                    print_r(base64_decode($dt_search["value"]));
+
                     //echo $this->where;
                 } else {
                     if ($search11[0] == 'productfano') {
