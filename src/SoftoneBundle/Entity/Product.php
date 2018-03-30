@@ -3415,7 +3415,7 @@ class Product extends Entity {
             //echo "<PRE>";
             //print_r($criterias);
             //echo "</PRE>";
-            $out = "<ul style='list-style:none; padding:0px;'>";
+            $out = "<ul style='width:300px; list-style:none; padding:0px;'>";
             foreach ($criterias as $criteria) {
                 //if ($criteria["des_text"] == '') continue;
                 if ($criteria["acr_value"] AND $criteria["des_text"]) {
