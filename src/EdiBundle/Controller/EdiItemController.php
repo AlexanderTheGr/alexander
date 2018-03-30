@@ -858,6 +858,7 @@ class EdiItemController extends Main {
                 @$jsonarr[$key]['8'] = $jsonarr[$key]['8'] . $AvailabilityDetailsHtml;
                 @$jsonarr[$key]['DT_RowClass'] .= $ed[0]->avail == "green" ? ' text-success ' : ' text-danger ';
             } else {
+                
                 /*
                   @$jsonarr[$key]['DT_RowClass'] .= $eltrekaavailability[$entity->getItemcode()] > 0 ? ' text-success ' : ' text-danger ';
 
@@ -869,6 +870,9 @@ class EdiItemController extends Main {
                   @$jsonarr[$key]['6'] = number_format($price, 2, '.', '');
                   @$jsonarr[$key]['DT_RowClass'] .= $xml->Item->Header->Available == "Y" ? ' text-success ' : ' text-danger ';
                  */
+                if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
+                    
+                } else
                 if (count($jsonarr) < 50) {
                     $response = $elteka->getAvailability(
                             array('CustomerNo' => $this->CustomerNo,
