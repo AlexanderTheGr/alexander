@@ -433,7 +433,7 @@ class EdiItemController extends Main {
                     $articleIds = count($articles["edimatched"]) ? $articles["edimatched"] : (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
                     $articleIds[] = 1;                    
                 } else {
-                    $articleIds = count($articles["articleIds"]) ? $articles["articleIds"] : (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
+                    $articleIds = count($articles["edimatched"]) ? $articles["edimatched"] : (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
                     $articleIds[] = 1;
                 }
             } else {
