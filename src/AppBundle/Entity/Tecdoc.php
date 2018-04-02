@@ -38,17 +38,21 @@ class Tecdoc extends Entity {
         $this->linkingTargetType = "C";
         $this->tecdoc = new \Tecdoc_first();
     }
+
     var $categoriestree = array();
+
     public function setCategoriestree($categoriestree) {
         $this->categoriestree = $categoriestree;
     }
-    
+
     public function setLng($lng) {
         $this->tecdoc->lng = $lng;
     }
+
     public function getLng() {
         return $this->tecdoc->lng;
     }
+
     public function getVehicleManufacturers($params) {
         $params = array(
             "carType" => 1,
@@ -192,6 +196,7 @@ class Tecdoc extends Entity {
         //echo serialize($this->c);
     }
 
+
     function linkedChildNodesAllLinkingTargetTree($params = array(), $lvl = 0) {
 
         $linkedChildNodesAllLinkingTarget = $this->getLinkedChildNodesAllLinkingTarget($params);
@@ -228,7 +233,7 @@ class Tecdoc extends Entity {
                 $v->assemblyGroupName = $this->categoriestree[$v->assemblyGroupNodeId];
             }
             $this->c[$v->assemblyGroupNodeId] = $v;
-            
+
             if ($hasChilds) {
                 $params["parentNodeId"] = $v->assemblyGroupNodeId;
                 $this->linkedChildNodesAllLinkingTargetTree($params, $lvl);
