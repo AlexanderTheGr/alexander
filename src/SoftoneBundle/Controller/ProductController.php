@@ -975,8 +975,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $params["linkingTargetId"] = $request->request->get("car");
         $out["originals"] = $tecdoc->originals($params);
         $link = $this->media($params["articleId"]);
-        $out["articleAttributes"] = $tecdoc->articleAttributesRow($params, 0) . "<img width=100% src='" .  $link . "'/>[" .  $link . "]";
-
+        //
+        if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
+            $out["articleAttributes"] = getCriteria($params["articleId"], $params["linkingTargetId"]) . "<img width=100% src='" .  $link . "'/>[" .  $link . "]";
+        } else {
+            $out["articleAttributes"] = $tecdoc->articleAttributesRow($params, 0) . "<img width=100% src='" .  $link . "'/>[" .  $link . "]";
+        }
+        
         //$asd = unserialize($this->getArticlesSearchByIds($article_id));
         //$out["articlesSearch"] = $tecdoc->getArticlesSearch($asd[0]->articleNo);
         //$out["articlesSearch"] = unserialize($this->getArticlesSearchByIds(implode(",", (array) $out["articlesSearch"])));
@@ -1009,6 +1014,170 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
+    function getCriteria($tecdocArticleId, $brandmodeltype = 0) {
+
+
+        if ($tecdocArticleId == 0 AND $tecdocArticleIdAlt == 0)
+            return;
+        //echo 'sss';
+		if ($tecdocArticleId > 0) {
+
+            $criterias2 = array();
+            if ($brandmodeltype) {
+                $sql = "select * from 
+				magento2_base4q2017.la_criteria, 
+				magento2_base4q2017.link_la_typ,
+				magento2_base4q2017.criteria,
+				magento2_base4q2017.text_designations,
+				magento2_base4q2017.la_crit_group 
+				where 
+				lac_la_id = lac_gr_la_id and 
+				cri_id = lac_cri_id and 
+				lac_gr_id = lat_lac_gr_id and
+				des_id = cri_des_id and 
+				(des_lng_id = '" . $this->lng . "' OR des_lng_id = 4) AND
+				des_text != '' AND
+				lat_typ_id = '" . $brandmodeltype . "' AND 
+				lat_art_id = '" . $tecdocArticleId . "' order by des_lng_id";
+                //$criterias = $this->connection->fetchAll($sql);	
+                //$result = mysqli_query($this->conn,$sql);
+                //$criterias =  mysqli_fetch_all($result,MYSQLI_ASSOC);					
+                $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+                $criterias = unserialize(file_get_contents($url));
+                //echo $sql;
+                //$criterias2 = array();
+                //echo "<pre>";
+                //print_r($criterias);
+                //echo "</pre>";
+                foreach ($criterias as $criteria) {
+                    if ($criteria["des_text"] == '')
+                        continue;
+                    if ($criteria["lac_value"]) {
+                        $criteria2["value"] = $criteria["lac_value"];
+                        //$criteria2["cri_id"] = $criteria["lac_cri_id"];						
+                        //$criterias2[$criteria2["cri_id"]] = $criteria2;
+                    } else {
+                        $sql = "select des_text from magento2_base4q2017.key_values, magento2_base4q2017.text_designations where kv_kt_id = '" . $criteria["lac_kv_kt_id"] . "' AND kv_kv = '" . $criteria["lac_kv_kv"] . "' AND des_id = kv_des_id and des_lng_id = '" . $this->lng . "' ";
+                        //$kv = $this->connection->fetchOne($sql);
+                        $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+                        $kv_kv = unserialize(file_get_contents($url));
+                        $kv_kv = $kv_kv[0];
+                        $kv = $kv_kv["des_text"]; // kv_kv HA VA							
+                        if ($kv == "") {
+                            $sql = "select * from magento2_base4q2017.key_values, magento2_base4q2017.text_designations where kv_kt_id = '" . $criteria["lac_kv_kt_id"] . "' AND kv_kv = '" . $criteria["lac_kv_kv"] . "' AND des_id = kv_des_id and des_lng_id = '" . $this->lng . "' ";
+                            //$sql = "select des_text from magento2_base4q2017.key_values, magento2_base4q2017.text_designations where kv_kt_id = '".$criteria["acr_kv_kt_id"]."' AND kv_kv = '".$criteria["acr_kv_kv"]."' AND des_id = kv_des_id and des_lng_id = '4' ";
+                            //echo $sql;
+                            //$kvrow = $this->connection->fetchRow($sql);		
+                            //print_r($kvrow);
+                        }
+                        $criteria2["value"] = $kv;
+                    }
+                    //$criteria2["cri_id"] = "(".$criteria["lac_cri_id"].")";
+                    $criteria2["name"] = $criteria["des_text"];
+                    $criteria2["cri_id"] = $criteria["lac_cri_id"];
+                    $criterias2[$criteria2["cri_id"]] = $criteria2;
+                }
+            }
+
+            //echo "[".$tecdocArticleId."]";
+            $sql = "select * from magento2_base4q2017.article_criteria, magento2_base4q2017.criteria, magento2_base4q2017.text_designations
+				where cri_id = acr_cri_id AND des_id = cri_des_id and (des_lng_id = '" . $this->lng . "' OR des_lng_id = 4) and acr_art_id = '" . $tecdocArticleId . "' AND des_text != '' order by des_lng_id";
+            //echo $sql;
+            //$criterias = $this->connection->fetchAll($sql);	
+            //$result = mysqli_query($this->conn,$sql);
+            //$criterias =  mysqli_fetch_all($result,MYSQLI_ASSOC);	
+            //echo $sql."<BR>";
+            $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+            //echo $sql;
+            $criterias = unserialize(file_get_contents($url));
+            //echo "<PRE>";
+            //print_r($criterias);
+            //echo "</PRE>";
+            $out = "<ul style='width:300px; list-style:none; padding:0px;'>";
+            foreach ($criterias as $criteria) {
+                //if ($criteria["des_text"] == '') continue;
+                if ($criteria["acr_value"] AND $criteria["des_text"]) {
+                    //$out .= "<li><b>".$criteria["des_text"]."</b>: ".$criteria["acr_value"]."</li>";
+                    $criteria2["name"] = $criteria["des_text"];
+                    $criteria2["value"] = $criteria["acr_value"];
+                    $criteria2["cri_id"] = $criteria["acr_cri_id"];
+                    $criterias2[$criteria2["cri_id"]] = $criteria2;
+                } else if ($criteria["acr_kv_kt_id"] AND $criteria["acr_kv_kv"]) {
+                    $sql = "select des_text from magento2_base4q2017.key_values, magento2_base4q2017.text_designations where kv_kt_id = '" . $criteria["acr_kv_kt_id"] . "' AND kv_kv = '" . $criteria["acr_kv_kv"] . "' AND des_id = kv_des_id and des_lng_id = '" . $this->lng . "' ";
+
+                    //echo "<BR>".$sql."<BR>";
+                    //$kv = $this->connection->fetchOne($sql);
+                    $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+                    $kv_kv = unserialize(file_get_contents($url));
+                    //echo "<PRE>----";
+                    //print_r($kv_kv);
+                    //echo "-----</PRE>";					
+                    $kv_kv = $kv_kv[0];
+                    $kv = $kv_kv["des_text"]; // kv_kv HA VA	
+                    //$kv = $kv_kv["des_text"]; // kv_kv HA VA
+                    //$sql = "select * from magento2_base4q2017.key_values, magento2_base4q2017.text_designations where kv_kt_id = '".$criteria["acr_kv_kt_id"]."' AND kv_kv = '".$criteria["acr_kv_kv"]."' AND des_id = kv_des_id and des_lng_id = '".$this->lng."' ";
+                    //$kvrow = $this->connection->fetchRow($sql);
+                    //$sql = "select * from magento2_base4q2017.key_values, magento2_base4q2017.text_designations where kv_kt_id = '".$criteria["acr_kv_kt_id"]."' AND kv_kv = '".$criteria["acr_kv_kv"]."' AND des_id = kv_des_id and des_lng_id = '".$this->lng."' ";
+                    //$kvrow = $this->connection->fetchRow($sql);	
+                    //print_r($kvrow);
+                    //if (!$criteria["des_text"]) continue;
+                    //$out .= "<li><b>".$criteria["des_text"]."</b>: ".$kv."</li>";
+                    $criteria2["name"] = $criteria["des_text"];
+                    $criteria2["value"] = $kv;
+                    $criteria2["cri_id"] = $criteria["acr_cri_id"];
+                    $criterias2[$criteria2["cri_id"]] = $criteria2;
+                } else {
+                    //$out .= "<li>".print_r($criteria,true)."</li>";
+                }
+            }
+            //echo "<pre>";
+            //print_r($criterias2);
+            //echo "</pre>";			
+            foreach ($criterias2 as $criteria) {
+                //if (!$criteria["name"]) continue;
+                //if (!$criteria["value"]) continue;
+                if ($criteria["cri_id"] == 20 OR $criteria["cri_id"] == 21)
+                    $criteria["value"] = str_replace(".", "/", $criteria["value"]);
+                //$out .= "<li><b>".$criteria["name"]." [".$criteria["cri_id"]."]</b>:: ".mb_convert_case($criteria["value"], MB_CASE_TITLE, "UTF-8")."</li>";
+                //$out .= "<li><b>".mb_convert_case($criteria["name"], MB_CASE_TITLE, "UTF-8")."</b>: ".mb_convert_case($criteria["value"], MB_CASE_TITLE, "UTF-8")."</li>";
+                $out .= "<li><b>" . $criteria["name"] . "</b>: " . $criteria["value"] . "</li>";
+            }
+            $out .= "<ul>";
+            //print_r($criterias);
+            return $out;
+        } elseif ($tecdocArticleIdAlt > 0) {
+            $url = "http://service5.fastwebltd.com/";
+            $fields = array(
+                'action' => 'articleAttributesRow',
+                'tecdoc_article_id' => $tecdocArticleIdAlt,
+                'linkingTargetId' => $brandmodeltype,
+            );
+            //print_r($fields);
+            $fields_string = "";
+            foreach ($fields as $key => $value) {
+                $fields_string .= $key . '=' . $value . '&';
+            }
+            rtrim($fields_string, '&');
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, count($fields));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            $criterias = unserialize(curl_exec($ch));
+            $out = "<ul style='list-style:none; padding:0px;'>";
+            foreach ($criterias as $criteria) {
+                //$out .= "<li><b>".mb_convert_case($criteria->attrName, MB_CASE_TITLE, "UTF-8")."</b>: ".mb_convert_case($criteria->attrValue, MB_CASE_TITLE, "UTF-8")."</li>";
+                $out .= "<li><b>" . $criteria->attrName . "</b>: " . $criteria->attrValue . "</li>";
+            }
+            $out .= "<ul>";
+            //print_r($criterias);
+            return $out;
+            //print_r($criterias);
+        }
+    }    
+    
+    
+    
 
     public function media($tecdocArticleId) {
 
