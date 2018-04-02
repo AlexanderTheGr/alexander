@@ -1181,7 +1181,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     $json[] = "";
                     $json[] = "<span  car='' class='product_info' data-articleId='" . $v["art_id"] . "' data-ref='" . $v["art_id"] . "' style='font-size:10px; color:blue'>" . $v["art_article_nr"] . "</span></a><BR><a class='create_product' data-ref='" . $v["art_id"] . "' style='font-size:10px; color:rose' href='#'>Create Product</a>";
                     //$json[] = "<span car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span>";
-                    $json[] = "<span car='' class='product_info tecdocArticleName' data-articleId='" . $v["art_id"] . "' data-ref='" . $v["art_id"]. "' style='font-size:10px; color:blue'>" . $v["genericArticleName"] . "</span>";
+                    $json[] = "<span car='' class='product_info tecdocArticleName' data-articleId='" . $v["art_id"] . "' data-ref='" . $v["art_id"]. "' style='font-size:10px; color:blue'>" . $v["des_text"] . "</span>";
                     $json[] = "<span  car='' class='product_info' data-articleId='" . $v["art_id"] . "' data-ref='" . $v["art_id"] . "' style='font-size:10px; color:blue'>" . $v["sup_brand"] . "</span>";
                     $json[] = $this->getArticleAttributes($v["art_id"], $articleIds2["linkingTargetId"]);
                     $json[] = "";
