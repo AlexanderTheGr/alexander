@@ -1164,6 +1164,38 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
                 $datas = unserialize(file_get_contents($url));                
                 
+                foreach ((array) $datas as $v) {
+                    $p[$v["art_id"]] = $v;
+                    $json = array();
+
+                    if ($supplier) {
+                        if ($supplier->getTitle() != $v["sup_brand"])
+                            continue;
+                    }
+                    if ($dt_columns[2]["search"]["value"] != '') {
+                        if ($dt_columns[2]["search"]["value"] != $v["genericArticleName"])
+                            continue;
+                    }
+
+
+                    $json[] = "";
+                    $json[] = "<span  car='' class='product_info' data-articleId='" . $v["art_id"] . "' data-ref='" . $v["art_id"] . "' style='font-size:10px; color:blue'>" . $v["art_article_nr"] . "</span></a><BR><a class='create_product' data-ref='" . $v["art_id"] . "' style='font-size:10px; color:rose' href='#'>Create Product</a>";
+                    //$json[] = "<span car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span>";
+                    $json[] = "<span car='' class='product_info tecdocArticleName' data-articleId='" . $v["art_id"] . "' data-ref='" . $v["art_id"]. "' style='font-size:10px; color:blue'>" . $v["genericArticleName"] . "</span>";
+                    $json[] = "<span  car='' class='product_info' data-articleId='" . $v["art_id"] . "' data-ref='" . $v["art_id"] . "' style='font-size:10px; color:blue'>" . $v["sup_brand"] . "</span>";
+                    $json[] = $this->getArticleAttributes($v["art_id"], $articleIds2["linkingTargetId"]);
+                    $json[] = "";
+                    $json[] = "";
+                    $json[] = "";
+                    $json[] = "";
+                    $json[] = "";
+                    $json[] = "";
+                    $json[] = "";
+                    $json[] = "";
+
+                    $jsonarr[] = $json;
+                }                
+                
             } else {
 
 
