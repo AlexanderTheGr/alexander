@@ -1035,7 +1035,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 				cri_id = lac_cri_id and 
 				lac_gr_id = lat_lac_gr_id and
 				des_id = cri_des_id and 
-				(des_lng_id = '" . $this->lng . "' OR des_lng_id = 4) AND
+				(des_lng_id = '20' OR des_lng_id = 4) AND
 				des_text != '' AND
 				lat_typ_id = '" . $brandmodeltype . "' AND 
 				lat_art_id = '" . $tecdocArticleId . "' order by des_lng_id";
