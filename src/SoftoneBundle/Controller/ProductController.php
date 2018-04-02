@@ -1017,6 +1017,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $sql = "select * from magento2_base4q2017.art_media_info where art_id = '" . $tecdocArticleId . "'";
             $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
             $datas = unserialize(file_get_contents($url));
+            print_r($datas);
             $media = $datas[0];
             $link = "http://magento2.fastwebltd.com/img/articles/" . $media["art_media_sup_id"] . "/" . $media["art_media_file_name"];
             //if ($media["art_media_file_name"])
