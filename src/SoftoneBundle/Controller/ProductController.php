@@ -727,12 +727,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
             $fields["itemPricew"] = array("label" => $this->getTranslation("Wholessle"), "className" => "col-md-2", "required" => false);
             $fields["itemPricer"] = array("label" => $this->getTranslation("Retail"), "className" => "col-md-2", "required" => false);
-            
+
             if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
                 $fields["cost"] = array("label" => $this->getTranslation("ΠΚ"), "className" => "col-md-1", "required" => false);
                 $fields["purlprice"] = array("label" => $this->getTranslation("Tελευταία τιμή αγοράς"), "className" => "col-md-1", "required" => false);
                 $fields["itemMarkupw"] = array("label" => $this->getTranslation("Wholessle Markup"), "className" => "col-md-1", "required" => false);
-                $fields["itemMarkupr"] = array("label" => $this->getTranslation("Retail Markup"), "className" => "col-md-1", "required" => false);                
+                $fields["itemMarkupr"] = array("label" => $this->getTranslation("Retail Markup"), "className" => "col-md-1", "required" => false);
             } else {
                 $fields["itemMarkupw"] = array("label" => $this->getTranslation("Wholessle Markup"), "className" => "col-md-2", "required" => false);
                 $fields["itemMarkupr"] = array("label" => $this->getTranslation("Retail Markup"), "className" => "col-md-2", "required" => false);
@@ -1012,6 +1012,21 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     public function media($tecdocArticleId) {
 
         //$product = json_decode($this->flat_data);
+
+        if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
+            $sql = "select * from magento2_base4q2017.art_media_info where art_id = '" . $tecdocArticleId . "'";
+            $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+            $datas = unserialize(file_get_contents($url));
+            $media = $datas[0];
+            $link = "http://magento2.fastwebltd.com/img/articles/" . $media["art_media_sup_id"] . "/" . $media["art_media_file_name"];
+            //if ($media["art_media_file_name"])
+            //echo $link."<BR>";
+            if (!file_exists($link) OR $media["art_media_file_name"] == "") {
+                $link = "pub/static/frontend/Magento/luma/en_US/Magento_Catalog/images/product/placeholder/image.jpg";
+                $link = "";
+            }
+            return "/" . $link;
+        }
         if ($tecdocArticleId == "")
             return;
 
@@ -1331,7 +1346,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             foreach ((array) $datas->data as $data) {
                 $sql = 'update `softone_product` set `purlprice` =  "' . $data->PURLPRICE . '" where reference = "' . $data->MTRL . '"';
                 //echo $sql."<BR>";    
-                $this->getDoctrine()->getConnection()->exec($sql);                
+                $this->getDoctrine()->getConnection()->exec($sql);
             }
             $params["fSQL"] = "SELECT NUM01, MTRL FROM MTREXTRA WHERE NUM01 != '' AND COMPANY = 1001";
             $datas = $softone->createSql($params);
@@ -1340,7 +1355,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             foreach ((array) $datas->data as $data) {
                 $sql = 'update `softone_product` set `cost` =  "' . $data->NUM01 . '" where reference = "' . $data->MTRL . '"';
                 //echo $sql."<BR>";    
-                $this->getDoctrine()->getConnection()->exec($sql);                 
+                $this->getDoctrine()->getConnection()->exec($sql);
             }
         } else {
 
@@ -1852,7 +1867,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         );
     }
 
-    
     /**
      * @Route("/product/product/updatetecdoc")
      */
@@ -1860,21 +1874,21 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $em = $this->getDoctrine()->getManager();
 
 
-        if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') { 
+        if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
             $query = $em->createQuery(
                     "SELECT  p.id
                         FROM " . $this->repository . " p
                         where p.tecdocSupplierId > 0 AND p.tecdocArticleId IS NULL order by p.id asc"
-            );         
+            );
         } else {
             $query = $em->createQuery(
                     "SELECT  p.id
                         FROM " . $this->repository . " p
                         where p.tecdocSupplierId > 0 AND p.tecdocArticleId IS NULL order by p.id asc"
             );
-        }        
-        
-        
+        }
+
+
         /*
           $query = $em->createQuery(
           "SELECT  p.id
