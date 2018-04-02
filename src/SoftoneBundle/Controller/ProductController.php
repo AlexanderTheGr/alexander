@@ -1027,7 +1027,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 $link = "pub/static/frontend/Magento/luma/en_US/Magento_Catalog/images/product/placeholder/image.jpg";
                 $link = "";
             }
-            return "/" . $link;
+            return $link;
         }
         if ($tecdocArticleId == "")
             return;
