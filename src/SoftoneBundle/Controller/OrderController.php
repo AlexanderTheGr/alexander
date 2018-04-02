@@ -1148,40 +1148,61 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $articleIds = array_unique((array) $articleIds);
             $de = array_diff((array) $articleIds, (array) $f);
             //print_r($de);
-            $out = $this->getArticlesSearchByIds(implode(",", (array) $de));
-            //print_r($out);
-            $p = array();
 
-            foreach ((array) $out as $v) {
-                $p[$v->articleId] = $v;
-                $json = array();
 
-                if ($supplier) {
-                    if ($supplier->getTitle() != $v->brandName)
-                        continue;
+            if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
+                $sql = "SELECT * FROM magento2_base4q2017.suppliers, magento2_base4q2017.articles art,magento2_base4q2017.products pt,magento2_base4q2017.art_products_des artpt,magento2_base4q2017.text_designations tex
+                        WHERE 
+                        artpt.art_id = art.art_id AND 
+                        suppliers.sup_id = art.art_sup_id AND 
+                        pt.pt_id = artpt.pt_id AND
+                        tex.des_id = pt.pt_des_id AND
+                        tex.des_lng_id = '20' AND 
+                        (
+                        art.art_id in (".implode(",", (array) $de).")
+                )";
+                $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+                $datas = unserialize(file_get_contents($url));                
+                
+            } else {
+
+
+
+                $out = $this->getArticlesSearchByIds(implode(",", (array) $de));
+                //print_r($out);
+                $p = array();
+
+                foreach ((array) $out as $v) {
+                    $p[$v->articleId] = $v;
+                    $json = array();
+
+                    if ($supplier) {
+                        if ($supplier->getTitle() != $v->brandName)
+                            continue;
+                    }
+                    if ($dt_columns[2]["search"]["value"] != '') {
+                        if ($dt_columns[2]["search"]["value"] != $v->genericArticleName)
+                            continue;
+                    }
+
+
+                    $json[] = "";
+                    $json[] = "<span  car='' class='product_info' data-articleId='" . $v->articleId . "' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span></a><BR><a class='create_product' data-ref='" . $v->articleId . "' style='font-size:10px; color:rose' href='#'>Create Product</a>";
+                    //$json[] = "<span car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span>";
+                    $json[] = "<span car='' class='product_info tecdocArticleName' data-articleId='" . $v->articleId . "' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->genericArticleName . "</span>";
+                    $json[] = "<span  car='' class='product_info' data-articleId='" . $v->articleId . "' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->brandName . "</span>";
+                    $json[] = $this->getArticleAttributes($v->articleId, $articleIds2["linkingTargetId"]);
+                    $json[] = "";
+                    $json[] = "";
+                    $json[] = "";
+                    $json[] = "";
+                    $json[] = "";
+                    $json[] = "";
+                    $json[] = "";
+                    $json[] = "";
+
+                    $jsonarr[] = $json;
                 }
-                if ($dt_columns[2]["search"]["value"] != '') {
-                    if ($dt_columns[2]["search"]["value"] != $v->genericArticleName)
-                        continue;
-                }
-
-
-                $json[] = "";
-                $json[] = "<span  car='' class='product_info' data-articleId='" . $v->articleId . "' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span></a><BR><a class='create_product' data-ref='" . $v->articleId . "' style='font-size:10px; color:rose' href='#'>Create Product</a>";
-                //$json[] = "<span car='' class='product_info' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->articleNo . "</span>";
-                $json[] = "<span car='' class='product_info tecdocArticleName' data-articleId='" . $v->articleId . "' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->genericArticleName . "</span>";
-                $json[] = "<span  car='' class='product_info' data-articleId='" . $v->articleId . "' data-ref='" . $v->articleId . "' style='font-size:10px; color:blue'>" . $v->brandName . "</span>";
-                $json[] = $this->getArticleAttributes($v->articleId, $articleIds2["linkingTargetId"]);
-                $json[] = "";
-                $json[] = "";
-                $json[] = "";
-                $json[] = "";
-                $json[] = "";
-                $json[] = "";
-                $json[] = "";
-                $json[] = "";
-
-                $jsonarr[] = $json;
             }
             // print_r($p);
         }
@@ -1806,14 +1827,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 a.product = b.product AND
                                 category.id = a.category AND 
                                 b.product = a.product AND
-                 b.model_type = '" . $params["linkingTargetId"] . "'";
+                 b.model_type = '" . $params["linkingTargetId"] . "' group by category.id";
             $connection = $em->getConnection();
             $statement = $connection->prepare($sql);
             $statement->execute();
             $results = $statement->fetchAll();
             foreach ($results as $cat) {
                 $tecdocArticleIds[$cat["id"]][] = $cat["tecdoc_article_id"];
-                $tecdocArticleIdsCnt[$cat["id"]]++;
+                $tecdocArticleIdsCnt[$cat["id"]] ++;
             }
             $sql = "select category.id, p.`tecdoc_article_id3`,p.id as pid from partsbox_db.edi_product_category a, 
                     partsbox_db.edi_product_model_type b,
@@ -1823,7 +1844,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 a.product = b.product AND
                                 category.id = a.category AND 
                                 b.product = a.product AND
-                 b.model_type = '" . $params["linkingTargetId"] . "'";
+                 b.model_type = '" . $params["linkingTargetId"] . "' group by category.id";
             $connection = $em->getConnection();
             $statement = $connection->prepare($sql);
             $statement->execute();
@@ -1844,7 +1865,8 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
 
                 $cat["parent"] = $category->getParent();
 
-                $matched = (array) $tecdocArticleIds[$key];;//array_intersect(@(array) $arts, (array) $tecdocArticleIds[$key]);
+                $matched = (array) $tecdocArticleIds[$key];
+                ; //array_intersect(@(array) $arts, (array) $tecdocArticleIds[$key]);
                 $edimatched = array_intersect(@(array) $arts, (array) $tecdocEdiArticleIds[$key]);
                 $matched = array_unique((array) $matched);
                 $edimatched = array_unique((array) $edimatched);
@@ -1855,7 +1877,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $dt["hasChilds"] = 0;
                 $dt["parentNodeId"] = $category->getParent();
                 $dt["matched"] = base64_encode(serialize($matched));
-                $dt["matched_count"] = (int)$tecdocArticleIdsCnt[$key];
+                $dt["matched_count"] = (int) $tecdocArticleIdsCnt[$key];
                 $dt["edimatched"] = base64_encode(serialize($edimatched));
                 $dt["edimatched_count"] = count($edimatched);
                 $dt["weight"] = $category->getWeight();
