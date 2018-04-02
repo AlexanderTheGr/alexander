@@ -980,7 +980,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //$asd = unserialize($this->getArticlesSearchByIds($article_id));
         //$out["articlesSearch"] = $tecdoc->getArticlesSearch($asd[0]->articleNo);
         //$out["articlesSearch"] = unserialize($this->getArticlesSearchByIds(implode(",", (array) $out["articlesSearch"])));
-        //print_r( $out["articlesSearch"]);
+        //print_r( $out["articlesSesarch"]);
         $egarmoges = '<ul>';
         foreach ($tecdoc->efarmoges($params) as $efarmogi) {
             $brandModelType = $this->getDoctrine()->getRepository('SoftoneBundle:BrandModelType')->find($efarmogi);
@@ -1021,9 +1021,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             
             $media = $datas[0];
             //print_r($datas);
+            if ($media["art_media_file_name"])
             $link = "http://magento2.fastwebltd.com/img/articles/" . $media["art_media_sup_id"] . "/" . $media["art_media_file_name"];
-            //if ($media["art_media_file_name"])
-            echo $link."<BR>";
+            //echo $link."<BR>";
             //if (!file_exists($link) OR $media["art_media_file_name"] == "") {
             //    $link = "pub/static/frontend/Magento/luma/en_US/Magento_Catalog/images/product/placeholder/image.jpg";
              //   $link = "";
