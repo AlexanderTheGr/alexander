@@ -974,7 +974,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $params["linkingTargetId"] = $request->request->get("car");
         $out["originals"] = $tecdoc->originals($params);
-        $out["articleAttributes"] = $tecdoc->articleAttributesRow($params, 0) . "<img width=100% src='" . $this->media($params["articleId"]) . "'/>[" . $this->media($params["articleId"]) . "]";
+        $link = $this->media($params["articleId"]);
+        $out["articleAttributes"] = $tecdoc->articleAttributesRow($params, 0) . "<img width=100% src='" .  $link . "'/>[" .  $link . "]";
 
         //$asd = unserialize($this->getArticlesSearchByIds($article_id));
         //$out["articlesSearch"] = $tecdoc->getArticlesSearch($asd[0]->articleNo);
@@ -1023,10 +1024,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $link = "http://magento2.fastwebltd.com/img/articles/" . $media["art_media_sup_id"] . "/" . $media["art_media_file_name"];
             //if ($media["art_media_file_name"])
             echo $link."<BR>";
-            if (!file_exists($link) OR $media["art_media_file_name"] == "") {
-                $link = "pub/static/frontend/Magento/luma/en_US/Magento_Catalog/images/product/placeholder/image.jpg";
-                $link = "";
-            }
+            //if (!file_exists($link) OR $media["art_media_file_name"] == "") {
+            //    $link = "pub/static/frontend/Magento/luma/en_US/Magento_Catalog/images/product/placeholder/image.jpg";
+             //   $link = "";
+            //}
             return $link;
         }
         if ($tecdocArticleId == "")
