@@ -1017,11 +1017,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $sql = "select * from magento2_base4q2017.art_media_info where art_id = '" . $tecdocArticleId . "'";
             $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
             $datas = unserialize(file_get_contents($url));
-            print_r($datas);
+            
             $media = $datas[0];
+            //print_r($datas);
             $link = "http://magento2.fastwebltd.com/img/articles/" . $media["art_media_sup_id"] . "/" . $media["art_media_file_name"];
             //if ($media["art_media_file_name"])
-            //echo $link."<BR>";
+            echo $link."<BR>";
             if (!file_exists($link) OR $media["art_media_file_name"] == "") {
                 $link = "pub/static/frontend/Magento/luma/en_US/Magento_Catalog/images/product/placeholder/image.jpg";
                 $link = "";
