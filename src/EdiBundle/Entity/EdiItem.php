@@ -828,7 +828,7 @@ class EdiItem extends Entity {
                             }
 
                             if ($kv != "") {
-                                echo "<BR>[" . $kv . "]<BR>";
+                                //echo "<BR>[" . $kv . "]<BR>";
                                 break;
                             }
                         }
@@ -840,9 +840,9 @@ class EdiItem extends Entity {
         }
         $sql = "delete from partsbox_db.edi_product_category where product = '" . $this->getId() . "'";
         $em->getConnection()->exec($sql);
-        echo "<BR>" . $sql . "<BR>";
+        //echo "<BR>" . $sql . "<BR>";
         //return;
-        echo "<BR>" . $kv . "<BR>";
+        //echo "<BR>" . $kv . "<BR>";
         //return;
         $connection = $em->getConnection();
         $sqls = array();
