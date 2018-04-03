@@ -2091,9 +2091,9 @@ class Product extends Entity {
         }
         $sql = "delete from t4_product_category where product = '" . $this->getId() . "'";
         $em->getConnection()->exec($sql);
-        echo "<BR>" . $sql . "<BR>";
+        //echo "<BR>" . $sql . "<BR>";
         //return;
-        echo "<BR>" . $kv . "<BR>";
+        //echo "<BR>" . $kv . "<BR>";
         //return;
         $connection = $em->getConnection();
         $sqls = array();
@@ -2120,20 +2120,20 @@ class Product extends Entity {
                     if ($kv == 'VA') {
                         $sql = "insert ignore t4_product_category set product = '" . $this->getId() . "', category2 = '" . $category["str_id"] . "', category = '" . $cat["w_str_id"] . "'";
                         $catva = true;
-                        echo "VA: " . $sql . "<BR>";
+                        //echo "VA: " . $sql . "<BR>";
                         $categories[] = $cat["w_str_id"];
                     }
                 } elseif ($cat["w_str_id"] == 11024 OR $cat["w_str_id"] == 11200 OR $cat["w_str_id"] == 11002 OR $cat["w_str_id"] == 11110 OR $cat["w_str_id"] == 11177) {
                     if ($kv == 'HA') {
                         $sql = "insert ignore t4_product_category set product = '" . $this->getId() . "', category2 = '" . $category["str_id"] . "', category = '" . $cat["w_str_id"] . "'";
                         $catha = true;
-                        echo "ΗΑ: " . $sql . "<BR>";
+                        //echo "ΗΑ: " . $sql . "<BR>";
                         $categories[] = $cat["w_str_id"];
                     }
                 } else {
                     $sql = "insert ignore t4_product_category set product = '" . $this->getId() . "', category2 = '" . $category["str_id"] . "', category = '" . $cat["w_str_id"] . "'";
                     $cattt = true;
-                    echo "VA: " . $sql . "<BR>";
+                    //echo "VA: " . $sql . "<BR>";
                     $categories[] = $cat["w_str_id"];
                 }
                 //echo "[[".$sql."]]<BR>";
@@ -3350,7 +3350,7 @@ class Product extends Entity {
 				magento2_base4q2017.la_criteria, 
 				magento2_base4q2017.link_la_typ,
 				magento2_base4q2017.criteria,
-				magento2_base4q2017.text_designations,
+				umagento2_base4q2017.text_designations,
 				magento2_base4q2017.la_crit_group 
 				where 
 				lac_la_id = lac_gr_la_id and 
