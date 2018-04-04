@@ -387,7 +387,7 @@ class EdiItemController extends Main {
               e.id = p.Edi AND p.dlnr > 0  order by p.id desc"
               );
              */
-            $sql = "Select id from partsbox_db.edi_item where tecdoc_article_id3 = 0  AND id > 312677 order by id";
+            $sql = "Select id from partsbox_db.edi_item where tecdoc_article_id3 = 0  AND id > 442677 order by id";
             $connection = $em->getConnection();
             $statement = $connection->prepare($sql);
             $statement->execute();
