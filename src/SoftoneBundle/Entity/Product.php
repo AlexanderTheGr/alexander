@@ -3371,7 +3371,7 @@ class Product extends Entity {
                 //echo "<pre>";
                 //print_r($criterias);
                 //echo "</pre>";
-                foreach ($criterias as $criteria) {
+                foreach ((array)$criterias as $criteria) {
                     if ($criteria["des_text"] == '')
                         continue;
                     if ($criteria["lac_value"]) {
