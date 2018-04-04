@@ -1859,7 +1859,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 a.product = b.product AND
                                 category.id = a.category AND 
                                 b.product = a.product AND
-                 b.model_type = '" . $params["linkingTargetId"] . "' group by category.id";
+                 b.model_type = '" . $params["linkingTargetId"] . "'";
             $connection = $em->getConnection();
             $statement = $connection->prepare($sql);
             $statement->execute();
@@ -1876,7 +1876,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                                 a.product = b.product AND
                                 category.id = a.category AND 
                                 b.product = a.product AND
-                 b.model_type = '" . $params["linkingTargetId"] . "' group by category.id";
+                 b.model_type = '" . $params["linkingTargetId"] . "'";
             $connection = $em->getConnection();
             $statement = $connection->prepare($sql);
             $statement->execute();
