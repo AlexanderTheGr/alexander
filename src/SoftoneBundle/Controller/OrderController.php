@@ -1176,10 +1176,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                         tex.des_lng_id = '20' AND 
                         (
                         art.art_id in (".implode(",", (array) $de).")
-                ) group by art.art_id";
+                ) AND pt_usage_des_id > 0 group by art.art_id";
                 $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
                 $datas = unserialize(file_get_contents($url));                
-                echo $sql;
+                //echo $sql;
                 //print_r($datas);
                 foreach ((array) $datas as $v) {
                     $p[$v["art_id"]] = $v;
