@@ -1179,7 +1179,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 ) AND artpt.pt_usage_des_id > 0 group by art.art_id";
                 $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
                 $datas = unserialize(file_get_contents($url));                
-                //echo $sql;
+                echo $sql;
                 //print_r($datas);
                 foreach ((array) $datas as $v) {
                     $p[$v["art_id"]] = $v;
