@@ -1175,7 +1175,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 )";
                 $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
                 $datas = unserialize(file_get_contents($url));                
-                //print_r($datas);
+                print_r($datas);
                 foreach ((array) $datas as $v) {
                     $p[$v["art_id"]] = $v;
                     $json = array();
