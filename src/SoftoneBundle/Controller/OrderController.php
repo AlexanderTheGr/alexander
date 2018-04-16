@@ -730,6 +730,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                     foreach($datas as $data) {
                         $articleIds[] = $data["articleId"]; 
                     }
+                    print_r($articleIds);
                 } else {
                     $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
                 }
