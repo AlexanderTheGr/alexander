@@ -2570,9 +2570,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'mpalantinakis') {
             
         } else {
-            $sql = "update softone_product set reserved = 0";
-            echo $sql . "<BR>";
-            $em->getConnection()->exec($sql);
+            if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'tsakonas') {
+                
+            } else {
+                $sql = "update softone_product set reserved = 0";
+                echo $sql . "<BR>";
+                $em->getConnection()->exec($sql);
+            }
             //$sql = "update softone_product set qty = 0";
             //echo $sql . "<BR>";
             //$em->getConnection()->exec($sql);
