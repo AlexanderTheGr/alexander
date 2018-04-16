@@ -1166,9 +1166,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 $sql = "SELECT * FROM magento2_base4q2017.suppliers, 
                                  magento2_base4q2017.products pt,
                                  
-                                 magento2_base4q2017.text_designations tex
+                                 magento2_base4q2017.text_designations tex,
                                  magento2_base4q2017.articles art,
-                                 magento2_base4q2017.art_products_des artpt,
+                                 magento2_base4q2017.art_products_des artpt
                         WHERE 
                         artpt.art_id = art.art_id AND 
                         suppliers.sup_id = art.art_sup_id AND 
