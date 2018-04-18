@@ -2571,7 +2571,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             
         } else {
             if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'tsakonas') {
-                
+                $sql = "update softone_product set reserved = 0";
+                echo $sql . "<BR>";
+                $em->getConnection()->exec($sql);                
             } else {
                 $sql = "update softone_product set reserved = 0";
                 echo $sql . "<BR>";
