@@ -2462,7 +2462,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //return;
         $softone = new Softone();
         //$datas = $softone->retrieveData("ITEM", "apothema");
-
+        echo $_GET["type"];
+                
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             $filters = "ITEM.V5=*";
             $datas = $softone->retrieveData("ITEM", "apothema", $filters);
@@ -2578,7 +2579,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'tsakonas') {
                 $sql = "update softone_product set reserved = 0";
                 echo $sql . "<BR>";
-                //$em->getConnection()->exec($sql);                
+                $em->getConnection()->exec($sql);                
             } else {
                 $sql = "update softone_product set reserved = 0";
                 echo $sql . "<BR>";
