@@ -2477,7 +2477,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //exit;
         }
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'tsakonas') {
-            $datas = $softone->retrieveData("ITEM", "apothema_full"); 
+            //$datas = $softone->retrieveData("ITEM", "apothema_full"); 
             //print_r($tdatas);
             //print_r($datas);
         }
