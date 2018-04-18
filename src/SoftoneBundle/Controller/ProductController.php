@@ -2476,7 +2476,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //exit;
         }
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'tsakonas') {
-            //$datas = $softone->retrieveData("ITEM", "apothema_full"); 
+            $datas = $softone->retrieveData("ITEM", "apothema_full"); 
             //print_r($tdatas);
             //print_r($datas);
         }
@@ -2578,7 +2578,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'tsakonas') {
                 $sql = "update softone_product set reserved = 0";
                 echo $sql . "<BR>";
-                $em->getConnection()->exec($sql);                
+                //$em->getConnection()->exec($sql);                
             } else {
                 $sql = "update softone_product set reserved = 0";
                 echo $sql . "<BR>";
