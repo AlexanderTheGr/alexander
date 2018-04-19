@@ -1532,6 +1532,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 //echo $sql."<BR>";    
                 $this->getDoctrine()->getConnection()->exec($sql);
             }
+        } elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh') {    
         } else {
 
             $params["fSQL"] = "SELECT VARCHAR05, MTRL FROM MTREXTRA WHERE VARCHAR05 != ''";
