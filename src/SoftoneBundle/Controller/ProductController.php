@@ -1305,13 +1305,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             echo $params["fSQL"];
             //$datas = $softone->createSql($params);
             //$datas = $softone->getManufactures($params);
-            //print_r($datas);
+            print_r($datas);
+            
         }
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
             //$datas = $softone->getManufactures($params);
         }
         //echo 'sss';
-
+        exit;
 
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
