@@ -1532,19 +1532,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 //echo $sql."<BR>";    
                 $this->getDoctrine()->getConnection()->exec($sql);
             }
-        } elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh') {  
-            $params["fSQL"] = "SELECT VARCHAR03, MTRL FROM MTREXTRA WHERE VARCHAR03 != ''";
-            $softone = new Softone();
-            $datas = $softone->createSql($params);
-            echo count($datas->data);
-            //print_r($datas->data);
-            foreach ((array) $datas->data as $data) {
-                if ($data->VARCHAR03 != "") {
-                    $sql = 'update `softone_product` set `tecdoc_code` =  "' . (int) $data->VARCHAR03 . '" where reference = "' . $data->MTRL . '"';
-                    echo $sql . ";<BR>";
-                    $this->getDoctrine()->getConnection()->exec($sql);
-                }
-            }           
         } else {
 
             $params["fSQL"] = "SELECT VARCHAR05, MTRL FROM MTREXTRA WHERE VARCHAR05 != ''";
@@ -1577,7 +1564,21 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $sql = 'UPDATE  `softone_product` SET `supplier_code` =  `item_code2`, `title` =  `item_name`, `tecdoc_code` =  `item_apvcode`, `erp_code` =  `item_code`';
         $this->getDoctrine()->getConnection()->exec($sql);
-
+        
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh') {  
+            $params["fSQL"] = "SELECT VARCHAR03, MTRL FROM MTREXTRA WHERE VARCHAR03 != ''";
+            $softone = new Softone();
+            $datas = $softone->createSql($params);
+            echo count($datas->data);
+            //print_r($datas->data);
+            foreach ((array) $datas->data as $data) {
+                if ($data->VARCHAR03 != "") {
+                    $sql = 'update `softone_product` set `tecdoc_code` =  "' . (int) $data->VARCHAR03 . '" where reference = "' . $data->MTRL . '"';
+                    echo $sql . ";<BR>";
+                    $this->getDoctrine()->getConnection()->exec($sql);
+                }
+            }           
+        } 
 
         if ($MTRL > 0) {
             $tecdoc = new Tecdoc();
