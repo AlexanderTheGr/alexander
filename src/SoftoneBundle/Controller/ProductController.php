@@ -1312,7 +1312,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //$datas = $softone->getManufactures($params);
         }
         //echo 'sss';
-        exit;
+        //exit;
 
         foreach ((array) $datas->data as $data) {
             $data = (array) $data;
@@ -1341,7 +1341,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 //$this->getDoctrine()->getConnection()->exec($sql);			
             }
         }
-        // exit;
+        exit;
     }
 
     function fixSupplier($supplier) {
