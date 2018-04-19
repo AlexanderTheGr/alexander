@@ -1510,6 +1510,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         //$this->retrieveProduct($params);
         //echo 'ss';
+        
 
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
             $params["fSQL"] = "SELECT * FROM MTRDATA WHERE COMPANY = 1001";
