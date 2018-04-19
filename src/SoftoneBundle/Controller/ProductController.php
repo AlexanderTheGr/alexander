@@ -1508,7 +1508,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $this->setSetting("SoftoneBundle:Product:retrieveMtrl", serialize($params));
         }
 
-        $this->retrieveProduct($params);
+        //$this->retrieveProduct($params);
         //echo 'ss';
 
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
@@ -1541,7 +1541,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 if ((int) $data->VARCHAR03 > 0) {
                     $sql = 'update `softone_product` set `tecdoc_code` =  "' . (int) $data->VARCHAR03 . '" where reference = "' . $data->MTRL . '"';
                     echo $sql . "<BR>";
-                    //$this->getDoctrine()->getConnection()->exec($sql);
+                    $this->getDoctrine()->getConnection()->exec($sql);
                 }
             }           
         } else {
