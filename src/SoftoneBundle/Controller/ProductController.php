@@ -1451,12 +1451,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "' ORDER BY MTRL";
                 } else {
 
-                    $MTRL1 = 83298;
-                    $MTRL2 = 100000;
+                    //$MTRL1 = 83298;
+                    //$MTRL2 = 100000;
 
                     
-                    $where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";
-                    //$where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "' ORDER BY MTRL";
+                    //$where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";
+                    $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "' ORDER BY MTRL";
                     //$where = " AND MTRPLACE != '' AND MTRL > 165150 ORDER BY MTRL";
                 }
                 //$where = " AND INSDATE = '2017-03-01' ORDER BY MTRL";
