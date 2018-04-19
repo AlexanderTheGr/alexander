@@ -1507,7 +1507,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $this->setSetting("SoftoneBundle:Product:retrieveMtrl", serialize($params));
         }
 
-        //$this->retrieveProduct($params);
+        $this->retrieveProduct($params);
         //echo 'ss';
 
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
