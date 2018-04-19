@@ -1539,9 +1539,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             echo count($datas->data);
             //print_r($datas->data);
             foreach ((array) $datas->data as $data) {
-                if ((int) $data->VARCHAR03 > 0) {
+                if ($data->VARCHAR03 != "") {
                     $sql = 'update `softone_product` set `tecdoc_code` =  "' . (int) $data->VARCHAR03 . '" where reference = "' . $data->MTRL . '"';
-                    echo $sql . "<BR>";
+                    echo $sql . ";<BR>";
                     $this->getDoctrine()->getConnection()->exec($sql);
                 }
             }           
