@@ -1451,8 +1451,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "' ORDER BY MTRL";
                 } else {
 
-                    $MTRL1 = 1;
-                    $MTRL2 = 5000;
+                    $MTRL1 = 5000;
+                    $MTRL2 = 25000;
 
                     $where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";
                     //$where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "' ORDER BY MTRL";
@@ -1507,7 +1507,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $this->setSetting("SoftoneBundle:Product:retrieveMtrl", serialize($params));
         }
 
-        //$this->retrieveProduct($params);
+        $this->retrieveProduct($params);
         //echo 'ss';
 
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
