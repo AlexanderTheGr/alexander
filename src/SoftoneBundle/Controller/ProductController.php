@@ -1530,6 +1530,19 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 //echo $sql."<BR>";    
                 $this->getDoctrine()->getConnection()->exec($sql);
             }
+        } elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh') {  
+            $params["fSQL"] = "SELECT VARCHAR03, MTRL FROM MTREXTRA WHERE VARCHAR03 != ''";
+            $softone = new Softone();
+            $datas = $softone->createSql($params);
+            echo count($datas->data);
+            //print_r($datas->data);
+            foreach ((array) $datas->data as $data) {
+                if ((int) $data->VARCHAR03 > 0) {
+                    $sql = 'update `softone_product` set `tecdoc_code` =  "' . (int) $data->VARCHAR03 . '" where reference = "' . $data->MTRL . '"';
+                    echo $sql . "<BR>";
+                    //$this->getDoctrine()->getConnection()->exec($sql);
+                }
+            }           
         } else {
 
             $params["fSQL"] = "SELECT VARCHAR05, MTRL FROM MTREXTRA WHERE VARCHAR05 != ''";
