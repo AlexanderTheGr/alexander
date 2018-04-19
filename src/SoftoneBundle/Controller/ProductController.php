@@ -1472,7 +1472,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $params["softone_table"] = 'MTRL';
             $params["table"] = 'softone_product';
             $params["object"] = 'SoftoneBundle\Entity\Product';
-            if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'iaponikh' OR $this->getSetting("SoftoneBundle:Softone:merchant") == 'gianop') {
+            if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh' OR $this->getSetting("SoftoneBundle:Softone:merchant") == 'gianop') {
                 $params["filter"] = 'WHERE M.SODTYPE=51 ' . $where;
                 //$params["filter"] = "WHERE M.SODTYPE=51 AND M.CODE2 = '19050'";
                 //$extra["foxline"] = array("CCCFXRELTDCODE" => "CCCFXRELTDCODE", "CCCFXRELBRAND" => "CCCFXRELBRAND");
