@@ -1305,7 +1305,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             echo $params["fSQL"];
             $datas = $softone->createSql($params);
             //$datas = $softone->getManufactures($params);
-            print_r($datas);
+            //print_r($datas);
             
         }
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
@@ -1322,7 +1322,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 if ($data["ISACTIVE"] == 1) {
                     $sql = "Insert softone_softone_supplier SET id = '" . $data["MTRMANFCTR"] . "', title = '" . addslashes($data["NAME"]) . "', code = '" . $data["CODE"] . "'";
                     $this->getDoctrine()->getConnection()->exec($sql);
-                    //echo $sql."<BR>";
+                    echo $sql."<BR>";
                 }
             } else {
                 //echo $data["ISACTIVE"]."<BR>";
