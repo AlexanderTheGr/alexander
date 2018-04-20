@@ -2098,12 +2098,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         };
         foreach ($results as $result) {
             //if ($result["id"] > 41170) {
+            echo $result["id"] . "<BR>";
             $ediediitem = $em->getRepository($this->repository)->find($result["id"]);
             $ediediitem->tecdoc = $tecdoc;
             $ediediitem->updatetecdoc();
             unset($ediediitem);
-            echo $result["id"] . "<BR>";
-            //if ($i++ > 300) exit;
+            //echo $result["id"] . "<BR>";
+            if ($i++ > 300) exit;
             // }
         }
         exit;
