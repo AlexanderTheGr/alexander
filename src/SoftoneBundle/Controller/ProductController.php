@@ -2068,7 +2068,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $query = $em->createQuery(
                     "SELECT  p.id
                         FROM " . $this->repository . " p
-                        where p.tecdocSupplierId > 0 AND p.tecdocArticleId IS NULL order by p.id asc"
+                        where p.tecdocSupplierId > 0 AND p.tecdocArticleId IS NULL order by p.id desc"
             );
         } else {
             $query = $em->createQuery(
