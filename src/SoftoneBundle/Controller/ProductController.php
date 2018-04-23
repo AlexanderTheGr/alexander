@@ -1317,7 +1317,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //print_r($datas);
             foreach ((array) $datas->data as $data) {
                 $data = (array) $data;
-                echo '"'.$data["MTRMANFCTR"].'";"'.$data["CODE"].'";"'.$data["NAME"].'"<BR>';
+                echo '"'.$data["MTRMARK"].'";"'.$data["CODE"].'";"'.$data["NAME"].'"<BR>';
             }
             exit;
         }
