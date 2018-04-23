@@ -1311,6 +1311,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
             //$datas = $softone->getManufactures($params);
         }
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh') {
+            $params["fSQL"] = "SELECT M.* FROM MTRMARK M where COMPANY = " . $company;
+            $datas = $softone->createSql($params);
+            print_r($datas);
+            exit;
+        }
         //echo 'sss';
         //exit;
 
