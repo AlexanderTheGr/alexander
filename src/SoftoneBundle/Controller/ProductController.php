@@ -1322,8 +1322,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             exit;
         }
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'tzianetas') {
-            $params["fSQL"] = "SELECT M.* FROM MTRMARK M where COMPANY = " . $company;
-            $datas = $softone->createSql($params);            
+            $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M where COMPANY = " . $company;
+            $datas = $softone->createSql($params);  
+            print_r($datas);
         }
         //echo 'sss';
         //exit;
