@@ -303,7 +303,7 @@ class ServiceController extends Main {
     function curlit($url,$fields_string) {
           rtrim($fields_string, '&');
           $ch = curl_init();
-          //echo $fields_string."\n";
+          echo $fields_string."\n";
           curl_setopt($ch, CURLOPT_URL, $url);
           curl_setopt($ch, CURLOPT_POST, 1);
           curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
