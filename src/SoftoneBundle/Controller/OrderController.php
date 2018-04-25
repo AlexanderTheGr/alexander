@@ -1269,14 +1269,14 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     function curlit($url,$fields_string) {
           rtrim($fields_string, '&');
           $ch = curl_init();
-          echo $fields_string."\n";
+          //echo $fields_string."\n";
           curl_setopt($ch, CURLOPT_URL, $url);
           curl_setopt($ch, CURLOPT_POST, 1);
           curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
           curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
           $datas = curl_exec($ch);
-          echo $datas;
-          exit;
+          //echo $datas;
+          //exit;
           return $datas;
     }
     
