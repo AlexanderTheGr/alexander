@@ -1177,11 +1177,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 //$Df = base64_encode($sql);
                 //echo base64_decode($Df);
                 
-                $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
-                
-                //echo $url;
-                
-                $datas = unserialize(file_get_contents($url));                
+                $url = "http://magento2.fastwebltd.com/service.php";
+          
+                $datas = unserialize($this->curlit($url,"sql=" . base64_encode($sql)));                
                 //print_r($datas);
                 foreach ((array) $datas as $v) {
                     $p[$v["art_id"]] = $v;
@@ -1266,6 +1264,19 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         return json_encode($data);
     }
 
+    
+    
+    function curlit($url,$fields_string) {
+          rtrim($fields_string, '&');
+          $ch = curl_init();
+          curl_setopt($ch, CURLOPT_URL, $url);
+          curl_setopt($ch, CURLOPT_POST, 1);
+          curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+          $datas = curl_exec($ch);
+          return $datas;
+    }
+    
     function getArticleAttributes($articleId, $linkingTargetId = '') {
 
         $tecdoc = new Tecdoc();
