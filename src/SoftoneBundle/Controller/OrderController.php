@@ -1178,7 +1178,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 //echo base64_decode($Df);
                 
                 $url = "http://magento2.fastwebltd.com/service.php";
-          
                 $datas = unserialize($this->curlit($url,"sql=" . base64_encode($sql)));                
                 //print_r($datas);
                 foreach ((array) $datas as $v) {
