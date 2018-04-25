@@ -265,10 +265,13 @@ class ServiceController extends Main {
                     }
                     $out[$data["art_article_nr_can"]][1] = "OK";
                 } else {
+                    /*
                     if ($out[$data["art_article_nr_can"]][1] == 'OK') {
                         continue;
                     }
-                    //$out[$data["art_article_nr_can"]][1] = "NOT OK";
+                    $out[$data["art_article_nr_can"]][1] = "NOT OK";
+                     * 
+                     */
                 }
             }
 
