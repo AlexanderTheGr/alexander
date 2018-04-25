@@ -1176,7 +1176,6 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 )  group by art.art_id";
                 //$Df = base64_encode($sql);
                 //echo base64_decode($Df);
-                
                 $url = "http://magento2.fastwebltd.com/service.php";
                 $datas = unserialize($this->curlit($url,"sql=" . base64_encode($sql)));                
                 //print_r($datas);
