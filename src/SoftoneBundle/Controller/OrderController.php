@@ -1274,6 +1274,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
           curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
           curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
           $datas = curl_exec($ch);
+          echo $datas;
           return $datas;
     }
     
