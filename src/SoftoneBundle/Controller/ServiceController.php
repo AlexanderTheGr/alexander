@@ -252,6 +252,7 @@ class ServiceController extends Main {
                 $out[$i."||".$art_article_nr_can] = array();
                 $sup_id[$art_article_nr_can] = $terms[1];
                 $is[$art_article_nr_can][] = $i;
+                $artnrs[$i."||".$art_article_nr_can] = $terms[0]; 
             }
             //$i = 0;
             $sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('" . implode("','", $art_article_nr_cans) . "') order by sup_brand";
@@ -295,10 +296,10 @@ class ServiceController extends Main {
             $html .= '<table>';
             foreach ($out as $articlenr => $arts) {
                 $article_nrs = explode("||", $articlenr);
-                $article_nr = $article_nrs[1];
+                $article_nr = $artnrs[$articlenr];
                 $html .= '<tr>';
                 $html .= "<td>" . $article_nr . "</td>";
-                $html .= "<td>" . $sup_id[$article_nr] . "</td>";
+                $html .= "<td>" . $sup_id[$article_nrs[0]] . "</td>";
                 foreach ($arts as $art) {
                     $html .= "<td>" . $art . "</td>";
                 }
