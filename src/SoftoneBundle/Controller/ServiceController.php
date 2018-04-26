@@ -304,13 +304,15 @@ class ServiceController extends Main {
                     $html .= "<td>" . $art . "</td>";
                 }
                 $html .= '</tr>';
+                $text .= $article_nr."\t".$sup_id[$article_nrs[1]]."\t".$art."\n";
             }
             $html .= '<tr>';
             $html .= "<td></td>";
             $html .= '</tr>';
             $html .= '<table>';
+            $textarea = "<textarea>".$text."</textarea><BR>";
         }
-        return $html;
+        return $textarea.$html;
     }
     function curlit($url,$fields_string) {
           rtrim($fields_string, '&');
@@ -336,7 +338,6 @@ class ServiceController extends Main {
                 $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
             }
             if ($items) {
-
                 foreach ($items as $term) {
                     $out[$term] = array();
                     if ($category > 0) {
@@ -350,7 +351,6 @@ class ServiceController extends Main {
                         $out[$term][] = $data;
                     }
                 }
-
                 $html = '<table>';
                 foreach ($out as $article_nr => $arts) {
                     $html .= '<tr>';
