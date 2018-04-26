@@ -331,6 +331,7 @@ class EdiController extends Main {
         $i = 0;
         foreach ($collection as $entity) {
             //if ($i++ <= 1) continue;
+            
             if ($entity["id"] == 11) {
                 $func = $entity["func"];
                 $this->$func($entity);
@@ -345,9 +346,10 @@ class EdiController extends Main {
         $em = $this->getDoctrine()->getManager();
         $zip = new \ZipArchive;
         echo ".";
-        if ($zip->open('/home2/partsbox/PRICELIST_RETAIL.ZIP') === TRUE) {
-            $zip->extractTo('/home2/partsbox/');
+        if ($zip->open('/public_html/partsbox/web/files/partsboxtsakonas/PRICELIST_15430.ZIP') === TRUE) {
+            $zip->extractTo('/public_html/partsbox/web/files/partsboxtsakonas/');
             $zip->close();
+            exit;
             $file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/PRICELIST_RETAIL.txt";
             if (($handle = fopen($file, "r")) !== FALSE) {
                 //echo 'sss';
