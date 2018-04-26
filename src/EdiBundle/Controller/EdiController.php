@@ -423,7 +423,7 @@ class EdiController extends Main {
                         }
 
                         echo $sql . "<BR>";
-                        if ($i++ > 100)
+                        if ($i++ > 500)
                             return;
                     }
                 }
