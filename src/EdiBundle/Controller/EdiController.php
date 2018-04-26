@@ -347,12 +347,12 @@ class EdiController extends Main {
         $zip = new \ZipArchive;
         echo ".";
         //if ($zip->open('/public_html/partsbox/web/files/partsboxtsakonas/PRICELIST_15430.ZIP') === TRUE) {
-            $zip->open('/public_html/partsbox/web/files/partsboxtsakonas/PRICELIST_15430.ZIP');
-            $zip->extractTo('/public_html/partsbox/web/files/partsboxtsakonas/');
-            $zip->close();
-            echo 'ssss';
-            exit;
-            $file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/PRICELIST_RETAIL.txt";
+            //$zip->open('/public_html/partsbox/web/files/partsboxtsakonas/PRICELIST_15430.ZIP');
+            //$zip->extractTo('/public_html/partsbox/web/files/partsboxtsakonas/');
+            //$zip->close();
+            //echo 'ssss';
+            //exit;
+            $file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/PRICELIST_15430.txt";
             if (($handle = fopen($file, "r")) !== FALSE) {
                 //echo 'sss';
                 while (($data = fgetcsv($handle, 1000000, ";")) !== FALSE) {
@@ -423,8 +423,8 @@ class EdiController extends Main {
                         }
 
                         echo $sql . "<BR>";
-                        //if ($i++ > 100)
-                        //    return;
+                        if ($i++ > 100)
+                            return;
                     }
                 }
             }
