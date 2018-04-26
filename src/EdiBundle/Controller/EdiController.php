@@ -346,7 +346,8 @@ class EdiController extends Main {
         $em = $this->getDoctrine()->getManager();
         $zip = new \ZipArchive;
         echo ".";
-        if ($zip->open('/public_html/partsbox/web/files/partsboxtsakonas/PRICELIST_15430.ZIP') === TRUE) {
+        //if ($zip->open('/public_html/partsbox/web/files/partsboxtsakonas/PRICELIST_15430.ZIP') === TRUE) {
+            $zip->open('/public_html/partsbox/web/files/partsboxtsakonas/PRICELIST_15430.ZIP');
             $zip->extractTo('/public_html/partsbox/web/files/partsboxtsakonas/');
             $zip->close();
             echo 'ssss';
@@ -428,7 +429,7 @@ class EdiController extends Main {
                 }
             }
             //$this->_redirect('*/*/');
-        }
+        //}
     }
 
     public function getRaskosEdiPartMaster($entity) {
