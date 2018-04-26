@@ -247,9 +247,9 @@ class ServiceController extends Main {
             foreach ($items as $term) {
                 $i++;
                 $terms = explode("\t", $term);
-                $art_article_nr_can = preg_replace("/[^a-zA-Z0-9]+/", "", $terms[0]);
-                $art_article_nr_cans[] = $art_article_nr_can;
-                $out[$i."-".$art_article_nr_can] = array();
+                $art_article_nr_can = $terms[0];
+                $art_article_nr_cans[] = preg_replace("/[^a-zA-Z0-9]+/", "", $terms[0]);
+                $out[$i."||".$art_article_nr_can] = array();
                 $sup_id[$art_article_nr_can] = $terms[1];
                 $is[$art_article_nr_can][] = $i;
             }
@@ -265,10 +265,10 @@ class ServiceController extends Main {
                           
                 foreach ($is[$data["art_article_nr_can"]] as $i) {
                     if ($sup_id[$data["art_article_nr_can"]] == $data["sup_id"]) {
-                        if ($out[$i."-".$data["art_article_nr_can"]][1] == 'OK') {
+                        if ($out[$i."||".$data["art_article_nr_can"]][1] == 'OK') {
                             continue;
                         }
-                        $out[$i."-".$data["art_article_nr_can"]][1] = "OK";
+                        $out[$i."||".$data["art_article_nr_can"]][1] = "OK";
                     } else {
                         /*
                         if ($out[$data["art_article_nr_can"]][1] == 'OK') {
@@ -293,7 +293,9 @@ class ServiceController extends Main {
             }
             */
             $html .= '<table>';
-            foreach ($out as $article_nr => $arts) {
+            foreach ($out as $articlenr => $arts) {
+                $article_nrs = explode("||", $articlenr);
+                $article_nr = $article_nrs[1];
                 $html .= '<tr>';
                 $html .= "<td>" . $article_nr . "</td>";
                 $html .= "<td>" . $sup_id[$article_nr] . "</td>";
