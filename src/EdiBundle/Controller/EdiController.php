@@ -349,6 +349,7 @@ class EdiController extends Main {
         if ($zip->open('/public_html/partsbox/web/files/partsboxtsakonas/PRICELIST_15430.ZIP') === TRUE) {
             $zip->extractTo('/public_html/partsbox/web/files/partsboxtsakonas/');
             $zip->close();
+            echo 'ssss';
             exit;
             $file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/PRICELIST_RETAIL.txt";
             if (($handle = fopen($file, "r")) !== FALSE) {
