@@ -299,7 +299,7 @@ class ServiceController extends Main {
                 $article_nr = $artnrs[$articlenr];
                 $html .= '<tr>';
                 $html .= "<td>" . $article_nr . "</td>";
-                $html .= "<td>" . $sup_id[$article_nrs[0]] . " ".$article_nrs[0]."</td>";
+                $html .= "<td>" . $sup_id[$article_nrs[1]] . " ".$article_nrs[1]."</td>";
                 foreach ($arts as $art) {
                     $html .= "<td>" . $art . "</td>";
                 }
