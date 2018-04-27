@@ -58,7 +58,8 @@ class ServiceController extends Main {
             }
         }
         $brands = $this->getDoctrine()
-                ->getRepository('SoftoneBundle:Brand');
+                ->getRepository('SoftoneBundle:Brand')->findAll(array(), array('brand' => 'ASC'));     
+
         $dataarray3[] = array("value" => 0, "name" => "Select");
         foreach ($brands as $brand) {
             $dataarray3[] = array("value" => $brand->getId(), "name" => $brand->getBrand());
