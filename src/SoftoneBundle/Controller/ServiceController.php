@@ -441,7 +441,7 @@ class ServiceController extends Main {
                     $html .= "<td>" . @$art["sup_id"] . "</td>";
                     $html .= "<td>" . @$art["sup_brand"] . "</td>";
                     $html .= "<td>" . @$art["art_article_nr_can"] . "</td>";
-                    $arttt .= $art["sup_id"]."\t".$art["sup_brand"]."\t".$art["art_article_nr_can"];
+                    $arttt .= $art["sup_id"]."\t".$art["sup_brand"]."\t".$art["art_article_nr_can"]."\t";
                 }
                 $html .= '</tr>';
                 $text .= $article_nr . "\t" .  count($arts) . "\t" . $arttt . "\n";
