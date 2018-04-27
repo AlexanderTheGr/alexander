@@ -424,7 +424,7 @@ class ServiceController extends Main {
             foreach ($datas as $data) {
                 //print_r($data);
                 foreach($oems[$data["art_id"]] as $oem_num_can) {
-                    if (in_array($oem_num_can, $out)) {
+                    if ($out[$oem_num_can]) {
                         $out[$oem_num_can][] = $data;
                     }
                 }
