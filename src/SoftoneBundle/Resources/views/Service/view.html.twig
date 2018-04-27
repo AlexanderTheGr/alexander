@@ -16,6 +16,9 @@
     $(".{{ctrl}}").alexTabs("{{app}}", "{{ctrl}}", "{{url}}","{{content|json_encode()}}");
     setTimeout(function () {
         jQuery(".asksksaksk select").chosen({width: "100%"});
+        jQuery(".asksksaksk select").change(function(){
+            jQuery(".asksksaksk select").trigger('chosen:updated');
+        })
     }, 1000)
 </script>
 
