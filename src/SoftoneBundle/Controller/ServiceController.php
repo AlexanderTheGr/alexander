@@ -423,7 +423,7 @@ class ServiceController extends Main {
             
             foreach ($datas as $data) {
                 //print_r($data);
-                $out[$oems[$data["art_id"]]] = $data;
+                $out[$oems[$data["art_id"]]][] = $data;
             }
             $html = $tecdocSupplierId . " -- " . $brand . '<BR><table>';
             foreach ($out as $article_nr => $arts) {
