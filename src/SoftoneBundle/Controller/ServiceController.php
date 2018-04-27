@@ -397,7 +397,7 @@ class ServiceController extends Main {
                 $out[$term] = array();
             }
             $brand_sql = $brand > 0 ? " AND mfa_id = '".$brand."'" : "";
-            $sql = "SELECT oem_num_can FROM `art_oem_numbers` WHERE `oem_num_can` in ('" . implode("','", $items) . "') ".$brand_sql."))";
+            $sql = "SELECT oem_num_can FROM `art_oem_numbers` WHERE `oem_num_can` in ('" . implode("','", $items) . "') ".$brand_sql."";
             echo $sql;
             $url = "http://magento2.fastwebltd.com/service.php";
             $datas = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
