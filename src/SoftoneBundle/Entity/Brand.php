@@ -6,17 +6,26 @@
  * Brand
  */
 namespace SoftoneBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\Entity;
+use SoftoneBundle\Entity\Softone as Softone;
 
 /**
- * Brand
+ * TecdocSupplier
  *
- * @ORM\Table(name="brand")
+ * @ORM\Table(name="tecdoc_supplier")
  * @ORM\Entity
  */
-class Brand
-{
+class Brand extends Entity {
+
+    public function getField($field) {
+        return $this->$field;
+    }
+
+    public function setField($field, $val) {
+        $this->$field = $val;
+        return $val;
+    }
     /**
      * @var string
      *
