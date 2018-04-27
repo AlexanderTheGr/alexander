@@ -402,7 +402,7 @@ class ServiceController extends Main {
             $url = "http://magento2.fastwebltd.com/service.php";
             $datas = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
             foreach ($datas as $data) {
-                $oems[$data["art_id"]] = $data["oem_num_can"];
+                $oems[$data["art_id"]][] = $data["oem_num_can"];
             }
 
             $brand_sql = $brand > 0 ? " AND mfa_id = '" . $brand . "'" : "";
@@ -423,7 +423,12 @@ class ServiceController extends Main {
             
             foreach ($datas as $data) {
                 //print_r($data);
-                $out[$oems[$data["art_id"]]][] = $data;
+                foreach($oems[$data["art_id"]] as $oem_num_can) {
+                    if (in_array($oem_num_can, $out)) {
+                        $out[$oem_num_can][] = $data;
+                    }
+                }
+                //$out[$oems[$data["art_id"]]][] = $data;
             }
             $html = $tecdocSupplierId . " -- " . $brand . '<BR><table>';
             foreach ($out as $article_nr => $arts) {
