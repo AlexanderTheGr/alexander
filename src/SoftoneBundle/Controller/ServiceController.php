@@ -392,12 +392,21 @@ class ServiceController extends Main {
             }
             $out = array();
             foreach ($items as $key => $item) {
-                $items[$key] = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
+                $term = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
+                $items[$key] = $term;
+                $out[$term] = array();
             }
+            $brand_sql = $brand > 0 ? " AND mfa_id = '".$brand."'" : "";
+            $sql = "SELECT oem_num_can FROM `art_oem_numbers` WHERE `oem_num_can` in ('" . implode("','", $items) . "') ".$brand_sql."))";
+            $url = "http://magento2.fastwebltd.com/service.php";
+            $datas = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
+            foreach ($datas as $data) {
+                $oems[$data["oem_num_can"]] = true; 
+            } 
             if ($items) {
-
+                
                 foreach ($items as $term) {
-                    $out[$term] = array();
+                    if (!$oems[$term]) continue;
                     $brand_sql = $brand > 0 ? " AND mfa_id = '".$brand."'" : "";
                     if ($category > 0) {
                         //$sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where art_id in (Select art_id from magento2_base4q2017.art_products_des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1)) ".$sup." AND sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = art_id AND art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` LIKE '" . $term . "'))))";                        
