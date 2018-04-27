@@ -416,7 +416,7 @@ class ServiceController extends Main {
                     }
                 }
 
-                $html = '<table>';
+                $html = $brand.'<BR><table>';
                 foreach ($out as $article_nr => $arts) {
                     $html .= '<tr>';
                     $html .= "<td>" . $article_nr . "</td>";
