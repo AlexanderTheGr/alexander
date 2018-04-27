@@ -436,15 +436,15 @@ class ServiceController extends Main {
                 $html .= '<tr>';
                 $html .= "<td>" . $article_nr . "</td>";
                 $html .= "<td>" . count($arts) . "</td>";
-                $art = "";
+                $arttt = "";
                 foreach ($arts as $art) {
                     $html .= "<td>" . @$art["sup_id"] . "</td>";
                     $html .= "<td>" . @$art["sup_brand"] . "</td>";
                     $html .= "<td>" . @$art["art_article_nr_can"] . "</td>";
-                    $art .= $art["sup_id"]."\t".$art["sup_brand"]."\t".$art["art_article_nr_can"];
+                    $arttt .= $art["sup_id"]."\t".$art["sup_brand"]."\t".$art["art_article_nr_can"];
                 }
                 $html .= '</tr>';
-                $text .= $article_nr . "\t" .  count($arts) . "\t" . $art . "\n";
+                $text .= $article_nr . "\t" .  count($arts) . "\t" . $arttt . "\n";
             }
             $html .= '<tr>';
             $html .= "<td></td>";
