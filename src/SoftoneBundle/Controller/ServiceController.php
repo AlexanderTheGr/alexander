@@ -407,7 +407,7 @@ class ServiceController extends Main {
                         //echo $sql;
                     }
                     //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$items)."') order by sup_brand";
-                    echo $sql;
+                    //echo $sql;
                     $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
                     $datas = unserialize(file_get_contents($url));
                     foreach ($datas as $data) {
