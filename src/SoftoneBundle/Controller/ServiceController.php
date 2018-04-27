@@ -61,7 +61,7 @@ class ServiceController extends Main {
         $fields["category"] = array("label" => "Category", 'type' => "select", 'dataarray' => $dataarray2, "required" => false, "className" => "asksksaksk col-md-4 col-sm-4");
         $fields["tecdocSupplierId"] = array("label" => $this->getTranslation("Tecdoc Supplier"), "required" => false, "className" => "asksksaksk col-md-4", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:TecdocSupplier', 'name' => 'supplier', 'value' => 'id', 'suffix' => 'id'));
         $fields["itecategoryName"] = array("label" => "Field", 'type' => "textarea");
-
+        $fields["brand"] = array("label" => "Vat", "required" => false, 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Brand', 'name' => 'brand', 'value' => 'id'));
         $forms = $this->getFormLyFields($entity, $fields);
 
         $this->addTab(array("title" => "General", "form" => $forms, "content" => '', "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
