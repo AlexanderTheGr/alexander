@@ -402,7 +402,7 @@ class ServiceController extends Main {
             $url = "http://magento2.fastwebltd.com/service.php";
             $datas = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
             foreach ($datas as $data) {
-                echo $data["oem_num_can"]."\n";
+                //echo $data["oem_num_can"]."\n";
                 $oems[$data["art_id"]][] = $data["oem_num_can"];
             }
 
@@ -425,8 +425,8 @@ class ServiceController extends Main {
             foreach ($datas as $data) {
                 //print_r($data);
                 foreach($oems[$data["art_id"]] as $oem_num_can) {
-                    if ($out[$oem_num_can]) {
-                        
+                    echo $oem_num_can."\n";
+                    if ($out[$oem_num_can]) { 
                         $out[$oem_num_can][] = $data;
                     }
                 }
