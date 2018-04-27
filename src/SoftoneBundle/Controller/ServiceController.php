@@ -425,7 +425,6 @@ class ServiceController extends Main {
             foreach ($datas as $data) {
                 //print_r($data);
                 foreach($oems[$data["art_id"]] as $oem_num_can) {
-                    //echo $oem_num_can."\n";
                     if ($out[$oem_num_can]) { 
                         $out[$oem_num_can][] = $data;
                     }
@@ -437,18 +436,21 @@ class ServiceController extends Main {
                 $html .= '<tr>';
                 $html .= "<td>" . $article_nr . "</td>";
                 $html .= "<td>" . count($arts) . "</td>";
+                $art = "";
                 foreach ($arts as $art) {
                     $html .= "<td>" . @$art["sup_id"] . "</td>";
                     $html .= "<td>" . @$art["sup_brand"] . "</td>";
                     $html .= "<td>" . @$art["art_article_nr_can"] . "</td>";
+                    $art = $art["sup_id"]."\t".$art["sup_brand"]."\t".$art["art_article_nr_can"];
                 }
                 $html .= '</tr>';
+                $text .= $article_nr . "\t" .  count($arts) . "\t" . $art . "\n";
             }
             $html .= '<tr>';
             $html .= "<td></td>";
             $html .= '</tr>';
             $html .= '<table>';
-            
+            $textarea = "<textarea>" . $text . "</textarea><BR>";
 
             /*
             if ($items) {
@@ -476,7 +478,7 @@ class ServiceController extends Main {
              * 
              */
         }
-        return $html;
+        return $textarea.$html;
     }
 
     function original($items, $category = 0, $tecdocSupplierId = 0, $brand = 0) {
