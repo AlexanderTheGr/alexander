@@ -422,7 +422,7 @@ class ServiceController extends Main {
 
             
             foreach ($datas as $data) {
-                $out[$data["art_article_nr_can"]][] = $data;
+                $out[$data["art_article_nr_can"]] = $data;
             }
             $html = $tecdocSupplierId . " -- " . $brand . '<BR><table>';
             foreach ($out as $article_nr => $arts) {
@@ -430,9 +430,9 @@ class ServiceController extends Main {
                 $html .= "<td>" . $article_nr . "</td>";
                 $html .= "<td>" . count($arts) . "</td>";
                 foreach ($arts as $art) {
-                    $html .= "<td>" . $art["sup_id"] . "</td>";
-                    $html .= "<td>" . $art["sup_brand"] . "</td>";
-                    $html .= "<td>" . $art["art_article_nr_can"] . "</td>";
+                    $html .= "<td>" . @$art["sup_id"] . "</td>";
+                    $html .= "<td>" . @$art["sup_brand"] . "</td>";
+                    $html .= "<td>" . @$art["art_article_nr_can"] . "</td>";
                 }
                 $html .= '</tr>';
             }
