@@ -422,6 +422,7 @@ class ServiceController extends Main {
 
             
             foreach ($datas as $data) {
+                print_r($data);
                 $out[$data["art_article_nr_can"]] = $data;
             }
             $html = $tecdocSupplierId . " -- " . $brand . '<BR><table>';
