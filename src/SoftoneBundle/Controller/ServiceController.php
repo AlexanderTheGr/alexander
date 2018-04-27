@@ -66,7 +66,8 @@ class ServiceController extends Main {
         }
         $fields["itemIsactive"] = array("label" => "Type", 'type' => "select", 'dataarray' => $dataarray, "required" => false, "className" => "col-md-3 col-sm-3");
         $fields["category"] = array("label" => "Category", 'type' => "select", 'dataarray' => $dataarray2, "required" => false, "className" => "asksksaksk col-md-3 col-sm-3");
-        $fields["brand"] = array("label" => "Brand", 'type' => "select", 'dataarray' => $dataarray3, "required" => false, "className" => "asksksaksk col-md-3 col-sm-3");
+        //$fields["brand"] = array("label" => "Brand", 'type' => "select", 'dataarray' => $dataarray3, "required" => false, "className" => "asksksaksk col-md-3 col-sm-3");
+        $fields["brand"] = array("label" => $this->getTranslation("Tecdoc Supplier"), "required" => false, "className" => "asksksaksk col-md-3", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Brand', 'name' => 'brand', 'value' => 'id', 'suffix' => 'id'));
         $fields["tecdocSupplierId"] = array("label" => $this->getTranslation("Tecdoc Supplier"), "required" => false, "className" => "asksksaksk col-md-3", 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:TecdocSupplier', 'name' => 'supplier', 'value' => 'id', 'suffix' => 'id'));
         $fields["itecategoryName"] = array("label" => "Field", 'type' => "textarea");
         //$fields["brand"] = array("label" => "Vat", "required" => false, 'type' => "select", 'datasource' => array('repository' => 'SoftoneBundle:Brand', 'name' => 'brand', 'value' => 'id'));
