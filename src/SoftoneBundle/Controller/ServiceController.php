@@ -264,7 +264,7 @@ class ServiceController extends Main {
             foreach ((array) $datas as $data) {
                 
                           
-                foreach ($is[$data["art_article_nr_can"]] as $i) {
+                foreach ((array)$is[$data["art_article_nr_can"]] as $i) {
                     if ($sup_id[$data["art_article_nr_can"]] == $data["sup_id"]) {
                         if ($out[$i."||".$data["art_article_nr_can"]][1] == 'OK') {
                             continue;
