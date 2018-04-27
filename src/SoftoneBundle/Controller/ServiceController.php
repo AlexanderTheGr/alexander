@@ -58,7 +58,7 @@ class ServiceController extends Main {
             }
         }
         $brands = $this->getDoctrine()
-                ->getRepository('SoftoneBundle:Brand')->findAll(array(), array('brand' => 'ASC'));     
+                        ->getRepository('SoftoneBundle:Brand')->findAll(array(), array('brand' => 'ASC'));
 
         $dataarray3[] = array("value" => 0, "name" => "Select");
         foreach ($brands as $brand) {
@@ -116,7 +116,7 @@ class ServiceController extends Main {
             $category = $results[0]["oldnew_id"];
         }
         //echo $type;
-        $html = $this->$type((array) $items, $category, $tecdocSupplierId,$brand);
+        $html = $this->$type((array) $items, $category, $tecdocSupplierId, $brand);
         $json = json_encode(array("ok", "html" => $html, 'divid' => "resulthtml"));
         return new Response(
                 $json, 200, array('Content-Type' => 'application/json')
@@ -396,43 +396,64 @@ class ServiceController extends Main {
                 $items[$key] = $term;
                 $out[$term] = array();
             }
-            $brand_sql = $brand > 0 ? " AND mfa_id = '".$brand."'" : "";
-            $sql = "SELECT oem_num_can FROM `art_oem_numbers` WHERE `oem_num_can` in ('" . implode("','", $items) . "') ".$brand_sql."";
+            $brand_sql = $brand > 0 ? " AND mfa_id = '" . $brand . "'" : "";
+            $sql = "SELECT oem_num_can FROM `art_oem_numbers` WHERE `oem_num_can` in ('" . implode("','", $items) . "') " . $brand_sql . "";
             //echo $sql;
             $url = "http://magento2.fastwebltd.com/service.php";
             $datas = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
             foreach ($datas as $data) {
-                $oems[$data["oem_num_can"]] = true; 
-            } 
-            
-            $brand_sql = $brand > 0 ? " AND mfa_id = '".$brand."'" : "";
+                $oems[$data["oem_num_can"]] = true;
+            }
+
+            $brand_sql = $brand > 0 ? " AND mfa_id = '" . $brand . "'" : "";
             if ($category > 0) {
                 //$sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where art_id in (Select art_id from magento2_base4q2017.art_products_des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1)) ".$sup." AND sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = art_id AND art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` LIKE '" . $term . "'))))";                        
-                $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where art_id in (Select art_id from magento2_base4q2017.art_products_des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1)) " . $sup . " AND sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` in ('" . implode("','", $items) . "') ".$brand_sql."))) limit 0,10";
+                $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where art_id in (Select art_id from magento2_base4q2017.art_products_des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1)) " . $sup . " AND sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` in ('" . implode("','", $items) . "') " . $brand_sql . "))) limit 0,10";
             } else {
                 //$sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and  AND art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` LIKE '" . $term . "'))))  ".$sup."";
-                $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` in ('" . implode("','", $items) . "') ".$brand_sql.")))  " . $sup . " limit 0,10";
+                $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` in ('" . implode("','", $items) . "') " . $brand_sql . ")))  " . $sup . " limit 0,10";
                 //echo $sql;
-            }  
-            
-            return $sql;
-            
+            }
+
+            //return $sql;
+
             $url = "http://magento2.fastwebltd.com/service.php";
-            $datas = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));            
+            $datas = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
+
             
+            foreach ($datas as $data) {
+                $out[$data["art_article_nr_can"]] = $data;
+            }
+            $html = $tecdocSupplierId . " -- " . $brand . '<BR><table>';
+            $html = $tecdocSupplierId . " -- " . $brand . '<BR><table>';
+            foreach ($out as $article_nr => $arts) {
+                $html .= '<tr>';
+                $html .= "<td>" . $article_nr . "</td>";
+                foreach ($arts as $art) {
+                    $html .= "<td>" . $art["sup_id"] . "</td>";
+                    $html .= "<td>" . $art["sup_brand"] . "</td>";
+                    $html .= "<td>" . $art["art_article_nr_can"] . "</td>";
+                }
+                $html .= '</tr>';
+            }
+            $html .= '<tr>';
+            $html .= "<td></td>";
+            $html .= '</tr>';
+            $html .= '<table>';
             
-            
-            
+
+            /*
             if ($items) {
                 foreach ($items as $term) {
-                    if (!$oems[$term]) continue;
-                    $brand_sql = $brand > 0 ? " AND mfa_id = '".$brand."'" : "";
+                    if (!$oems[$term])
+                        continue;
+                    $brand_sql = $brand > 0 ? " AND mfa_id = '" . $brand . "'" : "";
                     if ($category > 0) {
                         //$sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where art_id in (Select art_id from magento2_base4q2017.art_products_des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1)) ".$sup." AND sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = art_id AND art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` LIKE '" . $term . "'))))";                        
-                        $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where art_id in (Select art_id from magento2_base4q2017.art_products_des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1)) " . $sup . " AND sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` LIKE '" . $term . "' ".$brand_sql."))) limit 0,10";
+                        $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where art_id in (Select art_id from magento2_base4q2017.art_products_des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1)) " . $sup . " AND sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` LIKE '" . $term . "' " . $brand_sql . "))) limit 0,10";
                     } else {
                         //$sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and  AND art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` LIKE '" . $term . "'))))  ".$sup."";
-                        $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` LIKE '" . $term . "' ".$brand_sql.")))  " . $sup . " limit 0,10";
+                        $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` LIKE '" . $term . "' " . $brand_sql . ")))  " . $sup . " limit 0,10";
                         //echo $sql;
                     }
                     //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$items)."') order by sup_brand";
@@ -443,23 +464,9 @@ class ServiceController extends Main {
                         $out[$term][] = $data;
                     }
                 }
-
-                $html = $tecdocSupplierId." -- ".$brand.'<BR><table>';
-                foreach ($out as $article_nr => $arts) {
-                    $html .= '<tr>';
-                    $html .= "<td>" . $article_nr . "</td>";
-                    foreach ($arts as $art) {
-                        $html .= "<td>" . $art["sup_id"] . "</td>";
-                        $html .= "<td>" . $art["sup_brand"] . "</td>";
-                        $html .= "<td>" . $art["art_article_nr_can"] . "</td>";
-                    }
-                    $html .= '</tr>';
-                }
-                $html .= '<tr>';
-                $html .= "<td></td>";
-                $html .= '</tr>';
-                $html .= '<table>';
             }
+             * 
+             */
         }
         return $html;
     }
@@ -476,11 +483,11 @@ class ServiceController extends Main {
                 $sup = " AND sup_id = '" . $tecdocSupplierId . "'";
             }
             if ($items) {
-                $brand_sql = $brand > 0 ? " AND mfa_id = '".$brand."'" : "";
+                $brand_sql = $brand > 0 ? " AND mfa_id = '" . $brand . "'" : "";
                 if ($category > 0) {
-                    $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where art_id in (Select art_id from magento2_base4q2017.art_products_des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1)) AND sup_id = art_sup_id AND art_id in (SELECT `art_id` FROM `art_oem_numbers` WHERE `oem_num_can` in ('" . implode("','", $items) . "')) " . $sup . " ".$brand_sql." order by sup_brand";
+                    $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where art_id in (Select art_id from magento2_base4q2017.art_products_des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1)) AND sup_id = art_sup_id AND art_id in (SELECT `art_id` FROM `art_oem_numbers` WHERE `oem_num_can` in ('" . implode("','", $items) . "')) " . $sup . " " . $brand_sql . " order by sup_brand";
                 } else
-                    $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_id in (SELECT `art_id` FROM `art_oem_numbers` WHERE `oem_num_can` in ('" . implode("','", $items) . "') ".$brand_sql.") " . $sup . " order by sup_brand";
+                    $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_id in (SELECT `art_id` FROM `art_oem_numbers` WHERE `oem_num_can` in ('" . implode("','", $items) . "') " . $brand_sql . ") " . $sup . " order by sup_brand";
                 $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
                 //echo $sql;
                 //$sql = "(Select art_id from magento2_base4q2017.art_products_des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1))";
