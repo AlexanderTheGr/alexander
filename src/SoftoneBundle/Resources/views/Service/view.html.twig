@@ -17,7 +17,7 @@
     setTimeout(function () {
         jQuery(".asksksaksk select").chosen({width: "100%"});
     }, 1000)
-    jQuery(".asksksaksk select").change(function(){
+    jQuery(".asksksaksk select").live('change', function () {
         jQuery(".asksksaksk select").trigger('chosen:updated');
     })    
 </script>
