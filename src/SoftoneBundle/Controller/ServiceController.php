@@ -395,6 +395,7 @@ class ServiceController extends Main {
                 $term = preg_replace("/[^a-zA-Z0-9]+/", "", $item);
                 $items[$key] = $term;
                 $out[$term] = array();
+                $out11[$term] = true;
             }
             $brand_sql = $brand > 0 ? " AND mfa_id = '" . $brand . "'" : "";
             $sql = "SELECT oem_num_can,art_id FROM `art_oem_numbers` WHERE `oem_num_can` in ('" . implode("','", $items) . "') " . $brand_sql . "";
@@ -425,9 +426,9 @@ class ServiceController extends Main {
             foreach ($datas as $data) {
                 //print_r($data);
                 foreach($oems[$data["art_id"]] as $oem_num_can) {
-                    //if ($out[$oem_num_can]) { 
+                    if ($out11[$oem_num_can]) { 
                         $out[$oem_num_can][] = $data;
-                    //}
+                    }
                 }
                 //$out[$oems[$data["art_id"]]][] = $data;
             }
