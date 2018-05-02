@@ -1464,6 +1464,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             } else {
                 if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
                     $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "' ORDER BY MTRL";
+                    $where = " AND CODE = '047806050-G100'";
                 } else {
 
                    // $MTRL1 = 1;
