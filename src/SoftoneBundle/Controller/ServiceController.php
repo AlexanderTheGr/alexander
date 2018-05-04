@@ -424,7 +424,7 @@ class ServiceController extends Main {
             $html = print_r($art_article_nr_canss,true).'<table>';
             foreach ((array) $out as $article_nr => $arts) {
                 $html .= '<tr>';
-                $html .= "<td>" . $art_article_nr_canss[$article_nr] . "</td>";
+                $html .= "<td>" . $art_article_nr_canss[strtolower($article_nr)] . "</td>";
                 $html .= "<td>" . $des_text[$article_nr] . "</td>";
                 if (count($arts) > 1) {
                     $html .= "<td></td>";
