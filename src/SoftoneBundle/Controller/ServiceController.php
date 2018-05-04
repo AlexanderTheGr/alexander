@@ -422,30 +422,32 @@ class ServiceController extends Main {
                 $sup_brand[$art_article_nr_can] = $data["sup_brand"];
                 
             }
-            
+            $text = "";
             $html = '<table>';
             foreach ((array) $out as $article_nr => $arts) {
                 $html .= '<tr>';
                 $html .= "<td>" . $art_article_nr_canss[strtolower($article_nr)] . "</td>";
                 $html .= "<td>" . $sup_brand[$article_nr] . "</td>";
                 $html .= "<td>" . $des_text[$article_nr] . "</td>";
-                if (count($arts) > 1) {
-                    $html .= "<td></td>";
-                }
-
+                //if (count($arts) > 0) {
+                $html .= "<td>".count($arts)."</td>";
+                //}
+                $arttt = "";
                 foreach ($arts as $art) {
                     $html .= "<td>" . $art["oem_num"] . "</td>";
                     //$html .= "<td>" . $art["sup_brand"] . "</td>";
                     //$html .= "<td>" . $art["cat"] . "</td>";
                     //$html .= "<td>".$art["sql"]."</td>";
+                    $arttt .= $art["oem_num"]."\t";
                 }
-
+                $text .= $art_article_nr_canss[strtolower($article_nr)] . "\t" . $sup_brand[$article_nr] . "\t" . $des_text[$article_nr] . "\t" .  count($arts) . "\t" . $arttt . "\n";
                 $html .= '</tr>';
             }
+            
             $html .= '<table>';            
+            $textarea = "<textarea>" . $text . "</textarea><BR>";
             
-            
-            return $html;
+            return $textarea.$html;
         }    
     }    
         
