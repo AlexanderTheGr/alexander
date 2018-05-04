@@ -391,8 +391,8 @@ class ServiceController extends Main {
         if (count($items)) {
             if ($tecdocSupplierId > 0)
                 $sup = " AND sup_id = '" . $tecdocSupplierId . "'";
-            if ($category)
-                $cat = " AND art.art_id in (Select art_id from magento2_base4q2017.art_products_des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1))";
+            if ($category > 0)
+                $cat = " AND art.art_id in (Select des.art_id from magento2_base4q2017.art_products_des des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1))";
             
             $sql = "SELECT art.art_id, art_article_nr_can,sup_id,sup_brand FROM art_oem_numbers oem, `articles` art,suppliers where art.art_id=oem.art_id AND sup_id = art_sup_id AND art_article_nr_can in ('" . implode("','", $items) . "') " . $sup . " ".$cat." order by sup_brand";
         
