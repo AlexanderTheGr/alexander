@@ -396,6 +396,7 @@ class ServiceController extends Main {
                 $art_article_nr_cans[] = $art_article_nr_can;
                 $art_article_nr_canss[$art_article_nr_can] = $terms[0];
                 $sup_id[$art_article_nr_can] = $terms[1];
+                $out[$art_article_nr_can] = array();
             }
             
             if ($tecdocSupplierId > 0)
