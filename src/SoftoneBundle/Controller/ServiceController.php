@@ -389,7 +389,7 @@ class ServiceController extends Main {
     
     function getoriginals($items, $category = 0, $tecdocSupplierId = 0) {
         if (count($items)) {
-            if ($tecdocSupplierId)
+            if ($tecdocSupplierId > 0)
                 $sup = " AND sup_id = '" . $tecdocSupplierId . "'";
             if ($category)
                 $cat = " AND art_id in (Select art_id from magento2_base4q2017.art_products_des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1))";
