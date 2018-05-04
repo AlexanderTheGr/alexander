@@ -416,7 +416,7 @@ class ServiceController extends Main {
             $datas = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
             foreach ($datas as $data) {
                 $art_article_nr_can = $data["art_article_nr_can"];
-                $out[$art_article_nr_canss[$art_article_nr_can]][] = $data;
+                $out[$art_article_nr_can][] = $data;
                 $des_text[$art_article_nr_cans[$art_article_nr_can]] = $data["des_text"];
                 $des_text[$art_article_nr_cans[$art_article_nr_can]] = $data["des_text"];
             }
