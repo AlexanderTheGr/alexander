@@ -421,7 +421,7 @@ class ServiceController extends Main {
                 $des_text[$art_article_nr_cans[$art_article_nr_can]] = $data["des_text"];
             }
             
-            $html = '<table>';
+            $html = print_r($art_article_nr_canss,true).'<table>';
             foreach ((array) $out as $article_nr => $arts) {
                 $html .= '<tr>';
                 $html .= "<td>" . $art_article_nr_canss[$article_nr] . "</td>";
