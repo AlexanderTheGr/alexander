@@ -401,6 +401,7 @@ class ServiceController extends Main {
     }    
         
     
+    
     function original2($items, $category = 0, $tecdocSupplierId = 0, $brand = 0) {
         if (count($items)) {
             $sup = "";
