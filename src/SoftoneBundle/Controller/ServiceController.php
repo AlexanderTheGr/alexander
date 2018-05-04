@@ -423,7 +423,7 @@ class ServiceController extends Main {
                 
             }
             
-            $html = print_r($art_article_nr_canss,true).'<table>';
+            $html = '<table>';
             foreach ((array) $out as $article_nr => $arts) {
                 $html .= '<tr>';
                 $html .= "<td>" . $art_article_nr_canss[strtolower($article_nr)] . "</td>";
