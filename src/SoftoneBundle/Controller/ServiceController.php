@@ -394,7 +394,7 @@ class ServiceController extends Main {
                 $terms = explode("\t", $term);
                 $art_article_nr_can = preg_replace("/[^a-zA-Z0-9]+/", "", $terms[0]);
                 $art_article_nr_cans[] = $art_article_nr_can;
-                $art_article_nr_cans[$art_article_nr_can] = $terms[0];
+                $art_article_nr_canss[$art_article_nr_can] = $terms[0];
                 $sup_id[$art_article_nr_can] = $terms[1];
             }
             
@@ -417,6 +417,7 @@ class ServiceController extends Main {
             foreach ($datas as $data) {
                 $art_article_nr_can = $data["art_article_nr_can"];
                 $out[$art_article_nr_cans[$art_article_nr_can]][] = $data;
+                $des_text[$art_article_nr_cans[$art_article_nr_can]] = $data["des_text"];
                 $des_text[$art_article_nr_cans[$art_article_nr_can]] = $data["des_text"];
             }
             
