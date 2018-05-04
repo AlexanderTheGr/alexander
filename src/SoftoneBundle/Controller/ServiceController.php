@@ -389,12 +389,21 @@ class ServiceController extends Main {
     
     function getoriginals($items, $category = 0, $tecdocSupplierId = 0) {
         if (count($items)) {
+            
+            foreach ($items as $term) {
+                $terms = explode("\t", $term);
+                $art_article_nr_can = preg_replace("/[^a-zA-Z0-9]+/", "", $terms[0]);
+                $art_article_nr_cans[] = $art_article_nr_can;
+                $art_article_nr_cans[$art_article_nr_can] = $terms[0];
+                $sup_id[$art_article_nr_can] = $terms[1];
+            }
+            
             if ($tecdocSupplierId > 0)
                 $sup = " AND sup_id = '" . $tecdocSupplierId . "'";
             if ($category > 0)
                 $cat = " AND art.art_id in (Select des.art_id from magento2_base4q2017.art_products_des des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1))";
             
-            $sql = "SELECT des_text,art.art_id, art_article_nr_can,sup_id,sup_brand FROM art_products_des artpt, text_designations tex, products pt, art_oem_numbers oem, `articles` art,suppliers 
+            $sql = "SELECT des_text,art.art_id,oem_num, art_article_nr_can,sup_id,sup_brand FROM art_products_des artpt, text_designations tex, products pt, art_oem_numbers oem, `articles` art,suppliers 
                     where 
                     artpt.art_id = art.art_id AND 
                     pt.pt_id = artpt.pt_id AND
@@ -402,9 +411,37 @@ class ServiceController extends Main {
                     art.art_id=oem.art_id AND 
                     sup_id = art_sup_id AND 
                     tex.des_lng_id = '20' AND 
-                    art_article_nr_can in ('" . implode("','", $items) . "') " . $sup . " ".$cat." order by sup_brand";
-        
-            return $sql;
+                    art_article_nr_can in ('" . implode("','", $art_article_nr_cans) . "') " . $sup . " ".$cat." order by sup_brand";
+            $url = "http://magento2.fastwebltd.com/service.php";
+            $datas = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
+            foreach ($datas as $data) {
+                $art_article_nr_can = $data["art_article_nr_can"];
+                $out[$art_article_nr_cans[$art_article_nr_can]][] = $data;
+                $des_text[$art_article_nr_cans[$art_article_nr_can]] = $data["des_text"];
+            }
+            
+            $html = '<table>';
+            foreach ((array) $out as $article_nr => $arts) {
+                $html .= '<tr>';
+                $html .= "<td>" . $article_nr . "</td>";
+                $html .= "<td>" . $des_text[$article_nr] . "</td>";
+                if (count($arts) > 1) {
+                    $html .= "<td></td>";
+                }
+
+                foreach ($arts as $art) {
+                    $html .= "<td>" . $art["oem_num"] . "</td>";
+                    //$html .= "<td>" . $art["sup_brand"] . "</td>";
+                    //$html .= "<td>" . $art["cat"] . "</td>";
+                    //$html .= "<td>".$art["sql"]."</td>";
+                }
+
+                $html .= '</tr>';
+            }
+            $html .= '<table>';            
+            
+            
+            //return $sql;
         }    
     }    
         
