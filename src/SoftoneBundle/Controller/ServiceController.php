@@ -403,7 +403,7 @@ class ServiceController extends Main {
             if ($category > 0)
                 $cat = " AND art.art_id in (Select des.art_id from magento2_base4q2017.art_products_des des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1))";
             
-            $sql = "SELECT des_text,art.art_id,oem_num, art_article_nr_can,sup_id,sup_brand FROM art_products_des artpt, text_designations tex, products pt, art_oem_numbers oem, `articles` art,suppliers 
+            $sql = "SELECT sup_brand,des_text,art.art_id,oem_num, art_article_nr_can,sup_id,sup_brand FROM art_products_des artpt, text_designations tex, products pt, art_oem_numbers oem, `articles` art,suppliers 
                     where 
                     artpt.art_id = art.art_id AND 
                     pt.pt_id = artpt.pt_id AND
@@ -418,12 +418,16 @@ class ServiceController extends Main {
                 $art_article_nr_can = $data["art_article_nr_can"];
                 $out[$art_article_nr_can][] = $data;
                 $des_text[$art_article_nr_can] = $data["des_text"];
+                $des_text[$art_article_nr_can] = $data["des_text"];
+                $sup_brand[$art_article_nr_can] = $data["sup_brand"];
+                
             }
             
             $html = print_r($art_article_nr_canss,true).'<table>';
             foreach ((array) $out as $article_nr => $arts) {
                 $html .= '<tr>';
                 $html .= "<td>" . $art_article_nr_canss[strtolower($article_nr)] . "</td>";
+                $html .= "<td>" . $sup_brand[$article_nr] . "</td>";
                 $html .= "<td>" . $des_text[$article_nr] . "</td>";
                 if (count($arts) > 1) {
                     $html .= "<td></td>";
