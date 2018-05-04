@@ -401,6 +401,7 @@ class ServiceController extends Main {
                     tex.des_id = pt.pt_des_id AND                    
                     art.art_id=oem.art_id AND 
                     sup_id = art_sup_id AND 
+                    tex.des_lng_id = '20' AND 
                     art_article_nr_can in ('" . implode("','", $items) . "') " . $sup . " ".$cat." order by sup_brand";
         
             return $sql;
