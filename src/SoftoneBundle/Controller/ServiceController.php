@@ -416,7 +416,7 @@ class ServiceController extends Main {
             $url = "http://magento2.fastwebltd.com/service.php";
             $datas = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
             foreach ($datas as $data) {
-                $art_article_nr_can = $data["art_article_nr_can"];
+                $art_article_nr_can = strtolower($data["art_article_nr_can"]);
                 $out[$art_article_nr_can][] = $data;
                 $des_text[$art_article_nr_can] = $data["des_text"];
                 $des_text[$art_article_nr_can] = $data["des_text"];
