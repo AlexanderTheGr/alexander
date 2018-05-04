@@ -433,6 +433,7 @@ class ServiceController extends Main {
                 //if (count($arts) > 0) {
                 $html .= "<td>".count($arts)."</td>";
                 //}
+                
                 $arttt = "";
                 foreach ($arts as $art) {
                     $html .= "<td>" . $art["oem_num"] . "</td>";
