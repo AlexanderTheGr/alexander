@@ -441,7 +441,7 @@ class ServiceController extends Main {
             $html .= '<table>';            
             
             
-            //return $sql;
+            return $html;
         }    
     }    
         
