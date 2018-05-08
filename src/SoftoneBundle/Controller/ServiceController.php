@@ -290,7 +290,7 @@ class ServiceController extends Main {
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][3] = count($mdo[$data["art_article_nr_can"][$data["mod_lnk_vich_id"]]] );
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][4] = implode(",", $mdo[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]]);
                 } else {
-                    if ($out[$data["art_article_nr_can"]][1] == 'OK') {
+                    if ($out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][1] == 'OK') {
                         continue;
                     }
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][1] = "NOT OK";
