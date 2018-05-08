@@ -33,6 +33,7 @@ class ServiceController extends Main {
         $entity = new Pcategory;
 
         $dataarray[] = array("value" => "matchModels", "name" => "Match Models");
+        $dataarray[] = array("value" => "matchModels2", "name" => "Match Models Full");
         $dataarray[] = array("value" => "match", "name" => "Match");
         $dataarray[] = array("value" => "original2", "name" => "Original");
         $dataarray[] = array("value" => "ppergostat", "name" => "Ergostatio2");
@@ -262,51 +263,52 @@ class ServiceController extends Main {
                 $sup_id[$art_article_nr_can] = $terms[1];
             }
 
-            $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles` c, suppliers d where d.sup_id = c.art_sup_id AND c.art_article_nr_can in ('" . implode("','", $art_article_nr_cans) . "') order by d.sup_brand";
+            $sql = "SELECT mod_lnk_vich_id, c.art_id, art_article_nr_can,sup_id,sup_brand FROM magento2_base4q2017.art_mod_links a, magento2_base4q2017.models_links b, `articles` c, suppliers d where `mod_lnk_type` = 1 AND a.mod_lnk_id = b.mod_lnk_id AND c.art_id = a.art_id AND d.sup_id = c.art_sup_id AND c.art_article_nr_can in ('" . implode("','", $art_article_nr_cans) . "') order by d.sup_brand";
             //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."')))";
             //echo $sql;
             //exit;
             $url = "http://magento2.fastwebltd.com/service.php";
             $datas = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
             //$datas = unserialize(file_get_contents($url));
-
+            //$html =  "<pre>".print_r($datas,true)."<pre>";
             foreach ((array) $datas as $data) {
                 if ($sup_id[$data["art_article_nr_can"]] == $data["sup_id"]) {
-                    if ($out[$data["art_article_nr_can"]][1] == 'OK') {
-                        continue;
-                    }
-                    $out[$data["art_article_nr_can"]][1] = "OK";
-                    $out[$data["art_article_nr_can"]][2] = $data["art_id"];
-
-                    $sql = "Select mod_lnk_vich_id from magento2_base4q2017.art_mod_links a, magento2_base4q2017.models_links b where `mod_lnk_type` = 1 AND a.mod_lnk_id = b.mod_lnk_id and art_id = '" . $data["art_id"] . "' group by `mod_lnk_vich_id`";
+                    //if ($out[$data["art_article_nr_can"]][1] == 'OK') {
+                    //    continue;
+                    //}
+                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][1] = "OK";
+                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][2] = $data["art_id"];
+                    //$sql = "Select mod_lnk_vich_id from magento2_base4q2017.art_mod_links a, magento2_base4q2017.models_links b where `mod_lnk_type` = 1 AND a.mod_lnk_id = b.mod_lnk_id and art_id = '" . $data["art_id"] . "' group by `mod_lnk_vich_id`";
                     //$url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
-                    //$models = unserialize(file_get_contents($url));
-                    $mdo = array();
-                    foreach ($models as $model_type) {
-                        $mdo[] = $model_type["mod_lnk_vich_id"];
-                    }
-                    $out[$data["art_article_nr_can"]][3] = count($mdo);
-                    $out[$data["art_article_nr_can"]][4] = implode(",", $mdo);
+                    //$models = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
+                    //$mdo = array();
+                    //foreach ($models as $model_type) {
+                    
+                    $mdo[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][] = $data["mod_lnk_vich_id"];
+                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][3] = count($mdo[$data["art_article_nr_can"][$data["mod_lnk_vich_id"]]] );
+                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][4] = implode(",", $mdo[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]]);
                 } else {
                     if ($out[$data["art_article_nr_can"]][1] == 'OK') {
                         continue;
                     }
-                    $out[$data["art_article_nr_can"]][1] = "NOT OK";
-                    $out[$data["art_article_nr_can"]][2] = "";
-                    $out[$data["art_article_nr_can"]][3] = "";
-                    $out[$data["art_article_nr_can"]][4] = "";
+                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][1] = "NOT OK";
+                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][2] = "";
+                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][3] = "";
+                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][4] = "";
                 }
             }
 
             $html .= '<table>';
-            foreach ($out as $article_nr => $arts) {
-                $html .= '<tr>';
-                $html .= "<td>" . $article_nr . "</td>";
-                $html .= "<td>" . $sup_id[$article_nr] . "</td>";
-                foreach ($arts as $art) {
-                    $html .= "<td>" . $art . "</td>";
+            foreach ($out as $article_nr => $mods) {
+                foreach ($mods as $arts) {
+                    $html .= '<tr>';
+                    $html .= "<td>" . $article_nr . "</td>";
+                    $html .= "<td>" . $sup_id[$article_nr] . "</td>";
+                    foreach ($arts as $art) {
+                        $html .= "<td>" . $art . "</td>";
+                    }
+                    $html .= '</tr>';
                 }
-                $html .= '</tr>';
             }
             $html .= '<tr>';
             $html .= "<td></td>";
