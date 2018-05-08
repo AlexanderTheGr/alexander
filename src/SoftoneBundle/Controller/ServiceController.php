@@ -265,19 +265,22 @@ class ServiceController extends Main {
                 $out[$art_article_nr_can] = array();
             }
 
-            $sql = "SELECT mfa_brand, mod_lnk_vich_id, c.art_id, art_article_nr_can,sup_id,sup_brand 
+            $sql = "SELECT mfa_brand, mod_lnk_vich_id, c.art_id, art_article_nr_can,sup_id,sup_brand, mscs_name_des 
                        FROM art_mod_links a, 
                              models_links b, 
                                  articles c, 
                                 suppliers d,                                
                             manufacturers e,
-                            models_series f,
-                            passenger_cars h
+                            models_series f, 
+                            passenger_cars h,
+                      ms_country_specifics j  
                             where `mod_lnk_type` = 1 AND
                                    e.mfa_id = f.ms_mfa_id AND
                                    h.pc_mfa_id = e.mfa_id AND
                                    h.pc_ms_id = f.ms_id AND
                                    h.pc_id = mod_lnk_vich_id AND 
+                                   j.mscs_id = f.ms_id AND
+                                   j.mscs_cou_id = 255 AND
                                    a.mod_lnk_id = b.mod_lnk_id AND 
                                    c.art_id = a.art_id AND 
                                    d.sup_id = c.art_sup_id AND 
@@ -306,6 +309,7 @@ class ServiceController extends Main {
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][3] = count($mdo[$data["art_article_nr_can"][$data["mod_lnk_vich_id"]]] );
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][4] = implode(",", $mdo[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]]);
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][5] = $data["mfa_brand"];
+                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][6] = $data["mscs_name_des"];
                 } else {
                     if ($out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][1] == 'OK') {
                         continue;
@@ -315,6 +319,7 @@ class ServiceController extends Main {
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][3] = "";
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][4] = "";
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][5] = "";
+                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][6] = "";
                 }
             }
 
