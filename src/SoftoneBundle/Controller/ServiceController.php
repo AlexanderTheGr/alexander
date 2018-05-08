@@ -265,7 +265,7 @@ class ServiceController extends Main {
                 $out[$art_article_nr_can] = array();
             }
 
-            $sql = "SELECT mfa_brand, mod_lnk_vich_id, c.art_id, art_article_nr_can,sup_id,sup_brand, mscs_name_des 
+            $sql = "SELECT mfa_brand, mod_lnk_vich_id, c.art_id, art_article_nr_can,sup_id,sup_brand, mscs_name_des,pc_model_des
                        FROM art_mod_links a, 
                              models_links b, 
                                  articles c, 
@@ -310,6 +310,7 @@ class ServiceController extends Main {
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][4] = implode(",", $mdo[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]]);
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][5] = $data["mfa_brand"];
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][6] = $data["mscs_name_des"];
+                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][7] = $data["pc_model_des"];
                 } else {
                     if ($out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][1] == 'OK') {
                         continue;
@@ -320,6 +321,7 @@ class ServiceController extends Main {
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][4] = "";
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][5] = "";
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][6] = "";
+                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][7] = "";
                 }
             }
 
