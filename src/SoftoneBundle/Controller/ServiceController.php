@@ -197,14 +197,14 @@ class ServiceController extends Main {
                 $sup_id[$art_article_nr_can] = $terms[1];
             }
 
-            $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles` c, suppliers d where d.sup_id = c.art_sup_id AND c.art_article_nr_can in ('" . implode("','", $art_article_nr_cans) . "') order by d.sup_brand";
+            $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM magento2_base4q2017.art_mod_links a, magento2_base4q2017.models_links b, `articles` c, suppliers d where `mod_lnk_type` = 1 AND a.mod_lnk_id = b.mod_lnk_id AND c.art_id = a.art_id AND d.sup_id = c.art_sup_id AND c.art_article_nr_can in ('" . implode("','", $art_article_nr_cans) . "') order by d.sup_brand";
             //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."')))";
             //echo $sql;
             //exit;
             $url = "http://magento2.fastwebltd.com/service.php";
             $datas = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
             //$datas = unserialize(file_get_contents($url));
-
+            return print_r($datas,true);
             foreach ((array) $datas as $data) {
                 if ($sup_id[$data["art_article_nr_can"]] == $data["sup_id"]) {
                     if ($out[$data["art_article_nr_can"]][1] == 'OK') {
