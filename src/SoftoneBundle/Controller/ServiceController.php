@@ -266,7 +266,7 @@ class ServiceController extends Main {
                 $out[$art_article_nr_can] = array();
             }
             if ($tecdocSupplierId > 0) {
-                $sup = " AND c.sup_id = '" . $tecdocSupplierId . "'";
+                $sup = " AND sup_id = '" . $tecdocSupplierId . "'";
             }
             $sql = "SELECT mfa_brand, mod_lnk_vich_id, pt_des_id, c.art_id, art_article_nr_can,sup_id,sup_brand, mscs_name_des,pc_model_des,mscs_ci_from,mscs_ci_to
                        FROM art_mod_links a, 
