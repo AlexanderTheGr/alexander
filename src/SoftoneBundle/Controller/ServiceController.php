@@ -273,11 +273,12 @@ class ServiceController extends Main {
                                 
                             manufacturers e,
                             models_series f,
-                            passenger_cars h,
+                            passenger_cars h
                             where `mod_lnk_type` = 1 AND
                                    e.mfa_id = f.ms_mfa_id AND
                                    h.pc_mfa_id = e.mfa_id AND
                                    h.pc_ms_id = f.ms_id AND
+                                   h.pc_id = mod_lnk_vich_id AND 
                                    a.mod_lnk_id = b.mod_lnk_id AND 
                                    c.art_id = a.art_id AND 
                                    d.sup_id = c.art_sup_id AND 
