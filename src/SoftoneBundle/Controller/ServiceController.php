@@ -265,7 +265,7 @@ class ServiceController extends Main {
                 $out[$art_article_nr_can] = array();
             }
 
-            $sql = "SELECT mfa_brand, mod_lnk_vich_id, c.art_id, art_article_nr_can,sup_id,sup_brand, mscs_name_des,pc_model_des,mscs_ci_from,mscs_ci_to
+            $sql = "SELECT mfa_brand, mod_lnk_vich_id, pt_des_id, c.art_id, art_article_nr_can,sup_id,sup_brand, mscs_name_des,pc_model_des,mscs_ci_from,mscs_ci_to
                        FROM art_mod_links a, 
                              models_links b, 
                                  articles c, 
@@ -273,6 +273,8 @@ class ServiceController extends Main {
                             manufacturers e,
                             models_series f, 
                             passenger_cars h,
+                            products pt, 
+                            art_products_des artpt, 
                       ms_country_specifics j  
                             where `mod_lnk_type` = 1 AND
                                    e.mfa_id = f.ms_mfa_id AND
@@ -284,6 +286,8 @@ class ServiceController extends Main {
                                    a.mod_lnk_id = b.mod_lnk_id AND 
                                    c.art_id = a.art_id AND 
                                    d.sup_id = c.art_sup_id AND 
+                                   artpt.art_id = c.art_id AND 
+                                   pt.pt_id = artpt.pt_id AND
                                    c.art_article_nr_can in ('" . implode("','", $art_article_nr_cans) . "') order by d.sup_brand";
             //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."')))";
             //echo $sql;
@@ -298,7 +302,7 @@ class ServiceController extends Main {
                     //    continue;
                     //}
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][1] = "OK";
-                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][2] = $data["art_id"];
+                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][2] = $data["pt_des_id"];
                     //$sql = "Select mod_lnk_vich_id from magento2_base4q2017.art_mod_links a, magento2_base4q2017.models_links b where `mod_lnk_type` = 1 AND a.mod_lnk_id = b.mod_lnk_id and art_id = '" . $data["art_id"] . "' group by `mod_lnk_vich_id`";
                     //$url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
                     //$models = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
@@ -318,6 +322,8 @@ class ServiceController extends Main {
                     
                     $des[$data["pc_model_des"]] = $data["pc_model_des"]; 
                     $des[$data["mscs_name_des"]] = $data["mscs_name_des"]; 
+                    $des[$data["pt_des_id"]] = $data["pt_des_id"]; 
+                    
                 } else {
                     if ($ass[$sup_id[$data["art_article_nr_can"]]] == 'OK') {
                         continue;
@@ -351,7 +357,7 @@ class ServiceController extends Main {
                     $html .= "<td>" . $sup_id[$article_nr] . "</td>";
                     $arttt = "";
                     foreach ($arts as $key => $art) {
-                        if ($key == 6 OR $key == 7) {
+                        if ($key == 6 OR $key == 7 OR $key == 2) {
                             $art = $ds[$art];
                         }
                         $html .= "<td>" . $art . "</td>";
@@ -526,7 +532,11 @@ class ServiceController extends Main {
             if ($category > 0)
                 $cat = " AND art.art_id in (Select des.art_id from magento2_base4q2017.art_products_des des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1))";
             
-            $sql = "SELECT sup_brand,des_text,art.art_id,oem_num, art_article_nr_can,sup_id,sup_brand FROM art_products_des artpt, text_designations tex, products pt, art_oem_numbers oem, `articles` art,suppliers 
+            $sql = "SELECT sup_brand,des_text,art.art_id,oem_num, art_article_nr_can,sup_id,sup_brand FROM 
+                art_products_des artpt, 
+                text_designations tex, 
+                products pt, 
+                art_oem_numbers oem, `articles` art,suppliers 
                     where 
                     artpt.art_id = art.art_id AND 
                     pt.pt_id = artpt.pt_id AND
