@@ -357,7 +357,7 @@ class ServiceController extends Main {
                         $html .= "<td>" . $art . "</td>";
                         $arttt .= $art ."\t";
                     }
-                    $text .= $article_nr . "\t" . $sup_id[$article_nr] . "\t" . $art . "\n";
+                    $text .= $article_nr . "\t" . $sup_id[$article_nr] . "\t" . $arttt . "\n";
                     $html .= '</tr>';
                 }
             }
