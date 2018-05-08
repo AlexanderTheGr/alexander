@@ -399,6 +399,7 @@ class ServiceController extends Main {
                 $art_article_nr_can = preg_replace("/[^a-zA-Z0-9]+/", "", $terms[0]);
                 $art_article_nr_cans[] = $art_article_nr_can;
                 $out[$i . "||" . $art_article_nr_can] = array();
+                $terms[1] = $terms[1] > 0 ? $terms[1] : $tecdocSupplierId;
                 $sup_id[$art_article_nr_can] = $terms[1];
                 $is[$art_article_nr_can][] = $i;
                 $artnrs[$i . "||" . $art_article_nr_can] = $terms[0];
@@ -532,6 +533,7 @@ class ServiceController extends Main {
                 $art_article_nr_can = strtolower(preg_replace("/[^a-zA-Z0-9]+/", "", $terms[0]));
                 $art_article_nr_cans[] = $art_article_nr_can;
                 $art_article_nr_canss[$art_article_nr_can] = $terms[0];
+                $terms[1] = $terms[1] > 0 ? $terms[1] : $tecdocSupplierId;
                 $sup_id[$art_article_nr_can] = $terms[1];
                 $out[$art_article_nr_can] = array();
             }
