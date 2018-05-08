@@ -311,6 +311,8 @@ class ServiceController extends Main {
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][5] = $data["mfa_brand"];
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][6] = $data["mscs_name_des"];
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][7] = $data["pc_model_des"];
+                    $des[$data["pc_model_des"]] = $data["pc_model_des"]; 
+                    $des[$data["mscs_name_des"]] = $data["mscs_name_des"]; 
                 } else {
                     if ($out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][1] == 'OK') {
                         continue;
@@ -325,7 +327,15 @@ class ServiceController extends Main {
                 }
             }
 
+            $sql = "Select * text_designations from where des_lng_id = 20 and des_id in in ('" . implode("','", $des) . "')";
+            $datas = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
+            $html =  $sql."<pre>".print_r($datas,true)."<pre>";
+            
             $html .= '<table>';
+            
+            
+            
+            
             foreach ($out as $article_nr => $mods) {
                 foreach ($mods as $arts) {
                     $html .= '<tr>';
