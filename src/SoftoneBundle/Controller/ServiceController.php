@@ -265,7 +265,23 @@ class ServiceController extends Main {
                 $out[$art_article_nr_can] = array();
             }
 
-            $sql = "SELECT mod_lnk_vich_id, c.art_id, art_article_nr_can,sup_id,sup_brand FROM magento2_base4q2017.art_mod_links a, magento2_base4q2017.models_links b, `articles` c, suppliers d where `mod_lnk_type` = 1 AND a.mod_lnk_id = b.mod_lnk_id AND c.art_id = a.art_id AND d.sup_id = c.art_sup_id AND c.art_article_nr_can in ('" . implode("','", $art_article_nr_cans) . "') order by d.sup_brand";
+            $sql = "SELECT mfa_brand, mod_lnk_vich_id, c.art_id, art_article_nr_can,sup_id,sup_brand 
+                       FROM art_mod_links a, 
+                             models_links b, 
+                                 articles c, 
+                                suppliers d,
+                                
+                            manufacturers e,
+                            models_series f,
+                            passenger_cars h,
+                            where `mod_lnk_type` = 1 AND
+                                   e.mfa_id = f.ms_mfa_id AND
+                                   h.pc_mfa_id = e.mfa_id AND
+                                   h.pc_ms_id = f.ms_id AND
+                                   a.mod_lnk_id = b.mod_lnk_id AND 
+                                   c.art_id = a.art_id AND 
+                                   d.sup_id = c.art_sup_id AND 
+                                   c.art_article_nr_can in ('" . implode("','", $art_article_nr_cans) . "') order by d.sup_brand";
             //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."')))";
             //echo $sql;
             //exit;
@@ -289,6 +305,7 @@ class ServiceController extends Main {
                     $mdo[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][] = $data["mod_lnk_vich_id"];
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][3] = count($mdo[$data["art_article_nr_can"][$data["mod_lnk_vich_id"]]] );
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][4] = implode(",", $mdo[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]]);
+                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][5] = $data["mfa_brand"];
                 } else {
                     if ($out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][1] == 'OK') {
                         continue;
@@ -297,6 +314,7 @@ class ServiceController extends Main {
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][2] = $sup_id[$data["art_article_nr_can"]]." - ".$data["sup_id"];
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][3] = "";
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][4] = "";
+                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][5] = "";
                 }
             }
 
