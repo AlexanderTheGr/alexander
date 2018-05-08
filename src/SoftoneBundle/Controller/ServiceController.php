@@ -197,12 +197,13 @@ class ServiceController extends Main {
                 $sup_id[$art_article_nr_can] = $terms[1];
             }
 
-            $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('" . implode("','", $art_article_nr_cans) . "') order by sup_brand";
+            $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles` c, suppliers d where d.sup_id = c.art_sup_id AND c.art_article_nr_can in ('" . implode("','", $art_article_nr_cans) . "') order by d.sup_brand";
             //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."')))";
             //echo $sql;
             //exit;
-            $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
-            $datas = unserialize(file_get_contents($url));
+            $url = "http://magento2.fastwebltd.com/service.php";
+            $datas = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
+            //$datas = unserialize(file_get_contents($url));
 
             foreach ((array) $datas as $data) {
                 if ($sup_id[$data["art_article_nr_can"]] == $data["sup_id"]) {
@@ -213,8 +214,8 @@ class ServiceController extends Main {
                     $out[$data["art_article_nr_can"]][2] = $data["art_id"];
 
                     $sql = "Select mod_lnk_vich_id from magento2_base4q2017.art_mod_links a, magento2_base4q2017.models_links b where `mod_lnk_type` = 1 AND a.mod_lnk_id = b.mod_lnk_id and art_id = '" . $data["art_id"] . "' group by `mod_lnk_vich_id`";
-                    $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
-                    $models = unserialize(file_get_contents($url));
+                    //$url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+                    $models = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
                     $mdo = array();
                     foreach ($models as $model_type) {
                         $mdo[] = $model_type["mod_lnk_vich_id"];
@@ -249,6 +250,73 @@ class ServiceController extends Main {
         }
         return $html;
     }
+    
+    
+    function matchModels2($items, $category = 0, $tecdocSupplierId = 0) {
+        if (count($items)) {
+            $out = array();
+            foreach ($items as $term) {
+                $terms = explode("\t", $term);
+                $art_article_nr_can = preg_replace("/[^a-zA-Z0-9]+/", "", $terms[0]);
+                $art_article_nr_cans[] = $art_article_nr_can;
+                $sup_id[$art_article_nr_can] = $terms[1];
+            }
+
+            $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles` c, suppliers d where d.sup_id = c.art_sup_id AND c.art_article_nr_can in ('" . implode("','", $art_article_nr_cans) . "') order by d.sup_brand";
+            //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."')))";
+            //echo $sql;
+            //exit;
+            $url = "http://magento2.fastwebltd.com/service.php";
+            $datas = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
+            //$datas = unserialize(file_get_contents($url));
+
+            foreach ((array) $datas as $data) {
+                if ($sup_id[$data["art_article_nr_can"]] == $data["sup_id"]) {
+                    if ($out[$data["art_article_nr_can"]][1] == 'OK') {
+                        continue;
+                    }
+                    $out[$data["art_article_nr_can"]][1] = "OK";
+                    $out[$data["art_article_nr_can"]][2] = $data["art_id"];
+
+                    $sql = "Select mod_lnk_vich_id from magento2_base4q2017.art_mod_links a, magento2_base4q2017.models_links b where `mod_lnk_type` = 1 AND a.mod_lnk_id = b.mod_lnk_id and art_id = '" . $data["art_id"] . "' group by `mod_lnk_vich_id`";
+                    //$url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+                    //$models = unserialize(file_get_contents($url));
+                    $mdo = array();
+                    foreach ($models as $model_type) {
+                        $mdo[] = $model_type["mod_lnk_vich_id"];
+                    }
+                    $out[$data["art_article_nr_can"]][3] = count($mdo);
+                    $out[$data["art_article_nr_can"]][4] = implode(",", $mdo);
+                } else {
+                    if ($out[$data["art_article_nr_can"]][1] == 'OK') {
+                        continue;
+                    }
+                    $out[$data["art_article_nr_can"]][1] = "NOT OK";
+                    $out[$data["art_article_nr_can"]][2] = "";
+                    $out[$data["art_article_nr_can"]][3] = "";
+                    $out[$data["art_article_nr_can"]][4] = "";
+                }
+            }
+
+            $html .= '<table>';
+            foreach ($out as $article_nr => $arts) {
+                $html .= '<tr>';
+                $html .= "<td>" . $article_nr . "</td>";
+                $html .= "<td>" . $sup_id[$article_nr] . "</td>";
+                foreach ($arts as $art) {
+                    $html .= "<td>" . $art . "</td>";
+                }
+                $html .= '</tr>';
+            }
+            $html .= '<tr>';
+            $html .= "<td></td>";
+            $html .= '</tr>';
+            $html .= '<table>';
+        }
+        return $html;
+    }    
+    
+    
     
     function match($items, $category = 0, $tecdocSupplierId = 0) {
         if (count($items)) {
