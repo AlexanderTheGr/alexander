@@ -207,9 +207,9 @@ class ServiceController extends Main {
             $html =  "<pre>".print_r($datas,true)."<pre>";
             foreach ((array) $datas as $data) {
                 if ($sup_id[$data["art_article_nr_can"]] == $data["sup_id"]) {
-                    if ($out[$data["art_article_nr_can"]][1] == 'OK') {
-                        continue;
-                    }
+                    //if ($out[$data["art_article_nr_can"]][1] == 'OK') {
+                    //    continue;
+                    //}
                     $out[$data["art_article_nr_can"]][1] = "OK";
                     $out[$data["art_article_nr_can"]][2] = $data["art_id"];
 
