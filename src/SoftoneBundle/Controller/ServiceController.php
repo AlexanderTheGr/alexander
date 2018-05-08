@@ -254,7 +254,7 @@ class ServiceController extends Main {
     }
     
     
-    function matchModels2($items, $category = 0, $tecdocSupplierId = 0) {
+    function matchModels2($items, $category = 0, $tecdocSupplierId = 0, $brand = 0) {
         if (count($items)) {
             $out = array();
             foreach ($items as $term) {
@@ -268,6 +268,7 @@ class ServiceController extends Main {
             if ($tecdocSupplierId > 0) {
                 $sup = " AND sup_id = '" . $tecdocSupplierId . "'";
             }
+            $brand_sql = $brand > 0 ? " AND e.mfa_id = '" . $brand . "'" : "";
             $sql = "SELECT mfa_brand, mod_lnk_vich_id, pt_des_id, c.art_id, art_article_nr_can,sup_id,sup_brand, mscs_name_des,pc_model_des,mscs_ci_from,mscs_ci_to
                        FROM art_mod_links a, 
                              models_links b, 
@@ -291,7 +292,7 @@ class ServiceController extends Main {
                                    d.sup_id = c.art_sup_id AND 
                                    artpt.art_id = c.art_id AND 
                                    pt.pt_id = artpt.pt_id AND
-                                   c.art_article_nr_can in ('" . implode("','", $art_article_nr_cans) . "') ".$sup." order by d.sup_brand";
+                                   c.art_article_nr_can in ('" . implode("','", $art_article_nr_cans) . "') ".$sup.$brand_sql." order by d.sup_brand";
             //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."')))";
             //echo $sql;
             //exit;
