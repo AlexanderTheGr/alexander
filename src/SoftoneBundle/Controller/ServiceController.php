@@ -196,6 +196,7 @@ class ServiceController extends Main {
                 $art_article_nr_can = preg_replace("/[^a-zA-Z0-9]+/", "", $terms[0]);
                 $art_article_nr_cans[] = $art_article_nr_can;
                 $sup_id[$art_article_nr_can] = $terms[1];
+                $out[$art_article_nr_can] = array();
             }
 
             $sql = "SELECT mod_lnk_vich_id, c.art_id, art_article_nr_can,sup_id,sup_brand FROM magento2_base4q2017.art_mod_links a, magento2_base4q2017.models_links b, `articles` c, suppliers d where `mod_lnk_type` = 1 AND a.mod_lnk_id = b.mod_lnk_id AND c.art_id = a.art_id AND d.sup_id = c.art_sup_id AND c.art_article_nr_can in ('" . implode("','", $art_article_nr_cans) . "') order by d.sup_brand";
