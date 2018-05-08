@@ -304,7 +304,7 @@ class ServiceController extends Main {
                     //$models = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
                     //$mdo = array();
                     //foreach ($models as $model_type) {
-                    
+                    $ass[$sup_id[$data["art_article_nr_can"]]][$data["sup_id"]] = "OK";
                     $mdo[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][] = $data["mod_lnk_vich_id"];
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][3] = count($mdo[$data["art_article_nr_can"][$data["mod_lnk_vich_id"]]] );
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][4] = implode(",", $mdo[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]]);
@@ -314,7 +314,7 @@ class ServiceController extends Main {
                     $des[$data["pc_model_des"]] = $data["pc_model_des"]; 
                     $des[$data["mscs_name_des"]] = $data["mscs_name_des"]; 
                 } else {
-                    if ($out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][1] == 'OK') {
+                    if ($ass[$sup_id[$data["art_article_nr_can"]]][$data["sup_id"]] == 'OK') {
                         continue;
                     }
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][1] = "NOT OK";
