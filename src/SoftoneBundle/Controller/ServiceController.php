@@ -294,7 +294,7 @@ class ServiceController extends Main {
                         continue;
                     }
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][1] = "NOT OK";
-                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][2] = "";
+                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][2] = $sup_id[$data["art_article_nr_can"]]." - ".$data["sup_id"];
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][3] = "";
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][4] = "";
                 }
