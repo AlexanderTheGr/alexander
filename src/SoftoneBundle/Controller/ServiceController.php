@@ -327,10 +327,12 @@ class ServiceController extends Main {
                 }
             }
 
-            $sql = "Select * text_designations from where des_lng_id = 20 and des_id in ('" . implode("','", $des) . "')";
+            $sql = "Select * from text_designations where des_lng_id = 20 and des_id in ('" . implode("','", $des) . "')";
             $datas = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
-            $html =  $sql."<pre>".print_r($datas,true)."<pre>";
-            
+            //$html =  $sql."<pre>".print_r($datas,true)."<pre>";
+            foreach ((array) $datas as $data) {
+                $ds[$data["des_id"]] = $data["des_text"];             
+            }
             $html .= '<table>';
 
             
@@ -339,7 +341,10 @@ class ServiceController extends Main {
                     $html .= '<tr>';
                     $html .= "<td>" . $article_nr . "</td>";
                     $html .= "<td>" . $sup_id[$article_nr] . "</td>";
-                    foreach ($arts as $art) {
+                    foreach ($arts as $key => $art) {
+                        if ($key == 6 OR $key == 7) {
+                            $art = $ds[$art];
+                        }
                         $html .= "<td>" . $art . "</td>";
                     }
                     $html .= '</tr>';
