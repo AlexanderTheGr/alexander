@@ -327,14 +327,12 @@ class ServiceController extends Main {
                 }
             }
 
-            $sql = "Select * text_designations from where des_lng_id = 20 and des_id in in ('" . implode("','", $des) . "')";
+            $sql = "Select * text_designations from where des_lng_id = 20 and des_id in ('" . implode("','", $des) . "')";
             $datas = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
             $html =  $sql."<pre>".print_r($datas,true)."<pre>";
             
             $html .= '<table>';
-            
-            
-            
+
             
             foreach ($out as $article_nr => $mods) {
                 foreach ($mods as $arts) {
