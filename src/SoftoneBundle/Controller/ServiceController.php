@@ -349,12 +349,15 @@ class ServiceController extends Main {
                     $html .= '<tr>';
                     $html .= "<td>" . $article_nr . "</td>";
                     $html .= "<td>" . $sup_id[$article_nr] . "</td>";
+                    $arttt = "";
                     foreach ($arts as $key => $art) {
                         if ($key == 6 OR $key == 7) {
                             $art = $ds[$art];
                         }
                         $html .= "<td>" . $art . "</td>";
+                        $arttt .= $art ."\t";
                     }
+                    $text .= $article_nr . "\t" . $sup_id[$article_nr] . "\t" . $art . "\n";
                     $html .= '</tr>';
                 }
             }
@@ -362,8 +365,9 @@ class ServiceController extends Main {
             $html .= "<td></td>";
             $html .= '</tr>';
             $html .= '<table>';
+            $textarea = "<textarea>" . $text . "</textarea><BR>";
         }
-        return $html;
+        return $textarea.$html;
     }    
     
     
