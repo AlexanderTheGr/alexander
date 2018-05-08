@@ -265,7 +265,7 @@ class ServiceController extends Main {
                 $out[$art_article_nr_can] = array();
             }
 
-            $sql = "SELECT mfa_brand, mod_lnk_vich_id, c.art_id, art_article_nr_can,sup_id,sup_brand, mscs_name_des,pc_model_des
+            $sql = "SELECT mfa_brand, mod_lnk_vich_id, c.art_id, art_article_nr_can,sup_id,sup_brand, mscs_name_des,pc_model_des,mscs_ci_from,mscs_ci_to
                        FROM art_mod_links a, 
                              models_links b, 
                                  articles c, 
@@ -311,6 +311,11 @@ class ServiceController extends Main {
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][5] = $data["mfa_brand"];
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][6] = $data["mscs_name_des"];
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][7] = $data["pc_model_des"];
+                    
+                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][8] = $data["mscs_ci_from"];
+                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][9] = $data["mscs_ci_to"];
+                    
+                    
                     $des[$data["pc_model_des"]] = $data["pc_model_des"]; 
                     $des[$data["mscs_name_des"]] = $data["mscs_name_des"]; 
                 } else {
@@ -324,7 +329,10 @@ class ServiceController extends Main {
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][5] = "";
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][6] = "";
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][7] = "";
+                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][8] = "";
+                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][9] = "";
                 }
+                
             }
 
             $sql = "Select * from text_designations where des_lng_id = 20 and des_id in ('" . implode("','", $des) . "')";
