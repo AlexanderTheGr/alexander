@@ -269,8 +269,7 @@ class ServiceController extends Main {
                        FROM art_mod_links a, 
                              models_links b, 
                                  articles c, 
-                                suppliers d,
-                                
+                                suppliers d,                                
                             manufacturers e,
                             models_series f,
                             passenger_cars h
@@ -289,7 +288,7 @@ class ServiceController extends Main {
             $url = "http://magento2.fastwebltd.com/service.php";
             $datas = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
             //$datas = unserialize(file_get_contents($url));
-            $html =  $sql."<pre>".print_r($datas,true)."<pre>";
+            //$html =  $sql."<pre>".print_r($datas,true)."<pre>";
             foreach ((array) $datas as $data) {
                 if ($sup_id[$data["art_article_nr_can"]] == $data["sup_id"]) {
                     //if ($out[$data["art_article_nr_can"]][1] == 'OK') {
