@@ -218,7 +218,7 @@ class ServiceController extends Main {
                     //$models = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
                     //$mdo = array();
                     //foreach ($models as $model_type) {
-                    $mdo[$data["art_article_nr_can"]] = $data["mod_lnk_vich_id"];
+                    $mdo[$data["art_article_nr_can"]][] = $data["mod_lnk_vich_id"];
                     $out[$data["art_article_nr_can"]][3] = count($mdo[$data["art_article_nr_can"]] );
                     $out[$data["art_article_nr_can"]][4] = implode(",", $mdo[$data["art_article_nr_can"]]);
                 } else {
