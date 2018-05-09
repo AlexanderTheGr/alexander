@@ -885,11 +885,11 @@ class ProductController extends Main {
         $fields["title"] = array("label" => "Περιγραφή", "disabled" => $entity->getHasTransactions() > 0 ? true : false, "required" => true, "className" => "col-md-6 col-sm-6");
         $fields["erpCode"] = array("label" => "Κωδικός Είδους", "disabled" => $entity->getHasTransactions() > 0 ? true : false, "required" => false, "className" => "col-md-2 col-sm-2");
 
-        /*
+        
 
         $fields["erpCode2"] = array("label" => "Κωδικός Είδους 2", "required" => false, "className" => "col-md-2 col-sm-2");
         $fields["sisxetisi"] = array("label" => "Sisxetisi", "required" => false, "className" => "col-md-2 col-sm-2");
-
+        /*
         $fields["tecdocSupplierId"] = array("label" => "Tecdoc Supplier", "required" => false, "className" => "col-md-6", 'type' => "select", 'datasource' => array('repository' => 'MegasoftBundle:TecdocSupplier', 'name' => 'supplier', 'value' => 'id', 'suffix' => 'id'));
 
         $fields["tecdocCode"] = array("label" => "Tecdoc Code", "required" => false, "className" => "col-md-6");
