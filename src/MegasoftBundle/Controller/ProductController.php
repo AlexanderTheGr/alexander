@@ -880,25 +880,25 @@ class ProductController extends Main {
 
 
         $fields["productSale"] = array("label" => "Προσφορά", "className" => "col-md-3", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'MegasoftBundle:ProductSale', 'name' => 'title', 'value' => 'id'));
-        
+
 
         $fields["title"] = array("label" => "Περιγραφή", "disabled" => $entity->getHasTransactions() > 0 ? true : false, "required" => true, "className" => "col-md-6 col-sm-6");
         $fields["erpCode"] = array("label" => "Κωδικός Είδους", "disabled" => $entity->getHasTransactions() > 0 ? true : false, "required" => false, "className" => "col-md-2 col-sm-2");
 
-        
+
 
         $fields["erpCode2"] = array("label" => "Κωδικός Είδους 2", "required" => false, "className" => "col-md-2 col-sm-2");
         $fields["sisxetisi"] = array("label" => "Sisxetisi", "required" => false, "className" => "col-md-2 col-sm-2");
-        
+
         $fields["tecdocSupplierId"] = array("label" => "Tecdoc Supplier", "required" => false, "className" => "col-md-6", 'type' => "select", 'datasource' => array('repository' => 'MegasoftBundle:TecdocSupplier', 'name' => 'supplier', 'value' => 'id', 'suffix' => 'id'));
 
-        //$fields["tecdocCode"] = array("label" => "Tecdoc Code", "required" => false, "className" => "col-md-6");
+        $fields["tecdocCode"] = array("label" => "Tecdoc Code", "required" => false, "className" => "col-md-6");
 
-        /*
+
         //$fields["supplier"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'MegasoftBundle:MegasoftSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
         //$fields["supplier"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'dataarray' => $supplier);
 
-        /*
+
         $fields["manufacturer"] = array("label" => "Supplier", "required" => false, "className" => "col-md-2", 'type' => "select", 'datasource' => array('repository' => 'MegasoftBundle:Manufacturer', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
 
         $fields["erpSupplier"] = array("label" => "New Supplier", "required" => false, "className" => "col-md-3");
@@ -929,10 +929,10 @@ class ProductController extends Main {
         //$fields["replaced"] = array("label" => "Replaced by", "disabled" => $entity->getReplaced() == '' ? false : true, "className" => "col-md-6", "required" => false);
         $fields["replaced"] = array("label" => "Replaced by", "className" => "col-md-6", "required" => false);
 
-        */
+
         $forms = $this->getFormLyFields($entity, $fields);
 
-         
+
         $fieldsextra["var1"] = array("label" => $this->getTranslation("Var1"), "className" => "col-md-2", "required" => false);
         $fieldsextra["var2"] = array("label" => $this->getTranslation("Var2"), "className" => "col-md-2", "required" => false);
         $fieldsextra["var3"] = array("label" => $this->getTranslation("Var3"), "className" => "col-md-2", "required" => false);
