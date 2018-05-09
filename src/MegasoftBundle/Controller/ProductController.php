@@ -898,7 +898,7 @@ class ProductController extends Main {
         //$fields["supplier"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'datasource' => array('repository' => 'MegasoftBundle:MegasoftSupplier', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
         //$fields["supplier"] = array("label" => "Supplier", "className" => "col-md-3", 'type' => "select", "required" => false, 'dataarray' => $supplier);
 
-
+        /*
         $fields["manufacturer"] = array("label" => "Supplier", "required" => false, "className" => "col-md-2", 'type' => "select", 'datasource' => array('repository' => 'MegasoftBundle:Manufacturer', 'name' => 'title', 'value' => 'id', 'suffix' => 'code'));
 
         $fields["erpSupplier"] = array("label" => "New Supplier", "required" => false, "className" => "col-md-3");
@@ -929,7 +929,7 @@ class ProductController extends Main {
         //$fields["replaced"] = array("label" => "Replaced by", "disabled" => $entity->getReplaced() == '' ? false : true, "className" => "col-md-6", "required" => false);
         $fields["replaced"] = array("label" => "Replaced by", "className" => "col-md-6", "required" => false);
 
-
+        */
         $forms = $this->getFormLyFields($entity, $fields);
 
          
