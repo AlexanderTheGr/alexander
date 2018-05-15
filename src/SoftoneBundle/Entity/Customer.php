@@ -1042,6 +1042,7 @@ class Customer extends Entity {
         //print_r(@$dataOut);
         $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
         //print_r($out);
+        
         if (@$out->id > 1) {
             $filters = "CUSTOMER.CODE=" . $this->customerCode . "&CUSTOMER.CODE_TO=" . $this->customerCode;
             $datas = $softone->retrieveData($object, "partsbox", $filters);
