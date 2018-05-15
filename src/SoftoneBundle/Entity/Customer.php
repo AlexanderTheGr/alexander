@@ -1041,7 +1041,7 @@ class Customer extends Entity {
         //@$dataOut["ITEEXTRA"][0] = array("NUM02" => $this->item_mtrl_iteextra_num02);
         //print_r(@$dataOut);
         $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
-        print_r($out);
+        //print_r($out);
         if (@$out->id > 0) {
             $filters = "CUSTOMER.CODE=" . $this->customerCode . "&CUSTOMER.CODE_TO=" . $this->customerCode;
             $datas = $softone->retrieveData($object, "partsbox", $filters);
@@ -1055,6 +1055,23 @@ class Customer extends Entity {
             if ($this->reference > 0) {
                 $em->persist($this);
                 $em->flush();
+            }
+        } else {
+            $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
+            if (@$out->id > 0) {
+                $filters = "CUSTOMER.CODE=" . $this->customerCode . "&CUSTOMER.CODE_TO=" . $this->customerCode;
+                $datas = $softone->retrieveData($object, "partsbox", $filters);
+                foreach ($datas as $data) {
+                    $data = (array) $data;
+                    $zoominfo = $data["zoominfo"];
+                    $info = explode(";", $zoominfo);
+                    $this->reference = $info[1];
+                    break;
+                }
+                if ($this->reference > 0) {
+                    $em->persist($this);
+                    $em->flush();
+                }
             }
         }
     }
@@ -1279,6 +1296,7 @@ class Customer extends Entity {
     public function getShipment() {
         return $this->shipment;
     }
+
     /**
      * @var \SoftoneBundle\Entity\Store
      */
@@ -1305,6 +1323,7 @@ class Customer extends Entity {
     public function getSoftoneStore() {
         return $this->softoneStore;
     }
+
     /**
      * @var string
      */
@@ -1315,7 +1334,6 @@ class Customer extends Entity {
      */
     private $vin = '';
 
-
     /**
      * Set pinakida
      *
@@ -1323,8 +1341,7 @@ class Customer extends Entity {
      *
      * @return Customer
      */
-    public function setPinakida($pinakida)
-    {
+    public function setPinakida($pinakida) {
         $this->pinakida = $pinakida;
 
         return $this;
@@ -1335,8 +1352,7 @@ class Customer extends Entity {
      *
      * @return string
      */
-    public function getPinakida()
-    {
+    public function getPinakida() {
         return $this->pinakida;
     }
 
@@ -1347,8 +1363,7 @@ class Customer extends Entity {
      *
      * @return Customer
      */
-    public function setVin($vin)
-    {
+    public function setVin($vin) {
         $this->vin = $vin;
 
         return $this;
@@ -1359,8 +1374,8 @@ class Customer extends Entity {
      *
      * @return string
      */
-    public function getVin()
-    {
+    public function getVin() {
         return $this->vin;
     }
+
 }
