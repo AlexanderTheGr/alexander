@@ -1062,6 +1062,7 @@ class Customer extends Entity {
             print_r($out);
             if (@$out->id > 0) {
                 $filters = "CUSTOMER.CODE=" . $this->customerCode . "&CUSTOMER.CODE_TO=" . $this->customerCode;
+                print_r(@$dataOut);
                 $datas = $softone->retrieveData($object, "partsbox", $filters);
                 foreach ($datas as $data) {
                     $data = (array) $data;
