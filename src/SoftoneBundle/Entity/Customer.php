@@ -1042,7 +1042,7 @@ class Customer extends Entity {
         //print_r(@$dataOut);
         $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
         //print_r($out);
-        if (@$out->id > 1) {
+        if (@$out->id > 0) {
             $filters = "CUSTOMER.CODE=" . $this->customerCode . "&CUSTOMER.CODE_TO=" . $this->customerCode;
             $datas = $softone->retrieveData($object, "partsbox", $filters);
             foreach ($datas as $data) {
@@ -1056,25 +1056,7 @@ class Customer extends Entity {
                 $em->persist($this);
                 $em->flush();
             }
-        } else {
-            $out = $softone->setData((array) $dataOut, $object, (int) $out->id);
-            //print_r($out);
-            if (@$out->id > 1) {
-                $filters = "CUSTOMER.CODE=" . $this->customerCode . "&CUSTOMER.CODE_TO=" . $this->customerCode;
-                $datas = $softone->retrieveData($object, "partsbox", $filters);
-                foreach ($datas as $data) {
-                    $data = (array) $data;
-                    $zoominfo = $data["zoominfo"];
-                    $info = explode(";", $zoominfo);
-                    $this->reference = $info[1];
-                    break;
-                }
-                if ($this->reference > 0) {
-                    $em->persist($this);
-                    $em->flush();
-                }
-            }            
-        } 
+        }
     }
 
     /**
