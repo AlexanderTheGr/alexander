@@ -1042,7 +1042,9 @@ class EdiItemController extends Main {
             $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql);
             $datas = unserialize(file_get_contents($url)); 
             foreach($datas as $data) {
-                $articleIds[] = $data["art_id"]; 
+                if ($data["articleId"]) {
+                    $articleIds[] = $data["articleId"]; 
+                }
             }
             return serialize($articleIds);
             //print_r($articleIds);
