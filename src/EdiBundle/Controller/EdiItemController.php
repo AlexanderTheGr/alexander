@@ -184,7 +184,7 @@ class EdiItemController extends Main {
                 );
             } else {
                 if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
-                    $articleIds = (array) unserialize($this->getArticlesSearch($this->clearstring($search[1])));
+                    $articleIds = (array) unserialize($this->c($this->clearstring($search[1])));
                     @$articleIds2 = unserialize(base64_decode($search[1]));
                     $articleIds = array_merge((array) $articleIds, (array) $articleIds2["matched"], (array) $articleIds2["articleIds"]);
                     $articleIds[] = 1;
@@ -1042,7 +1042,7 @@ class EdiItemController extends Main {
             $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql);
             $datas = unserialize(file_get_contents($url)); 
             foreach($datas as $data) {
-                $articleIds[] = $data["articleId"]; 
+                $articleIds[] = $data["art_id"]; 
             }
             return serialize($articleIds);
             //print_r($articleIds);
