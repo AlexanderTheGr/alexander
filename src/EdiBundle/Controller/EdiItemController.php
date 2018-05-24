@@ -1035,6 +1035,18 @@ class EdiItemController extends Main {
           return $data;
          */
         //}
+        if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
+            $articleIds = array();
+            $term = preg_replace("/[^a-zA-Z0-9]+/", "", $search[1]);
+            $sql = "SELECT art.art_id as articleId FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."'))";			
+            $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql);
+            $datas = unserialize(file_get_contents($url)); 
+            foreach($datas as $data) {
+                $articleIds[] = $data["articleId"]; 
+            }
+            return serialize($articleIds);
+            //print_r($articleIds);
+        }        
         $tecdoc = new Tecdoc();
         $articles = $tecdoc->getArticlesSearch(array('search' => $this->clearstring($search)));
         //print_r($articles);
