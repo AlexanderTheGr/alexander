@@ -578,14 +578,14 @@ class ServiceController extends Main {
                         $sql = "select des_text from magento2_base4q2017.key_values, magento2_base4q2017.text_designations where kv_kt_id = '" . $criteria["lac_kv_kt_id"] . "' AND kv_kv = '" . $criteria["lac_kv_kv"] . "' AND des_id = kv_des_id and des_lng_id = '" . $this->lng . "' ";
                         $kv = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
                         $kv = $kv[0];
-                        if ($kv == "") {
+                        if ($kv["des_text"] == "") {
                             $sql = "select * from magento2_base4q2017.key_values, magento2_base4q2017.text_designations where kv_kt_id = '" . $criteria["lac_kv_kt_id"] . "' AND kv_kv = '" . $criteria["lac_kv_kv"] . "' AND des_id = kv_des_id and des_lng_id = '" . $this->lng . "' ";
                             //$sql = "select des_text from magento2_base4q2017.key_values, magento2_base4q2017.text_designations where kv_kt_id = '".$criteria["acr_kv_kt_id"]."' AND kv_kv = '".$criteria["acr_kv_kv"]."' AND des_id = kv_des_id and des_lng_id = '4' ";
                             //echo $sql;
                             //$kvrow = $this->connection->fetchRow($sql);		
                             //print_r($kvrow);
                         }
-                        $criteria2["value"] = $kv;
+                        $criteria2["value"] = $kv["des_text"];
                     }
                     //$criteria2["cri_id"] = "(".$criteria["lac_cri_id"].")";
                     $criteria2["name"] = $criteria["des_text"];
