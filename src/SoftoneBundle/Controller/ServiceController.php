@@ -623,7 +623,7 @@ class ServiceController extends Main {
                     //if (!$criteria["des_text"]) continue;
                     //$out .= "<li><b>".$criteria["des_text"]."</b>: ".$kv."</li>";
                     $criteria2["name"] = $criteria["des_text"];
-                    $criteria2["value"] = $kv;
+                    $criteria2["value"] = $kv["des_text"];
                     $criteria2["cri_id"] = $criteria["acr_cri_id"];
                     $criterias2[$criteria2["cri_id"]] = $criteria2;
                 } else {
@@ -640,8 +640,8 @@ class ServiceController extends Main {
                 if ($criteria["cri_id"] == 20 OR $criteria["cri_id"] == 21)
                     $criteria["value"] = str_replace(".", "/", $criteria["value"]);
                 //$out .= "<li><b>".$criteria["name"]." [".$criteria["cri_id"]."]</b>:: ".mb_convert_case($criteria["value"], MB_CASE_TITLE, "UTF-8")."</li>";
-                //$out .= "<li><b>" . @mb_convert_case($criteria["name"], MB_CASE_TITLE, "UTF-8") . "</b>: " . @mb_convert_case($criteria["value"], MB_CASE_TITLE, "UTF-8") . "</li>";
-                $out .= "<li>".print_r($criteria,true)."<b>" .$criteria["name"] . "</b>: " . $criteria["value"] . "</li>";
+                $out .= "<li><b>" . @mb_convert_case($criteria["name"], MB_CASE_TITLE, "UTF-8") . "</b>: " . @mb_convert_case($criteria["value"], MB_CASE_TITLE, "UTF-8") . "</li>";
+                //$out .= "<li>".print_r($criteria,true)."<b>" .$criteria["name"] . "</b>: " . $criteria["value"] . "</li>";
             
                 
             }
