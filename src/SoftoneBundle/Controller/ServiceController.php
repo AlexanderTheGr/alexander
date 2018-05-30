@@ -35,12 +35,13 @@ class ServiceController extends Main {
         $dataarray[] = array("value" => "matchModels", "name" => "Match Models");
         $dataarray[] = array("value" => "matchModels2", "name" => "Match Models Full");
         $dataarray[] = array("value" => "match", "name" => "Match");
+        $dataarray[] = array("value" => "matchwithattributes", "name" => "Match With Attributes");
         $dataarray[] = array("value" => "original2", "name" => "Original");
         $dataarray[] = array("value" => "ppergostat", "name" => "Ergostatio2");
         $dataarray[] = array("value" => "ergostatio", "name" => "Ergostatio");
         $dataarray[] = array("value" => "getoriginals", "name" => "Get Originals");
-        
-        
+
+
 
         $pcats = $this->getDoctrine()
                 ->getRepository('SoftoneBundle:Category')
@@ -220,9 +221,9 @@ class ServiceController extends Main {
                     //$models = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
                     //$mdo = array();
                     //foreach ($models as $model_type) {
-                    
+
                     $mdo[$data["art_article_nr_can"]][] = $data["mod_lnk_vich_id"];
-                    $out[$data["art_article_nr_can"]][3] = count($mdo[$data["art_article_nr_can"]] );
+                    $out[$data["art_article_nr_can"]][3] = count($mdo[$data["art_article_nr_can"]]);
                     $out[$data["art_article_nr_can"]][4] = implode(",", $mdo[$data["art_article_nr_can"]]);
                 } else {
                     if ($out[$data["art_article_nr_can"]][1] == 'OK') {
@@ -252,8 +253,7 @@ class ServiceController extends Main {
         }
         return $html;
     }
-    
-    
+
     function matchModels2($items, $category = 0, $tecdocSupplierId = 0, $brand = 0) {
         if (count($items)) {
             $out = array();
@@ -261,7 +261,7 @@ class ServiceController extends Main {
                 $terms = explode("\t", $term);
                 $art_article_nr_can = preg_replace("/[^a-zA-Z0-9]+/", "", $terms[0]);
                 $art_article_nr_cans[] = $art_article_nr_can;
-                $terms[1] = $terms[1] > 0 ? $terms[1] : $tecdocSupplierId; 
+                $terms[1] = $terms[1] > 0 ? $terms[1] : $tecdocSupplierId;
                 $sup_id[$art_article_nr_can] = $terms[1];
                 $out[$art_article_nr_can] = array();
             }
@@ -271,7 +271,7 @@ class ServiceController extends Main {
             $brand_sql = $brand > 0 ? " AND e.mfa_id = '" . $brand . "'" : "";
             if ($category > 0)
                 $cat = " AND art.art_id in (Select des.art_id from magento2_base4q2017.art_products_des des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1))";
-            
+
             $sql = "SELECT mfa_brand, mod_lnk_vich_id, pt_des_id, c.art_id, art_article_nr_can,sup_id,sup_brand, mscs_name_des,pc_model_des,mscs_ci_from,mscs_ci_to
                        FROM art_mod_links a, 
                              models_links b, 
@@ -295,7 +295,7 @@ class ServiceController extends Main {
                                    d.sup_id = c.art_sup_id AND 
                                    artpt.art_id = c.art_id AND 
                                    pt.pt_id = artpt.pt_id AND
-                                   c.art_article_nr_can in ('" . implode("','", $art_article_nr_cans) . "') ".$sup.$brand_sql.$cat." order by d.sup_brand";
+                                   c.art_article_nr_can in ('" . implode("','", $art_article_nr_cans) . "') " . $sup . $brand_sql . $cat . " order by d.sup_brand";
             //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."')))";
             //echo $sql;
             //exit;
@@ -317,26 +317,25 @@ class ServiceController extends Main {
                     //foreach ($models as $model_type) {
                     $ass[$sup_id[$data["art_article_nr_can"]]] = "OK";
                     $mdo[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][] = $data["mod_lnk_vich_id"];
-                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][3] = count($mdo[$data["art_article_nr_can"][$data["mod_lnk_vich_id"]]] );
+                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][3] = count($mdo[$data["art_article_nr_can"][$data["mod_lnk_vich_id"]]]);
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][4] = implode(",", $mdo[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]]);
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][5] = $data["mfa_brand"];
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][6] = $data["mscs_name_des"];
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][7] = $data["pc_model_des"];
-                    
+
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][8] = $data["mscs_ci_from"];
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][9] = $data["mscs_ci_to"];
-                    
-                    
-                    $des[$data["pc_model_des"]] = $data["pc_model_des"]; 
-                    $des[$data["mscs_name_des"]] = $data["mscs_name_des"]; 
-                    $des[$data["pt_des_id"]] = $data["pt_des_id"]; 
-                    
+
+
+                    $des[$data["pc_model_des"]] = $data["pc_model_des"];
+                    $des[$data["mscs_name_des"]] = $data["mscs_name_des"];
+                    $des[$data["pt_des_id"]] = $data["pt_des_id"];
                 } else {
                     if ($ass[$sup_id[$data["art_article_nr_can"]]] == 'OK') {
                         continue;
                     }
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][1] = "NOT OK";
-                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][2] = $sup_id[$data["art_article_nr_can"]]." - ".$data["sup_id"];
+                    $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][2] = $sup_id[$data["art_article_nr_can"]] . " - " . $data["sup_id"];
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][3] = "";
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][4] = "";
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][5] = "";
@@ -345,7 +344,6 @@ class ServiceController extends Main {
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][8] = "";
                     $out[$data["art_article_nr_can"]][$data["mod_lnk_vich_id"]][9] = "";
                 }
-                
             }
             $datas = array();
             if (count($des)) {
@@ -354,11 +352,11 @@ class ServiceController extends Main {
             }
             //$html =  $sql."<pre>".print_r($datas,true)."<pre>";
             foreach ((array) $datas as $data) {
-                $ds[$data["des_id"]] = $data["des_text"];             
+                $ds[$data["des_id"]] = $data["des_text"];
             }
             $html .= '<table>';
 
-            
+
             foreach ($out as $article_nr => $mods) {
                 foreach ($mods as $arts) {
                     $html .= '<tr>';
@@ -370,7 +368,7 @@ class ServiceController extends Main {
                             $art = $ds[$art];
                         }
                         $html .= "<td>" . $art . "</td>";
-                        $arttt .= $art ."\t";
+                        $arttt .= $art . "\t";
                     }
                     $text .= $article_nr . "\t" . $sup_id[$article_nr] . "\t" . $arttt . "\n";
                     $html .= '</tr>';
@@ -382,11 +380,9 @@ class ServiceController extends Main {
             $html .= '<table>';
             $textarea = "<textarea>" . $text . "</textarea><BR>";
         }
-        return $textarea.$html;
-    }    
-    
-    
-    
+        return $textarea . $html;
+    }
+
     function match($items, $category = 0, $tecdocSupplierId = 0) {
         if (count($items)) {
 
@@ -466,6 +462,191 @@ class ServiceController extends Main {
         return $textarea . $html;
     }
 
+    function matchwithattributes($items, $category = 0, $tecdocSupplierId = 0) {
+        if (count($items)) {
+
+
+            $out = array();
+            $i = 0;
+            foreach ($items as $term) {
+                $i++;
+                $terms = explode("\t", $term);
+                $art_article_nr_can = preg_replace("/[^a-zA-Z0-9]+/", "", $terms[0]);
+                $art_article_nr_cans[] = $art_article_nr_can;
+                $out[$i . "||" . $art_article_nr_can] = array();
+                $terms[1] = $terms[1] > 0 ? $terms[1] : $tecdocSupplierId;
+                $sup_id[$art_article_nr_can] = $terms[1];
+                $is[$art_article_nr_can][] = $i;
+                $artnrs[$i . "||" . $art_article_nr_can] = $terms[0];
+            }
+            //$i = 0;
+            $sql = "SELECT art_article_nr_can,sup_id,sup_brand, art_id FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('" . implode("','", $art_article_nr_cans) . "') order by sup_brand";
+            //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."')))";
+            //$url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+            $url = "http://magento2.fastwebltd.com/service.php";
+            $datas = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
+            //$datas = unserialize(file_get_contents($url));
+            foreach ((array) $datas as $data) {
+                foreach ((array) $is[$data["art_article_nr_can"]] as $i) {
+                    if ($sup_id[$data["art_article_nr_can"]] == $data["sup_id"]) {
+                        if ($out[$i . "||" . $data["art_article_nr_can"]][1] == 'OK') {
+                            continue;
+                        }
+                        $out[$i . "||" . $data["art_article_nr_can"]][1] = "OK";
+                        $out[$i . "||" . $data["art_article_nr_can"]][2] = $this->getCriteria($data["art_id"]);
+                    } else {
+                        /*
+                          if ($out[$data["art_article_nr_can"]][1] == 'OK') {
+                          continue;
+                          }
+                          $out[$data["art_article_nr_can"]][1] = "NOT OK";
+                         * 
+                         */
+                    }
+                }
+            }
+
+            /*
+              foreach ($items as $term) {
+              $terms = explode("\t", $term);
+              $art_article_nr_can = preg_replace("/[^a-zA-Z0-9]+/", "", $terms[0]);
+              $sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can = '".$art_article_nr_can."' order by sup_brand";
+              //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."')))";
+              $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+              $datas = unserialize(file_get_contents($url));
+
+              }
+             */
+            $html .= '<table>';
+            foreach ($out as $articlenr => $arts) {
+                $article_nrs = explode("||", $articlenr);
+                $article_nr = $artnrs[$articlenr];
+                $html .= '<tr>';
+                $html .= "<td>" . $article_nr . "</td>";
+                $html .= "<td>" . $sup_id[$article_nrs[1]] . "</td>";
+                $art = "";
+                foreach ($arts as $art) {
+                    $html .= "<td>" . $art . "</td>";
+                }
+                $html .= '</tr>';
+                $text .= $article_nr . "\t" . $sup_id[$article_nrs[1]] . "\t" . $art . "\n";
+            }
+            $html .= '<tr>';
+            $html .= "<td></td>";
+            $html .= '</tr>';
+            $html .= '<table>';
+            $textarea = "<textarea>" . $text . "</textarea><BR>";
+        }
+        return $textarea . $html;
+    }
+
+    function getCriteria($atr_id,$brandmodeltype = 0) {
+
+
+        if ($atr_id > 0) {
+            $this->lng = 20;
+            $criterias2 = array();
+            if ($brandmodeltype) {
+                $sql = "select * from 
+				magento2_base4q2017.la_criteria, 
+				magento2_base4q2017.link_la_typ,
+				magento2_base4q2017.criteria,
+				magento2_base4q2017.text_designations,
+				magento2_base4q2017.la_crit_group 
+				where 
+				lac_la_id = lac_gr_la_id and 
+				cri_id = lac_cri_id and 
+				lac_gr_id = lat_lac_gr_id and
+				des_id = cri_des_id and 
+				(des_lng_id = '" . $this->lng . "' OR des_lng_id = 4) AND
+				des_text != '' AND
+				lat_typ_id = '" . $brandmodeltype . "' AND 
+				lat_art_id = '" . $atr_id . "' order by des_lng_id";
+                $criterias = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
+                $criterias2 = array();
+                //echo "<pre>";
+                //print_r($criterias);
+                //echo "</pre>";
+                foreach ($criterias as $criteria) {
+                    if ($criteria["des_text"] == '')
+                        continue;
+                    if ($criteria["lac_value"]) {
+                        $criteria2["value"] = $criteria["lac_value"];
+                        //$criteria2["cri_id"] = $criteria["lac_cri_id"];						
+                        //$criterias2[$criteria2["cri_id"]] = $criteria2;
+                    } else {
+                        $sql = "select des_text from magento2_base4q2017.key_values, magento2_base4q2017.text_designations where kv_kt_id = '" . $criteria["lac_kv_kt_id"] . "' AND kv_kv = '" . $criteria["lac_kv_kv"] . "' AND des_id = kv_des_id and des_lng_id = '" . $this->lng . "' ";
+                        $kv = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
+                        $kv = $kv[0];
+                        if ($kv == "") {
+                            $sql = "select * from magento2_base4q2017.key_values, magento2_base4q2017.text_designations where kv_kt_id = '" . $criteria["lac_kv_kt_id"] . "' AND kv_kv = '" . $criteria["lac_kv_kv"] . "' AND des_id = kv_des_id and des_lng_id = '" . $this->lng . "' ";
+                            //$sql = "select des_text from magento2_base4q2017.key_values, magento2_base4q2017.text_designations where kv_kt_id = '".$criteria["acr_kv_kt_id"]."' AND kv_kv = '".$criteria["acr_kv_kv"]."' AND des_id = kv_des_id and des_lng_id = '4' ";
+                            //echo $sql;
+                            //$kvrow = $this->connection->fetchRow($sql);		
+                            //print_r($kvrow);
+                        }
+                        $criteria2["value"] = $kv;
+                    }
+                    //$criteria2["cri_id"] = "(".$criteria["lac_cri_id"].")";
+                    $criteria2["name"] = $criteria["des_text"];
+                    $criteria2["cri_id"] = $criteria["lac_cri_id"];
+                    $criterias2[$criteria2["cri_id"]] = $criteria2;
+                }
+            }
+
+            //echo "[".$atr_id."]";
+            $sql = "select * from magento2_base4q2017.article_criteria, magento2_base4q2017.criteria, magento2_base4q2017.text_designations
+				where cri_id = acr_cri_id AND des_id = cri_des_id and (des_lng_id = '" . $this->lng . "' OR des_lng_id = 4) and acr_art_id = '" . $atr_id . "' AND des_text != '' order by des_lng_id";
+            //echo $sql;
+            $criterias = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
+
+
+            $out = "<ul style='list-style:none; padding:0px;'>";
+            foreach ($criterias as $criteria) {
+                if ($criteria["des_text"] == '')
+                    continue;
+                if ($criteria["acr_value"] AND $criteria["des_text"]) {
+                    //$out .= "<li><b>".$criteria["des_text"]."</b>: ".$criteria["acr_value"]."</li>";
+                    $criteria2["name"] = $criteria["des_text"];
+                    $criteria2["value"] = $criteria["acr_value"];
+                    $criteria2["cri_id"] = $criteria["acr_cri_id"];
+                    $criterias2[$criteria2["cri_id"]] = $criteria2;
+                } else if ($criteria["acr_kv_kt_id"] AND $criteria["acr_kv_kv"]) {
+                    $sql = "select des_text from magento2_base4q2017.key_values, magento2_base4q2017.text_designations where kv_kt_id = '" . $criteria["acr_kv_kt_id"] . "' AND kv_kv = '" . $criteria["acr_kv_kv"] . "' AND des_id = kv_des_id and des_lng_id = '" . $this->lng . "' ";
+                    $kv = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
+                    $kv = $kv[0];
+                    //$sql = "select * from magento2_base4q2017.key_values, magento2_base4q2017.text_designations where kv_kt_id = '".$criteria["acr_kv_kt_id"]."' AND kv_kv = '".$criteria["acr_kv_kv"]."' AND des_id = kv_des_id and des_lng_id = '".$this->lng."' ";
+                    //$kvrow = $this->connection->fetchRow($sql);
+                    //$sql = "select * from magento2_base4q2017.key_values, magento2_base4q2017.text_designations where kv_kt_id = '".$criteria["acr_kv_kt_id"]."' AND kv_kv = '".$criteria["acr_kv_kv"]."' AND des_id = kv_des_id and des_lng_id = '".$this->lng."' ";
+                    //$kvrow = $this->connection->fetchRow($sql);	
+                    //print_r($kvrow);
+                    //if (!$criteria["des_text"]) continue;
+                    //$out .= "<li><b>".$criteria["des_text"]."</b>: ".$kv."</li>";
+                    $criteria2["name"] = $criteria["des_text"];
+                    $criteria2["value"] = $kv;
+                    $criteria2["cri_id"] = $criteria["acr_cri_id"];
+                    $criterias2[$criteria2["cri_id"]] = $criteria2;
+                } else {
+                    //$out .= "<li>".print_r($criteria,true)."</li>";
+                }
+            }
+            //echo "<pre>";
+            //print_r($criterias2);
+            //echo "</pre>";			
+            foreach ($criterias2 as $criteria) {
+                //if (!$criteria["name"]) continue;
+                //if (!$criteria["value"]) continue;
+                if ($criteria["cri_id"] == 20 OR $criteria["cri_id"] == 21)
+                    $criteria["value"] = str_replace(".", "/", $criteria["value"]);
+                //$out .= "<li><b>".$criteria["name"]." [".$criteria["cri_id"]."]</b>:: ".mb_convert_case($criteria["value"], MB_CASE_TITLE, "UTF-8")."</li>";
+                $out .= "<li><b>" . mb_convert_case($criteria["name"], MB_CASE_TITLE, "UTF-8") . "</b>: " . mb_convert_case($criteria["value"], MB_CASE_TITLE, "UTF-8") . "</li>";
+            }
+            $out .= "<ul>";
+            //print_r($criterias);
+            return $out;
+        }
+    }
+
     function curlit($url, $fields_string) {
         rtrim($fields_string, '&');
         $ch = curl_init();
@@ -524,10 +705,9 @@ class ServiceController extends Main {
         return $html;
     }
 
-    
     function getoriginals($items, $category = 0, $tecdocSupplierId = 0) {
         if (count($items)) {
-            
+
             foreach ($items as $term) {
                 $terms = explode("\t", $term);
                 $art_article_nr_can = strtolower(preg_replace("/[^a-zA-Z0-9]+/", "", $terms[0]));
@@ -537,12 +717,12 @@ class ServiceController extends Main {
                 $sup_id[$art_article_nr_can] = $terms[1];
                 $out[$art_article_nr_can] = array();
             }
-            
+
             if ($tecdocSupplierId > 0)
                 $sup = " AND sup_id = '" . $tecdocSupplierId . "'";
             if ($category > 0)
                 $cat = " AND art.art_id in (Select des.art_id from magento2_base4q2017.art_products_des des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1))";
-            
+
             $sql = "SELECT sup_brand,des_text,art.art_id,oem_num, art_article_nr_can,sup_id,sup_brand FROM 
                 art_products_des artpt, 
                 text_designations tex, 
@@ -555,7 +735,7 @@ class ServiceController extends Main {
                     art.art_id=oem.art_id AND 
                     sup_id = art_sup_id AND 
                     tex.des_lng_id = '20' AND 
-                    art_article_nr_can in ('" . implode("','", $art_article_nr_cans) . "') " . $sup . " ".$cat." order by sup_brand";
+                    art_article_nr_can in ('" . implode("','", $art_article_nr_cans) . "') " . $sup . " " . $cat . " order by sup_brand";
             $url = "http://magento2.fastwebltd.com/service.php";
             $datas = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
             foreach ($datas as $data) {
@@ -564,7 +744,6 @@ class ServiceController extends Main {
                 $des_text[$art_article_nr_can] = $data["des_text"];
                 $des_text[$art_article_nr_can] = $data["des_text"];
                 $sup_brand[$art_article_nr_can] = $data["sup_brand"];
-                
             }
             $text = "";
             $html = '<table>';
@@ -574,30 +753,28 @@ class ServiceController extends Main {
                 $html .= "<td>" . $sup_brand[$article_nr] . "</td>";
                 $html .= "<td>" . $des_text[$article_nr] . "</td>";
                 //if (count($arts) > 0) {
-                $html .= "<td>".count($arts)."</td>";
+                $html .= "<td>" . count($arts) . "</td>";
                 //}
-                
+
                 $arttt = "";
                 foreach ($arts as $art) {
                     $html .= "<td>" . $art["oem_num"] . "</td>";
                     //$html .= "<td>" . $art["sup_brand"] . "</td>";
                     //$html .= "<td>" . $art["cat"] . "</td>";
                     //$html .= "<td>".$art["sql"]."</td>";
-                    $arttt .= $art["oem_num"]."\t";
+                    $arttt .= $art["oem_num"] . "\t";
                 }
-                $text .= $art_article_nr_canss[strtolower($article_nr)] . "\t" . $sup_brand[$article_nr] . "\t" . $des_text[$article_nr] . "\t" .  count($arts) . "\t" . $arttt . "\n";
+                $text .= $art_article_nr_canss[strtolower($article_nr)] . "\t" . $sup_brand[$article_nr] . "\t" . $des_text[$article_nr] . "\t" . count($arts) . "\t" . $arttt . "\n";
                 $html .= '</tr>';
             }
-            
-            $html .= '<table>';            
+
+            $html .= '<table>';
             $textarea = "<textarea>" . $text . "</textarea><BR>";
-            
-            return $textarea.$html;
-        }    
-    }    
-        
-    
-    
+
+            return $textarea . $html;
+        }
+    }
+
     function original2($items, $category = 0, $tecdocSupplierId = 0, $brand = 0) {
         if (count($items)) {
             $sup = "";
@@ -636,11 +813,11 @@ class ServiceController extends Main {
             $url = "http://magento2.fastwebltd.com/service.php";
             $datas = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
 
-            
+
             foreach ($datas as $data) {
                 //print_r($data);
-                foreach($oems[$data["art_id"]] as $oem_num_can) {
-                    if ($out11[$oem_num_can]) { 
+                foreach ($oems[$data["art_id"]] as $oem_num_can) {
+                    if ($out11[$oem_num_can]) {
                         $out[$oem_num_can][$data["art_id"]] = $data;
                     }
                 }
@@ -656,10 +833,10 @@ class ServiceController extends Main {
                     $html .= "<td>" . @$art["sup_id"] . "</td>";
                     $html .= "<td>" . @$art["sup_brand"] . "</td>";
                     $html .= "<td>" . @$art["art_article_nr_can"] . "</td>";
-                    $arttt .= $art["sup_id"]."\t".$art["sup_brand"]."\t".$art["art_article_nr_can"]."\t";
+                    $arttt .= $art["sup_id"] . "\t" . $art["sup_brand"] . "\t" . $art["art_article_nr_can"] . "\t";
                 }
                 $html .= '</tr>';
-                $text .= $article_nr . "\t" .  count($arts) . "\t" . $arttt . "\n";
+                $text .= $article_nr . "\t" . count($arts) . "\t" . $arttt . "\n";
             }
             $html .= '<tr>';
             $html .= "<td></td>";
@@ -668,32 +845,32 @@ class ServiceController extends Main {
             $textarea = "<textarea>" . $text . "</textarea><BR>";
 
             /*
-            if ($items) {
-                foreach ($items as $term) {
-                    if (!$oems[$term])
-                        continue;
-                    $brand_sql = $brand > 0 ? " AND mfa_id = '" . $brand . "'" : "";
-                    if ($category > 0) {
-                        //$sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where art_id in (Select art_id from magento2_base4q2017.art_products_des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1)) ".$sup." AND sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = art_id AND art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` LIKE '" . $term . "'))))";                        
-                        $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where art_id in (Select art_id from magento2_base4q2017.art_products_des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1)) " . $sup . " AND sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` LIKE '" . $term . "' " . $brand_sql . "))) limit 0,10";
-                    } else {
-                        //$sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and  AND art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` LIKE '" . $term . "'))))  ".$sup."";
-                        $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` LIKE '" . $term . "' " . $brand_sql . ")))  " . $sup . " limit 0,10";
-                        //echo $sql;
-                    }
-                    //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$items)."') order by sup_brand";
-                    //echo $sql;
-                    $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
-                    $datas = unserialize(file_get_contents($url));
-                    foreach ($datas as $data) {
-                        $out[$term][] = $data;
-                    }
-                }
-            }
+              if ($items) {
+              foreach ($items as $term) {
+              if (!$oems[$term])
+              continue;
+              $brand_sql = $brand > 0 ? " AND mfa_id = '" . $brand . "'" : "";
+              if ($category > 0) {
+              //$sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where art_id in (Select art_id from magento2_base4q2017.art_products_des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1)) ".$sup." AND sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = art_id AND art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` LIKE '" . $term . "'))))";
+              $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where art_id in (Select art_id from magento2_base4q2017.art_products_des where pt_id in (SELECT `pt_id` FROM magento2_base4q2017.link_pt_str WHERE str_id='" . $category . "' AND `str_type` = 1)) " . $sup . " AND sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` LIKE '" . $term . "' " . $brand_sql . "))) limit 0,10";
+              } else {
+              //$sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and  AND art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` LIKE '" . $term . "'))))  ".$sup."";
+              $sql = "SELECT art_id, art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND `art_id` in (SELECT `art_id` FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT art_id FROM `art_oem_numbers` WHERE `oem_num_can` LIKE '" . $term . "' " . $brand_sql . ")))  " . $sup . " limit 0,10";
+              //echo $sql;
+              }
+              //$sql = "SELECT art_article_nr_can,sup_id,sup_brand FROM `articles`,suppliers where sup_id = art_sup_id AND art_article_nr_can in ('".implode("','",$items)."') order by sup_brand";
+              //echo $sql;
+              $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+              $datas = unserialize(file_get_contents($url));
+              foreach ($datas as $data) {
+              $out[$term][] = $data;
+              }
+              }
+              }
              * 
              */
         }
-        return $textarea.$html;
+        return $textarea . $html;
     }
 
     function original($items, $category = 0, $tecdocSupplierId = 0, $brand = 0) {
