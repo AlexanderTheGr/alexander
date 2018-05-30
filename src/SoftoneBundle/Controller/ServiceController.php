@@ -544,7 +544,7 @@ class ServiceController extends Main {
 
         $url = "http://magento2.fastwebltd.com/service.php";
         if ($atr_id > 0) {
-            $this->lng = 4;
+            $this->lng = 20;
             $criterias2 = array();
             if ($brandmodeltype) {
                 $sql = "select * from 
