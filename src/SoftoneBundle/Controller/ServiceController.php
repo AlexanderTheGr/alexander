@@ -542,7 +542,7 @@ class ServiceController extends Main {
 
     function getCriteria($atr_id,$brandmodeltype = 0) {
 
-
+        $url = "http://magento2.fastwebltd.com/service.php";
         if ($atr_id > 0) {
             $this->lng = 20;
             $criterias2 = array();
@@ -602,7 +602,7 @@ class ServiceController extends Main {
 
 
             $out = "<ul style='list-style:none; padding:0px;'>";
-            foreach ($criterias as $criteria) {
+            foreach ((array)$criterias as $criteria) {
                 if ($criteria["des_text"] == '')
                     continue;
                 if ($criteria["acr_value"] AND $criteria["des_text"]) {
