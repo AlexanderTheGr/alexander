@@ -636,11 +636,12 @@ class ServiceController extends Main {
             foreach ($criterias2 as $criteria) {
                 //if (!$criteria["name"]) continue;
                 //if (!$criteria["value"]) continue;
+                
                 if ($criteria["cri_id"] == 20 OR $criteria["cri_id"] == 21)
                     $criteria["value"] = str_replace(".", "/", $criteria["value"]);
                 //$out .= "<li><b>".$criteria["name"]." [".$criteria["cri_id"]."]</b>:: ".mb_convert_case($criteria["value"], MB_CASE_TITLE, "UTF-8")."</li>";
                 //$out .= "<li><b>" . @mb_convert_case($criteria["name"], MB_CASE_TITLE, "UTF-8") . "</b>: " . @mb_convert_case($criteria["value"], MB_CASE_TITLE, "UTF-8") . "</li>";
-                $out .= "<li><b>" .$criteria["name"] . "</b>: " . $criteria["value"] . "</li>";
+                $out .= "<li>".print_r($criteria,true)."<b>" .$criteria["name"] . "</b>: " . $criteria["value"] . "</li>";
             
                 
             }
