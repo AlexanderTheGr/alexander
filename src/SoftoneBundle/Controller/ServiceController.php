@@ -639,7 +639,7 @@ class ServiceController extends Main {
                 if ($criteria["cri_id"] == 20 OR $criteria["cri_id"] == 21)
                     $criteria["value"] = str_replace(".", "/", $criteria["value"]);
                 //$out .= "<li><b>".$criteria["name"]." [".$criteria["cri_id"]."]</b>:: ".mb_convert_case($criteria["value"], MB_CASE_TITLE, "UTF-8")."</li>";
-                $out .= "<li><b>" . mb_convert_case($criteria["name"], MB_CASE_TITLE, "UTF-8") . "</b>: " . mb_convert_case($criteria["value"], MB_CASE_TITLE, "UTF-8") . "</li>";
+                $out .= "<li><b>" . @mb_convert_case($criteria["name"], MB_CASE_TITLE, "UTF-8") . "</b>: " . @mb_convert_case($criteria["value"], MB_CASE_TITLE, "UTF-8") . "</li>";
             }
             $out .= "<ul>";
             //print_r($criterias);
