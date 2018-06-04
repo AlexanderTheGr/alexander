@@ -1039,8 +1039,9 @@ class EdiItemController extends Main {
             $articleIds = array();
             $term = preg_replace("/[^a-zA-Z0-9]+/", "", $search);
             $sql = "SELECT art.art_id as articleId FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '".$term."'))";			
-            $url = "http://magento2.fastwebltd.com/service.php?sql=".base64_encode($sql);
-            $datas = unserialize(file_get_contents($url)); 
+            $url = "http://magento2.fastwebltd.com/service.php";
+            //$datas = unserialize(file_get_contents($url)); 
+            $datas = unserialize($this->curlit($url, "sql=" . base64_encode($sql)));
             foreach($datas as $data) {
                 if ($data["articleId"]) {
                     $articleIds[] = $data["articleId"]; 
@@ -1058,7 +1059,19 @@ class EdiItemController extends Main {
         }
         return serialize($articleIds);
     }
-
+    function curlit($url, $fields_string) {
+        rtrim($fields_string, '&');
+        $ch = curl_init();
+        //echo $fields_string."\n";
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $datas = curl_exec($ch);
+        //echo $datas;
+        //exit;
+        return $datas;
+    }
     /**
      * @Route("/edi/ediitem/install")
      */
