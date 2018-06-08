@@ -1185,6 +1185,7 @@ class EdiItem extends Entity {
             $product->setItemPricew01((double) $this->getEdiMarkupPrice("itemPricew01"));
 
             $em->persist($product);
+            $product->setProductFreesearch();
             $em->flush();
             if ($TecdocSupplier) {
                 $product->setTecdocSupplierId($TecdocSupplier);
@@ -1275,7 +1276,9 @@ class EdiItem extends Entity {
         $em->persist($product);
         $em->flush();
         $product->updatetecdoc();
+        $product->setProductFreesearch();
         $product->toSoftone();
+        
         $this->updatetecdoc();
 
         //$this->setProduct($product->getId());
