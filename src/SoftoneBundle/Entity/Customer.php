@@ -1039,11 +1039,12 @@ class Customer extends Entity {
         $objectArr[0] = $objectArr2;
         $dataOut[$object] = (array) $objectArr;
         //@$dataOut["ITEEXTRA"][0] = array("NUM02" => $this->item_mtrl_iteextra_num02);
-        //print_r(@$dataOut);
+        print_r(@$dataOut);
         if ($this->reference == 1) $this->reference = 0;
         $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
         //echo $this->reference." - ";
-        //print_r($out);
+        print_r($out);
+        
         if (@$out->id > 1) {
             $filters = "CUSTOMER.CODE=" . $this->customerCode . "&CUSTOMER.CODE_TO=" . $this->customerCode;
             $datas = $softone->retrieveData($object, "partsbox", $filters);
