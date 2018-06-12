@@ -2372,6 +2372,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") != 'tsakonas')
             return;
 
+        if (!file_exists("/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/1/PRICELIST_RETAIL.ZIP")) exit;
+        
         rename("/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/1/PRICELIST_RETAIL.ZIP", "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/PRICELIST_RETAIL.ZIP");
         rename("/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/1/REFAR.ZIP", "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/REFAR.ZIP");
 
