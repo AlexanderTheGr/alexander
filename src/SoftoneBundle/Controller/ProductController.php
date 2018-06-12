@@ -2379,6 +2379,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $zip->close();
             $file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/1/PRICELIST_RETAIL.txt";
             $availability = false;
+            exit;
             if (($handle = fopen($file, "r")) !== FALSE) {
                 //echo 'sss';
                 //$sql = "update softone_product set gbg = '0'";
