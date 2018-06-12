@@ -2395,7 +2395,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     $sql = "update softone_product set item_pricer = '" . $data[8] . "' where item_code2 = '" . $data[0] . "'";
                     echo $sql . "<BR>";
                     //if ($i++ > 100) exit;
-                    //$em->getConnection()->exec($sql);
+                    $em->getConnection()->exec($sql);
                     //}
                 }
             }
