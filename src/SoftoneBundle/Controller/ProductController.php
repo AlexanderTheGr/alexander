@@ -2372,12 +2372,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") != 'tsakonas')
             return;
 
+        rename("/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/1/PRICELIST_RETAIL.ZIP", "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/PRICELIST_RETAIL.ZIP");
+        rename("/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/1/REFAR.ZIP", "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/REFAR.ZIP");
 
-        if ($zip->open('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/1/PRICELIST_RETAIL.ZIP') === TRUE) {
+        if ($zip->open('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/PRICELIST_RETAIL.ZIP') === TRUE) {
             //echo 'sssss';
-            $zip->extractTo('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/1/');
+            $zip->extractTo('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/');
             $zip->close();
-            $file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/1/PRICELIST_RETAIL.txt";
+            $file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/PRICELIST_RETAIL.txt";
             $availability = false;
             if (($handle = fopen($file, "r")) !== FALSE) {
                 //echo 'sss';
