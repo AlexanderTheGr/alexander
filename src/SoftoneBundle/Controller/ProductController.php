@@ -2373,13 +2373,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             return;
 
 
-        if ($zip->open('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/1/PRICELIST_RETAIL.ZIP') === TRUE) {
+        if ($zip->open('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/PRICELIST_RETAIL.ZIP') === TRUE) {
             //echo 'sssss';
-            $zip->extractTo('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/1/');
+            $zip->extractTo('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/');
             $zip->close();
-            $file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/1/PRICELIST_RETAIL.txt";
+            $file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/PRICELIST_RETAIL.txt";
             $availability = false;
-            exit;
             if (($handle = fopen($file, "r")) !== FALSE) {
                 //echo 'sss';
                 //$sql = "update softone_product set gbg = '0'";
@@ -2392,7 +2391,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     $sql = "update softone_product set item_pricer = '" . $data[8] . "' where item_code2 = '" . $data[0] . "'";
                     echo $sql . "<BR>";
                     //if ($i++ > 100) exit;
-                    $em->getConnection()->exec($sql);
+                    //$em->getConnection()->exec($sql);
                     //}
                 }
             }
