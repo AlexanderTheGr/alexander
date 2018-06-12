@@ -2373,11 +2373,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             return;
 
 
-        if ($zip->open('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/PRICELIST_RETAIL.ZIP') === TRUE) {
+        if ($zip->open('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/1/PRICELIST_RETAIL.ZIP') === TRUE) {
             //echo 'sssss';
-            $zip->extractTo('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/');
+            $zip->extractTo('/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/1/');
             $zip->close();
-            $file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/PRICELIST_RETAIL.txt";
+            $file = "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/1/PRICELIST_RETAIL.txt";
             $availability = false;
             if (($handle = fopen($file, "r")) !== FALSE) {
                 //echo 'sss';
