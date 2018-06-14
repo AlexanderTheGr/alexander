@@ -196,9 +196,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $html .= "<th></th>";
         $html .= "<th align='left'></th>";
         $html .= "<th align='left'></th>";
-        $html .= "<th align='left'>Ποσότητα</th>";
+        $html .= "<th align='right'>Ποσότητα</th>";
         //$html .= "<th align='left'></th>";
-        $html .= "<th align='left'>".$qtys."</th>";
+        $html .= "<th align='right'>".$qtys."</th>";
         $html .= "<th align='left'></th>";
         $html .= "<th align='left'>Σύνολο</th>";
         $html .= "<th align='right'>" . $total . "</th>";
