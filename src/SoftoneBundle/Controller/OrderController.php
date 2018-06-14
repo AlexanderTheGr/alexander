@@ -159,6 +159,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             if ($item->getQty() == 0)
                 continue;
             @$total += $item->getLineval();
+            @$qtys += $item->getQty();
             //$item->getProduct()->getReference();
 
             $product = $item->getProduct();
@@ -195,9 +196,9 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $html .= "<th></th>";
         $html .= "<th align='left'></th>";
         $html .= "<th align='left'></th>";
-        $html .= "<th align='left'></th>";
+        $html .= "<th align='left'>Ποσότητα</th>";
         //$html .= "<th align='left'></th>";
-        $html .= "<th align='left'></th>";
+        $html .= "<th align='left'>".$qtys."</th>";
         $html .= "<th align='left'></th>";
         $html .= "<th align='left'>Σύνολο</th>";
         $html .= "<th align='right'>" . $total . "</th>";
