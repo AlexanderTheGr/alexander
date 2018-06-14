@@ -2317,14 +2317,13 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
     public function itemsdatatable() {
         $data = json_decode($this->datatable());
         $total = 0;
+        $qtys = 0;
         foreach ($data->data as $item) {
 
             $of = "11";
-
             $text = $item->$of;
             $document = new \DOMDocument();
             $document->loadHTML($text);
-
             $inputs = $document->getElementsByTagName("input");
             $value = 0;
             foreach ($inputs as $input) {
@@ -2332,6 +2331,21 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
                 break;
             }
             $total += $value;
+            
+            $of = "7";
+            $text = $item->$of;
+            $document = new \DOMDocument();
+            $document->loadHTML($text);
+            $inputs = $document->getElementsByTagName("input");
+            $value = 0;
+            foreach ($inputs as $input) {
+                $value = $input->getAttribute("value");
+                break;
+            }
+            $qtys += $value;            
+            
+            
+            
         }
         $total = number_format($total, 2, '.', '');
         $json[0] = "";
@@ -2341,7 +2355,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         $json[4] = "";
         $json[5] = "";
         $json[6] = "";
-        $json[7] = "";
+        $json[7] = $qtys;
         $json[8] = "";
         $json[9] = "";
         $json[10] = "Total";
