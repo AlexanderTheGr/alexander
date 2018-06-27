@@ -1314,12 +1314,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh') {
             $params["fSQL"] = "SELECT M.* FROM MTRMARK M where COMPANY = " . $company;
             $datas = $softone->createSql($params);
-            //print_r($datas);
+            print_r($datas);
             foreach ((array) $datas->data as $data) {
                 $data = (array) $data;
                 echo '"'.$data["MTRMARK"].'";"'.$data["CODE"].'";"'.$data["NAME"].'"<BR>';
             }
-            //exit;
+            exit;
         }
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'tzianetas') {
             $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M where COMPANY = " . $company;
