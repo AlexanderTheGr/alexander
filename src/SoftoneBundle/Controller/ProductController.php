@@ -1315,6 +1315,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $params["fSQL"] = "SELECT M.* FROM MTRMARK M where COMPANY = " . $company;
             echo $params["fSQL"];
             $datas = $softone->createSql($params);
+            echo $datas;
             print_r($datas);
             foreach ((array) $datas->data as $data) {
                 $data = (array) $data;
