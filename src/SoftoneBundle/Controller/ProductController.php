@@ -1313,7 +1313,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //$datas = $softone->getManufactures($params);
         }
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh') {
-            $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M where COMPANY = " . $company;
+            $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M where  COMPANY = " . $company;
             echo $params["fSQL"];
             $datas = $softone->createSql($params);
             //exit;
@@ -1462,8 +1462,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
                     $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "' ORDER BY MTRL";
                     if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
-                        $MTRL1 = 1;
-                        $MTRL2 = 400;                        
+                        $MTRL1 = 12000;
+                        $MTRL2 = 30000;                        
                         $where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";     
                         
                     }
@@ -1473,8 +1473,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     //$MTRL2 = 10000;
 
                     if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
-                        $MTRL1 = 1;
-                        $MTRL2 = 400;                        
+                        $MTRL1 = 12000;
+                        $MTRL2 = 30000;                             
                         $where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";
                         //$where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1000 days")) . "' ORDER BY MTRL";
                         echo 'ssssss';
