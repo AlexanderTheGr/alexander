@@ -1469,11 +1469,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                    // $MTRL1 = 1;
                     //$MTRL2 = 10000;
 
-                    if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'tzianetas') {
+                    if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
                         $MTRL1 = 1;
-                        $MTRL2 = 20000;                        
-                        //$where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";
-                        $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1000 days")) . "' ORDER BY MTRL";
+                        $MTRL2 = 2000;                        
+                        $where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";
+                        //$where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1000 days")) . "' ORDER BY MTRL";
                         
                     } else {
                         $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "' ORDER BY MTRL";
