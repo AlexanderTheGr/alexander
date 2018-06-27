@@ -1466,8 +1466,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "' ORDER BY MTRL";
                     if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
                         $MTRL1 = 1;
-                        $MTRL2 = 12000;                        
-                        $where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";                         
+                        $MTRL2 = 2000;                        
+                        $where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";     
+                        
                     }
                 } else {
 
@@ -1488,7 +1489,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 }
                 //$where = " AND INSDATE = '2017-03-01' ORDER BY MTRL";
             }
-
+            echo $where;
 
             if ($MTRL > 0) {
                 $where = ' AND MTRL = ' . $MTRL . ' ';
