@@ -1302,7 +1302,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //$datas = $softone->createSql($params);
         } else {
             $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M where M.MTRMANFCTR != 452 AND COMPANY = " . $company;
-            echo $params["fSQL"];
+            //echo $params["fSQL"];
             //$datas = $softone->createSql($params);
             //$datas = $softone->getManufactures($params);
             //print_r($datas);
@@ -1313,6 +1313,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh') {
             $params["fSQL"] = "SELECT M.* FROM MTRMARK M where COMPANY = " . $company;
+            echo $params["fSQL"];
             $datas = $softone->createSql($params);
             print_r($datas);
             foreach ((array) $datas->data as $data) {
