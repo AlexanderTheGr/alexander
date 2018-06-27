@@ -1596,6 +1596,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $sql = 'UPDATE  `softone_product` SET `supplier_code` =  `item_code2`, `title` =  `item_name`, `tecdoc_code` =  `item_apvcode`, `erp_code` =  `item_code`';
         $this->getDoctrine()->getConnection()->exec($sql);
         
+        /*
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh') {  
             $params["fSQL"] = "SELECT VARCHAR03, UTBL01, MTRL FROM MTREXTRA WHERE VARCHAR03 != ''";
             $softone = new Softone();
@@ -1609,7 +1610,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     $this->getDoctrine()->getConnection()->exec($sql);
                 }
             }           
-        } 
+        }
+         * 
+         */ 
 
         if ($MTRL > 0) {
             $tecdoc = new Tecdoc();
