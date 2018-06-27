@@ -1656,7 +1656,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $selfields = implode(",", $itemfield);
         $params["fSQL"] = 'SELECT ' . $selfields . ' FROM ' . $params["softone_table"] . ' M ' . $params["filter"];
-        //echo $params["fSQL"];
+        echo $params["fSQL"];
         //exit;
         //$params["fSQL"] = 'SELECT M.MTRL FROM MTRL M';// ' . $params["softone_table"] . ';
         //$params["fSQL"] = "SELECT VARCHAR02, MTRL FROM MTREXTRA WHERE VARCHAR02 != ''";
