@@ -1302,10 +1302,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //$datas = $softone->createSql($params);
         } else {
             $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M where M.MTRMANFCTR != 452 AND COMPANY = " . $company;
-            //echo $params["fSQL"];
-            //$datas = $softone->createSql($params);
+            echo $params["fSQL"];
+            $datas = $softone->createSql($params);
             //$datas = $softone->getManufactures($params);
-            //print_r($datas);
+            print_r($datas);
+            exit;
             
         }
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
