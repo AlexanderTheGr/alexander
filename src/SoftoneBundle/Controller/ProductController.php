@@ -1464,6 +1464,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             } else {
                 if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
                     $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "' ORDER BY MTRL";
+                    if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
+                        $MTRL1 = 1;
+                        $MTRL2 = 12000;                        
+                        $where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";                         
+                    }
                 } else {
 
                    // $MTRL1 = 1;
