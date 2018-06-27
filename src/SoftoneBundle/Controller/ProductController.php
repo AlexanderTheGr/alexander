@@ -1718,8 +1718,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //exit;
             //echo $data["MTRL"]."<BR>";
             //if ($i++ > 230) continue;
-
+            echo "<PRE>";
             print_r($data);
+            echo "</PRE>";
             echo "<BR><BR>";
             $entity = $this->getDoctrine()
                     ->getRepository($this->repository)
