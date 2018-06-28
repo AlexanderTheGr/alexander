@@ -1950,7 +1950,7 @@ class Product extends Entity {
     function getDetailssnew() {
 
 
-        //echo "[" . $this->tecdocArticleId . "]";
+        echo "[" . $this->tecdocArticleId . "]";
         if ($this->tecdocArticleId == 0)
             return;
         //$this->getDetails();
