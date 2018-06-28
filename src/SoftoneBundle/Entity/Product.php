@@ -2164,6 +2164,7 @@ class Product extends Entity {
         $sql = "update `softone_product` set cars = '" . serialize($cars) . "', cats = '" . serialize($categories) . "' where id = '" . $this->id . "'";
         $em->getConnection()->exec($sql);
         //print_r($out);
+        exit;
     }
 
     function checkForUniqueCategory($article, $cats, $tecdoc, $linkingTargetId) {
