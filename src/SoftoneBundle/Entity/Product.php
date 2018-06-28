@@ -2049,7 +2049,7 @@ class Product extends Entity {
             $statement->execute();
             $cats = $statement->fetchAll();
             $statement->closeCursor();
-            
+            echo $sql;
             foreach ($cats as $cat) {
                 if (in_array($cat["w_str_id"], $array)) {
                     $del = true;
