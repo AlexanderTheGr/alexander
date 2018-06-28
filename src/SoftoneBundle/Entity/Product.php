@@ -2053,10 +2053,6 @@ class Product extends Entity {
             foreach ($cats as $cat) {
                 if (in_array($cat["w_str_id"], $array)) {
                     $del = true;
-                    echo "<BR>[".$kv."]<BR>";
-                    echo "<BR>[".$kv."]<BR>";
-                    echo "<BR>[".$kv."]<BR>";
-                    echo "<BR>[".$kv."]<BR>";
                     if ($kv != 'VA' AND $kv != 'HA' AND $kv != 'VL' AND $kv != 'HL' AND $kv != 'VR' AND $kv != 'HR' AND $kv != 'V' AND $kv != 'H') {
                         $term = preg_replace("/[^a-zA-Z0-9]+/", "", $product->getTecdocCode());
                         $sql = "SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and arl_search_number = '" . $term . "'";
@@ -2164,7 +2160,7 @@ class Product extends Entity {
         $sql = "update `softone_product` set cars = '" . serialize($cars) . "', cats = '" . serialize($categories) . "' where id = '" . $this->id . "'";
         $em->getConnection()->exec($sql);
         //print_r($out);
-        exit;
+        //exit;
     }
 
     function checkForUniqueCategory($article, $cats, $tecdoc, $linkingTargetId) {
