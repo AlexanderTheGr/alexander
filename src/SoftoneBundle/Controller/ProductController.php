@@ -1467,6 +1467,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         $where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";     
                         
                     }
+                    
                 } else {
 
                    // $MTRL1 = 1;
