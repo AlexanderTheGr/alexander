@@ -695,7 +695,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         } else {
 
             //$fields["productSale"] = array("label" => "Προσφορά", "className" => "col-md-3", 'type' => "select", "required" => true, 'datasource' => array('repository' => 'SoftoneBundle:ProductSale', 'name' => 'title', 'value' => 'id'));
-
+            $remarks = str_replace("\n", "|", $entity->getItemRemarks());
+            $remarks = str_replace("\r", "|", $remarks);
+            $remarks = str_replace("||", "|", $remarks);
+            $entity->setItemRemarks($remarks);
             $fields["title"] = array("label" => $this->getTranslation("Product Name"), "required" => true, "className" => "col-md-6 col-sm-6");
             $fields["erpCode"] = array("label" => $this->getTranslation("Product Code"), "required" => false, "className" => "col-md-3 col-sm-3");
             $fields["itemCode1"] = array("label" => $this->getTranslation("Barcode"), "required" => false, "className" => "col-md-3 col-sm-3");
