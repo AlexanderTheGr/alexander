@@ -1825,6 +1825,7 @@ class Product extends Entity {
             )";
             $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
             $datas = unserialize(file_get_contents($url));
+            print_r($datas);
             //$result = mysqli_query($this->conn,$sql);
             //$datas = mysqli_fetch_all($result,MYSQLI_ASSOC);
             $data = $datas[0];
