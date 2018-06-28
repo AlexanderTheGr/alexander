@@ -1465,7 +1465,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         $MTRL1 = 80000;
                         $MTRL2 = 110000;                        
                         $where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";     
-                        
+                        $where = " AND CODE = 'BTR4133-475' ORDER BY MTRL";
                     }
                     
                 } else {
@@ -1474,10 +1474,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     //$MTRL2 = 10000;
 
                     if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
-                        $MTRL1 = 80000;
-                        $MTRL2 = 110000;                             
+                        //$MTRL1 = 80000;
+                        //$MTRL2 = 110000;                             
                         $where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";
-                        //$where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1000 days")) . "' ORDER BY MTRL";
+                        $where = " AND CODE = 'BTR4133-475' ORDER BY MTRL";
                         echo 'ssssss';
                     } else {
                         $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "' ORDER BY MTRL";
