@@ -1835,7 +1835,7 @@ class Product extends Entity {
                 $out->articleName = $data["des_text"];
                 $out->genericArticleId = $data["pt_des_id"];
             }
-            //print_r($out);
+            print_r($out);
             if (@$out->articleId) {
                 $this->setTecdocArticleId($out->articleId);
                 $this->setTecdocArticleName($out->articleName);
