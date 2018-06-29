@@ -517,7 +517,7 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
         if ($_SERVER["REMOTE_ADDR"] == '212.205.224.191') {
             if ($entity->getId()) {
                 $this->addTab(array("title" => $this->getTranslation("Search"), "datatables" => array(), "form" => '', "content" => $this->getTabContentSearch($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => true));
-                //$this->addTab(array("title" => $this->getTranslation("Καλάθι"), "datatables" => $datatables, "form" => '', "content" => "", "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
+                $this->addTab(array("title" => $this->getTranslation("Καλάθι"), "datatables" => $datatables, "form" => '', "content" => "", "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
                 //$this->addTab(array("title" => $this->getTranslation("Customer Details"), "datatables" => array(), "form" => '', "content" => $this->getCustomerDetails($entity), "index" => $this->generateRandomString(), 'search' => 'text', "active" => false));
             }            
         } else {    
