@@ -81,7 +81,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $json = json_encode($asd);
         if ($_SERVER["REMOTE_ADDR"] == "212.205.224.191") {
             $term = preg_replace("/[^a-zA-Z0-9]+/", "", $params["search"]);
-            $sql = "SELECT art.art_id as articleId FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and art.art_id = '" . $request->request->get("ref") . "'))";
+            $sql = "SELECT * as articleId FROM magento2_base4q2017.articles art WHERE art.art_id = '" . $request->request->get("ref") . "'";
             $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
             $datas = unserialize(file_get_contents($url));
             print_r($datas);
