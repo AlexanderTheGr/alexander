@@ -1951,7 +1951,7 @@ class Product extends Entity {
     function getDetailssnew() {
 
 
-        echo "[" . $this->tecdocArticleId . "]";
+       // echo "[" . $this->tecdocArticleId . "]";
         if ($this->tecdocArticleId == 0)
             return;
         //$this->getDetails();
@@ -1964,7 +1964,7 @@ class Product extends Entity {
 
         //$this->connection = Mage::getSingleton('core/resource')->getConnection('core_write');
         $sql = "select * from t4_product_model_type where product = '" . $this->getId() . "'";
-        echo $sql . "<BR>";
+        //echo $sql . "<BR>";
         //$results = $this->connection->fetchAll($sql);
         $categories = array();
         $cars = array();
