@@ -1017,12 +1017,13 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $out["articleAttributes"] = $tecdoc->articleAttributesRow($params, 0) . "<img width=100% src='" . $link . "'/>[" . $link . "]";
         }
         if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
-            $sql = "Select * from t4_product_model_type where product = '".$params["prodcu"]."'";
+            $sql = "Select * from t4_product_model_type where product = '".$params["product"]."'";
             $em = $this->getDoctrine()->getManager();
             $connection = $em->getConnection();
             $statement = $connection->prepare($sql);
             $statement->execute();
             $results = $statement->fetchAll();
+            //print_r($results);
             foreach ($results as $data) {
                 $efarmoges[] = $data["model_type"];
                 if ($i++ > 50) break;
