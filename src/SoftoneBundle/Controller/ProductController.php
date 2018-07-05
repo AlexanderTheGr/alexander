@@ -1024,6 +1024,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $statement->execute();
             $results = $statement->fetchAll();
             //print_r($results);
+            $efarmoges = array();
             foreach ($results as $data) {
                 $efarmoges[] = $data["model_type"];
                 if ($i++ > 100) break;
