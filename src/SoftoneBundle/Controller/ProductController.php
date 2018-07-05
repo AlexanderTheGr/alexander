@@ -95,11 +95,12 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
           
             $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
             $datas = unserialize(file_get_contents($url));
+            $data = $datas[0];
             print_r($datas[0]);
             print_r($asd);
             
             $asd->articleId = $data["art_id"];
-            $asd->art_article_nr = $data["art_article_nr"];
+            $asd->articleNo = $data["art_article_nr"];
             $asd->brandName = $data["sup_brand"];
             $asd->brandNo = $data["art_sup_id"];
             
