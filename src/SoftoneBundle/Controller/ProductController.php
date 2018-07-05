@@ -79,7 +79,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $asd = $this->getArticlesSearchByIds($request->request->get("ref"));
         $asd = $asd[0];
         $json = json_encode($asd);
-        if ($_SERVER["REMOTE_ADDR"] == "212.205.224.191") {
+        if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
             $term = preg_replace("/[^a-zA-Z0-9]+/", "", $params["search"]);
             //$sql = "SELECT * FROM magento2_base4q2017.articles art, suppliers WHERE suppliers.sup_id = art.art_sup_id AND art.art_id = '" . $request->request->get("ref") . "'";
             
