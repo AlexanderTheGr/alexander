@@ -84,7 +84,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $sql = "SELECT * FROM magento2_base4q2017.articles art WHERE art.art_id = '" . $request->request->get("ref") . "'";
             $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
             $datas = unserialize(file_get_contents($url));
-            print_r($datas);
+            print_r($datas[0]);
+            print_r($asd);
             exit;
         }
 
