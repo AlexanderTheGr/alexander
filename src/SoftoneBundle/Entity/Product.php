@@ -2049,7 +2049,7 @@ class Product extends Entity {
             $statement->execute();
             $cats = $statement->fetchAll();
             $statement->closeCursor();
-            echo "<BR>[".$sql."]<BR>";
+            //echo "<BR>[".$sql."]<BR>";
             foreach ($cats as $cat) {
                 if (in_array($cat["w_str_id"], $array)) {
                     $del = true;
@@ -2068,7 +2068,7 @@ class Product extends Entity {
 								where acr_cri_id = 100 AND cri_id = acr_cri_id AND des_id = cri_des_id and des_lng_id = '" . $this->lng . "' and acr_art_id in (" . implode(",", $artsss) . ") group by acr_kv_kv order by cnt desc";
                         $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
 
-                        echo "<BR>" . $sql . "<BR>";
+                        //echo "<BR>" . $sql . "<BR>";
 
                         $criteria = unserialize(file_get_contents($url));
                         $criteria = $criteria[0];
