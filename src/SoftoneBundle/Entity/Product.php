@@ -3313,6 +3313,7 @@ class Product extends Entity {
         //return "";
 
         if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
+            return "";
             return $this->getCriteria($linkingTargetId);
         }
         $tecdoc = new Tecdoc();
