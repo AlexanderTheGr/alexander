@@ -1005,6 +1005,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 ->find($request->request->get("ref"));
 
         $params["articleId"] = $article_id;
+        $params["product"] = $request->request->get("ref");
 
         $params["linkingTargetId"] = $request->request->get("car");
         $out["originals"] = $tecdoc->originals($params);
