@@ -1811,7 +1811,7 @@ class Product extends Entity {
                 "lng" => 20,
                 "brandno" => $this->getTecdocSupplierId()->getId()
             );
-            print_r($postparams);
+            //print_r($postparams);
             $term = preg_replace("/[^a-zA-Z0-9]+/", "", $postparams["articleNumber"]);
             $sql = "SELECT * FROM magento2_base4q2017.suppliers, magento2_base4q2017.articles art,magento2_base4q2017.products pt,magento2_base4q2017.art_products_des artpt,magento2_base4q2017.text_designations tex
                     WHERE 
@@ -1825,7 +1825,7 @@ class Product extends Entity {
             )";
             $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
             $datas = unserialize(file_get_contents($url));
-            print_r($datas);
+            //print_r($datas);
             //$result = mysqli_query($this->conn,$sql);
             //$datas = mysqli_fetch_all($result,MYSQLI_ASSOC);
             $data = $datas[0];
@@ -1836,7 +1836,7 @@ class Product extends Entity {
                 $out->articleName = $data["des_text"];
                 $out->genericArticleId = $data["pt_des_id"];
             }
-            print_r($out);
+            //print_r($out);
             if (@$out->articleId) {
                 $this->setTecdocArticleId($out->articleId);
                 $this->setTecdocArticleName($out->articleName);
