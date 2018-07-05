@@ -103,8 +103,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $asd->brandName = $data["sup_brand"];
             $asd->brandNo = $data["art_sup_id"];
             
-            $asd->genericArticleId = $data["art_sup_id"];
-            $asd->genericArticleName = $data["art_sup_id"];
+            $asd->genericArticleId = $data["des_id"];
+            $asd->genericArticleName = $data["des_text"];
+            
+            print_r($asd);
             exit;
         }
 
