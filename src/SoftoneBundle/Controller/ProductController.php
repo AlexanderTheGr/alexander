@@ -83,7 +83,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $term = preg_replace("/[^a-zA-Z0-9]+/", "", $params["search"]);
             //$sql = "SELECT * FROM magento2_base4q2017.articles art, suppliers WHERE suppliers.sup_id = art.art_sup_id AND art.art_id = '" . $request->request->get("ref") . "'";
             
-            $asd = (object) array('1' => 'foo');
+            $asd = (object) array('articleId' => '0');
             $sql = "SELECT * FROM magento2_base4q2017.suppliers, magento2_base4q2017.articles art,magento2_base4q2017.products pt,magento2_base4q2017.art_products_des artpt,magento2_base4q2017.text_designations tex
                     WHERE 
                     artpt.art_id = art.art_id AND 
