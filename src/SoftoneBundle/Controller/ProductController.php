@@ -79,8 +79,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $asd = $this->getArticlesSearchByIds($request->request->get("ref"));
         $asd = $asd[0];
         $json = json_encode($asd);
-
-
+        if ($_SERVER["REMOTE_ADDR"] == "212.205.224.191")
+        print_r($asd);    
         //echo $asd->brandName;
         $em = $this->getDoctrine();
         $SoftoneSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")
