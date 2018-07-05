@@ -81,7 +81,19 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $json = json_encode($asd);
         if ($_SERVER["REMOTE_ADDR"] == "212.205.224.191") {
             $term = preg_replace("/[^a-zA-Z0-9]+/", "", $params["search"]);
-            $sql = "SELECT * FROM magento2_base4q2017.articles art, suppliers WHERE suppliers.sup_id = art.art_sup_id AND art.art_id = '" . $request->request->get("ref") . "'";
+            //$sql = "SELECT * FROM magento2_base4q2017.articles art, suppliers WHERE suppliers.sup_id = art.art_sup_id AND art.art_id = '" . $request->request->get("ref") . "'";
+            
+            
+            $sql = "SELECT * FROM magento2_base4q2017.suppliers, magento2_base4q2017.articles art,magento2_base4q2017.products pt,magento2_base4q2017.art_products_des artpt,magento2_base4q2017.text_designations tex
+                    WHERE 
+                    artpt.art_id = art.art_id AND 
+                    suppliers.sup_id = art.art_sup_id AND 
+                    pt.pt_id = artpt.pt_id AND
+                    tex.des_id = pt.pt_des_id AND
+                    tex.des_lng_id = '20' AND 
+                    (
+                    art.art_id = '".$request->request->get("ref")."'";
+          
             $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
             $datas = unserialize(file_get_contents($url));
             print_r($datas[0]);
@@ -89,8 +101,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             
             $asd->articleId = $data["art_id"];
             $asd->art_article_nr = $data["art_article_nr"];
-            $asd->brandName = $data["art_id"];
-            $asd->articleId = $data["art_id"];
+            $asd->brandName = $data["sup_brand"];
+            $asd->brandNo = $data["art_sup_id"];
+            
+            $asd->genericArticleId = $data["art_sup_id"];
+            $asd->genericArticleName = $data["art_sup_id"];
             exit;
         }
 
