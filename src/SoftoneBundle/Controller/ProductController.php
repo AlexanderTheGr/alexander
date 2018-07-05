@@ -1050,7 +1050,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
     }
 
     function getCriteria($tecdocArticleId, $brandmodeltype = 0) {
-
+        return;    
 
         if ($tecdocArticleId == 0 AND $tecdocArticleIdAlt == 0)
             return;
