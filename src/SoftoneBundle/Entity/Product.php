@@ -2154,7 +2154,7 @@ class Product extends Entity {
         $em->clear();
         $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         foreach ($sqls as $sql) {
-            echo $sql."<BR>";
+            //echo $sql."<BR>";
             $em->getConnection()->exec($sql);
         }
         $sql = "update `softone_product` set cars = '" . serialize($cars) . "', cats = '" . serialize($categories) . "' where id = '" . $this->id . "'";
