@@ -1016,13 +1016,24 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         } else {
             $out["articleAttributes"] = $tecdoc->articleAttributesRow($params, 0) . "<img width=100% src='" . $link . "'/>[" . $link . "]";
         }
-
+        if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
+            $em = $this->getDoctrine()->getManager();
+            $connection = $em->getConnection();
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            $results = $statement->fetchAll();
+            foreach ($results as $data) {
+                $efarmoges[] = $data["model_type"];
+            }
+        } else {
+            $efarmoges = $tecdoc->efarmoges($params);            
+        }
         //$asd = unserialize($this->getArticlesSearchByIds($article_id));
         //$out["articlesSearch"] = $tecdoc->getArticlesSearch($asd[0]->articleNo);
         //$out["articlesSearch"] = unserialize($this->getArticlesSearchByIds(implode(",", (array) $out["articlesSearch"])));
         //print_r( $out["articlesSesarch"]);
         $egarmoges = '<ul>';
-        foreach ($tecdoc->efarmoges($params) as $efarmogi) {
+        foreach ($efarmoges as $efarmogi) {
             $brandModelType = $this->getDoctrine()->getRepository('SoftoneBundle:BrandModelType')->find($efarmogi);
             if (!$brandModelType)
                 continue;
