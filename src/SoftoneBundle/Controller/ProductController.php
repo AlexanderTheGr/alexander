@@ -1026,7 +1026,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //print_r($results);
             foreach ($results as $data) {
                 $efarmoges[] = $data["model_type"];
-                if ($i++ > 50) break;
+                if ($i++ > 100) break;
             }
         } else {
             $efarmoges = $tecdoc->efarmoges($params);            
