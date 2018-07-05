@@ -91,7 +91,6 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     pt.pt_id = artpt.pt_id AND
                     tex.des_id = pt.pt_des_id AND
                     tex.des_lng_id = '20' AND 
-                    (
                     art.art_id = '".$request->request->get("ref")."'";
           
             $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
