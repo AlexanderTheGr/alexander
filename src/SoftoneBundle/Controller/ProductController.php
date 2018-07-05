@@ -1011,7 +1011,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $link = $this->media($params["articleId"]);
         //
         if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
-            $out["articleAttributes"] = $this->getCriteria($params["articleId"], $params["linkingTargetId"]) . "<img width=100% src='" . $link . "'/>[" . $link . "]";
+            $out["articleAttributes"] = $this->getCriteria($params["articleId"], $params["linkingTargetId"]) . "<img width=100% src='" . $link . "'/>";
         } else {
             $out["articleAttributes"] = $tecdoc->articleAttributesRow($params, 0) . "<img width=100% src='" . $link . "'/>[" . $link . "]";
         }
