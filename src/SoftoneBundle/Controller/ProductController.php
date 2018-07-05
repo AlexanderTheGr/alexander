@@ -79,8 +79,16 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $asd = $this->getArticlesSearchByIds($request->request->get("ref"));
         $asd = $asd[0];
         $json = json_encode($asd);
-        if ($_SERVER["REMOTE_ADDR"] == "212.205.224.191")
-        print_r($asd);    
+        if ($_SERVER["REMOTE_ADDR"] == "212.205.224.191") {
+            $term = preg_replace("/[^a-zA-Z0-9]+/", "", $params["search"]);
+            $sql = "SELECT art.art_id as articleId FROM magento2_base4q2017.articles art WHERE (art.art_id in (SELECT all_art_id FROM magento2_base4q2017.art_lookup_links, magento2_base4q2017.art_lookup where all_arl_id = arl_id and art.art_id = '" . $request->request->get("ref") . "'))";
+            $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
+            $datas = unserialize(file_get_contents($url));
+            print_r($datas);
+            exit;
+        }
+
+        //exit;
         //echo $asd->brandName;
         $em = $this->getDoctrine();
         $SoftoneSupplier = $this->getDoctrine()->getRepository("SoftoneBundle:SoftoneSupplier")
@@ -980,11 +988,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $link = $this->media($params["articleId"]);
         //
         if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
-            $out["articleAttributes"] = $this->getCriteria($params["articleId"], $params["linkingTargetId"]) . "<img width=100% src='" .  $link . "'/>[" .  $link . "]";
+            $out["articleAttributes"] = $this->getCriteria($params["articleId"], $params["linkingTargetId"]) . "<img width=100% src='" . $link . "'/>[" . $link . "]";
         } else {
-            $out["articleAttributes"] = $tecdoc->articleAttributesRow($params, 0) . "<img width=100% src='" .  $link . "'/>[" .  $link . "]";
+            $out["articleAttributes"] = $tecdoc->articleAttributesRow($params, 0) . "<img width=100% src='" . $link . "'/>[" . $link . "]";
         }
-        
+
         //$asd = unserialize($this->getArticlesSearchByIds($article_id));
         //$out["articlesSearch"] = $tecdoc->getArticlesSearch($asd[0]->articleNo);
         //$out["articlesSearch"] = unserialize($this->getArticlesSearchByIds(implode(",", (array) $out["articlesSearch"])));
@@ -1017,13 +1025,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
         ));
     }
+
     function getCriteria($tecdocArticleId, $brandmodeltype = 0) {
 
 
         if ($tecdocArticleId == 0 AND $tecdocArticleIdAlt == 0)
             return;
         //echo 'sss';
-		if ($tecdocArticleId > 0) {
+        if ($tecdocArticleId > 0) {
 
             $criterias2 = array();
             if ($brandmodeltype) {
@@ -1177,10 +1186,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             return $out;
             //print_r($criterias);
         }
-    }    
-    
-    
-    
+    }
 
     public function media($tecdocArticleId) {
 
@@ -1190,15 +1196,15 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $sql = "select * from magento2_base4q2017.art_media_info where art_id = '" . $tecdocArticleId . "'";
             $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
             $datas = unserialize(file_get_contents($url));
-            
+
             $media = $datas[0];
             //print_r($datas);
             if ($media["art_media_file_name"])
-            $link = "http://magento2.fastwebltd.com/img/articles/" . $media["art_media_sup_id"] . "/" . $media["art_media_file_name"];
+                $link = "http://magento2.fastwebltd.com/img/articles/" . $media["art_media_sup_id"] . "/" . $media["art_media_file_name"];
             //echo $link."<BR>";
             //if (!file_exists($link) OR $media["art_media_file_name"] == "") {
             //    $link = "pub/static/frontend/Magento/luma/en_US/Magento_Catalog/images/product/placeholder/image.jpg";
-             //   $link = "";
+            //   $link = "";
             //}
             return $link;
         }
@@ -1308,9 +1314,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //echo $params["fSQL"];
             //$datas = $softone->createSql($params);
             //$datas = $softone->getManufactures($params);
-           //print_r($datas);
+            //print_r($datas);
             //exit;
-            
         }
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
             //$datas = $softone->getManufactures($params);
@@ -1323,7 +1328,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'tzianetas') {
             $params["fSQL"] = "SELECT M.* FROM MTRMANFCTR M where COMPANY = " . $company;
-            $datas = $softone->createSql($params);  
+            $datas = $softone->createSql($params);
             print_r($datas);
         }
         //echo 'sss';
@@ -1337,7 +1342,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 if ($data["ISACTIVE"] == 1) {
                     $sql = "Insert softone_softone_supplier SET id = '" . $data["MTRMANFCTR"] . "', title = '" . addslashes($data["NAME"]) . "', code = '" . $data["CODE"] . "'";
                     $this->getDoctrine()->getConnection()->exec($sql);
-                    echo $sql."<BR>";
+                    echo $sql . "<BR>";
                 }
             } else {
                 //echo $data["ISACTIVE"]."<BR>";
@@ -1466,15 +1471,14 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "' ORDER BY MTRL";
                     if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
                         $MTRL1 = 80000;
-                        $MTRL2 = 110000;                        
-                        $where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";     
+                        $MTRL2 = 110000;
+                        $where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";
                         $where = " AND CODE = 'BTR4133-475' ORDER BY MTRL";
                         $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "' ORDER BY MTRL";
                     }
-                    
                 } else {
 
-                   // $MTRL1 = 1;
+                    // $MTRL1 = 1;
                     //$MTRL2 = 10000;
 
                     if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
@@ -1483,11 +1487,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                         $where = " AND  MTRL >= " . $MTRL1 . " AND MTRL < " . $MTRL2 . "  ORDER BY MTRL";
                         $where = " AND CODE = 'BTR4133-475' ORDER BY MTRL";
                         //echo 'ssssss';
-                        $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "' ORDER BY MTRL";    
+                        $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "' ORDER BY MTRL";
                     } else {
                         $where = " AND UPDDATE >= '" . date("Y-m-d", strtotime("-1 days")) . "' ORDER BY MTRL";
                     }
-                    
+
                     //$where = " AND MTRPLACE != '' AND MTRL > 165150 ORDER BY MTRL";
                 }
                 //$where = " AND INSDATE = '2017-03-01' ORDER BY MTRL";
@@ -1541,7 +1545,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $this->retrieveProduct($params);
         //echo 'ss';
-        
+
 
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
             $params["fSQL"] = "SELECT * FROM MTRDATA WHERE COMPANY = 1001";
@@ -1563,7 +1567,8 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 //echo $sql."<BR>";    
                 $this->getDoctrine()->getConnection()->exec($sql);
             }
-        } elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh') {    
+        } elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh') {
+            
         } else {
 
             $params["fSQL"] = "SELECT VARCHAR05, MTRL FROM MTREXTRA WHERE VARCHAR05 != ''";
@@ -1596,24 +1601,24 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
 
         $sql = 'UPDATE  `softone_product` SET `supplier_code` =  `item_code2`, `title` =  `item_name`, `tecdoc_code` =  `item_apvcode`, `erp_code` =  `item_code`';
         $this->getDoctrine()->getConnection()->exec($sql);
-        
+
         /*
-        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh') {  
-            $params["fSQL"] = "SELECT VARCHAR03, UTBL01, MTRL FROM MTREXTRA WHERE VARCHAR03 != ''";
-            $softone = new Softone();
-            $datas = $softone->createSql($params);
-            echo count($datas->data);
-            //print_r($datas->data);
-            foreach ((array) $datas->data as $data) {
-                if ($data->VARCHAR03 != "") {
-                    $sql = 'update `softone_product` set tecdoc_supplier_id = "' . $data->UTBL01 . '", `tecdoc_code` =  "' . $data->VARCHAR03 . '" where reference = "' . $data->MTRL . '"';
-                    echo $sql . ";<BR>";
-                    $this->getDoctrine()->getConnection()->exec($sql);
-                }
-            }           
-        }
+          if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh') {
+          $params["fSQL"] = "SELECT VARCHAR03, UTBL01, MTRL FROM MTREXTRA WHERE VARCHAR03 != ''";
+          $softone = new Softone();
+          $datas = $softone->createSql($params);
+          echo count($datas->data);
+          //print_r($datas->data);
+          foreach ((array) $datas->data as $data) {
+          if ($data->VARCHAR03 != "") {
+          $sql = 'update `softone_product` set tecdoc_supplier_id = "' . $data->UTBL01 . '", `tecdoc_code` =  "' . $data->VARCHAR03 . '" where reference = "' . $data->MTRL . '"';
+          echo $sql . ";<BR>";
+          $this->getDoctrine()->getConnection()->exec($sql);
+          }
+          }
+          }
          * 
-         */ 
+         */
 
         if ($MTRL > 0) {
             $tecdoc = new Tecdoc();
@@ -2385,8 +2390,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") != 'tsakonas')
             return;
 
-        if (!file_exists("/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/1/PRICELIST_RETAIL.ZIP")) exit;
-        
+        if (!file_exists("/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/1/PRICELIST_RETAIL.ZIP"))
+            exit;
+
         rename("/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/1/PRICELIST_RETAIL.ZIP", "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/PRICELIST_RETAIL.ZIP");
         rename("/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/1/REFAR.ZIP", "/home2/partsbox/public_html/partsbox/web/files/partsboxtsakonas/HONLIAN/REFAR.ZIP");
 
@@ -2521,7 +2527,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         $softone = new Softone();
         //$datas = $softone->retrieveData("ITEM", "apothema");
         echo $_GET["type"];
-                
+
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             $filters = "ITEM.V5=*";
             $datas = $softone->retrieveData("ITEM", "apothema", $filters);
@@ -2536,7 +2542,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         }
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'tsakonas') {
             if ($_GET["type"] == "full")
-            $datas = $softone->retrieveData("ITEM", "apothema_full"); 
+                $datas = $softone->retrieveData("ITEM", "apothema_full");
             //print_r($tdatas);
             //print_r($datas);
         }
@@ -2639,7 +2645,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 if ($_GET["type"] == "full") {
                     $sql = "update softone_product set reserved = 0";
                     echo $sql . "<BR>";
-                    $em->getConnection()->exec($sql);   
+                    $em->getConnection()->exec($sql);
                 }
             } else {
                 $sql = "update softone_product set reserved = 0";
@@ -2650,7 +2656,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //echo $sql . "<BR>";
             //$em->getConnection()->exec($sql);
 
-            
+
             foreach ((array) $reserveds as $reserved => $reference) {
                 $sql = "update softone_product set reserved = '" . $reserved . "' where reference in (" . implode(",", $reference) . ")";
                 echo $sql . "<BR>";
