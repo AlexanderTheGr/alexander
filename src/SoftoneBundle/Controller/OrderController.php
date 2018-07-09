@@ -1401,6 +1401,10 @@ class OrderController extends \SoftoneBundle\Controller\SoftoneController {
             $vat = 1.17;
         }
         $VATSTS = $this->getSetting("SoftoneBundle:Order:Vat") != '' ? $this->getSetting("SoftoneBundle:Order:Vat") : $customer->getCustomerVatsts();
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh') {
+            $VATSTS = 1;
+        }
+        
         if ($customer->getCustomerTrdcategory() == 3003) {
             $VATSTS = 0;
             $vat = 1;
