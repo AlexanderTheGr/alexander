@@ -2650,7 +2650,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                 //print_r($qty);
                 //exit;
                 //}			
-            } elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts') {
+            } elseif ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'carparts' OR $this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh') {
                 if ($data["item_soreserved"] > 0) {
                     $reserveds[$data["item_soreserved"]][] = $data["reference"];
                     $sql = "update softone_product set reserved = '" . $data["item_soreserved"] . "' where reference = '" . $data["reference"] . "'";
