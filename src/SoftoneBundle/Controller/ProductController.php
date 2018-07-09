@@ -1766,6 +1766,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //exit;
             //echo $data["MTRL"]."<BR>";
             //if ($i++ > 230) continue;
+            $data["MTRPLACE"] = $data["MTRPLACE"];
             echo "<PRE>";
             print_r($data);
             echo "</PRE>";
