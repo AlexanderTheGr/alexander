@@ -2695,7 +2695,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //$sql = "update softone_product set qty = 0";
             //echo $sql . "<BR>";
             //$em->getConnection()->exec($sql);
-
+            
+            print_r($reserveds); 
+            echo '<BR>';
+            print_r($qtys);    
 
             foreach ((array) $reserveds as $reserved => $reference) {
                 $sql = "update softone_product set reserved = '" . $reserved . "' where reference in (" . implode(",", $reference) . ")";
