@@ -2388,7 +2388,7 @@ class Product extends Entity {
         if ($this->reference > 0) {
             $data = $softone->getData($object, $this->reference);
             //print_r($data);
-            file_put_contents("log/productGet_" . $this->getId() . ".txt", print_r($data, true));
+            
             $objectArr = $data->data->$object;
             $objectArr2 = (array) $objectArr[0];
         } else {
@@ -2419,6 +2419,7 @@ class Product extends Entity {
             //}
         }
         $this->itemCode2 = $this->supplierCode;
+        $objectArr2["MTRUNIT1"] = 101;
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh') {
             $objectArr2["MTRUNIT1"] = 1;
         } else {
@@ -2486,7 +2487,7 @@ class Product extends Entity {
             $em->flush();
             //$this->itemMtrmark = $this->itemMtrmark > 0 ? $this->itemMtrmark : 1000;
             $this->itemMtrmanfctr = $this->itemMtrmanfctr > 0 ? $this->itemMtrmanfctr : 1000;
-            $params["fSQL"] = "UPDATE MTRL SET MTRMANFCTR=" . $this->getSupplierId()->getId() . " , MTRMARK=" . $this->itemMtrmark . " WHERE MTRL = " . $this->reference;
+            //$params["fSQL"] = "UPDATE MTRL SET MTRMANFCTR=" . $this->getSupplierId()->getId() . " , MTRMARK=" . $this->itemMtrmark . " WHERE MTRL = " . $this->reference;
             //echo $params["fSQL"]."\n";
             //if (!$op) {
             //if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'gianop') {
