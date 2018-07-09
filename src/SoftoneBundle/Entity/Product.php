@@ -2419,7 +2419,11 @@ class Product extends Entity {
             //}
         }
         $this->itemCode2 = $this->supplierCode;
-        $objectArr2["MTRUNIT1"] = 101;
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh') {
+            $objectArr2["MTRUNIT1"] = 1;
+        } else {
+            $objectArr2["MTRUNIT1"] = 101;
+        }
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
             $objectArr2["MTRPCATEGORY"] = 1000;
             $objectArr2["MTRACN"] = 101;
