@@ -2656,7 +2656,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     $sql = "update softone_product set reserved = '" . $data["item_soreserved"] . "' where reference = '" . $data["reference"] . "'";
                     echo $sql . "<BR>";
                 }
-                echo $data["item_mtrl_itemtrdata_qty1"].".";
+                //echo $data["item_mtrl_itemtrdata_qty1"].".";
                 $qtys[$data["item_mtrl_itemtrdata_qty1"]][] = $data["reference"];
             } else {
                 //if ($data["item_mtrl_itemtrdata_qty1"] > 0 OR $data["item_soreserved"] > 0) {
@@ -2696,9 +2696,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //echo $sql . "<BR>";
             //$em->getConnection()->exec($sql);
             
-            print_r($reserveds); 
-            echo '<BR>';
-            print_r($qtys);    
+            //print_r($reserveds); 
+            //echo '<BR>';
+            //print_r($qtys);    
             
             foreach ((array) $reserveds as $reserved => $reference) {
                 $sql = "update softone_product set reserved = '" . $reserved . "' where reference in (" . implode(",", $reference) . ")";
