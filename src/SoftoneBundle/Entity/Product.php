@@ -2482,9 +2482,20 @@ class Product extends Entity {
             if ($this->reference) {
                 $op = true;
             }
+            /*
             $this->reference = $out->id;
             $em->persist($this);
             $em->flush();
+            */
+            if ($this->reference == 0 AND $this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh') {
+                $sql = "update `softone_product` set reference = '" . $out->id. "' where id = '" . $this->id . "'";
+                $em->getConnection()->exec($sql);
+            } else {
+                $this->reference = $out->id;
+                $em->persist($this);
+                $em->flush();                
+            }
+            
             //$this->itemMtrmark = $this->itemMtrmark > 0 ? $this->itemMtrmark : 1000;
             $this->itemMtrmanfctr = $this->itemMtrmanfctr > 0 ? $this->itemMtrmanfctr : 1000;
             //$params["fSQL"] = "UPDATE MTRL SET MTRMANFCTR=" . $this->getSupplierId()->getId() . " , MTRMARK=" . $this->itemMtrmark . " WHERE MTRL = " . $this->reference;
