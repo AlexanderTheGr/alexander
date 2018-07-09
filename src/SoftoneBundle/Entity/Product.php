@@ -2388,6 +2388,7 @@ class Product extends Entity {
         if ($this->reference > 0) {
             $data = $softone->getData($object, $this->reference);
             //print_r($data);
+            file_put_contents("log/productGet_" . $this->getId() . ".txt", print_r($data, true));
             $objectArr = $data->data->$object;
             $objectArr2 = (array) $objectArr[0];
         } else {
