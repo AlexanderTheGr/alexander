@@ -1006,8 +1006,8 @@ class Customer extends Entity {
         if ((int) $this->reference > 0) {
             $data = $softone->getData($object, $this->reference);
             
-            if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh')
-            print_r($data);
+            //if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh')
+            //print_r($data);
             
             
             $objectArr = $data->data->$object;
@@ -1054,9 +1054,9 @@ class Customer extends Entity {
         $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
         //echo $this->reference." - ";
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh' ) {
-            echo "\n[".$this->reference."]\n";
-            print_r($dataOut);
-            print_r($out);
+            //echo "\n[".$this->reference."]\n";
+            //print_r($dataOut);
+            //print_r($out);
         }
         
         if (@$out->id > 1) {
