@@ -2072,7 +2072,7 @@ class Product extends Entity {
 
                         $criteria = unserialize(file_get_contents($url));
                         $criteria = $criteria[0];
-                        print_r($criteria);
+                        //print_r($criteria);
                         if ($criteria["acr_kv_kt_id"]) {
 
                             $kv = $criteria["acr_kv_kv"];
