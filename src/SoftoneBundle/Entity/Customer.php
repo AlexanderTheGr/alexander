@@ -1053,7 +1053,8 @@ class Customer extends Entity {
         if ($this->reference == 1) $this->reference = 0;
         $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
         //echo $this->reference." - ";
-        if ($this->getSetting("SoftoneBundle:Softone:apothiki")) {
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh' ) {
+            echo "\n[".$this->reference."]\n";
             print_r($dataOut);
             print_r($out);
         }
