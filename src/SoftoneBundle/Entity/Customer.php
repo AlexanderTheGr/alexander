@@ -1034,7 +1034,7 @@ class Customer extends Entity {
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh' AND (int) $this->reference == 0) {
             $objectArr2["COUNTRY"] = 1;
             $objectArr2["SOCURRENCY"] = 2;
-            //$objectArr2["VATSTS"] = 1;
+            $objectArr2["VATSTS"] = 1;
             $objectArr2["KEPYOSTS"] = 1;
         }
         $objectArr2["CITY"] = $this->customerCity;
@@ -1049,8 +1049,10 @@ class Customer extends Entity {
         if ($this->reference == 1) $this->reference = 0;
         $out = $softone->setData((array) $dataOut, $object, (int) $this->reference);
         //echo $this->reference." - ";
-        if ($this->getSetting("SoftoneBundle:Softone:apothiki"))
-        print_r($out);
+        if ($this->getSetting("SoftoneBundle:Softone:apothiki")) {
+            print_r($dataOut);
+            print_r($out);
+        }
         
         if (@$out->id > 1) {
             $filters = "CUSTOMER.CODE=" . $this->customerCode . "&CUSTOMER.CODE_TO=" . $this->customerCode;
