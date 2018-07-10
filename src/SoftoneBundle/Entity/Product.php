@@ -2077,7 +2077,7 @@ class Product extends Entity {
 
                             $kv = $criteria["acr_kv_kv"];
                             if ($kv != "") {
-                                echo "<BR>[" . $kv . "]<BR>";
+                                //echo "<BR>[" . $kv . "]<BR>";
                                 break;
                             }
                             $sql = "select kv_kv from magento2_base4q2017.key_values, magento2_base4q2017.text_designations where kv_kt_id = '" . $criteria["acr_kv_kt_id"] . "' AND kv_kv = '" . $criteria["acr_kv_kv"] . "' AND des_id = kv_des_id and des_lng_id = '" . $this->lng . "' ";
