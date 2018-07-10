@@ -2487,9 +2487,11 @@ class Product extends Entity {
             $em->persist($this);
             $em->flush();
             */
-            if ($this->reference == 0 AND $this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh') {
-                $sql = "update `softone_product` set reference = '" . $out->id. "' where id = '" . $this->id . "'";
-                $em->getConnection()->exec($sql);
+            if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh') {
+                if ($this->reference == 0) {
+                    $sql = "update `softone_product` set reference = '" . $out->id. "' where id = '" . $this->id . "'";
+                    $em->getConnection()->exec($sql);
+                }
             } else {
                 $this->reference = $out->id;
                 $em->persist($this);
