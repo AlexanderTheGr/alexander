@@ -1005,7 +1005,11 @@ class Customer extends Entity {
         $objectArr2 = array();
         if ((int) $this->reference > 0) {
             $data = $softone->getData($object, $this->reference);
-            //print_r($data);
+            
+            if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh')
+            print_r($data);
+            
+            
             $objectArr = $data->data->$object;
             //print_r($objectArr);
             $objectArr2 = (array) $objectArr[0];
