@@ -2087,7 +2087,7 @@ class Product extends Entity {
                             $kv_kv = $kv_kv[0];
                             $kv = $kv_kv["kv_kv"]; // kv_kv HA VA
                             if ($kv != "") {
-                                echo "<BR>[" . $kv . "]<BR>";
+                                //echo "<BR>[" . $kv . "]<BR>";
                                 break;
                             }
                         }
