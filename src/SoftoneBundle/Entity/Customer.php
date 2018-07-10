@@ -1034,7 +1034,7 @@ class Customer extends Entity {
         if ($this->getSetting("SoftoneBundle:Softone:apothiki") == 'iaponikh' AND (int) $this->reference > 0) {
             $objectArr2["COUNTRY"] = 1;
             $objectArr2["SOCURRENCY"] = 2;
-            $objectArr2["VATSTS"] = 1;
+            //$objectArr2["VATSTS"] = 1;
             $objectArr2["KEPYOSTS"] = 1;
         }
         $objectArr2["CITY"] = $this->customerCity;
