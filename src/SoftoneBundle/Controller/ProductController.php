@@ -82,7 +82,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
             $term = preg_replace("/[^a-zA-Z0-9]+/", "", $params["search"]);
             //$sql = "SELECT * FROM magento2_base4q2017.articles art, suppliers WHERE suppliers.sup_id = art.art_sup_id AND art.art_id = '" . $request->request->get("ref") . "'";
-            
+
             $asd = (object) array('articleId' => '0');
             $sql = "SELECT * FROM magento2_base4q2017.suppliers, magento2_base4q2017.articles art,magento2_base4q2017.products pt,magento2_base4q2017.art_products_des artpt,magento2_base4q2017.text_designations tex
                     WHERE 
@@ -91,23 +91,23 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
                     pt.pt_id = artpt.pt_id AND
                     tex.des_id = pt.pt_des_id AND
                     tex.des_lng_id = '20' AND 
-                    art.art_id = '".$request->request->get("ref")."'";
-          
+                    art.art_id = '" . $request->request->get("ref") . "'";
+
             $url = "http://magento2.fastwebltd.com/service.php?sql=" . base64_encode($sql);
             $datas = unserialize(file_get_contents($url));
             $data = $datas[0];
             //print_r($datas[0]);
             //print_r($asd);
-            
+
             $asd->articleId = $data["art_id"];
             $asd->articleNo = $data["art_article_nr"];
             $asd->brandName = $data["sup_brand"];
             $asd->brandNo = $data["art_sup_id"];
-            
+
             $asd->genericArticleId = $data["des_id"];
             $asd->genericArticleName = $data["des_text"];
-            
-           // print_r($asd);
+
+            // print_r($asd);
             //exit;
         }
 
@@ -1017,7 +1017,7 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $out["articleAttributes"] = $tecdoc->articleAttributesRow($params, 0) . "<img width=100% src='" . $link . "'/>[" . $link . "]";
         }
         if ($this->getSetting("AppBundle:Entity:newTecdocServiceUrl") != '') {
-            $sql = "Select * from t4_product_model_type where product = '".$params["product"]."'";
+            $sql = "Select * from t4_product_model_type where product = '" . $params["product"] . "'";
             $em = $this->getDoctrine()->getManager();
             $connection = $em->getConnection();
             $statement = $connection->prepare($sql);
@@ -1027,10 +1027,11 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $efarmoges = array();
             foreach ($results as $data) {
                 $efarmoges[] = $data["model_type"];
-                if ($i++ > 100) break;
+                if ($i++ > 100)
+                    break;
             }
         } else {
-            $efarmoges = $tecdoc->efarmoges($params);            
+            $efarmoges = $tecdoc->efarmoges($params);
         }
         //$asd = unserialize($this->getArticlesSearchByIds($article_id));
         //$out["articlesSearch"] = $tecdoc->getArticlesSearch($asd[0]->articleNo);
@@ -2590,9 +2591,9 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         //$datas = $softone->retrieveData("ITEM", "apothema");
         //echo 'Sss';
         echo count($datas) . "<BR>";
-       // print_r($datas);
+        // print_r($datas);
         //exit;
-        
+
         $em = $this->getDoctrine()->getManager();
 
         if ($this->getSetting("SoftoneBundle:Softone:merchant") == 'foxline') {
@@ -2696,11 +2697,10 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             //$sql = "update softone_product set qty = 0";
             //echo $sql . "<BR>";
             //$em->getConnection()->exec($sql);
-            
             //print_r($reserveds); 
             //echo '<BR>';
             //print_r($qtys);    
-            
+
             foreach ((array) $reserveds as $reserved => $reference) {
                 $sql = "update softone_product set reserved = '" . $reserved . "' where reference in (" . implode(",", $reference) . ")";
                 echo $sql . "<BR>";
@@ -2756,6 +2756,58 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
             $arr = array();
             foreach ($results as $data) {
                 $arr[] = $data;
+            }
+            $json = json_encode($arr);
+            return new Response(
+                    $json, 200, array('Content-Type' => 'application/json')
+            );
+        } else {
+            //   
+            exit;
+        }
+    }
+
+    /**
+     * 
+     * 
+     * @Route("/product/getInfo/{id}")
+     */
+    public function getInfo($id) {
+        //echo 'ssss';
+        $allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
+        $allowedipsArr = explode(",", $allowedips);
+        if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
+            $sql = "SELECT * FROM  `softone_product` where id = '" . $id . "'";
+            $connection = $this->getDoctrine()->getConnection();
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            $results = $statement->fetchAll();
+            $arr = array();
+            foreach ($results as $data) {
+                /*
+                  $cats = unserialize($data["cats"]);
+                  $categs = array();
+                  foreach((array)$cats as $cat) {
+                  //print_r($cat);
+                  //echo "<BR>";
+                  $category = $this->getDoctrine()->getRepository('SoftoneBundle:Category')->find($cat);
+                  if ($category)
+                  $categs[] = $category->getName();
+                  }
+                  $data["cats"] = implode(",",$categs);
+                  $data["cars"] = "";
+                  echo implode(";",$data)."\n";
+                 */
+
+                $arr["id"] = $data["id"];
+                $arr["qty"] = $data["qty"];
+                $arr["reserved"] = $data["reserved"];
+                $arr["item_pricew"] = $data["item_pricew"];
+                $arr["item_pricer"] = $data["item_pricer"];
+                $arr["item_pricew01"] = $data["item_pricew01"];
+                $arr["item_pricer01"] = $data["item_pricer01"];                
+                //$arr[] = $d;
+                //if ($i++ > 100) break;
             }
             $json = json_encode($arr);
             return new Response(
