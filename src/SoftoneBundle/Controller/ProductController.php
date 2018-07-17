@@ -2354,6 +2354,31 @@ class ProductController extends \SoftoneBundle\Controller\SoftoneController {
         exit;
     }
 
+    
+    /**
+     * 
+     * @Route("/product/setproduct/{id}")
+     */
+    function setproductAction($id) {
+
+        $allowedips = $this->getSetting("SoftoneBundle:Product:Allowedips");
+        $allowedipsArr = explode(",", $allowedips);
+        if (in_array($_SERVER["REMOTE_ADDR"], $allowedipsArr)) {
+            echo $this->retrieveMtrl($mtrl);
+            $product = $this->getDoctrine()
+                    ->getRepository($this->repository)
+                    ->find($id);
+            $product->updatetecdoc();
+            $product->toSoftone();
+            $product->setProductFreesearch();
+            return new Response(
+                    "", 200
+            );
+        } else {
+            exit;
+        }
+    }
+    
     /**
      * 
      * @Route("/product/retrieveMtrl/{mtrl}")
